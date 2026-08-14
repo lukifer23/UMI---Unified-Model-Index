@@ -1,5 +1,5 @@
 measurements:
-- record_id: deepswe-resource-summary-claude-opus-5-max-2026-08-13
+- record_id: deepswe-harness-resources-claude-opus-5-max-2026-08-13
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
@@ -7,12 +7,56 @@ measurements:
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
-  metric_definition: Published DeepSWE resource summaries; statistic semantics are
-    not sufficient for mean-based success adjustment
+  metric_definition: Arithmetic mean input tokens, output tokens, and mini-swe-agent
+    steps per attempt across the published DeepSWE leaderboard run set
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: true
+  raw_artifact_available: false
+  capture_type: reviewed_fact_extract
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-opus-max
+  signal_id: deepswe-v1.1-resources
+  source_model_id: Claude Opus 5 max
+  signal_role: efficiency
+  scoring_disposition: scored
+  model_id: claude-opus-5-max
+  workload: deepswe-v1.1
+  workload_category: coding_agents
+  cohort_key: deepswe-v1.1-2026-08-13
+  evaluation_date: '2026-08-13'
+  attempts: 444
+  success_rate: 0.7364864864864865
+  mean_input_tokens: 15025834.39864865
+  mean_output_tokens: 117565.6936936937
+  mean_agent_steps: 99.0427927927928
+  aggregation_statistic: arithmetic_mean
+- record_id: deepswe-endpoint-resources-claude-opus-5-max-2026-08-13
+  source:
+    organization: Datacurve
+    url: https://deepswe.datacurve.ai/
+    accessed: '2026-08-14'
+  result_type: independent
+  benchmark_version: v1.1
+  harness_version: pier-mini-swe-agent-deepswe-v1.1
+  metric_definition: Arithmetic mean wall duration and dollar cost per attempt from
+    the published DeepSWE leaderboard; retained diagnostically until deployment identity
+    is verified
+  evaluator: Datacurve
+  harness_owner: Datacurve
+  run_executor: Datacurve
+  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -27,7 +71,7 @@ measurements:
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-opus-max
-  signal_id: deepswe-v1.1
+  signal_id: deepswe-v1.1-endpoint-resources
   source_model_id: Claude Opus 5 max
   signal_role: efficiency
   scoring_disposition: diagnostic_only
@@ -36,13 +80,12 @@ measurements:
   workload_category: coding_agents
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
-  attempts: 113
-  success_rate: 0.74
-  observed_output_tokens_summary: 118000.0
-  observed_agent_steps_summary: 99.0
-  observed_cost_summary_usd: 11.84
-  aggregation_statistic: unspecified
-- record_id: deepswe-resource-summary-claude-fable-5-max-2026-08-13
+  attempts: 444
+  success_rate: 0.7364864864864865
+  mean_wall_seconds: 1911.819866231982
+  mean_cost_per_attempt: 11.837583271396396
+  aggregation_statistic: arithmetic_mean
+- record_id: deepswe-harness-resources-claude-fable-5-max-2026-08-13
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
@@ -50,12 +93,56 @@ measurements:
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
-  metric_definition: Published DeepSWE resource summaries; statistic semantics are
-    not sufficient for mean-based success adjustment
+  metric_definition: Arithmetic mean input tokens, output tokens, and mini-swe-agent
+    steps per attempt across the published DeepSWE leaderboard run set
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: true
+  raw_artifact_available: false
+  capture_type: reviewed_fact_extract
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-fable-max
+  signal_id: deepswe-v1.1-resources
+  source_model_id: Claude Fable 5 max
+  signal_role: efficiency
+  scoring_disposition: scored
+  model_id: claude-fable-5-max
+  workload: deepswe-v1.1
+  workload_category: coding_agents
+  cohort_key: deepswe-v1.1-2026-08-13
+  evaluation_date: '2026-08-13'
+  attempts: 436
+  success_rate: 0.6972477064220184
+  mean_input_tokens: 12638832.12614679
+  mean_output_tokens: 118592.77293577982
+  mean_agent_steps: 88.4288990825688
+  aggregation_statistic: arithmetic_mean
+- record_id: deepswe-endpoint-resources-claude-fable-5-max-2026-08-13
+  source:
+    organization: Datacurve
+    url: https://deepswe.datacurve.ai/
+    accessed: '2026-08-14'
+  result_type: independent
+  benchmark_version: v1.1
+  harness_version: pier-mini-swe-agent-deepswe-v1.1
+  metric_definition: Arithmetic mean wall duration and dollar cost per attempt from
+    the published DeepSWE leaderboard; retained diagnostically until deployment identity
+    is verified
+  evaluator: Datacurve
+  harness_owner: Datacurve
+  run_executor: Datacurve
+  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -70,7 +157,7 @@ measurements:
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-fable-max
-  signal_id: deepswe-v1.1
+  signal_id: deepswe-v1.1-endpoint-resources
   source_model_id: Claude Fable 5 max
   signal_role: efficiency
   scoring_disposition: diagnostic_only
@@ -79,13 +166,12 @@ measurements:
   workload_category: coding_agents
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
-  attempts: 113
-  success_rate: 0.7
-  observed_output_tokens_summary: 119000.0
-  observed_agent_steps_summary: 88.0
-  observed_cost_summary_usd: 21.63
-  aggregation_statistic: unspecified
-- record_id: deepswe-resource-summary-gpt-5.6-sol-max-2026-08-13
+  attempts: 436
+  success_rate: 0.6972477064220184
+  mean_wall_seconds: 2092.0106240022938
+  mean_cost_per_attempt: 21.634702092592594
+  aggregation_statistic: arithmetic_mean
+- record_id: deepswe-harness-resources-gpt-5.6-sol-max-2026-08-13
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
@@ -93,12 +179,56 @@ measurements:
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
-  metric_definition: Published DeepSWE resource summaries; statistic semantics are
-    not sufficient for mean-based success adjustment
+  metric_definition: Arithmetic mean input tokens, output tokens, and mini-swe-agent
+    steps per attempt across the published DeepSWE leaderboard run set
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: true
+  raw_artifact_available: false
+  capture_type: reviewed_fact_extract
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-sol-max
+  signal_id: deepswe-v1.1-resources
+  source_model_id: GPT-5.6 Sol max
+  signal_role: efficiency
+  scoring_disposition: scored
+  model_id: gpt-5.6-sol-max
+  workload: deepswe-v1.1
+  workload_category: coding_agents
+  cohort_key: deepswe-v1.1-2026-08-13
+  evaluation_date: '2026-08-13'
+  attempts: 450
+  success_rate: 0.7266666666666667
+  mean_input_tokens: 7907652.344444444
+  mean_output_tokens: 60013.64444444444
+  mean_agent_steps: 61.25333333333333
+  aggregation_statistic: arithmetic_mean
+- record_id: deepswe-endpoint-resources-gpt-5.6-sol-max-2026-08-13
+  source:
+    organization: Datacurve
+    url: https://deepswe.datacurve.ai/
+    accessed: '2026-08-14'
+  result_type: independent
+  benchmark_version: v1.1
+  harness_version: pier-mini-swe-agent-deepswe-v1.1
+  metric_definition: Arithmetic mean wall duration and dollar cost per attempt from
+    the published DeepSWE leaderboard; retained diagnostically until deployment identity
+    is verified
+  evaluator: Datacurve
+  harness_owner: Datacurve
+  run_executor: Datacurve
+  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -113,7 +243,7 @@ measurements:
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-sol-max
-  signal_id: deepswe-v1.1
+  signal_id: deepswe-v1.1-endpoint-resources
   source_model_id: GPT-5.6 Sol max
   signal_role: efficiency
   scoring_disposition: diagnostic_only
@@ -122,13 +252,12 @@ measurements:
   workload_category: coding_agents
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
-  attempts: 113
-  success_rate: 0.73
-  observed_output_tokens_summary: 60000.0
-  observed_agent_steps_summary: 61.0
-  observed_cost_summary_usd: 8.39
-  aggregation_statistic: unspecified
-- record_id: deepswe-resource-summary-kimi-k3-max-2026-08-13
+  attempts: 450
+  success_rate: 0.7266666666666667
+  mean_wall_seconds: 1128.624910331111
+  mean_cost_per_attempt: 8.386436346666667
+  aggregation_statistic: arithmetic_mean
+- record_id: deepswe-harness-resources-kimi-k3-max-2026-08-13
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
@@ -136,12 +265,56 @@ measurements:
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
-  metric_definition: Published DeepSWE resource summaries; statistic semantics are
-    not sufficient for mean-based success adjustment
+  metric_definition: Arithmetic mean input tokens, output tokens, and mini-swe-agent
+    steps per attempt across the published DeepSWE leaderboard run set
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: true
+  raw_artifact_available: false
+  capture_type: reviewed_fact_extract
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-kimi-max
+  signal_id: deepswe-v1.1-resources
+  source_model_id: Kimi K3 max
+  signal_role: efficiency
+  scoring_disposition: scored
+  model_id: kimi-k3-max
+  workload: deepswe-v1.1
+  workload_category: coding_agents
+  cohort_key: deepswe-v1.1-2026-08-13
+  evaluation_date: '2026-08-13'
+  attempts: 451
+  success_rate: 0.6851441241685144
+  mean_input_tokens: 9695436.246119734
+  mean_output_tokens: 81499.84257206209
+  mean_agent_steps: 97.58758314855876
+  aggregation_statistic: arithmetic_mean
+- record_id: deepswe-endpoint-resources-kimi-k3-max-2026-08-13
+  source:
+    organization: Datacurve
+    url: https://deepswe.datacurve.ai/
+    accessed: '2026-08-14'
+  result_type: independent
+  benchmark_version: v1.1
+  harness_version: pier-mini-swe-agent-deepswe-v1.1
+  metric_definition: Arithmetic mean wall duration and dollar cost per attempt from
+    the published DeepSWE leaderboard; retained diagnostically until deployment identity
+    is verified
+  evaluator: Datacurve
+  harness_owner: Datacurve
+  run_executor: Datacurve
+  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -156,7 +329,7 @@ measurements:
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-kimi-max
-  signal_id: deepswe-v1.1
+  signal_id: deepswe-v1.1-endpoint-resources
   source_model_id: Kimi K3 max
   signal_role: efficiency
   scoring_disposition: diagnostic_only
@@ -165,13 +338,12 @@ measurements:
   workload_category: coding_agents
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
-  attempts: 113
-  success_rate: 0.69
-  observed_output_tokens_summary: 81000.0
-  observed_agent_steps_summary: 98.0
-  observed_cost_summary_usd: 4.65
-  aggregation_statistic: unspecified
-- record_id: deepswe-resource-summary-glm-5.2-max-2026-08-13
+  attempts: 451
+  success_rate: 0.6851441241685144
+  mean_wall_seconds: 4541.447376412417
+  mean_cost_per_attempt: 4.654682129933482
+  aggregation_statistic: arithmetic_mean
+- record_id: deepswe-harness-resources-glm-5.2-max-2026-08-13
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
@@ -179,12 +351,56 @@ measurements:
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
-  metric_definition: Published DeepSWE resource summaries; statistic semantics are
-    not sufficient for mean-based success adjustment
+  metric_definition: Arithmetic mean input tokens, output tokens, and mini-swe-agent
+    steps per attempt across the published DeepSWE leaderboard run set
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: true
+  raw_artifact_available: false
+  capture_type: reviewed_fact_extract
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-glm-max
+  signal_id: deepswe-v1.1-resources
+  source_model_id: GLM-5.2 max
+  signal_role: efficiency
+  scoring_disposition: scored
+  model_id: glm-5.2-max
+  workload: deepswe-v1.1
+  workload_category: coding_agents
+  cohort_key: deepswe-v1.1-2026-08-13
+  evaluation_date: '2026-08-13'
+  attempts: 450
+  success_rate: 0.43777777777777777
+  mean_input_tokens: 12606560.215555556
+  mean_output_tokens: 78175.30666666667
+  mean_agent_steps: 129.12666666666667
+  aggregation_statistic: arithmetic_mean
+- record_id: deepswe-endpoint-resources-glm-5.2-max-2026-08-13
+  source:
+    organization: Datacurve
+    url: https://deepswe.datacurve.ai/
+    accessed: '2026-08-14'
+  result_type: independent
+  benchmark_version: v1.1
+  harness_version: pier-mini-swe-agent-deepswe-v1.1
+  metric_definition: Arithmetic mean wall duration and dollar cost per attempt from
+    the published DeepSWE leaderboard; retained diagnostically until deployment identity
+    is verified
+  evaluator: Datacurve
+  harness_owner: Datacurve
+  run_executor: Datacurve
+  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -199,7 +415,7 @@ measurements:
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-glm-max
-  signal_id: deepswe-v1.1
+  signal_id: deepswe-v1.1-endpoint-resources
   source_model_id: GLM-5.2 max
   signal_role: efficiency
   scoring_disposition: diagnostic_only
@@ -208,9 +424,8 @@ measurements:
   workload_category: coding_agents
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
-  attempts: 113
-  success_rate: 0.44
-  observed_output_tokens_summary: 78000.0
-  observed_agent_steps_summary: 129.0
-  observed_cost_summary_usd: 3.92
-  aggregation_statistic: unspecified
+  attempts: 450
+  success_rate: 0.43777777777777777
+  mean_wall_seconds: 2629.2083211311115
+  mean_cost_per_attempt: 3.9199075743111114
+  aggregation_statistic: arithmetic_mean

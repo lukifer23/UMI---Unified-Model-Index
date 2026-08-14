@@ -604,6 +604,60 @@
       ],
       "title": "WorkloadCategory",
       "type": "string"
+    },
+    "WorkloadDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Family",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "weight": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Weight",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "family",
+        "weight"
+      ],
+      "title": "WorkloadDefinition",
+      "type": "object"
+    },
+    "WorkloadFamilyDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "$ref": "#/$defs/WorkloadCategory"
+        },
+        "id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "weight": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Weight",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "category",
+        "weight"
+      ],
+      "title": "WorkloadFamilyDefinition",
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -644,6 +698,20 @@
     },
     "weights": {
       "$ref": "#/$defs/WeightConfig"
+    },
+    "workload_families": {
+      "items": {
+        "$ref": "#/$defs/WorkloadFamilyDefinition"
+      },
+      "title": "Workload Families",
+      "type": "array"
+    },
+    "workloads": {
+      "items": {
+        "$ref": "#/$defs/WorkloadDefinition"
+      },
+      "title": "Workloads",
+      "type": "array"
     }
   },
   "required": [
@@ -652,6 +720,8 @@
     "eligibility",
     "benchmarks",
     "families",
+    "workload_families",
+    "workloads",
     "value",
     "fingerprint"
   ],

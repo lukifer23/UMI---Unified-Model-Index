@@ -6,8 +6,12 @@ from umi.provenance import select_best_tier
 from umi.schemas import AggregationStatistic, EfficiencyMeasurement
 
 EFFICIENCY_ATTRIBUTES = {
-    "effective_tokens": "mean_total_tokens",
+    "effective_input_tokens": "mean_input_tokens",
+    "effective_output_tokens": "mean_output_tokens",
+    "effective_reasoning_tokens": "mean_reasoning_tokens",
+    "effective_cached_tokens": "mean_cached_tokens",
     "effective_turns": "mean_turns",
+    "effective_agent_steps": "mean_agent_steps",
     "effective_wall_time": "mean_wall_seconds",
     "effective_tool_calls": "mean_tool_calls",
 }

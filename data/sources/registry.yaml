@@ -163,9 +163,9 @@ snapshots:
     published: 2026-08-13
     as_of: 2026-08-13
     artifact_path: v0.3/deepswe-reviewed-facts-2026-08-13.yaml
-    artifact_sha256: 447549e6caa326bd494c781ed86bd583f3d30493803cf12d99d6815ccdb47782
+    artifact_sha256: cd8aa2f1c143a11b657ac86507e631bfc33fc5531a36feebd152d09bf2bf496a
     content_type: application/yaml
-    upstream_revision: 435ee89ec2f2e2289f33b0da4f992f0b7b7266b9
+    upstream_revision: leaderboard-generated-2026-08-13t16.11.55z
     adapter_id: deepswe-reviewed-facts-v1
     license_id: leaderboard-data-license-not-established
     attribution: DeepSWE v1.1 leaderboard facts by Datacurve

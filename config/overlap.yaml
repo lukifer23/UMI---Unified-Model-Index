@@ -7,6 +7,8 @@ signals:
   - {id: arena-agent, role: preference, disposition: diagnostic_only, budget_group: arena-agent}
   - {id: arena-agent-signals, role: preference, disposition: diagnostic_only, budget_group: arena-agent}
   - {id: deepswe-v1.1, role: task, disposition: scored, budget_group: deepswe-v1.1}
+  - {id: deepswe-v1.1-resources, role: efficiency, disposition: scored, budget_group: deepswe-v1.1-resources}
+  - {id: deepswe-v1.1-endpoint-resources, role: efficiency, disposition: diagnostic_only}
   - {id: hle, role: task, disposition: scored, budget_group: hle}
   - {id: terminalbench-2.1, role: task, disposition: scored, budget_group: terminalbench-2.1}
   - {id: scicode, role: task, disposition: scored, budget_group: scicode}
@@ -27,4 +29,6 @@ edges:
   - {source: aa-intelligence-v4.1, target: aa-lcr, relation: contains, evidence: "AA Intelligence v4.1 methodology"}
   - {source: aa-intelligence-v4.1, target: aa-omniscience, relation: contains, evidence: "AA Intelligence v4.1 methodology"}
   - {source: epoch-eci, target: deepswe-v1.1, relation: contains, evidence: "Epoch included-benchmarks documentation"}
+  - {source: deepswe-v1.1, target: deepswe-v1.1-resources, relation: shared_tasks, evidence: "Datacurve DeepSWE leaderboard payload"}
+  - {source: deepswe-v1.1-resources, target: deepswe-v1.1-endpoint-resources, relation: shared_tasks, evidence: "Datacurve DeepSWE leaderboard payload"}
   - {source: arena-agent, target: arena-agent-signals, relation: contains, evidence: "Arena leaderboard dataset card"}

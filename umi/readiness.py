@@ -67,11 +67,20 @@ def readiness_failures(record: ScoredRecord, model: ModelConfiguration) -> tuple
             failures.append("inference effort is not exact")
         if not verification.fallback_absent:
             failures.append("fallback or composite deployment is not ruled out")
-        if isinstance(record, (EfficiencyMeasurement, TaskEconomicsMeasurement)) and not (
-            verification.deployment_identity_verified
-        ):
+        endpoint_sensitive = isinstance(record, TaskEconomicsMeasurement) or (
+            isinstance(record, EfficiencyMeasurement)
+            and any(
+                value is not None
+                for value in (
+                    record.mean_cached_tokens,
+                    record.mean_wall_seconds,
+                    record.mean_cost_per_attempt,
+                )
+            )
+        )
+        if endpoint_sensitive and not verification.deployment_identity_verified:
             failures.append("deployment identity is not verified for endpoint-sensitive evidence")
-    if record.raw_artifact_available is not True or not record.source_artifact_id:
+    if record.capture_type is None or not record.source_artifact_id:
         failures.append("retained source artifact reference is missing")
     if record.cohort_key == "unspecified":
         failures.append("compatibility cohort key is unspecified")

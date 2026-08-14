@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from umi.config import load_project_config
+from umi.config import ProjectConfig, load_project_config
 from umi.schema_export import rendered_schemas
 from umi.schemas import EfficiencyMeasurement, PricingRecord
 
@@ -31,6 +31,27 @@ def test_configuration_is_deterministic_and_complete() -> None:
     assert len(first.fingerprint) == 64
     assert sum(first.weights.capability_domains.values()) == pytest.approx(1.0)
     assert len(first.weights.sensitivity_sets) == 5
+    assert {item.id for item in first.workloads} == {
+        "synthetic-agent-task",
+        "synthetic-browser",
+        "synthetic-coding",
+        "synthetic-general-interaction",
+        "synthetic-long-horizon",
+        "synthetic-research",
+    }
+
+
+def test_workload_hierarchy_and_efficiency_metrics_fail_closed() -> None:
+    config = load_project_config(ROOT / "tests" / "fixtures" / "config")
+    raw = config.model_dump(mode="python")
+    raw["weights"]["efficiency"] = {"made_up_metric": 1.0}
+    with pytest.raises(ValidationError, match="unsupported metric"):
+        ProjectConfig.model_validate(raw)
+
+    raw = config.model_dump(mode="python")
+    raw["workload_families"][0]["weight"] = 0.5
+    with pytest.raises(ValidationError, match="family weights.*sum to 1"):
+        ProjectConfig.model_validate(raw)
 
 
 def test_pricing_requires_at_least_one_nonnegative_price() -> None:

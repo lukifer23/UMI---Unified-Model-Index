@@ -17,6 +17,7 @@ from umi.schemas import (
     Provenance,
     TaskEconomicsMeasurement,
 )
+from umi.workloads import aggregate_workloads
 
 
 def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputation:
@@ -49,20 +50,26 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                 f"{reason} excluded from Economics/{economics_record.workload}"
             )
 
-    category_scores: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
+    normalized_scores: dict[str, dict[str, list[float]]] = defaultdict(
+        lambda: defaultdict(list)
+    )
     provisional_by_model: dict[str, set[str]] = defaultdict(set)
     profile_series: dict[str, set[str]] = defaultdict(set)
+    workload_definitions = {item.id: item for item in config.workloads}
+    workload_families = {item.id: item for item in config.workload_families}
     series = sorted(
         {(workload, cohort) for workload, cohort, _ in efficiency}
         | {(workload, cohort) for workload, cohort, _ in direct}
     )
     for workload, cohort_key in series:
+        definition = workload_definitions.get(workload)
+        if definition is None:
+            continue
+        family = workload_families[definition.family]
         costs: dict[str, float] = {}
-        categories: dict[str, str] = {}
         for (candidate, cohort, model_id), direct_records in direct.items():
             if (candidate, cohort) != (workload, cohort_key):
                 continue
-            categories[model_id] = direct_records[0].workload_category.value
             value, direct_selected, conflict = consolidate_numeric(
                 direct_records, "mean_cost_usd"
             )
@@ -78,7 +85,6 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                 model_id,
             ) in direct:
                 continue
-            categories[model_id] = efficiency_records[0].workload_category.value
             value, efficiency_selected, conflict = consolidate_cost_per_success(
                 efficiency_records
             )
@@ -96,30 +102,29 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
             minimum_rank_cohort=config.normalization.minimum_rank_cohort,
         )
         for model_id, score in normalized.scores.items():
-            if score is not None:
-                category_scores[categories[model_id]][model_id].append(score)
-                profile_series[model_id].add(
-                    f"{categories[model_id]}/{workload}/{cohort_key}/cost_per_success"
-                )
-                if normalized.provisional:
-                    provisional_by_model[model_id].add(f"{workload}/{cohort_key}/cost_per_success")
+            if score is None:
+                continue
+            normalized_scores[workload][model_id].append(score)
+            profile_series[model_id].add(
+                f"{family.category.value}/{family.id}/{workload}/{cohort_key}/cost_per_success"
+            )
+            if normalized.provisional:
+                provisional_by_model[model_id].add(f"{workload}/{cohort_key}/cost_per_success")
 
     output: dict[str, ComponentScore] = {}
     for model in dataset.models:
-        category_values = {
-            category.value: (
-                sum(category_scores.get(category.value, {}).get(model.id, []))
-                / len(category_scores[category.value][model.id])
-                if category_scores.get(category.value, {}).get(model.id)
-                else None
-            )
-            for category in config.weights.workload_weights
-        }
-        score, coverage = weighted_available(
+        aggregation = aggregate_workloads(model.id, normalized_scores, config)
+        category_values = aggregation.category_scores
+        category_coverages = aggregation.category_coverage
+        score, _ = weighted_available(
             category_values,
             {key.value: value for key, value in config.weights.workload_weights.items()},
         )
-        represented = sum(value is not None for value in category_values.values())
+        coverage = sum(
+            weight * category_coverages[category.value]
+            for category, weight in config.weights.workload_weights.items()
+        )
+        represented = sum(value > 0 for value in category_coverages.values())
         provisional_ids = provisional_by_model[model.id]
         if provisional_ids:
             diagnostics[model.id].append(
@@ -136,6 +141,15 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                 "economics_workloads_represented": represented,
                 "economics_workloads_total": len(config.weights.workload_weights),
                 "economics_workload_weighted": coverage,
+                "economics_workload_cells_represented": aggregation.present_cells,
+                **{
+                    f"economics_category_coverage_{category}": value
+                    for category, value in category_coverages.items()
+                },
+                **{
+                    f"economics_workload_coverage_{family}": value
+                    for family, value in aggregation.family_coverage.items()
+                },
             },
             evidence_profile=workload_profile(
                 "economics", profile_series[model.id], records_by_id.values(), config
@@ -162,20 +176,16 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                 "comparability_status": (
                     "directly_comparable"
                     if peers
-                    else (
-                        "different_evidence_profile"
-                        if has_support
-                        else "insufficient_common_support"
-                    )
+                    else "different_evidence_profile"
+                    if has_support
+                    else "insufficient_common_support"
                 ),
                 "comparability_reasons": (
                     ("same economics workload support and configuration",)
                     if peers
-                    else (
-                        ("no other model has the same economics evidence profile",)
-                        if has_support
-                        else ("no ready economics workload support",)
-                    )
+                    else ("no other model has the same economics evidence profile",)
+                    if has_support
+                    else ("no ready economics workload support",)
                 ),
             }
         )

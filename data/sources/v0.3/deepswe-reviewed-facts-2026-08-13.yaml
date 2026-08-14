@@ -1,40 +1,78 @@
 source_id: deepswe
 artifact_id: deepswe-v1.1-2026-08-13
 as_of: 2026-08-13
+generated_at: 2026-08-13T16:11:55.708636+00:00
 benchmark_version: v1.1
 task_count: 113
+run_count: 4
+ci_method: "95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))"
 source:
   organization: Datacurve
   url: https://deepswe.datacurve.ai/
   accessed: 2026-08-14
 rows:
   - source_model_id: Claude Opus 5 max
-    pass_rate_percent: 74
-    confidence_interval_percent: 4
-    cost_usd: 11.84
-    output_tokens: 118000
-    agent_steps: 99
+    source_config_id: mini_swe_agent_claude_opus_5_max
+    passed_attempts: 327
+    attempted_tasks: 444
+    pass_rate: 0.7364864864864865
+    pass_at_4: 0.8849557522123894
+    ci_lower: 0.6977633822227692
+    ci_upper: 0.7752095907502038
+    mean_cost_usd: 11.837583271396396
+    mean_input_tokens: 15025834.39864865
+    mean_output_tokens: 117565.6936936937
+    mean_duration_seconds: 1911.819866231982
+    mean_agent_steps: 99.0427927927928
   - source_model_id: Claude Fable 5 max
-    pass_rate_percent: 70
-    confidence_interval_percent: 4
-    cost_usd: 21.63
-    output_tokens: 119000
-    agent_steps: 88
+    source_config_id: mini_swe_agent_claude_fable_5_max
+    passed_attempts: 304
+    attempted_tasks: 436
+    pass_rate: 0.6972477064220184
+    pass_at_4: 0.8407079646017699
+    ci_lower: 0.656912963913939
+    ci_upper: 0.7375824489300977
+    mean_cost_usd: 21.634702092592594
+    mean_input_tokens: 12638832.12614679
+    mean_output_tokens: 118592.77293577982
+    mean_duration_seconds: 2092.0106240022938
+    mean_agent_steps: 88.4288990825688
   - source_model_id: GPT-5.6 Sol max
-    pass_rate_percent: 73
-    confidence_interval_percent: 3
-    cost_usd: 8.39
-    output_tokens: 60000
-    agent_steps: 61
+    source_config_id: mini_swe_agent_gpt_5_6_sol_max
+    passed_attempts: 327
+    attempted_tasks: 450
+    pass_rate: 0.7266666666666667
+    pass_at_4: 0.8584070796460177
+    ci_lower: 0.6983684441682949
+    ci_upper: 0.7549648891650385
+    mean_cost_usd: 8.386436346666667
+    mean_input_tokens: 7907652.344444444
+    mean_output_tokens: 60013.64444444444
+    mean_duration_seconds: 1128.624910331111
+    mean_agent_steps: 61.25333333333333
   - source_model_id: Kimi K3 max
-    pass_rate_percent: 69
-    confidence_interval_percent: 5
-    cost_usd: 4.65
-    output_tokens: 81000
-    agent_steps: 98
+    source_config_id: mini_swe_agent_kimi_k3_max
+    passed_attempts: 309
+    attempted_tasks: 451
+    pass_rate: 0.6851441241685144
+    pass_at_4: 0.8938053097345132
+    ci_lower: 0.6397739833756912
+    ci_upper: 0.7305142649613376
+    mean_cost_usd: 4.654682129933482
+    mean_input_tokens: 9695436.246119734
+    mean_output_tokens: 81499.84257206209
+    mean_duration_seconds: 4541.447376412417
+    mean_agent_steps: 97.58758314855876
   - source_model_id: GLM-5.2 max
-    pass_rate_percent: 44
-    confidence_interval_percent: 2
-    cost_usd: 3.92
-    output_tokens: 78000
-    agent_steps: 129
+    source_config_id: mini_swe_agent_glm_5_2_max
+    passed_attempts: 197
+    attempted_tasks: 450
+    pass_rate: 0.43777777777777777
+    pass_at_4: 0.7699115044247787
+    ci_lower: 0.42052148157196967
+    ci_upper: 0.45503407398358586
+    mean_cost_usd: 3.9199075743111114
+    mean_input_tokens: 12606560.215555556
+    mean_output_tokens: 78175.30666666667
+    mean_duration_seconds: 2629.2083211311115
+    mean_agent_steps: 129.12666666666667

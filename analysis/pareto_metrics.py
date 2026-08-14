@@ -5,7 +5,11 @@ from dataclasses import dataclass
 
 from analysis.pareto import ParetoPoint, pareto_frontier
 from umi._component import consolidate_numeric
-from umi.derived_metrics import consolidate_cost_per_success, consolidate_derived
+from umi.derived_metrics import (
+    EFFICIENCY_ATTRIBUTES,
+    consolidate_cost_per_success,
+    consolidate_derived,
+)
 from umi.loading import Dataset
 from umi.readiness import scoring_dataset
 from umi.schemas import CostBasis, EfficiencyMeasurement, ScoringResult, TaskEconomicsMeasurement
@@ -44,7 +48,7 @@ def pareto_dimensions(
     series_values: dict[tuple[str, str, str, str], dict[str, float]] = defaultdict(dict)
     for (workload, cohort, model_id), records in efficiency.items():
         category = records[0].workload_category.value
-        for metric in ("effective_tokens", "effective_wall_time"):
+        for metric in EFFICIENCY_ATTRIBUTES:
             value, _, _ = consolidate_derived(records, metric)
             if value is not None:
                 series_values[(metric, category, workload, cohort)][model_id] = value

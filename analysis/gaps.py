@@ -3,8 +3,10 @@ from __future__ import annotations
 from collections import Counter
 
 from umi.config import ProjectConfig
+from umi.economics import score_economics
+from umi.efficiency import score_efficiency
 from umi.loading import Dataset
-from umi.readiness import is_scoring_ready
+from umi.readiness import is_scoring_ready, scoring_dataset
 
 
 def pilot_gap_report(dataset: Dataset, config: ProjectConfig) -> dict[str, object]:
@@ -98,16 +100,29 @@ def pilot_gap_report(dataset: Dataset, config: ProjectConfig) -> dict[str, objec
         <= model.release_date
         <= config.eligibility.release_end
     ]
+    scored, _ = scoring_dataset(dataset)
+    efficiency_coverage = min(
+        item.coverage for item in score_efficiency(scored, config).components.values()
+    )
+    economics_coverage = min(
+        item.coverage for item in score_economics(scored, config).components.values()
+    )
     blockers = [
         (
             "Capability lacks ready evidence in at least "
             f"{config.eligibility.minimum_capability_domains} configured domains for every model."
         ),
-        "No workload category has ready all-model Efficiency evidence.",
-        "No workload category has ready all-model successful-task Economics evidence.",
         (
-            "Token tariffs cannot be converted to task cost without compatible per-attempt "
-            "resource usage."
+            f"Minimum pilot Efficiency coverage is {efficiency_coverage:.3f}, below the "
+            f"{config.eligibility.minimum_component_coverage['efficiency']:.3f} component gate."
+        ),
+        (
+            f"Minimum pilot Economics coverage is {economics_coverage:.3f}, below the "
+            f"{config.eligibility.minimum_component_coverage['economics']:.3f} component gate."
+        ),
+        (
+            "Token tariffs are not joined to task telemetry until deployment identity, billing "
+            "revision, cache behavior, and tool charges are aligned."
         ),
     ]
     if ineligible_models:

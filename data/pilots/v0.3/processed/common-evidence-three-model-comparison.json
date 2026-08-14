@@ -9,8 +9,8 @@
       "cohort_key": "epoch-gpqa-diamond-1.0.6-simple-evals"
     }
   ],
-  "common_evidence_profile_id": "82d956dfcc74092b882521e78b5d9b495d455578d89a1e4542c29ed009ee9f9a",
-  "comparison_group_id": "1afb7ec1296c813a3812bfad1892e1f0cc545dfabe073c017ee0344ab557e194",
+  "common_evidence_profile_id": "e3f0d0bf0123be67d2b1d7a4c69a2513950fa25924f2bf345df5a610c679228d",
+  "comparison_group_id": "568841171db9fe9729bbb2a6e8c1811b93ef31b9e4a79c786ed691667eb25940",
   "comparison_model_ids": [
     "claude-opus-5-max",
     "glm-5.2-max",

@@ -1,7 +1,7 @@
-# UMI methodology v0.3.1
+# UMI methodology v0.3.2
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3.1 retains the manually reviewed,
+current policy values; code must not contradict this document. UMI v0.3.2 retains the manually reviewed,
 multi-source evidence pilot. It does not publish a headline UMI ranking.
 
 ## v0.3 source roles and exact identity
@@ -122,7 +122,7 @@ unchanged scored configuration would falsely create a new scoring cohort.
 ## Identity and compatibility cohorts
 
 A benchmark comparison series is `(benchmark_id, cohort_key)`. A workload comparison series is
-`(workload_category, workload, cohort_key)`. Cohort keys must encode materially relevant harness,
+`(workload_category, workload_family, workload, cohort_key)`. Cohort keys must encode materially relevant harness,
 benchmark, prompt, tool, retry, pass@k, effort, and endpoint settings. Labels alone never establish
 equivalence.
 
@@ -155,10 +155,15 @@ immutable provider snapshot. `evidence_artifact_ids` are source captures, not mo
 
 Capability records may score provisionally when the named release, release label, and effort label
 are exact, fallback/composite behavior is ruled out, the evidence date is known, and identity
-assurance is at least `label_exact`. Efficiency and Economics additionally require verified
-deployment identity because endpoint, serving provider, service tier, caching, and latency can
-materially change those measurements. A `provider_snapshot_id` may be populated only when the
-provider actually publishes an immutable identifier.
+assurance is at least `label_exact`. Efficiency observations of wall time, cached tokens, or dollar
+cost and all Economics observations additionally require verified deployment identity because
+endpoint, serving provider, service tier, caching, and infrastructure can materially change those
+measurements. Exact harness-level input/output/reasoning-token counts, turns, agent steps, and tool
+calls may score provisionally without endpoint identity when the source proves the exact named
+release, effort, fallback state, harness, cohort, and arithmetic-mean semantics. Endpoint-sensitive
+fields must be isolated in a separate record so they cannot make a compatible harness-resource
+record appear deployable. A `provider_snapshot_id` may be populated only when the provider actually
+publishes an immutable identifier.
 
 ## Consolidation and conflicts
 
@@ -295,8 +300,24 @@ that limitation.
 
 ## Efficiency
 
-Default metric weights are 50% effective tokens, 20% effective turns, 20% effective wall time,
-and 10% effective tool calls. Workload-class weights are configured separately.
+The v0.3.2 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
+10% effective reasoning tokens, 10% effective cached tokens, 10% effective turns, 15% effective
+agent steps, 15% effective wall time, and 10% effective tool calls. These are policy weights, not
+empirically learned parameters. Token subtypes are kept distinct: a total-token field is not scored
+alongside its constituent input/output fields.
+
+Workload coverage uses a fixed configured hierarchy:
+
+```text
+component -> workload category -> workload family -> workload series -> metric
+```
+
+Within the pilot coding category, family weights are 40% software-repository agents, 30%
+terminal-environment agents, and 30% code-repair agents. DeepSWE v1.1 is the sole currently
+configured software-repository workload; Terminal-Bench 2.1 and CursorBench are the initial named
+workloads for the other two families. These are explicit pilot hypotheses and will receive
+sensitivity analysis before a headline release. Categories without an approved family profile have
+zero available coverage and cannot be represented by an arbitrary observed workload.
 
 For every individual source record `i` and attempt-level resource `x`:
 
@@ -304,19 +325,29 @@ For every individual source record `i` and attempt-level resource `x`:
 EffectiveResource_i = MeanResourcePerAttempt_i / SuccessRate_i
 ```
 
-This rule applies to tokens, turns, wall time, and tool calls. At zero success every effective
+This rule applies independently to input, output, reasoning, and cached tokens, turns, agent steps,
+wall time, and tool calls. At zero success every effective
 resource is positive infinity and receives the worst normalized result. UMI therefore measures
 resources per successful outcome and never rewards fast failure.
 
-Within a workload class `c`:
+Within category `c`, family `f`, workload `w`, and metric `m`:
 
 ```text
-MetricCoverage_c = sum(weights of available effective metrics)
-EfficiencyCoverage = sum_c WorkloadWeight_c * MetricCoverage_c
+WorkloadMetricScore_wm = normalize comparable cohort values
+FamilyMetricScore_fm = weighted_available_w(WorkloadMetricScore_wm, WorkloadWeight_w)
+CategoryMetricScore_cm = weighted_available_f(FamilyMetricScore_fm, FamilyWeight_f)
+CategoryScore_c = weighted_available_m(CategoryMetricScore_cm, MetricWeight_m)
+EfficiencyScore = weighted_available_c(CategoryScore_c, CategoryWeight_c)
+
+EfficiencyCoverage = sum_c CategoryWeight_c
+                       * sum_f FamilyWeight_f
+                       * sum_w WorkloadWeight_w
+                       * sum_m available_wm * MetricWeight_m
 ```
 
-The partial workload score may reweight across available metrics, but coverage retains every
-omitted metric weight. One 10%-weight tool-call observation cannot create full workload coverage.
+Each partial aggregation may reweight only across available children at that exact hierarchy level;
+coverage retains every omitted category, family, workload, and metric weight. One workload cannot
+stand in for an entire category, and one low-weight observation cannot create full workload coverage.
 
 ## Economics
 
@@ -330,9 +361,9 @@ CostPerSuccessfulTask_i = MeanCostPerAttempt_i / SuccessRate_i
 ```
 
 The ratio is derived per record before consolidation. Zero success is positive infinity and the
-worst outcome. Economics is normalized only within one workload/cohort series. Coverage is the sum
-of configured workload-class weights with comparable successful-task cost evidence. Costs from
-unrelated coding, research, browser, or other workloads are not pooled.
+worst outcome. Economics is normalized only within one workload/cohort series and aggregated through
+the same fixed category/family/workload hierarchy. Coverage retains missing family and workload
+weights. Costs from unrelated coding, research, browser, or other workloads are not pooled.
 
 ## Overall and headline eligibility
 

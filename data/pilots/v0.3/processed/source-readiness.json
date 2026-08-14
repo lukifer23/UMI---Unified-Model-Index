@@ -108,7 +108,7 @@
         "signal policy is diagnostic-only"
       ],
       "model_id": "claude-fable-5-max",
-      "record_id": "deepswe-resource-summary-claude-fable-5-max-2026-08-13",
+      "record_id": "deepswe-endpoint-resources-claude-fable-5-max-2026-08-13",
       "scoring_ready": false,
       "source_artifact_id": "deepswe-v1.1-2026-08-13"
     },
@@ -118,7 +118,7 @@
         "signal policy is diagnostic-only"
       ],
       "model_id": "claude-opus-5-max",
-      "record_id": "deepswe-resource-summary-claude-opus-5-max-2026-08-13",
+      "record_id": "deepswe-endpoint-resources-claude-opus-5-max-2026-08-13",
       "scoring_ready": false,
       "source_artifact_id": "deepswe-v1.1-2026-08-13"
     },
@@ -128,7 +128,7 @@
         "signal policy is diagnostic-only"
       ],
       "model_id": "glm-5.2-max",
-      "record_id": "deepswe-resource-summary-glm-5.2-max-2026-08-13",
+      "record_id": "deepswe-endpoint-resources-glm-5.2-max-2026-08-13",
       "scoring_ready": false,
       "source_artifact_id": "deepswe-v1.1-2026-08-13"
     },
@@ -138,7 +138,7 @@
         "signal policy is diagnostic-only"
       ],
       "model_id": "gpt-5.6-sol-max",
-      "record_id": "deepswe-resource-summary-gpt-5.6-sol-max-2026-08-13",
+      "record_id": "deepswe-endpoint-resources-gpt-5.6-sol-max-2026-08-13",
       "scoring_ready": false,
       "source_artifact_id": "deepswe-v1.1-2026-08-13"
     },
@@ -148,8 +148,48 @@
         "signal policy is diagnostic-only"
       ],
       "model_id": "kimi-k3-max",
-      "record_id": "deepswe-resource-summary-kimi-k3-max-2026-08-13",
+      "record_id": "deepswe-endpoint-resources-kimi-k3-max-2026-08-13",
       "scoring_ready": false,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "claude-fable-5-max",
+      "record_id": "deepswe-harness-resources-claude-fable-5-max-2026-08-13",
+      "scoring_ready": true,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "claude-opus-5-max",
+      "record_id": "deepswe-harness-resources-claude-opus-5-max-2026-08-13",
+      "scoring_ready": true,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "glm-5.2-max",
+      "record_id": "deepswe-harness-resources-glm-5.2-max-2026-08-13",
+      "scoring_ready": true,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "deepswe-harness-resources-gpt-5.6-sol-max-2026-08-13",
+      "scoring_ready": true,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "kimi-k3-max",
+      "record_id": "deepswe-harness-resources-kimi-k3-max-2026-08-13",
+      "scoring_ready": true,
       "source_artifact_id": "deepswe-v1.1-2026-08-13"
     },
     {

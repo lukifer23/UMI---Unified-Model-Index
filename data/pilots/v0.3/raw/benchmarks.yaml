@@ -384,7 +384,7 @@ measurements:
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: true
+  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -405,20 +405,33 @@ measurements:
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1
   model_id: claude-opus-5-max
-  value: 74.0
+  value: 73.64864864864865
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   evaluation_settings:
     agent: mini-swe-agent
-    task_count: 113
+    source_config_id: mini_swe_agent_claude_opus_5_max
+    run_count: 4
+    pass_at_4: 0.8849557522123894
+    passed_attempts: 327
+    attempted_tasks: 444
+    ci_method: '95% run-to-run: SE across repeated whole-benchmark passes (1.96 *
+      std(runs)/sqrt(R))'
+    leaderboard_generated_at: '2026-08-13T16:11:55.708636Z'
   number_of_tasks: 113
+  number_of_trials: 444
+  sample_count: 444
+  pass_at_k: 1
   uncertainty:
-    kind: published_margin
-    margin: 4.0
+    kind: confidence_interval
+    lower: 69.77633822227692
+    upper: 77.52095907502039
+    confidence_level: 0.95
     source_fields:
-    - confidence_interval_percent
-    notes: Published plus-or-minus margin; the frozen reviewed fact does not state
-      a confidence level or interval construction.
+    - ci_lower
+    - ci_upper
+    - ci_method
+    notes: '95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))'
 - record_id: deepswe-score-claude-fable-5-max-2026-08-13
   source:
     organization: Datacurve
@@ -431,7 +444,7 @@ measurements:
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: true
+  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -452,20 +465,33 @@ measurements:
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1
   model_id: claude-fable-5-max
-  value: 70.0
+  value: 69.72477064220183
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   evaluation_settings:
     agent: mini-swe-agent
-    task_count: 113
+    source_config_id: mini_swe_agent_claude_fable_5_max
+    run_count: 4
+    pass_at_4: 0.8407079646017699
+    passed_attempts: 304
+    attempted_tasks: 436
+    ci_method: '95% run-to-run: SE across repeated whole-benchmark passes (1.96 *
+      std(runs)/sqrt(R))'
+    leaderboard_generated_at: '2026-08-13T16:11:55.708636Z'
   number_of_tasks: 113
+  number_of_trials: 436
+  sample_count: 436
+  pass_at_k: 1
   uncertainty:
-    kind: published_margin
-    margin: 4.0
+    kind: confidence_interval
+    lower: 65.6912963913939
+    upper: 73.75824489300977
+    confidence_level: 0.95
     source_fields:
-    - confidence_interval_percent
-    notes: Published plus-or-minus margin; the frozen reviewed fact does not state
-      a confidence level or interval construction.
+    - ci_lower
+    - ci_upper
+    - ci_method
+    notes: '95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))'
 - record_id: deepswe-score-gpt-5.6-sol-max-2026-08-13
   source:
     organization: Datacurve
@@ -478,7 +504,7 @@ measurements:
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: true
+  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -499,20 +525,33 @@ measurements:
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1
   model_id: gpt-5.6-sol-max
-  value: 73.0
+  value: 72.66666666666667
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   evaluation_settings:
     agent: mini-swe-agent
-    task_count: 113
+    source_config_id: mini_swe_agent_gpt_5_6_sol_max
+    run_count: 4
+    pass_at_4: 0.8584070796460177
+    passed_attempts: 327
+    attempted_tasks: 450
+    ci_method: '95% run-to-run: SE across repeated whole-benchmark passes (1.96 *
+      std(runs)/sqrt(R))'
+    leaderboard_generated_at: '2026-08-13T16:11:55.708636Z'
   number_of_tasks: 113
+  number_of_trials: 450
+  sample_count: 450
+  pass_at_k: 1
   uncertainty:
-    kind: published_margin
-    margin: 3.0
+    kind: confidence_interval
+    lower: 69.83684441682949
+    upper: 75.49648891650385
+    confidence_level: 0.95
     source_fields:
-    - confidence_interval_percent
-    notes: Published plus-or-minus margin; the frozen reviewed fact does not state
-      a confidence level or interval construction.
+    - ci_lower
+    - ci_upper
+    - ci_method
+    notes: '95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))'
 - record_id: deepswe-score-kimi-k3-max-2026-08-13
   source:
     organization: Datacurve
@@ -525,7 +564,7 @@ measurements:
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: true
+  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -546,20 +585,33 @@ measurements:
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1
   model_id: kimi-k3-max
-  value: 69.0
+  value: 68.51441241685144
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   evaluation_settings:
     agent: mini-swe-agent
-    task_count: 113
+    source_config_id: mini_swe_agent_kimi_k3_max
+    run_count: 4
+    pass_at_4: 0.8938053097345132
+    passed_attempts: 309
+    attempted_tasks: 451
+    ci_method: '95% run-to-run: SE across repeated whole-benchmark passes (1.96 *
+      std(runs)/sqrt(R))'
+    leaderboard_generated_at: '2026-08-13T16:11:55.708636Z'
   number_of_tasks: 113
+  number_of_trials: 451
+  sample_count: 451
+  pass_at_k: 1
   uncertainty:
-    kind: published_margin
-    margin: 5.0
+    kind: confidence_interval
+    lower: 63.97739833756913
+    upper: 73.05142649613376
+    confidence_level: 0.95
     source_fields:
-    - confidence_interval_percent
-    notes: Published plus-or-minus margin; the frozen reviewed fact does not state
-      a confidence level or interval construction.
+    - ci_lower
+    - ci_upper
+    - ci_method
+    notes: '95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))'
 - record_id: deepswe-score-glm-5.2-max-2026-08-13
   source:
     organization: Datacurve
@@ -572,7 +624,7 @@ measurements:
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: true
+  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -593,17 +645,30 @@ measurements:
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1
   model_id: glm-5.2-max
-  value: 44.0
+  value: 43.77777777777778
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   evaluation_settings:
     agent: mini-swe-agent
-    task_count: 113
+    source_config_id: mini_swe_agent_glm_5_2_max
+    run_count: 4
+    pass_at_4: 0.7699115044247787
+    passed_attempts: 197
+    attempted_tasks: 450
+    ci_method: '95% run-to-run: SE across repeated whole-benchmark passes (1.96 *
+      std(runs)/sqrt(R))'
+    leaderboard_generated_at: '2026-08-13T16:11:55.708636Z'
   number_of_tasks: 113
+  number_of_trials: 450
+  sample_count: 450
+  pass_at_k: 1
   uncertainty:
-    kind: published_margin
-    margin: 2.0
+    kind: confidence_interval
+    lower: 42.05214815719697
+    upper: 45.50340739835859
+    confidence_level: 0.95
     source_fields:
-    - confidence_interval_percent
-    notes: Published plus-or-minus margin; the frozen reviewed fact does not state
-      a confidence level or interval construction.
+    - ci_lower
+    - ci_upper
+    - ci_method
+    notes: '95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))'

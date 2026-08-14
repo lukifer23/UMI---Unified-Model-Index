@@ -22,8 +22,10 @@ UMI separates parseability from scoring readiness. `umi validate` reports `schem
 - non-`unspecified` compatibility cohort key;
 - structured configuration verification;
 - retained inspectable artifact plus `source_artifact_id` and an accurate `capture_type`;
-- verified deployment identity for Efficiency/Economics, including serving provider, endpoint, and
-  service tier when those fields define the scored deployment;
+- verified deployment identity for all Economics and endpoint-sensitive Efficiency fields (cached
+  tokens, wall time, or dollar cost), including serving provider, endpoint, and service tier when
+  those fields define the scored deployment; exact harness-level input/output/reasoning tokens,
+  turns, agent steps, and tool calls may score provisionally under the remaining identity gates;
 - benchmark/workload identity, direction, unit, and category supplied by typed/configured fields;
 - no conflicting second ready cohort for the same benchmark representation or workload identity.
 

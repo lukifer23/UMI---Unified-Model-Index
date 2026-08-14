@@ -1,9 +1,10 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.1 adds a real,
-five-configuration, multi-source evidence pilot. It does **not** publish a headline UMI score:
-the evidence supports provisional partial Capability estimates only.
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.2 extends the real,
+five-configuration, multi-source pilot with exact DeepSWE pass counts, confidence intervals, and
+harness-resource means. It does **not** publish a headline UMI score: the evidence supports only
+provisional, model-specific partial Capability and Efficiency estimates.
 
 The pilot cohort is Claude Opus 5 Max, Claude Fable 5 Max, GPT-5.6 Sol Max, Kimi K3 Max, and
 GLM-5.2 Max. Its frozen sources are Artificial Analysis public facts, Epoch ECI, LM Arena Agent and
@@ -105,21 +106,22 @@ The default Overall formula remains:
 0.55 × Capability + 0.25 × Efficiency + 0.20 × Economics
 ```
 
-Capability retains the five domain weights and v0.3 fixes within-domain benchmark-family budgets.
+Capability retains the five domain weights and fixed within-domain benchmark-family budgets.
 DeepSWE pass rate contributes to software engineering and Epoch's frozen GPQA Diamond runs
 contribute to math/science. The pilot identities are exact named releases and efforts, not claimed
 immutable provider snapshots. Arena Agent rows retain exact source labels, effort, construct, and
-source-declared intervals, but remain diagnostic preference evidence. AA composites, ECI rows, Arena text ratings, and
-DeepSWE resource summaries are diagnostic only.
-
-DeepSWE's published “Avg cost”, output tokens, and steps are not treated as arithmetic means because
-the captured source does not establish that statistic. They therefore cannot be divided by success
-rate or enter Efficiency/Economics. This prevents a convenient but unsupported headline.
+source-declared intervals, but remain diagnostic preference evidence. AA composites, ECI rows, and
+Arena text ratings are also diagnostic. DeepSWE's embedded official leaderboard payload supplies
+arithmetic-mean input/output tokens and agent steps for the same four-run task cohort. Those harness
+resources enter provisional Efficiency after per-record success adjustment. Wall duration and
+observed dollar cost remain diagnostic until deployment identity is verified. The fixed workload
+hierarchy gives this evidence 4.5% absolute Efficiency coverage; it cannot represent coding as a
+whole or unlock Economics.
 
 ## Current limitations
 
 - Only two Capability domains have scored evidence; three are required for headline eligibility.
-- Efficiency and Economics evidence is coding-only and, in this capture, not mean-qualified.
+- Efficiency has only 4.5% absolute coverage; Economics has no ready evidence.
 - Fable 5 Max predates the unchanged 2026-06-15 release-window start.
 - Scores are cohort-relative; no fixed anchor cohort or formal uncertainty propagation exists.
 - Family budgets are documented pilot hypotheses, not empirical decorrelation weights.
@@ -133,6 +135,6 @@ See [PILOT_REPORT.md](PILOT_REPORT.md), [SOURCE_READINESS.md](SOURCE_READINESS.m
 
 Freeze exact, task-level public facts for HLE, GPQA Diamond/CritPt, and one context/reliability family
 for the same five configurations, including evaluation dates, harness versions, task counts, and
-configuration evidence. In parallel, obtain an explicitly arithmetic-mean, attempt-level resource
-export covering at least three configured workload categories. Do not broaden the cohort or relax a
+configuration evidence. In parallel, obtain exact task telemetry for the missing coding families
+and at least two additional configured workload categories. Do not broaden the cohort or relax a
 gate to manufacture a headline.

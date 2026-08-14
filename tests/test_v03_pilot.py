@@ -145,7 +145,21 @@ def test_real_pilot_requires_a_valid_governance_bundle(
         )
     )
 
-    efficiency = next(item for item in pilot_dataset.efficiency if item.model_id == scored.model_id)
+    harness_efficiency = next(
+        item
+        for item in pilot_dataset.efficiency
+        if item.model_id == scored.model_id and item.signal_id == "deepswe-v1.1-resources"
+    )
+    assert readiness_failures(
+        harness_efficiency,
+        next(item for item in pilot_dataset.models if item.id == scored.model_id),
+    ) == ()
+    efficiency = next(
+        item
+        for item in pilot_dataset.efficiency
+        if item.model_id == scored.model_id
+        and item.signal_id == "deepswe-v1.1-endpoint-resources"
+    )
     assert "deployment identity is not verified for endpoint-sensitive evidence" in (
         readiness_failures(
             efficiency.model_copy(
@@ -235,14 +249,34 @@ def test_adapters_are_offline_deterministic_and_role_safe(monkeypatch, crosswalk
     assert len(deep.benchmarks) == 5
     assert all(item.uncertainty is not None for item in deep.benchmarks)
     assert all(
-        item.uncertainty is not None and item.uncertainty.kind == UncertaintyKind.PUBLISHED_MARGIN
+        item.uncertainty is not None
+        and item.uncertainty.kind == UncertaintyKind.CONFIDENCE_INTERVAL
+        and item.uncertainty.confidence_level == 0.95
         for item in deep.benchmarks
     )
+    assert len(deep.efficiency) == 10
+    harness_records = [
+        item for item in deep.efficiency if item.signal_id == "deepswe-v1.1-resources"
+    ]
+    endpoint_records = [
+        item
+        for item in deep.efficiency
+        if item.signal_id == "deepswe-v1.1-endpoint-resources"
+    ]
+    assert len(harness_records) == len(endpoint_records) == 5
     assert all(
-        item.aggregation_statistic == AggregationStatistic.UNSPECIFIED for item in deep.efficiency
+        item.aggregation_statistic == AggregationStatistic.ARITHMETIC_MEAN
+        and item.scoring_disposition == ScoringDisposition.SCORED
+        and derive_efficiency_metric(item, "effective_input_tokens") is not None
+        and derive_efficiency_metric(item, "effective_output_tokens") is not None
+        and derive_efficiency_metric(item, "effective_agent_steps") is not None
+        for item in harness_records
     )
     assert all(
-        derive_efficiency_metric(item, "effective_tokens") is None for item in deep.efficiency
+        item.record_status == RecordStatus.DIAGNOSTIC_ONLY
+        and item.mean_wall_seconds is not None
+        and item.mean_cost_per_attempt is not None
+        for item in endpoint_records
     )
 
 
@@ -366,9 +400,9 @@ def test_gap_report_counts_every_configured_model_benchmark_cell(
 
 def test_reviewed_adapter_rejects_schema_drift(monkeypatch, crosswalk) -> None:
     raw = yaml.safe_load((SOURCES / "deepswe-reviewed-facts-2026-08-13.yaml").read_text())
-    del raw["rows"][0]["pass_rate_percent"]
+    del raw["rows"][0]["pass_rate"]
     monkeypatch.setattr("umi.adapters.reviewed.load_yaml", lambda path: raw)
-    with pytest.raises(KeyError, match="pass_rate_percent"):
+    with pytest.raises(KeyError, match="pass_rate"):
         adapt_deepswe_facts("offline-malformed-artifact.yaml", crosswalk)
 
 
@@ -390,7 +424,7 @@ def test_overlap_cycles_and_unrestricted_double_count_are_rejected(pilot_config)
             "signals": (
                 SignalPolicy(
                     id="aggregate",
-                    role=SignalRole.COMPOSITE,
+                        role=SignalRole.TASK,
                     disposition=ScoringDisposition.SCORED,
                     budget_group="aggregate-budget",
                 ),
@@ -467,11 +501,21 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
         "gpt-5.6-sol-max": 0.2625,
         "kimi-k3-max": 0.2625,
     }
-    assert all(
-        item.efficiency.score is None and item.economics.score is None for item in results.values()
+    assert {
+        item.model_id: item.efficiency.score for item in results.values()
+    } == pytest.approx(
+        {
+            "claude-fable-5-max": 50.0,
+            "claude-opus-5-max": 41.66666666666667,
+            "glm-5.2-max": 0.0,
+            "gpt-5.6-sol-max": 100.0,
+            "kimi-k3-max": 58.333333333333336,
+        }
     )
+    assert all(item.efficiency.coverage == pytest.approx(0.045) for item in results.values())
+    assert all(item.economics.score is None for item in results.values())
     assert all(
-        item.efficiency.comparability_status == "insufficient_common_support"
+        item.efficiency.comparability_status == "directly_comparable"
         and item.economics.comparability_status == "insufficient_common_support"
         for item in results.values()
     )

@@ -60,6 +60,8 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
     models = {model.id: model for model in dataset.models}
     benchmark_ids = {benchmark.id for benchmark in config.benchmarks}
     family_ids = {family.id for family in config.families}
+    workload_definitions = {item.id: item for item in config.workloads}
+    workload_families = {item.id: item for item in config.workload_families}
 
     for model_id in sorted(_duplicates([model.id for model in dataset.models])):
         errors.append(f"duplicate model id: {model_id}")
@@ -96,6 +98,20 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
         for failure in readiness_failures(item, model):
             if failure != "record is diagnostic-only":
                 readiness.append(f"record {item.record_id}: {failure}")
+        if isinstance(item, (EfficiencyMeasurement, TaskEconomicsMeasurement)):
+            workload = workload_definitions.get(item.workload)
+            if workload is None:
+                message = f"record {item.record_id} has unconfigured workload: {item.workload}"
+                if is_scoring_ready(item, model):
+                    errors.append(message)
+                else:
+                    warnings.append(message)
+            else:
+                family = workload_families[workload.family]
+                if family.category != item.workload_category:
+                    errors.append(
+                        f"record {item.record_id} workload category differs from configured family"
+                    )
     for item in dataset.benchmarks:
         if item.benchmark_id not in benchmark_ids:
             errors.append(f"benchmark {item.record_id} has unknown benchmark: {item.benchmark_id}")
@@ -146,9 +162,13 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
         if families and sum(item.cap for item in families) < 1.0 - 1e-9:
             errors.append(f"family caps for {domain.value} must sum to at least 1")
     for definition in config.benchmarks:
-        family = next((item for item in config.families if item.id == definition.family), None)
-        if family and family.domain != definition.domain:
-            errors.append(f"benchmark {definition.id} domain does not match family {family.id}")
+        capability_family = next(
+            (item for item in config.families if item.id == definition.family), None
+        )
+        if capability_family and capability_family.domain != definition.domain:
+            errors.append(
+                f"benchmark {definition.id} domain does not match family {capability_family.id}"
+            )
 
     for definition in config.benchmarks:
         for related in (*definition.parent_aggregates, *definition.constituents):
@@ -192,10 +212,10 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
         if candidate_model and is_scoring_ready(item, candidate_model):
             key = (item.workload_category.value, item.workload)
             ready_workload_cohorts.setdefault(key, set()).add(item.cohort_key)
-    for (category, workload), cohorts in sorted(ready_workload_cohorts.items()):
+    for (category, workload_id), cohorts in sorted(ready_workload_cohorts.items()):
         if len(cohorts) > 1:
             errors.append(
-                f"workload {category}/{workload} has multiple scoring cohorts without a merge "
+                f"workload {category}/{workload_id} has multiple scoring cohorts without a merge "
                 f"policy: {', '.join(sorted(cohorts))}"
             )
 

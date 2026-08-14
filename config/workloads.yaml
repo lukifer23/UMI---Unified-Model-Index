@@ -1,0 +1,8 @@
+families:
+  - {id: software-repository-agents, category: coding_agents, weight: 0.40}
+  - {id: terminal-environment-agents, category: coding_agents, weight: 0.30}
+  - {id: code-repair-agents, category: coding_agents, weight: 0.30}
+workloads:
+  - {id: deepswe-v1.1, family: software-repository-agents, weight: 1.0}
+  - {id: terminalbench-2.1, family: terminal-environment-agents, weight: 1.0}
+  - {id: cursorbench, family: code-repair-agents, weight: 1.0}

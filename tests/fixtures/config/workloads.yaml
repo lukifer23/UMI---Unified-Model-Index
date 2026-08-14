@@ -1,0 +1,14 @@
+families:
+  - {id: synthetic-coding-family, category: coding_agents, weight: 1.0}
+  - {id: synthetic-research-family, category: research_analysis, weight: 1.0}
+  - {id: synthetic-tool-family, category: tool_use_agents, weight: 1.0}
+  - {id: synthetic-browser-family, category: browser_computer_use, weight: 1.0}
+  - {id: synthetic-general-family, category: general_interaction, weight: 1.0}
+  - {id: synthetic-long-family, category: long_horizon, weight: 1.0}
+workloads:
+  - {id: synthetic-coding, family: synthetic-coding-family, weight: 1.0}
+  - {id: synthetic-research, family: synthetic-research-family, weight: 1.0}
+  - {id: synthetic-agent-task, family: synthetic-tool-family, weight: 1.0}
+  - {id: synthetic-browser, family: synthetic-browser-family, weight: 1.0}
+  - {id: synthetic-general-interaction, family: synthetic-general-family, weight: 1.0}
+  - {id: synthetic-long-horizon, family: synthetic-long-family, weight: 1.0}

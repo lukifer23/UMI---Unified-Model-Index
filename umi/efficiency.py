@@ -9,6 +9,7 @@ from umi.evidence_profiles import workload_profile
 from umi.loading import Dataset
 from umi.normalize import normalize_cohort
 from umi.schemas import ComponentScore, Direction, EfficiencyMeasurement, Provenance
+from umi.workloads import aggregate_workloads
 
 
 def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComputation:
@@ -16,24 +17,27 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
     for item in dataset.efficiency:
         grouped[(item.workload, item.cohort_key, item.model_id)].append(item)
 
-    scores: dict[str, dict[str, dict[str, list[float]]]] = {
+    normalized_scores: dict[str, dict[str, dict[str, list[float]]]] = {
         metric: defaultdict(lambda: defaultdict(list)) for metric in EFFICIENCY_ATTRIBUTES
     }
     selected_by_model: dict[str, list[Provenance]] = defaultdict(list)
     provisional_by_model: dict[str, set[str]] = defaultdict(set)
     diagnostics: dict[str, list[str]] = defaultdict(list)
     profile_series: dict[str, set[str]] = defaultdict(set)
-    series = sorted({(workload, cohort) for workload, cohort, _ in grouped})
+    workload_definitions = {item.id: item for item in config.workloads}
+    workload_families = {item.id: item for item in config.workload_families}
 
-    for workload, cohort_key in series:
+    for workload, cohort_key in sorted({(workload, cohort) for workload, cohort, _ in grouped}):
+        definition = workload_definitions.get(workload)
+        if definition is None:
+            continue
+        family = workload_families[definition.family]
         raw_by_metric: dict[str, dict[str, float]] = {
             metric: {} for metric in EFFICIENCY_ATTRIBUTES
         }
-        categories: dict[str, str] = {}
         for (candidate_workload, candidate_cohort, model_id), records in grouped.items():
             if (candidate_workload, candidate_cohort) != (workload, cohort_key):
                 continue
-            categories[model_id] = records[0].workload_category.value
             for metric in EFFICIENCY_ATTRIBUTES:
                 value, selected, conflict = consolidate_derived(records, metric)
                 if value is not None:
@@ -53,37 +57,54 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                 minimum_rank_cohort=config.normalization.minimum_rank_cohort,
             )
             for model_id, score in normalized.scores.items():
-                if score is not None:
-                    category = categories[model_id]
-                    scores[metric][category][model_id].append(score)
-                    profile_series[model_id].add(f"{category}/{workload}/{cohort_key}/{metric}")
-                    if normalized.provisional:
-                        provisional_by_model[model_id].add(
-                            f"{workload}/{cohort_key}/{metric}"
-                        )
+                if score is None:
+                    continue
+                normalized_scores[metric][workload][model_id].append(score)
+                profile_series[model_id].add(
+                    f"{family.category.value}/{family.id}/{workload}/{cohort_key}/{metric}"
+                )
+                if normalized.provisional:
+                    provisional_by_model[model_id].add(f"{workload}/{cohort_key}/{metric}")
 
     output: dict[str, ComponentScore] = {}
     for model in dataset.models:
         category_values: dict[str, float | None] = {}
-        category_metric_coverage: dict[str, float] = {}
+        category_coverages: dict[str, float] = {}
+        family_coverages: dict[str, float] = {}
+        workload_metric_cells = 0
+        metric_aggregations = {
+            metric: aggregate_workloads(model.id, normalized_scores[metric], config)
+            for metric in config.weights.efficiency
+        }
         for category in config.weights.workload_weights:
-            metric_values: dict[str, float | None] = {}
-            for metric in EFFICIENCY_ATTRIBUTES:
-                values = scores[metric].get(category.value, {}).get(model.id, [])
-                metric_values[metric] = sum(values) / len(values) if values else None
-            category_values[category.value], metric_coverage = weighted_available(
+            metric_values = {
+                metric: aggregation.category_scores[category.value]
+                for metric, aggregation in metric_aggregations.items()
+            }
+            category_values[category.value], _ = weighted_available(
                 metric_values, config.weights.efficiency
             )
-            category_metric_coverage[category.value] = metric_coverage
+            category_coverages[category.value] = sum(
+                config.weights.efficiency[metric]
+                * metric_aggregations[metric].category_coverage[category.value]
+                for metric in metric_aggregations
+            )
+        for aggregation in metric_aggregations.values():
+            workload_metric_cells += aggregation.present_cells
+            for family_id, coverage_value in aggregation.family_coverage.items():
+                family_coverages[family_id] = max(
+                    family_coverages.get(family_id, 0.0), coverage_value
+                )
+
         score, _ = weighted_available(
             category_values,
             {key.value: value for key, value in config.weights.workload_weights.items()},
         )
         coverage = sum(
-            weight * category_metric_coverage[category.value]
+            weight * category_coverages[category.value]
             for category, weight in config.weights.workload_weights.items()
         )
-        represented = sum(value > 0 for value in category_metric_coverage.values())
+        represented = sum(value > 0 for value in category_coverages.values())
         provisional_ids = provisional_by_model[model.id]
         if provisional_ids:
             diagnostics[model.id].append(
@@ -101,9 +122,14 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                 "efficiency_workloads_total": len(config.weights.workload_weights),
                 "efficiency_workload_weighted": coverage,
                 "efficiency_metric_weighted": coverage,
+                "efficiency_workload_metric_cells_represented": workload_metric_cells,
                 **{
                     f"efficiency_metric_coverage_{category}": value
-                    for category, value in category_metric_coverage.items()
+                    for category, value in category_coverages.items()
+                },
+                **{
+                    f"efficiency_workload_coverage_{family}": value
+                    for family, value in family_coverages.items()
                 },
             },
             evidence_profile=workload_profile(
@@ -131,20 +157,16 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                 "comparability_status": (
                     "directly_comparable"
                     if peers
-                    else (
-                        "different_evidence_profile"
-                        if has_support
-                        else "insufficient_common_support"
-                    )
+                    else "different_evidence_profile"
+                    if has_support
+                    else "insufficient_common_support"
                 ),
                 "comparability_reasons": (
                     ("same efficiency workload support and configuration",)
                     if peers
-                    else (
-                        ("no other model has the same efficiency evidence profile",)
-                        if has_support
-                        else ("no ready efficiency workload support",)
-                    )
+                    else ("no other model has the same efficiency evidence profile",)
+                    if has_support
+                    else ("no ready efficiency workload support",)
                 ),
             }
         )

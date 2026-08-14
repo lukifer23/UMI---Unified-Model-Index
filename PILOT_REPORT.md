@@ -2,20 +2,20 @@
 
 ## Publication decision
 
-**Real evidence — model-specific partial estimates. No headline UMI score or model-specific rank.**
+**Real evidence — model-specific partial estimates. No headline UMI score or universal rank.**
 
 The five configurations remain visible, but none passes the inherited v0.2.1 coverage, component,
 workload, and Capability-domain gates. This is the expected outcome, not a failed run.
 
 ## Accepted scored evidence
 
-| Configuration | DeepSWE v1.1 | GPQA Diamond | Model-specific partial Capability | Headline |
-|---|---:|---:|---:|---:|
-| Claude Opus 5 Max | 74% ± 4 | 93.88% (SE 1.48) | 100.00 | null |
-| Claude Fable 5 Max | 70% ± 4 | rejected: fallback absence unverified | 50.00 (DeepSWE only) | null |
-| GPT-5.6 Sol Max | 73% ± 3 | 93.50% (SE 1.57) | 71.90 | null |
-| Kimi K3 Max | 69% ± 5 | 93.12% (SE 1.49) | 28.10 | null |
-| GLM-5.2 Max | 44% ± 2 | 91.86% (SE 1.61) | 0.00 | null |
+| Configuration | DeepSWE v1.1 (95% CI) | GPQA Diamond | Partial Capability | Partial Efficiency | Headline |
+|---|---:|---:|---:|---:|---:|
+| Claude Opus 5 Max | 73.65% (69.78–77.52) | 93.88% (SE 1.48) | 100.00 | 41.67 | null |
+| Claude Fable 5 Max | 69.72% (65.69–73.76) | rejected: fallback absence unverified | 50.00 | 50.00 | null |
+| GPT-5.6 Sol Max | 72.67% (69.84–75.50) | 93.50% (SE 1.57) | 71.90 | 100.00 | null |
+| Kimi K3 Max | 68.51% (63.98–73.05) | 93.12% (SE 1.49) | 28.10 | 58.33 | null |
+| GLM-5.2 Max | 43.78% (42.05–45.50) | 91.86% (SE 1.61) | 0.00 | 0.00 | null |
 
 Partial Capability is cohort-relative. Four models cover the fixed DeepSWE and GPQA budgets—26.25%
 of Capability across two domains—while Fable covers only DeepSWE at 16.5%. Those model-specific
@@ -33,8 +33,9 @@ release-window-ineligible because its 2026-06-09 release predates the 2026-06-15
 - Arena Agent and text/style-control ratings are diagnostic preference evidence. The Agent artifact
   has exact labels and efforts but no immutable snapshot/deployment identity; missing or non-Max
   effort labels are rejected.
-- DeepSWE cost, token, and step summaries are retained but cannot enter mean-based success adjustment;
-  the captured source does not establish arithmetic-mean semantics.
+- DeepSWE arithmetic-mean input/output tokens and agent steps enter provisional Efficiency after
+  per-record success adjustment. Wall duration and dollar cost remain diagnostic because exact
+  deployment identity is not verified.
 - Official token tariffs are now retained for all five configurations, including cached-input rates
   and published cache-write, long-context, and tool-fee terms. They cannot establish cost per task
   until compatible task-level token, tool, and success observations exist.
@@ -44,8 +45,8 @@ release-window-ineligible because its 2026-06-09 release predates the 2026-06-15
 ## Why no headline exists
 
 - scored Capability covers software engineering and math/science, below the three-domain gate;
-- Efficiency coverage is below 0.50 and Economics coverage is below 0.40;
-- all potentially useful resource evidence is confined to coding and is statistic-ambiguous;
+- Efficiency coverage is 0.045, below 0.50, and Economics coverage is zero, below 0.40;
+- ready resources cover only DeepSWE in one of three configured coding families and three of eight metrics;
 - missing workload evidence is not reweighted to make the cohort eligible.
 
 The generated [model-specific partial estimates](data/pilots/v0.3/processed/model-specific-partial-estimates.json)

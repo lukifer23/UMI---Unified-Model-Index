@@ -4,7 +4,7 @@ capability_domains:
   agentic_work: 0.20
   math_science: 0.15
   context_reliability: 0.10
-efficiency: {effective_tokens: 0.50, effective_turns: 0.20, effective_wall_time: 0.20, effective_tool_calls: 0.10}
+efficiency: {effective_input_tokens: 0.25, effective_output_tokens: 0.25, effective_turns: 0.20, effective_wall_time: 0.20, effective_tool_calls: 0.10}
 workload_weights:
   coding_agents: 0.25
   research_analysis: 0.20

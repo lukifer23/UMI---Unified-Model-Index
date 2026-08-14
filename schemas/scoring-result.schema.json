@@ -358,6 +358,23 @@
           "title": "Source Organizations",
           "type": "array"
         },
+        "workload_category_ids": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/WorkloadCategory"
+          },
+          "title": "Workload Category Ids",
+          "type": "array"
+        },
+        "workload_family_ids": {
+          "default": [],
+          "items": {
+            "pattern": "^[a-z0-9][a-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Workload Family Ids",
+          "type": "array"
+        },
         "workload_series": {
           "default": [],
           "items": {
@@ -383,6 +400,18 @@
         "harmonic_mean_v1"
       ],
       "title": "ValueFormula",
+      "type": "string"
+    },
+    "WorkloadCategory": {
+      "enum": [
+        "coding_agents",
+        "research_analysis",
+        "tool_use_agents",
+        "browser_computer_use",
+        "general_interaction",
+        "long_horizon"
+      ],
+      "title": "WorkloadCategory",
       "type": "string"
     }
   },

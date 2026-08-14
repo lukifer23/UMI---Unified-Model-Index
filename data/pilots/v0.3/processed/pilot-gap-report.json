@@ -568,9 +568,9 @@
   ],
   "headline_blockers": [
     "Capability lacks ready evidence in at least 3 configured domains for every model.",
-    "No workload category has ready all-model Efficiency evidence.",
-    "No workload category has ready all-model successful-task Economics evidence.",
-    "Token tariffs cannot be converted to task cost without compatible per-attempt resource usage.",
+    "Minimum pilot Efficiency coverage is 0.045, below the 0.500 component gate.",
+    "Minimum pilot Economics coverage is 0.000, below the 0.400 component gate.",
+    "Token tariffs are not joined to task telemetry until deployment identity, billing revision, cache behavior, and tool charges are aligned.",
     "Release-window-ineligible configurations: claude-fable-5-max"
   ],
   "label": "real evidence gap audit; not a ranking",
@@ -603,9 +603,11 @@
       "configured_weight": 0.25,
       "economics_ready_record_ids": [],
       "efficiency_diagnostic_record_ids": [
-        "deepswe-resource-summary-claude-fable-5-max-2026-08-13"
+        "deepswe-endpoint-resources-claude-fable-5-max-2026-08-13"
       ],
-      "efficiency_ready_record_ids": [],
+      "efficiency_ready_record_ids": [
+        "deepswe-harness-resources-claude-fable-5-max-2026-08-13"
+      ],
       "model_id": "claude-fable-5-max",
       "workload_category": "coding_agents"
     },
@@ -613,9 +615,11 @@
       "configured_weight": 0.25,
       "economics_ready_record_ids": [],
       "efficiency_diagnostic_record_ids": [
-        "deepswe-resource-summary-claude-opus-5-max-2026-08-13"
+        "deepswe-endpoint-resources-claude-opus-5-max-2026-08-13"
       ],
-      "efficiency_ready_record_ids": [],
+      "efficiency_ready_record_ids": [
+        "deepswe-harness-resources-claude-opus-5-max-2026-08-13"
+      ],
       "model_id": "claude-opus-5-max",
       "workload_category": "coding_agents"
     },
@@ -623,9 +627,11 @@
       "configured_weight": 0.25,
       "economics_ready_record_ids": [],
       "efficiency_diagnostic_record_ids": [
-        "deepswe-resource-summary-glm-5.2-max-2026-08-13"
+        "deepswe-endpoint-resources-glm-5.2-max-2026-08-13"
       ],
-      "efficiency_ready_record_ids": [],
+      "efficiency_ready_record_ids": [
+        "deepswe-harness-resources-glm-5.2-max-2026-08-13"
+      ],
       "model_id": "glm-5.2-max",
       "workload_category": "coding_agents"
     },
@@ -633,9 +639,11 @@
       "configured_weight": 0.25,
       "economics_ready_record_ids": [],
       "efficiency_diagnostic_record_ids": [
-        "deepswe-resource-summary-gpt-5.6-sol-max-2026-08-13"
+        "deepswe-endpoint-resources-gpt-5.6-sol-max-2026-08-13"
       ],
-      "efficiency_ready_record_ids": [],
+      "efficiency_ready_record_ids": [
+        "deepswe-harness-resources-gpt-5.6-sol-max-2026-08-13"
+      ],
       "model_id": "gpt-5.6-sol-max",
       "workload_category": "coding_agents"
     },
@@ -643,9 +651,11 @@
       "configured_weight": 0.25,
       "economics_ready_record_ids": [],
       "efficiency_diagnostic_record_ids": [
-        "deepswe-resource-summary-kimi-k3-max-2026-08-13"
+        "deepswe-endpoint-resources-kimi-k3-max-2026-08-13"
       ],
-      "efficiency_ready_record_ids": [],
+      "efficiency_ready_record_ids": [
+        "deepswe-harness-resources-kimi-k3-max-2026-08-13"
+      ],
       "model_id": "kimi-k3-max",
       "workload_category": "coding_agents"
     },

@@ -8,10 +8,10 @@ import pytest
 
 from analysis.references import reference_observations
 from umi.cli import build_parser, run
-from umi.config import load_project_config
+from umi.config import WorkloadDefinition, WorkloadFamilyDefinition, load_project_config
 from umi.economics import score_economics
 from umi.loading import load_dataset, load_source_registry
-from umi.schemas import CostBasis
+from umi.schemas import CostBasis, WorkloadCategory
 from umi.scoring import score_dataset
 from umi.validation import validate_dataset, validate_source_registry
 
@@ -71,7 +71,25 @@ def test_successful_task_cost_can_score_but_attempted_cost_cannot() -> None:
             )
         }
     )
-    scored = score_economics(successful, config).components
+    governed_config = config.model_copy(
+        update={
+            "workload_families": (
+                *config.workload_families,
+                WorkloadFamilyDefinition(
+                    id="legacy-aa-index", category=WorkloadCategory.GENERAL, weight=1.0
+                ),
+            ),
+            "workloads": (
+                *config.workloads,
+                WorkloadDefinition(
+                    id="aa-intelligence-index-july-2026",
+                    family="legacy-aa-index",
+                    weight=1.0,
+                ),
+            ),
+        }
+    )
+    scored = score_economics(successful, governed_config).components
     assert all(item.score is not None for item in scored.values())
     assert scored["muse-spark-1.1-xhigh"].score > scored["claude-fable-5-max-fallback"].score
 

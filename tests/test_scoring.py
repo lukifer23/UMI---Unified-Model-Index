@@ -18,7 +18,7 @@ def test_synthetic_pipeline_is_eligible_traceable_and_cohort_relative(
         item.independent_or_community_evidence_share == 1 for item in results.values()
     )
     assert all(item.config_fingerprint == config.fingerprint for item in results.values())
-    assert all(item.formula_version == "umi-methodology-v0.3.1" for item in results.values())
+    assert all(item.formula_version == "umi-methodology-v0.3.2" for item in results.values())
     assert all(item.headline_overall == item.partial_overall_estimate for item in results.values())
     assert (
         results["synthetic-alpha"].capability.score > results["synthetic-epsilon"].capability.score

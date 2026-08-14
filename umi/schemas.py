@@ -349,6 +349,7 @@ class EfficiencyMeasurement(Provenance):
     mean_cached_tokens: NonNegative | None = None
     mean_total_tokens: NonNegative | None = None
     mean_turns: NonNegative | None = None
+    mean_agent_steps: NonNegative | None = None
     mean_wall_seconds: NonNegative | None = None
     mean_tool_calls: NonNegative | None = None
     mean_cost_per_attempt: NonNegative | None = None
@@ -378,6 +379,7 @@ class EfficiencyMeasurement(Provenance):
             self.mean_cached_tokens,
             self.mean_total_tokens,
             self.mean_turns,
+            self.mean_agent_steps,
             self.mean_wall_seconds,
             self.mean_tool_calls,
             self.mean_cost_per_attempt,
@@ -531,6 +533,8 @@ class EvidenceProfile(StrictModel):
     estimate_scope: str = Field(min_length=1)
     benchmark_series: tuple[EvidenceBenchmarkSeries, ...] = ()
     workload_series: tuple[str, ...] = ()
+    workload_category_ids: tuple[WorkloadCategory, ...] = ()
+    workload_family_ids: tuple[Identifier, ...] = ()
     domain_ids: tuple[Domain, ...] = ()
     family_ids: tuple[Identifier, ...] = ()
     source_organizations: tuple[str, ...] = ()

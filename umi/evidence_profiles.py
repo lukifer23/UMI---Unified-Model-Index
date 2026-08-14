@@ -5,7 +5,7 @@ import json
 from collections.abc import Iterable
 
 from umi.config import ProjectConfig
-from umi.schemas import EvidenceBenchmarkSeries, EvidenceProfile, Provenance
+from umi.schemas import EvidenceBenchmarkSeries, EvidenceProfile, Provenance, WorkloadCategory
 
 
 def _digest(value: object) -> str:
@@ -68,6 +68,12 @@ def workload_profile(
         id=methodology_fingerprint,
         estimate_scope=estimate_scope,
         workload_series=ordered_series,
+        workload_category_ids=tuple(
+            sorted({WorkloadCategory(item.split("/", 1)[0]) for item in ordered_series})
+        ),
+        workload_family_ids=tuple(
+            sorted({item.split("/", 2)[1] for item in ordered_series})
+        ),
         source_organizations=tuple(sorted({item.source.organization for item in ordered_records})),
         contributing_record_ids=tuple(item.record_id for item in ordered_records),
         methodology_fingerprint=methodology_fingerprint,

@@ -36,15 +36,17 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "c98954e07d938b212590e7750c33617ca05e44e0364ce9371884c200771508c4",
+        "evidence_record_fingerprint": "ad2af4211485e8255b86422a649935c6ae2ea30d75690a0dab2504cb367c96a5",
         "family_ids": [
           "deepswe-v1.1"
         ],
-        "id": "90057562f9576952ca44e66dd453c8dfe7c9153d754c5973d062f4909e61560e",
-        "methodology_fingerprint": "90057562f9576952ca44e66dd453c8dfe7c9153d754c5973d062f4909e61560e",
+        "id": "fa5290aa5d0f3a33a52470e6ccc2a35f3824fcd6f2e525c9b5bcc49b07215334",
+        "methodology_fingerprint": "fa5290aa5d0f3a33a52470e6ccc2a35f3824fcd6f2e525c9b5bcc49b07215334",
         "source_organizations": [
           "Datacurve"
         ],
+        "workload_category_ids": [],
+        "workload_family_ids": [],
         "workload_series": []
       },
       "provisional": true,
@@ -56,7 +58,7 @@
     "capability_domains": [
       "software_engineering"
     ],
-    "cohort_id": "1f2290b0877e05fc",
+    "cohort_id": "d847b36e2c172008",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -66,9 +68,9 @@
     ],
     "confidence": "low",
     "confidence_reasons": [
-      "9% hierarchical weighted coverage",
+      "10% hierarchical weighted coverage",
       "1/5 capability domains represented",
-      "0/6 efficiency workload classes",
+      "1/6 efficiency workload classes",
       "1 source organizations",
       "100% independent/community evidence",
       "confidence forced to Low: headline eligibility failed",
@@ -76,7 +78,7 @@
       "evidence depends on one source organization",
       "confidence forced to Low: insufficient capability breadth"
     ],
-    "config_fingerprint": "13018c0f05c07a96a49ca4443e6caf5f67163b76529f55cc6fd9473bbbbcded6",
+    "config_fingerprint": "72ae3a5fb95bb261cdd32afb5b6d75b8a018f5ba1047e838a7731c5c44b05235",
     "coverage": {
       "capability_absolute_weighted": 0.165,
       "capability_domains_represented": 1,
@@ -90,26 +92,27 @@
       "economics_workloads_total": 6,
       "efficiency_category_metric_coverage": {
         "browser_computer_use": 0.0,
-        "coding_agents": 0.0,
+        "coding_agents": 0.18,
         "general_interaction": 0.0,
         "long_horizon": 0.0,
         "research_analysis": 0.0,
         "tool_use_agents": 0.0
       },
-      "efficiency_metric_weighted": 0.0,
-      "efficiency_workload_weighted": 0.0,
-      "efficiency_workloads_represented": 0,
+      "efficiency_metric_weighted": 0.045,
+      "efficiency_workload_weighted": 0.045,
+      "efficiency_workloads_represented": 1,
       "efficiency_workloads_total": 6,
       "independent_or_community_evidence_share": 1.0,
-      "overall_weighted": 0.09075000000000001,
+      "overall_weighted": 0.10200000000000001,
       "source_organization_count": 1
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "026414ff10394753fe30bcf6c15dca287b903bf1db936e81ee8013d527c6fb36",
+    "dataset_fingerprint": "288b433a679248a28bcc57e0e53f2a5415381a5d10b08682a6b52cf60fb82e60",
     "diagnostics": [
       "model release date is outside the configured eligibility window",
       "not eligible for headline Overall ranking",
-      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
+      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13",
+      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
     ],
     "economics": {
       "comparability_reasons": [
@@ -118,6 +121,16 @@
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
+        "economics_category_coverage_browser_computer_use": 0.0,
+        "economics_category_coverage_coding_agents": 0.0,
+        "economics_category_coverage_general_interaction": 0.0,
+        "economics_category_coverage_long_horizon": 0.0,
+        "economics_category_coverage_research_analysis": 0.0,
+        "economics_category_coverage_tool_use_agents": 0.0,
+        "economics_workload_cells_represented": 0,
+        "economics_workload_coverage_code-repair-agents": 0.0,
+        "economics_workload_coverage_software-repository-agents": 0.0,
+        "economics_workload_coverage_terminal-environment-agents": 0.0,
         "economics_workload_weighted": 0.0,
         "economics_workloads_represented": 0,
         "economics_workloads_total": 6
@@ -131,9 +144,11 @@
         "estimate_scope": "economics",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "0dac7066b9a023cba44145c3d2ebc946985d3b9aebd5a1c8126b2aa1d163c16f",
-        "methodology_fingerprint": "0dac7066b9a023cba44145c3d2ebc946985d3b9aebd5a1c8126b2aa1d163c16f",
+        "id": "59163096246b510a8c803d83eba84160050d08eeec181d2459e4cd151d1e55b9",
+        "methodology_fingerprint": "59163096246b510a8c803d83eba84160050d08eeec181d2459e4cd151d1e55b9",
         "source_organizations": [],
+        "workload_category_ids": [],
+        "workload_family_ids": [],
         "workload_series": []
       },
       "provisional": false,
@@ -142,57 +157,85 @@
     },
     "efficiency": {
       "comparability_reasons": [
-        "no ready efficiency workload support"
+        "same efficiency workload support and configuration"
       ],
-      "comparability_status": "insufficient_common_support",
-      "coverage": 0.0,
+      "comparability_status": "directly_comparable",
+      "coverage": 0.045,
       "coverage_details": {
         "efficiency_metric_coverage_browser_computer_use": 0.0,
-        "efficiency_metric_coverage_coding_agents": 0.0,
+        "efficiency_metric_coverage_coding_agents": 0.18,
         "efficiency_metric_coverage_general_interaction": 0.0,
         "efficiency_metric_coverage_long_horizon": 0.0,
         "efficiency_metric_coverage_research_analysis": 0.0,
         "efficiency_metric_coverage_tool_use_agents": 0.0,
-        "efficiency_metric_weighted": 0.0,
-        "efficiency_workload_weighted": 0.0,
-        "efficiency_workloads_represented": 0,
+        "efficiency_metric_weighted": 0.045,
+        "efficiency_workload_coverage_code-repair-agents": 0.0,
+        "efficiency_workload_coverage_software-repository-agents": 1.0,
+        "efficiency_workload_coverage_terminal-environment-agents": 0.0,
+        "efficiency_workload_metric_cells_represented": 3,
+        "efficiency_workload_weighted": 0.045,
+        "efficiency_workloads_represented": 1,
         "efficiency_workloads_total": 6
       },
-      "diagnostics": [],
-      "directly_comparable_model_ids": [],
+      "diagnostics": [
+        "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
+      ],
+      "directly_comparable_model_ids": [
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max"
+      ],
       "evidence_profile": {
         "benchmark_series": [],
-        "contributing_record_ids": [],
+        "contributing_record_ids": [
+          "deepswe-harness-resources-claude-fable-5-max-2026-08-13"
+        ],
         "domain_ids": [],
         "estimate_scope": "efficiency",
-        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "evidence_record_fingerprint": "3dac3a10a31a2ee75d28f71599ac72cf94bdf0785fc076be9d668b9f454c4cb3",
         "family_ids": [],
-        "id": "e0088c3c20c39bbe0a1b3db950e6c342fd6066d4b396330d6e70c0457489b155",
-        "methodology_fingerprint": "e0088c3c20c39bbe0a1b3db950e6c342fd6066d4b396330d6e70c0457489b155",
-        "source_organizations": [],
-        "workload_series": []
+        "id": "9358347117eb3d6956f4f100dd8182da2d88af9ad686384c856a1258f514cb4f",
+        "methodology_fingerprint": "9358347117eb3d6956f4f100dd8182da2d88af9ad686384c856a1258f514cb4f",
+        "source_organizations": [
+          "Datacurve"
+        ],
+        "workload_category_ids": [
+          "coding_agents"
+        ],
+        "workload_family_ids": [
+          "software-repository-agents"
+        ],
+        "workload_series": [
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps",
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens",
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
+        ]
       },
-      "provisional": false,
-      "score": null,
-      "source_record_ids": []
+      "provisional": true,
+      "score": 50.00000000000001,
+      "source_record_ids": [
+        "deepswe-harness-resources-claude-fable-5-max-2026-08-13"
+      ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.1",
-    "formula_version": "umi-methodology-v0.3.1",
+    "engine_version": "umi-engine-v0.3.2",
+    "formula_version": "umi-methodology-v0.3.2",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "claude-fable-5-max",
-    "normalization_version": "umi-normalization-v0.3.1",
-    "overall_coverage": 0.09075000000000001,
-    "partial_overall_estimate": 50.0,
+    "normalization_version": "umi-normalization-v0.3.2",
+    "overall_coverage": 0.10200000000000001,
+    "partial_overall_estimate": 50.00000000000001,
     "provisional": true,
     "publication_label": "real evidence \u2014 model-specific partial estimate",
     "release_date": "2026-06-09",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "1f2290b0877e05fc3df9756af902ad75dae3b3cb333b10caa996bb029c5c3da6",
+    "scored_data_fingerprint": "d847b36e2c1720082bc83b9aa0b1ee27186e479eadcb2baca741cd86ab607b61",
     "scoring_ready": true,
     "source_record_ids": [
+      "deepswe-harness-resources-claude-fable-5-max-2026-08-13",
       "deepswe-score-claude-fable-5-max-2026-08-13"
     ],
     "value": null,
@@ -254,17 +297,19 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "67490678df53739ec0738575e3b0bca0dd4356c21522dcd047b3cde0df657372",
+        "evidence_record_fingerprint": "afdfa4929cfc6dbb078965a28bee1b7a9d5511cb32d6872060ecf62934277a57",
         "family_ids": [
           "deepswe-v1.1",
           "gpqa-diamond"
         ],
-        "id": "82d956dfcc74092b882521e78b5d9b495d455578d89a1e4542c29ed009ee9f9a",
-        "methodology_fingerprint": "82d956dfcc74092b882521e78b5d9b495d455578d89a1e4542c29ed009ee9f9a",
+        "id": "e3f0d0bf0123be67d2b1d7a4c69a2513950fa25924f2bf345df5a610c679228d",
+        "methodology_fingerprint": "e3f0d0bf0123be67d2b1d7a4c69a2513950fa25924f2bf345df5a610c679228d",
         "source_organizations": [
           "Datacurve",
           "Epoch AI"
         ],
+        "workload_category_ids": [],
+        "workload_family_ids": [],
         "workload_series": []
       },
       "provisional": true,
@@ -278,7 +323,7 @@
       "math_science",
       "software_engineering"
     ],
-    "cohort_id": "1f2290b0877e05fc",
+    "cohort_id": "d847b36e2c172008",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -288,16 +333,16 @@
     ],
     "confidence": "low",
     "confidence_reasons": [
-      "14% hierarchical weighted coverage",
+      "16% hierarchical weighted coverage",
       "2/5 capability domains represented",
-      "0/6 efficiency workload classes",
+      "1/6 efficiency workload classes",
       "2 source organizations",
       "100% independent/community evidence",
       "confidence forced to Low: headline eligibility failed",
       "one or more contributing results are provisional",
       "confidence forced to Low: insufficient capability breadth"
     ],
-    "config_fingerprint": "13018c0f05c07a96a49ca4443e6caf5f67163b76529f55cc6fd9473bbbbcded6",
+    "config_fingerprint": "72ae3a5fb95bb261cdd32afb5b6d75b8a018f5ba1047e838a7731c5c44b05235",
     "coverage": {
       "capability_absolute_weighted": 0.2625,
       "capability_domains_represented": 2,
@@ -311,25 +356,26 @@
       "economics_workloads_total": 6,
       "efficiency_category_metric_coverage": {
         "browser_computer_use": 0.0,
-        "coding_agents": 0.0,
+        "coding_agents": 0.18,
         "general_interaction": 0.0,
         "long_horizon": 0.0,
         "research_analysis": 0.0,
         "tool_use_agents": 0.0
       },
-      "efficiency_metric_weighted": 0.0,
-      "efficiency_workload_weighted": 0.0,
-      "efficiency_workloads_represented": 0,
+      "efficiency_metric_weighted": 0.045,
+      "efficiency_workload_weighted": 0.045,
+      "efficiency_workloads_represented": 1,
       "efficiency_workloads_total": 6,
       "independent_or_community_evidence_share": 1.0,
-      "overall_weighted": 0.14437500000000003,
+      "overall_weighted": 0.15562500000000004,
       "source_organization_count": 2
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "026414ff10394753fe30bcf6c15dca287b903bf1db936e81ee8013d527c6fb36",
+    "dataset_fingerprint": "288b433a679248a28bcc57e0e53f2a5415381a5d10b08682a6b52cf60fb82e60",
     "diagnostics": [
       "not eligible for headline Overall ranking",
-      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals"
+      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals",
+      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
     ],
     "economics": {
       "comparability_reasons": [
@@ -338,6 +384,16 @@
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
+        "economics_category_coverage_browser_computer_use": 0.0,
+        "economics_category_coverage_coding_agents": 0.0,
+        "economics_category_coverage_general_interaction": 0.0,
+        "economics_category_coverage_long_horizon": 0.0,
+        "economics_category_coverage_research_analysis": 0.0,
+        "economics_category_coverage_tool_use_agents": 0.0,
+        "economics_workload_cells_represented": 0,
+        "economics_workload_coverage_code-repair-agents": 0.0,
+        "economics_workload_coverage_software-repository-agents": 0.0,
+        "economics_workload_coverage_terminal-environment-agents": 0.0,
         "economics_workload_weighted": 0.0,
         "economics_workloads_represented": 0,
         "economics_workloads_total": 6
@@ -351,9 +407,11 @@
         "estimate_scope": "economics",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "0dac7066b9a023cba44145c3d2ebc946985d3b9aebd5a1c8126b2aa1d163c16f",
-        "methodology_fingerprint": "0dac7066b9a023cba44145c3d2ebc946985d3b9aebd5a1c8126b2aa1d163c16f",
+        "id": "59163096246b510a8c803d83eba84160050d08eeec181d2459e4cd151d1e55b9",
+        "methodology_fingerprint": "59163096246b510a8c803d83eba84160050d08eeec181d2459e4cd151d1e55b9",
         "source_organizations": [],
+        "workload_category_ids": [],
+        "workload_family_ids": [],
         "workload_series": []
       },
       "provisional": false,
@@ -362,57 +420,85 @@
     },
     "efficiency": {
       "comparability_reasons": [
-        "no ready efficiency workload support"
+        "same efficiency workload support and configuration"
       ],
-      "comparability_status": "insufficient_common_support",
-      "coverage": 0.0,
+      "comparability_status": "directly_comparable",
+      "coverage": 0.045,
       "coverage_details": {
         "efficiency_metric_coverage_browser_computer_use": 0.0,
-        "efficiency_metric_coverage_coding_agents": 0.0,
+        "efficiency_metric_coverage_coding_agents": 0.18,
         "efficiency_metric_coverage_general_interaction": 0.0,
         "efficiency_metric_coverage_long_horizon": 0.0,
         "efficiency_metric_coverage_research_analysis": 0.0,
         "efficiency_metric_coverage_tool_use_agents": 0.0,
-        "efficiency_metric_weighted": 0.0,
-        "efficiency_workload_weighted": 0.0,
-        "efficiency_workloads_represented": 0,
+        "efficiency_metric_weighted": 0.045,
+        "efficiency_workload_coverage_code-repair-agents": 0.0,
+        "efficiency_workload_coverage_software-repository-agents": 1.0,
+        "efficiency_workload_coverage_terminal-environment-agents": 0.0,
+        "efficiency_workload_metric_cells_represented": 3,
+        "efficiency_workload_weighted": 0.045,
+        "efficiency_workloads_represented": 1,
         "efficiency_workloads_total": 6
       },
-      "diagnostics": [],
-      "directly_comparable_model_ids": [],
+      "diagnostics": [
+        "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
+      ],
+      "directly_comparable_model_ids": [
+        "claude-fable-5-max",
+        "glm-5.2-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max"
+      ],
       "evidence_profile": {
         "benchmark_series": [],
-        "contributing_record_ids": [],
+        "contributing_record_ids": [
+          "deepswe-harness-resources-claude-opus-5-max-2026-08-13"
+        ],
         "domain_ids": [],
         "estimate_scope": "efficiency",
-        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "evidence_record_fingerprint": "df664b7b83ff006d60917658bf7325f0aa8a54464efdf1ef7ee014e4ad5a17fa",
         "family_ids": [],
-        "id": "e0088c3c20c39bbe0a1b3db950e6c342fd6066d4b396330d6e70c0457489b155",
-        "methodology_fingerprint": "e0088c3c20c39bbe0a1b3db950e6c342fd6066d4b396330d6e70c0457489b155",
-        "source_organizations": [],
-        "workload_series": []
+        "id": "9358347117eb3d6956f4f100dd8182da2d88af9ad686384c856a1258f514cb4f",
+        "methodology_fingerprint": "9358347117eb3d6956f4f100dd8182da2d88af9ad686384c856a1258f514cb4f",
+        "source_organizations": [
+          "Datacurve"
+        ],
+        "workload_category_ids": [
+          "coding_agents"
+        ],
+        "workload_family_ids": [
+          "software-repository-agents"
+        ],
+        "workload_series": [
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps",
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens",
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
+        ]
       },
-      "provisional": false,
-      "score": null,
-      "source_record_ids": []
+      "provisional": true,
+      "score": 41.66666666666667,
+      "source_record_ids": [
+        "deepswe-harness-resources-claude-opus-5-max-2026-08-13"
+      ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.1",
-    "formula_version": "umi-methodology-v0.3.1",
+    "engine_version": "umi-engine-v0.3.2",
+    "formula_version": "umi-methodology-v0.3.2",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "claude-opus-5-max",
-    "normalization_version": "umi-normalization-v0.3.1",
-    "overall_coverage": 0.14437500000000003,
-    "partial_overall_estimate": 100.0,
+    "normalization_version": "umi-normalization-v0.3.2",
+    "overall_coverage": 0.15562500000000004,
+    "partial_overall_estimate": 81.77083333333333,
     "provisional": true,
     "publication_label": "real evidence \u2014 model-specific partial estimate",
     "release_date": "2026-07-24",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "1f2290b0877e05fc3df9756af902ad75dae3b3cb333b10caa996bb029c5c3da6",
+    "scored_data_fingerprint": "d847b36e2c1720082bc83b9aa0b1ee27186e479eadcb2baca741cd86ab607b61",
     "scoring_ready": true,
     "source_record_ids": [
+      "deepswe-harness-resources-claude-opus-5-max-2026-08-13",
       "deepswe-score-claude-opus-5-max-2026-08-13",
       "epoch-gpqa-claude-opus-5-max-d3mtastumfvjr4fjmnhwry"
     ],
@@ -475,17 +561,19 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "1d3743bb449389bdf742e7b0a04aa6a2a5dc7fb3e4f40a49408c6f5f96b94877",
+        "evidence_record_fingerprint": "d732193f6a5ef562efcbb66b0acbb4bf39955bcf6dd73fc58f1d10645d08fb8b",
         "family_ids": [
           "deepswe-v1.1",
           "gpqa-diamond"
         ],
-        "id": "82d956dfcc74092b882521e78b5d9b495d455578d89a1e4542c29ed009ee9f9a",
-        "methodology_fingerprint": "82d956dfcc74092b882521e78b5d9b495d455578d89a1e4542c29ed009ee9f9a",
+        "id": "e3f0d0bf0123be67d2b1d7a4c69a2513950fa25924f2bf345df5a610c679228d",
+        "methodology_fingerprint": "e3f0d0bf0123be67d2b1d7a4c69a2513950fa25924f2bf345df5a610c679228d",
         "source_organizations": [
           "Datacurve",
           "Epoch AI"
         ],
+        "workload_category_ids": [],
+        "workload_family_ids": [],
         "workload_series": []
       },
       "provisional": true,
@@ -499,7 +587,7 @@
       "math_science",
       "software_engineering"
     ],
-    "cohort_id": "1f2290b0877e05fc",
+    "cohort_id": "d847b36e2c172008",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -509,16 +597,16 @@
     ],
     "confidence": "low",
     "confidence_reasons": [
-      "14% hierarchical weighted coverage",
+      "16% hierarchical weighted coverage",
       "2/5 capability domains represented",
-      "0/6 efficiency workload classes",
+      "1/6 efficiency workload classes",
       "2 source organizations",
       "100% independent/community evidence",
       "confidence forced to Low: headline eligibility failed",
       "one or more contributing results are provisional",
       "confidence forced to Low: insufficient capability breadth"
     ],
-    "config_fingerprint": "13018c0f05c07a96a49ca4443e6caf5f67163b76529f55cc6fd9473bbbbcded6",
+    "config_fingerprint": "72ae3a5fb95bb261cdd32afb5b6d75b8a018f5ba1047e838a7731c5c44b05235",
     "coverage": {
       "capability_absolute_weighted": 0.2625,
       "capability_domains_represented": 2,
@@ -532,25 +620,26 @@
       "economics_workloads_total": 6,
       "efficiency_category_metric_coverage": {
         "browser_computer_use": 0.0,
-        "coding_agents": 0.0,
+        "coding_agents": 0.18,
         "general_interaction": 0.0,
         "long_horizon": 0.0,
         "research_analysis": 0.0,
         "tool_use_agents": 0.0
       },
-      "efficiency_metric_weighted": 0.0,
-      "efficiency_workload_weighted": 0.0,
-      "efficiency_workloads_represented": 0,
+      "efficiency_metric_weighted": 0.045,
+      "efficiency_workload_weighted": 0.045,
+      "efficiency_workloads_represented": 1,
       "efficiency_workloads_total": 6,
       "independent_or_community_evidence_share": 1.0,
-      "overall_weighted": 0.14437500000000003,
+      "overall_weighted": 0.15562500000000004,
       "source_organization_count": 2
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "026414ff10394753fe30bcf6c15dca287b903bf1db936e81ee8013d527c6fb36",
+    "dataset_fingerprint": "288b433a679248a28bcc57e0e53f2a5415381a5d10b08682a6b52cf60fb82e60",
     "diagnostics": [
       "not eligible for headline Overall ranking",
-      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals"
+      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals",
+      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
     ],
     "economics": {
       "comparability_reasons": [
@@ -559,6 +648,16 @@
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
+        "economics_category_coverage_browser_computer_use": 0.0,
+        "economics_category_coverage_coding_agents": 0.0,
+        "economics_category_coverage_general_interaction": 0.0,
+        "economics_category_coverage_long_horizon": 0.0,
+        "economics_category_coverage_research_analysis": 0.0,
+        "economics_category_coverage_tool_use_agents": 0.0,
+        "economics_workload_cells_represented": 0,
+        "economics_workload_coverage_code-repair-agents": 0.0,
+        "economics_workload_coverage_software-repository-agents": 0.0,
+        "economics_workload_coverage_terminal-environment-agents": 0.0,
         "economics_workload_weighted": 0.0,
         "economics_workloads_represented": 0,
         "economics_workloads_total": 6
@@ -572,9 +671,11 @@
         "estimate_scope": "economics",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "0dac7066b9a023cba44145c3d2ebc946985d3b9aebd5a1c8126b2aa1d163c16f",
-        "methodology_fingerprint": "0dac7066b9a023cba44145c3d2ebc946985d3b9aebd5a1c8126b2aa1d163c16f",
+        "id": "59163096246b510a8c803d83eba84160050d08eeec181d2459e4cd151d1e55b9",
+        "methodology_fingerprint": "59163096246b510a8c803d83eba84160050d08eeec181d2459e4cd151d1e55b9",
         "source_organizations": [],
+        "workload_category_ids": [],
+        "workload_family_ids": [],
         "workload_series": []
       },
       "provisional": false,
@@ -583,57 +684,85 @@
     },
     "efficiency": {
       "comparability_reasons": [
-        "no ready efficiency workload support"
+        "same efficiency workload support and configuration"
       ],
-      "comparability_status": "insufficient_common_support",
-      "coverage": 0.0,
+      "comparability_status": "directly_comparable",
+      "coverage": 0.045,
       "coverage_details": {
         "efficiency_metric_coverage_browser_computer_use": 0.0,
-        "efficiency_metric_coverage_coding_agents": 0.0,
+        "efficiency_metric_coverage_coding_agents": 0.18,
         "efficiency_metric_coverage_general_interaction": 0.0,
         "efficiency_metric_coverage_long_horizon": 0.0,
         "efficiency_metric_coverage_research_analysis": 0.0,
         "efficiency_metric_coverage_tool_use_agents": 0.0,
-        "efficiency_metric_weighted": 0.0,
-        "efficiency_workload_weighted": 0.0,
-        "efficiency_workloads_represented": 0,
+        "efficiency_metric_weighted": 0.045,
+        "efficiency_workload_coverage_code-repair-agents": 0.0,
+        "efficiency_workload_coverage_software-repository-agents": 1.0,
+        "efficiency_workload_coverage_terminal-environment-agents": 0.0,
+        "efficiency_workload_metric_cells_represented": 3,
+        "efficiency_workload_weighted": 0.045,
+        "efficiency_workloads_represented": 1,
         "efficiency_workloads_total": 6
       },
-      "diagnostics": [],
-      "directly_comparable_model_ids": [],
+      "diagnostics": [
+        "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
+      ],
+      "directly_comparable_model_ids": [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max"
+      ],
       "evidence_profile": {
         "benchmark_series": [],
-        "contributing_record_ids": [],
+        "contributing_record_ids": [
+          "deepswe-harness-resources-glm-5.2-max-2026-08-13"
+        ],
         "domain_ids": [],
         "estimate_scope": "efficiency",
-        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "evidence_record_fingerprint": "7da36251ffbe226bb496a6977b033dcdabcab37a21e61a06642e669792774db2",
         "family_ids": [],
-        "id": "e0088c3c20c39bbe0a1b3db950e6c342fd6066d4b396330d6e70c0457489b155",
-        "methodology_fingerprint": "e0088c3c20c39bbe0a1b3db950e6c342fd6066d4b396330d6e70c0457489b155",
-        "source_organizations": [],
-        "workload_series": []
+        "id": "9358347117eb3d6956f4f100dd8182da2d88af9ad686384c856a1258f514cb4f",
+        "methodology_fingerprint": "9358347117eb3d6956f4f100dd8182da2d88af9ad686384c856a1258f514cb4f",
+        "source_organizations": [
+          "Datacurve"
+        ],
+        "workload_category_ids": [
+          "coding_agents"
+        ],
+        "workload_family_ids": [
+          "software-repository-agents"
+        ],
+        "workload_series": [
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps",
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens",
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
+        ]
       },
-      "provisional": false,
-      "score": null,
-      "source_record_ids": []
+      "provisional": true,
+      "score": 0.0,
+      "source_record_ids": [
+        "deepswe-harness-resources-glm-5.2-max-2026-08-13"
+      ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.1",
-    "formula_version": "umi-methodology-v0.3.1",
+    "engine_version": "umi-engine-v0.3.2",
+    "formula_version": "umi-methodology-v0.3.2",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "glm-5.2-max",
-    "normalization_version": "umi-normalization-v0.3.1",
-    "overall_coverage": 0.14437500000000003,
+    "normalization_version": "umi-normalization-v0.3.2",
+    "overall_coverage": 0.15562500000000004,
     "partial_overall_estimate": 0.0,
     "provisional": true,
     "publication_label": "real evidence \u2014 model-specific partial estimate",
     "release_date": "2026-06-16",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "1f2290b0877e05fc3df9756af902ad75dae3b3cb333b10caa996bb029c5c3da6",
+    "scored_data_fingerprint": "d847b36e2c1720082bc83b9aa0b1ee27186e479eadcb2baca741cd86ab607b61",
     "scoring_ready": true,
     "source_record_ids": [
+      "deepswe-harness-resources-glm-5.2-max-2026-08-13",
       "deepswe-score-glm-5.2-max-2026-08-13",
       "epoch-gpqa-glm-5.2-max-c5kpb4axzmygrywwqbkfmv"
     ],
@@ -696,17 +825,19 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "86f9cc2fad0cbf9789437786f0ed1d8e360c869af88ce0fd3be2ca3a1972f0d2",
+        "evidence_record_fingerprint": "ec475aaef7368940e102ab2a2e6efa42eea0398e983cd7dc63bc2f46ec096d28",
         "family_ids": [
           "deepswe-v1.1",
           "gpqa-diamond"
         ],
-        "id": "82d956dfcc74092b882521e78b5d9b495d455578d89a1e4542c29ed009ee9f9a",
-        "methodology_fingerprint": "82d956dfcc74092b882521e78b5d9b495d455578d89a1e4542c29ed009ee9f9a",
+        "id": "e3f0d0bf0123be67d2b1d7a4c69a2513950fa25924f2bf345df5a610c679228d",
+        "methodology_fingerprint": "e3f0d0bf0123be67d2b1d7a4c69a2513950fa25924f2bf345df5a610c679228d",
         "source_organizations": [
           "Datacurve",
           "Epoch AI"
         ],
+        "workload_category_ids": [],
+        "workload_family_ids": [],
         "workload_series": []
       },
       "provisional": true,
@@ -720,7 +851,7 @@
       "math_science",
       "software_engineering"
     ],
-    "cohort_id": "1f2290b0877e05fc",
+    "cohort_id": "d847b36e2c172008",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -730,16 +861,16 @@
     ],
     "confidence": "low",
     "confidence_reasons": [
-      "14% hierarchical weighted coverage",
+      "16% hierarchical weighted coverage",
       "2/5 capability domains represented",
-      "0/6 efficiency workload classes",
+      "1/6 efficiency workload classes",
       "2 source organizations",
       "100% independent/community evidence",
       "confidence forced to Low: headline eligibility failed",
       "one or more contributing results are provisional",
       "confidence forced to Low: insufficient capability breadth"
     ],
-    "config_fingerprint": "13018c0f05c07a96a49ca4443e6caf5f67163b76529f55cc6fd9473bbbbcded6",
+    "config_fingerprint": "72ae3a5fb95bb261cdd32afb5b6d75b8a018f5ba1047e838a7731c5c44b05235",
     "coverage": {
       "capability_absolute_weighted": 0.2625,
       "capability_domains_represented": 2,
@@ -753,25 +884,26 @@
       "economics_workloads_total": 6,
       "efficiency_category_metric_coverage": {
         "browser_computer_use": 0.0,
-        "coding_agents": 0.0,
+        "coding_agents": 0.18,
         "general_interaction": 0.0,
         "long_horizon": 0.0,
         "research_analysis": 0.0,
         "tool_use_agents": 0.0
       },
-      "efficiency_metric_weighted": 0.0,
-      "efficiency_workload_weighted": 0.0,
-      "efficiency_workloads_represented": 0,
+      "efficiency_metric_weighted": 0.045,
+      "efficiency_workload_weighted": 0.045,
+      "efficiency_workloads_represented": 1,
       "efficiency_workloads_total": 6,
       "independent_or_community_evidence_share": 1.0,
-      "overall_weighted": 0.14437500000000003,
+      "overall_weighted": 0.15562500000000004,
       "source_organization_count": 2
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "026414ff10394753fe30bcf6c15dca287b903bf1db936e81ee8013d527c6fb36",
+    "dataset_fingerprint": "288b433a679248a28bcc57e0e53f2a5415381a5d10b08682a6b52cf60fb82e60",
     "diagnostics": [
       "not eligible for headline Overall ranking",
-      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals"
+      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals",
+      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
     ],
     "economics": {
       "comparability_reasons": [
@@ -780,6 +912,16 @@
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
+        "economics_category_coverage_browser_computer_use": 0.0,
+        "economics_category_coverage_coding_agents": 0.0,
+        "economics_category_coverage_general_interaction": 0.0,
+        "economics_category_coverage_long_horizon": 0.0,
+        "economics_category_coverage_research_analysis": 0.0,
+        "economics_category_coverage_tool_use_agents": 0.0,
+        "economics_workload_cells_represented": 0,
+        "economics_workload_coverage_code-repair-agents": 0.0,
+        "economics_workload_coverage_software-repository-agents": 0.0,
+        "economics_workload_coverage_terminal-environment-agents": 0.0,
         "economics_workload_weighted": 0.0,
         "economics_workloads_represented": 0,
         "economics_workloads_total": 6
@@ -793,9 +935,11 @@
         "estimate_scope": "economics",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "0dac7066b9a023cba44145c3d2ebc946985d3b9aebd5a1c8126b2aa1d163c16f",
-        "methodology_fingerprint": "0dac7066b9a023cba44145c3d2ebc946985d3b9aebd5a1c8126b2aa1d163c16f",
+        "id": "59163096246b510a8c803d83eba84160050d08eeec181d2459e4cd151d1e55b9",
+        "methodology_fingerprint": "59163096246b510a8c803d83eba84160050d08eeec181d2459e4cd151d1e55b9",
         "source_organizations": [],
+        "workload_category_ids": [],
+        "workload_family_ids": [],
         "workload_series": []
       },
       "provisional": false,
@@ -804,57 +948,85 @@
     },
     "efficiency": {
       "comparability_reasons": [
-        "no ready efficiency workload support"
+        "same efficiency workload support and configuration"
       ],
-      "comparability_status": "insufficient_common_support",
-      "coverage": 0.0,
+      "comparability_status": "directly_comparable",
+      "coverage": 0.045,
       "coverage_details": {
         "efficiency_metric_coverage_browser_computer_use": 0.0,
-        "efficiency_metric_coverage_coding_agents": 0.0,
+        "efficiency_metric_coverage_coding_agents": 0.18,
         "efficiency_metric_coverage_general_interaction": 0.0,
         "efficiency_metric_coverage_long_horizon": 0.0,
         "efficiency_metric_coverage_research_analysis": 0.0,
         "efficiency_metric_coverage_tool_use_agents": 0.0,
-        "efficiency_metric_weighted": 0.0,
-        "efficiency_workload_weighted": 0.0,
-        "efficiency_workloads_represented": 0,
+        "efficiency_metric_weighted": 0.045,
+        "efficiency_workload_coverage_code-repair-agents": 0.0,
+        "efficiency_workload_coverage_software-repository-agents": 1.0,
+        "efficiency_workload_coverage_terminal-environment-agents": 0.0,
+        "efficiency_workload_metric_cells_represented": 3,
+        "efficiency_workload_weighted": 0.045,
+        "efficiency_workloads_represented": 1,
         "efficiency_workloads_total": 6
       },
-      "diagnostics": [],
-      "directly_comparable_model_ids": [],
+      "diagnostics": [
+        "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
+      ],
+      "directly_comparable_model_ids": [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "kimi-k3-max"
+      ],
       "evidence_profile": {
         "benchmark_series": [],
-        "contributing_record_ids": [],
+        "contributing_record_ids": [
+          "deepswe-harness-resources-gpt-5.6-sol-max-2026-08-13"
+        ],
         "domain_ids": [],
         "estimate_scope": "efficiency",
-        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "evidence_record_fingerprint": "ff0ff61acc9ff70c2c55b4c9fab2073b3a209c5b2c2e1c55690938f5bea6587f",
         "family_ids": [],
-        "id": "e0088c3c20c39bbe0a1b3db950e6c342fd6066d4b396330d6e70c0457489b155",
-        "methodology_fingerprint": "e0088c3c20c39bbe0a1b3db950e6c342fd6066d4b396330d6e70c0457489b155",
-        "source_organizations": [],
-        "workload_series": []
+        "id": "9358347117eb3d6956f4f100dd8182da2d88af9ad686384c856a1258f514cb4f",
+        "methodology_fingerprint": "9358347117eb3d6956f4f100dd8182da2d88af9ad686384c856a1258f514cb4f",
+        "source_organizations": [
+          "Datacurve"
+        ],
+        "workload_category_ids": [
+          "coding_agents"
+        ],
+        "workload_family_ids": [
+          "software-repository-agents"
+        ],
+        "workload_series": [
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps",
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens",
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
+        ]
       },
-      "provisional": false,
-      "score": null,
-      "source_record_ids": []
+      "provisional": true,
+      "score": 100.00000000000001,
+      "source_record_ids": [
+        "deepswe-harness-resources-gpt-5.6-sol-max-2026-08-13"
+      ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.1",
-    "formula_version": "umi-methodology-v0.3.1",
+    "engine_version": "umi-engine-v0.3.2",
+    "formula_version": "umi-methodology-v0.3.2",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "gpt-5.6-sol-max",
-    "normalization_version": "umi-normalization-v0.3.1",
-    "overall_coverage": 0.14437500000000003,
-    "partial_overall_estimate": 71.9047619047619,
+    "normalization_version": "umi-normalization-v0.3.2",
+    "overall_coverage": 0.15562500000000004,
+    "partial_overall_estimate": 80.68452380952381,
     "provisional": true,
     "publication_label": "real evidence \u2014 model-specific partial estimate",
     "release_date": "2026-07-09",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "1f2290b0877e05fc3df9756af902ad75dae3b3cb333b10caa996bb029c5c3da6",
+    "scored_data_fingerprint": "d847b36e2c1720082bc83b9aa0b1ee27186e479eadcb2baca741cd86ab607b61",
     "scoring_ready": true,
     "source_record_ids": [
+      "deepswe-harness-resources-gpt-5.6-sol-max-2026-08-13",
       "deepswe-score-gpt-5.6-sol-max-2026-08-13",
       "epoch-gpqa-gpt-5.6-sol-max-nukcgzrecbsxkcknj9bk37"
     ],
@@ -917,17 +1089,19 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "8731ef04f5addfc167a759380c19413e9db0ffe8fbe7d18fa6040c31560c8fcf",
+        "evidence_record_fingerprint": "8bf2f6e685932303a5c2391a3089397f82270d527c880beca279b2bc62932e10",
         "family_ids": [
           "deepswe-v1.1",
           "gpqa-diamond"
         ],
-        "id": "82d956dfcc74092b882521e78b5d9b495d455578d89a1e4542c29ed009ee9f9a",
-        "methodology_fingerprint": "82d956dfcc74092b882521e78b5d9b495d455578d89a1e4542c29ed009ee9f9a",
+        "id": "e3f0d0bf0123be67d2b1d7a4c69a2513950fa25924f2bf345df5a610c679228d",
+        "methodology_fingerprint": "e3f0d0bf0123be67d2b1d7a4c69a2513950fa25924f2bf345df5a610c679228d",
         "source_organizations": [
           "Datacurve",
           "Epoch AI"
         ],
+        "workload_category_ids": [],
+        "workload_family_ids": [],
         "workload_series": []
       },
       "provisional": true,
@@ -941,7 +1115,7 @@
       "math_science",
       "software_engineering"
     ],
-    "cohort_id": "1f2290b0877e05fc",
+    "cohort_id": "d847b36e2c172008",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -951,16 +1125,16 @@
     ],
     "confidence": "low",
     "confidence_reasons": [
-      "14% hierarchical weighted coverage",
+      "16% hierarchical weighted coverage",
       "2/5 capability domains represented",
-      "0/6 efficiency workload classes",
+      "1/6 efficiency workload classes",
       "2 source organizations",
       "100% independent/community evidence",
       "confidence forced to Low: headline eligibility failed",
       "one or more contributing results are provisional",
       "confidence forced to Low: insufficient capability breadth"
     ],
-    "config_fingerprint": "13018c0f05c07a96a49ca4443e6caf5f67163b76529f55cc6fd9473bbbbcded6",
+    "config_fingerprint": "72ae3a5fb95bb261cdd32afb5b6d75b8a018f5ba1047e838a7731c5c44b05235",
     "coverage": {
       "capability_absolute_weighted": 0.2625,
       "capability_domains_represented": 2,
@@ -974,25 +1148,26 @@
       "economics_workloads_total": 6,
       "efficiency_category_metric_coverage": {
         "browser_computer_use": 0.0,
-        "coding_agents": 0.0,
+        "coding_agents": 0.18,
         "general_interaction": 0.0,
         "long_horizon": 0.0,
         "research_analysis": 0.0,
         "tool_use_agents": 0.0
       },
-      "efficiency_metric_weighted": 0.0,
-      "efficiency_workload_weighted": 0.0,
-      "efficiency_workloads_represented": 0,
+      "efficiency_metric_weighted": 0.045,
+      "efficiency_workload_weighted": 0.045,
+      "efficiency_workloads_represented": 1,
       "efficiency_workloads_total": 6,
       "independent_or_community_evidence_share": 1.0,
-      "overall_weighted": 0.14437500000000003,
+      "overall_weighted": 0.15562500000000004,
       "source_organization_count": 2
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "026414ff10394753fe30bcf6c15dca287b903bf1db936e81ee8013d527c6fb36",
+    "dataset_fingerprint": "288b433a679248a28bcc57e0e53f2a5415381a5d10b08682a6b52cf60fb82e60",
     "diagnostics": [
       "not eligible for headline Overall ranking",
-      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals"
+      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals",
+      "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
     ],
     "economics": {
       "comparability_reasons": [
@@ -1001,6 +1176,16 @@
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
+        "economics_category_coverage_browser_computer_use": 0.0,
+        "economics_category_coverage_coding_agents": 0.0,
+        "economics_category_coverage_general_interaction": 0.0,
+        "economics_category_coverage_long_horizon": 0.0,
+        "economics_category_coverage_research_analysis": 0.0,
+        "economics_category_coverage_tool_use_agents": 0.0,
+        "economics_workload_cells_represented": 0,
+        "economics_workload_coverage_code-repair-agents": 0.0,
+        "economics_workload_coverage_software-repository-agents": 0.0,
+        "economics_workload_coverage_terminal-environment-agents": 0.0,
         "economics_workload_weighted": 0.0,
         "economics_workloads_represented": 0,
         "economics_workloads_total": 6
@@ -1014,9 +1199,11 @@
         "estimate_scope": "economics",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "0dac7066b9a023cba44145c3d2ebc946985d3b9aebd5a1c8126b2aa1d163c16f",
-        "methodology_fingerprint": "0dac7066b9a023cba44145c3d2ebc946985d3b9aebd5a1c8126b2aa1d163c16f",
+        "id": "59163096246b510a8c803d83eba84160050d08eeec181d2459e4cd151d1e55b9",
+        "methodology_fingerprint": "59163096246b510a8c803d83eba84160050d08eeec181d2459e4cd151d1e55b9",
         "source_organizations": [],
+        "workload_category_ids": [],
+        "workload_family_ids": [],
         "workload_series": []
       },
       "provisional": false,
@@ -1025,57 +1212,85 @@
     },
     "efficiency": {
       "comparability_reasons": [
-        "no ready efficiency workload support"
+        "same efficiency workload support and configuration"
       ],
-      "comparability_status": "insufficient_common_support",
-      "coverage": 0.0,
+      "comparability_status": "directly_comparable",
+      "coverage": 0.045,
       "coverage_details": {
         "efficiency_metric_coverage_browser_computer_use": 0.0,
-        "efficiency_metric_coverage_coding_agents": 0.0,
+        "efficiency_metric_coverage_coding_agents": 0.18,
         "efficiency_metric_coverage_general_interaction": 0.0,
         "efficiency_metric_coverage_long_horizon": 0.0,
         "efficiency_metric_coverage_research_analysis": 0.0,
         "efficiency_metric_coverage_tool_use_agents": 0.0,
-        "efficiency_metric_weighted": 0.0,
-        "efficiency_workload_weighted": 0.0,
-        "efficiency_workloads_represented": 0,
+        "efficiency_metric_weighted": 0.045,
+        "efficiency_workload_coverage_code-repair-agents": 0.0,
+        "efficiency_workload_coverage_software-repository-agents": 1.0,
+        "efficiency_workload_coverage_terminal-environment-agents": 0.0,
+        "efficiency_workload_metric_cells_represented": 3,
+        "efficiency_workload_weighted": 0.045,
+        "efficiency_workloads_represented": 1,
         "efficiency_workloads_total": 6
       },
-      "diagnostics": [],
-      "directly_comparable_model_ids": [],
+      "diagnostics": [
+        "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
+      ],
+      "directly_comparable_model_ids": [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "gpt-5.6-sol-max"
+      ],
       "evidence_profile": {
         "benchmark_series": [],
-        "contributing_record_ids": [],
+        "contributing_record_ids": [
+          "deepswe-harness-resources-kimi-k3-max-2026-08-13"
+        ],
         "domain_ids": [],
         "estimate_scope": "efficiency",
-        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "evidence_record_fingerprint": "2c17ec5255a70cc25ece030dae2399697856010c64c665cc24695886a4b191e1",
         "family_ids": [],
-        "id": "e0088c3c20c39bbe0a1b3db950e6c342fd6066d4b396330d6e70c0457489b155",
-        "methodology_fingerprint": "e0088c3c20c39bbe0a1b3db950e6c342fd6066d4b396330d6e70c0457489b155",
-        "source_organizations": [],
-        "workload_series": []
+        "id": "9358347117eb3d6956f4f100dd8182da2d88af9ad686384c856a1258f514cb4f",
+        "methodology_fingerprint": "9358347117eb3d6956f4f100dd8182da2d88af9ad686384c856a1258f514cb4f",
+        "source_organizations": [
+          "Datacurve"
+        ],
+        "workload_category_ids": [
+          "coding_agents"
+        ],
+        "workload_family_ids": [
+          "software-repository-agents"
+        ],
+        "workload_series": [
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps",
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens",
+          "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
+        ]
       },
-      "provisional": false,
-      "score": null,
-      "source_record_ids": []
+      "provisional": true,
+      "score": 58.333333333333336,
+      "source_record_ids": [
+        "deepswe-harness-resources-kimi-k3-max-2026-08-13"
+      ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.1",
-    "formula_version": "umi-methodology-v0.3.1",
+    "engine_version": "umi-engine-v0.3.2",
+    "formula_version": "umi-methodology-v0.3.2",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "kimi-k3-max",
-    "normalization_version": "umi-normalization-v0.3.1",
-    "overall_coverage": 0.14437500000000003,
-    "partial_overall_estimate": 28.095238095238095,
+    "normalization_version": "umi-normalization-v0.3.2",
+    "overall_coverage": 0.15562500000000004,
+    "partial_overall_estimate": 37.54464285714286,
     "provisional": true,
     "publication_label": "real evidence \u2014 model-specific partial estimate",
     "release_date": "2026-07-16",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "1f2290b0877e05fc3df9756af902ad75dae3b3cb333b10caa996bb029c5c3da6",
+    "scored_data_fingerprint": "d847b36e2c1720082bc83b9aa0b1ee27186e479eadcb2baca741cd86ab607b61",
     "scoring_ready": true,
     "source_record_ids": [
+      "deepswe-harness-resources-kimi-k3-max-2026-08-13",
       "deepswe-score-kimi-k3-max-2026-08-13",
       "epoch-gpqa-kimi-k3-max-b8mapue3eywuzassnqe7c9"
     ],

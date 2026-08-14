@@ -104,8 +104,9 @@ def test_source_bound_sensitivity_preserves_declared_margin_without_probability_
 ) -> None:
     report = source_bound_capability_sensitivity(real_pilot_dataset, real_pilot_config)
     kimi = next(item for item in report if item["model_id"] == "kimi-k3-max")
-    assert kimi["source_bound_lower"] == 64.0
-    assert kimi["source_bound_upper"] == 74.0
-    assert kimi["uncertainty"]["kind"] == "published_margin"
+    assert kimi["source_bound_lower"] == pytest.approx(63.97739833756913)
+    assert kimi["source_bound_upper"] == pytest.approx(73.05142649613376)
+    assert kimi["uncertainty"]["kind"] == "confidence_interval"
+    assert kimi["uncertainty"]["confidence_level"] == 0.95
     assert "not probabilistic" in kimi["method"]
     assert all(item["benchmark_id"] != "gpqa-diamond" for item in report)

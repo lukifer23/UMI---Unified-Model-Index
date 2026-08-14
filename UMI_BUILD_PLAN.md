@@ -2,8 +2,8 @@
 
 ## Objective
 
-Build an auditable current-release index for exact model configurations: immutable model
-snapshot plus inference effort, and provider/endpoint/tier when deployment affects the
+Build an auditable current-release index for exact model configurations: exact named release or
+immutable model snapshot plus inference effort, and provider/endpoint/tier when deployment affects the
 measurement. It must separately measure capability, success-adjusted efficiency, and
 success-adjusted economics, then emit a unified headline only when all evidence gates pass.
 
@@ -18,7 +18,7 @@ crosswalks, source/license registry, offline adapters, overlap controls, hierarc
 coverage, per-record success adjustment, fingerprints, diagnostics, and headline gates.
 
 It does not yet support a public UMI: it has five configurations, two partially scored
-Capability domains, no ready Efficiency/Economics evidence, hypothesized weights,
+Capability domains, 4.5% DeepSWE-only Efficiency coverage, no ready Economics evidence, hypothesized weights,
 cohort-relative normalization, no propagated uncertainty, and no first-class lab-claim or
 complete agent/scaffold identity model.
 

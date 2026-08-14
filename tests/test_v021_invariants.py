@@ -80,8 +80,11 @@ def test_hierarchical_efficiency_coverage_counts_metric_weight(
     efficiency = tuple(
         item.model_copy(
             update={
-                "mean_total_tokens": None,
-                "mean_turns": None,
+                    "mean_total_tokens": None,
+                    "mean_input_tokens": None,
+                    "mean_output_tokens": None,
+                    "mean_turns": None,
+                    "mean_agent_steps": None,
                 "mean_wall_seconds": None,
                 "mean_cost_per_attempt": None,
             }
@@ -274,7 +277,8 @@ def test_headline_requires_efficiency_even_with_direct_economics(
                     "mean_reasoning_tokens",
                     "mean_cached_tokens",
                     "mean_total_tokens",
-                    "mean_turns",
+                        "mean_turns",
+                        "mean_agent_steps",
                     "mean_wall_seconds",
                     "mean_tool_calls",
                         "mean_cost_per_attempt",

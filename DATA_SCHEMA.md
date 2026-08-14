@@ -97,8 +97,10 @@ synthetic: false
 Identity kind distinguishes immutable provider snapshots, immutable open-weight revisions,
 versioned or dated endpoints, named releases, marketing configurations, and unknown identity.
 Identity assurance is `verified`, `strongly_supported`, `label_exact`, `inferred`, or `unknown`.
-Capability may use exact named-release evidence provisionally. Endpoint-sensitive Efficiency and
-Economics require verified deployment identity.
+Capability may use exact named-release evidence provisionally. Efficiency wall time, cached-token,
+and cost fields and all Economics records require verified deployment identity. Exact harness-level
+input/output/reasoning-token, turn, agent-step, and tool-call observations may score provisionally
+without endpoint identity when the remaining identity and provenance gates pass.
 
 ## Benchmark configuration
 
@@ -135,6 +137,11 @@ The unit must be a supported enum and percentages/rates must respect their decla
 
 ## Efficiency and Economics
 
+`workloads.yaml` defines the fixed category -> family -> workload hierarchy used for coverage and
+aggregation. Family weights sum to one within each configured category, and workload weights sum to
+one within each family. An observed workload must match its configured category and family; an
+unconfigured workload cannot score.
+
 Efficiency measurements require model/workload/category/cohort identity, attempts, success rate in
 `[0,1]`, and at least one nonnegative observation:
 
@@ -148,8 +155,10 @@ cohort_key: workload-harness-v2
 evaluation_date: 2026-08-10
 attempts: 100
 success_rate: 0.72
-mean_total_tokens: 12000
+mean_input_tokens: 10000
+mean_output_tokens: 2000
 mean_turns: 8
+mean_agent_steps: 9
 mean_wall_seconds: 91
 mean_tool_calls: 14
 mean_cost_per_attempt: 1.35
@@ -157,7 +166,9 @@ mean_cost_per_attempt: 1.35
 
 Supported workload categories are `coding_agents`, `research_analysis`, `tool_use_agents`,
 `browser_computer_use`, `general_interaction`, and `long_horizon`. Legacy short aliases migrate on
-load. Success-adjusted derived values are not stored back into YAML.
+load. Success-adjusted derived values are not stored back into YAML. `mean_total_tokens` remains a
+literal backward-compatible diagnostic field but is never added to separately weighted input and
+output tokens.
 
 Task Economics records use `cost_basis: attempted_task|successful_task`, nonnegative
 `mean_cost_usd`, and `aggregation_statistic: arithmetic_mean|median|total|unspecified`. Only

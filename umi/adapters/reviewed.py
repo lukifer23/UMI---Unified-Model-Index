@@ -115,19 +115,30 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
                 benchmark_id="deepswe-v1.1",
                 model_id=match.canonical_model_id,
                 source_model_id=source_model_id,
-                value=float(cast(float, row["pass_rate_percent"])),
+                value=float(cast(float, row["pass_rate"])) * 100.0,
                 cohort_key=identifier(f"deepswe-v1.1-{as_of}"),
                 evaluation_date=as_of,
-                evaluation_settings={"agent": "mini-swe-agent", "task_count": raw["task_count"]},
+                evaluation_settings={
+                    "agent": "mini-swe-agent",
+                    "source_config_id": row["source_config_id"],
+                    "run_count": raw["run_count"],
+                    "pass_at_4": row["pass_at_4"],
+                    "passed_attempts": row["passed_attempts"],
+                    "attempted_tasks": row["attempted_tasks"],
+                    "ci_method": raw["ci_method"],
+                    "leaderboard_generated_at": raw["generated_at"],
+                },
                 number_of_tasks=int(str(raw["task_count"])),
+                number_of_trials=int(str(row["attempted_tasks"])),
+                sample_count=int(str(row["attempted_tasks"])),
+                pass_at_k=1,
                 uncertainty=MeasurementUncertainty(
-                    kind=UncertaintyKind.PUBLISHED_MARGIN,
-                    margin=float(cast(float, row["confidence_interval_percent"])),
-                    source_fields=("confidence_interval_percent",),
-                    notes=(
-                        "Published plus-or-minus margin; the frozen reviewed fact does not state "
-                        "a confidence level or interval construction."
-                    ),
+                    kind=UncertaintyKind.CONFIDENCE_INTERVAL,
+                    lower=float(cast(float, row["ci_lower"])) * 100.0,
+                    upper=float(cast(float, row["ci_upper"])) * 100.0,
+                    confidence_level=0.95,
+                    source_fields=("ci_lower", "ci_upper", "ci_method"),
+                    notes=str(raw["ci_method"]),
                 ),
                 metric_definition="DeepSWE v1.1 task resolution rate in percent",
                 source=source,
@@ -137,7 +148,7 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
                 evaluator="Datacurve",
                 harness_owner="Datacurve",
                 run_executor="Datacurve",
-                raw_artifact_available=True,
+                raw_artifact_available=False,
                 capture_type=ArtifactCaptureType.REVIEWED_FACT_EXTRACT,
                 source_artifact_id=artifact_id,
                 source_registry_snapshot_id=artifact_id,
@@ -155,22 +166,66 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
         )
         efficiency.append(
             EfficiencyMeasurement(
-                record_id=identifier(f"deepswe-resource-summary-{match.canonical_model_id}-{as_of}"),
+                record_id=identifier(f"deepswe-harness-resources-{match.canonical_model_id}-{as_of}"),
                 model_id=match.canonical_model_id,
                 source_model_id=source_model_id,
                 workload="deepswe-v1.1",
                 workload_category=WorkloadCategory.CODING,
                 cohort_key=identifier(f"deepswe-v1.1-{as_of}"),
                 evaluation_date=as_of,
-                attempts=int(str(raw["task_count"])),
-                success_rate=float(cast(float, row["pass_rate_percent"])) / 100.0,
-                observed_output_tokens_summary=float(cast(float, row["output_tokens"])),
-                observed_agent_steps_summary=float(cast(float, row["agent_steps"])),
-                observed_cost_summary_usd=float(cast(float, row["cost_usd"])),
-                aggregation_statistic=AggregationStatistic.UNSPECIFIED,
+                attempts=int(str(row["attempted_tasks"])),
+                success_rate=float(cast(float, row["pass_rate"])),
+                mean_input_tokens=float(cast(float, row["mean_input_tokens"])),
+                mean_output_tokens=float(cast(float, row["mean_output_tokens"])),
+                mean_agent_steps=float(cast(float, row["mean_agent_steps"])),
+                aggregation_statistic=AggregationStatistic.ARITHMETIC_MEAN,
                 metric_definition=(
-                    "Published DeepSWE resource summaries; statistic semantics are not sufficient "
-                    "for mean-based success adjustment"
+                    "Arithmetic mean input tokens, output tokens, and mini-swe-agent steps per "
+                    "attempt across the published DeepSWE leaderboard run set"
+                ),
+                signal_role=SignalRole.EFFICIENCY,
+                scoring_disposition=ScoringDisposition.SCORED,
+                source=source,
+                result_type=ResultType.INDEPENDENT,
+                benchmark_version=benchmark_version,
+                harness_version="pier-mini-swe-agent-deepswe-v1.1",
+                evaluator="Datacurve",
+                harness_owner="Datacurve",
+                run_executor="Datacurve",
+                raw_artifact_available=False,
+                capture_type=ArtifactCaptureType.REVIEWED_FACT_EXTRACT,
+                source_artifact_id=artifact_id,
+                source_registry_snapshot_id=artifact_id,
+                crosswalk_entry_id=match.id,
+                signal_id="deepswe-v1.1-resources",
+                configuration_verification=ConfigurationVerification(
+                    model_label_exact=True,
+                    release_label_exact=True,
+                    effort_label_exact=True,
+                    fallback_absent=True,
+                ),
+            )
+        )
+        efficiency.append(
+            EfficiencyMeasurement(
+                record_id=identifier(
+                    f"deepswe-endpoint-resources-{match.canonical_model_id}-{as_of}"
+                ),
+                model_id=match.canonical_model_id,
+                source_model_id=source_model_id,
+                workload="deepswe-v1.1",
+                workload_category=WorkloadCategory.CODING,
+                cohort_key=identifier(f"deepswe-v1.1-{as_of}"),
+                evaluation_date=as_of,
+                attempts=int(str(row["attempted_tasks"])),
+                success_rate=float(cast(float, row["pass_rate"])),
+                mean_wall_seconds=float(cast(float, row["mean_duration_seconds"])),
+                mean_cost_per_attempt=float(cast(float, row["mean_cost_usd"])),
+                aggregation_statistic=AggregationStatistic.ARITHMETIC_MEAN,
+                metric_definition=(
+                    "Arithmetic mean wall duration and dollar cost per attempt from the published "
+                    "DeepSWE leaderboard; retained diagnostically until deployment identity is "
+                    "verified"
                 ),
                 record_status=RecordStatus.DIAGNOSTIC_ONLY,
                 signal_role=SignalRole.EFFICIENCY,
@@ -182,12 +237,12 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
                 evaluator="Datacurve",
                 harness_owner="Datacurve",
                 run_executor="Datacurve",
-                raw_artifact_available=True,
+                raw_artifact_available=False,
                 capture_type=ArtifactCaptureType.REVIEWED_FACT_EXTRACT,
                 source_artifact_id=artifact_id,
                 source_registry_snapshot_id=artifact_id,
                 crosswalk_entry_id=match.id,
-                signal_id="deepswe-v1.1",
+                signal_id="deepswe-v1.1-endpoint-resources",
                 configuration_verification=ConfigurationVerification(
                     model_label_exact=True,
                     release_label_exact=True,
@@ -203,7 +258,7 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
         efficiency=tuple(efficiency),
         rejections=tuple(rejected),
         diagnostics=(
-            "DeepSWE resource summaries retained as diagnostic because mean semantics are unproven",
+            "DeepSWE wall time and dollar cost remain diagnostic pending deployment identity",
         ),
     )
 

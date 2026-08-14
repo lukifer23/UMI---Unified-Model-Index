@@ -61,6 +61,18 @@ class WeightConfig(ConfigModel):
                 or abs(sum(weights.values()) - 1) > 1e-9
             ):
                 raise ValueError(f"{name} weights must be nonnegative and sum to 1")
+        supported_efficiency = {
+            "effective_input_tokens",
+            "effective_output_tokens",
+            "effective_reasoning_tokens",
+            "effective_cached_tokens",
+            "effective_turns",
+            "effective_agent_steps",
+            "effective_wall_time",
+            "effective_tool_calls",
+        }
+        if not self.efficiency or not set(self.efficiency).issubset(supported_efficiency):
+            raise ValueError("efficiency weights contain an unsupported metric")
         return self
 
 
@@ -142,12 +154,26 @@ class ValueConfig(ConfigModel):
         return next(item for item in self.scenarios if item.name == self.baseline)
 
 
+class WorkloadFamilyDefinition(ConfigModel):
+    id: str = Field(pattern=r"^[a-z0-9][a-z0-9._-]*$")
+    category: WorkloadCategory
+    weight: float = Field(gt=0, le=1)
+
+
+class WorkloadDefinition(ConfigModel):
+    id: str = Field(pattern=r"^[a-z0-9][a-z0-9._-]*$")
+    family: str = Field(pattern=r"^[a-z0-9][a-z0-9._-]*$")
+    weight: float = Field(gt=0, le=1)
+
+
 class ProjectConfig(ConfigModel):
     weights: WeightConfig
     normalization: NormalizationConfig
     eligibility: EligibilityConfig
     benchmarks: tuple[BenchmarkDefinition, ...]
     families: tuple[BenchmarkFamilyDefinition, ...]
+    workload_families: tuple[WorkloadFamilyDefinition, ...]
+    workloads: tuple[WorkloadDefinition, ...]
     value: ValueConfig
     overlap: OverlapPolicy = OverlapPolicy()
     fingerprint: str
@@ -175,6 +201,34 @@ class ProjectConfig(ConfigModel):
         return self
 
     @model_validator(mode="after")
+    def validate_workload_hierarchy(self) -> ProjectConfig:
+        family_ids = [item.id for item in self.workload_families]
+        workload_ids = [item.id for item in self.workloads]
+        if len(family_ids) != len(set(family_ids)):
+            raise ValueError("workload family IDs must be unique")
+        if len(workload_ids) != len(set(workload_ids)):
+            raise ValueError("workload IDs must be unique")
+        families = {item.id: item for item in self.workload_families}
+        for workload in self.workloads:
+            if workload.family not in families:
+                raise ValueError(f"workload {workload.id} references unknown family")
+        for category in self.weights.workload_weights:
+            category_families = [
+                item for item in self.workload_families if item.category == category
+            ]
+            if category_families and abs(
+                sum(item.weight for item in category_families) - 1.0
+            ) > 1e-9:
+                raise ValueError(f"workload family weights for {category.value} must sum to 1")
+        for family in self.workload_families:
+            family_workloads = [item for item in self.workloads if item.family == family.id]
+            if not family_workloads:
+                raise ValueError(f"workload family {family.id} has no configured workloads")
+            if abs(sum(item.weight for item in family_workloads) - 1.0) > 1e-9:
+                raise ValueError(f"workload weights for {family.id} must sum to 1")
+        return self
+
+    @model_validator(mode="after")
     def validate_overlap_policy(self) -> ProjectConfig:
         signals = {item.id: item for item in self.overlap.signals}
         if len(signals) != len(self.overlap.signals):
@@ -191,6 +245,7 @@ class ProjectConfig(ConfigModel):
             if (
                 source.disposition == ScoringDisposition.SCORED
                 and target.disposition == ScoringDisposition.SCORED
+                and source.role == target.role
                 and edge.relation
                 in {
                     OverlapRelation.CONTAINS,
@@ -269,12 +324,15 @@ def load_project_config(config_dir: str | Path) -> ProjectConfig:
     raw_eligibility = _read_yaml(root / "eligibility.yaml")
     raw_benchmarks = _read_yaml(root / "benchmarks.yaml")
     raw_value = _read_yaml(root / "value.yaml")
+    raw_workloads = _read_yaml(root / "workloads.yaml")
     overlap_path = root / "overlap.yaml"
     raw_overlap = (
         _read_yaml(overlap_path) if overlap_path.is_file() else {"signals": [], "edges": []}
     )
     if not isinstance(raw_benchmarks, dict):
         raise ValueError("benchmarks.yaml must be a mapping")
+    if not isinstance(raw_workloads, dict):
+        raise ValueError("workloads.yaml must be a mapping")
     canonical = json.dumps(
         {
             "weights": raw_weights,
@@ -282,6 +340,7 @@ def load_project_config(config_dir: str | Path) -> ProjectConfig:
             "eligibility": raw_eligibility,
             "benchmarks": raw_benchmarks,
             "value": raw_value,
+            "workloads": raw_workloads,
             "overlap": raw_overlap,
         },
         sort_keys=True,
@@ -297,6 +356,13 @@ def load_project_config(config_dir: str | Path) -> ProjectConfig:
         ),
         families=tuple(
             BenchmarkFamilyDefinition.model_validate(item) for item in raw_benchmarks["families"]
+        ),
+        workload_families=tuple(
+            WorkloadFamilyDefinition.model_validate(item)
+            for item in raw_workloads["families"]
+        ),
+        workloads=tuple(
+            WorkloadDefinition.model_validate(item) for item in raw_workloads["workloads"]
         ),
         value=ValueConfig.model_validate(raw_value),
         overlap=OverlapPolicy.model_validate(raw_overlap),

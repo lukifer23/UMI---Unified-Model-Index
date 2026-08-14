@@ -689,6 +689,19 @@
           "default": null,
           "title": "Leaderboard Publish Date"
         },
+        "mean_agent_steps": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mean Agent Steps"
+        },
         "mean_cached_tokens": {
           "anyOf": [
             {
