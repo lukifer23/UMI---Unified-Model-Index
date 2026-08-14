@@ -117,7 +117,9 @@
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
     ],
     "economics": {
-      "comparability_reasons": [],
+      "comparability_reasons": [
+        "no ready economics workload support"
+      ],
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
@@ -127,13 +129,26 @@
       },
       "diagnostics": [],
       "directly_comparable_model_ids": [],
-      "evidence_profile": null,
+      "evidence_profile": {
+        "benchmark_series": [],
+        "contributing_record_ids": [],
+        "domain_ids": [],
+        "estimate_scope": "economics",
+        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "family_ids": [],
+        "id": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "methodology_fingerprint": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "source_organizations": [],
+        "workload_series": []
+      },
       "provisional": false,
       "score": null,
       "source_record_ids": []
     },
     "efficiency": {
-      "comparability_reasons": [],
+      "comparability_reasons": [
+        "no ready efficiency workload support"
+      ],
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
@@ -150,7 +165,18 @@
       },
       "diagnostics": [],
       "directly_comparable_model_ids": [],
-      "evidence_profile": null,
+      "evidence_profile": {
+        "benchmark_series": [],
+        "contributing_record_ids": [],
+        "domain_ids": [],
+        "estimate_scope": "efficiency",
+        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "family_ids": [],
+        "id": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "methodology_fingerprint": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "source_organizations": [],
+        "workload_series": []
+      },
       "provisional": false,
       "score": null,
       "source_record_ids": []
@@ -298,7 +324,9 @@
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
     ],
     "economics": {
-      "comparability_reasons": [],
+      "comparability_reasons": [
+        "no ready economics workload support"
+      ],
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
@@ -308,13 +336,26 @@
       },
       "diagnostics": [],
       "directly_comparable_model_ids": [],
-      "evidence_profile": null,
+      "evidence_profile": {
+        "benchmark_series": [],
+        "contributing_record_ids": [],
+        "domain_ids": [],
+        "estimate_scope": "economics",
+        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "family_ids": [],
+        "id": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "methodology_fingerprint": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "source_organizations": [],
+        "workload_series": []
+      },
       "provisional": false,
       "score": null,
       "source_record_ids": []
     },
     "efficiency": {
-      "comparability_reasons": [],
+      "comparability_reasons": [
+        "no ready efficiency workload support"
+      ],
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
@@ -331,7 +372,18 @@
       },
       "diagnostics": [],
       "directly_comparable_model_ids": [],
-      "evidence_profile": null,
+      "evidence_profile": {
+        "benchmark_series": [],
+        "contributing_record_ids": [],
+        "domain_ids": [],
+        "estimate_scope": "efficiency",
+        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "family_ids": [],
+        "id": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "methodology_fingerprint": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "source_organizations": [],
+        "workload_series": []
+      },
       "provisional": false,
       "score": null,
       "source_record_ids": []
@@ -479,7 +531,9 @@
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
     ],
     "economics": {
-      "comparability_reasons": [],
+      "comparability_reasons": [
+        "no ready economics workload support"
+      ],
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
@@ -489,13 +543,26 @@
       },
       "diagnostics": [],
       "directly_comparable_model_ids": [],
-      "evidence_profile": null,
+      "evidence_profile": {
+        "benchmark_series": [],
+        "contributing_record_ids": [],
+        "domain_ids": [],
+        "estimate_scope": "economics",
+        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "family_ids": [],
+        "id": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "methodology_fingerprint": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "source_organizations": [],
+        "workload_series": []
+      },
       "provisional": false,
       "score": null,
       "source_record_ids": []
     },
     "efficiency": {
-      "comparability_reasons": [],
+      "comparability_reasons": [
+        "no ready efficiency workload support"
+      ],
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
@@ -512,7 +579,18 @@
       },
       "diagnostics": [],
       "directly_comparable_model_ids": [],
-      "evidence_profile": null,
+      "evidence_profile": {
+        "benchmark_series": [],
+        "contributing_record_ids": [],
+        "domain_ids": [],
+        "estimate_scope": "efficiency",
+        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "family_ids": [],
+        "id": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "methodology_fingerprint": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "source_organizations": [],
+        "workload_series": []
+      },
       "provisional": false,
       "score": null,
       "source_record_ids": []
@@ -660,7 +738,9 @@
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
     ],
     "economics": {
-      "comparability_reasons": [],
+      "comparability_reasons": [
+        "no ready economics workload support"
+      ],
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
@@ -670,13 +750,26 @@
       },
       "diagnostics": [],
       "directly_comparable_model_ids": [],
-      "evidence_profile": null,
+      "evidence_profile": {
+        "benchmark_series": [],
+        "contributing_record_ids": [],
+        "domain_ids": [],
+        "estimate_scope": "economics",
+        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "family_ids": [],
+        "id": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "methodology_fingerprint": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "source_organizations": [],
+        "workload_series": []
+      },
       "provisional": false,
       "score": null,
       "source_record_ids": []
     },
     "efficiency": {
-      "comparability_reasons": [],
+      "comparability_reasons": [
+        "no ready efficiency workload support"
+      ],
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
@@ -693,7 +786,18 @@
       },
       "diagnostics": [],
       "directly_comparable_model_ids": [],
-      "evidence_profile": null,
+      "evidence_profile": {
+        "benchmark_series": [],
+        "contributing_record_ids": [],
+        "domain_ids": [],
+        "estimate_scope": "efficiency",
+        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "family_ids": [],
+        "id": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "methodology_fingerprint": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "source_organizations": [],
+        "workload_series": []
+      },
       "provisional": false,
       "score": null,
       "source_record_ids": []
@@ -841,7 +945,9 @@
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
     ],
     "economics": {
-      "comparability_reasons": [],
+      "comparability_reasons": [
+        "no ready economics workload support"
+      ],
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
@@ -851,13 +957,26 @@
       },
       "diagnostics": [],
       "directly_comparable_model_ids": [],
-      "evidence_profile": null,
+      "evidence_profile": {
+        "benchmark_series": [],
+        "contributing_record_ids": [],
+        "domain_ids": [],
+        "estimate_scope": "economics",
+        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "family_ids": [],
+        "id": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "methodology_fingerprint": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "source_organizations": [],
+        "workload_series": []
+      },
       "provisional": false,
       "score": null,
       "source_record_ids": []
     },
     "efficiency": {
-      "comparability_reasons": [],
+      "comparability_reasons": [
+        "no ready efficiency workload support"
+      ],
       "comparability_status": "insufficient_common_support",
       "coverage": 0.0,
       "coverage_details": {
@@ -874,7 +993,18 @@
       },
       "diagnostics": [],
       "directly_comparable_model_ids": [],
-      "evidence_profile": null,
+      "evidence_profile": {
+        "benchmark_series": [],
+        "contributing_record_ids": [],
+        "domain_ids": [],
+        "estimate_scope": "efficiency",
+        "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "family_ids": [],
+        "id": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "methodology_fingerprint": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "source_organizations": [],
+        "workload_series": []
+      },
       "provisional": false,
       "score": null,
       "source_record_ids": []

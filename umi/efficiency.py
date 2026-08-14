@@ -5,6 +5,7 @@ from collections import defaultdict
 from umi._component import ComponentComputation, weighted_available
 from umi.config import ProjectConfig
 from umi.derived_metrics import EFFICIENCY_ATTRIBUTES, consolidate_derived
+from umi.evidence_profiles import workload_profile
 from umi.loading import Dataset
 from umi.normalize import normalize_cohort
 from umi.schemas import ComponentScore, Direction, EfficiencyMeasurement, Provenance
@@ -21,6 +22,7 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
     selected_by_model: dict[str, list[Provenance]] = defaultdict(list)
     provisional_by_model: dict[str, set[str]] = defaultdict(set)
     diagnostics: dict[str, list[str]] = defaultdict(list)
+    profile_series: dict[str, set[str]] = defaultdict(set)
     series = sorted({(workload, cohort) for workload, cohort, _ in grouped})
 
     for workload, cohort_key in series:
@@ -54,6 +56,7 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                 if score is not None:
                     category = categories[model_id]
                     scores[metric][category][model_id].append(score)
+                    profile_series[model_id].add(f"{category}/{workload}/{cohort_key}/{metric}")
                     if normalized.provisional:
                         provisional_by_model[model_id].add(
                             f"{workload}/{cohort_key}/{metric}"
@@ -103,6 +106,47 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                     for category, value in category_metric_coverage.items()
                 },
             },
+            evidence_profile=workload_profile(
+                "efficiency", profile_series[model.id], records_by_id.values(), config
+            ),
+        )
+    for model_id, component in output.items():
+        profile_id = component.evidence_profile.id if component.evidence_profile else None
+        has_support = bool(
+            component.evidence_profile and component.evidence_profile.workload_series
+        )
+        peers = tuple(
+            sorted(
+                other_id
+                for other_id, other in output.items()
+                if has_support
+                and other_id != model_id
+                and other.evidence_profile
+                and other.evidence_profile.id == profile_id
+            )
+        )
+        output[model_id] = component.model_copy(
+            update={
+                "directly_comparable_model_ids": peers,
+                "comparability_status": (
+                    "directly_comparable"
+                    if peers
+                    else (
+                        "different_evidence_profile"
+                        if has_support
+                        else "insufficient_common_support"
+                    )
+                ),
+                "comparability_reasons": (
+                    ("same efficiency workload support and configuration",)
+                    if peers
+                    else (
+                        ("no other model has the same efficiency evidence profile",)
+                        if has_support
+                        else ("no ready efficiency workload support",)
+                    )
+                ),
+            }
         )
     return ComponentComputation(
         output, {key: tuple(value) for key, value in selected_by_model.items()}, {}

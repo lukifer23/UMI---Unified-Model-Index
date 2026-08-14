@@ -5,6 +5,7 @@ from collections import defaultdict
 from umi._component import ComponentComputation, consolidate_numeric, weighted_available
 from umi.config import ProjectConfig
 from umi.derived_metrics import consolidate_cost_per_success
+from umi.evidence_profiles import workload_profile
 from umi.loading import Dataset
 from umi.normalize import normalize_cohort
 from umi.schemas import (
@@ -50,6 +51,7 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
 
     category_scores: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
     provisional_by_model: dict[str, set[str]] = defaultdict(set)
+    profile_series: dict[str, set[str]] = defaultdict(set)
     series = sorted(
         {(workload, cohort) for workload, cohort, _ in efficiency}
         | {(workload, cohort) for workload, cohort, _ in direct}
@@ -96,6 +98,9 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
         for model_id, score in normalized.scores.items():
             if score is not None:
                 category_scores[categories[model_id]][model_id].append(score)
+                profile_series[model_id].add(
+                    f"{categories[model_id]}/{workload}/{cohort_key}/cost_per_success"
+                )
                 if normalized.provisional:
                     provisional_by_model[model_id].add(f"{workload}/{cohort_key}/cost_per_success")
 
@@ -132,5 +137,46 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                 "economics_workloads_total": len(config.weights.workload_weights),
                 "economics_workload_weighted": coverage,
             },
+            evidence_profile=workload_profile(
+                "economics", profile_series[model.id], records_by_id.values(), config
+            ),
+        )
+    for model_id, component in output.items():
+        profile_id = component.evidence_profile.id if component.evidence_profile else None
+        has_support = bool(
+            component.evidence_profile and component.evidence_profile.workload_series
+        )
+        peers = tuple(
+            sorted(
+                other_id
+                for other_id, other in output.items()
+                if has_support
+                and other_id != model_id
+                and other.evidence_profile
+                and other.evidence_profile.id == profile_id
+            )
+        )
+        output[model_id] = component.model_copy(
+            update={
+                "directly_comparable_model_ids": peers,
+                "comparability_status": (
+                    "directly_comparable"
+                    if peers
+                    else (
+                        "different_evidence_profile"
+                        if has_support
+                        else "insufficient_common_support"
+                    )
+                ),
+                "comparability_reasons": (
+                    ("same economics workload support and configuration",)
+                    if peers
+                    else (
+                        ("no other model has the same economics evidence profile",)
+                        if has_support
+                        else ("no ready economics workload support",)
+                    )
+                ),
+            }
         )
     return ComponentComputation(output, {key: tuple(value) for key, value in evidence.items()}, {})

@@ -291,6 +291,11 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
     assert all(
         item.efficiency.score is None and item.economics.score is None for item in results.values()
     )
+    assert all(
+        item.efficiency.comparability_status == "insufficient_common_support"
+        and item.economics.comparability_status == "insufficient_common_support"
+        for item in results.values()
+    )
     assert any("release date" in item for item in results["claude-fable-5-max"].diagnostics)
 
 

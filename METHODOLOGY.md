@@ -230,6 +230,11 @@ estimates are never a shared ranking. A common-evidence comparison first interse
 benchmark series `(benchmark_id, cohort_key)` available to every requested configuration, then
 recomputes each score using only that intersection.
 
+Efficiency and Economics use the same rule with workload support rather than benchmark support.
+Their profile records every normalized workload/category/cohort/metric series. They are comparable
+only when those workload-series sets and the scoring configuration match; a cost result cannot be
+ranked beside a different task, cohort, or resource definition.
+
 Family weights in each configured domain sum to one. In v0.3, `family.cap` is a configuration
 guard: `family.weight <= family.cap`, and domain caps sum to at least one. Scoring uses
 `family.weight` directly. A cap does not prevent a family from dominating a partial diagnostic
