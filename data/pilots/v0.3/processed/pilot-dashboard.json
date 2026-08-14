@@ -28,27 +28,14 @@
         "type": "chart"
       },
       {
-        "id": "models",
-        "layout": "full",
-        "tableId": "model_detail",
-        "type": "table"
-      },
-      {
         "chartId": "benchmark_scores",
         "id": "benchmarks",
         "type": "chart"
       },
       {
-        "id": "benchmark_rows",
-        "layout": "full",
-        "tableId": "benchmark_detail",
-        "type": "table"
-      },
-      {
+        "chartId": "effective_input_tokens",
         "id": "resources",
-        "layout": "full",
-        "tableId": "resource_detail",
-        "type": "table"
+        "type": "chart"
       },
       {
         "chartId": "gap_counts",
@@ -189,7 +176,7 @@
         "dataset": "benchmarks",
         "encodings": {
           "color": {
-            "field": "benchmark",
+            "field": "benchmark_short",
             "label": "Benchmark",
             "type": "nominal"
           },
@@ -212,6 +199,30 @@
         "type": "bar",
         "valueFormat": "number",
         "yAxisTitle": "Source score (%)"
+      },
+      {
+        "dataset": "resources",
+        "encodings": {
+          "x": {
+            "field": "model_short",
+            "label": "Model",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "effective_input_tokens",
+            "format": "compact",
+            "label": "Effective input tokens",
+            "type": "quantitative"
+          }
+        },
+        "id": "effective_input_tokens",
+        "layout": "full",
+        "sourceId": "accepted_efficiency",
+        "subtitle": "Mean input tokens per attempt divided by observed task success; lower is better.",
+        "title": "Success-adjusted DeepSWE input use",
+        "type": "bar",
+        "valueFormat": "compact",
+        "yAxisTitle": "Success-adjusted input tokens"
       },
       {
         "dataset": "gap_counts",
@@ -289,148 +300,7 @@
       }
     ],
     "surface": "dashboard",
-    "tables": [
-      {
-        "columns": [
-          {
-            "field": "model",
-            "label": "Exact configuration",
-            "type": "text"
-          },
-          {
-            "field": "capability",
-            "format": "number",
-            "label": "Capability"
-          },
-          {
-            "field": "capability_coverage",
-            "format": "percent",
-            "label": "Cap. coverage"
-          },
-          {
-            "field": "capability_domains",
-            "format": "number",
-            "label": "Domains"
-          },
-          {
-            "field": "efficiency",
-            "format": "number",
-            "label": "Efficiency"
-          },
-          {
-            "field": "efficiency_coverage",
-            "format": "percent",
-            "label": "Eff. coverage"
-          },
-          {
-            "field": "economics_coverage",
-            "format": "percent",
-            "label": "Econ. coverage"
-          },
-          {
-            "field": "partial_overall",
-            "format": "number",
-            "label": "Partial overall"
-          },
-          {
-            "field": "headline",
-            "label": "Headline",
-            "type": "text"
-          }
-        ],
-        "dataset": "model_summary",
-        "defaultSort": {
-          "direction": "desc",
-          "field": "capability_coverage"
-        },
-        "density": "dense",
-        "id": "model_detail",
-        "layout": "full",
-        "sourceId": "pilot_estimates",
-        "subtitle": "Partial values retain their coverage and evidence-profile context.",
-        "title": "Pilot configuration detail"
-      },
-      {
-        "columns": [
-          {
-            "field": "model",
-            "label": "Model",
-            "type": "text"
-          },
-          {
-            "field": "benchmark",
-            "label": "Benchmark",
-            "type": "text"
-          },
-          {
-            "field": "score",
-            "format": "number",
-            "label": "Raw score (%)"
-          },
-          {
-            "field": "source",
-            "label": "Source",
-            "type": "text"
-          }
-        ],
-        "dataset": "benchmarks",
-        "defaultSort": {
-          "direction": "asc",
-          "field": "model"
-        },
-        "density": "dense",
-        "id": "benchmark_detail",
-        "layout": "full",
-        "sourceId": "accepted_benchmarks",
-        "subtitle": "Every row retains its cohort and immutable source record ID.",
-        "title": "Accepted benchmark records"
-      },
-      {
-        "columns": [
-          {
-            "field": "model",
-            "label": "Model",
-            "type": "text"
-          },
-          {
-            "field": "success_rate",
-            "format": "percent",
-            "label": "Success rate"
-          },
-          {
-            "field": "attempts",
-            "format": "number",
-            "label": "Attempts"
-          },
-          {
-            "field": "effective_input_tokens",
-            "format": "compact",
-            "label": "Effective input tokens"
-          },
-          {
-            "field": "effective_output_tokens",
-            "format": "compact",
-            "label": "Effective output tokens"
-          },
-          {
-            "field": "effective_agent_steps",
-            "format": "number",
-            "label": "Effective agent steps"
-          }
-        ],
-        "dataset": "resources",
-        "defaultSort": {
-          "direction": "asc",
-          "field": "effective_input_tokens"
-        },
-        "density": "dense",
-        "id": "resource_detail",
-        "layout": "full",
-        "sourceId": "accepted_efficiency",
-        "subtitle": "Scored harness resources; endpoint cost and wall time remain diagnostic.",
-        "title": "Success-adjusted DeepSWE resources"
-      }
-    ],
+    "tables": [],
     "title": "UMI v0.3.4 \u2014 five-model pilot evidence report",
     "version": 1
   },
@@ -461,6 +331,7 @@
       "benchmarks": [
         {
           "benchmark": "gpqa-diamond",
+          "benchmark_short": "GPQA",
           "cohort": "epoch-gpqa-diamond-1.0.6-simple-evals",
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
@@ -471,6 +342,7 @@
         },
         {
           "benchmark": "gpqa-diamond",
+          "benchmark_short": "GPQA",
           "cohort": "epoch-gpqa-diamond-1.0.6-simple-evals",
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
@@ -481,6 +353,7 @@
         },
         {
           "benchmark": "gpqa-diamond",
+          "benchmark_short": "GPQA",
           "cohort": "epoch-gpqa-diamond-1.0.6-simple-evals",
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
@@ -491,6 +364,7 @@
         },
         {
           "benchmark": "gpqa-diamond",
+          "benchmark_short": "GPQA",
           "cohort": "epoch-gpqa-diamond-1.0.6-simple-evals",
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
@@ -501,6 +375,7 @@
         },
         {
           "benchmark": "scicode",
+          "benchmark_short": "SciCode",
           "cohort": "aa-v4.1.1-scicode-test-288-background-pass1",
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
@@ -511,6 +386,7 @@
         },
         {
           "benchmark": "scicode",
+          "benchmark_short": "SciCode",
           "cohort": "aa-v4.1.1-scicode-test-288-background-pass1",
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
@@ -521,6 +397,7 @@
         },
         {
           "benchmark": "scicode",
+          "benchmark_short": "SciCode",
           "cohort": "aa-v4.1.1-scicode-test-288-background-pass1",
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
@@ -531,6 +408,7 @@
         },
         {
           "benchmark": "scicode",
+          "benchmark_short": "SciCode",
           "cohort": "aa-v4.1.1-scicode-test-288-background-pass1",
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
@@ -541,6 +419,7 @@
         },
         {
           "benchmark": "critpt",
+          "benchmark_short": "CritPt",
           "cohort": "aa-v4.1.1-critpt-70-test-challenges-pass1",
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
@@ -551,6 +430,7 @@
         },
         {
           "benchmark": "critpt",
+          "benchmark_short": "CritPt",
           "cohort": "aa-v4.1.1-critpt-70-test-challenges-pass1",
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
@@ -561,6 +441,7 @@
         },
         {
           "benchmark": "critpt",
+          "benchmark_short": "CritPt",
           "cohort": "aa-v4.1.1-critpt-70-test-challenges-pass1",
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
@@ -571,6 +452,7 @@
         },
         {
           "benchmark": "critpt",
+          "benchmark_short": "CritPt",
           "cohort": "aa-v4.1.1-critpt-70-test-challenges-pass1",
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
@@ -581,6 +463,7 @@
         },
         {
           "benchmark": "arc-agi-2",
+          "benchmark_short": "ARC-2",
           "cohort": "arc-prize-verified-arc-agi-2-semi-private-pass2",
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
@@ -591,6 +474,7 @@
         },
         {
           "benchmark": "arc-agi-2",
+          "benchmark_short": "ARC-2",
           "cohort": "arc-prize-verified-arc-agi-2-semi-private-pass2",
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
@@ -601,6 +485,7 @@
         },
         {
           "benchmark": "arc-agi-2",
+          "benchmark_short": "ARC-2",
           "cohort": "arc-prize-verified-arc-agi-2-semi-private-pass2",
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
@@ -611,6 +496,7 @@
         },
         {
           "benchmark": "deepswe-v1.1",
+          "benchmark_short": "DeepSWE",
           "cohort": "deepswe-v1.1-2026-08-13",
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
@@ -621,6 +507,7 @@
         },
         {
           "benchmark": "deepswe-v1.1",
+          "benchmark_short": "DeepSWE",
           "cohort": "deepswe-v1.1-2026-08-13",
           "model": "Claude Fable 5 (max)",
           "model_id": "claude-fable-5-max",
@@ -631,6 +518,7 @@
         },
         {
           "benchmark": "deepswe-v1.1",
+          "benchmark_short": "DeepSWE",
           "cohort": "deepswe-v1.1-2026-08-13",
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
@@ -641,6 +529,7 @@
         },
         {
           "benchmark": "deepswe-v1.1",
+          "benchmark_short": "DeepSWE",
           "cohort": "deepswe-v1.1-2026-08-13",
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
@@ -651,6 +540,7 @@
         },
         {
           "benchmark": "deepswe-v1.1",
+          "benchmark_short": "DeepSWE",
           "cohort": "deepswe-v1.1-2026-08-13",
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
@@ -662,70 +552,70 @@
       ],
       "component_scores": [
         {
-          "component": "Capability",
+          "component": "Cap.",
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
           "score": 76.9620253164557
         },
         {
-          "component": "Efficiency",
+          "component": "Eff.",
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
           "score": 41.66666666666667
         },
         {
-          "component": "Capability",
+          "component": "Cap.",
           "model": "Claude Fable 5 (max)",
           "model_id": "claude-fable-5-max",
           "model_short": "Fable 5",
           "score": 50.0
         },
         {
-          "component": "Efficiency",
+          "component": "Eff.",
           "model": "Claude Fable 5 (max)",
           "model_id": "claude-fable-5-max",
           "model_short": "Fable 5",
           "score": 50.00000000000001
         },
         {
-          "component": "Capability",
+          "component": "Cap.",
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
           "score": 82.27848101265822
         },
         {
-          "component": "Efficiency",
+          "component": "Eff.",
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
           "score": 100.00000000000001
         },
         {
-          "component": "Capability",
+          "component": "Cap.",
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
           "score": 26.83544303797468
         },
         {
-          "component": "Efficiency",
+          "component": "Eff.",
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
           "score": 58.333333333333336
         },
         {
-          "component": "Capability",
+          "component": "Cap.",
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2",
           "score": 0.0
         },
         {
-          "component": "Efficiency",
+          "component": "Eff.",
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2",
@@ -734,105 +624,105 @@
       ],
       "coverage": [
         {
-          "component": "Capability",
+          "component": "Cap.",
           "coverage": 0.49375,
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5"
         },
         {
-          "component": "Efficiency",
+          "component": "Eff.",
           "coverage": 0.045,
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5"
         },
         {
-          "component": "Economics",
+          "component": "Econ.",
           "coverage": 0.0,
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5"
         },
         {
-          "component": "Capability",
+          "component": "Cap.",
           "coverage": 0.165,
           "model": "Claude Fable 5 (max)",
           "model_id": "claude-fable-5-max",
           "model_short": "Fable 5"
         },
         {
-          "component": "Efficiency",
+          "component": "Eff.",
           "coverage": 0.045,
           "model": "Claude Fable 5 (max)",
           "model_id": "claude-fable-5-max",
           "model_short": "Fable 5"
         },
         {
-          "component": "Economics",
+          "component": "Econ.",
           "coverage": 0.0,
           "model": "Claude Fable 5 (max)",
           "model_id": "claude-fable-5-max",
           "model_short": "Fable 5"
         },
         {
-          "component": "Capability",
+          "component": "Cap.",
           "coverage": 0.49375,
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol"
         },
         {
-          "component": "Efficiency",
+          "component": "Eff.",
           "coverage": 0.045,
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol"
         },
         {
-          "component": "Economics",
+          "component": "Econ.",
           "coverage": 0.0,
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol"
         },
         {
-          "component": "Capability",
+          "component": "Cap.",
           "coverage": 0.49375,
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3"
         },
         {
-          "component": "Efficiency",
+          "component": "Eff.",
           "coverage": 0.045,
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3"
         },
         {
-          "component": "Economics",
+          "component": "Econ.",
           "coverage": 0.0,
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3"
         },
         {
-          "component": "Capability",
+          "component": "Cap.",
           "coverage": 0.35625,
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2"
         },
         {
-          "component": "Efficiency",
+          "component": "Eff.",
           "coverage": 0.045,
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2"
         },
         {
-          "component": "Economics",
+          "component": "Econ.",
           "coverage": 0.0,
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",

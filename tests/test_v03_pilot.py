@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import base64
+import gzip
 import json
+import re
 import socket
 from datetime import date
 from pathlib import Path
@@ -298,6 +301,7 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
         "pareto.json",
         "pilot-gap-report.json",
         "pilot-dashboard.json",
+        "pilot-dashboard.html",
         "pilot-sensitivity.json",
     } <= {item.name for item in processed.iterdir()}
     dashboard = json.loads((processed / "pilot-dashboard.json").read_text(encoding="utf-8"))
@@ -326,6 +330,20 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
         for collection in ("cards", "charts", "tables")
         for item in dashboard["manifest"][collection]
     )
+    html = (processed / "pilot-dashboard.html").read_text(encoding="utf-8")
+    payload_match = re.search(
+        r'<template\s+id=["\']data-analytics-portable-artifact-payload-source["\'][^>]*>'
+        r"(.*?)</template>",
+        html,
+        re.DOTALL,
+    )
+    assert payload_match is not None
+    embedded = json.loads(
+        gzip.decompress(base64.b64decode(re.sub(r"\s+", "", payload_match.group(1))))
+    )
+    assert embedded["manifest"] == dashboard["manifest"]
+    assert embedded["snapshot"] == dashboard["snapshot"]
+    assert embedded["sources"] == dashboard["sources"]
 
 
 def test_epoch_and_arena_adapter_dispositions(crosswalk) -> None:

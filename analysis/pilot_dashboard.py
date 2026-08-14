@@ -43,6 +43,13 @@ def build_pilot_dashboard(
         "kimi-k3-max": "Kimi K3",
         "glm-5.2-max": "GLM-5.2",
     }
+    benchmark_short_names = {
+        "arc-agi-2": "ARC-2",
+        "critpt": "CritPt",
+        "deepswe-v1.1": "DeepSWE",
+        "gpqa-diamond": "GPQA",
+        "scicode": "SciCode",
+    }
     ordered_models = [model.id for model in dataset.models]
     estimates_by_model = {item["model_id"]: item for item in estimates}
 
@@ -80,7 +87,7 @@ def build_pilot_dashboard(
                         "model": label,
                         "model_id": model_id,
                         "model_short": model_short_names[model_id],
-                        "component": component.title(),
+                        "component": {"capability": "Cap.", "efficiency": "Eff."}[component],
                         "score": score,
                     }
                 )
@@ -90,7 +97,11 @@ def build_pilot_dashboard(
                     "model": label,
                     "model_id": model_id,
                     "model_short": model_short_names[model_id],
-                    "component": component.title(),
+                    "component": {
+                        "capability": "Cap.",
+                        "efficiency": "Eff.",
+                        "economics": "Econ.",
+                    }[component],
                     "coverage": item[component]["coverage"],
                 }
             )
@@ -101,6 +112,7 @@ def build_pilot_dashboard(
             "model_id": record.model_id,
             "model_short": model_short_names[record.model_id],
             "benchmark": record.benchmark_id,
+            "benchmark_short": benchmark_short_names[record.benchmark_id],
             "score": record.value,
             "cohort": record.cohort_key,
             "record_id": record.record_id,
@@ -333,10 +345,41 @@ def build_pilot_dashboard(
                             "label": "Model",
                         },
                         "y": {"field": "score", "type": "quantitative", "label": "Raw score"},
-                        "color": {"field": "benchmark", "type": "nominal", "label": "Benchmark"},
+                        "color": {
+                            "field": "benchmark_short",
+                            "type": "nominal",
+                            "label": "Benchmark",
+                        },
                     },
                     "yAxisTitle": "Source score (%)",
                     "valueFormat": "number",
+                    "layout": "full",
+                },
+                {
+                    "id": "effective_input_tokens",
+                    "title": "Success-adjusted DeepSWE input use",
+                    "subtitle": (
+                        "Mean input tokens per attempt divided by observed task success; "
+                        "lower is better."
+                    ),
+                    "type": "bar",
+                    "dataset": "resources",
+                    "sourceId": "accepted_efficiency",
+                    "encodings": {
+                        "x": {
+                            "field": "model_short",
+                            "type": "nominal",
+                            "label": "Model",
+                        },
+                        "y": {
+                            "field": "effective_input_tokens",
+                            "type": "quantitative",
+                            "label": "Effective input tokens",
+                            "format": "compact",
+                        },
+                    },
+                    "yAxisTitle": "Success-adjusted input tokens",
+                    "valueFormat": "compact",
                     "layout": "full",
                 },
                 {
@@ -358,95 +401,7 @@ def build_pilot_dashboard(
                     "layout": "full",
                 },
             ],
-            "tables": [
-                {
-                    "id": "model_detail",
-                    "title": "Pilot configuration detail",
-                    "subtitle": (
-                        "Partial values retain their coverage and evidence-profile context."
-                    ),
-                    "dataset": "model_summary",
-                    "sourceId": "pilot_estimates",
-                    "defaultSort": {"field": "capability_coverage", "direction": "desc"},
-                    "density": "dense",
-                    "layout": "full",
-                    "columns": [
-                        {"field": "model", "label": "Exact configuration", "type": "text"},
-                        {"field": "capability", "label": "Capability", "format": "number"},
-                        {
-                            "field": "capability_coverage",
-                            "label": "Cap. coverage",
-                            "format": "percent",
-                        },
-                        {"field": "capability_domains", "label": "Domains", "format": "number"},
-                        {"field": "efficiency", "label": "Efficiency", "format": "number"},
-                        {
-                            "field": "efficiency_coverage",
-                            "label": "Eff. coverage",
-                            "format": "percent",
-                        },
-                        {
-                            "field": "economics_coverage",
-                            "label": "Econ. coverage",
-                            "format": "percent",
-                        },
-                        {
-                            "field": "partial_overall",
-                            "label": "Partial overall",
-                            "format": "number",
-                        },
-                        {"field": "headline", "label": "Headline", "type": "text"},
-                    ],
-                },
-                {
-                    "id": "benchmark_detail",
-                    "title": "Accepted benchmark records",
-                    "subtitle": "Every row retains its cohort and immutable source record ID.",
-                    "dataset": "benchmarks",
-                    "sourceId": "accepted_benchmarks",
-                    "defaultSort": {"field": "model", "direction": "asc"},
-                    "density": "dense",
-                    "layout": "full",
-                    "columns": [
-                        {"field": "model", "label": "Model", "type": "text"},
-                        {"field": "benchmark", "label": "Benchmark", "type": "text"},
-                        {"field": "score", "label": "Raw score (%)", "format": "number"},
-                        {"field": "source", "label": "Source", "type": "text"},
-                    ],
-                },
-                {
-                    "id": "resource_detail",
-                    "title": "Success-adjusted DeepSWE resources",
-                    "subtitle": (
-                        "Scored harness resources; endpoint cost and wall time remain diagnostic."
-                    ),
-                    "dataset": "resources",
-                    "sourceId": "accepted_efficiency",
-                    "defaultSort": {"field": "effective_input_tokens", "direction": "asc"},
-                    "density": "dense",
-                    "layout": "full",
-                    "columns": [
-                        {"field": "model", "label": "Model", "type": "text"},
-                        {"field": "success_rate", "label": "Success rate", "format": "percent"},
-                        {"field": "attempts", "label": "Attempts", "format": "number"},
-                        {
-                            "field": "effective_input_tokens",
-                            "label": "Effective input tokens",
-                            "format": "compact",
-                        },
-                        {
-                            "field": "effective_output_tokens",
-                            "label": "Effective output tokens",
-                            "format": "compact",
-                        },
-                        {
-                            "field": "effective_agent_steps",
-                            "label": "Effective agent steps",
-                            "format": "number",
-                        },
-                    ],
-                },
-            ],
+            "tables": [],
             "sources": [
                 {"id": source["id"], "label": source["label"], "path": source["path"]}
                 for source in sources
@@ -477,19 +432,11 @@ def build_pilot_dashboard(
                 },
                 {"id": "coverage", "type": "chart", "chartId": "component_coverage"},
                 {"id": "components", "type": "chart", "chartId": "component_scores"},
-                {"id": "models", "type": "table", "tableId": "model_detail", "layout": "full"},
                 {"id": "benchmarks", "type": "chart", "chartId": "benchmark_scores"},
                 {
-                    "id": "benchmark_rows",
-                    "type": "table",
-                    "tableId": "benchmark_detail",
-                    "layout": "full",
-                },
-                {
                     "id": "resources",
-                    "type": "table",
-                    "tableId": "resource_detail",
-                    "layout": "full",
+                    "type": "chart",
+                    "chartId": "effective_input_tokens",
                 },
                 {"id": "gaps", "type": "chart", "chartId": "gap_counts"},
                 {

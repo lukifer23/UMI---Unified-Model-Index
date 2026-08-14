@@ -70,6 +70,8 @@ uv run --no-sync umi gaps --data-dir data/pilots/v0.3/raw
 The build also regenerates `data/pilots/v0.3/processed/pilot-dashboard.json`, the canonical
 source-backed contract for the five-model interactive report. It has partial status and is not a
 second scoring implementation or a headline ranking.
+`data/pilots/v0.3/processed/pilot-dashboard.html` is the committed self-contained rendering; its
+embedded manifest, snapshot, and sources are tested against the canonical JSON after every build.
 
 Every model-specific output is labeled `real evidence — model-specific partial estimate`; it is
 not a ranking. All `headline_overall` fields are null. `umi compare` produces a separately labeled,
