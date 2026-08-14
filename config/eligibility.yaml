@@ -1,0 +1,9 @@
+release_start: 2026-06-15
+release_end: 2026-08-14
+minimum_overall_coverage: 0.60
+minimum_capability_domains: 3
+high_confidence_coverage: 0.80
+high_confidence_quality_share: 0.75
+medium_confidence_coverage: 0.60
+medium_confidence_quality_share: 0.50
+

@@ -1,0 +1,22 @@
+capability_domains:
+  general_reasoning: 0.275
+  software_engineering: 0.275
+  agentic_work: 0.20
+  math_science: 0.15
+  context_reliability: 0.10
+efficiency:
+  effective_tokens: 0.50
+  turns: 0.20
+  wall_seconds: 0.20
+  tool_calls: 0.10
+overall:
+  capability: 0.55
+  efficiency: 0.25
+  economics: 0.20
+sensitivity_sets:
+  - {name: baseline, capability: 0.55, efficiency: 0.25, economics: 0.20}
+  - {name: capability_60, capability: 0.60, efficiency: 0.20, economics: 0.20}
+  - {name: efficiency_30, capability: 0.50, efficiency: 0.30, economics: 0.20}
+  - {name: economics_15, capability: 0.60, efficiency: 0.25, economics: 0.15}
+  - {name: economics_25, capability: 0.50, efficiency: 0.25, economics: 0.25}
+

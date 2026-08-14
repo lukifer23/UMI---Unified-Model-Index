@@ -1,0 +1,42 @@
+benchmarks:
+  - id: synthetic-general
+    name: Synthetic General Reasoning
+    domain: general_reasoning
+    family: synthetic-general-family
+    direction: higher
+    unit: percent
+    weight: 1.0
+    normalization: robust_z
+  - id: synthetic-code
+    name: Synthetic Software Engineering
+    domain: software_engineering
+    family: synthetic-code-family
+    direction: higher
+    unit: percent
+    weight: 1.0
+    normalization: robust_z
+  - id: synthetic-agent
+    name: Synthetic Agent Work
+    domain: agentic_work
+    family: synthetic-agent-family
+    direction: higher
+    unit: percent
+    weight: 1.0
+    normalization: robust_z
+  - id: synthetic-math
+    name: Synthetic Math/Science
+    domain: math_science
+    family: synthetic-math-family
+    direction: higher
+    unit: percent
+    weight: 1.0
+    normalization: robust_z
+  - id: synthetic-context
+    name: Synthetic Context Reliability
+    domain: context_reliability
+    family: synthetic-context-family
+    direction: higher
+    unit: percent
+    weight: 1.0
+    normalization: robust_z
+

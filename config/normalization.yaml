@@ -1,0 +1,11 @@
+minimum_robust_cohort: 5
+minimum_rank_cohort: 2
+correlation_min_overlap: 5
+default_strategy: robust_z
+log_metrics:
+  - effective_tokens
+  - turns
+  - wall_seconds
+  - tool_calls
+  - cost_per_success
+
