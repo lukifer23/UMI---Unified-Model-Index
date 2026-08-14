@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -13,6 +15,7 @@ from umi.loading import (
 )
 from umi.readiness import readiness_failures
 from umi.schemas import (
+    AcceptanceManifest,
     BenchmarkMeasurement,
     CrosswalkStatus,
     EfficiencyMeasurement,
@@ -33,7 +36,81 @@ class ScoringBundle:
     source_registry: SourceRegistry
     crosswalk: ModelCrosswalk
     registry_path: Path
+    acceptance_manifest: AcceptanceManifest
     warnings: tuple[str, ...] = ()
+
+
+def build_acceptance_manifest(
+    dataset: Dataset, registry: SourceRegistry
+) -> AcceptanceManifest:
+    models = {item.id: item for item in dataset.models}
+    records: tuple[
+        BenchmarkMeasurement | EfficiencyMeasurement | TaskEconomicsMeasurement, ...
+    ] = (*dataset.benchmarks, *dataset.efficiency, *dataset.task_economics)
+    diagnostic = tuple(
+        sorted(
+            item.record_id
+            for item in records
+            if item.scoring_disposition == ScoringDisposition.DIAGNOSTIC_ONLY
+        )
+    )
+    accepted_records = tuple(
+        sorted(
+            item.record_id
+            for item in records
+            if item.scoring_disposition == ScoringDisposition.SCORED
+            and (model := models.get(item.model_id)) is not None
+            and not readiness_failures(item, model)
+        )
+    )
+    accepted_ids = set(accepted_records)
+    accepted = tuple(item for item in records if item.record_id in accepted_ids)
+    accepted_artifact_ids = tuple(
+        sorted({item.source_artifact_id for item in accepted if item.source_artifact_id})
+    )
+    snapshots = {item.id: item for item in registry.snapshots}
+    unready = tuple(
+        sorted(
+            item.record_id
+            for item in records
+            if item.scoring_disposition == ScoringDisposition.SCORED
+            and item.record_id not in accepted_ids
+        )
+    )
+    payload = {
+        "accepted_record_ids": accepted_records,
+        "excluded_diagnostic_record_ids": diagnostic,
+        "excluded_unready_record_ids": unready,
+        "accepted_artifact_ids": accepted_artifact_ids,
+        "accepted_crosswalk_entry_ids": tuple(
+            sorted({item.crosswalk_entry_id for item in accepted if item.crosswalk_entry_id})
+        ),
+        "accepted_signal_ids": tuple(
+            sorted({item.signal_id for item in accepted if item.signal_id})
+        ),
+        "scoring_relevant_adapter_versions": tuple(
+            sorted(
+                {
+                    snapshots[artifact_id].adapter_id
+                    for artifact_id in accepted_artifact_ids
+                    if artifact_id in snapshots
+                }
+            )
+        ),
+        "warnings": tuple(
+            message
+            for condition, message in (
+                (bool(diagnostic), f"{len(diagnostic)} diagnostic records excluded"),
+                (bool(unready), f"{len(unready)} unready scoring records excluded"),
+            )
+            if condition
+        ),
+    }
+    rendered = json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    return AcceptanceManifest(
+        **payload,
+        fingerprint=hashlib.sha256(rendered.encode()).hexdigest(),
+    )
 
 
 def validate_scoring_bundle(
@@ -45,11 +122,36 @@ def validate_scoring_bundle(
 ) -> tuple[str, ...]:
     dataset_report = validate_dataset(dataset, config)
     errors: set[str] = set(dataset_report.errors)
-    registry_report = validate_source_registry(registry, registry_path, dataset)
+    manifest = build_acceptance_manifest(dataset, registry)
+    accepted_ids = set(manifest.accepted_record_ids)
+    accepted_records = tuple(
+        item
+        for item in (*dataset.benchmarks, *dataset.efficiency, *dataset.task_economics)
+        if item.record_id in accepted_ids
+    )
+    scored_artifact_ids = {
+        item.source_artifact_id for item in accepted_records if item.source_artifact_id
+    }
+    registry_report = validate_source_registry(
+        registry,
+        registry_path,
+        snapshot_ids=scored_artifact_ids,
+    )
     errors.update(registry_report.errors)
-    crosswalk_report = validate_crosswalk(crosswalk, dataset, registry)
+    scored_crosswalk_ids = {
+        item.crosswalk_entry_id for item in accepted_records if item.crosswalk_entry_id
+    }
+    scoped_crosswalk = ModelCrosswalk(
+        entries=tuple(item for item in crosswalk.entries if item.id in scored_crosswalk_ids)
+    )
+    scored_registry = SourceRegistry(
+        snapshots=tuple(item for item in registry.snapshots if item.id in scored_artifact_ids)
+    )
+    crosswalk_report = validate_crosswalk(scoped_crosswalk, dataset, scored_registry)
     errors.update(crosswalk_report.errors)
     errors.update(validate_overlap(config.overlap).errors)
+    if set(manifest.scoring_relevant_adapter_versions) != set(dataset.adapter_versions):
+        errors.add("scoring-relevant adapter versions differ from accepted source artifacts")
 
     signals = {item.id: item for item in config.overlap.signals}
     definitions = {item.id: item for item in config.benchmarks}
@@ -98,6 +200,9 @@ def validate_scoring_bundle(
             elif record.signal_id != definition.signal_id:
                 errors.add(f"{prefix} signal differs from benchmark definition")
 
+        if record.record_id not in accepted_ids:
+            continue
+
         artifact_id = record.source_registry_snapshot_id
         if artifact_id is None or artifact_id != record.source_artifact_id:
             errors.add(f"{prefix} lacks an exact source-registry snapshot binding")
@@ -138,10 +243,14 @@ def load_scoring_bundle(
     errors = validate_scoring_bundle(dataset, config, registry, registry_path, crosswalk)
     if errors:
         raise DataValidationError(errors)
-    reports = (
-        validate_dataset(dataset, config),
-        validate_source_registry(registry, registry_path, dataset),
-        validate_crosswalk(crosswalk, dataset, registry),
+    warnings = validate_dataset(dataset, config).warnings
+    manifest = build_acceptance_manifest(dataset, registry)
+    return ScoringBundle(
+        dataset,
+        config,
+        registry,
+        crosswalk,
+        registry_path,
+        manifest,
+        tuple(sorted({*warnings, *manifest.warnings})),
     )
-    warnings = tuple(sorted({warning for report in reports for warning in report.warnings}))
-    return ScoringBundle(dataset, config, registry, crosswalk, registry_path, warnings)

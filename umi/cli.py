@@ -30,7 +30,11 @@ from umi.adapters import (
     adapt_epoch_csv,
     adapt_lab_release_facts,
 )
-from umi.bundle import load_scoring_bundle
+from umi.bundle import (
+    build_acceptance_manifest,
+    load_scoring_bundle,
+    validate_scoring_bundle,
+)
 from umi.config import load_project_config
 from umi.loading import load_dataset, load_model_crosswalk, load_source_registry
 from umi.scoring import score_bundle, score_dataset
@@ -130,6 +134,7 @@ def build_parser() -> argparse.ArgumentParser:
     ):
         child = subparsers.add_parser(command)
         _add_common(child)
+    subparsers.choices["validate"].set_defaults(source_registry=None, crosswalk=None)
     subparsers.choices["rank"].add_argument(
         "--include-provisional",
         action="store_true",
@@ -140,6 +145,11 @@ def build_parser() -> argparse.ArgumentParser:
     source_commands = sources.add_subparsers(dest="sources_command", required=True)
     source_validate = source_commands.add_parser("validate")
     _add_common(source_validate)
+    source_validate.add_argument(
+        "--strict",
+        action="store_true",
+        help="Validate the complete audit package, including diagnostic evidence",
+    )
 
     ingest = subparsers.add_parser("ingest")
     ingest.add_argument(
@@ -266,9 +276,13 @@ def run(args: argparse.Namespace) -> int:
         )
         _emit(
             {
-                "valid": True,
+                "schema_valid": True,
+                "scored_inputs_ready": True,
+                "strict_audit_valid": None,
+                "headline_eligible": None,
                 "model_count": len(bundle.dataset.models),
                 "scored_audit_fingerprint": bundle.dataset.scored_audit_fingerprint,
+                "acceptance_manifest": bundle.acceptance_manifest,
                 "warnings": bundle.warnings,
             },
             args.format,
@@ -278,42 +292,77 @@ def run(args: argparse.Namespace) -> int:
     if args.command == "sources":
         registry = load_source_registry(args.source_registry)
         data_report = validate_dataset(dataset, config)
-        registry_report = validate_source_registry(registry, args.source_registry, dataset)
-        crosswalk_report = validate_crosswalk(
-            load_model_crosswalk(args.crosswalk), dataset, registry
-        )
+        crosswalk = load_model_crosswalk(args.crosswalk)
+        if args.strict:
+            registry_report = validate_source_registry(
+                registry, args.source_registry, dataset
+            )
+            crosswalk_report = validate_crosswalk(crosswalk, dataset, registry)
+            audit_errors = (
+                *data_report.errors,
+                *registry_report.errors,
+                *crosswalk_report.errors,
+            )
+        else:
+            manifest = build_acceptance_manifest(dataset, registry)
+            accepted_artifact_ids = set(manifest.accepted_artifact_ids)
+            accepted_crosswalk_ids = set(manifest.accepted_crosswalk_entry_ids)
+            audit_errors = validate_scoring_bundle(
+                dataset, config, registry, args.source_registry, crosswalk
+            )
+            registry_report = validate_source_registry(
+                registry,
+                args.source_registry,
+                snapshot_ids=accepted_artifact_ids,
+            )
+            crosswalk_report = validate_crosswalk(
+                crosswalk.model_copy(
+                    update={
+                        "entries": tuple(
+                            item
+                            for item in crosswalk.entries
+                            if item.id in accepted_crosswalk_ids
+                        )
+                    }
+                )
+            )
         source_payload = {
-            "schema_valid": data_report.schema_valid and not registry_report.errors,
+            "schema_valid": data_report.schema_valid,
+            "scored_inputs_ready": data_report.scored_inputs_ready,
+            "strict_audit_valid": not audit_errors if args.strict else None,
+            "headline_eligible": None,
+            "bundle_valid": not audit_errors,
             "crosswalk_valid": crosswalk_report.valid,
             "source_errors": registry_report.errors,
             "crosswalk_errors": crosswalk_report.errors,
+            "audit_errors": tuple(sorted(set(audit_errors))),
             "readiness": source_readiness_matrix(dataset),
         }
         _emit(source_payload, args.format, args.output)
-        return 0 if source_payload["schema_valid"] and source_payload["crosswalk_valid"] else 1
+        return 0 if data_report.schema_valid and not audit_errors else 1
     if args.command == "validate":
         report = validate_dataset(dataset, config)
+        source_report = None
         if args.source_registry:
             source_report = validate_source_registry(
                 load_source_registry(args.source_registry), args.source_registry, dataset
             )
-            report = type(report)(
-                errors=tuple(sorted({*report.errors, *source_report.errors})),
-                warnings=tuple(sorted({*report.warnings, *source_report.warnings})),
-                readiness_failures=report.readiness_failures,
-            )
         _emit(
             {
                 "schema_valid": report.schema_valid,
-                "scoring_ready": report.scoring_ready,
+                "scored_inputs_ready": report.scored_inputs_ready,
+                "strict_audit_valid": None,
+                "headline_eligible": None,
                 "errors": report.errors,
                 "readiness_failures": report.readiness_failures,
                 "warnings": report.warnings,
+                "source_errors": source_report.errors if source_report is not None else (),
+                "source_warnings": source_report.warnings if source_report is not None else (),
             },
             args.format,
             args.output,
         )
-        return 0 if report.scoring_ready else 1
+        return 0 if report.schema_valid else 1
     if any(not model.synthetic for model in dataset.models):
         bundle = load_scoring_bundle(
             args.data_dir,

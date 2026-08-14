@@ -108,10 +108,10 @@ def test_real_pilot_cli_validates_registry_and_exports_stable_csv(
             str(ROOT / "data" / "sources" / "registry.yaml"),
         ]
     )
-    assert run(validate_args) == 1
+    assert run(validate_args) == 0
     validation = capsys.readouterr().out
     assert '"schema_valid": true' in validation
-    assert '"scoring_ready": false' in validation
+    assert '"scored_inputs_ready": false' in validation
     assert "model identity assurance is below label_exact" in validation
 
     reference_args = build_parser().parse_args(

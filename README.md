@@ -42,8 +42,9 @@ AA, DeepSWE, and lab releases remain reviewed-fact inputs.
 
 ```bash
 uv run --no-sync python -m scripts.build_v03_pilot
+uv run --no-sync umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config
 uv run --no-sync umi bundle validate --data-dir data/pilots/v0.3/raw
-uv run --no-sync umi sources validate --data-dir data/pilots/v0.3/raw
+uv run --no-sync umi sources validate --strict --data-dir data/pilots/v0.3/raw
 uv run --no-sync umi crosswalk
 uv run --no-sync umi overlap
 uv run --no-sync umi ingest --source aa
@@ -80,10 +81,14 @@ provisional rank only after explicitly restricting the requested models to their
 The synthetic engine demonstration remains available under `tests/fixtures` and is always labeled
 as synthetic.
 
-All real-data analysis commands construct the governed scoring bundle first. A checksum mismatch,
+All real-data analysis commands construct the governed scoring bundle first. Its deterministic,
+typed acceptance manifest records exactly which scored records, artifacts, crosswalk entries,
+signals, and adapter versions are admitted, and `score_bundle()` revalidates it. A checksum mismatch,
 non-exact crosswalk, unknown or diagnostic signal, revision mismatch, or signal/budget mismatch
-fails before scoring. The direct `score_dataset` function is the isolated synthetic-fixture path;
-production CLI flows use `ScoringBundle`.
+in accepted evidence fails before scoring. Unrelated diagnostic evidence is checked by
+`umi sources validate --strict` and cannot block a score it does not feed. The direct
+`score_dataset` function is the isolated synthetic-fixture path; production CLI flows use
+`ScoringBundle`.
 
 ## Architecture
 
@@ -99,7 +104,8 @@ frozen artifacts -> offline adapters -> governed scoring bundle -> readiness fil
 - `config/overlap.yaml` assigns signal roles and directed overlap relationships.
 - `data/pilots/v0.3/raw/` contains generated typed inputs; `processed/` contains deterministic reports.
 - `umi/adapters/` contains source-specific, no-network transformations.
-- `schemas/` contains generated JSON Schemas for data, config, source, crosswalk, overlap, and output.
+- `schemas/` contains generated JSON Schemas for data, config, source, crosswalk, overlap,
+  acceptance manifest, and output.
 
 Complete and scored-data fingerprints are deliberately different. Rejected and diagnostic evidence,
 crosswalk decisions, and artifact checksums affect the complete fingerprint. The scored fingerprint

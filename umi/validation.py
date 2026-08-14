@@ -8,7 +8,13 @@ from typing import TypeVar
 from umi.config import ProjectConfig
 from umi.loading import Dataset, SourceRegistry
 from umi.readiness import ScoredRecord, is_scoring_ready, readiness_failures
-from umi.schemas import EfficiencyMeasurement, Provenance, RecordStatus, TaskEconomicsMeasurement
+from umi.schemas import (
+    EfficiencyMeasurement,
+    Provenance,
+    RecordStatus,
+    ScoringDisposition,
+    TaskEconomicsMeasurement,
+)
 
 T = TypeVar("T")
 
@@ -29,6 +35,10 @@ class ValidationReport:
 
     @property
     def scoring_ready(self) -> bool:
+        return self.scored_inputs_ready
+
+    @property
+    def scored_inputs_ready(self) -> bool:
         return self.schema_valid and not self.readiness_failures
 
     def raise_for_errors(self) -> None:
@@ -95,8 +105,8 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
             errors.append(
                 f"record {item.record_id} provider snapshot does not match model {item.model_id}"
             )
-        for failure in readiness_failures(item, model):
-            if failure != "record is diagnostic-only":
+        if item.scoring_disposition == ScoringDisposition.SCORED:
+            for failure in readiness_failures(item, model):
                 readiness.append(f"record {item.record_id}: {failure}")
         if isinstance(item, (EfficiencyMeasurement, TaskEconomicsMeasurement)):
             workload = workload_definitions.get(item.workload)
@@ -235,17 +245,26 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
 
 
 def validate_source_registry(
-    registry: SourceRegistry, registry_path: str | Path, dataset: Dataset | None = None
+    registry: SourceRegistry,
+    registry_path: str | Path,
+    dataset: Dataset | None = None,
+    *,
+    snapshot_ids: set[str] | None = None,
 ) -> ValidationReport:
     errors: list[str] = []
     warnings: list[str] = []
     path = Path(registry_path)
-    for snapshot_id in sorted(_duplicates([item.id for item in registry.snapshots])):
+    snapshots = tuple(
+        item
+        for item in registry.snapshots
+        if snapshot_ids is None or item.id in snapshot_ids
+    )
+    for snapshot_id in sorted(_duplicates([item.id for item in snapshots])):
         errors.append(f"duplicate source snapshot id: {snapshot_id}")
-    registry_urls = {str(item.source.url) for item in registry.snapshots}
-    registry_ids = {item.id for item in registry.snapshots}
+    registry_urls = {str(item.source.url) for item in snapshots}
+    registry_ids = {item.id for item in snapshots}
     registry_root = path.parent.resolve()
-    for snapshot in registry.snapshots:
+    for snapshot in snapshots:
         if not snapshot.license_id.strip() or not snapshot.attribution.strip():
             errors.append(f"source snapshot {snapshot.id} lacks license or attribution metadata")
         if not snapshot.upstream_revision.strip() or not snapshot.adapter_id.strip():

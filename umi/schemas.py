@@ -218,6 +218,18 @@ class Provenance(StrictModel):
     scoring_disposition: ScoringDisposition = ScoringDisposition.SCORED
 
 
+class AcceptanceManifest(StrictModel):
+    accepted_record_ids: tuple[Identifier, ...]
+    excluded_diagnostic_record_ids: tuple[Identifier, ...]
+    excluded_unready_record_ids: tuple[Identifier, ...]
+    accepted_artifact_ids: tuple[Identifier, ...]
+    accepted_crosswalk_entry_ids: tuple[Identifier, ...]
+    accepted_signal_ids: tuple[Identifier, ...]
+    scoring_relevant_adapter_versions: tuple[str, ...]
+    warnings: tuple[str, ...] = ()
+    fingerprint: str = Field(pattern=r"^[0-9a-f]{64}$")
+
+
 class ModelConfiguration(StrictModel):
     id: Identifier
     family: str = Field(min_length=1)

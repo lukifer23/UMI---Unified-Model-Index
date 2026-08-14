@@ -1,6 +1,78 @@
 {
+  "acceptance_manifest": {
+    "accepted_artifact_ids": [
+      "deepswe-v1.1-2026-08-13",
+      "epoch-benchmark-data-2026-08-14"
+    ],
+    "accepted_crosswalk_entry_ids": [
+      "deepswe-fable-max",
+      "deepswe-glm-max",
+      "deepswe-kimi-max",
+      "deepswe-opus-max",
+      "deepswe-sol-max",
+      "epoch-benchmarks-glm-max",
+      "epoch-benchmarks-kimi-max",
+      "epoch-benchmarks-opus-max",
+      "epoch-benchmarks-sol-max"
+    ],
+    "accepted_record_ids": [
+      "deepswe-harness-resources-claude-fable-5-max-2026-08-13",
+      "deepswe-harness-resources-claude-opus-5-max-2026-08-13",
+      "deepswe-harness-resources-glm-5.2-max-2026-08-13",
+      "deepswe-harness-resources-gpt-5.6-sol-max-2026-08-13",
+      "deepswe-harness-resources-kimi-k3-max-2026-08-13",
+      "deepswe-score-claude-fable-5-max-2026-08-13",
+      "deepswe-score-claude-opus-5-max-2026-08-13",
+      "deepswe-score-glm-5.2-max-2026-08-13",
+      "deepswe-score-gpt-5.6-sol-max-2026-08-13",
+      "deepswe-score-kimi-k3-max-2026-08-13",
+      "epoch-arc-agi-2-claude-opus-5-max-recryrmlezuut9acr",
+      "epoch-arc-agi-2-gpt-5.6-sol-max-reciqjzyogw8gyglw",
+      "epoch-arc-agi-2-kimi-k3-max-rec4whjt7mjgylj9q",
+      "epoch-critpt-claude-opus-5-max-rec5c4zdqpzverrgc",
+      "epoch-critpt-glm-5.2-max-reccz0gyjqlgpm3ch",
+      "epoch-critpt-gpt-5.6-sol-max-recok7wfznqiaai15",
+      "epoch-critpt-kimi-k3-max-recqkvzvlqfvkoht4",
+      "epoch-gpqa-claude-opus-5-max-d3mtastumfvjr4fjmnhwry",
+      "epoch-gpqa-glm-5.2-max-c5kpb4axzmygrywwqbkfmv",
+      "epoch-gpqa-gpt-5.6-sol-max-nukcgzrecbsxkcknj9bk37",
+      "epoch-gpqa-kimi-k3-max-b8mapue3eywuzassnqe7c9",
+      "epoch-scicode-claude-opus-5-max-claude-opus-5_max",
+      "epoch-scicode-glm-5.2-max-glm-5.2_max",
+      "epoch-scicode-gpt-5.6-sol-max-gpt-5.6-sol_max",
+      "epoch-scicode-kimi-k3-max-kimi-k3_max"
+    ],
+    "accepted_signal_ids": [
+      "arc-agi-2",
+      "critpt",
+      "deepswe-v1.1",
+      "deepswe-v1.1-resources",
+      "gpqa-diamond",
+      "scicode"
+    ],
+    "excluded_diagnostic_record_ids": [
+      "arena-agent-claude-opus-5-max-2026-08-12",
+      "arena-agent-glm-5.2-max-2026-08-12",
+      "arena-agent-kimi-k3-max-2026-08-12",
+      "deepswe-endpoint-resources-claude-fable-5-max-2026-08-13",
+      "deepswe-endpoint-resources-claude-opus-5-max-2026-08-13",
+      "deepswe-endpoint-resources-glm-5.2-max-2026-08-13",
+      "deepswe-endpoint-resources-gpt-5.6-sol-max-2026-08-13",
+      "deepswe-endpoint-resources-kimi-k3-max-2026-08-13"
+    ],
+    "excluded_unready_record_ids": [],
+    "fingerprint": "49089c73b2f82da36fbc109bbd7a146174bdc8297a94138bfcc8274413daef7e",
+    "scoring_relevant_adapter_versions": [
+      "deepswe-reviewed-facts-v1",
+      "epoch-benchmark-zip-v2"
+    ],
+    "warnings": [
+      "8 diagnostic records excluded"
+    ]
+  },
   "crosswalk_errors": [],
   "crosswalk_valid": true,
+  "headline_eligible": null,
   "readiness": [
     {
       "disposition": "diagnostic_only",
@@ -1034,5 +1106,7 @@
     }
   ],
   "schema_valid": true,
-  "source_errors": []
+  "scored_inputs_ready": true,
+  "source_errors": [],
+  "strict_audit_valid": true
 }

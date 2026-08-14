@@ -218,7 +218,9 @@ scoring records affect the scored-data fingerprint.
 ```json
 {
   "schema_valid": true,
-  "scoring_ready": false,
+  "scored_inputs_ready": false,
+  "strict_audit_valid": null,
+  "headline_eligible": null,
   "errors": [],
   "readiness_failures": ["record x: model identity assurance is below label_exact"],
   "warnings": []
@@ -227,7 +229,16 @@ scoring records affect the scored-data fingerprint.
 
 Structural/referential errors include duplicate IDs, unknown models/benchmarks, provider-snapshot collisions,
 invalid family budgets, invalid status, and multiple ready cohorts without a merge policy.
-Readiness failures exclude records from normal scoring without pretending the YAML is malformed.
+Readiness failures exclude selected scored records from normal scoring without pretending the YAML
+is malformed. Diagnostic-only records do not make `scored_inputs_ready` false. Ordinary validation
+does not load the source registry by default and exits according to `schema_valid`.
+
+`umi bundle validate` emits a typed acceptance manifest and validates the evidence used by scoring.
+`umi sources validate --strict` validates the complete audit package. A diagnostic artifact can
+therefore fail `strict_audit_valid` without invalidating a governed score that does not consume it.
+`headline_eligible` remains a per-model scoring-result property, not a dataset-validation shortcut.
+
+See `schemas/acceptance-manifest.schema.json` for the machine-readable manifest contract.
 
 ## Scoring result
 

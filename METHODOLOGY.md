@@ -141,7 +141,11 @@ average local percentiles from disconnected cohorts and does not infer cohort eq
 ## Governed scoring bundle
 
 Real-data scoring requires a validated bundle containing the typed dataset, scoring configuration,
-source registry, exact model crosswalk, overlap policy, and artifact manifest. Every scored record
+source registry, exact model crosswalk, overlap policy, and typed acceptance manifest. The manifest
+deterministically lists accepted record, artifact, crosswalk, and signal IDs; excluded diagnostic
+and unready records; scoring-relevant adapter versions; warnings; and a content fingerprint.
+`score_bundle()` revalidates both the governed inputs and this manifest, so a caller cannot bypass
+the factory and silently alter the admitted evidence. Every scored record
 binds its `signal_id`, `crosswalk_entry_id`, and `source_registry_snapshot_id`. Before scoring, UMI
 verifies the artifact checksum and revision, exact canonical model and effort mapping, signal role
 and disposition, and the benchmark's signal-to-budget allocation. Every scored record also declares
@@ -149,6 +153,18 @@ whether its evidence capture is a raw upstream payload, archived source snapshot
 extract, citation-only reference, or derived artifact. Capture type is provenance, not proof of
 reproducibility. Synthetic fixtures use a separate test path. Optional side-command validation is
 not a substitute for this bundle.
+
+Validation has three deliberately separate scopes. `umi validate` checks typed structure,
+references, cohorts, and configuration consistency without loading a source registry by default;
+its exit status reflects structural validity, while `scored_inputs_ready` separately reports
+whether selected scored records pass readiness. `umi bundle validate` is the scoring trust boundary
+and checks only accepted scoring records and the artifacts, exact crosswalk entries, identities,
+signals, budgets, and adapter versions they depend on. `umi sources validate --strict` checks the
+complete archival package, including diagnostic evidence, pricing, release claims, rejected
+crosswalk context, licensing, attribution, and every registered artifact. Therefore a broken
+diagnostic artifact fails strict audit validity but cannot invalidate a score that does not consume
+it. Headline eligibility remains a model-result property and is never inferred from schema or audit
+validity.
 
 Benchmark definitions bind one overlap-policy signal and budget group. A budget group resolves to
 one `(domain, family, representation_group)` allocation; mappings across domains or families are

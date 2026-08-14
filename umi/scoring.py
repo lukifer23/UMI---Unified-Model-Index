@@ -332,4 +332,21 @@ def score_dataset(
 
 def score_bundle(bundle: ScoringBundle, *, allow_unready: bool = False) -> list[ScoringResult]:
     """Score real evidence only after the bundle's governance checks have passed."""
+    from umi.bundle import build_acceptance_manifest, validate_scoring_bundle
+    from umi.validation import DataValidationError
+
+    expected_manifest = build_acceptance_manifest(bundle.dataset, bundle.source_registry)
+    errors = list(
+        validate_scoring_bundle(
+            bundle.dataset,
+            bundle.config,
+            bundle.source_registry,
+            bundle.registry_path,
+            bundle.crosswalk,
+        )
+    )
+    if expected_manifest != bundle.acceptance_manifest:
+        errors.append("acceptance manifest does not match the governed bundle inputs")
+    if errors:
+        raise DataValidationError(tuple(sorted(set(errors))))
     return score_dataset(bundle.dataset, bundle.config, allow_unready=allow_unready)

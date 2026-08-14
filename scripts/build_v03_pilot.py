@@ -27,7 +27,7 @@ from umi.adapters import (
     adapt_lab_release_facts,
     assemble_pilot_dataset,
 )
-from umi.bundle import ScoringBundle, validate_scoring_bundle
+from umi.bundle import ScoringBundle, build_acceptance_manifest, validate_scoring_bundle
 from umi.config import load_project_config
 from umi.loading import load_model_crosswalk, load_source_registry
 from umi.schemas import ModelConfiguration, ScoringDisposition
@@ -189,11 +189,16 @@ def main() -> None:
         registry, ROOT / "data" / "sources" / "registry.yaml", dataset
     )
     crosswalk_report = validate_crosswalk(crosswalk, dataset, registry)
+    acceptance_manifest = build_acceptance_manifest(dataset, registry)
     source_report = {
-        "schema_valid": data_report.schema_valid and not registry_report.errors,
+        "schema_valid": data_report.schema_valid,
+        "scored_inputs_ready": data_report.scored_inputs_ready,
+        "strict_audit_valid": not registry_report.errors and crosswalk_report.valid,
+        "headline_eligible": None,
         "crosswalk_valid": crosswalk_report.valid,
         "source_errors": list(registry_report.errors),
         "crosswalk_errors": list(crosswalk_report.errors),
+        "acceptance_manifest": acceptance_manifest.model_dump(mode="json"),
         "readiness": [item.model_dump(mode="json") for item in source_readiness_matrix(dataset)],
     }
     (PROCESSED_ROOT / "source-readiness.json").write_text(
@@ -205,6 +210,7 @@ def main() -> None:
         source_registry=registry,
         crosswalk=crosswalk,
         registry_path=ROOT / "data" / "sources" / "registry.yaml",
+        acceptance_manifest=acceptance_manifest,
     )
     scoring_results = score_bundle(bundle)
     estimates = [item.model_dump(mode="json") for item in scoring_results]

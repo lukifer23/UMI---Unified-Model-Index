@@ -1,0 +1,85 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "accepted_artifact_ids": {
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "title": "Accepted Artifact Ids",
+      "type": "array"
+    },
+    "accepted_crosswalk_entry_ids": {
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "title": "Accepted Crosswalk Entry Ids",
+      "type": "array"
+    },
+    "accepted_record_ids": {
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "title": "Accepted Record Ids",
+      "type": "array"
+    },
+    "accepted_signal_ids": {
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "title": "Accepted Signal Ids",
+      "type": "array"
+    },
+    "excluded_diagnostic_record_ids": {
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "title": "Excluded Diagnostic Record Ids",
+      "type": "array"
+    },
+    "excluded_unready_record_ids": {
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "title": "Excluded Unready Record Ids",
+      "type": "array"
+    },
+    "fingerprint": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Fingerprint",
+      "type": "string"
+    },
+    "scoring_relevant_adapter_versions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Scoring Relevant Adapter Versions",
+      "type": "array"
+    },
+    "warnings": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "accepted_record_ids",
+    "excluded_diagnostic_record_ids",
+    "excluded_unready_record_ids",
+    "accepted_artifact_ids",
+    "accepted_crosswalk_entry_ids",
+    "accepted_signal_ids",
+    "scoring_relevant_adapter_versions",
+    "fingerprint"
+  ],
+  "title": "AcceptanceManifest",
+  "type": "object"
+}

@@ -1,0 +1,17 @@
+# Source and documentation use stable LF line endings.
+*.py text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.csv text eol=lf
+
+# Frozen upstream and reviewed source artifacts preserve exact Git blob bytes.
+data/sources/** -text
+
+# Generated pilot text artifacts remain deterministic LF text.
+data/pilots/**/*.yaml text eol=lf
+data/pilots/**/*.yml text eol=lf
+data/pilots/**/*.json text eol=lf
+data/pilots/**/*.csv text eol=lf

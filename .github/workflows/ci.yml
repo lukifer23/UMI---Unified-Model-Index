@@ -19,6 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
         with:
+          version: "0.9.4"
           python-version: ${{ matrix.python-version }}
           enable-cache: true
       - run: uv sync --frozen --extra dev
@@ -27,7 +28,8 @@ jobs:
       - run: uv run mypy --strict umi analysis scripts
       - run: uv run python -m scripts.generate_schemas
       - run: git diff --exit-code -- schemas
-      - run: uv run umi sources validate --data-dir data/pilots/v0.3/raw
+      - run: uv run umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config
+      - run: uv run umi sources validate --strict --data-dir data/pilots/v0.3/raw
       - run: uv run umi crosswalk
       - run: uv run umi overlap
       - run: uv run umi bundle validate --data-dir data/pilots/v0.3/raw
@@ -50,12 +52,14 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
         with:
+          version: "0.9.4"
           python-version: "3.12"
           enable-cache: true
       - run: uv sync --frozen --extra dev
       - run: uv run pytest --cov=umi --cov=analysis --cov-fail-under=90
-      - run: uv run ruff check .
-      - run: uv run mypy --strict umi analysis scripts
+      - run: uv run umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config
       - run: uv run umi bundle validate --data-dir data/pilots/v0.3/raw
+      - run: uv run umi sources validate --strict --data-dir data/pilots/v0.3/raw
       - run: uv run python -m scripts.build_v03_pilot
       - run: git diff --exit-code -- data/pilots/v0.3
+      - run: uv run umi compare --data-dir data/pilots/v0.3/raw --models claude-opus-5-max kimi-k3-max glm-5.2-max

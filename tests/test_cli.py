@@ -74,7 +74,11 @@ def test_fixture_config_is_auto_discovered(capsys: pytest.CaptureFixture[str]) -
         ["validate", "--data-dir", str(ROOT / "tests" / "fixtures")]
     )
     assert run(args) == 0
-    assert json.loads(capsys.readouterr().out)["scoring_ready"] is True
+    report = json.loads(capsys.readouterr().out)
+    assert report["schema_valid"] is True
+    assert report["scored_inputs_ready"] is True
+    assert report["strict_audit_valid"] is None
+    assert args.source_registry is None
 
 
 @pytest.mark.parametrize(
@@ -114,11 +118,13 @@ def test_v03_policy_and_publication_commands(capsys: pytest.CaptureFixture[str])
             registry,
             "--crosswalk",
             crosswalk,
+            "--strict",
         ]
     )
     assert run(sources_args) == 0
     source_report = json.loads(capsys.readouterr().out)
     assert source_report["schema_valid"] is True
+    assert source_report["strict_audit_valid"] is True
     assert source_report["crosswalk_valid"] is True
 
     for command in ("crosswalk", "overlap"):

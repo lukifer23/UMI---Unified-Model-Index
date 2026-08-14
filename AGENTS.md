@@ -43,3 +43,5 @@
     effort or map fallback/composite aliases to plain configurations.
 23. Validate licenses, attribution, redistribution scope, revisions, and checksums. Unknown
     redistribution rights mean facts-and-citations only.
+24. Keep structural dataset validation, accepted scored-bundle validation, and strict complete-audit
+    validation separate. Diagnostic evidence must not block a score it does not feed.

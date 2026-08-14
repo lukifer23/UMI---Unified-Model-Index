@@ -5,6 +5,7 @@ import gzip
 import json
 import re
 import socket
+import subprocess
 from datetime import date
 from pathlib import Path
 
@@ -26,7 +27,7 @@ from umi.adapters import (
     adapt_epoch_gpqa_zip,
     adapt_lab_release_facts,
 )
-from umi.bundle import load_scoring_bundle, validate_scoring_bundle
+from umi.bundle import build_acceptance_manifest, load_scoring_bundle, validate_scoring_bundle
 from umi.config import ProjectConfig, load_project_config
 from umi.derived_metrics import derive_efficiency_metric
 from umi.fingerprints import dataset_fingerprint
@@ -47,9 +48,9 @@ from umi.schemas import (
     SignalRole,
     UncertaintyKind,
 )
-from umi.scoring import score_dataset
+from umi.scoring import score_bundle, score_dataset
 from umi.source_policy import validate_crosswalk
-from umi.validation import validate_source_registry
+from umi.validation import DataValidationError, validate_source_registry
 
 ROOT = Path(__file__).parents[1]
 SOURCES = ROOT / "data" / "sources" / "v0.3"
@@ -82,6 +83,27 @@ def test_frozen_registry_checksums_and_license_contract(pilot_dataset) -> None:
     assert all(item.license_id and item.attribution and item.adapter_id for item in pilot_snapshots)
 
 
+def test_git_attributes_preserve_frozen_sources_and_normalize_generated_text() -> None:
+    output = subprocess.run(
+        [
+            "git",
+            "check-attr",
+            "text",
+            "eol",
+            "--",
+            "data/sources/v0.3/deepswe-reviewed-facts-2026-08-13.yaml",
+            "data/pilots/v0.3/raw/benchmarks.yaml",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+    assert "data/sources/v0.3/deepswe-reviewed-facts-2026-08-13.yaml: text: unset" in output
+    assert "data/pilots/v0.3/raw/benchmarks.yaml: text: set" in output
+    assert "data/pilots/v0.3/raw/benchmarks.yaml: eol: lf" in output
+
+
 def test_real_pilot_requires_a_valid_governance_bundle(
     pilot_dataset, pilot_config, crosswalk
 ) -> None:
@@ -89,6 +111,9 @@ def test_real_pilot_requires_a_valid_governance_bundle(
     registry = load_source_registry(registry_path)
     bundle = load_scoring_bundle(PILOT, ROOT / "config", registry_path, SOURCES / "crosswalk.yaml")
     assert bundle.dataset == pilot_dataset
+    assert bundle.acceptance_manifest == build_acceptance_manifest(pilot_dataset, registry)
+    assert bundle.acceptance_manifest.accepted_record_ids
+    assert bundle.acceptance_manifest.excluded_diagnostic_record_ids
 
     scored = next(item for item in pilot_dataset.benchmarks if item.record_id.startswith("deepswe"))
     assert scored.capture_type == ArtifactCaptureType.REVIEWED_FACT_EXTRACT
@@ -178,6 +203,45 @@ def test_real_pilot_requires_a_valid_governance_bundle(
             next(item for item in pilot_dataset.models if item.id == scored.model_id),
         )
     )
+
+
+def test_diagnostic_artifact_failure_blocks_strict_audit_but_not_scoring(
+    pilot_dataset, pilot_config, crosswalk
+) -> None:
+    registry_path = ROOT / "data" / "sources" / "registry.yaml"
+    registry = load_source_registry(registry_path)
+    manifest = build_acceptance_manifest(pilot_dataset, registry)
+    diagnostic_snapshot = next(
+        item for item in registry.snapshots if item.id not in manifest.accepted_artifact_ids
+    )
+    corrupted = registry.model_copy(
+        update={
+            "snapshots": tuple(
+                item.model_copy(update={"artifact_sha256": "0" * 64})
+                if item.id == diagnostic_snapshot.id
+                else item
+                for item in registry.snapshots
+            )
+        }
+    )
+
+    assert validate_scoring_bundle(
+        pilot_dataset, pilot_config, corrupted, registry_path, crosswalk
+    ) == ()
+    strict_report = validate_source_registry(
+        corrupted, registry_path, pilot_dataset
+    )
+    assert any("checksum mismatch" in error for error in strict_report.errors)
+
+
+def test_score_bundle_rejects_a_forged_acceptance_manifest() -> None:
+    registry_path = ROOT / "data" / "sources" / "registry.yaml"
+    bundle = load_scoring_bundle(PILOT, ROOT / "config", registry_path, SOURCES / "crosswalk.yaml")
+    forged = bundle.acceptance_manifest.model_copy(
+        update={"fingerprint": "0" * 64}
+    )
+    with pytest.raises(DataValidationError, match="acceptance manifest"):
+        score_bundle(bundle.__class__(**{**bundle.__dict__, "acceptance_manifest": forged}))
 
 
 def test_crosswalk_exactness_and_rejected_aliases(pilot_dataset, crosswalk) -> None:

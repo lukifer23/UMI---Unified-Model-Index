@@ -1,7 +1,9 @@
 # Enforced source-readiness gate
 
 UMI separates parseability from scoring readiness. `umi validate` reports `schema_valid`,
-`scoring_ready`, structural `errors`, `readiness_failures`, and non-blocking `warnings`.
+`scored_inputs_ready`, structural `errors`, `readiness_failures`, and non-blocking `warnings`.
+It does not load the source registry by default and exits according to structural validity.
+Diagnostic-only records do not make selected scored inputs appear unready.
 
 ## Record status
 
@@ -53,6 +55,11 @@ artifact path, SHA-256, upstream revision, content type, adapter version, licens
 redistribution scope. Validation checks path containment, existence, checksum, model evidence
 artifact references, record artifact references, and source URL registration. `capture_type`
 distinguishes raw payloads, archived snapshots, reviewed extracts, citations, and derived artifacts.
+
+`umi bundle validate` checks only the source, crosswalk, identity, policy, and adapter dependencies
+listed in the deterministic acceptance manifest for admitted scoring records. `umi sources validate
+--strict` checks the complete registry and audit context. A failure in unused diagnostic evidence
+blocks strict archival validity, not governed scoring.
 
 ## Adapter acceptance checklist
 
