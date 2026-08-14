@@ -9,18 +9,19 @@ workload, and Capability-domain gates. This is the expected outcome, not a faile
 
 ## Accepted scored evidence
 
-| Configuration | DeepSWE v1.1 (95% CI) | GPQA Diamond | Partial Capability | Partial Efficiency | Headline |
-|---|---:|---:|---:|---:|---:|
-| Claude Opus 5 Max | 73.65% (69.78–77.52) | 93.88% (SE 1.48) | 100.00 | 41.67 | null |
-| Claude Fable 5 Max | 69.72% (65.69–73.76) | rejected: fallback absence unverified | 50.00 | 50.00 | null |
-| GPT-5.6 Sol Max | 72.67% (69.84–75.50) | 93.50% (SE 1.57) | 71.90 | 100.00 | null |
-| Kimi K3 Max | 68.51% (63.98–73.05) | 93.12% (SE 1.49) | 28.10 | 58.33 | null |
-| GLM-5.2 Max | 43.78% (42.05–45.50) | 91.86% (SE 1.61) | 0.00 | 0.00 | null |
+| Configuration | DeepSWE v1.1 (95% CI) | GPQA | SciCode | CritPt | Partial Capability | Partial Efficiency | Headline |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Claude Opus 5 Max | 73.65% (69.78–77.52) | 93.88% | 55.67% | 29.14% | 87.37 | 41.67 | null |
+| Claude Fable 5 Max | 69.72% (65.69–73.76) | rejected | rejected | rejected | 50.00 | 50.00 | null |
+| GPT-5.6 Sol Max | 72.67% (69.84–75.50) | 93.50% | 56.13% | 32.30% | 75.44 | 100.00 | null |
+| Kimi K3 Max | 68.51% (63.98–73.05) | 93.12% | 58.68% | 23.40% | 37.19 | 58.33 | null |
+| GLM-5.2 Max | 43.78% (42.05–45.50) | 91.86% | 50.46% | 20.86% | 0.00 | 0.00 | null |
 
-Partial Capability is cohort-relative. Four models cover the fixed DeepSWE and GPQA budgets—26.25%
-of Capability across two domains—while Fable covers only DeepSWE at 16.5%. Those model-specific
-partials are not directly rankable across evidence profiles and are not Overall scores. Fable is also
-release-window-ineligible because its 2026-06-09 release predates the 2026-06-15 start.
+Partial Capability is cohort-relative. Four models cover the fixed DeepSWE, SciCode, GPQA, and
+CritPt budgets—35.625% of Capability across two domains—while Fable covers only DeepSWE at 16.5%.
+Those model-specific partials are not directly rankable across evidence profiles and are not Overall
+scores. Fable is also release-window-ineligible because its 2026-06-09 release predates the
+2026-06-15 start.
 
 ## Diagnostic evidence
 
@@ -30,6 +31,10 @@ release-window-ineligible because its 2026-06-09 release predates the 2026-06-15
   heterogeneous harnesses/settings and ECI selects highest results across settings.
 - Epoch's raw GPQA archive supplies four scoring-ready exact Max rows. Fable is rejected because the
   CSV does not prove fallback routing was absent and the linked run log was access-controlled.
+- The same frozen Epoch archive supplies creator-run SciCode and CritPt results for four exact Max
+  configurations. Their execution dates are not established, so UMI keeps `evaluation_date` null
+  and uses the frozen measurement-as-of date for freshness. Fable's rows explicitly include Opus
+  4.8 fallback and are rejected.
 - Arena Agent and text/style-control ratings are diagnostic preference evidence. The Agent artifact
   has exact labels and efforts but no immutable snapshot/deployment identity; missing or non-Max
   effort labels are rejected.
@@ -52,9 +57,9 @@ release-window-ineligible because its 2026-06-09 release predates the 2026-06-15
 The generated [model-specific partial estimates](data/pilots/v0.3/processed/model-specific-partial-estimates.json)
 have no model-specific rank and null `headline_overall` for every model. The five-model
 [common-evidence comparison](data/pilots/v0.3/processed/common-evidence-five-model-comparison.json)
-uses DeepSWE only because Fable's GPQA identity is not cleared; the exact three-model
+uses DeepSWE only because Fable's other benchmark identities are not cleared; the exact three-model
 [common-evidence comparison](data/pilots/v0.3/processed/common-evidence-three-model-comparison.json)
-also uses both series under the current strict identity policy. Both are provisional and separately
+uses all four scored series under the current strict identity policy. Both are provisional and separately
 labeled. The [source-bound uncertainty report](data/pilots/v0.3/processed/source-bound-uncertainty.json)
 re-scores one published bound at a time; it is not probabilistic propagation. The
 [source readiness report](data/pilots/v0.3/processed/source-readiness.json),
@@ -67,8 +72,8 @@ benchmark/model cell and every workload-category gate.
 
 Equal-family and source-ablation scenarios are computed without relaxing publication gates. Removing
 a source does not redistribute or enlarge its domain budget. Every scenario continues to have a null
-headline. These scenarios expose how dependent the partial Capability values are on the pilot's two
-scored sources.
+headline. These scenarios expose how dependent the four scored benchmark families are on the
+pilot's two frozen scored source artifacts.
 
 ## Reproducibility
 

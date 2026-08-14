@@ -1,47 +1,47 @@
 {
-  "config_fingerprint": "529a2867e045459a31069d6e9a097ccf0bd4232ed966a1a7cb4167710141bc3e",
+  "config_fingerprint": "72ae3a5fb95bb261cdd32afb5b6d75b8a018f5ba1047e838a7731c5c44b05235",
   "edges": [
     {
       "evidence": "AA Intelligence v4.1 methodology",
       "relation": "contains",
       "source": "aa-intelligence-v4.1",
-      "target": "aa-hle"
+      "target": "hle"
     },
     {
       "evidence": "AA Intelligence v4.1 methodology",
       "relation": "contains",
       "source": "aa-intelligence-v4.1",
-      "target": "aa-terminalbench-2.1"
+      "target": "terminalbench-2.1"
     },
     {
       "evidence": "AA Intelligence v4.1 methodology",
       "relation": "contains",
       "source": "aa-intelligence-v4.1",
-      "target": "aa-scicode"
+      "target": "scicode"
     },
     {
       "evidence": "AA Intelligence v4.1 methodology",
       "relation": "contains",
       "source": "aa-intelligence-v4.1",
-      "target": "aa-gdpval-v2"
+      "target": "gdpval-aa-v2"
     },
     {
       "evidence": "AA Intelligence v4.1 methodology",
       "relation": "contains",
       "source": "aa-intelligence-v4.1",
-      "target": "aa-tau3-banking"
+      "target": "tau3-banking"
     },
     {
       "evidence": "AA Intelligence v4.1 methodology",
       "relation": "contains",
       "source": "aa-intelligence-v4.1",
-      "target": "aa-gpqa-diamond"
+      "target": "gpqa-diamond"
     },
     {
       "evidence": "AA Intelligence v4.1 methodology",
       "relation": "contains",
       "source": "aa-intelligence-v4.1",
-      "target": "aa-critpt"
+      "target": "critpt"
     },
     {
       "evidence": "AA Intelligence v4.1 methodology",
@@ -62,13 +62,24 @@
       "target": "deepswe-v1.1"
     },
     {
+      "evidence": "Datacurve DeepSWE leaderboard payload",
+      "relation": "shared_tasks",
+      "source": "deepswe-v1.1",
+      "target": "deepswe-v1.1-resources"
+    },
+    {
+      "evidence": "Datacurve DeepSWE leaderboard payload",
+      "relation": "shared_tasks",
+      "source": "deepswe-v1.1-resources",
+      "target": "deepswe-v1.1-endpoint-resources"
+    },
+    {
       "evidence": "Arena leaderboard dataset card",
       "relation": "contains",
       "source": "arena-agent",
       "target": "arena-agent-signals"
     }
   ],
-  "errors": [],
   "signals": [
     {
       "budget_group": null,
@@ -102,7 +113,7 @@
     },
     {
       "budget_group": "arena-agent",
-      "disposition": "scored",
+      "disposition": "diagnostic_only",
       "id": "arena-agent",
       "role": "preference"
     },
@@ -119,45 +130,57 @@
       "role": "task"
     },
     {
-      "budget_group": "aa-hle",
+      "budget_group": "deepswe-v1.1-resources",
       "disposition": "scored",
-      "id": "aa-hle",
+      "id": "deepswe-v1.1-resources",
+      "role": "efficiency"
+    },
+    {
+      "budget_group": null,
+      "disposition": "diagnostic_only",
+      "id": "deepswe-v1.1-endpoint-resources",
+      "role": "efficiency"
+    },
+    {
+      "budget_group": "hle",
+      "disposition": "scored",
+      "id": "hle",
       "role": "task"
     },
     {
-      "budget_group": "aa-terminalbench-2.1",
+      "budget_group": "terminalbench-2.1",
       "disposition": "scored",
-      "id": "aa-terminalbench-2.1",
+      "id": "terminalbench-2.1",
       "role": "task"
     },
     {
-      "budget_group": "aa-scicode",
+      "budget_group": "scicode",
       "disposition": "scored",
-      "id": "aa-scicode",
+      "id": "scicode",
       "role": "task"
     },
     {
-      "budget_group": "aa-gdpval-v2",
+      "budget_group": "gdpval-aa-v2",
       "disposition": "scored",
-      "id": "aa-gdpval-v2",
+      "id": "gdpval-aa-v2",
       "role": "task"
     },
     {
-      "budget_group": "aa-tau3-banking",
+      "budget_group": "tau3-banking",
       "disposition": "scored",
-      "id": "aa-tau3-banking",
+      "id": "tau3-banking",
       "role": "task"
     },
     {
-      "budget_group": "aa-gpqa-diamond",
+      "budget_group": "gpqa-diamond",
       "disposition": "scored",
-      "id": "aa-gpqa-diamond",
+      "id": "gpqa-diamond",
       "role": "task"
     },
     {
-      "budget_group": "aa-critpt",
+      "budget_group": "critpt",
       "disposition": "scored",
-      "id": "aa-critpt",
+      "id": "critpt",
       "role": "task"
     },
     {
@@ -172,6 +195,5 @@
       "id": "aa-omniscience",
       "role": "task"
     }
-  ],
-  "valid": true
+  ]
 }

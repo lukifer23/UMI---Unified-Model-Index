@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import socket
+from datetime import date
 from pathlib import Path
 
 import pytest
@@ -16,6 +17,7 @@ from umi.adapters import (
     adapt_arena_json,
     adapt_deepswe_facts,
     adapt_epoch_csv,
+    adapt_epoch_external_benchmarks_zip,
     adapt_epoch_gpqa_zip,
     adapt_lab_release_facts,
 )
@@ -286,7 +288,15 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
 
     monkeypatch.setattr(socket, "socket", deny_network)
     build_v03_pilot()
-    assert (PILOT.parent / "processed" / "pilot-gap-report.json").is_file()
+    processed = PILOT.parent / "processed"
+    assert {
+        "correlations.json",
+        "model-specific-partial-estimates.json",
+        "overlap.json",
+        "pareto.json",
+        "pilot-gap-report.json",
+        "pilot-sensitivity.json",
+    } <= {item.name for item in processed.iterdir()}
 
 
 def test_epoch_and_arena_adapter_dispositions(crosswalk) -> None:
@@ -364,6 +374,30 @@ def test_epoch_gpqa_is_exact_common_scored_capability(crosswalk) -> None:
         and item.number_of_trials is None
         for item in result.benchmarks
     )
+
+
+def test_epoch_external_benchmarks_preserve_source_date_and_reject_fallback(
+    crosswalk,
+) -> None:
+    result = adapt_epoch_external_benchmarks_zip(
+        SOURCES / "epoch-benchmark-data-2026-08-14.zip",
+        crosswalk,
+        source_id="epoch-benchmarks",
+        artifact_id="epoch-benchmark-data-2026-08-14",
+    )
+    assert len(result.benchmarks) == 8
+    assert {item.benchmark_id for item in result.benchmarks} == {"scicode", "critpt"}
+    assert all(item.evaluation_date is None for item in result.benchmarks)
+    assert all(item.measurement_as_of_date == date(2026, 8, 14) for item in result.benchmarks)
+    assert all(item.pass_at_k == 1 for item in result.benchmarks)
+    assert {
+        (item.benchmark_id, item.number_of_tasks, item.number_of_trials)
+        for item in result.benchmarks
+    } == {("scicode", 288, 864), ("critpt", 70, 350)}
+    assert {item.source_row_id for item in result.rejections} == {
+        "critpt_external.csv:claude-fable-5_max",
+        "scicode_external.csv:claude-fable-5_max",
+    }
 
 
 def test_lab_release_facts_preserve_tariffs_and_claims(crosswalk) -> None:
@@ -496,11 +530,22 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
         item.model_id: item.coverage.capability_absolute_weighted for item in results.values()
     } == {
         "claude-fable-5-max": 0.165,
-        "claude-opus-5-max": 0.2625,
-        "glm-5.2-max": 0.2625,
-        "gpt-5.6-sol-max": 0.2625,
-        "kimi-k3-max": 0.2625,
+        "claude-opus-5-max": 0.35625,
+        "glm-5.2-max": 0.35625,
+        "gpt-5.6-sol-max": 0.35625,
+        "kimi-k3-max": 0.35625,
     }
+    assert {
+        item.model_id: item.capability.score for item in results.values()
+    } == pytest.approx(
+        {
+            "claude-fable-5-max": 50.0,
+            "claude-opus-5-max": 87.36842105263158,
+            "glm-5.2-max": 0.0,
+            "gpt-5.6-sol-max": 75.43859649122807,
+            "kimi-k3-max": 37.19298245614035,
+        }
+    )
     assert {
         item.model_id: item.efficiency.score for item in results.values()
     } == pytest.approx(

@@ -90,13 +90,21 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
     series = cast(list[dict[str, str]], comparison["common_benchmark_series"])
     scores = cast(list[dict[str, object]], comparison["scores"])
     assert series == [
+        {
+            "benchmark_id": "critpt",
+            "cohort_key": "aa-v4.1.1-critpt-70-test-challenges-pass1",
+        },
         {"benchmark_id": "deepswe-v1.1", "cohort_key": "deepswe-v1.1-2026-08-13"},
         {
             "benchmark_id": "gpqa-diamond",
             "cohort_key": "epoch-gpqa-diamond-1.0.6-simple-evals",
         },
+        {
+            "benchmark_id": "scicode",
+            "cohort_key": "aa-v4.1.1-scicode-test-288-background-pass1",
+        },
     ]
-    assert {item["coverage"] for item in scores} == {0.2625}
+    assert {item["coverage"] for item in scores} == {0.35625}
 
 
 def test_source_bound_sensitivity_preserves_declared_margin_without_probability_model(

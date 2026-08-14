@@ -1,4 +1,4 @@
-# UMI v0.3.1 verification record
+# UMI v0.3.3 verification record
 
 Verified on 2026-08-14 from `main` on macOS with Python 3.14.3 against the Python 3.11+
 project contract.
@@ -7,17 +7,17 @@ project contract.
 
 | Check | Outcome |
 |---|---|
-| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.1 as a wheel from the committed lock |
+| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.3 as a wheel from the committed lock |
 | `uv run --no-sync python -m scripts.build_v03_pilot` | passed; rebuilt all raw and processed pilot artifacts offline |
-| `uv run --no-sync python -m umi.schemas` | passed; regenerated the machine-readable schemas |
-| `PYTHONPATH=. uv run --no-sync pytest --cov=umi --cov=analysis --cov-fail-under=90` | 89 passed; 93.20% combined `umi`/`analysis` coverage |
+| schema equality test against `umi.schema_export.rendered_schemas()` | passed; committed machine-readable schemas remain current |
+| `PYTHONPATH=. uv run --no-sync pytest` | 94 passed; 93% combined `umi`/`analysis` coverage |
 | `PYTHONPATH=. uv run --no-sync ruff check .` | passed |
-| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 47 source files |
+| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 48 source files |
 | `umi sources validate` | passed |
 | `umi crosswalk` and `umi overlap` | passed |
 | `umi bundle validate --data-dir data/pilots/v0.3/raw` | passed; all scored records have exact source, crosswalk, signal, budget, revision, checksum, and capture-type bindings |
-| all nine offline `umi ingest --source ...` commands | passed: AA, Epoch, both Arena cohorts, DeepSWE, and four lab-release sources |
-| rank, estimates, both sensitivity paths, references, correlations, Pareto, both comparison cohorts, uncertainty, claims, and gaps | passed |
+| all ten offline `umi ingest --source ...` commands | passed: AA, Epoch ECI, Epoch benchmarks, both Arena cohorts, DeepSWE, and four lab-release sources |
+| all 27 scoring/reporting CLI flows | passed |
 | `umi validate` | schema valid with zero errors; deliberately exited 1 because eight records are diagnostic-only and the pilot is not headline-ready |
 | explicit Epoch/Arena network acquisition into a fresh temporary snapshot | passed with a checksum manifest; destination reuse remains fail-closed |
 
@@ -32,8 +32,9 @@ README rather than hidden as a local workaround.
   `946538f24b2d16cbbccc54c554d86e5afb6d4b3f175bf9bdeae2af61869658b6`.
 - The complete Epoch Benchmarking Hub archive is frozen at SHA-256
   `35a7c21ba7d535514ebcf9bbe7b8265d2e2da40ef6b1fa63fe49323c3395a18b`;
-  four exact Max-effort GPQA Diamond rows are adapted from the raw CSV member. Fable is rejected
-  because fallback absence is not established.
+  four exact Max-effort rows each for GPQA Diamond, SciCode, and CritPt are adapted from the raw CSV
+  members. Fable is rejected because fallback absence is not established for GPQA and is explicitly
+  contradicted by fallback-composite labels for SciCode and CritPt.
 - A later same-day acquisition produced a different ZIP-container hash because member timestamps
   changed, while all 77 extracted member names and bytes remained identical at semantic content hash
   `2b818e5b5ad1fcdba9f04616d6f1c7f71714a3d045967dbf09a7e13bf557f009`.
@@ -50,10 +51,10 @@ README rather than hidden as a local workaround.
 
 - Five exact canonical named-release configurations are visible, each with label-exact identity and
   first-party nominal pricing record.
-- The configured capability matrix contains 65 model/benchmark cells: 9 ready scored, 3 diagnostic
-  measurements, 5 diagnostic references, 2 vendor-claim-only, and 46 missing.
+- The configured capability matrix contains 65 model/benchmark cells: 17 ready scored, 3 diagnostic
+  measurements, 1 diagnostic reference, 2 vendor-claim-only, and 42 missing.
 - Every model-specific score is labeled `real evidence — model-specific partial estimate`; it is not
-  a UMI rank. Four estimates use two of 13 capability families across two domains with 26.25%
+  a UMI rank. Four estimates use four of 13 capability families across two domains with 35.625%
   Capability coverage; Fable remains on one family at 16.5% because fallback absence is unverified.
 - Every publishable rank and every `headline_overall` remains null.
 - No workload category has ready all-model Efficiency evidence or successful-task Economics
@@ -88,8 +89,8 @@ umi/                              validation, readiness, scoring, fingerprinting
 
 ## Remaining evidence required for a real headline UMI
 
-- exact-configuration, common-cohort capability results for the 46 missing cells, beginning with
-  HLE, Terminal-Bench, SciCode, CritPt, ARC-AGI, and long-context/reliability evidence;
+- exact-configuration, common-cohort capability results for the 42 missing cells, beginning with
+  HLE, Terminal-Bench, ARC-AGI, and long-context/reliability evidence;
 - arithmetic-mean attempt-level cost, input/output/cache-token use, wall time, turn count, and task
   success for the five models across at least three configured workload categories;
 - independent replication or auditable raw result artifacts for vendor-only claims;

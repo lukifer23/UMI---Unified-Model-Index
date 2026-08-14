@@ -114,12 +114,12 @@ snapshots:
     artifact_sha256: 35a7c21ba7d535514ebcf9bbe7b8265d2e2da40ef6b1fa63fe49323c3395a18b
     content_type: application/zip
     upstream_revision: content-sha256-2b818e5b5ad1fcdba9f04616d6f1c7f71714a3d045967dbf09a7e13bf557f009
-    adapter_id: epoch-gpqa-zip-v1
+    adapter_id: epoch-benchmark-zip-v2
     license_id: CC-BY-4.0
     license_url: https://creativecommons.org/licenses/by/4.0/
     attribution: Epoch AI, AI Benchmarking Hub, 2026
     redistribution_scope: full_artifact
-    notes: Official raw export frozen whole; GPQA is adapted and other files remain unpromoted.
+    notes: Official raw export frozen whole; GPQA, SciCode, and CritPt are adapted under the cited AA v4.1.1 public protocol profile.
   - id: arena-agent-2026-08-14
     title: Arena Agent leaderboard revision snapshot
     source:

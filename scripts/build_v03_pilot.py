@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from dataclasses import asdict
 from pathlib import Path
 from typing import Any
 
@@ -10,14 +11,18 @@ from pydantic import TypeAdapter
 
 from analysis.claims import calibrate_release_claims
 from analysis.compare import common_capability_comparison
+from analysis.correlations import benchmark_correlations
 from analysis.gaps import pilot_gap_report
+from analysis.pareto_metrics import pareto_dimensions
+from analysis.pilot_sensitivity import analyze_pilot_sensitivity
+from analysis.sensitivity import analyze_sensitivity
 from analysis.uncertainty import source_bound_capability_sensitivity
 from umi.adapters import (
     adapt_aa_facts,
     adapt_arena_json,
     adapt_deepswe_facts,
+    adapt_epoch_benchmarks_zip,
     adapt_epoch_csv,
-    adapt_epoch_gpqa_zip,
     adapt_lab_release_facts,
     assemble_pilot_dataset,
 )
@@ -26,7 +31,7 @@ from umi.config import load_project_config
 from umi.loading import load_model_crosswalk, load_source_registry
 from umi.schemas import ModelConfiguration, ScoringDisposition
 from umi.scoring import score_bundle
-from umi.source_policy import source_readiness_matrix, validate_crosswalk
+from umi.source_policy import overlap_report, source_readiness_matrix, validate_crosswalk
 from umi.validation import validate_dataset, validate_source_registry
 
 ROOT = Path(__file__).parents[1]
@@ -59,7 +64,7 @@ def main() -> None:
             source_id="epoch-eci",
             artifact_id="epoch-eci-matrix-2026-08-14",
         ),
-        adapt_epoch_gpqa_zip(
+        adapt_epoch_benchmarks_zip(
             SOURCE_ROOT / "epoch-benchmark-data-2026-08-14.zip",
             crosswalk,
             source_id="epoch-benchmarks",
@@ -200,9 +205,55 @@ def main() -> None:
         crosswalk=crosswalk,
         registry_path=ROOT / "data" / "sources" / "registry.yaml",
     )
-    estimates = [item.model_dump(mode="json") for item in score_bundle(bundle)]
+    scoring_results = score_bundle(bundle)
+    estimates = [item.model_dump(mode="json") for item in scoring_results]
     (PROCESSED_ROOT / "model-specific-partial-estimates.json").write_text(
         json.dumps(estimates, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    (PROCESSED_ROOT / "overall-sensitivity.json").write_text(
+        json.dumps(
+            [asdict(item) for item in analyze_sensitivity(scoring_results, config)],
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (PROCESSED_ROOT / "pilot-sensitivity.json").write_text(
+        json.dumps(
+            [asdict(item) for item in analyze_pilot_sensitivity(dataset, config)],
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (PROCESSED_ROOT / "correlations.json").write_text(
+        json.dumps(
+            [
+                asdict(item)
+                for item in benchmark_correlations(
+                    dataset, config.normalization.correlation_min_overlap, config
+                )
+            ],
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (PROCESSED_ROOT / "pareto.json").write_text(
+        json.dumps(
+            [asdict(item) for item in pareto_dimensions(dataset, scoring_results)],
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (PROCESSED_ROOT / "overlap.json").write_text(
+        json.dumps(overlap_report(config), indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
     )
     (PROCESSED_ROOT / "source-bound-uncertainty.json").write_text(
         json.dumps(source_bound_capability_sensitivity(dataset, config), indent=2, sort_keys=True)

@@ -1,15 +1,16 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.2 extends the real,
-five-configuration, multi-source pilot with exact DeepSWE pass counts, confidence intervals, and
-harness-resource means. It does **not** publish a headline UMI score: the evidence supports only
-provisional, model-specific partial Capability and Efficiency estimates.
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.3 extends the real,
+five-configuration, multi-source pilot with exact DeepSWE, GPQA Diamond, SciCode, and CritPt results
+plus DeepSWE confidence intervals and harness-resource means. It does **not** publish a headline UMI
+score: the evidence supports only provisional, model-specific partial Capability and Efficiency
+estimates.
 
 The pilot cohort is Claude Opus 5 Max, Claude Fable 5 Max, GPT-5.6 Sol Max, Kimi K3 Max, and
-GLM-5.2 Max. Its frozen sources are Artificial Analysis public facts, Epoch ECI, LM Arena Agent and
-text/style-control rows, and DeepSWE v1.1 facts. Every source row is accepted only through an exact
-model-and-effort crosswalk.
+GLM-5.2 Max. Its frozen sources are Artificial Analysis public facts, Epoch ECI and Benchmarking Hub
+data, LM Arena Agent and text/style-control rows, and DeepSWE v1.1 facts. Every source row is
+accepted only through an exact model-and-effort crosswalk.
 
 ## Install and verify
 
@@ -47,6 +48,7 @@ uv run --no-sync umi crosswalk
 uv run --no-sync umi overlap
 uv run --no-sync umi ingest --source aa
 uv run --no-sync umi ingest --source epoch
+uv run --no-sync umi ingest --source epoch-benchmarks
 uv run --no-sync umi ingest --source arena-agent
 uv run --no-sync umi ingest --source arena-text
 uv run --no-sync umi ingest --source deepswe
@@ -107,11 +109,13 @@ The default Overall formula remains:
 ```
 
 Capability retains the five domain weights and fixed within-domain benchmark-family budgets.
-DeepSWE pass rate contributes to software engineering and Epoch's frozen GPQA Diamond runs
-contribute to math/science. The pilot identities are exact named releases and efforts, not claimed
-immutable provider snapshots. Arena Agent rows retain exact source labels, effort, construct, and
-source-declared intervals, but remain diagnostic preference evidence. AA composites, ECI rows, and
-Arena text ratings are also diagnostic. DeepSWE's embedded official leaderboard payload supplies
+DeepSWE and SciCode contribute to software engineering; GPQA Diamond and CritPt contribute to
+math/science. The frozen Epoch archive supplies exact Max rows for Opus, Sol, Kimi, and GLM. Fable's
+archive rows remain rejected because SciCode and CritPt identify an Opus 4.8 fallback composite and
+GPQA does not establish fallback absence. The pilot identities are exact named releases and efforts,
+not claimed immutable provider snapshots. Arena Agent rows retain exact source labels, effort,
+construct, and source-declared intervals, but remain diagnostic preference evidence. AA composites,
+ECI rows, and Arena text ratings are also diagnostic. DeepSWE's embedded official leaderboard payload supplies
 arithmetic-mean input/output tokens and agent steps for the same four-run task cohort. Those harness
 resources enter provisional Efficiency after per-record success adjustment. Wall duration and
 observed dollar cost remain diagnostic until deployment identity is verified. The fixed workload
@@ -121,6 +125,8 @@ whole or unlock Economics.
 ## Current limitations
 
 - Only two Capability domains have scored evidence; three are required for headline eligibility.
+- Four configurations have 35.625% Capability coverage; Fable has 16.5%, so their model-specific
+  partials are not one shared ranking.
 - Efficiency has only 4.5% absolute coverage; Economics has no ready evidence.
 - Fable 5 Max predates the unchanged 2026-06-15 release-window start.
 - Scores are cohort-relative; no fixed anchor cohort or formal uncertainty propagation exists.
@@ -133,8 +139,8 @@ See [PILOT_REPORT.md](PILOT_REPORT.md), [SOURCE_READINESS.md](SOURCE_READINESS.m
 
 ## Recommended next ingestion task
 
-Freeze exact, task-level public facts for HLE, GPQA Diamond/CritPt, and one context/reliability family
-for the same five configurations, including evaluation dates, harness versions, task counts, and
-configuration evidence. In parallel, obtain exact task telemetry for the missing coding families
-and at least two additional configured workload categories. Do not broaden the cohort or relax a
-gate to manufacture a headline.
+Freeze exact, task-level public facts for HLE and one context/reliability family for the same five
+configurations, including truthful source dates, harness versions, task counts where established,
+and configuration evidence. In parallel, obtain exact task telemetry for the missing coding
+families and at least two additional configured workload categories. Do not broaden the cohort or
+relax a gate to manufacture a headline.

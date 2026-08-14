@@ -5,8 +5,18 @@ import pytest
 from pydantic import ValidationError
 
 from umi.config import ProjectConfig, load_project_config
+from umi.readiness import readiness_failures
 from umi.schema_export import rendered_schemas
-from umi.schemas import EfficiencyMeasurement, PricingRecord
+from umi.schemas import (
+    ArtifactCaptureType,
+    BenchmarkMeasurement,
+    ConfigurationVerification,
+    EfficiencyMeasurement,
+    IdentityAssurance,
+    ModelConfiguration,
+    PricingRecord,
+    ResultType,
+)
 
 ROOT = Path(__file__).parents[1]
 
@@ -83,6 +93,49 @@ def test_efficiency_rejects_bad_rates_counts_and_empty_observations() -> None:
         EfficiencyMeasurement.model_validate({**data, "success_rate": 1.1, "mean_turns": 1})
     with pytest.raises(ValidationError):
         EfficiencyMeasurement.model_validate({**data, "mean_total_tokens": -1})
+
+
+def test_capability_source_as_of_date_is_not_relabelled_as_evaluation_date() -> None:
+    model = ModelConfiguration.model_validate(
+        {
+            "id": "dated-model",
+            "family": "Dated Model",
+            "provider": "UMI Test",
+            "release_date": "2026-08-01",
+            "configuration": "max",
+            "identity_kind": "named_release",
+            "identity_assurance": IdentityAssurance.LABEL_EXACT,
+            "named_release": "Dated Model",
+            "open_weights": False,
+        }
+    )
+    record = BenchmarkMeasurement.model_validate(
+        {
+            **provenance(),
+            "record_id": "dated-record",
+            "benchmark_id": "dated-benchmark",
+            "model_id": model.id,
+            "source_model_id": "Dated Model Max",
+            "value": 50,
+            "cohort_key": "dated-cohort",
+            "evaluation_date": None,
+            "measurement_as_of_date": "2026-08-14",
+            "benchmark_version": "dated-v1",
+            "harness_version": "dated-harness-v1",
+            "evaluator": "UMI Test",
+            "capture_type": ArtifactCaptureType.REVIEWED_FACT_EXTRACT,
+            "source_artifact_id": "dated-artifact",
+            "configuration_verification": ConfigurationVerification(
+                model_label_exact=True,
+                release_label_exact=True,
+                effort_label_exact=True,
+                fallback_absent=True,
+            ),
+            "result_type": ResultType.INDEPENDENT,
+        }
+    )
+    assert readiness_failures(record, model) == ()
+    assert record.evaluation_date is None
 
 
 def test_unknown_fields_and_units_are_rejected() -> None:

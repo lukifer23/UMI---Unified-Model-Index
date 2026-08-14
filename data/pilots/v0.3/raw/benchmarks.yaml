@@ -30,7 +30,7 @@ measurements:
   record_status: ready
   source_artifact_id: epoch-benchmark-data-2026-08-14
   source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
-  crosswalk_entry_id: epoch-gpqa-opus-max
+  crosswalk_entry_id: epoch-benchmarks-opus-max
   signal_id: gpqa-diamond
   source_model_id: claude-opus-5_max
   signal_role: task
@@ -85,7 +85,7 @@ measurements:
   record_status: ready
   source_artifact_id: epoch-benchmark-data-2026-08-14
   source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
-  crosswalk_entry_id: epoch-gpqa-kimi-max
+  crosswalk_entry_id: epoch-benchmarks-kimi-max
   signal_id: gpqa-diamond
   source_model_id: kimi-k3_max
   signal_role: task
@@ -140,7 +140,7 @@ measurements:
   record_status: ready
   source_artifact_id: epoch-benchmark-data-2026-08-14
   source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
-  crosswalk_entry_id: epoch-gpqa-sol-max
+  crosswalk_entry_id: epoch-benchmarks-sol-max
   signal_id: gpqa-diamond
   source_model_id: gpt-5.6-sol_max
   signal_role: task
@@ -195,7 +195,7 @@ measurements:
   record_status: ready
   source_artifact_id: epoch-benchmark-data-2026-08-14
   source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
-  crosswalk_entry_id: epoch-gpqa-glm-max
+  crosswalk_entry_id: epoch-benchmarks-glm-max
   signal_id: gpqa-diamond
   source_model_id: glm-5.2_max
   signal_role: task
@@ -219,6 +219,418 @@ measurements:
     source_fields:
     - stderr
     notes: Standard error published by Epoch; trial count is not inferred.
+- record_id: epoch-scicode-glm-5.2-max-glm-5.2_max
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: scicode-test-288
+  harness_version: aa-intelligence-v4.1.1-public-methodology
+  metric_definition: SciCode test-subproblem pass@1 score in percent with scientist
+    background prompting
+  notes: Creator-run result redistributed by Epoch under CC BY 4.0. The export does
+    not establish an evaluation date; measurement_as_of_date is kept separate. Protocol
+    facts follow the cited official AA v4.1.1 methodology.
+  evaluator: Artificial Analysis
+  harness_owner: SciCode benchmark authors
+  run_executor: Artificial Analysis
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-benchmarks-glm-max
+  signal_id: scicode
+  source_model_id: glm-5.2_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: scicode
+  model_id: glm-5.2-max
+  value: 50.462962962963
+  cohort_key: aa-v4.1.1-scicode-test-288-background-pass1
+  evaluation_settings:
+    source_archive_member: scicode_external.csv
+    source_row_key: glm-5.2_max
+    source_display_name: GLM-5.2 (max)
+    methodology_url: https://artificialanalysis.ai/methodology/intelligence-benchmarking
+    methodology_profile: Artificial Analysis Intelligence Index v4.1.1
+    repeats: 3
+  number_of_tasks: 288
+  number_of_trials: 864
+  pass_at_k: 1
+- record_id: epoch-scicode-gpt-5.6-sol-max-gpt-5.6-sol_max
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: scicode-test-288
+  harness_version: aa-intelligence-v4.1.1-public-methodology
+  metric_definition: SciCode test-subproblem pass@1 score in percent with scientist
+    background prompting
+  notes: Creator-run result redistributed by Epoch under CC BY 4.0. The export does
+    not establish an evaluation date; measurement_as_of_date is kept separate. Protocol
+    facts follow the cited official AA v4.1.1 methodology.
+  evaluator: Artificial Analysis
+  harness_owner: SciCode benchmark authors
+  run_executor: Artificial Analysis
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-benchmarks-sol-max
+  signal_id: scicode
+  source_model_id: gpt-5.6-sol_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: scicode
+  model_id: gpt-5.6-sol-max
+  value: 56.1342592592593
+  cohort_key: aa-v4.1.1-scicode-test-288-background-pass1
+  evaluation_settings:
+    source_archive_member: scicode_external.csv
+    source_row_key: gpt-5.6-sol_max
+    source_display_name: GPT-5.6 Sol (max)
+    methodology_url: https://artificialanalysis.ai/methodology/intelligence-benchmarking
+    methodology_profile: Artificial Analysis Intelligence Index v4.1.1
+    repeats: 3
+  number_of_tasks: 288
+  number_of_trials: 864
+  pass_at_k: 1
+- record_id: epoch-scicode-claude-opus-5-max-claude-opus-5_max
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: scicode-test-288
+  harness_version: aa-intelligence-v4.1.1-public-methodology
+  metric_definition: SciCode test-subproblem pass@1 score in percent with scientist
+    background prompting
+  notes: Creator-run result redistributed by Epoch under CC BY 4.0. The export does
+    not establish an evaluation date; measurement_as_of_date is kept separate. Protocol
+    facts follow the cited official AA v4.1.1 methodology.
+  evaluator: Artificial Analysis
+  harness_owner: SciCode benchmark authors
+  run_executor: Artificial Analysis
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-benchmarks-opus-max
+  signal_id: scicode
+  source_model_id: claude-opus-5_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: scicode
+  model_id: claude-opus-5-max
+  value: 55.671296296296305
+  cohort_key: aa-v4.1.1-scicode-test-288-background-pass1
+  evaluation_settings:
+    source_archive_member: scicode_external.csv
+    source_row_key: claude-opus-5_max
+    source_display_name: Claude Opus 5 (Adaptive Reasoning, Max Effort)
+    methodology_url: https://artificialanalysis.ai/methodology/intelligence-benchmarking
+    methodology_profile: Artificial Analysis Intelligence Index v4.1.1
+    repeats: 3
+  number_of_tasks: 288
+  number_of_trials: 864
+  pass_at_k: 1
+- record_id: epoch-scicode-kimi-k3-max-kimi-k3_max
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: scicode-test-288
+  harness_version: aa-intelligence-v4.1.1-public-methodology
+  metric_definition: SciCode test-subproblem pass@1 score in percent with scientist
+    background prompting
+  notes: Creator-run result redistributed by Epoch under CC BY 4.0. The export does
+    not establish an evaluation date; measurement_as_of_date is kept separate. Protocol
+    facts follow the cited official AA v4.1.1 methodology.
+  evaluator: Artificial Analysis
+  harness_owner: SciCode benchmark authors
+  run_executor: Artificial Analysis
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-benchmarks-kimi-max
+  signal_id: scicode
+  source_model_id: kimi-k3_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: scicode
+  model_id: kimi-k3-max
+  value: 58.6805555555556
+  cohort_key: aa-v4.1.1-scicode-test-288-background-pass1
+  evaluation_settings:
+    source_archive_member: scicode_external.csv
+    source_row_key: kimi-k3_max
+    source_display_name: Kimi K3 (max)
+    methodology_url: https://artificialanalysis.ai/methodology/intelligence-benchmarking
+    methodology_profile: Artificial Analysis Intelligence Index v4.1.1
+    repeats: 3
+  number_of_tasks: 288
+  number_of_trials: 864
+  pass_at_k: 1
+- record_id: epoch-critpt-gpt-5.6-sol-max-recok7wfznqiaai15
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: critpt-public-leaderboard-2026-08-14
+  harness_version: aa-intelligence-v4.1.1-public-methodology
+  metric_definition: CritPt official-grader pass@1 accuracy in percent
+  notes: Creator-run result redistributed by Epoch under CC BY 4.0. The export does
+    not establish an evaluation date; measurement_as_of_date is kept separate. Protocol
+    facts follow the cited official AA v4.1.1 methodology.
+  evaluator: Artificial Analysis
+  harness_owner: CritPt benchmark authors
+  run_executor: Artificial Analysis
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-benchmarks-sol-max
+  signal_id: critpt
+  source_model_id: gpt-5.6-sol_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: critpt
+  model_id: gpt-5.6-sol-max
+  value: 32.300000000000004
+  cohort_key: aa-v4.1.1-critpt-70-test-challenges-pass1
+  evaluation_settings:
+    source_archive_member: critpt_external.csv
+    source_row_key: recok7WFznQiAaI15
+    source_display_name: GPT-5.6 Sol (max)
+    methodology_url: https://artificialanalysis.ai/methodology/intelligence-benchmarking
+    methodology_profile: Artificial Analysis Intelligence Index v4.1.1
+    repeats: 5
+  number_of_tasks: 70
+  number_of_trials: 350
+  pass_at_k: 1
+- record_id: epoch-critpt-claude-opus-5-max-rec5c4zdqpzverrgc
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: critpt-public-leaderboard-2026-08-14
+  harness_version: aa-intelligence-v4.1.1-public-methodology
+  metric_definition: CritPt official-grader pass@1 accuracy in percent
+  notes: Creator-run result redistributed by Epoch under CC BY 4.0. The export does
+    not establish an evaluation date; measurement_as_of_date is kept separate. Protocol
+    facts follow the cited official AA v4.1.1 methodology.
+  evaluator: Artificial Analysis
+  harness_owner: CritPt benchmark authors
+  run_executor: Artificial Analysis
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-benchmarks-opus-max
+  signal_id: critpt
+  source_model_id: claude-opus-5_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: critpt
+  model_id: claude-opus-5-max
+  value: 29.142857100000004
+  cohort_key: aa-v4.1.1-critpt-70-test-challenges-pass1
+  evaluation_settings:
+    source_archive_member: critpt_external.csv
+    source_row_key: rec5C4zdQpZvERrGC
+    source_display_name: null
+    methodology_url: https://artificialanalysis.ai/methodology/intelligence-benchmarking
+    methodology_profile: Artificial Analysis Intelligence Index v4.1.1
+    repeats: 5
+  number_of_tasks: 70
+  number_of_trials: 350
+  pass_at_k: 1
+- record_id: epoch-critpt-kimi-k3-max-recqkvzvlqfvkoht4
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: critpt-public-leaderboard-2026-08-14
+  harness_version: aa-intelligence-v4.1.1-public-methodology
+  metric_definition: CritPt official-grader pass@1 accuracy in percent
+  notes: Creator-run result redistributed by Epoch under CC BY 4.0. The export does
+    not establish an evaluation date; measurement_as_of_date is kept separate. Protocol
+    facts follow the cited official AA v4.1.1 methodology.
+  evaluator: Artificial Analysis
+  harness_owner: CritPt benchmark authors
+  run_executor: Artificial Analysis
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-benchmarks-kimi-max
+  signal_id: critpt
+  source_model_id: kimi-k3_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: critpt
+  model_id: kimi-k3-max
+  value: 23.400000000000002
+  cohort_key: aa-v4.1.1-critpt-70-test-challenges-pass1
+  evaluation_settings:
+    source_archive_member: critpt_external.csv
+    source_row_key: recQkvzVLQfVkOHT4
+    source_display_name: Kimi K3
+    methodology_url: https://artificialanalysis.ai/methodology/intelligence-benchmarking
+    methodology_profile: Artificial Analysis Intelligence Index v4.1.1
+    repeats: 5
+  number_of_tasks: 70
+  number_of_trials: 350
+  pass_at_k: 1
+- record_id: epoch-critpt-glm-5.2-max-reccz0gyjqlgpm3ch
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: critpt-public-leaderboard-2026-08-14
+  harness_version: aa-intelligence-v4.1.1-public-methodology
+  metric_definition: CritPt official-grader pass@1 accuracy in percent
+  notes: Creator-run result redistributed by Epoch under CC BY 4.0. The export does
+    not establish an evaluation date; measurement_as_of_date is kept separate. Protocol
+    facts follow the cited official AA v4.1.1 methodology.
+  evaluator: Artificial Analysis
+  harness_owner: CritPt benchmark authors
+  run_executor: Artificial Analysis
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-benchmarks-glm-max
+  signal_id: critpt
+  source_model_id: glm-5.2_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: critpt
+  model_id: glm-5.2-max
+  value: 20.8571428571429
+  cohort_key: aa-v4.1.1-critpt-70-test-challenges-pass1
+  evaluation_settings:
+    source_archive_member: critpt_external.csv
+    source_row_key: reccz0GyjqLGPM3cH
+    source_display_name: GLM-5.2 (max)
+    methodology_url: https://artificialanalysis.ai/methodology/intelligence-benchmarking
+    methodology_profile: Artificial Analysis Intelligence Index v4.1.1
+    repeats: 5
+  number_of_tasks: 70
+  number_of_trials: 350
+  pass_at_k: 1
 - record_id: arena-agent-claude-opus-5-max-2026-08-12
   source:
     organization: Arena

@@ -1,5 +1,5 @@
-scored_audit_fingerprint: 169cb9cba6b98673f615e6e7b7281d87ef19ce2bbbf02be829d76d7b0811f6c2
-complete_audit_fingerprint: 2d2f8278e09a582cd785aeab56b3988b067c6586452ad0c1db64f21d2fdb976b
+scored_audit_fingerprint: 3a7a78783e23b2065a3650d2f5387ca522a51a3c432ed7dcbaf7ec851b1fcce0
+complete_audit_fingerprint: 5bd031d212c8245b9fd94cc78e55fa31e93482f966b2954143a2c3bc889f3e52
 adapter_versions:
 - deepswe-reviewed-facts-v1
-- epoch-gpqa-zip-v1
+- epoch-benchmark-zip-v2

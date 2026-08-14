@@ -26,6 +26,7 @@ from umi.adapters import (
     adapt_aa_facts,
     adapt_arena_json,
     adapt_deepswe_facts,
+    adapt_epoch_benchmarks_zip,
     adapt_epoch_csv,
     adapt_lab_release_facts,
 )
@@ -147,6 +148,7 @@ def build_parser() -> argparse.ArgumentParser:
         choices=(
             "aa",
             "epoch",
+            "epoch-benchmarks",
             "arena-agent",
             "arena-text",
             "deepswe",
@@ -185,6 +187,7 @@ def _adapt_source(args: argparse.Namespace) -> Any:
     defaults = {
         "aa": root / "aa-reviewed-facts-2026-08-14.yaml",
         "epoch": root / "epoch-eci-benchmarks-2026-08-14.csv",
+        "epoch-benchmarks": root / "epoch-benchmark-data-2026-08-14.zip",
         "arena-agent": root / "arena-agent-2026-08-14.json",
         "arena-text": root / "arena-text-style-control-2026-08-14.json",
         "deepswe": root / "deepswe-reviewed-facts-2026-08-13.yaml",
@@ -202,6 +205,13 @@ def _adapt_source(args: argparse.Namespace) -> Any:
             crosswalk,
             source_id="epoch-eci",
             artifact_id="epoch-eci-matrix-2026-08-14",
+        )
+    if args.source == "epoch-benchmarks":
+        return adapt_epoch_benchmarks_zip(
+            artifact,
+            crosswalk,
+            source_id="epoch-benchmarks",
+            artifact_id="epoch-benchmark-data-2026-08-14",
         )
     if args.source in {"arena-agent", "arena-text"}:
         return adapt_arena_json(

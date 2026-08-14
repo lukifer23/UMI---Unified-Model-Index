@@ -353,6 +353,14 @@
       "source_artifact_id": "epoch-eci-matrix-2026-08-14"
     },
     {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-critpt-claude-opus-5-max-rec5c4zdqpzverrgc",
+      "scoring_ready": true,
+      "source_artifact_id": "epoch-benchmark-data-2026-08-14"
+    },
+    {
       "disposition": "diagnostic_only",
       "failures": [
         "signal policy is diagnostic-only"
@@ -361,6 +369,14 @@
       "record_id": "epoch-critpt-glm-5.2-max-m53",
       "scoring_ready": false,
       "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-critpt-glm-5.2-max-reccz0gyjqlgpm3ch",
+      "scoring_ready": true,
+      "source_artifact_id": "epoch-benchmark-data-2026-08-14"
     },
     {
       "disposition": "diagnostic_only",
@@ -373,6 +389,14 @@
       "source_artifact_id": "epoch-eci-matrix-2026-08-14"
     },
     {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-critpt-gpt-5.6-sol-max-recok7wfznqiaai15",
+      "scoring_ready": true,
+      "source_artifact_id": "epoch-benchmark-data-2026-08-14"
+    },
+    {
       "disposition": "diagnostic_only",
       "failures": [
         "signal policy is diagnostic-only"
@@ -381,6 +405,14 @@
       "record_id": "epoch-critpt-kimi-k3-max-m136",
       "scoring_ready": false,
       "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-critpt-kimi-k3-max-recqkvzvlqfvkoht4",
+      "scoring_ready": true,
+      "source_artifact_id": "epoch-benchmark-data-2026-08-14"
     },
     {
       "disposition": "diagnostic_only",
@@ -833,6 +865,38 @@
       "record_id": "epoch-proofbench-gpt-5.6-sol-max-m87",
       "scoring_ready": false,
       "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-scicode-claude-opus-5-max-claude-opus-5_max",
+      "scoring_ready": true,
+      "source_artifact_id": "epoch-benchmark-data-2026-08-14"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-scicode-glm-5.2-max-glm-5.2_max",
+      "scoring_ready": true,
+      "source_artifact_id": "epoch-benchmark-data-2026-08-14"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-scicode-gpt-5.6-sol-max-gpt-5.6-sol_max",
+      "scoring_ready": true,
+      "source_artifact_id": "epoch-benchmark-data-2026-08-14"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-scicode-kimi-k3-max-kimi-k3_max",
+      "scoring_ready": true,
+      "source_artifact_id": "epoch-benchmark-data-2026-08-14"
     },
     {
       "disposition": "diagnostic_only",

@@ -10,7 +10,7 @@ from umi.efficiency import score_efficiency
 from umi.fingerprints import dataset_fingerprint, scored_data_fingerprint
 from umi.loading import Dataset
 from umi.provenance import independent_or_community_evidence_share
-from umi.readiness import ScoredRecord, is_scoring_ready, scoring_dataset
+from umi.readiness import ScoredRecord, evidence_date, is_scoring_ready, scoring_dataset
 from umi.schemas import Confidence, CoverageSummary, Domain, ScoringResult
 from umi.validation import validate_dataset
 from umi.value import value_score
@@ -86,9 +86,9 @@ def score_dataset(
         *scored_dataset.task_economics,
     )
     observed_dates = [
-        item.evaluation_date
+        item_date
         for item in scored_observations
-        if item.evaluation_date is not None
+        if (item_date := evidence_date(item))
     ]
     data_as_of = max(observed_dates) if observed_dates else config.eligibility.release_end
     models = {model.id: model for model in scored_dataset.models}

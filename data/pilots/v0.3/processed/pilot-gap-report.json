@@ -1,9 +1,9 @@
 {
   "capability_cell_counts": {
     "diagnostic_measurement": 3,
-    "diagnostic_reference": 5,
-    "missing": 46,
-    "ready_scored": 9,
+    "diagnostic_reference": 1,
+    "missing": 42,
+    "ready_scored": 17,
     "vendor_claim_only": 2
   },
   "capability_cells": [
@@ -152,32 +152,40 @@
       "domain": "software_engineering",
       "family": "scicode",
       "model_id": "claude-opus-5-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "epoch-scicode-claude-opus-5-max-claude-opus-5_max"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "scicode",
       "domain": "software_engineering",
       "family": "scicode",
       "model_id": "glm-5.2-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "epoch-scicode-glm-5.2-max-glm-5.2_max"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "scicode",
       "domain": "software_engineering",
       "family": "scicode",
       "model_id": "gpt-5.6-sol-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "epoch-scicode-gpt-5.6-sol-max-gpt-5.6-sol_max"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "scicode",
       "domain": "software_engineering",
       "family": "scicode",
       "model_id": "kimi-k3-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "epoch-scicode-kimi-k3-max-kimi-k3_max"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "aa-coding-agent-index",
@@ -451,9 +459,9 @@
       "family": "critpt",
       "model_id": "claude-opus-5-max",
       "record_ids": [
-        "epoch-critpt-claude-opus-5-max-m25"
+        "epoch-critpt-claude-opus-5-max-rec5c4zdqpzverrgc"
       ],
-      "status": "diagnostic_reference"
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "critpt",
@@ -461,9 +469,9 @@
       "family": "critpt",
       "model_id": "glm-5.2-max",
       "record_ids": [
-        "epoch-critpt-glm-5.2-max-m53"
+        "epoch-critpt-glm-5.2-max-reccz0gyjqlgpm3ch"
       ],
-      "status": "diagnostic_reference"
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "critpt",
@@ -471,9 +479,9 @@
       "family": "critpt",
       "model_id": "gpt-5.6-sol-max",
       "record_ids": [
-        "epoch-critpt-gpt-5.6-sol-max-m87"
+        "epoch-critpt-gpt-5.6-sol-max-recok7wfznqiaai15"
       ],
-      "status": "diagnostic_reference"
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "critpt",
@@ -481,9 +489,9 @@
       "family": "critpt",
       "model_id": "kimi-k3-max",
       "record_ids": [
-        "epoch-critpt-kimi-k3-max-m136"
+        "epoch-critpt-kimi-k3-max-recqkvzvlqfvkoht4"
       ],
-      "status": "diagnostic_reference"
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "aa-lcr",

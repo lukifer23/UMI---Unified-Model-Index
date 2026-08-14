@@ -1,10 +1,15 @@
 import pytest
 
+from umi import __version__
 from umi.capability import score_capability
 from umi.config import ProjectConfig
 from umi.loading import Dataset
 from umi.schemas import BenchmarkDefinition
 from umi.scoring import score_dataset
+
+
+def test_public_package_version_matches_release() -> None:
+    assert __version__ == "0.3.3"
 
 
 def test_synthetic_pipeline_is_eligible_traceable_and_cohort_relative(
@@ -18,7 +23,7 @@ def test_synthetic_pipeline_is_eligible_traceable_and_cohort_relative(
         item.independent_or_community_evidence_share == 1 for item in results.values()
     )
     assert all(item.config_fingerprint == config.fingerprint for item in results.values())
-    assert all(item.formula_version == "umi-methodology-v0.3.2" for item in results.values())
+    assert all(item.formula_version == "umi-methodology-v0.3.3" for item in results.values())
     assert all(item.headline_overall == item.partial_overall_estimate for item in results.values())
     assert (
         results["synthetic-alpha"].capability.score > results["synthetic-epsilon"].capability.score

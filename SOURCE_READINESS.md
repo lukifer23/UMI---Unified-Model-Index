@@ -18,7 +18,8 @@ UMI separates parseability from scoring readiness. `umi validate` reports `schem
 - benchmark or workload version and harness version;
 - typed model identity with assurance at least `label_exact` for Capability;
 - exact model, release, and inference-effort labels with fallback/composite behavior ruled out;
-- evaluation date;
+- truthful evidence date: evaluation date when established, otherwise measurement-as-of,
+  leaderboard publication, or source publication date;
 - non-`unspecified` compatibility cohort key;
 - structured configuration verification;
 - retained inspectable artifact plus `source_artifact_id` and an accurate `capture_type`;
@@ -31,7 +32,8 @@ UMI separates parseability from scoring readiness. `umi validate` reports `schem
 
 Published evaluator, harness owner, run executor, tools, scaffold, retry, context, pass@k, task/trial
 counts, standard error, and confidence interval should be preserved when available. UMI never
-manufactures missing facts.
+manufactures missing facts. Artifact access dates and model release dates never stand in for
+evaluation/source dates.
 
 ## Scoring behavior
 

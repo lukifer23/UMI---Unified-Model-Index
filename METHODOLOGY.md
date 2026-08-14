@@ -1,7 +1,7 @@
-# UMI methodology v0.3.2
+# UMI methodology v0.3.3
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3.2 retains the manually reviewed,
+current policy values; code must not contradict this document. UMI v0.3.3 retains the manually reviewed,
 multi-source evidence pilot. It does not publish a headline UMI ranking.
 
 ## v0.3 source roles and exact identity
@@ -154,7 +154,7 @@ are exact named releases at Max effort with `label_exact` assurance; none is rep
 immutable provider snapshot. `evidence_artifact_ids` are source captures, not model snapshots.
 
 Capability records may score provisionally when the named release, release label, and effort label
-are exact, fallback/composite behavior is ruled out, the evidence date is known, and identity
+are exact, fallback/composite behavior is ruled out, the source date is known, and identity
 assurance is at least `label_exact`. Efficiency observations of wall time, cached tokens, or dollar
 cost and all Economics observations additionally require verified deployment identity because
 endpoint, serving provider, service tier, caching, and infrastructure can materially change those
@@ -164,6 +164,19 @@ release, effort, fallback state, harness, cohort, and arithmetic-mean semantics.
 fields must be isolated in a separate record so they cannot make a compatible harness-resource
 record appear deployable. A `provider_snapshot_id` may be populated only when the provider actually
 publishes an immutable identifier.
+
+Date fields are not interchangeable. `evaluation_date` is populated only when the source establishes
+the execution date. Otherwise freshness/readiness uses the first available truthful source date in
+this order: measurement-as-of date, leaderboard publication date, then source publication date.
+Artifact access date and model release date do not become evaluation dates. Outputs expose the
+latest contributing evidence date under this rule as `data_as_of`.
+
+For the frozen Artificial Analysis results redistributed in Epoch's Benchmarking Hub archive,
+`harness_version` names the accessed public AA methodology profile, not an undisclosed code revision.
+SciCode uses the documented 288 test subproblems over three repeats with scientist-background
+prompting; CritPt uses the documented 70 test challenges over five repeats and official grader. The
+archive does not expose execution dates, so these records retain null `evaluation_date`, a truthful
+measurement-as-of date, and `reproducible: false`.
 
 ## Consolidation and conflicts
 
@@ -300,7 +313,7 @@ that limitation.
 
 ## Efficiency
 
-The v0.3.2 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
+The v0.3.3 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
 10% effective reasoning tokens, 10% effective cached tokens, 10% effective turns, 15% effective
 agent steps, 15% effective wall time, and 10% effective tool calls. These are policy weights, not
 empirically learned parameters. Token subtypes are kept distinct: a total-token field is not scored

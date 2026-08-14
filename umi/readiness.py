@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
+from datetime import date
 
 from umi.loading import Dataset
 from umi.schemas import (
@@ -29,6 +30,16 @@ IDENTITY_ASSURANCE_ORDER = {
     IdentityAssurance.STRONGLY_SUPPORTED: 3,
     IdentityAssurance.VERIFIED: 4,
 }
+
+
+def evidence_date(record: Provenance) -> date | None:
+    """Return the best truthful date for freshness without relabeling it as an eval run date."""
+    return (
+        getattr(record, "evaluation_date", None)
+        or record.measurement_as_of_date
+        or record.leaderboard_publish_date
+        or record.source_published_date
+    )
 
 
 def readiness_failures(record: ScoredRecord, model: ModelConfiguration) -> tuple[str, ...]:
@@ -92,8 +103,8 @@ def readiness_failures(record: ScoredRecord, model: ModelConfiguration) -> tuple
         failures.append("named release is missing")
     if record.provider_snapshot_id and record.provider_snapshot_id != model.provider_snapshot_id:
         failures.append("provider snapshot does not match the scored configuration")
-    if record.evaluation_date is None:
-        failures.append("evaluation date is missing")
+    if evidence_date(record) is None:
+        failures.append("evaluation or source as-of date is missing")
     if model.endpoint_id and record.endpoint_id != model.endpoint_id:
         failures.append("deployment endpoint does not match the scored configuration")
     if model.serving_provider and record.serving_provider != model.serving_provider:

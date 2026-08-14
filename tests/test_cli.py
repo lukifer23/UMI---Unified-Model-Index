@@ -77,7 +77,9 @@ def test_fixture_config_is_auto_discovered(capsys: pytest.CaptureFixture[str]) -
     assert json.loads(capsys.readouterr().out)["scoring_ready"] is True
 
 
-@pytest.mark.parametrize("source", ["aa", "epoch", "arena-agent", "arena-text", "deepswe"])
+@pytest.mark.parametrize(
+    "source", ["aa", "epoch", "epoch-benchmarks", "arena-agent", "arena-text", "deepswe"]
+)
 def test_v03_ingest_commands_are_offline_and_deterministic(
     source: str, capsys: pytest.CaptureFixture[str]
 ) -> None:

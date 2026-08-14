@@ -1,16 +1,24 @@
 {
   "common_benchmark_series": [
     {
+      "benchmark_id": "critpt",
+      "cohort_key": "aa-v4.1.1-critpt-70-test-challenges-pass1"
+    },
+    {
       "benchmark_id": "deepswe-v1.1",
       "cohort_key": "deepswe-v1.1-2026-08-13"
     },
     {
       "benchmark_id": "gpqa-diamond",
       "cohort_key": "epoch-gpqa-diamond-1.0.6-simple-evals"
+    },
+    {
+      "benchmark_id": "scicode",
+      "cohort_key": "aa-v4.1.1-scicode-test-288-background-pass1"
     }
   ],
-  "common_evidence_profile_id": "e3f0d0bf0123be67d2b1d7a4c69a2513950fa25924f2bf345df5a610c679228d",
-  "comparison_group_id": "568841171db9fe9729bbb2a6e8c1811b93ef31b9e4a79c786ed691667eb25940",
+  "common_evidence_profile_id": "8ef661729ce67588cdf62dc81fa6d6697a5e4e833e201e32027baaaedbedaa7d",
+  "comparison_group_id": "95028a44e0c07927780289dbf42439088b7fb3e1d5b52bcc84df855e5eaa0fb7",
   "comparison_model_ids": [
     "claude-opus-5-max",
     "glm-5.2-max",
@@ -21,25 +29,25 @@
   "publication_label": "real evidence, provisional common-evidence comparison",
   "scores": [
     {
-      "coverage": 0.2625,
+      "coverage": 0.35625,
       "model_id": "claude-opus-5-max",
       "provisional": true,
       "rank": 1.0,
-      "score": 100.0
+      "score": 94.21052631578947
     },
     {
-      "coverage": 0.2625,
+      "coverage": 0.35625,
       "model_id": "glm-5.2-max",
       "provisional": true,
       "rank": 3.0,
       "score": 0.0
     },
     {
-      "coverage": 0.2625,
+      "coverage": 0.35625,
       "model_id": "kimi-k3-max",
       "provisional": true,
       "rank": 2.0,
-      "score": 50.0
+      "score": 55.78947368421053
     }
   ]
 }

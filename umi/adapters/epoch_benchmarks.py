@@ -29,6 +29,57 @@ PILOT_SOURCE_MODELS = {
     "glm-5.2_max",
 }
 
+EXTERNAL_BENCHMARKS = (
+    {
+        "member": "scicode_external.csv",
+        "benchmark_id": "scicode",
+        "value_field": "Score",
+        "benchmark_version": "scicode-test-288",
+        "harness_version": "aa-intelligence-v4.1.1-public-methodology",
+        "cohort_key": "aa-v4.1.1-scicode-test-288-background-pass1",
+        "number_of_tasks": 288,
+        "repeats": 3,
+        "metric_definition": (
+            "SciCode test-subproblem pass@1 score in percent with scientist background prompting"
+        ),
+        "methodology_url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+    },
+    {
+        "member": "critpt_external.csv",
+        "benchmark_id": "critpt",
+        "value_field": "Accuracy",
+        "benchmark_version": "critpt-public-leaderboard-2026-08-14",
+        "harness_version": "aa-intelligence-v4.1.1-public-methodology",
+        "cohort_key": "aa-v4.1.1-critpt-70-test-challenges-pass1",
+        "number_of_tasks": 70,
+        "repeats": 5,
+        "metric_definition": "CritPt official-grader pass@1 accuracy in percent",
+        "methodology_url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+    },
+)
+
+
+def adapt_epoch_benchmarks_zip(
+    path: str | Path,
+    crosswalk: ModelCrosswalk,
+    *,
+    source_id: str,
+    artifact_id: str,
+) -> AdaptationResult:
+    """Adapt all promoted pilot benchmarks from one frozen Epoch archive."""
+    gpqa = adapt_epoch_gpqa_zip(
+        path, crosswalk, source_id=source_id, artifact_id=artifact_id
+    )
+    external = adapt_epoch_external_benchmarks_zip(
+        path, crosswalk, source_id=source_id, artifact_id=artifact_id
+    )
+    return AdaptationResult(
+        source_id=source_id,
+        adapter_id="epoch-benchmark-zip-v2",
+        benchmarks=(*gpqa.benchmarks, *external.benchmarks),
+        rejections=(*gpqa.rejections, *external.rejections),
+    )
+
 
 def adapt_epoch_gpqa_zip(
     path: str | Path,
@@ -119,6 +170,113 @@ def adapt_epoch_gpqa_zip(
     return AdaptationResult(
         source_id=source_id,
         adapter_id="epoch-gpqa-zip-v1",
+        benchmarks=tuple(records),
+        rejections=tuple(rejected),
+    )
+
+
+def adapt_epoch_external_benchmarks_zip(
+    path: str | Path,
+    crosswalk: ModelCrosswalk,
+    *,
+    source_id: str,
+    artifact_id: str,
+) -> AdaptationResult:
+    """Adapt configured creator-run benchmark rows from Epoch's frozen raw export."""
+    source = Source.model_validate(
+        {
+            "organization": "Epoch AI",
+            "url": "https://epoch.ai/data/benchmark_data.zip",
+            "accessed": date(2026, 8, 14),
+        }
+    )
+    records: list[BenchmarkMeasurement] = []
+    rejected: list[AdapterRejection] = []
+    with zipfile.ZipFile(path) as archive:
+        for spec in EXTERNAL_BENCHMARKS:
+            member = str(spec["member"])
+            number_of_tasks = spec["number_of_tasks"]
+            repeats = spec["repeats"]
+            if not isinstance(number_of_tasks, int) or not isinstance(repeats, int):
+                raise TypeError(f"invalid task/repeat profile for {member}")
+            payload = archive.read(member).decode("utf-8")
+            for row in csv.DictReader(io.StringIO(payload)):
+                source_model_id = row["Model version"]
+                if source_model_id not in PILOT_SOURCE_MODELS:
+                    continue
+                match = exact_entry(crosswalk, source_id, artifact_id, source_model_id)
+                if match is None or match.canonical_model_id is None:
+                    rejected.append(
+                        AdapterRejection(
+                            source_row_id=f"{member}:{source_model_id}",
+                            reason="no exact crosswalk",
+                        )
+                    )
+                    continue
+                benchmark_id = str(spec["benchmark_id"])
+                source_row_key = row.get("id") or source_model_id
+                records.append(
+                    BenchmarkMeasurement(
+                        record_id=identifier(
+                            f"epoch-{benchmark_id}-{match.canonical_model_id}-{source_row_key}"
+                        ),
+                        benchmark_id=identifier(benchmark_id),
+                        model_id=match.canonical_model_id,
+                        source_model_id=source_model_id,
+                        value=float(row[str(spec["value_field"])]) * 100.0,
+                        cohort_key=identifier(str(spec["cohort_key"])),
+                        evaluation_date=None,
+                        model_release_date=date.fromisoformat(row["Release date"]),
+                        measurement_as_of_date=date(2026, 8, 14),
+                        evaluation_settings={
+                            "source_archive_member": member,
+                            "source_row_key": source_row_key,
+                            "source_display_name": row.get("Name") or None,
+                            "methodology_url": spec["methodology_url"],
+                            "methodology_profile": "Artificial Analysis Intelligence Index v4.1.1",
+                            "repeats": repeats,
+                        },
+                        number_of_tasks=number_of_tasks,
+                        number_of_trials=number_of_tasks * repeats,
+                        pass_at_k=1,
+                        source=source,
+                        result_type=ResultType.INDEPENDENT,
+                        benchmark_version=str(spec["benchmark_version"]),
+                        harness_version=str(spec["harness_version"]),
+                        metric_definition=str(spec["metric_definition"]),
+                        evaluator="Artificial Analysis",
+                        harness_owner=(
+                            "SciCode benchmark authors"
+                            if benchmark_id == "scicode"
+                            else "CritPt benchmark authors"
+                        ),
+                        run_executor="Artificial Analysis",
+                        raw_artifact_available=True,
+                        capture_type=ArtifactCaptureType.RAW_UPSTREAM_PAYLOAD,
+                        reproducible=False,
+                        configuration_verification=ConfigurationVerification(
+                            model_label_exact=True,
+                            release_label_exact=True,
+                            effort_label_exact=True,
+                            fallback_absent=True,
+                        ),
+                        source_artifact_id=artifact_id,
+                        source_registry_snapshot_id=artifact_id,
+                        crosswalk_entry_id=match.id,
+                        signal_id=identifier(benchmark_id),
+                        signal_role=SignalRole.TASK,
+                        scoring_disposition=ScoringDisposition.SCORED,
+                        notes=(
+                            "Creator-run result redistributed by Epoch under CC BY 4.0. The export "
+                            "does not establish an evaluation date; measurement_as_of_date is kept "
+                            "separate. Protocol facts follow the cited official AA v4.1.1 "
+                            "methodology."
+                        ),
+                    )
+                )
+    return AdaptationResult(
+        source_id=source_id,
+        adapter_id="epoch-external-benchmarks-zip-v1",
         benchmarks=tuple(records),
         rejections=tuple(rejected),
     )
