@@ -15,11 +15,16 @@ model-and-effort crosswalk.
 Python 3.11 or newer and [uv](https://docs.astral.sh/uv/) are required.
 
 ```bash
-uv sync --frozen
-uv run pytest
-uv run ruff check .
-uv run mypy
+uv sync --frozen --extra dev --no-editable
+PYTHONPATH=. uv run --no-sync pytest
+PYTHONPATH=. uv run --no-sync ruff check .
+PYTHONPATH=. uv run --no-sync mypy
 ```
+
+`--no-editable` makes the installed CLI testable on Python 3.14, whose site loader ignores
+Hatchling's underscore-prefixed editable `.pth` file. The explicit `PYTHONPATH=.` makes the
+quality checks measure the checked-out source; run the install and CLI smoke commands below as
+the package-level verification.
 
 ## Reproduce the v0.3 pilot
 
@@ -30,19 +35,19 @@ artifacts.
 Arena. It is never called by ingestion or scoring. AA and DeepSWE remain reviewed-fact inputs.
 
 ```bash
-uv run python scripts/build_v03_pilot.py
-uv run umi sources validate --data-dir data/pilots/v0.3/raw
-uv run umi crosswalk
-uv run umi overlap
-uv run umi ingest --source aa
-uv run umi ingest --source epoch
-uv run umi ingest --source arena-agent
-uv run umi ingest --source arena-text
-uv run umi ingest --source deepswe
-uv run umi rank --data-dir data/pilots/v0.3/raw --include-provisional
-uv run umi pilot-sensitivity --data-dir data/pilots/v0.3/raw
-uv run umi correlations --data-dir data/pilots/v0.3/raw
-uv run umi pareto --data-dir data/pilots/v0.3/raw
+uv run --no-sync python scripts/build_v03_pilot.py
+uv run --no-sync umi sources validate --data-dir data/pilots/v0.3/raw
+uv run --no-sync umi crosswalk
+uv run --no-sync umi overlap
+uv run --no-sync umi ingest --source aa
+uv run --no-sync umi ingest --source epoch
+uv run --no-sync umi ingest --source arena-agent
+uv run --no-sync umi ingest --source arena-text
+uv run --no-sync umi ingest --source deepswe
+uv run --no-sync umi rank --data-dir data/pilots/v0.3/raw --include-provisional
+uv run --no-sync umi pilot-sensitivity --data-dir data/pilots/v0.3/raw
+uv run --no-sync umi correlations --data-dir data/pilots/v0.3/raw
+uv run --no-sync umi pareto --data-dir data/pilots/v0.3/raw
 ```
 
 Every real-pilot result is labeled `real evidence, provisional partial ranking`. All
