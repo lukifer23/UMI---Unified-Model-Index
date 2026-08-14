@@ -73,7 +73,7 @@ snapshots:
     title: Artificial Analysis manually reviewed v0.3 public facts
     source:
       organization: Artificial Analysis
-      url: https://artificialanalysis.ai/data-api/docs
+      url: https://artificialanalysis.ai/leaderboards/models
       accessed: 2026-08-14
     as_of: 2026-08-14
     artifact_path: v0.3/aa-reviewed-facts-2026-08-14.yaml

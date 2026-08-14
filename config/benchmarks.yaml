@@ -4,25 +4,25 @@ families:
   - {id: terminalbench-2.1, domain: software_engineering, weight: 0.25, cap: 0.25}
   - {id: scicode, domain: software_engineering, weight: 0.15, cap: 0.15}
   - {id: legacy-aa-coding-index, domain: software_engineering, weight: 0.0, cap: 0.01}
-  - {id: gdpval-aa-v2, domain: agentic_work, weight: 0.45, cap: 0.45}
-  - {id: tau3-banking, domain: agentic_work, weight: 0.30, cap: 0.30}
-  - {id: arena-agent, domain: agentic_work, weight: 0.25, cap: 0.25}
+  - {id: gdpval-aa-v2, domain: agentic_work, weight: 0.60, cap: 0.60}
+  - {id: tau3-banking, domain: agentic_work, weight: 0.40, cap: 0.40}
+  - {id: arena-agent, domain: agentic_work, weight: 0.0, cap: 0.01}
   - {id: legacy-aa-briefcase, domain: agentic_work, weight: 0.0, cap: 0.01}
   - {id: gpqa-diamond, domain: math_science, weight: 0.65, cap: 0.65}
   - {id: critpt, domain: math_science, weight: 0.35, cap: 0.35}
   - {id: aa-lcr, domain: context_reliability, weight: 0.50, cap: 0.50}
   - {id: aa-omniscience, domain: context_reliability, weight: 0.50, cap: 0.50}
 benchmarks:
-  - {id: hle, name: Humanity's Last Exam, domain: general_reasoning, family: hle, direction: higher, unit: percent, normalization: robust_z}
-  - {id: deepswe-v1.1, name: DeepSWE v1.1, domain: software_engineering, family: deepswe-v1.1, direction: higher, unit: percent, normalization: robust_z}
-  - {id: terminalbench-2.1, name: Terminal-Bench 2.1, domain: software_engineering, family: terminalbench-2.1, direction: higher, unit: percent, normalization: robust_z}
-  - {id: scicode, name: SciCode, domain: software_engineering, family: scicode, direction: higher, unit: percent, normalization: robust_z}
-  - {id: aa-coding-agent-index, name: Legacy AA Coding Agent Index, domain: software_engineering, family: legacy-aa-coding-index, direction: higher, unit: score, normalization: robust_z}
-  - {id: gdpval-aa-v2, name: GDPval-AA v2, domain: agentic_work, family: gdpval-aa-v2, direction: higher, unit: score, normalization: robust_z}
-  - {id: tau3-banking, name: tau3-Banking, domain: agentic_work, family: tau3-banking, direction: higher, unit: percent, normalization: robust_z}
-  - {id: arena-agent, name: Arena Agent aggregate, domain: agentic_work, family: arena-agent, direction: higher, unit: score, representation_group: arena-agent, normalization: robust_z}
-  - {id: aa-briefcase, name: Legacy AA-Briefcase, domain: agentic_work, family: legacy-aa-briefcase, direction: higher, unit: score, normalization: robust_z}
-  - {id: gpqa-diamond, name: GPQA Diamond, domain: math_science, family: gpqa-diamond, direction: higher, unit: percent, normalization: robust_z}
-  - {id: critpt, name: CritPt, domain: math_science, family: critpt, direction: higher, unit: percent, normalization: robust_z}
-  - {id: aa-lcr, name: AA-LCR, domain: context_reliability, family: aa-lcr, direction: higher, unit: percent, normalization: robust_z}
-  - {id: aa-omniscience, name: AA-Omniscience, domain: context_reliability, family: aa-omniscience, direction: higher, unit: score, normalization: robust_z}
+  - {id: hle, name: Humanity's Last Exam, domain: general_reasoning, family: hle, signal_id: aa-hle, budget_group: hle, direction: higher, unit: percent, normalization: robust_z}
+  - {id: deepswe-v1.1, name: DeepSWE v1.1, domain: software_engineering, family: deepswe-v1.1, signal_id: deepswe-v1.1, budget_group: deepswe-v1.1, direction: higher, unit: percent, normalization: robust_z}
+  - {id: terminalbench-2.1, name: Terminal-Bench 2.1, domain: software_engineering, family: terminalbench-2.1, signal_id: aa-terminalbench-2.1, budget_group: terminalbench-2.1, direction: higher, unit: percent, normalization: robust_z}
+  - {id: scicode, name: SciCode, domain: software_engineering, family: scicode, signal_id: aa-scicode, budget_group: scicode, direction: higher, unit: percent, normalization: robust_z}
+  - {id: aa-coding-agent-index, name: Legacy AA Coding Agent Index, domain: software_engineering, family: legacy-aa-coding-index, signal_id: aa-coding-index, budget_group: null, direction: higher, unit: score, normalization: robust_z}
+  - {id: gdpval-aa-v2, name: GDPval-AA v2, domain: agentic_work, family: gdpval-aa-v2, signal_id: aa-gdpval-v2, budget_group: gdpval-aa-v2, direction: higher, unit: score, normalization: robust_z}
+  - {id: tau3-banking, name: tau3-Banking, domain: agentic_work, family: tau3-banking, signal_id: aa-tau3-banking, budget_group: tau3-banking, direction: higher, unit: percent, normalization: robust_z}
+  - {id: arena-agent, name: Arena Agent aggregate, domain: agentic_work, family: arena-agent, signal_id: arena-agent, budget_group: arena-agent, direction: higher, unit: score, representation_group: arena-agent, normalization: robust_z}
+  - {id: aa-briefcase, name: Legacy AA-Briefcase, domain: agentic_work, family: legacy-aa-briefcase, signal_id: aa-agentic-index, budget_group: null, direction: higher, unit: score, normalization: robust_z}
+  - {id: gpqa-diamond, name: GPQA Diamond, domain: math_science, family: gpqa-diamond, signal_id: aa-gpqa-diamond, budget_group: gpqa-diamond, direction: higher, unit: percent, normalization: robust_z}
+  - {id: critpt, name: CritPt, domain: math_science, family: critpt, signal_id: aa-critpt, budget_group: critpt, direction: higher, unit: percent, normalization: robust_z}
+  - {id: aa-lcr, name: AA-LCR, domain: context_reliability, family: aa-lcr, signal_id: aa-lcr, budget_group: aa-lcr, direction: higher, unit: percent, normalization: robust_z}
+  - {id: aa-omniscience, name: AA-Omniscience, domain: context_reliability, family: aa-omniscience, signal_id: aa-omniscience, budget_group: aa-omniscience, direction: higher, unit: score, normalization: robust_z}

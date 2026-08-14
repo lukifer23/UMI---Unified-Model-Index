@@ -20,6 +20,7 @@ from umi.adapters import (
     adapt_lab_release_facts,
     assemble_pilot_dataset,
 )
+from umi.bundle import validate_scoring_bundle
 from umi.config import load_project_config
 from umi.loading import load_model_crosswalk, load_source_registry
 from umi.schemas import ModelConfiguration, ScoringDisposition
@@ -73,9 +74,7 @@ def main() -> None:
             upstream_revision="08dd89df7a8aa9df2ead3799f6422af4ad2e97a7",
             subset="text_style_control",
         ),
-        adapt_deepswe_facts(
-            SOURCE_ROOT / "deepswe-reviewed-facts-2026-08-13.yaml", crosswalk
-        ),
+        adapt_deepswe_facts(SOURCE_ROOT / "deepswe-reviewed-facts-2026-08-13.yaml", crosswalk),
         *(
             adapt_lab_release_facts(SOURCE_ROOT / filename, crosswalk)
             for filename in (
@@ -89,9 +88,7 @@ def main() -> None:
     dataset = assemble_pilot_dataset(models, results)
     relevant_ids = {entry.source_artifact_id for entry in crosswalk.entries}
     snapshots = [
-        item.model_dump(mode="json")
-        for item in registry.snapshots
-        if item.id in relevant_ids
+        item.model_dump(mode="json") for item in registry.snapshots if item.id in relevant_ids
     ]
     complete_payload = {
         "snapshots": snapshots,
@@ -165,6 +162,15 @@ def main() -> None:
         json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     config = load_project_config(ROOT / "config")
+    bundle_errors = validate_scoring_bundle(
+        dataset,
+        config,
+        registry,
+        ROOT / "data" / "sources" / "registry.yaml",
+        crosswalk,
+    )
+    if bundle_errors:
+        raise ValueError("invalid scoring bundle: " + "; ".join(bundle_errors))
     data_report = validate_dataset(dataset, config)
     registry_report = validate_source_registry(
         registry, ROOT / "data" / "sources" / "registry.yaml", dataset
@@ -175,9 +181,7 @@ def main() -> None:
         "crosswalk_valid": crosswalk_report.valid,
         "source_errors": list(registry_report.errors),
         "crosswalk_errors": list(crosswalk_report.errors),
-        "readiness": [
-            item.model_dump(mode="json") for item in source_readiness_matrix(dataset)
-        ],
+        "readiness": [item.model_dump(mode="json") for item in source_readiness_matrix(dataset)],
     }
     (PROCESSED_ROOT / "source-readiness.json").write_text(
         json.dumps(source_report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
@@ -187,9 +191,7 @@ def main() -> None:
         json.dumps(estimates, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     (PROCESSED_ROOT / "source-bound-uncertainty.json").write_text(
-        json.dumps(
-            source_bound_capability_sensitivity(dataset, config), indent=2, sort_keys=True
-        )
+        json.dumps(source_bound_capability_sensitivity(dataset, config), indent=2, sort_keys=True)
         + "\n",
         encoding="utf-8",
     )

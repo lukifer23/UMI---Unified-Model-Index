@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import cast
+from typing import TYPE_CHECKING, cast
 
 from umi._component import weighted_available
 from umi.capability import score_capability
@@ -15,6 +15,9 @@ from umi.schemas import Confidence, CoverageSummary, Domain, ScoringResult
 from umi.validation import validate_dataset
 from umi.value import value_score
 from umi.version import ENGINE_VERSION, FORMULA_VERSION, NORMALIZATION_VERSION
+
+if TYPE_CHECKING:
+    from umi.bundle import ScoringBundle
 
 
 def overall_for_weights(result: ScoringResult, weights: OverallWeights) -> float | None:
@@ -325,3 +328,8 @@ def score_dataset(
         )
         results.append(result)
     return results
+
+
+def score_bundle(bundle: ScoringBundle, *, allow_unready: bool = False) -> list[ScoringResult]:
+    """Score real evidence only after the bundle's governance checks have passed."""
+    return score_dataset(bundle.dataset, bundle.config, allow_unready=allow_unready)

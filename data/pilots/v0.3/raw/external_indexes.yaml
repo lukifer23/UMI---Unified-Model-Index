@@ -11,9 +11,13 @@ measurements:
   notes: Public-page fact capture; composite excluded from UMI scoring.
   evaluator: Artificial Analysis
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: aa-public-facts-2026-08-14
+  source_registry_snapshot_id: aa-public-facts-2026-08-14
+  crosswalk_entry_id: aa-opus-max
+  signal_id: aa-intelligence-v4.1
   signal_role: composite
   scoring_disposition: diagnostic_only
   index_id: aa-intelligence-index
@@ -36,9 +40,13 @@ measurements:
   notes: Public-page fact capture; composite excluded from UMI scoring.
   evaluator: Artificial Analysis
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: aa-public-facts-2026-08-14
+  source_registry_snapshot_id: aa-public-facts-2026-08-14
+  crosswalk_entry_id: aa-sol-max
+  signal_id: aa-intelligence-v4.1
   signal_role: composite
   scoring_disposition: diagnostic_only
   index_id: aa-intelligence-index
@@ -61,9 +69,13 @@ measurements:
   notes: Public-page fact capture; composite excluded from UMI scoring.
   evaluator: Artificial Analysis
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: aa-public-facts-2026-08-14
+  source_registry_snapshot_id: aa-public-facts-2026-08-14
+  crosswalk_entry_id: aa-kimi-max
+  signal_id: aa-intelligence-v4.1
   signal_role: composite
   scoring_disposition: diagnostic_only
   index_id: aa-intelligence-index
@@ -86,9 +98,13 @@ measurements:
   notes: Public-page fact capture; composite excluded from UMI scoring.
   evaluator: Artificial Analysis
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: aa-public-facts-2026-08-14
+  source_registry_snapshot_id: aa-public-facts-2026-08-14
+  crosswalk_entry_id: aa-glm-max
+  signal_id: aa-intelligence-v4.1
   signal_role: composite
   scoring_disposition: diagnostic_only
   index_id: aa-intelligence-index
@@ -104,6 +120,8 @@ measurements:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -112,9 +130,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-kimi-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: gpqa-diamond
@@ -124,12 +146,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-gpqa-diamond-2026-08-14
   model_snapshot_id: kimi-k3-max
-  evaluation_date: '2026-07-16'
 - record_id: epoch-otis-mock-aime-2024-2025-kimi-k3-max-m136
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -138,9 +161,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-kimi-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: otis-mock-aime-2024-2025
@@ -150,12 +177,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-otis-mock-aime-2024-2025-2026-08-14
   model_snapshot_id: kimi-k3-max
-  evaluation_date: '2026-07-16'
 - record_id: epoch-weirdml-kimi-k3-max-m136
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -164,9 +192,13 @@ measurements:
   notes: 'Original source column: https://htihle.github.io/weirdml.html'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-kimi-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: weirdml
@@ -176,12 +208,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-weirdml-2026-08-14
   model_snapshot_id: kimi-k3-max
-  evaluation_date: '2026-07-16'
 - record_id: epoch-chess-puzzles-kimi-k3-max-m136
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -190,9 +223,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-kimi-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: chess-puzzles
@@ -202,12 +239,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-chess-puzzles-2026-08-14
   model_snapshot_id: kimi-k3-max
-  evaluation_date: '2026-07-16'
 - record_id: epoch-simpleqa-verified-kimi-k3-max-m136
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -216,9 +254,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-kimi-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: simpleqa-verified
@@ -228,12 +270,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-simpleqa-verified-2026-08-14
   model_snapshot_id: kimi-k3-max
-  evaluation_date: '2026-07-16'
 - record_id: epoch-critpt-kimi-k3-max-m136
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -242,9 +285,13 @@ measurements:
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-kimi-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: critpt
@@ -254,12 +301,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-critpt-2026-08-14
   model_snapshot_id: kimi-k3-max
-  evaluation_date: '2026-07-16'
 - record_id: epoch-arc-agi-kimi-k3-max-m136
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -268,9 +316,13 @@ measurements:
   notes: 'Original source column: https://arcprize.org/leaderboard'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-kimi-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: arc-agi
@@ -280,12 +332,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-arc-agi-2026-08-14
   model_snapshot_id: kimi-k3-max
-  evaluation_date: '2026-07-16'
 - record_id: epoch-arc-agi-2-kimi-k3-max-m136
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -294,9 +347,13 @@ measurements:
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-kimi-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: arc-agi-2
@@ -306,12 +363,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-arc-agi-2-2026-08-14
   model_snapshot_id: kimi-k3-max
-  evaluation_date: '2026-07-16'
 - record_id: epoch-frontiermath-tiers-1-3-v2-private-kimi-k3-max-m136
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -320,9 +378,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-kimi-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tiers-1-3-v2-private
@@ -332,12 +394,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tiers-1-3-v2-private-2026-08-14
   model_snapshot_id: kimi-k3-max
-  evaluation_date: '2026-07-16'
 - record_id: epoch-frontiermath-tier-4-v2-private-kimi-k3-max-m136
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -346,9 +409,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-kimi-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tier-4-v2-private
@@ -358,12 +425,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tier-4-v2-private-2026-08-14
   model_snapshot_id: kimi-k3-max
-  evaluation_date: '2026-07-16'
 - record_id: epoch-mystery-game-puzzles-kimi-k3-max-m136
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -372,9 +440,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-kimi-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: mystery-game-puzzles
@@ -384,12 +456,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-mystery-game-puzzles-2026-08-14
   model_snapshot_id: kimi-k3-max
-  evaluation_date: '2026-07-16'
 - record_id: epoch-surface-evolver-bench-kimi-k3-max-m136
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -398,9 +471,13 @@ measurements:
   notes: 'Original source column: https://yhenon.github.io/surface-evolver-llm-eval/'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-kimi-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: surface-evolver-bench
@@ -410,12 +487,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-surface-evolver-bench-2026-08-14
   model_snapshot_id: kimi-k3-max
-  evaluation_date: '2026-07-16'
 - record_id: epoch-deepswe-kimi-k3-max-m136
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -424,9 +502,13 @@ measurements:
   notes: 'Original source column: https://deepswe.datacurve.ai/'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-kimi-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: deepswe
@@ -436,12 +518,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-deepswe-2026-08-14
   model_snapshot_id: kimi-k3-max
-  evaluation_date: '2026-07-16'
 - record_id: epoch-otis-mock-aime-2024-2025-claude-fable-5-max-m16
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -450,9 +533,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-fable-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: otis-mock-aime-2024-2025
@@ -462,12 +549,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-otis-mock-aime-2024-2025-2026-08-14
   model_snapshot_id: claude-fable-5-max
-  evaluation_date: '2026-06-09'
 - record_id: epoch-weirdml-claude-fable-5-max-m16
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -476,9 +564,13 @@ measurements:
   notes: 'Original source column: https://htihle.github.io/weirdml.html'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-fable-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: weirdml
@@ -488,12 +580,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-weirdml-2026-08-14
   model_snapshot_id: claude-fable-5-max
-  evaluation_date: '2026-06-09'
 - record_id: epoch-chess-puzzles-claude-fable-5-max-m16
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -502,9 +595,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-fable-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: chess-puzzles
@@ -514,12 +611,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-chess-puzzles-2026-08-14
   model_snapshot_id: claude-fable-5-max
-  evaluation_date: '2026-06-09'
 - record_id: epoch-simplebench-claude-fable-5-max-m16
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -528,9 +626,13 @@ measurements:
   notes: 'Original source column: SimpleBench Leaderboard'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-fable-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: simplebench
@@ -540,12 +642,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-simplebench-2026-08-14
   model_snapshot_id: claude-fable-5-max
-  evaluation_date: '2026-06-09'
 - record_id: epoch-critpt-claude-fable-5-max-m16
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -554,9 +657,13 @@ measurements:
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-fable-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: critpt
@@ -566,12 +673,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-critpt-2026-08-14
   model_snapshot_id: claude-fable-5-max
-  evaluation_date: '2026-06-09'
 - record_id: epoch-frontiermath-tiers-1-3-v2-private-claude-fable-5-max-m16
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -580,9 +688,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-fable-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tiers-1-3-v2-private
@@ -592,12 +704,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tiers-1-3-v2-private-2026-08-14
   model_snapshot_id: claude-fable-5-max
-  evaluation_date: '2026-06-09'
 - record_id: epoch-frontiermath-tier-4-v2-private-claude-fable-5-max-m16
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -606,9 +719,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-fable-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tier-4-v2-private
@@ -618,12 +735,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tier-4-v2-private-2026-08-14
   model_snapshot_id: claude-fable-5-max
-  evaluation_date: '2026-06-09'
 - record_id: epoch-ebr-bench-claude-fable-5-max-m16
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -632,9 +750,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-fable-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: ebr-bench
@@ -644,12 +766,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-ebr-bench-2026-08-14
   model_snapshot_id: claude-fable-5-max
-  evaluation_date: '2026-06-09'
 - record_id: epoch-mystery-game-puzzles-claude-fable-5-max-m16
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -658,9 +781,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-fable-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: mystery-game-puzzles
@@ -670,12 +797,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-mystery-game-puzzles-2026-08-14
   model_snapshot_id: claude-fable-5-max
-  evaluation_date: '2026-06-09'
 - record_id: epoch-posttrainbench-claude-fable-5-max-m16
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -684,9 +812,13 @@ measurements:
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-fable-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: posttrainbench
@@ -696,12 +828,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-posttrainbench-2026-08-14
   model_snapshot_id: claude-fable-5-max
-  evaluation_date: '2026-06-09'
 - record_id: epoch-cursorbench-claude-fable-5-max-m16
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -710,9 +843,13 @@ measurements:
   notes: 'Original source column: https://cursor.com/cursorbench'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-fable-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: cursorbench
@@ -722,12 +859,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-cursorbench-2026-08-14
   model_snapshot_id: claude-fable-5-max
-  evaluation_date: '2026-06-09'
 - record_id: epoch-proofbench-claude-fable-5-max-m16
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -736,9 +874,13 @@ measurements:
   notes: 'Original source column: https://www.vals.ai/benchmarks/proof_bench'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-fable-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: proofbench
@@ -748,12 +890,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-proofbench-2026-08-14
   model_snapshot_id: claude-fable-5-max
-  evaluation_date: '2026-06-09'
 - record_id: epoch-gpqa-diamond-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -762,9 +905,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: gpqa-diamond
@@ -774,12 +921,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-gpqa-diamond-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-otis-mock-aime-2024-2025-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -788,9 +936,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: otis-mock-aime-2024-2025
@@ -800,12 +952,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-otis-mock-aime-2024-2025-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-weirdml-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -814,9 +967,13 @@ measurements:
   notes: 'Original source column: https://htihle.github.io/weirdml.html'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: weirdml
@@ -826,12 +983,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-weirdml-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-chess-puzzles-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -840,9 +998,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: chess-puzzles
@@ -852,12 +1014,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-chess-puzzles-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-simpleqa-verified-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -866,9 +1029,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: simpleqa-verified
@@ -878,12 +1045,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-simpleqa-verified-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-critpt-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -892,9 +1060,13 @@ measurements:
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: critpt
@@ -904,12 +1076,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-critpt-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-arc-agi-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -918,9 +1091,13 @@ measurements:
   notes: 'Original source column: https://arcprize.org/leaderboard'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: arc-agi
@@ -930,12 +1107,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-arc-agi-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-arc-agi-2-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -944,9 +1122,13 @@ measurements:
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: arc-agi-2
@@ -956,12 +1138,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-arc-agi-2-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-frontiermath-tiers-1-3-v2-private-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -970,9 +1153,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tiers-1-3-v2-private
@@ -982,12 +1169,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tiers-1-3-v2-private-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-frontiermath-tier-4-v2-private-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -996,9 +1184,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tier-4-v2-private
@@ -1008,12 +1200,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tier-4-v2-private-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-ebr-bench-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1022,9 +1215,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: ebr-bench
@@ -1034,12 +1231,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-ebr-bench-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-mystery-game-puzzles-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1048,9 +1246,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: mystery-game-puzzles
@@ -1060,12 +1262,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-mystery-game-puzzles-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-frontiercode-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1074,9 +1277,13 @@ measurements:
   notes: 'Original source column: https://cognition.com/frontiercode'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiercode
@@ -1086,12 +1293,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-frontiercode-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-apex-agents-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1100,9 +1308,13 @@ measurements:
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: apex-agents
@@ -1112,12 +1324,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-apex-agents-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-cursorbench-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1126,9 +1339,13 @@ measurements:
   notes: 'Original source column: https://cursor.com/cursorbench'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: cursorbench
@@ -1138,12 +1355,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-cursorbench-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-deepswe-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1152,9 +1370,13 @@ measurements:
   notes: 'Original source column: https://deepswe.datacurve.ai/'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: deepswe
@@ -1164,12 +1386,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-deepswe-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-proofbench-claude-opus-5-max-m25
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1178,9 +1401,13 @@ measurements:
   notes: 'Original source column: https://www.vals.ai/benchmarks/proof_bench'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-opus-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: proofbench
@@ -1190,12 +1417,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-proofbench-2026-08-14
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-07-24'
 - record_id: epoch-gpqa-diamond-glm-5.2-max-m53
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1204,9 +1432,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-glm-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: gpqa-diamond
@@ -1216,12 +1448,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-gpqa-diamond-2026-08-14
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-06-16'
 - record_id: epoch-otis-mock-aime-2024-2025-glm-5.2-max-m53
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1230,9 +1463,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-glm-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: otis-mock-aime-2024-2025
@@ -1242,12 +1479,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-otis-mock-aime-2024-2025-2026-08-14
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-06-16'
 - record_id: epoch-weirdml-glm-5.2-max-m53
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1256,9 +1494,13 @@ measurements:
   notes: 'Original source column: https://htihle.github.io/weirdml.html'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-glm-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: weirdml
@@ -1268,12 +1510,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-weirdml-2026-08-14
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-06-16'
 - record_id: epoch-chess-puzzles-glm-5.2-max-m53
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1282,9 +1525,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-glm-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: chess-puzzles
@@ -1294,12 +1541,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-chess-puzzles-2026-08-14
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-06-16'
 - record_id: epoch-simpleqa-verified-glm-5.2-max-m53
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1308,9 +1556,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-glm-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: simpleqa-verified
@@ -1320,12 +1572,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-simpleqa-verified-2026-08-14
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-06-16'
 - record_id: epoch-critpt-glm-5.2-max-m53
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1334,9 +1587,13 @@ measurements:
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-glm-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: critpt
@@ -1346,12 +1603,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-critpt-2026-08-14
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-06-16'
 - record_id: epoch-swe-bench-verified-glm-5.2-max-m53
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1360,9 +1618,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-glm-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: swe-bench-verified
@@ -1372,12 +1634,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-swe-bench-verified-2026-08-14
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-06-16'
 - record_id: epoch-frontiermath-tiers-1-3-v2-private-glm-5.2-max-m53
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1386,9 +1649,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-glm-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tiers-1-3-v2-private
@@ -1398,12 +1665,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tiers-1-3-v2-private-2026-08-14
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-06-16'
 - record_id: epoch-frontiermath-tier-4-v2-private-glm-5.2-max-m53
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1412,9 +1680,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-glm-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tier-4-v2-private
@@ -1424,12 +1696,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tier-4-v2-private-2026-08-14
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-06-16'
 - record_id: epoch-ebr-bench-glm-5.2-max-m53
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1438,9 +1711,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-glm-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: ebr-bench
@@ -1450,12 +1727,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-ebr-bench-2026-08-14
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-06-16'
 - record_id: epoch-posttrainbench-glm-5.2-max-m53
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1464,9 +1742,13 @@ measurements:
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-glm-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: posttrainbench
@@ -1476,12 +1758,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-posttrainbench-2026-08-14
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-06-16'
 - record_id: epoch-cursorbench-glm-5.2-max-m53
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1490,9 +1773,13 @@ measurements:
   notes: 'Original source column: https://cursor.com/cursorbench'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-glm-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: cursorbench
@@ -1502,12 +1789,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-cursorbench-2026-08-14
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-06-16'
 - record_id: epoch-deepswe-glm-5.2-max-m53
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1516,9 +1804,13 @@ measurements:
   notes: 'Original source column: https://deepswe.datacurve.ai/'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-glm-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: deepswe
@@ -1528,12 +1820,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-deepswe-2026-08-14
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-06-16'
 - record_id: epoch-proofbench-glm-5.2-max-m53
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1542,9 +1835,13 @@ measurements:
   notes: 'Original source column: https://www.vals.ai/benchmarks/proof_bench'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-glm-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: proofbench
@@ -1554,12 +1851,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-proofbench-2026-08-14
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-06-16'
 - record_id: epoch-gpqa-diamond-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1568,9 +1866,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-sol-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: gpqa-diamond
@@ -1580,12 +1882,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-gpqa-diamond-2026-08-14
   model_snapshot_id: gpt-5.6-sol-max
-  evaluation_date: '2026-07-09'
 - record_id: epoch-otis-mock-aime-2024-2025-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1594,9 +1897,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-sol-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: otis-mock-aime-2024-2025
@@ -1606,12 +1913,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-otis-mock-aime-2024-2025-2026-08-14
   model_snapshot_id: gpt-5.6-sol-max
-  evaluation_date: '2026-07-09'
 - record_id: epoch-simpleqa-verified-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1620,9 +1928,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-sol-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: simpleqa-verified
@@ -1632,12 +1944,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-simpleqa-verified-2026-08-14
   model_snapshot_id: gpt-5.6-sol-max
-  evaluation_date: '2026-07-09'
 - record_id: epoch-critpt-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1646,9 +1959,13 @@ measurements:
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-sol-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: critpt
@@ -1658,12 +1975,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-critpt-2026-08-14
   model_snapshot_id: gpt-5.6-sol-max
-  evaluation_date: '2026-07-09'
 - record_id: epoch-arc-agi-2-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1672,9 +1990,13 @@ measurements:
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-sol-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: arc-agi-2
@@ -1684,12 +2006,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-arc-agi-2-2026-08-14
   model_snapshot_id: gpt-5.6-sol-max
-  evaluation_date: '2026-07-09'
 - record_id: epoch-frontiermath-tiers-1-3-v2-private-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1698,9 +2021,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-sol-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tiers-1-3-v2-private
@@ -1710,12 +2037,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tiers-1-3-v2-private-2026-08-14
   model_snapshot_id: gpt-5.6-sol-max
-  evaluation_date: '2026-07-09'
 - record_id: epoch-ebr-bench-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1724,9 +2052,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-sol-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: ebr-bench
@@ -1736,12 +2068,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-ebr-bench-2026-08-14
   model_snapshot_id: gpt-5.6-sol-max
-  evaluation_date: '2026-07-09'
 - record_id: epoch-mystery-game-puzzles-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1750,9 +2083,13 @@ measurements:
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-sol-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: mystery-game-puzzles
@@ -1762,12 +2099,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-mystery-game-puzzles-2026-08-14
   model_snapshot_id: gpt-5.6-sol-max
-  evaluation_date: '2026-07-09'
 - record_id: epoch-posttrainbench-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1776,9 +2114,13 @@ measurements:
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-sol-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: posttrainbench
@@ -1788,12 +2130,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-posttrainbench-2026-08-14
   model_snapshot_id: gpt-5.6-sol-max
-  evaluation_date: '2026-07-09'
 - record_id: epoch-cursorbench-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1802,9 +2145,13 @@ measurements:
   notes: 'Original source column: https://cursor.com/cursorbench'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-sol-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: cursorbench
@@ -1814,12 +2161,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-cursorbench-2026-08-14
   model_snapshot_id: gpt-5.6-sol-max
-  evaluation_date: '2026-07-09'
 - record_id: epoch-deepswe-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1828,9 +2176,13 @@ measurements:
   notes: 'Original source column: https://deepswe.datacurve.ai/'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-sol-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: deepswe
@@ -1840,12 +2192,13 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-deepswe-2026-08-14
   model_snapshot_id: gpt-5.6-sol-max
-  evaluation_date: '2026-07-09'
 - record_id: epoch-proofbench-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
     url: https://epoch.ai/data/eci_benchmarks.csv
     accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
   result_type: derived
   benchmark_version: eci-matrix-2026-08-14
   harness_version: mixed-source-eci-input-matrix
@@ -1854,9 +2207,13 @@ measurements:
   notes: 'Original source column: https://www.vals.ai/benchmarks/proof_bench'
   evaluator: Epoch AI
   raw_artifact_available: true
+  capture_type: raw_upstream_payload
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
+  source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
+  crosswalk_entry_id: epoch-sol-max
+  signal_id: epoch-eci
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: proofbench
@@ -1866,21 +2223,26 @@ measurements:
   direction: higher
   cohort_key: epoch-eci-matrix-proofbench-2026-08-14
   model_snapshot_id: gpt-5.6-sol-max
-  evaluation_date: '2026-07-09'
 - record_id: arena-text-claude-opus-5-max-2026-08-12
   source:
     organization: Arena
     url: https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset
     accessed: '2026-08-14'
+  measurement_as_of_date: '2026-08-12'
+  leaderboard_publish_date: '2026-08-12'
   result_type: independent
   benchmark_version: arena-text-style-control-2026-08-12
   harness_version: arena-bradley-terry-2026-08-12
   metric_definition: Arena text style-controlled Bradley-Terry rating
   evaluator: Arena
   raw_artifact_available: true
+  capture_type: archived_source_snapshot
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: arena-text-2026-08-14
+  source_registry_snapshot_id: arena-text-2026-08-14
+  crosswalk_entry_id: arena-text-opus-max
+  signal_id: arena-text
   signal_role: preference
   scoring_disposition: diagnostic_only
   index_id: arena-text-style-control
@@ -1890,21 +2252,26 @@ measurements:
   direction: higher
   cohort_key: arena-text-style-control-2026-08-12
   model_snapshot_id: claude-opus-5-max
-  evaluation_date: '2026-08-12'
 - record_id: arena-text-kimi-k3-max-2026-08-12
   source:
     organization: Arena
     url: https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset
     accessed: '2026-08-14'
+  measurement_as_of_date: '2026-08-12'
+  leaderboard_publish_date: '2026-08-12'
   result_type: independent
   benchmark_version: arena-text-style-control-2026-08-12
   harness_version: arena-bradley-terry-2026-08-12
   metric_definition: Arena text style-controlled Bradley-Terry rating
   evaluator: Arena
   raw_artifact_available: true
+  capture_type: archived_source_snapshot
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: arena-text-2026-08-14
+  source_registry_snapshot_id: arena-text-2026-08-14
+  crosswalk_entry_id: arena-text-kimi-max
+  signal_id: arena-text
   signal_role: preference
   scoring_disposition: diagnostic_only
   index_id: arena-text-style-control
@@ -1914,21 +2281,26 @@ measurements:
   direction: higher
   cohort_key: arena-text-style-control-2026-08-12
   model_snapshot_id: kimi-k3-max
-  evaluation_date: '2026-08-12'
 - record_id: arena-text-glm-5.2-max-2026-08-12
   source:
     organization: Arena
     url: https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset
     accessed: '2026-08-14'
+  measurement_as_of_date: '2026-08-12'
+  leaderboard_publish_date: '2026-08-12'
   result_type: independent
   benchmark_version: arena-text-style-control-2026-08-12
   harness_version: arena-bradley-terry-2026-08-12
   metric_definition: Arena text style-controlled Bradley-Terry rating
   evaluator: Arena
   raw_artifact_available: true
+  capture_type: archived_source_snapshot
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: arena-text-2026-08-14
+  source_registry_snapshot_id: arena-text-2026-08-14
+  crosswalk_entry_id: arena-text-glm-max
+  signal_id: arena-text
   signal_role: preference
   scoring_disposition: diagnostic_only
   index_id: arena-text-style-control
@@ -1938,4 +2310,3 @@ measurements:
   direction: higher
   cohort_key: arena-text-style-control-2026-08-12
   model_snapshot_id: glm-5.2-max
-  evaluation_date: '2026-08-12'

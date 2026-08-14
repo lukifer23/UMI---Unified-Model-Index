@@ -103,16 +103,20 @@ def test_real_pilot_cli_validates_registry_and_exports_stable_csv(
         [
             "references",
             "--data-dir",
-            str(ROOT / "data" / "raw"),
+            str(ROOT / "data" / "pilots" / "v0.3" / "raw"),
             "--config-dir",
             str(ROOT / "config"),
+            "--source-registry",
+            str(ROOT / "data" / "sources" / "registry.yaml"),
+            "--crosswalk",
+            str(ROOT / "data" / "sources" / "v0.3" / "crosswalk.yaml"),
             "--format",
             "csv",
         ]
     )
     assert run(reference_args) == 0
     rows = list(csv.DictReader(io.StringIO(capsys.readouterr().out)))
-    assert len(rows) == 12
+    assert len(rows) == 75
     assert set(rows[0]) == {
         "cohort_key",
         "measurement_type",

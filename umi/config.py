@@ -16,6 +16,7 @@ from umi.schemas import (
     OverlapPolicy,
     OverlapRelation,
     ScoringDisposition,
+    SignalRole,
     ValueFormula,
     WorkloadCategory,
 )
@@ -198,10 +199,7 @@ class ProjectConfig(ConfigModel):
                     OverlapRelation.SHARED_TASKS,
                     OverlapRelation.SHARED_CONSTRUCT,
                 }
-                and (
-                    source.budget_group is None
-                    or source.budget_group != target.budget_group
-                )
+                and (source.budget_group is None or source.budget_group != target.budget_group)
             ):
                 raise ValueError(
                     f"overlapping scored signals {source.id} and {target.id} must share a budget"
@@ -223,6 +221,39 @@ class ProjectConfig(ConfigModel):
 
         for signal_id in sorted(graph):
             visit(signal_id)
+
+        governed = [item for item in self.benchmarks if item.signal_id is not None]
+        if governed:
+            if len(governed) != len(self.benchmarks):
+                raise ValueError("all benchmark definitions must bind a signal policy")
+            allocations: dict[str, tuple[Domain, str, str]] = {}
+            for benchmark in governed:
+                signal = signals.get(benchmark.signal_id or "")
+                if signal is None:
+                    raise ValueError(f"benchmark {benchmark.id} references unknown signal policy")
+                if benchmark.budget_group != signal.budget_group:
+                    raise ValueError(f"benchmark {benchmark.id} budget differs from signal policy")
+                family = next(item for item in self.families if item.id == benchmark.family)
+                if family.weight > 0 and signal.disposition != ScoringDisposition.SCORED:
+                    raise ValueError(
+                        f"positive-weight benchmark {benchmark.id} is not score-enabled"
+                    )
+                if (
+                    signal.disposition == ScoringDisposition.SCORED
+                    and signal.role != SignalRole.TASK
+                ):
+                    raise ValueError(f"scored benchmark {benchmark.id} must bind a task signal")
+                if benchmark.budget_group is not None:
+                    allocation = (
+                        benchmark.domain,
+                        benchmark.family,
+                        benchmark.representation_group or benchmark.family,
+                    )
+                    prior = allocations.setdefault(benchmark.budget_group, allocation)
+                    if prior != allocation:
+                        raise ValueError(
+                            f"budget group {benchmark.budget_group} maps to multiple allocations"
+                        )
         return self
 
 

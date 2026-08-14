@@ -29,6 +29,17 @@
       "title": "AggregationStatistic",
       "type": "string"
     },
+    "ArtifactCaptureType": {
+      "enum": [
+        "raw_upstream_payload",
+        "archived_source_snapshot",
+        "reviewed_fact_extract",
+        "citation_only",
+        "derived_artifact"
+      ],
+      "title": "ArtifactCaptureType",
+      "type": "string"
+    },
     "BenchmarkMeasurement": {
       "additionalProperties": false,
       "properties": {
@@ -49,6 +60,17 @@
           "default": null,
           "title": "Benchmark Version"
         },
+        "capture_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArtifactCaptureType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "cohort_key": {
           "default": "unspecified",
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
@@ -66,6 +88,19 @@
           ],
           "default": null,
           "title": "Configuration Verified"
+        },
+        "crosswalk_entry_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Crosswalk Entry Id"
         },
         "endpoint_id": {
           "anyOf": [
@@ -133,6 +168,32 @@
           "default": null,
           "title": "Harness Version"
         },
+        "leaderboard_publish_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Leaderboard Publish Date"
+        },
+        "measurement_as_of_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Measurement As Of Date"
+        },
         "metric_definition": {
           "minLength": 1,
           "title": "Metric Definition",
@@ -142,6 +203,19 @@
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
           "title": "Model Id",
           "type": "string"
+        },
+        "model_release_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Release Date"
         },
         "model_snapshot_id": {
           "default": "unspecified",
@@ -289,6 +363,19 @@
           "default": null,
           "title": "Serving Provider"
         },
+        "signal_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signal Id"
+        },
         "signal_role": {
           "$ref": "#/$defs/SignalRole",
           "default": "task"
@@ -308,6 +395,32 @@
           ],
           "default": null,
           "title": "Source Artifact Id"
+        },
+        "source_published_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Published Date"
+        },
+        "source_registry_snapshot_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Registry Snapshot Id"
         },
         "tools_enabled": {
           "anyOf": [
@@ -402,6 +515,17 @@
           "default": null,
           "title": "Benchmark Version"
         },
+        "capture_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArtifactCaptureType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "cohort_key": {
           "default": "unspecified",
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
@@ -419,6 +543,19 @@
           ],
           "default": null,
           "title": "Configuration Verified"
+        },
+        "crosswalk_entry_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Crosswalk Entry Id"
         },
         "endpoint_id": {
           "anyOf": [
@@ -480,6 +617,19 @@
           ],
           "default": null,
           "title": "Harness Version"
+        },
+        "leaderboard_publish_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Leaderboard Publish Date"
         },
         "mean_cached_tokens": {
           "anyOf": [
@@ -598,6 +748,19 @@
           "default": null,
           "title": "Mean Wall Seconds"
         },
+        "measurement_as_of_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Measurement As Of Date"
+        },
         "metric_definition": {
           "minLength": 1,
           "title": "Metric Definition",
@@ -607,6 +770,19 @@
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
           "title": "Model Id",
           "type": "string"
+        },
+        "model_release_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Release Date"
         },
         "model_snapshot_id": {
           "default": "unspecified",
@@ -741,6 +917,19 @@
           "default": null,
           "title": "Serving Provider"
         },
+        "signal_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signal Id"
+        },
         "signal_role": {
           "$ref": "#/$defs/SignalRole",
           "default": "task"
@@ -760,6 +949,32 @@
           ],
           "default": null,
           "title": "Source Artifact Id"
+        },
+        "source_published_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Published Date"
+        },
+        "source_registry_snapshot_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Registry Snapshot Id"
         },
         "success_rate": {
           "maximum": 1,
@@ -817,6 +1032,17 @@
           "default": null,
           "title": "Benchmark Version"
         },
+        "capture_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArtifactCaptureType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "cohort_key": {
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
           "title": "Cohort Key",
@@ -834,6 +1060,19 @@
           "default": null,
           "title": "Configuration Verified"
         },
+        "crosswalk_entry_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Crosswalk Entry Id"
+        },
         "direction": {
           "$ref": "#/$defs/Direction"
         },
@@ -850,9 +1089,17 @@
           "title": "Endpoint Id"
         },
         "evaluation_date": {
-          "format": "date",
-          "title": "Evaluation Date",
-          "type": "string"
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evaluation Date"
         },
         "evaluator": {
           "anyOf": [
@@ -895,6 +1142,32 @@
           "title": "Index Id",
           "type": "string"
         },
+        "leaderboard_publish_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Leaderboard Publish Date"
+        },
+        "measurement_as_of_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Measurement As Of Date"
+        },
         "metric_definition": {
           "minLength": 1,
           "title": "Metric Definition",
@@ -904,6 +1177,19 @@
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
           "title": "Model Id",
           "type": "string"
+        },
+        "model_release_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Release Date"
         },
         "model_snapshot_id": {
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
@@ -998,6 +1284,19 @@
           "default": null,
           "title": "Serving Provider"
         },
+        "signal_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signal Id"
+        },
         "signal_role": {
           "$ref": "#/$defs/SignalRole",
           "default": "task"
@@ -1017,6 +1316,32 @@
           ],
           "default": null,
           "title": "Source Artifact Id"
+        },
+        "source_published_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Published Date"
+        },
+        "source_registry_snapshot_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Registry Snapshot Id"
         },
         "tools_enabled": {
           "anyOf": [
@@ -1049,8 +1374,7 @@
         "unit",
         "direction",
         "cohort_key",
-        "model_snapshot_id",
-        "evaluation_date"
+        "model_snapshot_id"
       ],
       "title": "ExternalIndexMeasurement",
       "type": "object"
@@ -1208,6 +1532,17 @@
           "default": null,
           "title": "Cached Input Per Million"
         },
+        "capture_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArtifactCaptureType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "configuration_verified": {
           "anyOf": [
             {
@@ -1219,6 +1554,19 @@
           ],
           "default": null,
           "title": "Configuration Verified"
+        },
+        "crosswalk_entry_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Crosswalk Entry Id"
         },
         "currency": {
           "default": "USD",
@@ -1292,6 +1640,19 @@
           "default": null,
           "title": "Input Per Million"
         },
+        "leaderboard_publish_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Leaderboard Publish Date"
+        },
         "long_context_surcharge": {
           "additionalProperties": {
             "minimum": 0,
@@ -1299,6 +1660,19 @@
           },
           "title": "Long Context Surcharge",
           "type": "object"
+        },
+        "measurement_as_of_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Measurement As Of Date"
         },
         "metric_definition": {
           "minLength": 1,
@@ -1309,6 +1683,19 @@
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
           "title": "Model Id",
           "type": "string"
+        },
+        "model_release_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Release Date"
         },
         "notes": {
           "anyOf": [
@@ -1424,6 +1811,19 @@
           "default": null,
           "title": "Serving Provider"
         },
+        "signal_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signal Id"
+        },
         "signal_role": {
           "$ref": "#/$defs/SignalRole",
           "default": "task"
@@ -1443,6 +1843,32 @@
           ],
           "default": null,
           "title": "Source Artifact Id"
+        },
+        "source_published_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Published Date"
+        },
+        "source_registry_snapshot_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Registry Snapshot Id"
         },
         "tool_costs": {
           "additionalProperties": {
@@ -1507,6 +1933,17 @@
           "default": null,
           "title": "Benchmark Version"
         },
+        "capture_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArtifactCaptureType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "claim_text": {
           "minLength": 1,
           "title": "Claim Text",
@@ -1528,6 +1965,19 @@
           ],
           "default": null,
           "title": "Configuration Verified"
+        },
+        "crosswalk_entry_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Crosswalk Entry Id"
         },
         "direction": {
           "$ref": "#/$defs/Direction"
@@ -1585,6 +2035,32 @@
           "default": null,
           "title": "Harness Version"
         },
+        "leaderboard_publish_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Leaderboard Publish Date"
+        },
+        "measurement_as_of_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Measurement As Of Date"
+        },
         "metric_definition": {
           "minLength": 1,
           "title": "Metric Definition",
@@ -1594,6 +2070,19 @@
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
           "title": "Model Id",
           "type": "string"
+        },
+        "model_release_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Release Date"
         },
         "model_snapshot_id": {
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
@@ -1688,6 +2177,19 @@
           "default": null,
           "title": "Serving Provider"
         },
+        "signal_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signal Id"
+        },
         "signal_role": {
           "$ref": "#/$defs/SignalRole",
           "default": "task"
@@ -1707,6 +2209,32 @@
           ],
           "default": null,
           "title": "Source Artifact Id"
+        },
+        "source_published_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Published Date"
+        },
+        "source_registry_snapshot_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Registry Snapshot Id"
         },
         "tools_enabled": {
           "anyOf": [
@@ -1824,6 +2352,17 @@
           "default": null,
           "title": "Benchmark Version"
         },
+        "capture_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArtifactCaptureType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "cohort_key": {
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
           "title": "Cohort Key",
@@ -1843,6 +2382,19 @@
         },
         "cost_basis": {
           "$ref": "#/$defs/CostBasis"
+        },
+        "crosswalk_entry_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Crosswalk Entry Id"
         },
         "endpoint_id": {
           "anyOf": [
@@ -1897,10 +2449,36 @@
           "default": null,
           "title": "Harness Version"
         },
+        "leaderboard_publish_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Leaderboard Publish Date"
+        },
         "mean_cost_usd": {
           "minimum": 0,
           "title": "Mean Cost Usd",
           "type": "number"
+        },
+        "measurement_as_of_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Measurement As Of Date"
         },
         "metric_definition": {
           "minLength": 1,
@@ -1911,6 +2489,19 @@
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
           "title": "Model Id",
           "type": "string"
+        },
+        "model_release_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Release Date"
         },
         "model_snapshot_id": {
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
@@ -2018,6 +2609,19 @@
           "default": null,
           "title": "Serving Provider"
         },
+        "signal_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signal Id"
+        },
         "signal_role": {
           "$ref": "#/$defs/SignalRole",
           "default": "task"
@@ -2037,6 +2641,32 @@
           ],
           "default": null,
           "title": "Source Artifact Id"
+        },
+        "source_published_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Published Date"
+        },
+        "source_registry_snapshot_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Registry Snapshot Id"
         },
         "tools_enabled": {
           "anyOf": [

@@ -7,6 +7,7 @@ from pathlib import Path
 from umi.adapters.common import exact_entry, identifier
 from umi.adapters.models import AdaptationResult, AdapterRejection
 from umi.schemas import (
+    ArtifactCaptureType,
     Direction,
     ExternalIndexMeasurement,
     ModelCrosswalk,
@@ -70,7 +71,9 @@ def adapt_epoch_csv(
                     unit=Unit.PERCENT,
                     direction=Direction.HIGHER,
                     cohort_key=identifier(f"epoch-eci-matrix-{benchmark}-2026-08-14"),
-                    evaluation_date=released,
+                    evaluation_date=None,
+                    model_release_date=released,
+                    measurement_as_of_date=date(2026, 8, 14),
                     source=source,
                     result_type=ResultType.DERIVED,
                     benchmark_version="eci-matrix-2026-08-14",
@@ -81,7 +84,11 @@ def adapt_epoch_csv(
                     ),
                     evaluator="Epoch AI",
                     raw_artifact_available=True,
+                    capture_type=ArtifactCaptureType.RAW_UPSTREAM_PAYLOAD,
                     source_artifact_id=artifact_id,
+                    source_registry_snapshot_id=artifact_id,
+                    crosswalk_entry_id=match.id,
+                    signal_id="epoch-eci",
                     configuration_verified=True,
                     record_status=RecordStatus.DIAGNOSTIC_ONLY,
                     signal_role=SignalRole.REFERENCE,

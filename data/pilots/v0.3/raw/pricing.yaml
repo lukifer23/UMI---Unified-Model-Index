@@ -11,9 +11,12 @@ pricing:
     resource measurements.
   evaluator: Anthropic
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: anthropic-release-facts-2026-08-14
+  source_registry_snapshot_id: anthropic-release-facts-2026-08-14
+  crosswalk_entry_id: anthropic-release-opus-max
   signal_role: economics
   scoring_disposition: diagnostic_only
   model_id: claude-opus-5-max
@@ -38,9 +41,12 @@ pricing:
     resource measurements.
   evaluator: Anthropic
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: anthropic-release-facts-2026-08-14
+  source_registry_snapshot_id: anthropic-release-facts-2026-08-14
+  crosswalk_entry_id: anthropic-release-fable-max
   signal_role: economics
   scoring_disposition: diagnostic_only
   model_id: claude-fable-5-max
@@ -64,9 +70,12 @@ pricing:
     resource measurements.
   evaluator: OpenAI
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: openai-release-facts-2026-08-14
+  source_registry_snapshot_id: openai-release-facts-2026-08-14
+  crosswalk_entry_id: openai-release-sol-max
   signal_role: economics
   scoring_disposition: diagnostic_only
   model_id: gpt-5.6-sol-max
@@ -92,9 +101,12 @@ pricing:
     resource measurements.
   evaluator: Moonshot AI
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: kimi-release-facts-2026-08-14
+  source_registry_snapshot_id: kimi-release-facts-2026-08-14
+  crosswalk_entry_id: kimi-release-k3-max
   signal_role: economics
   scoring_disposition: diagnostic_only
   model_id: kimi-k3-max
@@ -116,9 +128,12 @@ pricing:
     resource measurements.
   evaluator: Z.ai
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: zai-release-facts-2026-08-14
+  source_registry_snapshot_id: zai-release-facts-2026-08-14
+  crosswalk_entry_id: zai-release-glm-max
   signal_role: economics
   scoring_disposition: diagnostic_only
   model_id: glm-5.2-max

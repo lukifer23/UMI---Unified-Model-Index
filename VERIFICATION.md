@@ -10,11 +10,12 @@ project contract.
 | `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.1 as a wheel from the committed lock |
 | `uv run --no-sync python -m scripts.build_v03_pilot` | passed; rebuilt all raw and processed pilot artifacts offline |
 | `uv run --no-sync python -m umi.schemas` | passed; regenerated the machine-readable schemas |
-| `PYTHONPATH=. uv run --no-sync pytest` | 86 passed; 93% combined `umi`/`analysis` coverage |
+| `PYTHONPATH=. uv run --no-sync pytest --cov=umi --cov=analysis --cov-fail-under=90` | 88 passed; 93.19% combined `umi`/`analysis` coverage |
 | `PYTHONPATH=. uv run --no-sync ruff check .` | passed |
-| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts/build_v03_pilot.py scripts/freeze_v03_open_sources.py` | passed, 44 source files |
+| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 46 source files |
 | `umi sources validate` | passed |
 | `umi crosswalk` and `umi overlap` | passed |
+| `umi bundle validate --data-dir data/pilots/v0.3/raw` | passed; all scored records have exact source, crosswalk, signal, budget, revision, checksum, and capture-type bindings |
 | all nine offline `umi ingest --source ...` commands | passed: AA, Epoch, both Arena cohorts, DeepSWE, and four lab-release sources |
 | rank, estimates, both sensitivity paths, references, correlations, Pareto, both comparison cohorts, uncertainty, claims, and gaps | passed |
 | `umi validate` | schema valid with zero errors; deliberately exited 1 because eight records are diagnostic-only and the pilot is not headline-ready |
@@ -54,6 +55,11 @@ README rather than hidden as a local workaround.
   independent benchmark results.
 - Diagnostic evidence and source metadata change the complete audit fingerprint without changing
   the scored audit fingerprint. Input order remains fingerprint-invariant.
+- Arena Agent is diagnostic preference evidence with zero Capability weight. Its former positive
+  allocation is redistributed to GDPval-AA v2 and tau3-Banking in their prior ratio; it cannot
+  increase coverage, confidence, or source diversity.
+- Epoch model release dates, evidence-as-of dates, and Arena leaderboard publication dates are
+  serialized in separate fields; unknown evaluation dates remain null.
 
 ## Repository map
 

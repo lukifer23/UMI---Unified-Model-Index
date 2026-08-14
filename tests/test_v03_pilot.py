@@ -9,6 +9,7 @@ from pydantic import ValidationError
 
 from analysis.gaps import pilot_gap_report
 from analysis.pilot_sensitivity import analyze_pilot_sensitivity, family_budget_snapshot
+from scripts.build_v03_pilot import main as build_v03_pilot
 from umi.adapters import (
     adapt_aa_facts,
     adapt_arena_json,
@@ -16,12 +17,14 @@ from umi.adapters import (
     adapt_epoch_csv,
     adapt_lab_release_facts,
 )
+from umi.bundle import load_scoring_bundle, validate_scoring_bundle
 from umi.config import ProjectConfig, load_project_config
 from umi.derived_metrics import derive_efficiency_metric
 from umi.fingerprints import dataset_fingerprint
 from umi.loading import load_dataset, load_model_crosswalk, load_source_registry
 from umi.schemas import (
     AggregationStatistic,
+    ArtifactCaptureType,
     CrosswalkStatus,
     ModelCrosswalk,
     ModelCrosswalkEntry,
@@ -66,6 +69,63 @@ def test_frozen_registry_checksums_and_license_contract(pilot_dataset) -> None:
     pilot_snapshots = [item for item in registry.snapshots if "v0.3/" in item.artifact_path]
     assert len(pilot_snapshots) == 9
     assert all(item.license_id and item.attribution and item.adapter_id for item in pilot_snapshots)
+
+
+def test_real_pilot_requires_a_valid_governance_bundle(
+    pilot_dataset, pilot_config, crosswalk
+) -> None:
+    registry_path = ROOT / "data" / "sources" / "registry.yaml"
+    registry = load_source_registry(registry_path)
+    bundle = load_scoring_bundle(PILOT, ROOT / "config", registry_path, SOURCES / "crosswalk.yaml")
+    assert bundle.dataset == pilot_dataset
+
+    scored = next(item for item in pilot_dataset.benchmarks if item.record_id.startswith("deepswe"))
+    assert scored.capture_type == ArtifactCaptureType.REVIEWED_FACT_EXTRACT
+    unbound = pilot_dataset.model_copy(
+        update={
+            "benchmarks": (
+                scored.model_copy(update={"crosswalk_entry_id": None}),
+                *tuple(item for item in pilot_dataset.benchmarks if item != scored),
+            )
+        }
+    )
+    assert any(
+        "lacks an exact crosswalk binding" in error
+        for error in validate_scoring_bundle(
+            unbound, pilot_config, registry, registry_path, crosswalk
+        )
+    )
+
+    uncaptured = pilot_dataset.model_copy(
+        update={
+            "benchmarks": (
+                scored.model_copy(update={"capture_type": None}),
+                *tuple(item for item in pilot_dataset.benchmarks if item != scored),
+            )
+        }
+    )
+    assert any(
+        "lacks capture_type" in error
+        for error in validate_scoring_bundle(
+            uncaptured, pilot_config, registry, registry_path, crosswalk
+        )
+    )
+
+    signals = tuple(
+        item.model_copy(update={"disposition": ScoringDisposition.DIAGNOSTIC_ONLY})
+        if item.id == "deepswe-v1.1"
+        else item
+        for item in pilot_config.overlap.signals
+    )
+    diagnostic_policy = pilot_config.model_copy(
+        update={"overlap": pilot_config.overlap.model_copy(update={"signals": signals})}
+    )
+    assert any(
+        "signal policy does not permit scoring" in error
+        for error in validate_scoring_bundle(
+            pilot_dataset, diagnostic_policy, registry, registry_path, crosswalk
+        )
+    )
 
 
 def test_crosswalk_exactness_and_rejected_aliases(pilot_dataset, crosswalk) -> None:
@@ -144,8 +204,7 @@ def test_adapters_are_offline_deterministic_and_role_safe(monkeypatch, crosswalk
     assert len(deep.benchmarks) == 5
     assert all(item.uncertainty is not None for item in deep.benchmarks)
     assert all(
-        item.uncertainty is not None
-        and item.uncertainty.kind == UncertaintyKind.PUBLISHED_MARGIN
+        item.uncertainty is not None and item.uncertainty.kind == UncertaintyKind.PUBLISHED_MARGIN
         for item in deep.benchmarks
     )
     assert all(
@@ -156,6 +215,15 @@ def test_adapters_are_offline_deterministic_and_role_safe(monkeypatch, crosswalk
     )
 
 
+def test_full_pilot_build_is_offline(monkeypatch) -> None:
+    def deny_network(*args, **kwargs):
+        raise AssertionError("pilot build attempted network access")
+
+    monkeypatch.setattr(socket, "socket", deny_network)
+    build_v03_pilot()
+    assert (PILOT.parent / "processed" / "pilot-gap-report.json").is_file()
+
+
 def test_epoch_and_arena_adapter_dispositions(crosswalk) -> None:
     epoch = adapt_epoch_csv(
         SOURCES / "epoch-eci-benchmarks-2026-08-14.csv",
@@ -164,6 +232,12 @@ def test_epoch_and_arena_adapter_dispositions(crosswalk) -> None:
         artifact_id="epoch-eci-matrix-2026-08-14",
     )
     assert epoch.external_indexes
+    assert all(item.evaluation_date is None for item in epoch.external_indexes)
+    assert all(item.model_release_date is not None for item in epoch.external_indexes)
+    assert all(
+        item.capture_type == ArtifactCaptureType.RAW_UPSTREAM_PAYLOAD
+        for item in epoch.external_indexes
+    )
     assert all(
         item.scoring_disposition == ScoringDisposition.DIAGNOSTIC_ONLY
         for item in epoch.external_indexes
@@ -182,6 +256,12 @@ def test_epoch_and_arena_adapter_dispositions(crosswalk) -> None:
         "glm-5.2-max",
     }
     assert all(item.model_snapshot_id == "unspecified" for item in arena.benchmarks)
+    assert all(item.evaluation_date is None for item in arena.benchmarks)
+    assert all(item.leaderboard_publish_date is not None for item in arena.benchmarks)
+    assert all(
+        item.capture_type == ArtifactCaptureType.ARCHIVED_SOURCE_SNAPSHOT
+        for item in arena.benchmarks
+    )
     assert all(item.record_status == RecordStatus.DIAGNOSTIC_ONLY for item in arena.benchmarks)
     assert all(
         item.uncertainty is not None
@@ -194,9 +274,7 @@ def test_epoch_and_arena_adapter_dispositions(crosswalk) -> None:
 
 
 def test_lab_release_facts_preserve_tariffs_and_claims(crosswalk) -> None:
-    openai = adapt_lab_release_facts(
-        SOURCES / "openai-release-facts-2026-08-14.yaml", crosswalk
-    )
+    openai = adapt_lab_release_facts(SOURCES / "openai-release-facts-2026-08-14.yaml", crosswalk)
     assert len(openai.pricing) == 1
     assert openai.pricing[0].cached_input_per_million == 0.5
     assert openai.pricing[0].long_context_surcharge["threshold_input_tokens"] == 272000
@@ -321,9 +399,7 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
         for item in results.values()
     )
     assert all(item.headline_overall is None and not item.eligible for item in results.values())
-    assert {
-        item.coverage.capability_absolute_weighted for item in results.values()
-    } == {0.165}
+    assert {item.coverage.capability_absolute_weighted for item in results.values()} == {0.165}
     assert all(
         item.efficiency.score is None and item.economics.score is None for item in results.values()
     )

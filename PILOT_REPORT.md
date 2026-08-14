@@ -40,7 +40,7 @@ release-window-ineligible because its 2026-06-09 release predates the 2026-06-15
 
 ## Why no headline exists
 
-- scored Capability covers only software engineering and agentic work, below the three-domain gate;
+- scored Capability covers only software engineering, below the three-domain gate;
 - Efficiency coverage is below 0.50 and Economics coverage is below 0.40;
 - all potentially useful resource evidence is confined to coding and is statistic-ambiguous;
 - missing workload evidence is not reweighted to make the cohort eligible.

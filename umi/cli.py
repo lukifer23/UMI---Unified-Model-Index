@@ -29,9 +29,10 @@ from umi.adapters import (
     adapt_epoch_csv,
     adapt_lab_release_facts,
 )
+from umi.bundle import load_scoring_bundle
 from umi.config import load_project_config
 from umi.loading import load_dataset, load_model_crosswalk, load_source_registry
-from umi.scoring import score_dataset
+from umi.scoring import score_bundle, score_dataset
 from umi.source_policy import (
     overlap_report,
     source_readiness_matrix,
@@ -99,7 +100,8 @@ def _add_common(parser: argparse.ArgumentParser) -> None:
     )
     parser.add_argument("--format", choices=("json", "csv"), default="json")
     parser.add_argument("--output")
-    parser.add_argument("--source-registry")
+    parser.add_argument("--source-registry", default="data/sources/registry.yaml")
+    parser.add_argument("--crosswalk", default="data/sources/v0.3/crosswalk.yaml")
     parser.add_argument(
         "--allow-unready",
         action="store_true",
@@ -137,8 +139,6 @@ def build_parser() -> argparse.ArgumentParser:
     source_commands = sources.add_subparsers(dest="sources_command", required=True)
     source_validate = source_commands.add_parser("validate")
     _add_common(source_validate)
-    source_validate.set_defaults(source_registry="data/sources/registry.yaml")
-    source_validate.add_argument("--crosswalk", default="data/sources/v0.3/crosswalk.yaml")
 
     ingest = subparsers.add_parser("ingest")
     ingest.add_argument(
@@ -172,6 +172,10 @@ def build_parser() -> argparse.ArgumentParser:
     overlap.add_argument("--config-dir", default="config")
     overlap.add_argument("--format", choices=("json", "csv"), default="json")
     overlap.add_argument("--output")
+    bundle = subparsers.add_parser("bundle")
+    bundle_commands = bundle.add_subparsers(dest="bundle_command", required=True)
+    bundle_validate = bundle_commands.add_parser("validate")
+    _add_common(bundle_validate)
     return parser
 
 
@@ -243,6 +247,24 @@ def run(args: argparse.Namespace) -> int:
     config_dir = args.config_dir or (colocated_config if colocated_config.is_dir() else "config")
     config = load_project_config(config_dir)
     dataset = load_dataset(args.data_dir)
+    if args.command == "bundle":
+        bundle = load_scoring_bundle(
+            args.data_dir,
+            config_dir,
+            args.source_registry,
+            args.crosswalk,
+        )
+        _emit(
+            {
+                "valid": True,
+                "model_count": len(bundle.dataset.models),
+                "scored_audit_fingerprint": bundle.dataset.scored_audit_fingerprint,
+                "warnings": bundle.warnings,
+            },
+            args.format,
+            args.output,
+        )
+        return 0
     if args.command == "sources":
         registry = load_source_registry(args.source_registry)
         data_report = validate_dataset(dataset, config)
@@ -282,7 +304,18 @@ def run(args: argparse.Namespace) -> int:
             args.output,
         )
         return 0 if report.scoring_ready else 1
-    results = score_dataset(dataset, config, allow_unready=args.allow_unready)
+    if any(not model.synthetic for model in dataset.models):
+        bundle = load_scoring_bundle(
+            args.data_dir,
+            config_dir,
+            args.source_registry,
+            args.crosswalk,
+        )
+        dataset = bundle.dataset
+        config = bundle.config
+        results = score_bundle(bundle, allow_unready=args.allow_unready)
+    else:
+        results = score_dataset(dataset, config, allow_unready=args.allow_unready)
     payload: Any
     if args.command == "references":
         payload = reference_observations(dataset)

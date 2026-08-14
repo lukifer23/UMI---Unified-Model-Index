@@ -41,7 +41,11 @@ evaluator: Evaluator name
 harness_owner: Harness owner
 run_executor: Run executor
 raw_artifact_available: true
+capture_type: reviewed_fact_extract
 source_artifact_id: registry-snapshot-id
+source_registry_snapshot_id: registry-snapshot-id
+crosswalk_entry_id: exact-crosswalk-entry-id
+signal_id: overlap-policy-signal-id
 reproducible: false
 configuration_verified: true
 serving_provider: Optional serving provider
@@ -51,6 +55,10 @@ service_tier: Optional service tier
 
 Optional notes and tool metadata preserve published context. Readiness requirements are enforced by
 record type and model status; missing published sample-size fields remain null rather than invented.
+The three governance bindings and `capture_type` are mandatory for scored real-data records at
+bundle validation, while remaining optional for diagnostic records and isolated synthetic fixtures.
+Capture type distinguishes a raw upstream payload, archived source snapshot, reviewed fact extract,
+citation-only reference, or derived artifact; it does not by itself imply reproducibility.
 
 ## Model configuration and deployment
 
@@ -151,6 +159,11 @@ and full provenance. In v0.3, AA indices, Epoch ECI rows, and Arena text/style-c
 explicitly diagnostic-only and excluded from the scored-data fingerprint.
 
 ## Source, crosswalk, overlap, and adapter contracts
+
+`ScoringBundle` is the enforced real-data boundary. It combines the dataset, configuration, source
+registry, exact crosswalk, overlap policy, and verified artifact manifest. Normal real-data analysis
+refuses to score if a scored record lacks an exact signal, crosswalk, registry, checksum, revision,
+role, disposition, or budget binding.
 
 Each source snapshot requires content type, upstream revision, adapter ID, license ID, attribution,
 redistribution scope, artifact path, and SHA-256. Missing documentation, missing files, or checksum

@@ -141,6 +141,14 @@ class RedistributionScope(StrEnum):
     REFERENCE_ONLY = "reference_only"
 
 
+class ArtifactCaptureType(StrEnum):
+    RAW_UPSTREAM_PAYLOAD = "raw_upstream_payload"
+    ARCHIVED_SOURCE_SNAPSHOT = "archived_source_snapshot"
+    REVIEWED_FACT_EXTRACT = "reviewed_fact_extract"
+    CITATION_ONLY = "citation_only"
+    DERIVED_ARTIFACT = "derived_artifact"
+
+
 class Source(StrictModel):
     organization: str = Field(min_length=1)
     url: HttpUrl
@@ -150,6 +158,10 @@ class Source(StrictModel):
 class Provenance(StrictModel):
     record_id: Identifier
     source: Source
+    model_release_date: date | None = None
+    measurement_as_of_date: date | None = None
+    leaderboard_publish_date: date | None = None
+    source_published_date: date | None = None
     result_type: ResultType
     benchmark_version: str | None = None
     harness_version: str | None = None
@@ -160,10 +172,14 @@ class Provenance(StrictModel):
     harness_owner: str | None = None
     run_executor: str | None = None
     raw_artifact_available: bool | None = None
+    capture_type: ArtifactCaptureType | None = None
     reproducible: bool | None = None
     configuration_verified: bool | None = None
     record_status: RecordStatus = RecordStatus.READY
     source_artifact_id: Identifier | None = None
+    source_registry_snapshot_id: Identifier | None = None
+    crosswalk_entry_id: Identifier | None = None
+    signal_id: Identifier | None = None
     serving_provider: str | None = None
     endpoint_id: str | None = None
     service_tier: str | None = None
@@ -197,6 +213,8 @@ class BenchmarkDefinition(StrictModel):
     name: str = Field(min_length=1)
     domain: Domain
     family: Identifier
+    signal_id: Identifier | None = None
+    budget_group: Identifier | None = None
     direction: Direction
     unit: Unit
     representation_weight: float = Field(default=1.0, gt=0)
@@ -360,7 +378,7 @@ class ExternalIndexMeasurement(Provenance):
     direction: Direction
     cohort_key: Identifier
     model_snapshot_id: Identifier
-    evaluation_date: date
+    evaluation_date: date | None = None
 
 
 class ReleaseClaim(Provenance):

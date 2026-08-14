@@ -41,12 +41,12 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "03ddb4d37119c405f1d77bb1919bae1fe4e4860f5ad6a038003a0ad7107be648",
+        "evidence_record_fingerprint": "c58b15124ce59c644ebc77042c84bd1bd2d7f3bdab42d2446d427e01b0d1f70c",
         "family_ids": [
           "deepswe-v1.1"
         ],
-        "id": "46926b7589a1f5e7e0c69bf3dde07c8acab5f70c09aae8d86492596c97e55509",
-        "methodology_fingerprint": "46926b7589a1f5e7e0c69bf3dde07c8acab5f70c09aae8d86492596c97e55509",
+        "id": "a44a0d5046e9384dae70be4eeb0345959ad54a296307208db6aad7429692f2a9",
+        "methodology_fingerprint": "a44a0d5046e9384dae70be4eeb0345959ad54a296307208db6aad7429692f2a9",
         "source_organizations": [
           "Datacurve"
         ],
@@ -61,7 +61,7 @@
     "capability_domains": [
       "software_engineering"
     ],
-    "cohort_id": "905aed44e858c7ff",
+    "cohort_id": "5bf592113d1daf34",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -81,7 +81,7 @@
       "evidence depends on one source organization",
       "confidence forced to Low: insufficient capability breadth"
     ],
-    "config_fingerprint": "90d6f4a0395ddc3211f4cb9d4a21dd27223e29cfae75dc0cf2244eec37ef27f4",
+    "config_fingerprint": "bcf97a7df3f392cbb607ffb4f82720b8d39f65c6d266a87ba6e2544bed74e08a",
     "coverage": {
       "capability_absolute_weighted": 0.165,
       "capability_domains_represented": 1,
@@ -110,7 +110,7 @@
       "source_organization_count": 1
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "30ef2e5e1fdeefd94b14c53029d64719837b4b5207a7ce424f5b55af4239707b",
+    "dataset_fingerprint": "0867fd60e4455c12eedfa742593f216de5e98ef8ad7e04a8402168ca1db13f37",
     "diagnostics": [
       "model release date is outside the configured eligibility window",
       "not eligible for headline Overall ranking",
@@ -136,8 +136,8 @@
         "estimate_scope": "economics",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
-        "methodology_fingerprint": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "id": "e9ef9be2ce72769aa3535e9e5b8d26318cc8f31472d8fd0bb12261c34db6e3c0",
+        "methodology_fingerprint": "e9ef9be2ce72769aa3535e9e5b8d26318cc8f31472d8fd0bb12261c34db6e3c0",
         "source_organizations": [],
         "workload_series": []
       },
@@ -172,8 +172,8 @@
         "estimate_scope": "efficiency",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
-        "methodology_fingerprint": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "id": "407d8a742ece07be29409150c61c9707d62cac321071e7227c563b26bdda7cfd",
+        "methodology_fingerprint": "407d8a742ece07be29409150c61c9707d62cac321071e7227c563b26bdda7cfd",
         "source_organizations": [],
         "workload_series": []
       },
@@ -195,7 +195,7 @@
     "release_date": "2026-06-09",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "905aed44e858c7ff69e7348da5c6c51f0966e177bc7c1f62437964d36f2cc7af",
+    "scored_data_fingerprint": "5bf592113d1daf3495c88d54722a993ba5700a4cb67b45d2b26e9fc9b5d264c6",
     "scoring_ready": true,
     "source_record_ids": [
       "deepswe-score-claude-fable-5-max-2026-08-13"
@@ -249,12 +249,12 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "bc179e833fb4b94c35668dd723239948f85633e502b744d9eddab7435283eb17",
+        "evidence_record_fingerprint": "410db0db4258482c45e23eb389d32a964dd2e55941bf1f5884f24f15ce926b4d",
         "family_ids": [
           "deepswe-v1.1"
         ],
-        "id": "46926b7589a1f5e7e0c69bf3dde07c8acab5f70c09aae8d86492596c97e55509",
-        "methodology_fingerprint": "46926b7589a1f5e7e0c69bf3dde07c8acab5f70c09aae8d86492596c97e55509",
+        "id": "a44a0d5046e9384dae70be4eeb0345959ad54a296307208db6aad7429692f2a9",
+        "methodology_fingerprint": "a44a0d5046e9384dae70be4eeb0345959ad54a296307208db6aad7429692f2a9",
         "source_organizations": [
           "Datacurve"
         ],
@@ -269,7 +269,7 @@
     "capability_domains": [
       "software_engineering"
     ],
-    "cohort_id": "905aed44e858c7ff",
+    "cohort_id": "5bf592113d1daf34",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -289,7 +289,7 @@
       "evidence depends on one source organization",
       "confidence forced to Low: insufficient capability breadth"
     ],
-    "config_fingerprint": "90d6f4a0395ddc3211f4cb9d4a21dd27223e29cfae75dc0cf2244eec37ef27f4",
+    "config_fingerprint": "bcf97a7df3f392cbb607ffb4f82720b8d39f65c6d266a87ba6e2544bed74e08a",
     "coverage": {
       "capability_absolute_weighted": 0.165,
       "capability_domains_represented": 1,
@@ -318,7 +318,7 @@
       "source_organization_count": 1
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "30ef2e5e1fdeefd94b14c53029d64719837b4b5207a7ce424f5b55af4239707b",
+    "dataset_fingerprint": "0867fd60e4455c12eedfa742593f216de5e98ef8ad7e04a8402168ca1db13f37",
     "diagnostics": [
       "not eligible for headline Overall ranking",
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
@@ -343,8 +343,8 @@
         "estimate_scope": "economics",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
-        "methodology_fingerprint": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "id": "e9ef9be2ce72769aa3535e9e5b8d26318cc8f31472d8fd0bb12261c34db6e3c0",
+        "methodology_fingerprint": "e9ef9be2ce72769aa3535e9e5b8d26318cc8f31472d8fd0bb12261c34db6e3c0",
         "source_organizations": [],
         "workload_series": []
       },
@@ -379,8 +379,8 @@
         "estimate_scope": "efficiency",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
-        "methodology_fingerprint": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "id": "407d8a742ece07be29409150c61c9707d62cac321071e7227c563b26bdda7cfd",
+        "methodology_fingerprint": "407d8a742ece07be29409150c61c9707d62cac321071e7227c563b26bdda7cfd",
         "source_organizations": [],
         "workload_series": []
       },
@@ -402,7 +402,7 @@
     "release_date": "2026-07-24",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "905aed44e858c7ff69e7348da5c6c51f0966e177bc7c1f62437964d36f2cc7af",
+    "scored_data_fingerprint": "5bf592113d1daf3495c88d54722a993ba5700a4cb67b45d2b26e9fc9b5d264c6",
     "scoring_ready": true,
     "source_record_ids": [
       "deepswe-score-claude-opus-5-max-2026-08-13"
@@ -456,12 +456,12 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "f248ee96212b68d19040ed038bb46822b45c312ff6548bea185b092db4cea420",
+        "evidence_record_fingerprint": "2316850579e31e38c516473d7ce5e4552092ee655ad7ced0178aa87fd57a8080",
         "family_ids": [
           "deepswe-v1.1"
         ],
-        "id": "46926b7589a1f5e7e0c69bf3dde07c8acab5f70c09aae8d86492596c97e55509",
-        "methodology_fingerprint": "46926b7589a1f5e7e0c69bf3dde07c8acab5f70c09aae8d86492596c97e55509",
+        "id": "a44a0d5046e9384dae70be4eeb0345959ad54a296307208db6aad7429692f2a9",
+        "methodology_fingerprint": "a44a0d5046e9384dae70be4eeb0345959ad54a296307208db6aad7429692f2a9",
         "source_organizations": [
           "Datacurve"
         ],
@@ -476,7 +476,7 @@
     "capability_domains": [
       "software_engineering"
     ],
-    "cohort_id": "905aed44e858c7ff",
+    "cohort_id": "5bf592113d1daf34",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -496,7 +496,7 @@
       "evidence depends on one source organization",
       "confidence forced to Low: insufficient capability breadth"
     ],
-    "config_fingerprint": "90d6f4a0395ddc3211f4cb9d4a21dd27223e29cfae75dc0cf2244eec37ef27f4",
+    "config_fingerprint": "bcf97a7df3f392cbb607ffb4f82720b8d39f65c6d266a87ba6e2544bed74e08a",
     "coverage": {
       "capability_absolute_weighted": 0.165,
       "capability_domains_represented": 1,
@@ -525,7 +525,7 @@
       "source_organization_count": 1
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "30ef2e5e1fdeefd94b14c53029d64719837b4b5207a7ce424f5b55af4239707b",
+    "dataset_fingerprint": "0867fd60e4455c12eedfa742593f216de5e98ef8ad7e04a8402168ca1db13f37",
     "diagnostics": [
       "not eligible for headline Overall ranking",
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
@@ -550,8 +550,8 @@
         "estimate_scope": "economics",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
-        "methodology_fingerprint": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "id": "e9ef9be2ce72769aa3535e9e5b8d26318cc8f31472d8fd0bb12261c34db6e3c0",
+        "methodology_fingerprint": "e9ef9be2ce72769aa3535e9e5b8d26318cc8f31472d8fd0bb12261c34db6e3c0",
         "source_organizations": [],
         "workload_series": []
       },
@@ -586,8 +586,8 @@
         "estimate_scope": "efficiency",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
-        "methodology_fingerprint": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "id": "407d8a742ece07be29409150c61c9707d62cac321071e7227c563b26bdda7cfd",
+        "methodology_fingerprint": "407d8a742ece07be29409150c61c9707d62cac321071e7227c563b26bdda7cfd",
         "source_organizations": [],
         "workload_series": []
       },
@@ -609,7 +609,7 @@
     "release_date": "2026-06-16",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "905aed44e858c7ff69e7348da5c6c51f0966e177bc7c1f62437964d36f2cc7af",
+    "scored_data_fingerprint": "5bf592113d1daf3495c88d54722a993ba5700a4cb67b45d2b26e9fc9b5d264c6",
     "scoring_ready": true,
     "source_record_ids": [
       "deepswe-score-glm-5.2-max-2026-08-13"
@@ -663,12 +663,12 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "1105b7b9d9f1159a391f1f14c58a16c4459c564d50aac5192c903aedce77eacc",
+        "evidence_record_fingerprint": "fd3dcc4ffeb8c1f6ad3b09a65fb0a1659d4076e43c4780d4d077872737644930",
         "family_ids": [
           "deepswe-v1.1"
         ],
-        "id": "46926b7589a1f5e7e0c69bf3dde07c8acab5f70c09aae8d86492596c97e55509",
-        "methodology_fingerprint": "46926b7589a1f5e7e0c69bf3dde07c8acab5f70c09aae8d86492596c97e55509",
+        "id": "a44a0d5046e9384dae70be4eeb0345959ad54a296307208db6aad7429692f2a9",
+        "methodology_fingerprint": "a44a0d5046e9384dae70be4eeb0345959ad54a296307208db6aad7429692f2a9",
         "source_organizations": [
           "Datacurve"
         ],
@@ -683,7 +683,7 @@
     "capability_domains": [
       "software_engineering"
     ],
-    "cohort_id": "905aed44e858c7ff",
+    "cohort_id": "5bf592113d1daf34",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -703,7 +703,7 @@
       "evidence depends on one source organization",
       "confidence forced to Low: insufficient capability breadth"
     ],
-    "config_fingerprint": "90d6f4a0395ddc3211f4cb9d4a21dd27223e29cfae75dc0cf2244eec37ef27f4",
+    "config_fingerprint": "bcf97a7df3f392cbb607ffb4f82720b8d39f65c6d266a87ba6e2544bed74e08a",
     "coverage": {
       "capability_absolute_weighted": 0.165,
       "capability_domains_represented": 1,
@@ -732,7 +732,7 @@
       "source_organization_count": 1
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "30ef2e5e1fdeefd94b14c53029d64719837b4b5207a7ce424f5b55af4239707b",
+    "dataset_fingerprint": "0867fd60e4455c12eedfa742593f216de5e98ef8ad7e04a8402168ca1db13f37",
     "diagnostics": [
       "not eligible for headline Overall ranking",
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
@@ -757,8 +757,8 @@
         "estimate_scope": "economics",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
-        "methodology_fingerprint": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "id": "e9ef9be2ce72769aa3535e9e5b8d26318cc8f31472d8fd0bb12261c34db6e3c0",
+        "methodology_fingerprint": "e9ef9be2ce72769aa3535e9e5b8d26318cc8f31472d8fd0bb12261c34db6e3c0",
         "source_organizations": [],
         "workload_series": []
       },
@@ -793,8 +793,8 @@
         "estimate_scope": "efficiency",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
-        "methodology_fingerprint": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "id": "407d8a742ece07be29409150c61c9707d62cac321071e7227c563b26bdda7cfd",
+        "methodology_fingerprint": "407d8a742ece07be29409150c61c9707d62cac321071e7227c563b26bdda7cfd",
         "source_organizations": [],
         "workload_series": []
       },
@@ -816,7 +816,7 @@
     "release_date": "2026-07-09",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "905aed44e858c7ff69e7348da5c6c51f0966e177bc7c1f62437964d36f2cc7af",
+    "scored_data_fingerprint": "5bf592113d1daf3495c88d54722a993ba5700a4cb67b45d2b26e9fc9b5d264c6",
     "scoring_ready": true,
     "source_record_ids": [
       "deepswe-score-gpt-5.6-sol-max-2026-08-13"
@@ -870,12 +870,12 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "42f7d16706e453b99682e0ba498ab047eb455ce675dbd829ef1bb1ba4ec1b945",
+        "evidence_record_fingerprint": "e196e3d1463659e101b2c5204d3fff46410af228f67ede3273abf85081606a85",
         "family_ids": [
           "deepswe-v1.1"
         ],
-        "id": "46926b7589a1f5e7e0c69bf3dde07c8acab5f70c09aae8d86492596c97e55509",
-        "methodology_fingerprint": "46926b7589a1f5e7e0c69bf3dde07c8acab5f70c09aae8d86492596c97e55509",
+        "id": "a44a0d5046e9384dae70be4eeb0345959ad54a296307208db6aad7429692f2a9",
+        "methodology_fingerprint": "a44a0d5046e9384dae70be4eeb0345959ad54a296307208db6aad7429692f2a9",
         "source_organizations": [
           "Datacurve"
         ],
@@ -890,7 +890,7 @@
     "capability_domains": [
       "software_engineering"
     ],
-    "cohort_id": "905aed44e858c7ff",
+    "cohort_id": "5bf592113d1daf34",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -910,7 +910,7 @@
       "evidence depends on one source organization",
       "confidence forced to Low: insufficient capability breadth"
     ],
-    "config_fingerprint": "90d6f4a0395ddc3211f4cb9d4a21dd27223e29cfae75dc0cf2244eec37ef27f4",
+    "config_fingerprint": "bcf97a7df3f392cbb607ffb4f82720b8d39f65c6d266a87ba6e2544bed74e08a",
     "coverage": {
       "capability_absolute_weighted": 0.165,
       "capability_domains_represented": 1,
@@ -939,7 +939,7 @@
       "source_organization_count": 1
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "30ef2e5e1fdeefd94b14c53029d64719837b4b5207a7ce424f5b55af4239707b",
+    "dataset_fingerprint": "0867fd60e4455c12eedfa742593f216de5e98ef8ad7e04a8402168ca1db13f37",
     "diagnostics": [
       "not eligible for headline Overall ranking",
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
@@ -964,8 +964,8 @@
         "estimate_scope": "economics",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
-        "methodology_fingerprint": "d69fe82d8e2d9bb78f2f45994864cf8d3d342e1c82bcb241fdbb09c87f3f41d8",
+        "id": "e9ef9be2ce72769aa3535e9e5b8d26318cc8f31472d8fd0bb12261c34db6e3c0",
+        "methodology_fingerprint": "e9ef9be2ce72769aa3535e9e5b8d26318cc8f31472d8fd0bb12261c34db6e3c0",
         "source_organizations": [],
         "workload_series": []
       },
@@ -1000,8 +1000,8 @@
         "estimate_scope": "efficiency",
         "evidence_record_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "family_ids": [],
-        "id": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
-        "methodology_fingerprint": "32b49f7a6f08fc477d5db51e94ac2397fda844f9aab2bd2ea76e6c9eb98a4b3a",
+        "id": "407d8a742ece07be29409150c61c9707d62cac321071e7227c563b26bdda7cfd",
+        "methodology_fingerprint": "407d8a742ece07be29409150c61c9707d62cac321071e7227c563b26bdda7cfd",
         "source_organizations": [],
         "workload_series": []
       },
@@ -1023,7 +1023,7 @@
     "release_date": "2026-07-16",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "905aed44e858c7ff69e7348da5c6c51f0966e177bc7c1f62437964d36f2cc7af",
+    "scored_data_fingerprint": "5bf592113d1daf3495c88d54722a993ba5700a4cb67b45d2b26e9fc9b5d264c6",
     "scoring_ready": true,
     "source_record_ids": [
       "deepswe-score-kimi-k3-max-2026-08-13"

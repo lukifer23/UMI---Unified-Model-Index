@@ -31,12 +31,19 @@ Pilot family budgets are hypotheses:
 |---|---|
 | General reasoning | HLE 1.00 |
 | Software engineering | DeepSWE 0.60; Terminal-Bench 2.1 0.25; SciCode 0.15 |
-| Agentic work | GDPval-AA v2 0.45; tau3-Banking 0.30; Arena Agent 0.25 |
+| Agentic work | GDPval-AA v2 0.60; tau3-Banking 0.40; Arena Agent diagnostic 0.00 |
 | Math/science | GPQA Diamond 0.65; CritPt 0.35 |
 | Context/reliability | AA-LCR 0.50; AA-Omniscience 0.50 |
 
 Equal-family and source-ablation scenarios test these allocations. They do not relax coverage or
 publication gates.
+
+Arena Agent's aggregate is a causal/field-utility preference construct rather than an atomic task
+success measurement. v0.3.1 therefore follows the constituent-first policy: the aggregate remains
+diagnostic with zero Capability weight, while future compatible constituent task signals may enter
+their own documented budgets. The former positive Arena allocation is redistributed between the
+two active agentic task families in their prior 0.45:0.30 ratio. Diagnostic Arena evidence cannot
+increase coverage, confidence, or source diversity.
 
 ## Aggregation statistics
 
@@ -119,6 +126,22 @@ equivalence.
 At most one ready scoring cohort may exist for a benchmark representation or workload identity
 without an explicit future merge policy. Additional cohorts must be diagnostic. UMI does not
 average local percentiles from disconnected cohorts and does not infer cohort equivalence.
+
+## Governed scoring bundle
+
+Real-data scoring requires a validated bundle containing the typed dataset, scoring configuration,
+source registry, exact model crosswalk, overlap policy, and artifact manifest. Every scored record
+binds its `signal_id`, `crosswalk_entry_id`, and `source_registry_snapshot_id`. Before scoring, UMI
+verifies the artifact checksum and revision, exact canonical model and effort mapping, signal role
+and disposition, and the benchmark's signal-to-budget allocation. Every scored record also declares
+whether its evidence capture is a raw upstream payload, archived source snapshot, reviewed fact
+extract, citation-only reference, or derived artifact. Capture type is provenance, not proof of
+reproducibility. Synthetic fixtures use a separate test path. Optional side-command validation is
+not a substitute for this bundle.
+
+Benchmark definitions bind one overlap-policy signal and budget group. A budget group resolves to
+one `(domain, family, representation_group)` allocation; mappings across domains or families are
+invalid. Record-level `scoring_disposition` cannot override a diagnostic policy.
 
 ## Consolidation and conflicts
 
@@ -226,10 +249,10 @@ CapabilityCoverage = sum(AbsoluteWeight_r)
 ```
 
 It does not renormalize an available family to a full domain budget before combining domains.
-For example, DeepSWE retains its configured absolute budget of `0.275 × 0.60 = 0.165`, and Arena
-Agent retains `0.20 × 0.25 = 0.05`; their relative influence when both are available is therefore
-their configured 0.165:0.05 ratio. Missing Terminal-Bench or SciCode lowers coverage and does not
-make DeepSWE a full software-engineering vote.
+DeepSWE retains its configured absolute budget of `0.275 × 0.60 = 0.165`; missing Terminal-Bench or
+SciCode lowers coverage and does not make DeepSWE a full software-engineering vote. Arena Agent had
+a `0.20 × 0.25 = 0.05` budget in the earlier experimental policy, but the v0.3.1 construct decision
+makes that aggregate diagnostic with zero weight. It therefore cannot enter this formula.
 
 Aliases in one `representation_group` use a deterministic canonical representation. Additional
 aliases do not increase coverage or budget, and they cannot alter a score merely by being added.

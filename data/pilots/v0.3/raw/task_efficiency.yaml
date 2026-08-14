@@ -13,9 +13,13 @@ measurements:
   harness_owner: Datacurve
   run_executor: Datacurve
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-opus-max
+  signal_id: deepswe-v1.1
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: claude-opus-5-max
@@ -44,9 +48,13 @@ measurements:
   harness_owner: Datacurve
   run_executor: Datacurve
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-fable-max
+  signal_id: deepswe-v1.1
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: claude-fable-5-max
@@ -75,9 +83,13 @@ measurements:
   harness_owner: Datacurve
   run_executor: Datacurve
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-sol-max
+  signal_id: deepswe-v1.1
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: gpt-5.6-sol-max
@@ -106,9 +118,13 @@ measurements:
   harness_owner: Datacurve
   run_executor: Datacurve
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-kimi-max
+  signal_id: deepswe-v1.1
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: kimi-k3-max
@@ -137,9 +153,13 @@ measurements:
   harness_owner: Datacurve
   run_executor: Datacurve
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: diagnostic_only
   source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-glm-max
+  signal_id: deepswe-v1.1
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: glm-5.2-max

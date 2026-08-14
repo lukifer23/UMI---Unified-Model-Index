@@ -39,6 +39,7 @@ AA, DeepSWE, and lab releases remain reviewed-fact inputs.
 
 ```bash
 uv run --no-sync python -m scripts.build_v03_pilot
+uv run --no-sync umi bundle validate --data-dir data/pilots/v0.3/raw
 uv run --no-sync umi sources validate --data-dir data/pilots/v0.3/raw
 uv run --no-sync umi crosswalk
 uv run --no-sync umi overlap
@@ -69,10 +70,15 @@ provisional rank only after explicitly restricting the requested models to their
 The synthetic engine demonstration remains available under `tests/fixtures` and is always labeled
 as synthetic.
 
+All real-data analysis commands construct the governed scoring bundle first. A checksum mismatch,
+non-exact crosswalk, unknown or diagnostic signal, revision mismatch, or signal/budget mismatch
+fails before scoring. The direct `score_dataset` function is the isolated synthetic-fixture path;
+production CLI flows use `ScoringBundle`.
+
 ## Architecture
 
 ```text
-frozen artifacts -> offline adapters -> exact crosswalk -> readiness filter
+frozen artifacts -> offline adapters -> governed scoring bundle -> readiness filter
                  -> overlap/family budgets -> compatible-cohort normalization
                  -> component estimates -> eligibility/publication gates
 ```

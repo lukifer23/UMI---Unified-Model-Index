@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  linux-quality:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+      - run: uv sync --frozen --extra dev
+      - run: uv run pytest --cov=umi --cov=analysis --cov-report=term-missing --cov-fail-under=90
+      - run: uv run ruff check .
+      - run: uv run mypy --strict umi analysis scripts
+      - run: uv run python -m scripts.generate_schemas
+      - run: git diff --exit-code -- schemas
+      - run: uv run umi sources validate --data-dir data/pilots/v0.3/raw
+      - run: uv run umi crosswalk
+      - run: uv run umi overlap
+      - run: uv run umi bundle validate --data-dir data/pilots/v0.3/raw
+      - run: uv run python -m scripts.build_v03_pilot
+      - run: git diff --exit-code -- data/pilots/v0.3
+      - name: CLI smoke tests
+        run: |
+          uv run umi estimates --data-dir data/pilots/v0.3/raw >/dev/null
+          uv run umi compare --data-dir data/pilots/v0.3/raw --models claude-fable-5-max claude-opus-5-max glm-5.2-max gpt-5.6-sol-max kimi-k3-max >/dev/null
+          uv run umi uncertainty --data-dir data/pilots/v0.3/raw >/dev/null
+          uv run umi pilot-sensitivity --data-dir data/pilots/v0.3/raw >/dev/null
+          uv run umi correlations --data-dir data/pilots/v0.3/raw >/dev/null
+          uv run umi pareto --data-dir data/pilots/v0.3/raw >/dev/null
+          uv run umi claims --data-dir data/pilots/v0.3/raw >/dev/null
+          uv run umi gaps --data-dir data/pilots/v0.3/raw >/dev/null
+
+  windows-smoke:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+          enable-cache: true
+      - run: uv sync --frozen --extra dev
+      - run: uv run pytest --cov=umi --cov=analysis --cov-fail-under=90
+      - run: uv run ruff check .
+      - run: uv run mypy --strict umi analysis scripts
+      - run: uv run umi bundle validate --data-dir data/pilots/v0.3/raw
+      - run: uv run python -m scripts.build_v03_pilot
+      - run: git diff --exit-code -- data/pilots/v0.3

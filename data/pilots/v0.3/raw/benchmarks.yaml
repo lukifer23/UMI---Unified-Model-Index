@@ -4,6 +4,8 @@ measurements:
     organization: Arena
     url: https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset
     accessed: '2026-08-14'
+  measurement_as_of_date: '2026-08-12'
+  leaderboard_publish_date: '2026-08-12'
   result_type: independent
   benchmark_version: arena-agent-2026-08-12
   harness_version: arena-agent-ips-2026-08-12
@@ -12,9 +14,13 @@ measurements:
     and deployment identity are absent; retained as diagnostic preference evidence.
   evaluator: Arena
   raw_artifact_available: true
+  capture_type: archived_source_snapshot
   configuration_verified: false
   record_status: diagnostic_only
   source_artifact_id: arena-agent-2026-08-14
+  source_registry_snapshot_id: arena-agent-2026-08-14
+  crosswalk_entry_id: arena-agent-opus-max
+  signal_id: arena-agent
   signal_role: preference
   scoring_disposition: diagnostic_only
   benchmark_id: arena-agent
@@ -22,7 +28,6 @@ measurements:
   value: 0.11998377869814668
   cohort_key: arena-agent-ips-2026-08-12
   model_snapshot_id: unspecified
-  evaluation_date: '2026-08-12'
   evaluation_settings:
     category: overall
     observation_count: 1803690
@@ -42,6 +47,8 @@ measurements:
     organization: Arena
     url: https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset
     accessed: '2026-08-14'
+  measurement_as_of_date: '2026-08-12'
+  leaderboard_publish_date: '2026-08-12'
   result_type: independent
   benchmark_version: arena-agent-2026-08-12
   harness_version: arena-agent-ips-2026-08-12
@@ -50,9 +57,13 @@ measurements:
     and deployment identity are absent; retained as diagnostic preference evidence.
   evaluator: Arena
   raw_artifact_available: true
+  capture_type: archived_source_snapshot
   configuration_verified: false
   record_status: diagnostic_only
   source_artifact_id: arena-agent-2026-08-14
+  source_registry_snapshot_id: arena-agent-2026-08-14
+  crosswalk_entry_id: arena-agent-kimi-max
+  signal_id: arena-agent
   signal_role: preference
   scoring_disposition: diagnostic_only
   benchmark_id: arena-agent
@@ -60,7 +71,6 @@ measurements:
   value: 0.10537803205413024
   cohort_key: arena-agent-ips-2026-08-12
   model_snapshot_id: unspecified
-  evaluation_date: '2026-08-12'
   evaluation_settings:
     category: overall
     observation_count: 2431944
@@ -80,6 +90,8 @@ measurements:
     organization: Arena
     url: https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset
     accessed: '2026-08-14'
+  measurement_as_of_date: '2026-08-12'
+  leaderboard_publish_date: '2026-08-12'
   result_type: independent
   benchmark_version: arena-agent-2026-08-12
   harness_version: arena-agent-ips-2026-08-12
@@ -88,9 +100,13 @@ measurements:
     and deployment identity are absent; retained as diagnostic preference evidence.
   evaluator: Arena
   raw_artifact_available: true
+  capture_type: archived_source_snapshot
   configuration_verified: false
   record_status: diagnostic_only
   source_artifact_id: arena-agent-2026-08-14
+  source_registry_snapshot_id: arena-agent-2026-08-14
+  crosswalk_entry_id: arena-agent-glm-max
+  signal_id: arena-agent
   signal_role: preference
   scoring_disposition: diagnostic_only
   benchmark_id: arena-agent
@@ -98,7 +114,6 @@ measurements:
   value: 0.06710906067840385
   cohort_key: arena-agent-ips-2026-08-12
   model_snapshot_id: unspecified
-  evaluation_date: '2026-08-12'
   evaluation_settings:
     category: overall
     observation_count: 2305627
@@ -126,9 +141,13 @@ measurements:
   harness_owner: Datacurve
   run_executor: Datacurve
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: ready
   source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-opus-max
+  signal_id: deepswe-v1.1
   signal_role: task
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1
@@ -161,9 +180,13 @@ measurements:
   harness_owner: Datacurve
   run_executor: Datacurve
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: ready
   source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-fable-max
+  signal_id: deepswe-v1.1
   signal_role: task
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1
@@ -196,9 +219,13 @@ measurements:
   harness_owner: Datacurve
   run_executor: Datacurve
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: ready
   source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-sol-max
+  signal_id: deepswe-v1.1
   signal_role: task
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1
@@ -231,9 +258,13 @@ measurements:
   harness_owner: Datacurve
   run_executor: Datacurve
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: ready
   source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-kimi-max
+  signal_id: deepswe-v1.1
   signal_role: task
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1
@@ -266,9 +297,13 @@ measurements:
   harness_owner: Datacurve
   run_executor: Datacurve
   raw_artifact_available: true
+  capture_type: reviewed_fact_extract
   configuration_verified: true
   record_status: ready
   source_artifact_id: deepswe-v1.1-2026-08-13
+  source_registry_snapshot_id: deepswe-v1.1-2026-08-13
+  crosswalk_entry_id: deepswe-glm-max
+  signal_id: deepswe-v1.1
   signal_role: task
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1

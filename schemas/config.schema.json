@@ -3,6 +3,19 @@
     "BenchmarkDefinition": {
       "additionalProperties": false,
       "properties": {
+        "budget_group": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Budget Group"
+        },
         "constituents": {
           "default": [],
           "items": {
@@ -63,6 +76,19 @@
           "exclusiveMinimum": 0,
           "title": "Representation Weight",
           "type": "number"
+        },
+        "signal_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signal Id"
         },
         "unit": {
           "$ref": "#/$defs/Unit"
