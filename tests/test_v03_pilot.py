@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import socket
 from datetime import date
 from pathlib import Path
@@ -296,8 +297,35 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
         "overlap.json",
         "pareto.json",
         "pilot-gap-report.json",
+        "pilot-dashboard.json",
         "pilot-sensitivity.json",
     } <= {item.name for item in processed.iterdir()}
+    dashboard = json.loads((processed / "pilot-dashboard.json").read_text(encoding="utf-8"))
+    assert dashboard["surface"] == "dashboard"
+    assert dashboard["snapshot"]["status"] == "partial"
+    assert dashboard["snapshot"]["datasets"]["overview"] == [
+        {
+            "economics_coverage": 0.0,
+            "efficiency_coverage": 0.045,
+            "headline_ready": 0,
+            "max_capability_coverage": 0.49375,
+            "pilot_models": 5,
+            "scored_capability_cells": 20,
+            "total_capability_cells": 70,
+        }
+    ]
+    assert all(
+        item["headline"] == "Not eligible"
+        for item in dashboard["snapshot"]["datasets"]["model_summary"]
+    )
+    assert len(dashboard["snapshot"]["datasets"]["benchmarks"]) == 20
+    assert len(dashboard["snapshot"]["datasets"]["resources"]) == 5
+    source_ids = {item["id"] for item in dashboard["sources"]}
+    assert all(
+        item["sourceId"] in source_ids
+        for collection in ("cards", "charts", "tables")
+        for item in dashboard["manifest"][collection]
+    )
 
 
 def test_epoch_and_arena_adapter_dispositions(crosswalk) -> None:

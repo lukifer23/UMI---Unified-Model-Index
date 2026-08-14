@@ -1,0 +1,1047 @@
+{
+  "manifest": {
+    "blocks": [
+      {
+        "body": "## Current result: no headline UMI score\n\nThe pilot contains real, exact-configuration evidence, but **none of the five models clears the Capability, Efficiency, Economics, coverage, breadth, date, and readiness gates**. Partial estimates below are diagnostic evidence views, not a unified ranking.",
+        "id": "truth_status",
+        "sourceId": "pilot_estimates",
+        "type": "markdown"
+      },
+      {
+        "cardIds": [
+          "pilot_scope",
+          "headline_state",
+          "capability_cells",
+          "coverage_ceiling"
+        ],
+        "id": "metrics",
+        "type": "metric-strip"
+      },
+      {
+        "chartId": "component_coverage",
+        "id": "coverage",
+        "type": "chart"
+      },
+      {
+        "chartId": "component_scores",
+        "id": "components",
+        "type": "chart"
+      },
+      {
+        "id": "models",
+        "layout": "full",
+        "tableId": "model_detail",
+        "type": "table"
+      },
+      {
+        "chartId": "benchmark_scores",
+        "id": "benchmarks",
+        "type": "chart"
+      },
+      {
+        "id": "benchmark_rows",
+        "layout": "full",
+        "tableId": "benchmark_detail",
+        "type": "table"
+      },
+      {
+        "id": "resources",
+        "layout": "full",
+        "tableId": "resource_detail",
+        "type": "table"
+      },
+      {
+        "chartId": "gap_counts",
+        "id": "gaps",
+        "type": "chart"
+      },
+      {
+        "body": "## How to read this report\n\nCompare raw benchmark values only within the displayed compatible cohort. Compare normalized Capability values only when the evidence-profile identifier matches. Efficiency currently represents one coding-agent workload. Economics is absent because published DeepSWE cost and wall-time facts do not verify the endpoint, service tier, cache policy, and billing identity required for scoring.",
+        "id": "method_note",
+        "type": "markdown"
+      }
+    ],
+    "cards": [
+      {
+        "dataset": "overview",
+        "description": "Exact named-release and effort configurations in the pilot.",
+        "id": "pilot_scope",
+        "metrics": [
+          {
+            "field": "pilot_models",
+            "label": "Pilot configurations"
+          }
+        ],
+        "sourceId": "pilot_estimates"
+      },
+      {
+        "dataset": "overview",
+        "description": "Models clearing every configured headline gate.",
+        "id": "headline_state",
+        "metrics": [
+          {
+            "field": "headline_ready",
+            "label": "Headline-ready"
+          }
+        ],
+        "sourceId": "pilot_estimates"
+      },
+      {
+        "dataset": "overview",
+        "description": "Ready scored cells across the complete capability matrix.",
+        "id": "capability_cells",
+        "metrics": [
+          {
+            "field": "scored_capability_cells",
+            "label": "Ready cells"
+          },
+          {
+            "field": "total_capability_cells",
+            "label": "Configured cells"
+          }
+        ],
+        "sourceId": "pilot_gaps"
+      },
+      {
+        "dataset": "overview",
+        "description": "Best current model coverage by component.",
+        "id": "coverage_ceiling",
+        "metrics": [
+          {
+            "field": "max_capability_coverage",
+            "format": "percent",
+            "label": "Max capability coverage"
+          },
+          {
+            "field": "efficiency_coverage",
+            "format": "percent",
+            "label": "Efficiency coverage"
+          },
+          {
+            "field": "economics_coverage",
+            "format": "percent",
+            "label": "Economics coverage"
+          }
+        ],
+        "sourceId": "pilot_estimates"
+      }
+    ],
+    "charts": [
+      {
+        "dataset": "component_scores",
+        "encodings": {
+          "color": {
+            "field": "component",
+            "label": "Component",
+            "type": "nominal"
+          },
+          "x": {
+            "field": "model_short",
+            "label": "Model",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "score",
+            "label": "Normalized score",
+            "type": "quantitative"
+          }
+        },
+        "headerMarkdown": "These are **not headline UMI scores**. A value of 0 can be the cohort minimum, not zero task performance.",
+        "id": "component_scores",
+        "layout": "full",
+        "sourceId": "pilot_estimates",
+        "subtitle": "Diagnostic normalized scores; compare only models with matching evidence support.",
+        "title": "Partial component positions",
+        "type": "bar",
+        "valueFormat": "number",
+        "yAxisTitle": "Normalized score (0\u2013100)"
+      },
+      {
+        "dataset": "coverage",
+        "encodings": {
+          "color": {
+            "field": "component",
+            "label": "Component",
+            "type": "nominal"
+          },
+          "x": {
+            "field": "model_short",
+            "label": "Model",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "coverage",
+            "format": "percent",
+            "label": "Coverage",
+            "type": "quantitative"
+          }
+        },
+        "id": "component_coverage",
+        "layout": "full",
+        "sourceId": "pilot_estimates",
+        "subtitle": "Absolute configured coverage, not the share of evidence available for one model.",
+        "title": "Coverage remains the binding constraint",
+        "type": "bar",
+        "valueFormat": "percent",
+        "yAxisTitle": "Configured coverage"
+      },
+      {
+        "dataset": "benchmarks",
+        "encodings": {
+          "color": {
+            "field": "benchmark",
+            "label": "Benchmark",
+            "type": "nominal"
+          },
+          "x": {
+            "field": "model_short",
+            "label": "Model",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "score",
+            "label": "Raw score",
+            "type": "quantitative"
+          }
+        },
+        "id": "benchmark_scores",
+        "layout": "full",
+        "sourceId": "accepted_benchmarks",
+        "subtitle": "Raw percent scores within explicit compatible cohorts; missing bars are missing evidence.",
+        "title": "Accepted benchmark evidence",
+        "type": "bar",
+        "valueFormat": "number",
+        "yAxisTitle": "Source score (%)"
+      },
+      {
+        "dataset": "gap_counts",
+        "encodings": {
+          "x": {
+            "field": "status",
+            "label": "Evidence state",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "cells",
+            "label": "Cells",
+            "type": "quantitative"
+          }
+        },
+        "id": "gap_counts",
+        "layout": "full",
+        "sourceId": "pilot_gaps",
+        "subtitle": "All 70 configured model-by-capability cells, including absence and rejected evidence.",
+        "title": "Why the index is not yet headline-ready",
+        "type": "bar",
+        "valueFormat": "number",
+        "yAxisTitle": "Configured cells"
+      }
+    ],
+    "description": "A reproducible view of current accepted evidence, partial component estimates, coverage, and the gates that prevent a headline UMI ranking.",
+    "filters": [
+      {
+        "dataset": "model_summary",
+        "field": "model",
+        "id": "model",
+        "includeAll": true,
+        "label": "Model configuration",
+        "targets": [
+          {
+            "dataset": "component_scores",
+            "field": "model"
+          },
+          {
+            "dataset": "coverage",
+            "field": "model"
+          },
+          {
+            "dataset": "benchmarks",
+            "field": "model"
+          },
+          {
+            "dataset": "resources",
+            "field": "model"
+          }
+        ]
+      }
+    ],
+    "generatedAt": "2026-08-14T00:00:00Z",
+    "sources": [
+      {
+        "id": "pilot_estimates",
+        "label": "Governed UMI partial estimates",
+        "path": "data/pilots/v0.3/processed/model-specific-partial-estimates.json"
+      },
+      {
+        "id": "accepted_benchmarks",
+        "label": "Accepted benchmark records",
+        "path": "data/pilots/v0.3/raw/benchmarks.yaml"
+      },
+      {
+        "id": "accepted_efficiency",
+        "label": "Accepted DeepSWE harness resources",
+        "path": "data/pilots/v0.3/raw/task_efficiency.yaml"
+      },
+      {
+        "id": "pilot_gaps",
+        "label": "Configured capability gap matrix",
+        "path": "data/pilots/v0.3/processed/pilot-gap-report.json"
+      }
+    ],
+    "surface": "dashboard",
+    "tables": [
+      {
+        "columns": [
+          {
+            "field": "model",
+            "label": "Exact configuration",
+            "type": "text"
+          },
+          {
+            "field": "capability",
+            "format": "number",
+            "label": "Capability"
+          },
+          {
+            "field": "capability_coverage",
+            "format": "percent",
+            "label": "Cap. coverage"
+          },
+          {
+            "field": "capability_domains",
+            "format": "number",
+            "label": "Domains"
+          },
+          {
+            "field": "efficiency",
+            "format": "number",
+            "label": "Efficiency"
+          },
+          {
+            "field": "efficiency_coverage",
+            "format": "percent",
+            "label": "Eff. coverage"
+          },
+          {
+            "field": "economics_coverage",
+            "format": "percent",
+            "label": "Econ. coverage"
+          },
+          {
+            "field": "partial_overall",
+            "format": "number",
+            "label": "Partial overall"
+          },
+          {
+            "field": "headline",
+            "label": "Headline",
+            "type": "text"
+          }
+        ],
+        "dataset": "model_summary",
+        "defaultSort": {
+          "direction": "desc",
+          "field": "capability_coverage"
+        },
+        "density": "dense",
+        "id": "model_detail",
+        "layout": "full",
+        "sourceId": "pilot_estimates",
+        "subtitle": "Partial values retain their coverage and evidence-profile context.",
+        "title": "Pilot configuration detail"
+      },
+      {
+        "columns": [
+          {
+            "field": "model",
+            "label": "Model",
+            "type": "text"
+          },
+          {
+            "field": "benchmark",
+            "label": "Benchmark",
+            "type": "text"
+          },
+          {
+            "field": "score",
+            "format": "number",
+            "label": "Raw score (%)"
+          },
+          {
+            "field": "source",
+            "label": "Source",
+            "type": "text"
+          }
+        ],
+        "dataset": "benchmarks",
+        "defaultSort": {
+          "direction": "asc",
+          "field": "model"
+        },
+        "density": "dense",
+        "id": "benchmark_detail",
+        "layout": "full",
+        "sourceId": "accepted_benchmarks",
+        "subtitle": "Every row retains its cohort and immutable source record ID.",
+        "title": "Accepted benchmark records"
+      },
+      {
+        "columns": [
+          {
+            "field": "model",
+            "label": "Model",
+            "type": "text"
+          },
+          {
+            "field": "success_rate",
+            "format": "percent",
+            "label": "Success rate"
+          },
+          {
+            "field": "attempts",
+            "format": "number",
+            "label": "Attempts"
+          },
+          {
+            "field": "effective_input_tokens",
+            "format": "compact",
+            "label": "Effective input tokens"
+          },
+          {
+            "field": "effective_output_tokens",
+            "format": "compact",
+            "label": "Effective output tokens"
+          },
+          {
+            "field": "effective_agent_steps",
+            "format": "number",
+            "label": "Effective agent steps"
+          }
+        ],
+        "dataset": "resources",
+        "defaultSort": {
+          "direction": "asc",
+          "field": "effective_input_tokens"
+        },
+        "density": "dense",
+        "id": "resource_detail",
+        "layout": "full",
+        "sourceId": "accepted_efficiency",
+        "subtitle": "Scored harness resources; endpoint cost and wall time remain diagnostic.",
+        "title": "Success-adjusted DeepSWE resources"
+      }
+    ],
+    "title": "UMI v0.3.4 \u2014 five-model pilot evidence report",
+    "version": 1
+  },
+  "package_info": {
+    "manifestPath": "data/pilots/v0.3/processed/pilot-dashboard.json",
+    "root": ".",
+    "snapshotPath": "data/pilots/v0.3/processed/pilot-dashboard.json"
+  },
+  "snapshot": {
+    "accessIssues": [
+      {
+        "id": "headline-blocked",
+        "message": "No pilot model satisfies all configured publication gates.",
+        "scope": "Headline UMI"
+      },
+      {
+        "id": "economics-missing",
+        "message": "No workload has endpoint-verified, scoring-ready Economics evidence.",
+        "scope": "Economics"
+      },
+      {
+        "id": "efficiency-sparse",
+        "message": "Efficiency covers one of six configured workload classes.",
+        "scope": "Efficiency"
+      }
+    ],
+    "datasets": {
+      "benchmarks": [
+        {
+          "benchmark": "gpqa-diamond",
+          "cohort": "epoch-gpqa-diamond-1.0.6-simple-evals",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "record_id": "epoch-gpqa-claude-opus-5-max-d3mtastumfvjr4fjmnhwry",
+          "score": 93.87626262626263,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "gpqa-diamond",
+          "cohort": "epoch-gpqa-diamond-1.0.6-simple-evals",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "record_id": "epoch-gpqa-kimi-k3-max-b8mapue3eywuzassnqe7c9",
+          "score": 93.11868686868688,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "gpqa-diamond",
+          "cohort": "epoch-gpqa-diamond-1.0.6-simple-evals",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "record_id": "epoch-gpqa-gpt-5.6-sol-max-nukcgzrecbsxkcknj9bk37",
+          "score": 93.49747474747475,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "gpqa-diamond",
+          "cohort": "epoch-gpqa-diamond-1.0.6-simple-evals",
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "record_id": "epoch-gpqa-glm-5.2-max-c5kpb4axzmygrywwqbkfmv",
+          "score": 91.85606060606061,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "scicode",
+          "cohort": "aa-v4.1.1-scicode-test-288-background-pass1",
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "record_id": "epoch-scicode-glm-5.2-max-glm-5.2_max",
+          "score": 50.462962962963,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "scicode",
+          "cohort": "aa-v4.1.1-scicode-test-288-background-pass1",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "record_id": "epoch-scicode-gpt-5.6-sol-max-gpt-5.6-sol_max",
+          "score": 56.1342592592593,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "scicode",
+          "cohort": "aa-v4.1.1-scicode-test-288-background-pass1",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "record_id": "epoch-scicode-claude-opus-5-max-claude-opus-5_max",
+          "score": 55.671296296296305,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "scicode",
+          "cohort": "aa-v4.1.1-scicode-test-288-background-pass1",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "record_id": "epoch-scicode-kimi-k3-max-kimi-k3_max",
+          "score": 58.6805555555556,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "critpt",
+          "cohort": "aa-v4.1.1-critpt-70-test-challenges-pass1",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "record_id": "epoch-critpt-gpt-5.6-sol-max-recok7wfznqiaai15",
+          "score": 32.300000000000004,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "critpt",
+          "cohort": "aa-v4.1.1-critpt-70-test-challenges-pass1",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "record_id": "epoch-critpt-claude-opus-5-max-rec5c4zdqpzverrgc",
+          "score": 29.142857100000004,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "critpt",
+          "cohort": "aa-v4.1.1-critpt-70-test-challenges-pass1",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "record_id": "epoch-critpt-kimi-k3-max-recqkvzvlqfvkoht4",
+          "score": 23.400000000000002,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "critpt",
+          "cohort": "aa-v4.1.1-critpt-70-test-challenges-pass1",
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "record_id": "epoch-critpt-glm-5.2-max-reccz0gyjqlgpm3ch",
+          "score": 20.8571428571429,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "arc-agi-2",
+          "cohort": "arc-prize-verified-arc-agi-2-semi-private-pass2",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "record_id": "epoch-arc-agi-2-gpt-5.6-sol-max-reciqjzyogw8gyglw",
+          "score": 92.5,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "arc-agi-2",
+          "cohort": "arc-prize-verified-arc-agi-2-semi-private-pass2",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "record_id": "epoch-arc-agi-2-claude-opus-5-max-recryrmlezuut9acr",
+          "score": 90.42,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "arc-agi-2",
+          "cohort": "arc-prize-verified-arc-agi-2-semi-private-pass2",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "record_id": "epoch-arc-agi-2-kimi-k3-max-rec4whjt7mjgylj9q",
+          "score": 60.416666666666664,
+          "source": "Epoch AI"
+        },
+        {
+          "benchmark": "deepswe-v1.1",
+          "cohort": "deepswe-v1.1-2026-08-13",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "record_id": "deepswe-score-claude-opus-5-max-2026-08-13",
+          "score": 73.64864864864865,
+          "source": "Datacurve"
+        },
+        {
+          "benchmark": "deepswe-v1.1",
+          "cohort": "deepswe-v1.1-2026-08-13",
+          "model": "Claude Fable 5 (max)",
+          "model_id": "claude-fable-5-max",
+          "model_short": "Fable 5",
+          "record_id": "deepswe-score-claude-fable-5-max-2026-08-13",
+          "score": 69.72477064220183,
+          "source": "Datacurve"
+        },
+        {
+          "benchmark": "deepswe-v1.1",
+          "cohort": "deepswe-v1.1-2026-08-13",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "record_id": "deepswe-score-gpt-5.6-sol-max-2026-08-13",
+          "score": 72.66666666666667,
+          "source": "Datacurve"
+        },
+        {
+          "benchmark": "deepswe-v1.1",
+          "cohort": "deepswe-v1.1-2026-08-13",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "record_id": "deepswe-score-kimi-k3-max-2026-08-13",
+          "score": 68.51441241685144,
+          "source": "Datacurve"
+        },
+        {
+          "benchmark": "deepswe-v1.1",
+          "cohort": "deepswe-v1.1-2026-08-13",
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "record_id": "deepswe-score-glm-5.2-max-2026-08-13",
+          "score": 43.77777777777778,
+          "source": "Datacurve"
+        }
+      ],
+      "component_scores": [
+        {
+          "component": "Capability",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "score": 76.9620253164557
+        },
+        {
+          "component": "Efficiency",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "score": 41.66666666666667
+        },
+        {
+          "component": "Capability",
+          "model": "Claude Fable 5 (max)",
+          "model_id": "claude-fable-5-max",
+          "model_short": "Fable 5",
+          "score": 50.0
+        },
+        {
+          "component": "Efficiency",
+          "model": "Claude Fable 5 (max)",
+          "model_id": "claude-fable-5-max",
+          "model_short": "Fable 5",
+          "score": 50.00000000000001
+        },
+        {
+          "component": "Capability",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "score": 82.27848101265822
+        },
+        {
+          "component": "Efficiency",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "score": 100.00000000000001
+        },
+        {
+          "component": "Capability",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "score": 26.83544303797468
+        },
+        {
+          "component": "Efficiency",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "score": 58.333333333333336
+        },
+        {
+          "component": "Capability",
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "score": 0.0
+        },
+        {
+          "component": "Efficiency",
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "score": 0.0
+        }
+      ],
+      "coverage": [
+        {
+          "component": "Capability",
+          "coverage": 0.49375,
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5"
+        },
+        {
+          "component": "Efficiency",
+          "coverage": 0.045,
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5"
+        },
+        {
+          "component": "Economics",
+          "coverage": 0.0,
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5"
+        },
+        {
+          "component": "Capability",
+          "coverage": 0.165,
+          "model": "Claude Fable 5 (max)",
+          "model_id": "claude-fable-5-max",
+          "model_short": "Fable 5"
+        },
+        {
+          "component": "Efficiency",
+          "coverage": 0.045,
+          "model": "Claude Fable 5 (max)",
+          "model_id": "claude-fable-5-max",
+          "model_short": "Fable 5"
+        },
+        {
+          "component": "Economics",
+          "coverage": 0.0,
+          "model": "Claude Fable 5 (max)",
+          "model_id": "claude-fable-5-max",
+          "model_short": "Fable 5"
+        },
+        {
+          "component": "Capability",
+          "coverage": 0.49375,
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol"
+        },
+        {
+          "component": "Efficiency",
+          "coverage": 0.045,
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol"
+        },
+        {
+          "component": "Economics",
+          "coverage": 0.0,
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol"
+        },
+        {
+          "component": "Capability",
+          "coverage": 0.49375,
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3"
+        },
+        {
+          "component": "Efficiency",
+          "coverage": 0.045,
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3"
+        },
+        {
+          "component": "Economics",
+          "coverage": 0.0,
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3"
+        },
+        {
+          "component": "Capability",
+          "coverage": 0.35625,
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2"
+        },
+        {
+          "component": "Efficiency",
+          "coverage": 0.045,
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2"
+        },
+        {
+          "component": "Economics",
+          "coverage": 0.0,
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2"
+        }
+      ],
+      "gap_counts": [
+        {
+          "cells": 3,
+          "status": "Diagnostic"
+        },
+        {
+          "cells": 1,
+          "status": "Reference"
+        },
+        {
+          "cells": 44,
+          "status": "Missing"
+        },
+        {
+          "cells": 20,
+          "status": "Ready"
+        },
+        {
+          "cells": 2,
+          "status": "Vendor claim"
+        }
+      ],
+      "model_summary": [
+        {
+          "capability": 76.9620253164557,
+          "capability_coverage": 0.49375,
+          "capability_domains": 3,
+          "capability_profile": "d8d5b262b8f0",
+          "comparability": "directly_comparable",
+          "confidence": "Low",
+          "economics": null,
+          "economics_coverage": 0.0,
+          "efficiency": 41.66666666666667,
+          "efficiency_coverage": 0.045,
+          "headline": "Not eligible",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "partial_overall": 65.93222573839662
+        },
+        {
+          "capability": 50.0,
+          "capability_coverage": 0.165,
+          "capability_domains": 1,
+          "capability_profile": "6c44eb1c4619",
+          "comparability": "different_evidence_profile",
+          "confidence": "Low",
+          "economics": null,
+          "economics_coverage": 0.0,
+          "efficiency": 50.00000000000001,
+          "efficiency_coverage": 0.045,
+          "headline": "Not eligible",
+          "model": "Claude Fable 5 (max)",
+          "model_id": "claude-fable-5-max",
+          "model_short": "Fable 5",
+          "partial_overall": 50.00000000000001
+        },
+        {
+          "capability": 82.27848101265822,
+          "capability_coverage": 0.49375,
+          "capability_domains": 3,
+          "capability_profile": "d8d5b262b8f0",
+          "comparability": "directly_comparable",
+          "confidence": "Low",
+          "economics": null,
+          "economics_coverage": 0.0,
+          "efficiency": 100.00000000000001,
+          "efficiency_coverage": 0.045,
+          "headline": "Not eligible",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "partial_overall": 87.81645569620254
+        },
+        {
+          "capability": 26.83544303797468,
+          "capability_coverage": 0.49375,
+          "capability_domains": 3,
+          "capability_profile": "d8d5b262b8f0",
+          "comparability": "directly_comparable",
+          "confidence": "Low",
+          "economics": null,
+          "economics_coverage": 0.0,
+          "efficiency": 58.333333333333336,
+          "efficiency_coverage": 0.045,
+          "headline": "Not eligible",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "partial_overall": 36.67853375527426
+        },
+        {
+          "capability": 0.0,
+          "capability_coverage": 0.35625,
+          "capability_domains": 2,
+          "capability_profile": "c03155936098",
+          "comparability": "different_evidence_profile",
+          "confidence": "Low",
+          "economics": null,
+          "economics_coverage": 0.0,
+          "efficiency": 0.0,
+          "efficiency_coverage": 0.045,
+          "headline": "Not eligible",
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "partial_overall": 0.0
+        }
+      ],
+      "overview": [
+        {
+          "economics_coverage": 0.0,
+          "efficiency_coverage": 0.045,
+          "headline_ready": 0,
+          "max_capability_coverage": 0.49375,
+          "pilot_models": 5,
+          "scored_capability_cells": 20,
+          "total_capability_cells": 70
+        }
+      ],
+      "resources": [
+        {
+          "attempts": 444,
+          "effective_agent_steps": 134.48012232415903,
+          "effective_input_tokens": 20402050.37614679,
+          "effective_output_tokens": 159630.48318042813,
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "record_id": "deepswe-harness-resources-claude-opus-5-max-2026-08-13",
+          "success_rate": 0.7364864864864865
+        },
+        {
+          "attempts": 436,
+          "effective_agent_steps": 126.82565789473684,
+          "effective_input_tokens": 18126746.075657893,
+          "effective_output_tokens": 170087.00328947368,
+          "model": "Claude Fable 5 (max)",
+          "model_id": "claude-fable-5-max",
+          "model_short": "Fable 5",
+          "record_id": "deepswe-harness-resources-claude-fable-5-max-2026-08-13",
+          "success_rate": 0.6972477064220184
+        },
+        {
+          "attempts": 450,
+          "effective_agent_steps": 84.29357798165137,
+          "effective_input_tokens": 10882090.382262997,
+          "effective_output_tokens": 82587.58409785932,
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "record_id": "deepswe-harness-resources-gpt-5.6-sol-max-2026-08-13",
+          "success_rate": 0.7266666666666667
+        },
+        {
+          "attempts": 451,
+          "effective_agent_steps": 142.4336569579288,
+          "effective_input_tokens": 14150944.165048543,
+          "effective_output_tokens": 118952.84466019417,
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "record_id": "deepswe-harness-resources-kimi-k3-max-2026-08-13",
+          "success_rate": 0.6851441241685144
+        },
+        {
+          "attempts": 450,
+          "effective_agent_steps": 294.9593908629442,
+          "effective_input_tokens": 28796711.152284265,
+          "effective_output_tokens": 178573.03553299495,
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "record_id": "deepswe-harness-resources-glm-5.2-max-2026-08-13",
+          "success_rate": 0.43777777777777777
+        }
+      ]
+    },
+    "generatedAt": "2026-08-14T00:00:00Z",
+    "status": "partial",
+    "version": 1
+  },
+  "sources": [
+    {
+      "id": "pilot_estimates",
+      "label": "Governed UMI partial estimates",
+      "path": "data/pilots/v0.3/processed/model-specific-partial-estimates.json"
+    },
+    {
+      "id": "accepted_benchmarks",
+      "label": "Accepted benchmark records",
+      "path": "data/pilots/v0.3/raw/benchmarks.yaml"
+    },
+    {
+      "id": "accepted_efficiency",
+      "label": "Accepted DeepSWE harness resources",
+      "path": "data/pilots/v0.3/raw/task_efficiency.yaml"
+    },
+    {
+      "id": "pilot_gaps",
+      "label": "Configured capability gap matrix",
+      "path": "data/pilots/v0.3/processed/pilot-gap-report.json"
+    }
+  ],
+  "surface": "dashboard"
+}

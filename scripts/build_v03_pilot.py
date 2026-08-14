@@ -14,6 +14,7 @@ from analysis.compare import common_capability_comparison
 from analysis.correlations import benchmark_correlations
 from analysis.gaps import pilot_gap_report
 from analysis.pareto_metrics import pareto_dimensions
+from analysis.pilot_dashboard import build_pilot_dashboard
 from analysis.pilot_sensitivity import analyze_pilot_sensitivity
 from analysis.sensitivity import analyze_sensitivity
 from analysis.uncertainty import source_bound_capability_sensitivity
@@ -264,8 +265,14 @@ def main() -> None:
         json.dumps(calibrate_release_claims(dataset), indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
+    gap_report = pilot_gap_report(dataset, config)
     (PROCESSED_ROOT / "pilot-gap-report.json").write_text(
-        json.dumps(pilot_gap_report(dataset, config), indent=2, sort_keys=True) + "\n",
+        json.dumps(gap_report, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    (PROCESSED_ROOT / "pilot-dashboard.json").write_text(
+        json.dumps(build_pilot_dashboard(dataset, estimates, gap_report), indent=2, sort_keys=True)
+        + "\n",
         encoding="utf-8",
     )
     five_models = tuple(model.id for model in models)
