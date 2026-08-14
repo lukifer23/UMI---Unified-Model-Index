@@ -13,6 +13,7 @@ from pydantic import BaseModel, ValidationError
 
 from analysis.correlations import benchmark_correlations
 from analysis.pareto_metrics import pareto_dimensions
+from analysis.pilot_sensitivity import analyze_pilot_sensitivity
 from analysis.rankings import rank_results
 from analysis.references import reference_observations
 from analysis.sensitivity import analyze_sensitivity
@@ -112,6 +113,7 @@ def build_parser() -> argparse.ArgumentParser:
         "references",
         "correlations",
         "pareto",
+        "pilot-sensitivity",
     ):
         child = subparsers.add_parser(command)
         _add_common(child)
@@ -268,8 +270,10 @@ def run(args: argparse.Namespace) -> int:
         payload = benchmark_correlations(
             dataset, config.normalization.correlation_min_overlap, config
         )
-    else:
+    elif args.command == "pareto":
         payload = pareto_dimensions(dataset, results)
+    else:
+        payload = analyze_pilot_sensitivity(dataset, config)
     _emit(payload, args.format, args.output)
     return 0
 

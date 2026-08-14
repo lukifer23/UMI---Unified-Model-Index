@@ -1,0 +1,17 @@
+[
+  {
+    "benchmark_a": "arena-agent",
+    "benchmark_b": "deepswe-v1.1",
+    "cohort_a": "arena-agent-ips-2026-08-12",
+    "cohort_b": "deepswe-v1.1-2026-08-13",
+    "direction_a": "higher",
+    "direction_b": "higher",
+    "family_a": "arena-agent",
+    "family_b": "deepswe-v1.1",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 3,
+    "pearson": 0.9934442246163662,
+    "spearman": 1.0
+  }
+]

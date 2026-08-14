@@ -1,0 +1,299 @@
+from __future__ import annotations
+
+import socket
+from pathlib import Path
+
+import pytest
+import yaml
+from pydantic import ValidationError
+
+from analysis.pilot_sensitivity import analyze_pilot_sensitivity, family_budget_snapshot
+from umi.adapters import (
+    adapt_aa_facts,
+    adapt_arena_json,
+    adapt_deepswe_facts,
+    adapt_epoch_csv,
+)
+from umi.config import ProjectConfig, load_project_config
+from umi.derived_metrics import derive_efficiency_metric
+from umi.fingerprints import dataset_fingerprint
+from umi.loading import load_dataset, load_model_crosswalk, load_source_registry
+from umi.schemas import (
+    AggregationStatistic,
+    CrosswalkStatus,
+    ModelCrosswalk,
+    ModelCrosswalkEntry,
+    OverlapEdge,
+    OverlapRelation,
+    ScoringDisposition,
+    SignalPolicy,
+    SignalRole,
+)
+from umi.scoring import score_dataset
+from umi.source_policy import validate_crosswalk
+from umi.validation import validate_source_registry
+
+ROOT = Path(__file__).parents[1]
+SOURCES = ROOT / "data" / "sources" / "v0.3"
+PILOT = ROOT / "data" / "pilots" / "v0.3" / "raw"
+
+
+@pytest.fixture(scope="module")
+def pilot_dataset():
+    return load_dataset(PILOT)
+
+
+@pytest.fixture(scope="module")
+def pilot_config():
+    return load_project_config(ROOT / "config")
+
+
+@pytest.fixture(scope="module")
+def crosswalk():
+    return load_model_crosswalk(SOURCES / "crosswalk.yaml")
+
+
+def test_frozen_registry_checksums_and_license_contract(pilot_dataset) -> None:
+    registry = load_source_registry(ROOT / "data" / "sources" / "registry.yaml")
+    report = validate_source_registry(
+        registry, ROOT / "data" / "sources" / "registry.yaml", pilot_dataset
+    )
+    assert report.errors == ()
+    pilot_snapshots = [item for item in registry.snapshots if "v0.3/" in item.artifact_path]
+    assert len(pilot_snapshots) == 5
+    assert all(item.license_id and item.attribution and item.adapter_id for item in pilot_snapshots)
+
+
+def test_crosswalk_exactness_and_rejected_aliases(pilot_dataset, crosswalk) -> None:
+    report = validate_crosswalk(
+        crosswalk,
+        pilot_dataset,
+        load_source_registry(ROOT / "data" / "sources" / "registry.yaml"),
+    )
+    assert report.valid
+    rejected = {
+        item.id: item.rejection_reason
+        for item in crosswalk.entries
+        if item.status == CrosswalkStatus.REJECTED
+    }
+    assert "fallback" in rejected["aa-fable-fallback-rejected"].lower()
+    assert "effort" in rejected["arena-agent-sol-xhigh-rejected"].lower()
+    assert "missing effort" in rejected["arena-text-fable-omitted-rejected"].lower()
+
+
+def test_exact_crosswalk_rejects_missing_and_mismatched_effort() -> None:
+    base = {
+        "id": "bad",
+        "source_id": "source",
+        "source_artifact_id": "artifact",
+        "upstream_revision": "revision",
+        "source_model_id": "model",
+        "canonical_model_id": "canonical",
+        "match_evidence": "test",
+        "status": "exact",
+    }
+    with pytest.raises(ValidationError, match="require source and canonical effort"):
+        ModelCrosswalkEntry.model_validate(
+            {**base, "source_effort": None, "canonical_effort": None}
+        )
+    with pytest.raises(ValidationError, match="effort must match"):
+        ModelCrosswalkEntry.model_validate(
+            {**base, "source_effort": "high", "canonical_effort": "max"}
+        )
+
+
+def test_crosswalk_detects_many_to_one_collision(crosswalk) -> None:
+    exact = next(item for item in crosswalk.entries if item.status == CrosswalkStatus.EXACT)
+    collision = exact.model_copy(update={"id": "collision", "source_model_id": "other"})
+    report = validate_crosswalk(ModelCrosswalk(entries=(*crosswalk.entries, collision)))
+    assert not report.valid
+    assert any("multiple rows" in error for error in report.errors)
+
+
+def test_crosswalk_detects_upstream_revision_change(pilot_dataset, crosswalk) -> None:
+    entry = crosswalk.entries[0].model_copy(update={"upstream_revision": "changed"})
+    changed = ModelCrosswalk(entries=(entry, *crosswalk.entries[1:]))
+    report = validate_crosswalk(
+        changed,
+        pilot_dataset,
+        load_source_registry(ROOT / "data" / "sources" / "registry.yaml"),
+    )
+    assert not report.valid
+    assert any("upstream revision mismatch" in error for error in report.errors)
+
+
+def test_adapters_are_offline_deterministic_and_role_safe(monkeypatch, crosswalk) -> None:
+    def deny_network(*args, **kwargs):
+        raise AssertionError("adapter attempted network access")
+
+    monkeypatch.setattr(socket, "socket", deny_network)
+    aa_first = adapt_aa_facts(SOURCES / "aa-reviewed-facts-2026-08-14.yaml", crosswalk)
+    aa_second = adapt_aa_facts(SOURCES / "aa-reviewed-facts-2026-08-14.yaml", crosswalk)
+    assert aa_first == aa_second
+    assert len(aa_first.external_indexes) == 4
+    assert len(aa_first.rejections) == 1
+    assert all(
+        item.scoring_disposition == ScoringDisposition.DIAGNOSTIC_ONLY
+        for item in aa_first.external_indexes
+    )
+    deep = adapt_deepswe_facts(SOURCES / "deepswe-reviewed-facts-2026-08-13.yaml", crosswalk)
+    assert len(deep.benchmarks) == 5
+    assert all(item.confidence_interval is not None for item in deep.benchmarks)
+    assert all(
+        item.aggregation_statistic == AggregationStatistic.UNSPECIFIED for item in deep.efficiency
+    )
+    assert all(
+        derive_efficiency_metric(item, "effective_tokens") is None for item in deep.efficiency
+    )
+
+
+def test_epoch_and_arena_adapter_dispositions(crosswalk) -> None:
+    epoch = adapt_epoch_csv(
+        SOURCES / "epoch-eci-benchmarks-2026-08-14.csv",
+        crosswalk,
+        source_id="epoch-eci",
+        artifact_id="epoch-eci-matrix-2026-08-14",
+    )
+    assert epoch.external_indexes
+    assert all(
+        item.scoring_disposition == ScoringDisposition.DIAGNOSTIC_ONLY
+        for item in epoch.external_indexes
+    )
+    arena = adapt_arena_json(
+        SOURCES / "arena-agent-2026-08-14.json",
+        crosswalk,
+        source_id="arena-agent",
+        artifact_id="arena-agent-2026-08-14",
+        upstream_revision="08dd89df7a8aa9df2ead3799f6422af4ad2e97a7",
+        subset="agent",
+    )
+    assert {item.model_id for item in arena.benchmarks} == {
+        "claude-opus-5-max",
+        "kimi-k3-max",
+        "glm-5.2-max",
+    }
+    assert any("Fable" in item.source_row_id for item in arena.rejections)
+    assert any("Sol" in item.source_row_id for item in arena.rejections)
+
+
+def test_reviewed_adapter_rejects_schema_drift(monkeypatch, crosswalk) -> None:
+    raw = yaml.safe_load((SOURCES / "deepswe-reviewed-facts-2026-08-13.yaml").read_text())
+    del raw["rows"][0]["pass_rate_percent"]
+    monkeypatch.setattr("umi.adapters.reviewed.load_yaml", lambda path: raw)
+    with pytest.raises(KeyError, match="pass_rate_percent"):
+        adapt_deepswe_facts("offline-malformed-artifact.yaml", crosswalk)
+
+
+def test_overlap_cycles_and_unrestricted_double_count_are_rejected(pilot_config) -> None:
+    reverse = OverlapEdge(
+        source="aa-hle",
+        target="aa-intelligence-v4.1",
+        relation=OverlapRelation.DERIVED_FROM,
+        evidence="adversarial cycle",
+    )
+    overlap = pilot_config.overlap.model_copy(
+        update={"edges": (*pilot_config.overlap.edges, reverse)}
+    )
+    with pytest.raises(ValidationError, match="acyclic"):
+        ProjectConfig.model_validate({**pilot_config.model_dump(mode="python"), "overlap": overlap})
+
+    double_count_overlap = pilot_config.overlap.model_copy(
+        update={
+            "signals": (
+                SignalPolicy(
+                    id="aggregate",
+                    role=SignalRole.COMPOSITE,
+                    disposition=ScoringDisposition.SCORED,
+                    budget_group="aggregate-budget",
+                ),
+                SignalPolicy(
+                    id="constituent",
+                    role=SignalRole.TASK,
+                    disposition=ScoringDisposition.SCORED,
+                    budget_group="constituent-budget",
+                ),
+            ),
+            "edges": (
+                OverlapEdge(
+                    source="aggregate",
+                    target="constituent",
+                    relation=OverlapRelation.CONTAINS,
+                    evidence="known containment",
+                ),
+            ),
+        }
+    )
+    with pytest.raises(ValidationError, match="share a budget"):
+        ProjectConfig.model_validate(
+            {**pilot_config.model_dump(mode="python"), "overlap": double_count_overlap}
+        )
+
+
+def test_documented_overlap_edges_cover_known_composites(pilot_config) -> None:
+    edges = {(item.source, item.target, item.relation) for item in pilot_config.overlap.edges}
+    assert ("epoch-eci", "deepswe-v1.1", OverlapRelation.CONTAINS) in edges
+    assert ("arena-agent", "arena-agent-signals", OverlapRelation.CONTAINS) in edges
+    assert ("aa-intelligence-v4.1", "aa-hle", OverlapRelation.CONTAINS) in edges
+
+
+def test_fixed_family_budgets_and_source_ablation(pilot_dataset, pilot_config) -> None:
+    budgets = family_budget_snapshot(pilot_config)
+    assert budgets[
+        next(domain for domain in budgets if domain.value == "software_engineering")
+    ] == {
+        "deepswe-v1.1": 0.60,
+        "terminalbench-2.1": 0.25,
+        "scicode": 0.15,
+        "legacy-aa-coding-index": 0.0,
+    }
+    scenarios = analyze_pilot_sensitivity(pilot_dataset, pilot_config)
+    assert {item.scenario for item in scenarios} >= {
+        "equal_family",
+        "ablate_deepswe-v1.1-2026-08-13",
+        "ablate_arena-agent-2026-08-14",
+    }
+    assert all(item.headline_overall is None for item in scenarios)
+    assert family_budget_snapshot(pilot_config) == budgets
+
+
+def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) -> None:
+    results = {item.model_id: item for item in score_dataset(pilot_dataset, pilot_config)}
+    assert set(results) == {
+        "claude-opus-5-max",
+        "claude-fable-5-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "glm-5.2-max",
+    }
+    assert all(
+        item.publication_label == "real evidence, provisional partial ranking"
+        for item in results.values()
+    )
+    assert all(item.headline_overall is None and not item.eligible for item in results.values())
+    assert all(
+        item.efficiency.score is None and item.economics.score is None for item in results.values()
+    )
+    assert any("release date" in item for item in results["claude-fable-5-max"].diagnostics)
+
+
+def test_diagnostic_evidence_changes_complete_not_scored_fingerprint(
+    pilot_dataset, pilot_config
+) -> None:
+    baseline = {item.model_id: item for item in score_dataset(pilot_dataset, pilot_config)}
+    diagnostic = pilot_dataset.external_indexes[0]
+    changed = pilot_dataset.model_copy(
+        update={
+            "external_indexes": (
+                diagnostic.model_copy(update={"value": diagnostic.value + 1}),
+                *pilot_dataset.external_indexes[1:],
+            ),
+            "complete_audit_fingerprint": "f" * 64,
+        }
+    )
+    changed_results = {item.model_id: item for item in score_dataset(changed, pilot_config)}
+    assert dataset_fingerprint(changed, pilot_config) != dataset_fingerprint(
+        pilot_dataset, pilot_config
+    )
+    assert {item.scored_data_fingerprint for item in baseline.values()} == {
+        item.scored_data_fingerprint for item in changed_results.values()
+    }

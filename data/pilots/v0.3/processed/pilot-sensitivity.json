@@ -1,0 +1,107 @@
+[
+  {
+    "baseline_change": 0.0,
+    "capability_score": 50.0,
+    "headline_overall": null,
+    "model_id": "claude-fable-5-max",
+    "scenario": "ablate_arena-agent-2026-08-14"
+  },
+  {
+    "baseline_change": -7.757509434481193,
+    "capability_score": 81.57591509310713,
+    "headline_overall": null,
+    "model_id": "claude-opus-5-max",
+    "scenario": "ablate_arena-agent-2026-08-14"
+  },
+  {
+    "baseline_change": 1.062707988864452e-07,
+    "capability_score": 2.523931473553074e-07,
+    "headline_overall": null,
+    "model_id": "glm-5.2-max",
+    "scenario": "ablate_arena-agent-2026-08-14"
+  },
+  {
+    "baseline_change": 0.0,
+    "capability_score": 75.00003207255932,
+    "headline_overall": null,
+    "model_id": "gpt-5.6-sol-max",
+    "scenario": "ablate_arena-agent-2026-08-14"
+  },
+  {
+    "baseline_change": -3.745024633498531,
+    "capability_score": 41.10556649544099,
+    "headline_overall": null,
+    "model_id": "kimi-k3-max",
+    "scenario": "ablate_arena-agent-2026-08-14"
+  },
+  {
+    "baseline_change": null,
+    "capability_score": null,
+    "headline_overall": null,
+    "model_id": "claude-fable-5-max",
+    "scenario": "ablate_deepswe-v1.1-2026-08-13"
+  },
+  {
+    "baseline_change": 10.66657547241168,
+    "capability_score": 100.0,
+    "headline_overall": null,
+    "model_id": "claude-opus-5-max",
+    "scenario": "ablate_deepswe-v1.1-2026-08-13"
+  },
+  {
+    "baseline_change": -1.4612234846886218e-07,
+    "capability_score": 0.0,
+    "headline_overall": null,
+    "model_id": "glm-5.2-max",
+    "scenario": "ablate_deepswe-v1.1-2026-08-13"
+  },
+  {
+    "baseline_change": null,
+    "capability_score": null,
+    "headline_overall": null,
+    "model_id": "gpt-5.6-sol-max",
+    "scenario": "ablate_deepswe-v1.1-2026-08-13"
+  },
+  {
+    "baseline_change": 5.14940887106048,
+    "capability_score": 50.0,
+    "headline_overall": null,
+    "model_id": "kimi-k3-max",
+    "scenario": "ablate_deepswe-v1.1-2026-08-13"
+  },
+  {
+    "baseline_change": -7.105427357601002e-15,
+    "capability_score": 49.99999999999999,
+    "headline_overall": null,
+    "model_id": "claude-fable-5-max",
+    "scenario": "equal_family"
+  },
+  {
+    "baseline_change": 0.0,
+    "capability_score": 89.33342452758832,
+    "headline_overall": null,
+    "model_id": "claude-opus-5-max",
+    "scenario": "equal_family"
+  },
+  {
+    "baseline_change": 0.0,
+    "capability_score": 1.4612234846886218e-07,
+    "headline_overall": null,
+    "model_id": "glm-5.2-max",
+    "scenario": "equal_family"
+  },
+  {
+    "baseline_change": 0.0,
+    "capability_score": 75.00003207255932,
+    "headline_overall": null,
+    "model_id": "gpt-5.6-sol-max",
+    "scenario": "equal_family"
+  },
+  {
+    "baseline_change": 0.0,
+    "capability_score": 44.85059112893952,
+    "headline_overall": null,
+    "model_id": "kimi-k3-max",
+    "scenario": "equal_family"
+  }
+]

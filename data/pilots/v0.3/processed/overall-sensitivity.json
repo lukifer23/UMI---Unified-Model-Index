@@ -1,0 +1,72 @@
+[
+  {
+    "baseline_eligible": false,
+    "baseline_rank": null,
+    "eligibility_changed": false,
+    "eligible_scenario_count": 0,
+    "ineligible_scenario_count": 5,
+    "maximum_rank_movement": null,
+    "model_id": "claude-fable-5-max",
+    "rank_max": null,
+    "rank_min": null,
+    "score_max": null,
+    "score_min": null,
+    "stability": null
+  },
+  {
+    "baseline_eligible": false,
+    "baseline_rank": null,
+    "eligibility_changed": false,
+    "eligible_scenario_count": 0,
+    "ineligible_scenario_count": 5,
+    "maximum_rank_movement": null,
+    "model_id": "claude-opus-5-max",
+    "rank_max": null,
+    "rank_min": null,
+    "score_max": null,
+    "score_min": null,
+    "stability": null
+  },
+  {
+    "baseline_eligible": false,
+    "baseline_rank": null,
+    "eligibility_changed": false,
+    "eligible_scenario_count": 0,
+    "ineligible_scenario_count": 5,
+    "maximum_rank_movement": null,
+    "model_id": "glm-5.2-max",
+    "rank_max": null,
+    "rank_min": null,
+    "score_max": null,
+    "score_min": null,
+    "stability": null
+  },
+  {
+    "baseline_eligible": false,
+    "baseline_rank": null,
+    "eligibility_changed": false,
+    "eligible_scenario_count": 0,
+    "ineligible_scenario_count": 5,
+    "maximum_rank_movement": null,
+    "model_id": "gpt-5.6-sol-max",
+    "rank_max": null,
+    "rank_min": null,
+    "score_max": null,
+    "score_min": null,
+    "stability": null
+  },
+  {
+    "baseline_eligible": false,
+    "baseline_rank": null,
+    "eligibility_changed": false,
+    "eligible_scenario_count": 0,
+    "ineligible_scenario_count": 5,
+    "maximum_rank_movement": null,
+    "model_id": "kimi-k3-max",
+    "rank_max": null,
+    "rank_min": null,
+    "score_max": null,
+    "score_min": null,
+    "stability": null
+  }
+]
