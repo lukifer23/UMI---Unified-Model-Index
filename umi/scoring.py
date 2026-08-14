@@ -62,7 +62,18 @@ def score_dataset(dataset: Dataset, config: ProjectConfig) -> list[ScoringResult
             *economics.evidence.get(model.id, ()),
         ):
             records_by_id[record.record_id] = record
-        quality = evidence_quality_share(records_by_id.values())
+        component_quality = {
+            "capability": evidence_quality_share(capability.evidence.get(model.id, ())),
+            "efficiency": evidence_quality_share(efficiency.evidence.get(model.id, ())),
+            "economics": evidence_quality_share(economics.evidence.get(model.id, ())),
+        }
+        quality_denominator = overall_coverage
+        quality_numerator = (
+            weights.capability * cap.coverage * component_quality["capability"]
+            + weights.efficiency * eff.coverage * component_quality["efficiency"]
+            + weights.economics * econ.coverage * component_quality["economics"]
+        )
+        quality = quality_numerator / quality_denominator if quality_denominator else 0.0
         if (
             overall_coverage >= config.eligibility.high_confidence_coverage
             and quality >= config.eligibility.high_confidence_quality_share
@@ -108,6 +119,7 @@ def score_dataset(dataset: Dataset, config: ProjectConfig) -> list[ScoringResult
                 source_record_ids=tuple(sorted(records_by_id)),
                 diagnostics=tuple(diagnostics),
                 config_fingerprint=config.fingerprint,
+                formula_version="umi-methodology-v0.1",
             )
         )
     return results

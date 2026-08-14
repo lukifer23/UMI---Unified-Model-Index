@@ -22,7 +22,7 @@ Valid result types are `independent`, `community_reproduction`, `vendor_reported
 
 ## Models
 
-`models.yaml` contains `models`. Required fields are `id`, `family`, `provider`, `release_date`, `configuration`, and `open_weights`. Optional fields include `context_window`, `notes`, and `synthetic`.
+`models.yaml` contains `models`. Required fields are `id`, `family`, `provider`, `release_date`, `configuration`, and `open_weights`. Configuration effort is one of `standard`, `off`, `low`, `medium`, `high`, `max`, or `custom`. Optional fields include `context_window`, `notes`, and `synthetic`.
 
 ## Benchmark definitions and measurements
 
@@ -36,9 +36,8 @@ Definitions in `config/benchmarks.yaml` specify `id`, `name`, `domain`, `family`
 
 ## Task efficiency and observed economics
 
-`task_efficiency.yaml` contains records keyed by model and workload. Required observations are `attempts` and `success_rate` in `[0,1]`; optional nonnegative fields include token counts, turns, seconds, tool calls, and `mean_cost_per_attempt`. Derived effective metrics use the methodology's success adjustment. Zero success remains measured failure.
+`task_efficiency.yaml` contains records keyed by model and workload. Each record has a typed `workload_category`: `general`, `coding`, `agentic`, `research`, `browser`, or `multimodal`. Required observations are `attempts` and `success_rate` in `[0,1]`; optional nonnegative fields include token counts, turns, seconds, tool calls, and `mean_cost_per_attempt`. Derived effective metrics use the methodology's success adjustment. Zero success remains measured failure.
 
 ## Derived output
 
-Score results contain `model_id`, component scores, Value, Overall, coverage percentage, confidence, eligibility, provisional status, domains represented, evidence-quality share, source record IDs, diagnostics, and configuration SHA-256 fingerprint. JSON output uses stable key ordering; CSV flattens lists with `|`.
-
+Score results contain `model_id`, component scores, Value, Overall, coverage percentage, confidence, eligibility, provisional status, domains represented, evidence-quality share, source record IDs, diagnostics, formula version, and configuration SHA-256 fingerprint. JSON output uses stable key ordering; CSV flattens lists with `|`.

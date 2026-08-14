@@ -56,6 +56,25 @@ class Confidence(StrEnum):
     LOW = "low"
 
 
+class ConfigurationEffort(StrEnum):
+    STANDARD = "standard"
+    OFF = "off"
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    MAX = "max"
+    CUSTOM = "custom"
+
+
+class WorkloadCategory(StrEnum):
+    GENERAL = "general"
+    CODING = "coding"
+    AGENTIC = "agentic"
+    RESEARCH = "research"
+    BROWSER = "browser"
+    MULTIMODAL = "multimodal"
+
+
 class Source(StrictModel):
     organization: str = Field(min_length=1)
     url: HttpUrl
@@ -78,7 +97,7 @@ class ModelConfiguration(StrictModel):
     family: str = Field(min_length=1)
     provider: str = Field(min_length=1)
     release_date: date
-    configuration: str = Field(min_length=1)
+    configuration: ConfigurationEffort
     open_weights: bool
     context_window: int | None = Field(default=None, gt=0)
     notes: str | None = None
@@ -138,6 +157,7 @@ class PricingRecord(Provenance):
 class EfficiencyMeasurement(Provenance):
     model_id: Identifier
     workload: Identifier
+    workload_category: WorkloadCategory
     attempts: int = Field(gt=0)
     success_rate: Rate
     mean_input_tokens: NonNegative | None = None
@@ -192,3 +212,4 @@ class ScoringResult(StrictModel):
     source_record_ids: tuple[Identifier, ...]
     diagnostics: tuple[str, ...]
     config_fingerprint: str
+    formula_version: str

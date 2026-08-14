@@ -36,7 +36,9 @@ The default Overall score is `0.55C + 0.25E + 0.20X`. Missing components are ren
 
 Value is separate: `sqrt(Capability × observed-cost-efficiency score)`. It is unavailable without both inputs.
 
-Confidence is High at coverage >=80% and independent/community evidence share >=75%; Medium at coverage >=60% and that evidence share >=50%; otherwise Low. Any small-cohort normalization or failed headline eligibility marks the result provisional.
+Confidence is High at coverage >=80% and independent/community evidence share >=75%; Medium at coverage >=60% and that evidence share >=50%; otherwise Low. Evidence quality is weighted first by the headline component weight and component coverage; selected records within a component contribute equally in v0.1. Any small-cohort normalization or failed headline eligibility marks the result provisional.
+
+Aggregate/constituent metadata must use the same benchmark-family ID. Validation rejects an overlap declared across different families, ensuring the scoring engine places every known overlap inside one shared family budget.
 
 ## Sensitivity, correlation, and Pareto analysis
 
@@ -51,4 +53,3 @@ A model is Pareto dominated when another model is at least as capable and no mor
 - How should formal measurement uncertainty and benchmark sampling error propagate?
 - How should heterogeneous workload categories combine without hiding user-specific tradeoffs?
 - Should evidence tiers receive calibrated quality weights once validation history exists?
-

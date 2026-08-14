@@ -3,6 +3,8 @@ __pycache__/
 *.egg-info/
 .venv/
 .pytest_cache/
+.pytest-tmp/
+pytest-cache-files-*/
 .mypy_cache/
 .ruff_cache/
 .coverage
@@ -11,4 +13,3 @@ dist/
 build/
 data/processed/*
 !data/processed/.gitkeep
-

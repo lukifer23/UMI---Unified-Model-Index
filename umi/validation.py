@@ -80,6 +80,12 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
         for related in (*definition.parent_aggregates, *definition.constituents):
             if related not in benchmark_ids:
                 errors.append(f"benchmark {definition.id} references unknown benchmark: {related}")
+                continue
+            related_definition = next(item for item in config.benchmarks if item.id == related)
+            if related_definition.family != definition.family:
+                errors.append(
+                    f"overlapping benchmarks {definition.id} and {related} must share a family"
+                )
 
     for model in dataset.models:
         if (

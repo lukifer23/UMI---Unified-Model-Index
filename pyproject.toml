@@ -34,7 +34,7 @@ umi = "umi.cli:main"
 packages = ["umi", "analysis"]
 
 [tool.pytest.ini_options]
-addopts = "--strict-markers --cov=umi --cov=analysis --cov-report=term-missing"
+addopts = "--strict-markers -p no:cacheprovider --cov=umi --cov=analysis --cov-report=term-missing"
 testpaths = ["tests"]
 
 [tool.ruff]
