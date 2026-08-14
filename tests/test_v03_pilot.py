@@ -7,12 +7,14 @@ import pytest
 import yaml
 from pydantic import ValidationError
 
+from analysis.gaps import pilot_gap_report
 from analysis.pilot_sensitivity import analyze_pilot_sensitivity, family_budget_snapshot
 from umi.adapters import (
     adapt_aa_facts,
     adapt_arena_json,
     adapt_deepswe_facts,
     adapt_epoch_csv,
+    adapt_lab_release_facts,
 )
 from umi.config import ProjectConfig, load_project_config
 from umi.derived_metrics import derive_efficiency_metric
@@ -62,7 +64,7 @@ def test_frozen_registry_checksums_and_license_contract(pilot_dataset) -> None:
     )
     assert report.errors == ()
     pilot_snapshots = [item for item in registry.snapshots if "v0.3/" in item.artifact_path]
-    assert len(pilot_snapshots) == 5
+    assert len(pilot_snapshots) == 9
     assert all(item.license_id and item.attribution and item.adapter_id for item in pilot_snapshots)
 
 
@@ -189,6 +191,40 @@ def test_epoch_and_arena_adapter_dispositions(crosswalk) -> None:
     )
     assert any("Fable" in item.source_row_id for item in arena.rejections)
     assert any("Sol" in item.source_row_id for item in arena.rejections)
+
+
+def test_lab_release_facts_preserve_tariffs_and_claims(crosswalk) -> None:
+    openai = adapt_lab_release_facts(
+        SOURCES / "openai-release-facts-2026-08-14.yaml", crosswalk
+    )
+    assert len(openai.pricing) == 1
+    assert openai.pricing[0].cached_input_per_million == 0.5
+    assert openai.pricing[0].long_context_surcharge["threshold_input_tokens"] == 272000
+    assert len(openai.release_claims) == 4
+    assert all(
+        item.scoring_disposition == ScoringDisposition.DIAGNOSTIC_ONLY
+        for item in openai.release_claims
+    )
+    anthropic = adapt_lab_release_facts(
+        SOURCES / "anthropic-release-facts-2026-08-14.yaml", crosswalk
+    )
+    assert {item.cache_write_1h_per_million for item in anthropic.pricing} == {10.0, 20.0}
+
+
+def test_gap_report_counts_every_configured_model_benchmark_cell(
+    pilot_dataset, pilot_config
+) -> None:
+    report = pilot_gap_report(pilot_dataset, pilot_config)
+    assert len(report["capability_cells"]) == len(pilot_dataset.models) * len(
+        pilot_config.benchmarks
+    )
+    assert sum(report["capability_cell_counts"].values()) == 65
+    assert all(report["pricing_record_ids"].values())
+    assert any(
+        str(pilot_config.eligibility.minimum_capability_domains) in blocker
+        for blocker in report["headline_blockers"]
+    )
+    assert any("claude-fable-5-max" in blocker for blocker in report["headline_blockers"])
 
 
 def test_reviewed_adapter_rejects_schema_drift(monkeypatch, crosswalk) -> None:

@@ -58,7 +58,10 @@ def scoring_context_payload(dataset: Dataset, config: ProjectConfig) -> dict[str
         *dataset.task_economics,
     )
     return {
-        "models": _ordered(dataset.models, "id"),
+        "models": [
+            item.model_dump(mode="json", exclude={"source_snapshot_ids", "notes"})
+            for item in sorted(dataset.models, key=lambda model: model.id)
+        ],
         "scored_records": _ordered(records, "record_id"),
         "scoring_config_fingerprint": config.fingerprint,
         "engine_version": ENGINE_VERSION,

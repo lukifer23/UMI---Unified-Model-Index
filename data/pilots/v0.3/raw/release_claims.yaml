@@ -1,0 +1,101 @@
+claims:
+- record_id: openai-release-claim-deepswe-v1.1-gpt-5.6-sol-max-2026-07-09
+  source:
+    organization: OpenAI
+    url: https://openai.com/index/gpt-5-6/
+    accessed: '2026-08-14'
+  result_type: vendor_reported
+  benchmark_version: deepswe-v1.1
+  harness_version: openai-release-deepswe-v1.1-codex-max-2026-07-09
+  metric_definition: Literal numeric result published in an official lab release
+  evaluator: OpenAI
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: diagnostic_only
+  source_artifact_id: openai-release-facts-2026-08-14
+  signal_role: reference
+  scoring_disposition: diagnostic_only
+  claim_text: GPT-5.6 Sol scored 72.7% on DeepSWE v1.1.
+  model_id: gpt-5.6-sol-max
+  model_snapshot_id: gpt-5.6-sol-max
+  benchmark_id: deepswe-v1.1
+  value: 72.7
+  unit: percent
+  direction: higher
+  cohort_key: openai-release-deepswe-v1.1-codex-max-2026-07-09
+  evaluation_date: '2026-07-09'
+- record_id: openai-release-claim-terminalbench-2.1-gpt-5.6-sol-max-2026-07-09
+  source:
+    organization: OpenAI
+    url: https://openai.com/index/gpt-5-6/
+    accessed: '2026-08-14'
+  result_type: vendor_reported
+  benchmark_version: terminalbench-2.1
+  harness_version: openai-release-terminalbench-2.1-codex-max-2026-07-09
+  metric_definition: Literal numeric result published in an official lab release
+  evaluator: OpenAI
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: diagnostic_only
+  source_artifact_id: openai-release-facts-2026-08-14
+  signal_role: reference
+  scoring_disposition: diagnostic_only
+  claim_text: GPT-5.6 Sol scored 88.8% on Terminal-Bench 2.1.
+  model_id: gpt-5.6-sol-max
+  model_snapshot_id: gpt-5.6-sol-max
+  benchmark_id: terminalbench-2.1
+  value: 88.8
+  unit: percent
+  direction: higher
+  cohort_key: openai-release-terminalbench-2.1-codex-max-2026-07-09
+  evaluation_date: '2026-07-09'
+- record_id: openai-release-claim-gdpval-aa-v2-gpt-5.6-sol-max-2026-07-09
+  source:
+    organization: OpenAI
+    url: https://openai.com/index/gpt-5-6/
+    accessed: '2026-08-14'
+  result_type: vendor_reported
+  benchmark_version: gdpval-aa-v2
+  harness_version: openai-release-gdpval-aa-v2-max-2026-07-09
+  metric_definition: Literal numeric result published in an official lab release
+  evaluator: OpenAI
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: diagnostic_only
+  source_artifact_id: openai-release-facts-2026-08-14
+  signal_role: reference
+  scoring_disposition: diagnostic_only
+  claim_text: GPT-5.6 Sol scored 1747.8 Elo on GDPval-AA v2.
+  model_id: gpt-5.6-sol-max
+  model_snapshot_id: gpt-5.6-sol-max
+  benchmark_id: gdpval-aa-v2
+  value: 1747.8
+  unit: score
+  direction: higher
+  cohort_key: openai-release-gdpval-aa-v2-max-2026-07-09
+  evaluation_date: '2026-07-09'
+- record_id: openai-release-claim-gpqa-diamond-gpt-5.6-sol-max-2026-07-09
+  source:
+    organization: OpenAI
+    url: https://openai.com/index/gpt-5-6/
+    accessed: '2026-08-14'
+  result_type: vendor_reported
+  benchmark_version: gpqa-diamond
+  harness_version: openai-release-gpqa-diamond-max-2026-07-09
+  metric_definition: Literal numeric result published in an official lab release
+  evaluator: OpenAI
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: diagnostic_only
+  source_artifact_id: openai-release-facts-2026-08-14
+  signal_role: reference
+  scoring_disposition: diagnostic_only
+  claim_text: GPT-5.6 Sol scored 94.6% on GPQA Diamond.
+  model_id: gpt-5.6-sol-max
+  model_snapshot_id: gpt-5.6-sol-max
+  benchmark_id: gpqa-diamond
+  value: 94.6
+  unit: percent
+  direction: higher
+  cohort_key: openai-release-gpqa-diamond-max-2026-07-09
+  evaluation_date: '2026-07-09'

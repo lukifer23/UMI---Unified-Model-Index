@@ -1,0 +1,853 @@
+{
+  "capability_cell_counts": {
+    "diagnostic_measurement": 3,
+    "diagnostic_reference": 9,
+    "missing": 46,
+    "ready_scored": 5,
+    "vendor_claim_only": 2
+  },
+  "capability_cells": [
+    {
+      "benchmark_id": "hle",
+      "domain": "general_reasoning",
+      "family": "hle",
+      "model_id": "claude-fable-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "hle",
+      "domain": "general_reasoning",
+      "family": "hle",
+      "model_id": "claude-opus-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "hle",
+      "domain": "general_reasoning",
+      "family": "hle",
+      "model_id": "glm-5.2-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "hle",
+      "domain": "general_reasoning",
+      "family": "hle",
+      "model_id": "gpt-5.6-sol-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "hle",
+      "domain": "general_reasoning",
+      "family": "hle",
+      "model_id": "kimi-k3-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "deepswe-v1.1",
+      "domain": "software_engineering",
+      "family": "deepswe-v1.1",
+      "model_id": "claude-fable-5-max",
+      "record_ids": [
+        "deepswe-score-claude-fable-5-max-2026-08-13"
+      ],
+      "status": "ready_scored"
+    },
+    {
+      "benchmark_id": "deepswe-v1.1",
+      "domain": "software_engineering",
+      "family": "deepswe-v1.1",
+      "model_id": "claude-opus-5-max",
+      "record_ids": [
+        "deepswe-score-claude-opus-5-max-2026-08-13"
+      ],
+      "status": "ready_scored"
+    },
+    {
+      "benchmark_id": "deepswe-v1.1",
+      "domain": "software_engineering",
+      "family": "deepswe-v1.1",
+      "model_id": "glm-5.2-max",
+      "record_ids": [
+        "deepswe-score-glm-5.2-max-2026-08-13"
+      ],
+      "status": "ready_scored"
+    },
+    {
+      "benchmark_id": "deepswe-v1.1",
+      "domain": "software_engineering",
+      "family": "deepswe-v1.1",
+      "model_id": "gpt-5.6-sol-max",
+      "record_ids": [
+        "deepswe-score-gpt-5.6-sol-max-2026-08-13"
+      ],
+      "status": "ready_scored"
+    },
+    {
+      "benchmark_id": "deepswe-v1.1",
+      "domain": "software_engineering",
+      "family": "deepswe-v1.1",
+      "model_id": "kimi-k3-max",
+      "record_ids": [
+        "deepswe-score-kimi-k3-max-2026-08-13"
+      ],
+      "status": "ready_scored"
+    },
+    {
+      "benchmark_id": "terminalbench-2.1",
+      "domain": "software_engineering",
+      "family": "terminalbench-2.1",
+      "model_id": "claude-fable-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "terminalbench-2.1",
+      "domain": "software_engineering",
+      "family": "terminalbench-2.1",
+      "model_id": "claude-opus-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "terminalbench-2.1",
+      "domain": "software_engineering",
+      "family": "terminalbench-2.1",
+      "model_id": "glm-5.2-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "terminalbench-2.1",
+      "domain": "software_engineering",
+      "family": "terminalbench-2.1",
+      "model_id": "gpt-5.6-sol-max",
+      "record_ids": [
+        "openai-release-claim-terminalbench-2.1-gpt-5.6-sol-max-2026-07-09"
+      ],
+      "status": "vendor_claim_only"
+    },
+    {
+      "benchmark_id": "terminalbench-2.1",
+      "domain": "software_engineering",
+      "family": "terminalbench-2.1",
+      "model_id": "kimi-k3-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "scicode",
+      "domain": "software_engineering",
+      "family": "scicode",
+      "model_id": "claude-fable-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "scicode",
+      "domain": "software_engineering",
+      "family": "scicode",
+      "model_id": "claude-opus-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "scicode",
+      "domain": "software_engineering",
+      "family": "scicode",
+      "model_id": "glm-5.2-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "scicode",
+      "domain": "software_engineering",
+      "family": "scicode",
+      "model_id": "gpt-5.6-sol-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "scicode",
+      "domain": "software_engineering",
+      "family": "scicode",
+      "model_id": "kimi-k3-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-coding-agent-index",
+      "domain": "software_engineering",
+      "family": "legacy-aa-coding-index",
+      "model_id": "claude-fable-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-coding-agent-index",
+      "domain": "software_engineering",
+      "family": "legacy-aa-coding-index",
+      "model_id": "claude-opus-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-coding-agent-index",
+      "domain": "software_engineering",
+      "family": "legacy-aa-coding-index",
+      "model_id": "glm-5.2-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-coding-agent-index",
+      "domain": "software_engineering",
+      "family": "legacy-aa-coding-index",
+      "model_id": "gpt-5.6-sol-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-coding-agent-index",
+      "domain": "software_engineering",
+      "family": "legacy-aa-coding-index",
+      "model_id": "kimi-k3-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "gdpval-aa-v2",
+      "domain": "agentic_work",
+      "family": "gdpval-aa-v2",
+      "model_id": "claude-fable-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "gdpval-aa-v2",
+      "domain": "agentic_work",
+      "family": "gdpval-aa-v2",
+      "model_id": "claude-opus-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "gdpval-aa-v2",
+      "domain": "agentic_work",
+      "family": "gdpval-aa-v2",
+      "model_id": "glm-5.2-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "gdpval-aa-v2",
+      "domain": "agentic_work",
+      "family": "gdpval-aa-v2",
+      "model_id": "gpt-5.6-sol-max",
+      "record_ids": [
+        "openai-release-claim-gdpval-aa-v2-gpt-5.6-sol-max-2026-07-09"
+      ],
+      "status": "vendor_claim_only"
+    },
+    {
+      "benchmark_id": "gdpval-aa-v2",
+      "domain": "agentic_work",
+      "family": "gdpval-aa-v2",
+      "model_id": "kimi-k3-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "tau3-banking",
+      "domain": "agentic_work",
+      "family": "tau3-banking",
+      "model_id": "claude-fable-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "tau3-banking",
+      "domain": "agentic_work",
+      "family": "tau3-banking",
+      "model_id": "claude-opus-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "tau3-banking",
+      "domain": "agentic_work",
+      "family": "tau3-banking",
+      "model_id": "glm-5.2-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "tau3-banking",
+      "domain": "agentic_work",
+      "family": "tau3-banking",
+      "model_id": "gpt-5.6-sol-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "tau3-banking",
+      "domain": "agentic_work",
+      "family": "tau3-banking",
+      "model_id": "kimi-k3-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "arena-agent",
+      "domain": "agentic_work",
+      "family": "arena-agent",
+      "model_id": "claude-fable-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "arena-agent",
+      "domain": "agentic_work",
+      "family": "arena-agent",
+      "model_id": "claude-opus-5-max",
+      "record_ids": [
+        "arena-agent-claude-opus-5-max-2026-08-12"
+      ],
+      "status": "diagnostic_measurement"
+    },
+    {
+      "benchmark_id": "arena-agent",
+      "domain": "agentic_work",
+      "family": "arena-agent",
+      "model_id": "glm-5.2-max",
+      "record_ids": [
+        "arena-agent-glm-5.2-max-2026-08-12"
+      ],
+      "status": "diagnostic_measurement"
+    },
+    {
+      "benchmark_id": "arena-agent",
+      "domain": "agentic_work",
+      "family": "arena-agent",
+      "model_id": "gpt-5.6-sol-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "arena-agent",
+      "domain": "agentic_work",
+      "family": "arena-agent",
+      "model_id": "kimi-k3-max",
+      "record_ids": [
+        "arena-agent-kimi-k3-max-2026-08-12"
+      ],
+      "status": "diagnostic_measurement"
+    },
+    {
+      "benchmark_id": "aa-briefcase",
+      "domain": "agentic_work",
+      "family": "legacy-aa-briefcase",
+      "model_id": "claude-fable-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-briefcase",
+      "domain": "agentic_work",
+      "family": "legacy-aa-briefcase",
+      "model_id": "claude-opus-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-briefcase",
+      "domain": "agentic_work",
+      "family": "legacy-aa-briefcase",
+      "model_id": "glm-5.2-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-briefcase",
+      "domain": "agentic_work",
+      "family": "legacy-aa-briefcase",
+      "model_id": "gpt-5.6-sol-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-briefcase",
+      "domain": "agentic_work",
+      "family": "legacy-aa-briefcase",
+      "model_id": "kimi-k3-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "gpqa-diamond",
+      "domain": "math_science",
+      "family": "gpqa-diamond",
+      "model_id": "claude-fable-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "gpqa-diamond",
+      "domain": "math_science",
+      "family": "gpqa-diamond",
+      "model_id": "claude-opus-5-max",
+      "record_ids": [
+        "epoch-gpqa-diamond-claude-opus-5-max-m25"
+      ],
+      "status": "diagnostic_reference"
+    },
+    {
+      "benchmark_id": "gpqa-diamond",
+      "domain": "math_science",
+      "family": "gpqa-diamond",
+      "model_id": "glm-5.2-max",
+      "record_ids": [
+        "epoch-gpqa-diamond-glm-5.2-max-m53"
+      ],
+      "status": "diagnostic_reference"
+    },
+    {
+      "benchmark_id": "gpqa-diamond",
+      "domain": "math_science",
+      "family": "gpqa-diamond",
+      "model_id": "gpt-5.6-sol-max",
+      "record_ids": [
+        "epoch-gpqa-diamond-gpt-5.6-sol-max-m87"
+      ],
+      "status": "diagnostic_reference"
+    },
+    {
+      "benchmark_id": "gpqa-diamond",
+      "domain": "math_science",
+      "family": "gpqa-diamond",
+      "model_id": "kimi-k3-max",
+      "record_ids": [
+        "epoch-gpqa-diamond-kimi-k3-max-m136"
+      ],
+      "status": "diagnostic_reference"
+    },
+    {
+      "benchmark_id": "critpt",
+      "domain": "math_science",
+      "family": "critpt",
+      "model_id": "claude-fable-5-max",
+      "record_ids": [
+        "epoch-critpt-claude-fable-5-max-m16"
+      ],
+      "status": "diagnostic_reference"
+    },
+    {
+      "benchmark_id": "critpt",
+      "domain": "math_science",
+      "family": "critpt",
+      "model_id": "claude-opus-5-max",
+      "record_ids": [
+        "epoch-critpt-claude-opus-5-max-m25"
+      ],
+      "status": "diagnostic_reference"
+    },
+    {
+      "benchmark_id": "critpt",
+      "domain": "math_science",
+      "family": "critpt",
+      "model_id": "glm-5.2-max",
+      "record_ids": [
+        "epoch-critpt-glm-5.2-max-m53"
+      ],
+      "status": "diagnostic_reference"
+    },
+    {
+      "benchmark_id": "critpt",
+      "domain": "math_science",
+      "family": "critpt",
+      "model_id": "gpt-5.6-sol-max",
+      "record_ids": [
+        "epoch-critpt-gpt-5.6-sol-max-m87"
+      ],
+      "status": "diagnostic_reference"
+    },
+    {
+      "benchmark_id": "critpt",
+      "domain": "math_science",
+      "family": "critpt",
+      "model_id": "kimi-k3-max",
+      "record_ids": [
+        "epoch-critpt-kimi-k3-max-m136"
+      ],
+      "status": "diagnostic_reference"
+    },
+    {
+      "benchmark_id": "aa-lcr",
+      "domain": "context_reliability",
+      "family": "aa-lcr",
+      "model_id": "claude-fable-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-lcr",
+      "domain": "context_reliability",
+      "family": "aa-lcr",
+      "model_id": "claude-opus-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-lcr",
+      "domain": "context_reliability",
+      "family": "aa-lcr",
+      "model_id": "glm-5.2-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-lcr",
+      "domain": "context_reliability",
+      "family": "aa-lcr",
+      "model_id": "gpt-5.6-sol-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-lcr",
+      "domain": "context_reliability",
+      "family": "aa-lcr",
+      "model_id": "kimi-k3-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-omniscience",
+      "domain": "context_reliability",
+      "family": "aa-omniscience",
+      "model_id": "claude-fable-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-omniscience",
+      "domain": "context_reliability",
+      "family": "aa-omniscience",
+      "model_id": "claude-opus-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-omniscience",
+      "domain": "context_reliability",
+      "family": "aa-omniscience",
+      "model_id": "glm-5.2-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-omniscience",
+      "domain": "context_reliability",
+      "family": "aa-omniscience",
+      "model_id": "gpt-5.6-sol-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "aa-omniscience",
+      "domain": "context_reliability",
+      "family": "aa-omniscience",
+      "model_id": "kimi-k3-max",
+      "record_ids": [],
+      "status": "missing"
+    }
+  ],
+  "headline_blockers": [
+    "Capability lacks ready evidence in at least 3 configured domains for every model.",
+    "No workload category has ready all-model Efficiency evidence.",
+    "No workload category has ready all-model successful-task Economics evidence.",
+    "Token tariffs cannot be converted to task cost without compatible per-attempt resource usage.",
+    "Release-window-ineligible configurations: claude-fable-5-max"
+  ],
+  "label": "real evidence gap audit; not a ranking",
+  "pilot_model_ids": [
+    "claude-fable-5-max",
+    "claude-opus-5-max",
+    "glm-5.2-max",
+    "gpt-5.6-sol-max",
+    "kimi-k3-max"
+  ],
+  "pricing_record_ids": {
+    "claude-fable-5-max": [
+      "anthropic-release-pricing-claude-fable-5-max-2026-06-09"
+    ],
+    "claude-opus-5-max": [
+      "anthropic-release-pricing-claude-opus-5-max-2026-07-24"
+    ],
+    "glm-5.2-max": [
+      "zai-release-pricing-glm-5.2-max-2026-06-16"
+    ],
+    "gpt-5.6-sol-max": [
+      "openai-release-pricing-gpt-5.6-sol-max-2026-07-09"
+    ],
+    "kimi-k3-max": [
+      "kimi-release-pricing-kimi-k3-max-2026-07-16"
+    ]
+  },
+  "workload_rows": [
+    {
+      "configured_weight": 0.25,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [
+        "deepswe-resource-summary-claude-fable-5-max-2026-08-13"
+      ],
+      "efficiency_ready_record_ids": [],
+      "model_id": "claude-fable-5-max",
+      "workload_category": "coding_agents"
+    },
+    {
+      "configured_weight": 0.25,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [
+        "deepswe-resource-summary-claude-opus-5-max-2026-08-13"
+      ],
+      "efficiency_ready_record_ids": [],
+      "model_id": "claude-opus-5-max",
+      "workload_category": "coding_agents"
+    },
+    {
+      "configured_weight": 0.25,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [
+        "deepswe-resource-summary-glm-5.2-max-2026-08-13"
+      ],
+      "efficiency_ready_record_ids": [],
+      "model_id": "glm-5.2-max",
+      "workload_category": "coding_agents"
+    },
+    {
+      "configured_weight": 0.25,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [
+        "deepswe-resource-summary-gpt-5.6-sol-max-2026-08-13"
+      ],
+      "efficiency_ready_record_ids": [],
+      "model_id": "gpt-5.6-sol-max",
+      "workload_category": "coding_agents"
+    },
+    {
+      "configured_weight": 0.25,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [
+        "deepswe-resource-summary-kimi-k3-max-2026-08-13"
+      ],
+      "efficiency_ready_record_ids": [],
+      "model_id": "kimi-k3-max",
+      "workload_category": "coding_agents"
+    },
+    {
+      "configured_weight": 0.2,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "claude-fable-5-max",
+      "workload_category": "research_analysis"
+    },
+    {
+      "configured_weight": 0.2,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "claude-opus-5-max",
+      "workload_category": "research_analysis"
+    },
+    {
+      "configured_weight": 0.2,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "glm-5.2-max",
+      "workload_category": "research_analysis"
+    },
+    {
+      "configured_weight": 0.2,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "gpt-5.6-sol-max",
+      "workload_category": "research_analysis"
+    },
+    {
+      "configured_weight": 0.2,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "kimi-k3-max",
+      "workload_category": "research_analysis"
+    },
+    {
+      "configured_weight": 0.2,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "claude-fable-5-max",
+      "workload_category": "tool_use_agents"
+    },
+    {
+      "configured_weight": 0.2,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "claude-opus-5-max",
+      "workload_category": "tool_use_agents"
+    },
+    {
+      "configured_weight": 0.2,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "glm-5.2-max",
+      "workload_category": "tool_use_agents"
+    },
+    {
+      "configured_weight": 0.2,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "gpt-5.6-sol-max",
+      "workload_category": "tool_use_agents"
+    },
+    {
+      "configured_weight": 0.2,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "kimi-k3-max",
+      "workload_category": "tool_use_agents"
+    },
+    {
+      "configured_weight": 0.15,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "claude-fable-5-max",
+      "workload_category": "browser_computer_use"
+    },
+    {
+      "configured_weight": 0.15,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "claude-opus-5-max",
+      "workload_category": "browser_computer_use"
+    },
+    {
+      "configured_weight": 0.15,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "glm-5.2-max",
+      "workload_category": "browser_computer_use"
+    },
+    {
+      "configured_weight": 0.15,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "gpt-5.6-sol-max",
+      "workload_category": "browser_computer_use"
+    },
+    {
+      "configured_weight": 0.15,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "kimi-k3-max",
+      "workload_category": "browser_computer_use"
+    },
+    {
+      "configured_weight": 0.1,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "claude-fable-5-max",
+      "workload_category": "general_interaction"
+    },
+    {
+      "configured_weight": 0.1,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "claude-opus-5-max",
+      "workload_category": "general_interaction"
+    },
+    {
+      "configured_weight": 0.1,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "glm-5.2-max",
+      "workload_category": "general_interaction"
+    },
+    {
+      "configured_weight": 0.1,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "gpt-5.6-sol-max",
+      "workload_category": "general_interaction"
+    },
+    {
+      "configured_weight": 0.1,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "kimi-k3-max",
+      "workload_category": "general_interaction"
+    },
+    {
+      "configured_weight": 0.1,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "claude-fable-5-max",
+      "workload_category": "long_horizon"
+    },
+    {
+      "configured_weight": 0.1,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "claude-opus-5-max",
+      "workload_category": "long_horizon"
+    },
+    {
+      "configured_weight": 0.1,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "glm-5.2-max",
+      "workload_category": "long_horizon"
+    },
+    {
+      "configured_weight": 0.1,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "gpt-5.6-sol-max",
+      "workload_category": "long_horizon"
+    },
+    {
+      "configured_weight": 0.1,
+      "economics_ready_record_ids": [],
+      "efficiency_diagnostic_record_ids": [],
+      "efficiency_ready_record_ids": [],
+      "model_id": "kimi-k3-max",
+      "workload_category": "long_horizon"
+    }
+  ]
+}

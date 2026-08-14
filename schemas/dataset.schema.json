@@ -1335,6 +1335,19 @@
           "default": null,
           "title": "Benchmark Version"
         },
+        "cache_write_1h_per_million": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cache Write 1H Per Million"
+        },
         "cache_write_per_million": {
           "anyOf": [
             {

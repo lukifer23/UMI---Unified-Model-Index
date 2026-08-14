@@ -14,7 +14,10 @@ from umi.schemas import (
     ExternalIndexMeasurement,
     MeasurementUncertainty,
     ModelCrosswalk,
+    ModelCrosswalkEntry,
+    PricingRecord,
     RecordStatus,
+    ReleaseClaim,
     ResultType,
     ScoringDisposition,
     SignalRole,
@@ -172,5 +175,118 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
         rejections=tuple(rejected),
         diagnostics=(
             "DeepSWE resource summaries retained as diagnostic because mean semantics are unproven",
+        ),
+    )
+
+
+def adapt_lab_release_facts(path: str | Path, crosswalk: ModelCrosswalk) -> AdaptationResult:
+    """Adapt manually reviewed facts from one official lab artifact.
+
+    Prices remain descriptive inputs. Release claims are typed diagnostic records and never
+    become benchmark measurements through this adapter.
+    """
+    raw = load_yaml(path)
+    source_id = str(raw["source_id"])
+    artifact_id = str(raw["artifact_id"])
+    source = Source.model_validate(raw["source"])
+    prices: list[PricingRecord] = []
+    claims: list[ReleaseClaim] = []
+    rejected: list[AdapterRejection] = []
+
+    def matched(source_model_id: str) -> ModelCrosswalkEntry | None:
+        match = exact_entry(crosswalk, source_id, artifact_id, source_model_id)
+        if match is None or match.canonical_model_id is None:
+            rejected.append(
+                AdapterRejection(source_row_id=source_model_id, reason="no exact crosswalk")
+            )
+            return None
+        return match
+
+    def optional_float(row: dict[str, object], key: str) -> float | None:
+        value = row.get(key)
+        return None if value is None else float(cast(float, value))
+
+    for row_value in cast(list[object], raw.get("pricing", [])):
+        row = cast(dict[str, object], row_value)
+        source_model_id = str(row["source_model_id"])
+        match = matched(source_model_id)
+        if match is None or match.canonical_model_id is None:
+            continue
+        effective = date.fromisoformat(str(row["effective_date"]))
+        prices.append(
+            PricingRecord(
+                record_id=identifier(f"{source_id}-pricing-{match.canonical_model_id}-{effective}"),
+                model_id=match.canonical_model_id,
+                effective_date=effective,
+                input_per_million=optional_float(row, "input_per_million"),
+                cached_input_per_million=optional_float(row, "cached_input_per_million"),
+                output_per_million=optional_float(row, "output_per_million"),
+                cache_write_per_million=optional_float(row, "cache_write_per_million"),
+                cache_write_1h_per_million=optional_float(row, "cache_write_1h_per_million"),
+                long_context_surcharge=cast(
+                    dict[str, float], row.get("long_context_surcharge", {})
+                ),
+                tool_costs=cast(dict[str, float], row.get("tool_costs", {})),
+                source=source,
+                result_type=ResultType.VENDOR,
+                metric_definition=str(row["metric_definition"]),
+                evaluator=source.organization,
+                raw_artifact_available=True,
+                source_artifact_id=artifact_id,
+                configuration_verified=True,
+                record_status=RecordStatus.DIAGNOSTIC_ONLY,
+                signal_role=SignalRole.ECONOMICS,
+                scoring_disposition=ScoringDisposition.DIAGNOSTIC_ONLY,
+                notes=(
+                    "Token tariff only; it cannot establish task cost without compatible "
+                    "task-level resource measurements."
+                ),
+            )
+        )
+
+    for row_value in cast(list[object], raw.get("claims", [])):
+        row = cast(dict[str, object], row_value)
+        source_model_id = str(row["source_model_id"])
+        match = matched(source_model_id)
+        if match is None or match.canonical_model_id is None:
+            continue
+        evaluated = date.fromisoformat(str(row["evaluation_date"]))
+        claims.append(
+            ReleaseClaim(
+                record_id=identifier(
+                    f"{source_id}-claim-{row['benchmark_id']}-{match.canonical_model_id}-{evaluated}"
+                ),
+                claim_text=str(row["claim_text"]),
+                model_id=match.canonical_model_id,
+                model_snapshot_id=match.canonical_model_id,
+                benchmark_id=identifier(str(row["benchmark_id"])),
+                value=float(cast(float, row["value"])),
+                unit=Unit(str(row["unit"])),
+                direction=Direction(str(row["direction"])),
+                cohort_key=identifier(str(row["cohort_key"])),
+                evaluation_date=evaluated,
+                source=source,
+                result_type=ResultType.VENDOR,
+                benchmark_version=identifier(str(row["benchmark_id"])),
+                harness_version=str(row["cohort_key"]),
+                metric_definition="Literal numeric result published in an official lab release",
+                evaluator=source.organization,
+                raw_artifact_available=True,
+                source_artifact_id=artifact_id,
+                configuration_verified=True,
+                record_status=RecordStatus.DIAGNOSTIC_ONLY,
+                signal_role=SignalRole.REFERENCE,
+                scoring_disposition=ScoringDisposition.DIAGNOSTIC_ONLY,
+            )
+        )
+    return AdaptationResult(
+        source_id=source_id,
+        adapter_id="lab-release-reviewed-facts-v1",
+        pricing=tuple(prices),
+        release_claims=tuple(claims),
+        rejections=tuple(rejected),
+        diagnostics=(
+            "Pricing cannot establish workload economics without compatible resource usage",
+            "Vendor release claims are diagnostic and require exact independent reproduction",
         ),
     )

@@ -10,18 +10,22 @@ from pydantic import TypeAdapter
 
 from analysis.claims import calibrate_release_claims
 from analysis.compare import common_capability_comparison
+from analysis.gaps import pilot_gap_report
 from analysis.uncertainty import source_bound_capability_sensitivity
 from umi.adapters import (
     adapt_aa_facts,
     adapt_arena_json,
     adapt_deepswe_facts,
     adapt_epoch_csv,
+    adapt_lab_release_facts,
     assemble_pilot_dataset,
 )
 from umi.config import load_project_config
 from umi.loading import load_model_crosswalk, load_source_registry
 from umi.schemas import ModelConfiguration, ScoringDisposition
 from umi.scoring import score_dataset
+from umi.source_policy import source_readiness_matrix, validate_crosswalk
+from umi.validation import validate_dataset, validate_source_registry
 
 ROOT = Path(__file__).parents[1]
 SOURCE_ROOT = ROOT / "data" / "sources" / "v0.3"
@@ -72,6 +76,15 @@ def main() -> None:
         adapt_deepswe_facts(
             SOURCE_ROOT / "deepswe-reviewed-facts-2026-08-13.yaml", crosswalk
         ),
+        *(
+            adapt_lab_release_facts(SOURCE_ROOT / filename, crosswalk)
+            for filename in (
+                "anthropic-release-facts-2026-08-14.yaml",
+                "openai-release-facts-2026-08-14.yaml",
+                "kimi-release-facts-2026-08-14.yaml",
+                "zai-release-facts-2026-08-14.yaml",
+            )
+        ),
     )
     dataset = assemble_pilot_dataset(models, results)
     relevant_ids = {entry.source_artifact_id for entry in crosswalk.entries}
@@ -100,7 +113,22 @@ def main() -> None:
         ],
         "accepted_scoring_records": scored_records,
     }
-    adapter_versions = tuple(sorted({item.adapter_id for item in results}))
+    adapter_versions = tuple(
+        sorted(
+            {
+                item.adapter_id
+                for item in results
+                if any(
+                    record.scoring_disposition == ScoringDisposition.SCORED
+                    for record in (
+                        *item.benchmarks,
+                        *item.efficiency,
+                        *item.task_economics,
+                    )
+                )
+            }
+        )
+    )
     dataset = dataset.model_copy(
         update={
             "scored_audit_fingerprint": _hash(scored_payload),
@@ -115,6 +143,7 @@ def main() -> None:
     _write_yaml(RAW_ROOT / "task_efficiency.yaml", "measurements", dataset.efficiency)
     _write_yaml(RAW_ROOT / "task_economics.yaml", "measurements", dataset.task_economics)
     _write_yaml(RAW_ROOT / "external_indexes.yaml", "measurements", dataset.external_indexes)
+    _write_yaml(RAW_ROOT / "release_claims.yaml", "claims", dataset.release_claims)
     (RAW_ROOT / "audit.yaml").write_text(
         yaml.safe_dump(
             {
@@ -136,6 +165,23 @@ def main() -> None:
         json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     config = load_project_config(ROOT / "config")
+    data_report = validate_dataset(dataset, config)
+    registry_report = validate_source_registry(
+        registry, ROOT / "data" / "sources" / "registry.yaml", dataset
+    )
+    crosswalk_report = validate_crosswalk(crosswalk, dataset, registry)
+    source_report = {
+        "schema_valid": data_report.schema_valid and not registry_report.errors,
+        "crosswalk_valid": crosswalk_report.valid,
+        "source_errors": list(registry_report.errors),
+        "crosswalk_errors": list(crosswalk_report.errors),
+        "readiness": [
+            item.model_dump(mode="json") for item in source_readiness_matrix(dataset)
+        ],
+    }
+    (PROCESSED_ROOT / "source-readiness.json").write_text(
+        json.dumps(source_report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
     estimates = [item.model_dump(mode="json") for item in score_dataset(dataset, config)]
     (PROCESSED_ROOT / "model-specific-partial-estimates.json").write_text(
         json.dumps(estimates, indent=2, sort_keys=True) + "\n", encoding="utf-8"
@@ -149,6 +195,10 @@ def main() -> None:
     )
     (PROCESSED_ROOT / "release-claim-calibration.json").write_text(
         json.dumps(calibrate_release_claims(dataset), indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    (PROCESSED_ROOT / "pilot-gap-report.json").write_text(
+        json.dumps(pilot_gap_report(dataset, config), indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
     five_models = tuple(model.id for model in models)

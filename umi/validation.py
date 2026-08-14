@@ -72,6 +72,7 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
         *dataset.efficiency,
         *dataset.task_economics,
         *dataset.external_indexes,
+        *dataset.release_claims,
     ]
     for record_id in sorted(_duplicates([item.record_id for item in provenance])):
         errors.append(f"duplicate record id: {record_id}")
@@ -109,6 +110,18 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
         if record.model_snapshot_id != model.snapshot_id:
             errors.append(
                 f"record {record.record_id} snapshot does not match model {record.model_id}"
+            )
+    for claim in dataset.release_claims:
+        if claim.model_id not in model_ids:
+            errors.append(f"record {claim.record_id} has unknown model: {claim.model_id}")
+            continue
+        if claim.benchmark_id not in benchmark_ids:
+            errors.append(
+                f"release claim {claim.record_id} has unknown benchmark: {claim.benchmark_id}"
+            )
+        if claim.model_snapshot_id != models[claim.model_id].snapshot_id:
+            errors.append(
+                f"record {claim.record_id} snapshot does not match model {claim.model_id}"
             )
 
     if family_ids != {definition.family for definition in config.benchmarks}:
@@ -234,6 +247,7 @@ def validate_source_registry(
             *dataset.efficiency,
             *dataset.task_economics,
             *dataset.external_indexes,
+            *dataset.release_claims,
         )
         for record in records:
             if record.source_artifact_id and record.source_artifact_id not in registry_ids:

@@ -261,6 +261,7 @@ class PricingRecord(Provenance):
     cached_input_per_million: NonNegative | None = None
     output_per_million: NonNegative | None = None
     cache_write_per_million: NonNegative | None = None
+    cache_write_1h_per_million: NonNegative | None = None
     reasoning_token_pricing: NonNegative | None = None
     long_context_surcharge: dict[str, NonNegative] = Field(default_factory=dict)
     tool_costs: dict[str, NonNegative] = Field(default_factory=dict)
@@ -272,6 +273,7 @@ class PricingRecord(Provenance):
             self.cached_input_per_million,
             self.output_per_million,
             self.cache_write_per_million,
+            self.cache_write_1h_per_million,
             self.reasoning_token_pricing,
         )
         if not any(value is not None for value in scalar) and not (

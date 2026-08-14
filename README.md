@@ -31,11 +31,14 @@ the package-level verification.
 All adapters are pure and offline. Acquisition is separate; the committed build reads only frozen
 artifacts.
 
-`scripts/freeze_v03_open_sources.py --accept-network` is the explicit acquisition path for Epoch and
-Arena. It is never called by ingestion or scoring. AA and DeepSWE remain reviewed-fact inputs.
+`uv run --no-sync python scripts/freeze_v03_open_sources.py --accept-network --snapshot-id ID` is the explicit,
+non-overwriting acquisition path for Epoch and Arena. It writes a checksum manifest to a fresh
+snapshot directory and is never called by ingestion or scoring. Arena acquisition freezes the
+revision-addressed raw Parquet files; promotion into adapter input is a separate reviewed step.
+AA, DeepSWE, and lab releases remain reviewed-fact inputs.
 
 ```bash
-uv run --no-sync python scripts/build_v03_pilot.py
+uv run --no-sync python -m scripts.build_v03_pilot
 uv run --no-sync umi sources validate --data-dir data/pilots/v0.3/raw
 uv run --no-sync umi crosswalk
 uv run --no-sync umi overlap
@@ -44,6 +47,10 @@ uv run --no-sync umi ingest --source epoch
 uv run --no-sync umi ingest --source arena-agent
 uv run --no-sync umi ingest --source arena-text
 uv run --no-sync umi ingest --source deepswe
+uv run --no-sync umi ingest --source lab-anthropic
+uv run --no-sync umi ingest --source lab-openai
+uv run --no-sync umi ingest --source lab-kimi
+uv run --no-sync umi ingest --source lab-zai
 uv run --no-sync umi estimates --data-dir data/pilots/v0.3/raw
 uv run --no-sync umi compare --data-dir data/pilots/v0.3/raw --models claude-fable-5-max claude-opus-5-max glm-5.2-max gpt-5.6-sol-max kimi-k3-max
 uv run --no-sync umi compare --data-dir data/pilots/v0.3/raw --models claude-opus-5-max kimi-k3-max glm-5.2-max
@@ -51,6 +58,8 @@ uv run --no-sync umi uncertainty --data-dir data/pilots/v0.3/raw
 uv run --no-sync umi pilot-sensitivity --data-dir data/pilots/v0.3/raw
 uv run --no-sync umi correlations --data-dir data/pilots/v0.3/raw
 uv run --no-sync umi pareto --data-dir data/pilots/v0.3/raw
+uv run --no-sync umi claims --data-dir data/pilots/v0.3/raw
+uv run --no-sync umi gaps --data-dir data/pilots/v0.3/raw
 ```
 
 Every model-specific output is labeled `real evidence — model-specific partial estimate`; it is

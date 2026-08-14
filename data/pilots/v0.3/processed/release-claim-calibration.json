@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "claim_record_id": "openai-release-claim-deepswe-v1.1-gpt-5.6-sol-max-2026-07-09",
+    "status": "not_comparable"
+  },
+  {
+    "claim_record_id": "openai-release-claim-gdpval-aa-v2-gpt-5.6-sol-max-2026-07-09",
+    "status": "not_comparable"
+  },
+  {
+    "claim_record_id": "openai-release-claim-gpqa-diamond-gpt-5.6-sol-max-2026-07-09",
+    "status": "not_comparable"
+  },
+  {
+    "claim_record_id": "openai-release-claim-terminalbench-2.1-gpt-5.6-sol-max-2026-07-09",
+    "status": "not_comparable"
+  }
+]

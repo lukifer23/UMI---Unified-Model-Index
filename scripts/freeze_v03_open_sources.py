@@ -1,19 +1,39 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
-import urllib.parse
+import time
 import urllib.request
 from pathlib import Path
+from typing import cast
+from urllib.error import HTTPError, URLError
 
 ROOT = Path(__file__).parents[1]
-DESTINATION = ROOT / "data" / "sources" / "v0.3"
 ARENA_REVISION = "08dd89df7a8aa9df2ead3799f6422af4ad2e97a7"
 
 
+def _read_url(url: str, *, attempts: int = 3) -> bytes:
+    request = urllib.request.Request(url, headers={"User-Agent": "UMI-acquisition/0.3.1"})
+    for attempt in range(attempts):
+        try:
+            with urllib.request.urlopen(  # noqa: S310 - explicit acquisition script
+                request, timeout=30
+            ) as response:
+                return cast(bytes, response.read())
+        except (HTTPError, URLError):
+            if attempt + 1 == attempts:
+                raise
+            time.sleep(2**attempt)
+    raise RuntimeError("unreachable acquisition retry state")
+
+
 def _download(url: str, destination: Path) -> None:
-    with urllib.request.urlopen(url) as response:  # noqa: S310 - explicit acquisition script
-        destination.write_bytes(response.read())
+    destination.write_bytes(_read_url(url))
+
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def main() -> None:
@@ -23,34 +43,58 @@ def main() -> None:
         action="store_true",
         help="Required acknowledgement that this acquisition script performs HTTP requests",
     )
+    parser.add_argument(
+        "--snapshot-id",
+        required=True,
+        help="Stable caller-supplied snapshot ID; timestamps are never generated implicitly",
+    )
+    parser.add_argument(
+        "--destination",
+        type=Path,
+        help="Fresh output directory; defaults to data/sources/acquisitions/SNAPSHOT_ID",
+    )
     args = parser.parse_args()
     if not args.accept_network:
         parser.error("--accept-network is required")
-    DESTINATION.mkdir(parents=True, exist_ok=True)
-    _download(
-        "https://epoch.ai/data/eci_benchmarks.csv",
-        DESTINATION / "epoch-eci-benchmarks-2026-08-14.csv",
+    destination = args.destination or ROOT / "data" / "sources" / "acquisitions" / args.snapshot_id
+    destination.mkdir(parents=True, exist_ok=False)
+    epoch_url = "https://epoch.ai/data/eci_benchmarks.csv"
+    epoch_path = destination / "epoch-eci-benchmarks.csv"
+    _download(epoch_url, epoch_path)
+    artifacts: list[dict[str, object]] = [
+        {"path": epoch_path.name, "url": epoch_url, "sha256": _sha256(epoch_path)}
+    ]
+    arena_base = (
+        "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset/resolve/"
+        f"{ARENA_REVISION}"
     )
-    endpoint = "https://datasets-server.huggingface.co/rows"
-    for subset, output in (
-        ("agent", "arena-agent-2026-08-14.json"),
-        ("text_style_control", "arena-text-style-control-2026-08-14.json"),
+    for source_path, output in (
+        ("agent/latest-00000-of-00001.parquet", "arena-agent-latest.parquet"),
+        (
+            "text_style_control/latest-00000-of-00001.parquet",
+            "arena-text-style-control-latest.parquet",
+        ),
     ):
-        query = urllib.parse.urlencode(
+        url = f"{arena_base}/{source_path}?download=true"
+        output_path = destination / output
+        _download(url, output_path)
+        artifacts.append(
             {
-                "dataset": "lmarena-ai/leaderboard-dataset",
-                "config": subset,
-                "split": "train",
-                "offset": 0,
-                "length": 100,
-                "revision": ARENA_REVISION,
+                "path": output_path.name,
+                "url": url,
+                "upstream_revision": ARENA_REVISION,
+                "sha256": _sha256(output_path),
             }
         )
-        with urllib.request.urlopen(f"{endpoint}?{query}") as response:  # noqa: S310
-            payload = json.loads(response.read())
-        (DESTINATION / output).write_text(
-            json.dumps(payload, separators=(",", ":")), encoding="utf-8"
+    (destination / "manifest.json").write_text(
+        json.dumps(
+            {"snapshot_id": args.snapshot_id, "artifacts": artifacts},
+            indent=2,
+            sort_keys=True,
         )
+        + "\n",
+        encoding="utf-8",
+    )
 
 
 if __name__ == "__main__":

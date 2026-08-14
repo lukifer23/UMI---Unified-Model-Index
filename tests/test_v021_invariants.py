@@ -199,6 +199,18 @@ def test_scored_fingerprint_excludes_diagnostics_but_tracks_scoring_context(
     )
     assert scored_data_fingerprint(changed_diagnostic, config) == fingerprint
 
+    changed_model_metadata = baseline.model_copy(
+        update={
+            "models": (
+                baseline.models[0].model_copy(
+                    update={"source_snapshot_ids": ("diagnostic-only-artifact",)}
+                ),
+                *baseline.models[1:],
+            )
+        }
+    )
+    assert scored_data_fingerprint(changed_model_metadata, config) == fingerprint
+
     changed_record = baseline.benchmarks[0].model_copy(
         update={"value": baseline.benchmarks[0].value + 1}
     )

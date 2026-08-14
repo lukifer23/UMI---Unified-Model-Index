@@ -61,7 +61,7 @@
     "capability_domains": [
       "software_engineering"
     ],
-    "cohort_id": "042862d029988e48",
+    "cohort_id": "905aed44e858c7ff",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -110,7 +110,7 @@
       "source_organization_count": 1
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "9da2d68e3c43eb59efc0df51483d784aa6a74d3bdfdf41630eb42459552edb35",
+    "dataset_fingerprint": "30ef2e5e1fdeefd94b14c53029d64719837b4b5207a7ce424f5b55af4239707b",
     "diagnostics": [
       "model release date is outside the configured eligibility window",
       "not eligible for headline Overall ranking",
@@ -195,7 +195,7 @@
     "release_date": "2026-06-09",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "042862d029988e4824fb0bd2faabfdab362a8e925c580bbdd30eda0161b9faa6",
+    "scored_data_fingerprint": "905aed44e858c7ff69e7348da5c6c51f0966e177bc7c1f62437964d36f2cc7af",
     "scoring_ready": true,
     "source_record_ids": [
       "deepswe-score-claude-fable-5-max-2026-08-13"
@@ -269,7 +269,7 @@
     "capability_domains": [
       "software_engineering"
     ],
-    "cohort_id": "042862d029988e48",
+    "cohort_id": "905aed44e858c7ff",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -318,7 +318,7 @@
       "source_organization_count": 1
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "9da2d68e3c43eb59efc0df51483d784aa6a74d3bdfdf41630eb42459552edb35",
+    "dataset_fingerprint": "30ef2e5e1fdeefd94b14c53029d64719837b4b5207a7ce424f5b55af4239707b",
     "diagnostics": [
       "not eligible for headline Overall ranking",
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
@@ -402,7 +402,7 @@
     "release_date": "2026-07-24",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "042862d029988e4824fb0bd2faabfdab362a8e925c580bbdd30eda0161b9faa6",
+    "scored_data_fingerprint": "905aed44e858c7ff69e7348da5c6c51f0966e177bc7c1f62437964d36f2cc7af",
     "scoring_ready": true,
     "source_record_ids": [
       "deepswe-score-claude-opus-5-max-2026-08-13"
@@ -476,7 +476,7 @@
     "capability_domains": [
       "software_engineering"
     ],
-    "cohort_id": "042862d029988e48",
+    "cohort_id": "905aed44e858c7ff",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -525,7 +525,7 @@
       "source_organization_count": 1
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "9da2d68e3c43eb59efc0df51483d784aa6a74d3bdfdf41630eb42459552edb35",
+    "dataset_fingerprint": "30ef2e5e1fdeefd94b14c53029d64719837b4b5207a7ce424f5b55af4239707b",
     "diagnostics": [
       "not eligible for headline Overall ranking",
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
@@ -609,7 +609,7 @@
     "release_date": "2026-06-16",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "042862d029988e4824fb0bd2faabfdab362a8e925c580bbdd30eda0161b9faa6",
+    "scored_data_fingerprint": "905aed44e858c7ff69e7348da5c6c51f0966e177bc7c1f62437964d36f2cc7af",
     "scoring_ready": true,
     "source_record_ids": [
       "deepswe-score-glm-5.2-max-2026-08-13"
@@ -683,7 +683,7 @@
     "capability_domains": [
       "software_engineering"
     ],
-    "cohort_id": "042862d029988e48",
+    "cohort_id": "905aed44e858c7ff",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -732,7 +732,7 @@
       "source_organization_count": 1
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "9da2d68e3c43eb59efc0df51483d784aa6a74d3bdfdf41630eb42459552edb35",
+    "dataset_fingerprint": "30ef2e5e1fdeefd94b14c53029d64719837b4b5207a7ce424f5b55af4239707b",
     "diagnostics": [
       "not eligible for headline Overall ranking",
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
@@ -816,7 +816,7 @@
     "release_date": "2026-07-09",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "042862d029988e4824fb0bd2faabfdab362a8e925c580bbdd30eda0161b9faa6",
+    "scored_data_fingerprint": "905aed44e858c7ff69e7348da5c6c51f0966e177bc7c1f62437964d36f2cc7af",
     "scoring_ready": true,
     "source_record_ids": [
       "deepswe-score-gpt-5.6-sol-max-2026-08-13"
@@ -890,7 +890,7 @@
     "capability_domains": [
       "software_engineering"
     ],
-    "cohort_id": "042862d029988e48",
+    "cohort_id": "905aed44e858c7ff",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -939,7 +939,7 @@
       "source_organization_count": 1
     },
     "data_as_of": "2026-08-13",
-    "dataset_fingerprint": "9da2d68e3c43eb59efc0df51483d784aa6a74d3bdfdf41630eb42459552edb35",
+    "dataset_fingerprint": "30ef2e5e1fdeefd94b14c53029d64719837b4b5207a7ce424f5b55af4239707b",
     "diagnostics": [
       "not eligible for headline Overall ranking",
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
@@ -1023,7 +1023,7 @@
     "release_date": "2026-07-16",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "042862d029988e4824fb0bd2faabfdab362a8e925c580bbdd30eda0161b9faa6",
+    "scored_data_fingerprint": "905aed44e858c7ff69e7348da5c6c51f0966e177bc7c1f62437964d36f2cc7af",
     "scoring_ready": true,
     "source_record_ids": [
       "deepswe-score-kimi-k3-max-2026-08-13"

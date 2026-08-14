@@ -1,1 +1,132 @@
-pricing: []
+pricing:
+- record_id: anthropic-release-pricing-claude-opus-5-max-2026-07-24
+  source:
+    organization: Anthropic
+    url: https://platform.claude.com/docs/en/about-claude/pricing
+    accessed: '2026-08-14'
+  result_type: vendor_reported
+  metric_definition: Claude API USD prices per million tokens; cache write is the
+    5-minute rate
+  notes: Token tariff only; it cannot establish task cost without compatible task-level
+    resource measurements.
+  evaluator: Anthropic
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: diagnostic_only
+  source_artifact_id: anthropic-release-facts-2026-08-14
+  signal_role: economics
+  scoring_disposition: diagnostic_only
+  model_id: claude-opus-5-max
+  currency: USD
+  effective_date: '2026-07-24'
+  input_per_million: 5.0
+  cached_input_per_million: 0.5
+  output_per_million: 25.0
+  cache_write_per_million: 6.25
+  cache_write_1h_per_million: 10.0
+  long_context_surcharge: {}
+  tool_costs: {}
+- record_id: anthropic-release-pricing-claude-fable-5-max-2026-06-09
+  source:
+    organization: Anthropic
+    url: https://platform.claude.com/docs/en/about-claude/pricing
+    accessed: '2026-08-14'
+  result_type: vendor_reported
+  metric_definition: Claude API USD prices per million tokens; cache write is the
+    5-minute rate
+  notes: Token tariff only; it cannot establish task cost without compatible task-level
+    resource measurements.
+  evaluator: Anthropic
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: diagnostic_only
+  source_artifact_id: anthropic-release-facts-2026-08-14
+  signal_role: economics
+  scoring_disposition: diagnostic_only
+  model_id: claude-fable-5-max
+  currency: USD
+  effective_date: '2026-06-09'
+  input_per_million: 10.0
+  cached_input_per_million: 1.0
+  output_per_million: 50.0
+  cache_write_per_million: 12.5
+  cache_write_1h_per_million: 20.0
+  long_context_surcharge: {}
+  tool_costs: {}
+- record_id: openai-release-pricing-gpt-5.6-sol-max-2026-07-09
+  source:
+    organization: OpenAI
+    url: https://openai.com/index/gpt-5-6/
+    accessed: '2026-08-14'
+  result_type: vendor_reported
+  metric_definition: OpenAI API USD prices per million tokens for GPT-5.6 Sol
+  notes: Token tariff only; it cannot establish task cost without compatible task-level
+    resource measurements.
+  evaluator: OpenAI
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: diagnostic_only
+  source_artifact_id: openai-release-facts-2026-08-14
+  signal_role: economics
+  scoring_disposition: diagnostic_only
+  model_id: gpt-5.6-sol-max
+  currency: USD
+  effective_date: '2026-07-09'
+  input_per_million: 5.0
+  cached_input_per_million: 0.5
+  output_per_million: 30.0
+  cache_write_per_million: 6.25
+  long_context_surcharge:
+    threshold_input_tokens: 272000.0
+    input_multiplier: 2.0
+    output_multiplier: 1.5
+  tool_costs: {}
+- record_id: kimi-release-pricing-kimi-k3-max-2026-07-16
+  source:
+    organization: Moonshot AI
+    url: https://www.kimi.com/blog/kimi-k3
+    accessed: '2026-08-14'
+  result_type: vendor_reported
+  metric_definition: Official Kimi API USD prices per million tokens
+  notes: Token tariff only; it cannot establish task cost without compatible task-level
+    resource measurements.
+  evaluator: Moonshot AI
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: diagnostic_only
+  source_artifact_id: kimi-release-facts-2026-08-14
+  signal_role: economics
+  scoring_disposition: diagnostic_only
+  model_id: kimi-k3-max
+  currency: USD
+  effective_date: '2026-07-16'
+  input_per_million: 3.0
+  cached_input_per_million: 0.3
+  output_per_million: 15.0
+  long_context_surcharge: {}
+  tool_costs: {}
+- record_id: zai-release-pricing-glm-5.2-max-2026-06-16
+  source:
+    organization: Z.ai
+    url: https://docs.z.ai/guides/overview/pricing
+    accessed: '2026-08-14'
+  result_type: vendor_reported
+  metric_definition: Z.ai API USD prices per million tokens and published tool fee
+  notes: Token tariff only; it cannot establish task cost without compatible task-level
+    resource measurements.
+  evaluator: Z.ai
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: diagnostic_only
+  source_artifact_id: zai-release-facts-2026-08-14
+  signal_role: economics
+  scoring_disposition: diagnostic_only
+  model_id: glm-5.2-max
+  currency: USD
+  effective_date: '2026-06-16'
+  input_per_million: 1.4
+  cached_input_per_million: 0.26
+  output_per_million: 4.4
+  long_context_surcharge: {}
+  tool_costs:
+    web_search_per_use: 0.01

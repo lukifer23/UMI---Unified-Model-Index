@@ -43,27 +43,33 @@
       "source_artifact_id": "aa-public-facts-2026-08-14"
     },
     {
-      "disposition": "scored",
-      "failures": [],
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
       "model_id": "claude-opus-5-max",
       "record_id": "arena-agent-claude-opus-5-max-2026-08-12",
-      "scoring_ready": true,
+      "scoring_ready": false,
       "source_artifact_id": "arena-agent-2026-08-14"
     },
     {
-      "disposition": "scored",
-      "failures": [],
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
       "model_id": "glm-5.2-max",
       "record_id": "arena-agent-glm-5.2-max-2026-08-12",
-      "scoring_ready": true,
+      "scoring_ready": false,
       "source_artifact_id": "arena-agent-2026-08-14"
     },
     {
-      "disposition": "scored",
-      "failures": [],
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
       "model_id": "kimi-k3-max",
       "record_id": "arena-agent-kimi-k3-max-2026-08-12",
-      "scoring_ready": true,
+      "scoring_ready": false,
       "source_artifact_id": "arena-agent-2026-08-14"
     },
     {

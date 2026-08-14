@@ -97,6 +97,18 @@ headline eligibility. Any future use of vendor-reported atomic measurements rema
 ordinary provenance-tier and readiness rules and must be ingested as a separately typed
 measurement with an explicit overlap decision.
 
+Official token tariffs are also frozen as descriptive evidence. A pricing record may preserve
+uncached input, cached input, five-minute cache-write, one-hour cache-write, output, long-context
+multiplier, and per-tool fees when the source publishes them. A missing tariff field is unknown,
+not zero. Model-level tariffs do not establish task Economics: UMI requires compatible observed
+per-attempt resource use and success before deriving cost per successful task. Tariffs and release
+claims change the complete audit fingerprint but not the scored fingerprint unless a future,
+documented scoring rule explicitly consumes them.
+
+Descriptive model notes and diagnostic `source_snapshot_ids` are excluded from the scored
+fingerprint and retained in the complete audit fingerprint. Otherwise adding a citation to an
+unchanged scored configuration would falsely create a new scoring cohort.
+
 ## Identity and compatibility cohorts
 
 A benchmark comparison series is `(benchmark_id, cohort_key)`. A workload comparison series is

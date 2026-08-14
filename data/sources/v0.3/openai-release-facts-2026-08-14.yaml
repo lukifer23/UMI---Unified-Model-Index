@@ -1,0 +1,52 @@
+source_id: openai-release
+artifact_id: openai-release-facts-2026-08-14
+as_of: 2026-08-14
+source:
+  organization: OpenAI
+  url: https://openai.com/index/gpt-5-6/
+  accessed: 2026-08-14
+pricing:
+  - source_model_id: GPT-5.6 Sol (Max)
+    effective_date: 2026-07-09
+    input_per_million: 5.00
+    cached_input_per_million: 0.50
+    cache_write_per_million: 6.25
+    output_per_million: 30.00
+    long_context_surcharge:
+      threshold_input_tokens: 272000
+      input_multiplier: 2.0
+      output_multiplier: 1.5
+    metric_definition: OpenAI API USD prices per million tokens for GPT-5.6 Sol
+claims:
+  - source_model_id: GPT-5.6 Sol (Max)
+    benchmark_id: deepswe-v1.1
+    value: 72.7
+    unit: percent
+    direction: higher
+    cohort_key: openai-release-deepswe-v1.1-codex-max-2026-07-09
+    evaluation_date: 2026-07-09
+    claim_text: GPT-5.6 Sol scored 72.7% on DeepSWE v1.1.
+  - source_model_id: GPT-5.6 Sol (Max)
+    benchmark_id: terminalbench-2.1
+    value: 88.8
+    unit: percent
+    direction: higher
+    cohort_key: openai-release-terminalbench-2.1-codex-max-2026-07-09
+    evaluation_date: 2026-07-09
+    claim_text: GPT-5.6 Sol scored 88.8% on Terminal-Bench 2.1.
+  - source_model_id: GPT-5.6 Sol (Max)
+    benchmark_id: gdpval-aa-v2
+    value: 1747.8
+    unit: score
+    direction: higher
+    cohort_key: openai-release-gdpval-aa-v2-max-2026-07-09
+    evaluation_date: 2026-07-09
+    claim_text: GPT-5.6 Sol scored 1747.8 Elo on GDPval-AA v2.
+  - source_model_id: GPT-5.6 Sol (Max)
+    benchmark_id: gpqa-diamond
+    value: 94.6
+    unit: percent
+    direction: higher
+    cohort_key: openai-release-gpqa-diamond-max-2026-07-09
+    evaluation_date: 2026-07-09
+    claim_text: GPT-5.6 Sol scored 94.6% on GPQA Diamond.

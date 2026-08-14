@@ -8,6 +8,8 @@ from umi.schemas import (
     EfficiencyMeasurement,
     ExternalIndexMeasurement,
     ModelConfiguration,
+    PricingRecord,
+    ReleaseClaim,
     TaskEconomicsMeasurement,
 )
 
@@ -28,6 +30,8 @@ class AdaptationResult(AdapterModel):
     efficiency: tuple[EfficiencyMeasurement, ...] = ()
     task_economics: tuple[TaskEconomicsMeasurement, ...] = ()
     external_indexes: tuple[ExternalIndexMeasurement, ...] = ()
+    pricing: tuple[PricingRecord, ...] = ()
+    release_claims: tuple[ReleaseClaim, ...] = ()
     rejections: tuple[AdapterRejection, ...] = ()
     diagnostics: tuple[str, ...] = ()
 
@@ -38,8 +42,9 @@ def assemble_pilot_dataset(
     return Dataset(
         models=models,
         benchmarks=tuple(item for result in results for item in result.benchmarks),
-        pricing=(),
+        pricing=tuple(item for result in results for item in result.pricing),
         efficiency=tuple(item for result in results for item in result.efficiency),
         task_economics=tuple(item for result in results for item in result.task_economics),
         external_indexes=tuple(item for result in results for item in result.external_indexes),
+        release_claims=tuple(item for result in results for item in result.release_claims),
     )

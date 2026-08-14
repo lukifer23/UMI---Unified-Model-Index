@@ -14,6 +14,7 @@ from pydantic import BaseModel, ValidationError
 from analysis.claims import calibrate_release_claims
 from analysis.compare import common_capability_comparison
 from analysis.correlations import benchmark_correlations
+from analysis.gaps import pilot_gap_report
 from analysis.pareto_metrics import pareto_dimensions
 from analysis.pilot_sensitivity import analyze_pilot_sensitivity
 from analysis.rankings import rank_results
@@ -26,6 +27,7 @@ from umi.adapters import (
     adapt_arena_json,
     adapt_deepswe_facts,
     adapt_epoch_csv,
+    adapt_lab_release_facts,
 )
 from umi.config import load_project_config
 from umi.loading import load_dataset, load_model_crosswalk, load_source_registry
@@ -121,6 +123,7 @@ def build_parser() -> argparse.ArgumentParser:
         "compare",
         "uncertainty",
         "claims",
+        "gaps",
     ):
         child = subparsers.add_parser(command)
         _add_common(child)
@@ -141,7 +144,17 @@ def build_parser() -> argparse.ArgumentParser:
     ingest.add_argument(
         "--source",
         required=True,
-        choices=("aa", "epoch", "arena-agent", "arena-text", "deepswe"),
+        choices=(
+            "aa",
+            "epoch",
+            "arena-agent",
+            "arena-text",
+            "deepswe",
+            "lab-anthropic",
+            "lab-openai",
+            "lab-kimi",
+            "lab-zai",
+        ),
     )
     ingest.add_argument("--artifact")
     ingest.add_argument("--crosswalk", default="data/sources/v0.3/crosswalk.yaml")
@@ -171,6 +184,10 @@ def _adapt_source(args: argparse.Namespace) -> Any:
         "arena-agent": root / "arena-agent-2026-08-14.json",
         "arena-text": root / "arena-text-style-control-2026-08-14.json",
         "deepswe": root / "deepswe-reviewed-facts-2026-08-13.yaml",
+        "lab-anthropic": root / "anthropic-release-facts-2026-08-14.yaml",
+        "lab-openai": root / "openai-release-facts-2026-08-14.yaml",
+        "lab-kimi": root / "kimi-release-facts-2026-08-14.yaml",
+        "lab-zai": root / "zai-release-facts-2026-08-14.yaml",
     }
     artifact = Path(args.artifact) if args.artifact else defaults[args.source]
     if args.source == "aa":
@@ -191,6 +208,8 @@ def _adapt_source(args: argparse.Namespace) -> Any:
             upstream_revision="08dd89df7a8aa9df2ead3799f6422af4ad2e97a7",
             subset="agent" if args.source == "arena-agent" else "text_style_control",
         )
+    if args.source.startswith("lab-"):
+        return adapt_lab_release_facts(artifact, crosswalk)
     return adapt_deepswe_facts(artifact, crosswalk)
 
 
@@ -273,6 +292,8 @@ def run(args: argparse.Namespace) -> int:
         payload = source_bound_capability_sensitivity(dataset, config)
     elif args.command == "claims":
         payload = calibrate_release_claims(dataset)
+    elif args.command == "gaps":
+        payload = pilot_gap_report(dataset, config)
     elif args.command == "rank":
         ranked = rank_results(results, eligible_only=not args.include_provisional)
         payload = [{"rank": item.rank, **item.result.model_dump(mode="json")} for item in ranked]

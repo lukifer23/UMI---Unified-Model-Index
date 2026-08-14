@@ -1,0 +1,24 @@
+source_id: anthropic-release
+artifact_id: anthropic-release-facts-2026-08-14
+as_of: 2026-08-14
+source:
+  organization: Anthropic
+  url: https://platform.claude.com/docs/en/about-claude/pricing
+  accessed: 2026-08-14
+pricing:
+  - source_model_id: Claude Opus 5 (Max)
+    effective_date: 2026-07-24
+    input_per_million: 5.00
+    cached_input_per_million: 0.50
+    cache_write_per_million: 6.25
+    cache_write_1h_per_million: 10.00
+    output_per_million: 25.00
+    metric_definition: Claude API USD prices per million tokens; cache write is the 5-minute rate
+  - source_model_id: Claude Fable 5 (Max)
+    effective_date: 2026-06-09
+    input_per_million: 10.00
+    cached_input_per_million: 1.00
+    cache_write_per_million: 12.50
+    cache_write_1h_per_million: 20.00
+    output_per_million: 50.00
+    metric_definition: Claude API USD prices per million tokens; cache write is the 5-minute rate

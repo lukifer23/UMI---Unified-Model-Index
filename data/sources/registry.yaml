@@ -1,4 +1,74 @@
 snapshots:
+  - id: anthropic-release-facts-2026-08-14
+    title: Anthropic official release and pricing facts for pilot models
+    source:
+      organization: Anthropic
+      url: https://platform.claude.com/docs/en/about-claude/pricing
+      accessed: 2026-08-14
+    as_of: 2026-08-14
+    artifact_path: v0.3/anthropic-release-facts-2026-08-14.yaml
+    artifact_sha256: e106046e8ad755d15bbe42d91829b9ce9418548f63f4c1872c8278df0c0f9163
+    content_type: application/yaml
+    upstream_revision: reviewed-2026-08-14
+    adapter_id: lab-release-reviewed-facts-v1
+    license_id: terms-governed-no-redistribution-assumed
+    license_url: https://www.anthropic.com/legal/consumer-terms
+    attribution: Facts reviewed from official Anthropic release and platform documentation
+    redistribution_scope: facts_only
+    notes: Factual transcription only; no page copy or chart artwork is redistributed.
+  - id: openai-release-facts-2026-08-14
+    title: OpenAI official GPT-5.6 release facts
+    source:
+      organization: OpenAI
+      url: https://openai.com/index/gpt-5-6/
+      accessed: 2026-08-14
+    published: 2026-07-09
+    as_of: 2026-08-14
+    artifact_path: v0.3/openai-release-facts-2026-08-14.yaml
+    artifact_sha256: 7e8715cb5ec334a6e001422b7083d9f881ade87dc6c3b64c47ef0153265df70a
+    content_type: application/yaml
+    upstream_revision: reviewed-2026-08-14
+    adapter_id: lab-release-reviewed-facts-v1
+    license_id: terms-governed-no-redistribution-assumed
+    license_url: https://openai.com/policies/terms-of-use/
+    attribution: Facts reviewed from the official OpenAI GPT-5.6 release
+    redistribution_scope: facts_only
+    notes: Factual transcription only; vendor benchmark claims remain diagnostic.
+  - id: kimi-release-facts-2026-08-14
+    title: Moonshot AI official Kimi K3 release facts
+    source:
+      organization: Moonshot AI
+      url: https://www.kimi.com/blog/kimi-k3
+      accessed: 2026-08-14
+    published: 2026-07-16
+    as_of: 2026-08-14
+    artifact_path: v0.3/kimi-release-facts-2026-08-14.yaml
+    artifact_sha256: 1fd66f4012477d50bb2239d77244e5d2ec426b49315831e9852d2e1772515a56
+    content_type: application/yaml
+    upstream_revision: reviewed-2026-08-14
+    adapter_id: lab-release-reviewed-facts-v1
+    license_id: terms-governed-no-redistribution-assumed
+    license_url: https://www.kimi.com/user/agreement
+    attribution: Facts reviewed from the official Moonshot AI Kimi K3 release
+    redistribution_scope: facts_only
+    notes: Factual transcription only; no page copy or chart artwork is redistributed.
+  - id: zai-release-facts-2026-08-14
+    title: Z.ai official GLM-5.2 API pricing facts
+    source:
+      organization: Z.ai
+      url: https://docs.z.ai/guides/overview/pricing
+      accessed: 2026-08-14
+    as_of: 2026-08-14
+    artifact_path: v0.3/zai-release-facts-2026-08-14.yaml
+    artifact_sha256: 34fa619730a6329eb254d7f425e7cb5598fb12e283ec388fa134258d9f53bdb8
+    content_type: application/yaml
+    upstream_revision: reviewed-2026-08-14
+    adapter_id: lab-release-reviewed-facts-v1
+    license_id: terms-governed-no-redistribution-assumed
+    attribution: Facts reviewed from official Z.ai developer documentation
+    redistribution_scope: facts_only
+    notes: Factual transcription only; cached-input storage is limited-time free and not encoded as zero.
+
   - id: aa-public-facts-2026-08-14
     title: Artificial Analysis manually reviewed v0.3 public facts
     source:

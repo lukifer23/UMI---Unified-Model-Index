@@ -140,7 +140,9 @@ arithmetic means can enter mean-based success adjustment. UMI never joins a nume
 different records or silently treats a median, total, or ambiguous “average” as a mean.
 
 Pricing records preserve advertised input/output/cache/reasoning/tool prices but do not substitute
-for observed successful-task Economics in v0.3.
+for observed successful-task Economics in v0.3. `cache_write_per_million` is the ordinary or
+five-minute write tariff; `cache_write_1h_per_million` retains a separately published one-hour
+write tariff. Missing cache-write or storage prices remain absent rather than being encoded as zero.
 
 ## External indexes
 

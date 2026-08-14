@@ -32,6 +32,11 @@ release-window-ineligible because its 2026-06-09 release predates the 2026-06-15
   effort labels are rejected.
 - DeepSWE cost, token, and step summaries are retained but cannot enter mean-based success adjustment;
   the captured source does not establish arithmetic-mean semantics.
+- Official token tariffs are now retained for all five configurations, including cached-input rates
+  and published cache-write, long-context, and tool-fee terms. They cannot establish cost per task
+  until compatible task-level token, tool, and success observations exist.
+- Four numeric GPT-5.6 Sol Max release claims are retained as vendor claims. None is silently matched
+  to a differently dated or differently harnessed independent result.
 
 ## Why no headline exists
 
@@ -51,6 +56,8 @@ re-scores one published bound at a time; it is not probabilistic propagation. Th
 [source readiness report](data/pilots/v0.3/processed/source-readiness.json),
 [overlap report](data/pilots/v0.3/processed/overlap.json), and
 [pilot sensitivity report](data/pilots/v0.3/processed/pilot-sensitivity.json) are machine-readable.
+The [pilot gap report](data/pilots/v0.3/processed/pilot-gap-report.json) enumerates every configured
+benchmark/model cell and every workload-category gate.
 
 ## Sensitivity result
 

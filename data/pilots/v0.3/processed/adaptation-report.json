@@ -1,5 +1,5 @@
 {
-  "complete_audit_fingerprint": "05cd651df40334be73c9295684c4d6696dc5e9cc736ea9f81ea5657fc41b364f",
+  "complete_audit_fingerprint": "e673046cd4dbd60f931ef8df48acd27161561d9d03c7e1d251c6ad2ff8b48d12",
   "label": "real evidence \u2014 model-specific partial estimate",
   "scored_audit_fingerprint": "740a78670a08168f51b64c276aa37ec159776d93728c1f54ac38d890f04a6996",
   "sources": [
@@ -150,12 +150,14 @@
           "value": 51.0
         }
       ],
+      "pricing": [],
       "rejections": [
         {
           "reason": "no exact crosswalk",
           "source_row_id": "Claude Fable 5 (Max) + Claude Opus 4.8 fallback"
         }
       ],
+      "release_claims": [],
       "source_id": "artificial-analysis",
       "task_economics": []
     },
@@ -2548,6 +2550,7 @@
           "value": 0.77
         }
       ],
+      "pricing": [],
       "rejections": [
         {
           "reason": "row is not the exact reviewed effort configuration",
@@ -2602,6 +2605,7 @@
           "source_row_id": "gpt-5.6-sol_unknown"
         }
       ],
+      "release_claims": [],
       "source_id": "epoch-eci",
       "task_economics": []
     },
@@ -2783,6 +2787,7 @@
       "diagnostics": [],
       "efficiency": [],
       "external_indexes": [],
+      "pricing": [],
       "rejections": [
         {
           "reason": "no exact effort match",
@@ -2861,6 +2866,7 @@
           "source_row_id": "Kimi K2.6"
         }
       ],
+      "release_claims": [],
       "source_id": "arena-agent",
       "task_economics": []
     },
@@ -2976,7 +2982,9 @@
           "value": 1470.655051431796
         }
       ],
+      "pricing": [],
       "rejections": [],
+      "release_claims": [],
       "source_id": "arena-text",
       "task_economics": []
     },
@@ -3500,8 +3508,415 @@
         }
       ],
       "external_indexes": [],
+      "pricing": [],
       "rejections": [],
+      "release_claims": [],
       "source_id": "deepswe",
+      "task_economics": []
+    },
+    {
+      "adapter_id": "lab-release-reviewed-facts-v1",
+      "benchmarks": [],
+      "diagnostics": [
+        "Pricing cannot establish workload economics without compatible resource usage",
+        "Vendor release claims are diagnostic and require exact independent reproduction"
+      ],
+      "efficiency": [],
+      "external_indexes": [],
+      "pricing": [
+        {
+          "benchmark_version": null,
+          "cache_write_1h_per_million": 10.0,
+          "cache_write_per_million": 6.25,
+          "cached_input_per_million": 0.5,
+          "configuration_verified": true,
+          "currency": "USD",
+          "effective_date": "2026-07-24",
+          "endpoint_id": null,
+          "evaluator": "Anthropic",
+          "harness_owner": null,
+          "harness_version": null,
+          "input_per_million": 5.0,
+          "long_context_surcharge": {},
+          "metric_definition": "Claude API USD prices per million tokens; cache write is the 5-minute rate",
+          "model_id": "claude-opus-5-max",
+          "notes": "Token tariff only; it cannot establish task cost without compatible task-level resource measurements.",
+          "output_per_million": 25.0,
+          "raw_artifact_available": true,
+          "reasoning_token_pricing": null,
+          "record_id": "anthropic-release-pricing-claude-opus-5-max-2026-07-24",
+          "record_status": "diagnostic_only",
+          "reproducible": null,
+          "result_type": "vendor_reported",
+          "run_executor": null,
+          "scoring_disposition": "diagnostic_only",
+          "service_tier": null,
+          "serving_provider": null,
+          "signal_role": "economics",
+          "source": {
+            "accessed": "2026-08-14",
+            "organization": "Anthropic",
+            "url": "https://platform.claude.com/docs/en/about-claude/pricing"
+          },
+          "source_artifact_id": "anthropic-release-facts-2026-08-14",
+          "tool_costs": {},
+          "tools_enabled": null
+        },
+        {
+          "benchmark_version": null,
+          "cache_write_1h_per_million": 20.0,
+          "cache_write_per_million": 12.5,
+          "cached_input_per_million": 1.0,
+          "configuration_verified": true,
+          "currency": "USD",
+          "effective_date": "2026-06-09",
+          "endpoint_id": null,
+          "evaluator": "Anthropic",
+          "harness_owner": null,
+          "harness_version": null,
+          "input_per_million": 10.0,
+          "long_context_surcharge": {},
+          "metric_definition": "Claude API USD prices per million tokens; cache write is the 5-minute rate",
+          "model_id": "claude-fable-5-max",
+          "notes": "Token tariff only; it cannot establish task cost without compatible task-level resource measurements.",
+          "output_per_million": 50.0,
+          "raw_artifact_available": true,
+          "reasoning_token_pricing": null,
+          "record_id": "anthropic-release-pricing-claude-fable-5-max-2026-06-09",
+          "record_status": "diagnostic_only",
+          "reproducible": null,
+          "result_type": "vendor_reported",
+          "run_executor": null,
+          "scoring_disposition": "diagnostic_only",
+          "service_tier": null,
+          "serving_provider": null,
+          "signal_role": "economics",
+          "source": {
+            "accessed": "2026-08-14",
+            "organization": "Anthropic",
+            "url": "https://platform.claude.com/docs/en/about-claude/pricing"
+          },
+          "source_artifact_id": "anthropic-release-facts-2026-08-14",
+          "tool_costs": {},
+          "tools_enabled": null
+        }
+      ],
+      "rejections": [],
+      "release_claims": [],
+      "source_id": "anthropic-release",
+      "task_economics": []
+    },
+    {
+      "adapter_id": "lab-release-reviewed-facts-v1",
+      "benchmarks": [],
+      "diagnostics": [
+        "Pricing cannot establish workload economics without compatible resource usage",
+        "Vendor release claims are diagnostic and require exact independent reproduction"
+      ],
+      "efficiency": [],
+      "external_indexes": [],
+      "pricing": [
+        {
+          "benchmark_version": null,
+          "cache_write_1h_per_million": null,
+          "cache_write_per_million": 6.25,
+          "cached_input_per_million": 0.5,
+          "configuration_verified": true,
+          "currency": "USD",
+          "effective_date": "2026-07-09",
+          "endpoint_id": null,
+          "evaluator": "OpenAI",
+          "harness_owner": null,
+          "harness_version": null,
+          "input_per_million": 5.0,
+          "long_context_surcharge": {
+            "input_multiplier": 2.0,
+            "output_multiplier": 1.5,
+            "threshold_input_tokens": 272000.0
+          },
+          "metric_definition": "OpenAI API USD prices per million tokens for GPT-5.6 Sol",
+          "model_id": "gpt-5.6-sol-max",
+          "notes": "Token tariff only; it cannot establish task cost without compatible task-level resource measurements.",
+          "output_per_million": 30.0,
+          "raw_artifact_available": true,
+          "reasoning_token_pricing": null,
+          "record_id": "openai-release-pricing-gpt-5.6-sol-max-2026-07-09",
+          "record_status": "diagnostic_only",
+          "reproducible": null,
+          "result_type": "vendor_reported",
+          "run_executor": null,
+          "scoring_disposition": "diagnostic_only",
+          "service_tier": null,
+          "serving_provider": null,
+          "signal_role": "economics",
+          "source": {
+            "accessed": "2026-08-14",
+            "organization": "OpenAI",
+            "url": "https://openai.com/index/gpt-5-6/"
+          },
+          "source_artifact_id": "openai-release-facts-2026-08-14",
+          "tool_costs": {},
+          "tools_enabled": null
+        }
+      ],
+      "rejections": [],
+      "release_claims": [
+        {
+          "benchmark_id": "deepswe-v1.1",
+          "benchmark_version": "deepswe-v1.1",
+          "claim_text": "GPT-5.6 Sol scored 72.7% on DeepSWE v1.1.",
+          "cohort_key": "openai-release-deepswe-v1.1-codex-max-2026-07-09",
+          "configuration_verified": true,
+          "direction": "higher",
+          "endpoint_id": null,
+          "evaluation_date": "2026-07-09",
+          "evaluator": "OpenAI",
+          "harness_owner": null,
+          "harness_version": "openai-release-deepswe-v1.1-codex-max-2026-07-09",
+          "metric_definition": "Literal numeric result published in an official lab release",
+          "model_id": "gpt-5.6-sol-max",
+          "model_snapshot_id": "gpt-5.6-sol-max",
+          "notes": null,
+          "raw_artifact_available": true,
+          "record_id": "openai-release-claim-deepswe-v1.1-gpt-5.6-sol-max-2026-07-09",
+          "record_status": "diagnostic_only",
+          "reproducible": null,
+          "result_type": "vendor_reported",
+          "run_executor": null,
+          "scoring_disposition": "diagnostic_only",
+          "service_tier": null,
+          "serving_provider": null,
+          "signal_role": "reference",
+          "source": {
+            "accessed": "2026-08-14",
+            "organization": "OpenAI",
+            "url": "https://openai.com/index/gpt-5-6/"
+          },
+          "source_artifact_id": "openai-release-facts-2026-08-14",
+          "tools_enabled": null,
+          "unit": "percent",
+          "value": 72.7
+        },
+        {
+          "benchmark_id": "terminalbench-2.1",
+          "benchmark_version": "terminalbench-2.1",
+          "claim_text": "GPT-5.6 Sol scored 88.8% on Terminal-Bench 2.1.",
+          "cohort_key": "openai-release-terminalbench-2.1-codex-max-2026-07-09",
+          "configuration_verified": true,
+          "direction": "higher",
+          "endpoint_id": null,
+          "evaluation_date": "2026-07-09",
+          "evaluator": "OpenAI",
+          "harness_owner": null,
+          "harness_version": "openai-release-terminalbench-2.1-codex-max-2026-07-09",
+          "metric_definition": "Literal numeric result published in an official lab release",
+          "model_id": "gpt-5.6-sol-max",
+          "model_snapshot_id": "gpt-5.6-sol-max",
+          "notes": null,
+          "raw_artifact_available": true,
+          "record_id": "openai-release-claim-terminalbench-2.1-gpt-5.6-sol-max-2026-07-09",
+          "record_status": "diagnostic_only",
+          "reproducible": null,
+          "result_type": "vendor_reported",
+          "run_executor": null,
+          "scoring_disposition": "diagnostic_only",
+          "service_tier": null,
+          "serving_provider": null,
+          "signal_role": "reference",
+          "source": {
+            "accessed": "2026-08-14",
+            "organization": "OpenAI",
+            "url": "https://openai.com/index/gpt-5-6/"
+          },
+          "source_artifact_id": "openai-release-facts-2026-08-14",
+          "tools_enabled": null,
+          "unit": "percent",
+          "value": 88.8
+        },
+        {
+          "benchmark_id": "gdpval-aa-v2",
+          "benchmark_version": "gdpval-aa-v2",
+          "claim_text": "GPT-5.6 Sol scored 1747.8 Elo on GDPval-AA v2.",
+          "cohort_key": "openai-release-gdpval-aa-v2-max-2026-07-09",
+          "configuration_verified": true,
+          "direction": "higher",
+          "endpoint_id": null,
+          "evaluation_date": "2026-07-09",
+          "evaluator": "OpenAI",
+          "harness_owner": null,
+          "harness_version": "openai-release-gdpval-aa-v2-max-2026-07-09",
+          "metric_definition": "Literal numeric result published in an official lab release",
+          "model_id": "gpt-5.6-sol-max",
+          "model_snapshot_id": "gpt-5.6-sol-max",
+          "notes": null,
+          "raw_artifact_available": true,
+          "record_id": "openai-release-claim-gdpval-aa-v2-gpt-5.6-sol-max-2026-07-09",
+          "record_status": "diagnostic_only",
+          "reproducible": null,
+          "result_type": "vendor_reported",
+          "run_executor": null,
+          "scoring_disposition": "diagnostic_only",
+          "service_tier": null,
+          "serving_provider": null,
+          "signal_role": "reference",
+          "source": {
+            "accessed": "2026-08-14",
+            "organization": "OpenAI",
+            "url": "https://openai.com/index/gpt-5-6/"
+          },
+          "source_artifact_id": "openai-release-facts-2026-08-14",
+          "tools_enabled": null,
+          "unit": "score",
+          "value": 1747.8
+        },
+        {
+          "benchmark_id": "gpqa-diamond",
+          "benchmark_version": "gpqa-diamond",
+          "claim_text": "GPT-5.6 Sol scored 94.6% on GPQA Diamond.",
+          "cohort_key": "openai-release-gpqa-diamond-max-2026-07-09",
+          "configuration_verified": true,
+          "direction": "higher",
+          "endpoint_id": null,
+          "evaluation_date": "2026-07-09",
+          "evaluator": "OpenAI",
+          "harness_owner": null,
+          "harness_version": "openai-release-gpqa-diamond-max-2026-07-09",
+          "metric_definition": "Literal numeric result published in an official lab release",
+          "model_id": "gpt-5.6-sol-max",
+          "model_snapshot_id": "gpt-5.6-sol-max",
+          "notes": null,
+          "raw_artifact_available": true,
+          "record_id": "openai-release-claim-gpqa-diamond-gpt-5.6-sol-max-2026-07-09",
+          "record_status": "diagnostic_only",
+          "reproducible": null,
+          "result_type": "vendor_reported",
+          "run_executor": null,
+          "scoring_disposition": "diagnostic_only",
+          "service_tier": null,
+          "serving_provider": null,
+          "signal_role": "reference",
+          "source": {
+            "accessed": "2026-08-14",
+            "organization": "OpenAI",
+            "url": "https://openai.com/index/gpt-5-6/"
+          },
+          "source_artifact_id": "openai-release-facts-2026-08-14",
+          "tools_enabled": null,
+          "unit": "percent",
+          "value": 94.6
+        }
+      ],
+      "source_id": "openai-release",
+      "task_economics": []
+    },
+    {
+      "adapter_id": "lab-release-reviewed-facts-v1",
+      "benchmarks": [],
+      "diagnostics": [
+        "Pricing cannot establish workload economics without compatible resource usage",
+        "Vendor release claims are diagnostic and require exact independent reproduction"
+      ],
+      "efficiency": [],
+      "external_indexes": [],
+      "pricing": [
+        {
+          "benchmark_version": null,
+          "cache_write_1h_per_million": null,
+          "cache_write_per_million": null,
+          "cached_input_per_million": 0.3,
+          "configuration_verified": true,
+          "currency": "USD",
+          "effective_date": "2026-07-16",
+          "endpoint_id": null,
+          "evaluator": "Moonshot AI",
+          "harness_owner": null,
+          "harness_version": null,
+          "input_per_million": 3.0,
+          "long_context_surcharge": {},
+          "metric_definition": "Official Kimi API USD prices per million tokens",
+          "model_id": "kimi-k3-max",
+          "notes": "Token tariff only; it cannot establish task cost without compatible task-level resource measurements.",
+          "output_per_million": 15.0,
+          "raw_artifact_available": true,
+          "reasoning_token_pricing": null,
+          "record_id": "kimi-release-pricing-kimi-k3-max-2026-07-16",
+          "record_status": "diagnostic_only",
+          "reproducible": null,
+          "result_type": "vendor_reported",
+          "run_executor": null,
+          "scoring_disposition": "diagnostic_only",
+          "service_tier": null,
+          "serving_provider": null,
+          "signal_role": "economics",
+          "source": {
+            "accessed": "2026-08-14",
+            "organization": "Moonshot AI",
+            "url": "https://www.kimi.com/blog/kimi-k3"
+          },
+          "source_artifact_id": "kimi-release-facts-2026-08-14",
+          "tool_costs": {},
+          "tools_enabled": null
+        }
+      ],
+      "rejections": [],
+      "release_claims": [],
+      "source_id": "kimi-release",
+      "task_economics": []
+    },
+    {
+      "adapter_id": "lab-release-reviewed-facts-v1",
+      "benchmarks": [],
+      "diagnostics": [
+        "Pricing cannot establish workload economics without compatible resource usage",
+        "Vendor release claims are diagnostic and require exact independent reproduction"
+      ],
+      "efficiency": [],
+      "external_indexes": [],
+      "pricing": [
+        {
+          "benchmark_version": null,
+          "cache_write_1h_per_million": null,
+          "cache_write_per_million": null,
+          "cached_input_per_million": 0.26,
+          "configuration_verified": true,
+          "currency": "USD",
+          "effective_date": "2026-06-16",
+          "endpoint_id": null,
+          "evaluator": "Z.ai",
+          "harness_owner": null,
+          "harness_version": null,
+          "input_per_million": 1.4,
+          "long_context_surcharge": {},
+          "metric_definition": "Z.ai API USD prices per million tokens and published tool fee",
+          "model_id": "glm-5.2-max",
+          "notes": "Token tariff only; it cannot establish task cost without compatible task-level resource measurements.",
+          "output_per_million": 4.4,
+          "raw_artifact_available": true,
+          "reasoning_token_pricing": null,
+          "record_id": "zai-release-pricing-glm-5.2-max-2026-06-16",
+          "record_status": "diagnostic_only",
+          "reproducible": null,
+          "result_type": "vendor_reported",
+          "run_executor": null,
+          "scoring_disposition": "diagnostic_only",
+          "service_tier": null,
+          "serving_provider": null,
+          "signal_role": "economics",
+          "source": {
+            "accessed": "2026-08-14",
+            "organization": "Z.ai",
+            "url": "https://docs.z.ai/guides/overview/pricing"
+          },
+          "source_artifact_id": "zai-release-facts-2026-08-14",
+          "tool_costs": {
+            "web_search_per_use": 0.01
+          },
+          "tools_enabled": null
+        }
+      ],
+      "rejections": [],
+      "release_claims": [],
+      "source_id": "zai-release",
       "task_economics": []
     }
   ]
