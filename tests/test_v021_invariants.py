@@ -10,7 +10,7 @@ from analysis.pareto_metrics import pareto_dimensions
 from analysis.sensitivity import analyze_sensitivity
 from umi.config import ProjectConfig, SensitivityWeights, ValueConfig
 from umi.derived_metrics import consolidate_cost_per_success
-from umi.fingerprints import dataset_fingerprint
+from umi.fingerprints import dataset_fingerprint, scored_data_fingerprint
 from umi.loading import Dataset
 from umi.schemas import (
     BenchmarkDefinition,
@@ -176,6 +176,36 @@ def test_dataset_fingerprint_tracks_values_snapshots_cohorts_and_order(
             update={"benchmarks": (changed_record, *synthetic_dataset.benchmarks[1:])}
         )
         assert dataset_fingerprint(changed, config) != baseline
+
+
+def test_scored_fingerprint_excludes_diagnostics_but_tracks_scoring_context(
+    synthetic_dataset: Dataset, config: ProjectConfig
+) -> None:
+    from umi.readiness import scoring_dataset
+
+    baseline, _ = scoring_dataset(synthetic_dataset)
+    fingerprint = scored_data_fingerprint(baseline, config)
+    diagnostic = synthetic_dataset.benchmarks[0].model_copy(
+        update={
+            "record_id": "fingerprint-diagnostic",
+            "value": 99_999.0,
+            "record_status": RecordStatus.DIAGNOSTIC_ONLY,
+        }
+    )
+    changed_diagnostic, _ = scoring_dataset(
+        synthetic_dataset.model_copy(
+            update={"benchmarks": (*synthetic_dataset.benchmarks, diagnostic)}
+        )
+    )
+    assert scored_data_fingerprint(changed_diagnostic, config) == fingerprint
+
+    changed_record = baseline.benchmarks[0].model_copy(
+        update={"value": baseline.benchmarks[0].value + 1}
+    )
+    changed_scored = baseline.model_copy(
+        update={"benchmarks": (changed_record, *baseline.benchmarks[1:])}
+    )
+    assert scored_data_fingerprint(changed_scored, config) != fingerprint
 
 
 def test_family_weight_above_cap_is_invalid(config: ProjectConfig) -> None:

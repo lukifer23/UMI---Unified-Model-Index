@@ -7,7 +7,7 @@ from umi.capability import score_capability
 from umi.config import OverallWeights, ProjectConfig
 from umi.economics import score_economics
 from umi.efficiency import score_efficiency
-from umi.fingerprints import dataset_fingerprint
+from umi.fingerprints import dataset_fingerprint, scored_data_fingerprint
 from umi.loading import Dataset
 from umi.provenance import independent_or_community_evidence_share
 from umi.readiness import ScoredRecord, is_scoring_ready, scoring_dataset
@@ -75,7 +75,7 @@ def score_dataset(
     economics = score_economics(scored_dataset, config)
     weights = config.weights.overall
     complete_fingerprint = dataset_fingerprint(dataset, config)
-    scored_fingerprint = dataset_fingerprint(scored_dataset, config)
+    scored_fingerprint = scored_data_fingerprint(scored_dataset, config)
     cohort_model_ids = tuple(sorted(model.id for model in scored_dataset.models))
     scored_observations: tuple[ScoredRecord, ...] = (
         *scored_dataset.benchmarks,

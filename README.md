@@ -77,9 +77,9 @@ frozen artifacts -> offline adapters -> exact crosswalk -> readiness filter
 - `schemas/` contains generated JSON Schemas for data, config, source, crosswalk, overlap, and output.
 
 Complete and scored-data fingerprints are deliberately different. Rejected and diagnostic evidence,
-crosswalk decisions, adapter versions, and artifact checksums affect the complete fingerprint. Only
-accepted scoring evidence affects the scored fingerprint. The overlap policy is included through the
-configuration fingerprint.
+crosswalk decisions, and artifact checksums affect the complete fingerprint. The scored fingerprint
+contains only accepted scoring records plus the scored-artifact audit manifest, adapter versions, and
+governed scoring configuration. The overlap policy is included through the configuration fingerprint.
 
 ## Scoring summary
 

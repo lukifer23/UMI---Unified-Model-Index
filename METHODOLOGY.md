@@ -358,11 +358,12 @@ reports dominator IDs. UMI creates no universal cost or efficiency frontier from
 
 ## Dataset identity
 
-`dataset_fingerprint` hashes canonical serialized complete input data. `scored_data_fingerprint`
-hashes the exact readiness-filtered inputs used by scoring; pricing and external reference indexes
-are excluded in v0.3. Both include model/deployment identity, raw values, success rates, dates,
-cohort and evaluation settings, provenance, configuration fingerprint, and engine/formula/
-normalization versions. Records are sorted before SHA-256 hashing and no current timestamp is used.
+`dataset_fingerprint` hashes canonical serialized complete audit input data. `scored_data_fingerprint`
+hashes a separate, explicit scoring context: the exact readiness-filtered benchmark, efficiency, and
+task-economics records; scored model configurations; the governed scoring-configuration fingerprint;
+scored-artifact audit manifest; adapter versions; and engine/formula/normalization versions. Pricing,
+external references, complete-audit metadata, and diagnostic-only records are excluded in v0.3.
+Records are sorted before SHA-256 hashing and no current timestamp is used.
 
 `cohort_id` is the first 16 hexadecimal characters of `scored_data_fingerprint`. `data_as_of` is the
 latest included scoring evaluation date, or the configured release-window end if none exists.
