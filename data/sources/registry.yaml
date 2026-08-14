@@ -1,0 +1,42 @@
+snapshots:
+  - id: aa-frontier-2026-07-17
+    title: "Four frontier launches in eight days: six labs now field a model above 50"
+    source:
+      organization: Artificial Analysis
+      url: https://artificialanalysis.ai/articles/four-frontier-launches-in-eight-days-six-labs-now-field-a-model-above-50-on-the-artificial-analysis-intelligence-index
+      accessed: 2026-08-14
+    published: 2026-07-17
+    as_of: 2026-07-17
+    artifact_path: captures/aa-frontier-2026-07-17.yaml
+    artifact_sha256: 48a76663a0e4dc0ae050bb01a13e0d5d43cdc721d91aeefa55beb3809e45247e
+    notes: Manually reviewed fact capture; preserves the dated article snapshot without copying the full copyrighted page.
+  - id: aa-gpt-5.6-sol-page-2026-08-14
+    title: GPT-5.6 Sol max model page identity snapshot
+    source:
+      organization: Artificial Analysis
+      url: https://artificialanalysis.ai/models/gpt-5-6-sol/
+      accessed: 2026-08-14
+    as_of: 2026-08-14
+    artifact_path: captures/aa-gpt-5.6-sol-page-2026-08-14.yaml
+    artifact_sha256: a61b15c77ed22aed59deaac975fd64a2d99a6b05788e4c0e10a05a1d44b72e1e
+    notes: Mutable model page captured only to support exact release-date identity metadata.
+  - id: aa-glm-5.2-page-2026-08-14
+    title: GLM-5.2 max model page identity snapshot
+    source:
+      organization: Artificial Analysis
+      url: https://artificialanalysis.ai/models/glm-5-2/
+      accessed: 2026-08-14
+    as_of: 2026-08-14
+    artifact_path: captures/aa-glm-5.2-page-2026-08-14.yaml
+    artifact_sha256: 27ce485a635ae6b10cbce6ed821f77161f2daa2e86180946a5baf20f7b9ea9bc
+    notes: Mutable model page captured only to support exact release-date identity metadata.
+  - id: aa-muse-spark-1.1-page-2026-08-14
+    title: Muse Spark 1.1 xhigh model page identity snapshot
+    source:
+      organization: Artificial Analysis
+      url: https://artificialanalysis.ai/models/muse-spark-1-1/
+      accessed: 2026-08-14
+    as_of: 2026-08-14
+    artifact_path: captures/aa-muse-spark-1.1-page-2026-08-14.yaml
+    artifact_sha256: 2938d5bbacea41d44f28cdd70355aecea320151ce15d608f397229ba9ac813a8
+    notes: Mutable model page captured only to support exact release-date identity metadata.

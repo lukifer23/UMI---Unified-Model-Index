@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import date
+
 import pytest
 
 from analysis.value_sensitivity import analyze_value_sensitivity
@@ -111,3 +113,17 @@ def test_single_evaluator_caps_high_confidence_and_value_is_sensitive(
     sensitivity = analyze_value_sensitivity(results, config)
     assert len(sensitivity) == len(results)
     assert all(item.rank_min is not None and item.rank_max is not None for item in sensitivity)
+
+
+def test_release_window_is_a_headline_gate(
+    synthetic_dataset: Dataset, config: ProjectConfig
+) -> None:
+    outside = synthetic_dataset.models[0].model_copy(update={"release_date": date(2026, 6, 1)})
+    dataset = synthetic_dataset.model_copy(
+        update={"models": (outside, *synthetic_dataset.models[1:])}
+    )
+    result = next(item for item in score_dataset(dataset, config) if item.model_id == outside.id)
+    assert result.partial_overall_estimate is not None
+    assert result.headline_overall is None
+    assert not result.eligible
+    assert any("release date" in message for message in result.diagnostics)

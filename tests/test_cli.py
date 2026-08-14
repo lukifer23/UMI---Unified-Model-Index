@@ -17,7 +17,7 @@ def test_every_cli_command_emits_json(command: str, capsys: pytest.CaptureFixtur
             "--data-dir",
             str(ROOT / "tests" / "fixtures"),
             "--config-dir",
-            str(ROOT / "config"),
+            str(ROOT / "tests" / "fixtures" / "config"),
         ]
     )
     assert run(args) == 0
@@ -33,7 +33,7 @@ def test_rank_csv_is_flat_and_deterministic(capsys: pytest.CaptureFixture[str]) 
                 "--data-dir",
                 str(ROOT / "tests" / "fixtures"),
                 "--config-dir",
-                str(ROOT / "config"),
+                str(ROOT / "tests" / "fixtures" / "config"),
                 "--format",
                 "csv",
             ]

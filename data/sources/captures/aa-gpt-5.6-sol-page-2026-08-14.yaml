@@ -1,0 +1,10 @@
+capture_id: aa-gpt-5.6-sol-page-2026-08-14
+capture_type: manually-reviewed-fact-transcription
+source_url: https://artificialanalysis.ai/models/gpt-5-6-sol/
+accessed: 2026-08-14
+facts:
+  model: GPT-5.6 Sol (max)
+  provider: OpenAI
+  release_date: 2026-07-09
+limitations:
+  - Mutable model page used for identity metadata only, not measurement values.

@@ -1,0 +1,616 @@
+[
+  {
+    "capability": {
+      "coverage": 0.47500000000000003,
+      "coverage_details": {
+        "capability_families_represented": 3,
+        "capability_families_total": 3,
+        "capability_family_weighted": 1.0
+      },
+      "diagnostics": [],
+      "provisional": true,
+      "score": 80.70175438596492,
+      "source_record_ids": [
+        "aa-briefcase-fable-2026-07-17",
+        "aa-coding-fable-2026-07-17",
+        "aa-gdpval-fable-2026-07-17"
+      ]
+    },
+    "capability_domains": [
+      "software_engineering",
+      "agentic_work"
+    ],
+    "cohort_id": "e8aa08bb1fedbc01",
+    "cohort_model_ids": [
+      "claude-fable-5-max-fallback",
+      "glm-5.2-max",
+      "gpt-5.6-sol-max",
+      "grok-4.5-high",
+      "kimi-k3-max",
+      "muse-spark-1.1-xhigh"
+    ],
+    "confidence": "low",
+    "confidence_reasons": [
+      "26% weighted coverage",
+      "2/5 capability domains represented",
+      "0/6 efficiency workload classes",
+      "1 source organizations",
+      "100% independent/community evidence",
+      "confidence capped at Low: insufficient capability breadth"
+    ],
+    "config_fingerprint": "99c41879c8592d19bef45e4c53fda179eb4074921c175cd424db50a8011123cc",
+    "coverage": {
+      "capability_domains_represented": 2,
+      "capability_domains_total": 5,
+      "capability_family_weighted": 1.0,
+      "economics_workload_weighted": 0.0,
+      "economics_workloads_represented": 0,
+      "economics_workloads_total": 6,
+      "efficiency_workload_weighted": 0.0,
+      "efficiency_workloads_represented": 0,
+      "efficiency_workloads_total": 6,
+      "independent_evidence_share": 1.0,
+      "overall_weighted": 0.26125000000000004,
+      "source_organization_count": 1
+    },
+    "diagnostics": [
+      "attempted-task cost excluded from headline Economics/aa-intelligence-index-july-2026",
+      "model release date is outside the configured eligibility window",
+      "not eligible for headline Overall ranking"
+    ],
+    "economics": {
+      "coverage": 0.0,
+      "coverage_details": {
+        "economics_workload_weighted": 0.0,
+        "economics_workloads_represented": 0,
+        "economics_workloads_total": 6
+      },
+      "diagnostics": [
+        "attempted-task cost excluded from headline Economics/aa-intelligence-index-july-2026"
+      ],
+      "provisional": false,
+      "score": null,
+      "source_record_ids": [
+        "aa-cost-fable-2026-07-17"
+      ]
+    },
+    "efficiency": {
+      "coverage": 0.0,
+      "coverage_details": {
+        "efficiency_workload_weighted": 0.0,
+        "efficiency_workloads_represented": 0,
+        "efficiency_workloads_total": 6
+      },
+      "diagnostics": [],
+      "provisional": false,
+      "score": null,
+      "source_record_ids": []
+    },
+    "eligible": false,
+    "evaluation_date": "2026-07-17",
+    "evidence_quality_share": 1.0,
+    "formula_version": "umi-methodology-v0.2-draft",
+    "headline_overall": null,
+    "model_id": "claude-fable-5-max-fallback",
+    "normalization_version": "umi-normalization-v0.2",
+    "overall_coverage": 0.26125000000000004,
+    "partial_overall_estimate": 80.70175438596492,
+    "provisional": true,
+    "rank": null,
+    "source_record_ids": [
+      "aa-briefcase-fable-2026-07-17",
+      "aa-coding-fable-2026-07-17",
+      "aa-cost-fable-2026-07-17",
+      "aa-gdpval-fable-2026-07-17"
+    ],
+    "value": null,
+    "value_methodology": "geometric_mean_v1"
+  },
+  {
+    "capability": {
+      "coverage": 0.0,
+      "coverage_details": {
+        "capability_families_represented": 0,
+        "capability_families_total": 3,
+        "capability_family_weighted": 0.0
+      },
+      "diagnostics": [],
+      "provisional": false,
+      "score": null,
+      "source_record_ids": []
+    },
+    "capability_domains": [],
+    "cohort_id": "e8aa08bb1fedbc01",
+    "cohort_model_ids": [
+      "claude-fable-5-max-fallback",
+      "glm-5.2-max",
+      "gpt-5.6-sol-max",
+      "grok-4.5-high",
+      "kimi-k3-max",
+      "muse-spark-1.1-xhigh"
+    ],
+    "confidence": "low",
+    "confidence_reasons": [
+      "0% weighted coverage",
+      "0/5 capability domains represented",
+      "0/6 efficiency workload classes",
+      "1 source organizations",
+      "0% independent/community evidence",
+      "confidence capped at Low: insufficient capability breadth"
+    ],
+    "config_fingerprint": "99c41879c8592d19bef45e4c53fda179eb4074921c175cd424db50a8011123cc",
+    "coverage": {
+      "capability_domains_represented": 0,
+      "capability_domains_total": 5,
+      "capability_family_weighted": 0.0,
+      "economics_workload_weighted": 0.0,
+      "economics_workloads_represented": 0,
+      "economics_workloads_total": 6,
+      "efficiency_workload_weighted": 0.0,
+      "efficiency_workloads_represented": 0,
+      "efficiency_workloads_total": 6,
+      "independent_evidence_share": 0.0,
+      "overall_weighted": 0.0,
+      "source_organization_count": 1
+    },
+    "diagnostics": [
+      "attempted-task cost excluded from headline Economics/aa-intelligence-index-july-2026",
+      "not eligible for headline Overall ranking"
+    ],
+    "economics": {
+      "coverage": 0.0,
+      "coverage_details": {
+        "economics_workload_weighted": 0.0,
+        "economics_workloads_represented": 0,
+        "economics_workloads_total": 6
+      },
+      "diagnostics": [
+        "attempted-task cost excluded from headline Economics/aa-intelligence-index-july-2026"
+      ],
+      "provisional": false,
+      "score": null,
+      "source_record_ids": [
+        "aa-cost-glm-2026-07-17"
+      ]
+    },
+    "efficiency": {
+      "coverage": 0.0,
+      "coverage_details": {
+        "efficiency_workload_weighted": 0.0,
+        "efficiency_workloads_represented": 0,
+        "efficiency_workloads_total": 6
+      },
+      "diagnostics": [],
+      "provisional": false,
+      "score": null,
+      "source_record_ids": []
+    },
+    "eligible": false,
+    "evaluation_date": "2026-07-17",
+    "evidence_quality_share": 0.0,
+    "formula_version": "umi-methodology-v0.2-draft",
+    "headline_overall": null,
+    "model_id": "glm-5.2-max",
+    "normalization_version": "umi-normalization-v0.2",
+    "overall_coverage": 0.0,
+    "partial_overall_estimate": null,
+    "provisional": true,
+    "rank": null,
+    "source_record_ids": [
+      "aa-cost-glm-2026-07-17"
+    ],
+    "value": null,
+    "value_methodology": "geometric_mean_v1"
+  },
+  {
+    "capability": {
+      "coverage": 0.47500000000000003,
+      "coverage_details": {
+        "capability_families_represented": 3,
+        "capability_families_total": 3,
+        "capability_family_weighted": 1.0
+      },
+      "diagnostics": [],
+      "provisional": true,
+      "score": 70.52631578947368,
+      "source_record_ids": [
+        "aa-briefcase-sol-2026-07-17",
+        "aa-coding-sol-2026-07-17",
+        "aa-gdpval-sol-2026-07-17"
+      ]
+    },
+    "capability_domains": [
+      "software_engineering",
+      "agentic_work"
+    ],
+    "cohort_id": "e8aa08bb1fedbc01",
+    "cohort_model_ids": [
+      "claude-fable-5-max-fallback",
+      "glm-5.2-max",
+      "gpt-5.6-sol-max",
+      "grok-4.5-high",
+      "kimi-k3-max",
+      "muse-spark-1.1-xhigh"
+    ],
+    "confidence": "low",
+    "confidence_reasons": [
+      "26% weighted coverage",
+      "2/5 capability domains represented",
+      "0/6 efficiency workload classes",
+      "1 source organizations",
+      "100% independent/community evidence",
+      "confidence capped at Low: insufficient capability breadth"
+    ],
+    "config_fingerprint": "99c41879c8592d19bef45e4c53fda179eb4074921c175cd424db50a8011123cc",
+    "coverage": {
+      "capability_domains_represented": 2,
+      "capability_domains_total": 5,
+      "capability_family_weighted": 1.0,
+      "economics_workload_weighted": 0.0,
+      "economics_workloads_represented": 0,
+      "economics_workloads_total": 6,
+      "efficiency_workload_weighted": 0.0,
+      "efficiency_workloads_represented": 0,
+      "efficiency_workloads_total": 6,
+      "independent_evidence_share": 1.0,
+      "overall_weighted": 0.26125000000000004,
+      "source_organization_count": 1
+    },
+    "diagnostics": [
+      "attempted-task cost excluded from headline Economics/aa-intelligence-index-july-2026",
+      "not eligible for headline Overall ranking"
+    ],
+    "economics": {
+      "coverage": 0.0,
+      "coverage_details": {
+        "economics_workload_weighted": 0.0,
+        "economics_workloads_represented": 0,
+        "economics_workloads_total": 6
+      },
+      "diagnostics": [
+        "attempted-task cost excluded from headline Economics/aa-intelligence-index-july-2026"
+      ],
+      "provisional": false,
+      "score": null,
+      "source_record_ids": [
+        "aa-cost-sol-2026-07-17"
+      ]
+    },
+    "efficiency": {
+      "coverage": 0.0,
+      "coverage_details": {
+        "efficiency_workload_weighted": 0.0,
+        "efficiency_workloads_represented": 0,
+        "efficiency_workloads_total": 6
+      },
+      "diagnostics": [],
+      "provisional": false,
+      "score": null,
+      "source_record_ids": []
+    },
+    "eligible": false,
+    "evaluation_date": "2026-07-17",
+    "evidence_quality_share": 1.0,
+    "formula_version": "umi-methodology-v0.2-draft",
+    "headline_overall": null,
+    "model_id": "gpt-5.6-sol-max",
+    "normalization_version": "umi-normalization-v0.2",
+    "overall_coverage": 0.26125000000000004,
+    "partial_overall_estimate": 70.52631578947368,
+    "provisional": true,
+    "rank": null,
+    "source_record_ids": [
+      "aa-briefcase-sol-2026-07-17",
+      "aa-coding-sol-2026-07-17",
+      "aa-cost-sol-2026-07-17",
+      "aa-gdpval-sol-2026-07-17"
+    ],
+    "value": null,
+    "value_methodology": "geometric_mean_v1"
+  },
+  {
+    "capability": {
+      "coverage": 0.275,
+      "coverage_details": {
+        "capability_families_represented": 1,
+        "capability_families_total": 3,
+        "capability_family_weighted": 0.5789473684210527
+      },
+      "diagnostics": [],
+      "provisional": true,
+      "score": 33.333333333333336,
+      "source_record_ids": [
+        "aa-coding-grok-2026-07-17"
+      ]
+    },
+    "capability_domains": [
+      "software_engineering"
+    ],
+    "cohort_id": "e8aa08bb1fedbc01",
+    "cohort_model_ids": [
+      "claude-fable-5-max-fallback",
+      "glm-5.2-max",
+      "gpt-5.6-sol-max",
+      "grok-4.5-high",
+      "kimi-k3-max",
+      "muse-spark-1.1-xhigh"
+    ],
+    "confidence": "low",
+    "confidence_reasons": [
+      "15% weighted coverage",
+      "1/5 capability domains represented",
+      "0/6 efficiency workload classes",
+      "1 source organizations",
+      "100% independent/community evidence",
+      "confidence capped at Low: insufficient capability breadth"
+    ],
+    "config_fingerprint": "99c41879c8592d19bef45e4c53fda179eb4074921c175cd424db50a8011123cc",
+    "coverage": {
+      "capability_domains_represented": 1,
+      "capability_domains_total": 5,
+      "capability_family_weighted": 0.5789473684210527,
+      "economics_workload_weighted": 0.0,
+      "economics_workloads_represented": 0,
+      "economics_workloads_total": 6,
+      "efficiency_workload_weighted": 0.0,
+      "efficiency_workloads_represented": 0,
+      "efficiency_workloads_total": 6,
+      "independent_evidence_share": 1.0,
+      "overall_weighted": 0.15125000000000002,
+      "source_organization_count": 1
+    },
+    "diagnostics": [
+      "attempted-task cost excluded from headline Economics/aa-intelligence-index-july-2026",
+      "not eligible for headline Overall ranking"
+    ],
+    "economics": {
+      "coverage": 0.0,
+      "coverage_details": {
+        "economics_workload_weighted": 0.0,
+        "economics_workloads_represented": 0,
+        "economics_workloads_total": 6
+      },
+      "diagnostics": [
+        "attempted-task cost excluded from headline Economics/aa-intelligence-index-july-2026"
+      ],
+      "provisional": false,
+      "score": null,
+      "source_record_ids": [
+        "aa-cost-grok-2026-07-17"
+      ]
+    },
+    "efficiency": {
+      "coverage": 0.0,
+      "coverage_details": {
+        "efficiency_workload_weighted": 0.0,
+        "efficiency_workloads_represented": 0,
+        "efficiency_workloads_total": 6
+      },
+      "diagnostics": [],
+      "provisional": false,
+      "score": null,
+      "source_record_ids": []
+    },
+    "eligible": false,
+    "evaluation_date": "2026-07-17",
+    "evidence_quality_share": 1.0,
+    "formula_version": "umi-methodology-v0.2-draft",
+    "headline_overall": null,
+    "model_id": "grok-4.5-high",
+    "normalization_version": "umi-normalization-v0.2",
+    "overall_coverage": 0.15125000000000002,
+    "partial_overall_estimate": 33.333333333333336,
+    "provisional": true,
+    "rank": null,
+    "source_record_ids": [
+      "aa-coding-grok-2026-07-17",
+      "aa-cost-grok-2026-07-17"
+    ],
+    "value": null,
+    "value_methodology": "geometric_mean_v1"
+  },
+  {
+    "capability": {
+      "coverage": 0.2,
+      "coverage_details": {
+        "capability_families_represented": 2,
+        "capability_families_total": 3,
+        "capability_family_weighted": 0.42105263157894735
+      },
+      "diagnostics": [],
+      "provisional": true,
+      "score": 20.0,
+      "source_record_ids": [
+        "aa-briefcase-kimi-2026-07-17",
+        "aa-gdpval-kimi-2026-07-17"
+      ]
+    },
+    "capability_domains": [
+      "agentic_work"
+    ],
+    "cohort_id": "e8aa08bb1fedbc01",
+    "cohort_model_ids": [
+      "claude-fable-5-max-fallback",
+      "glm-5.2-max",
+      "gpt-5.6-sol-max",
+      "grok-4.5-high",
+      "kimi-k3-max",
+      "muse-spark-1.1-xhigh"
+    ],
+    "confidence": "low",
+    "confidence_reasons": [
+      "11% weighted coverage",
+      "1/5 capability domains represented",
+      "0/6 efficiency workload classes",
+      "1 source organizations",
+      "100% independent/community evidence",
+      "confidence capped at Low: insufficient capability breadth"
+    ],
+    "config_fingerprint": "99c41879c8592d19bef45e4c53fda179eb4074921c175cd424db50a8011123cc",
+    "coverage": {
+      "capability_domains_represented": 1,
+      "capability_domains_total": 5,
+      "capability_family_weighted": 0.42105263157894735,
+      "economics_workload_weighted": 0.0,
+      "economics_workloads_represented": 0,
+      "economics_workloads_total": 6,
+      "efficiency_workload_weighted": 0.0,
+      "efficiency_workloads_represented": 0,
+      "efficiency_workloads_total": 6,
+      "independent_evidence_share": 1.0,
+      "overall_weighted": 0.11000000000000001,
+      "source_organization_count": 1
+    },
+    "diagnostics": [
+      "attempted-task cost excluded from headline Economics/aa-intelligence-index-july-2026",
+      "not eligible for headline Overall ranking"
+    ],
+    "economics": {
+      "coverage": 0.0,
+      "coverage_details": {
+        "economics_workload_weighted": 0.0,
+        "economics_workloads_represented": 0,
+        "economics_workloads_total": 6
+      },
+      "diagnostics": [
+        "attempted-task cost excluded from headline Economics/aa-intelligence-index-july-2026"
+      ],
+      "provisional": false,
+      "score": null,
+      "source_record_ids": [
+        "aa-cost-kimi-2026-07-17"
+      ]
+    },
+    "efficiency": {
+      "coverage": 0.0,
+      "coverage_details": {
+        "efficiency_workload_weighted": 0.0,
+        "efficiency_workloads_represented": 0,
+        "efficiency_workloads_total": 6
+      },
+      "diagnostics": [],
+      "provisional": false,
+      "score": null,
+      "source_record_ids": []
+    },
+    "eligible": false,
+    "evaluation_date": "2026-07-17",
+    "evidence_quality_share": 1.0,
+    "formula_version": "umi-methodology-v0.2-draft",
+    "headline_overall": null,
+    "model_id": "kimi-k3-max",
+    "normalization_version": "umi-normalization-v0.2",
+    "overall_coverage": 0.11000000000000001,
+    "partial_overall_estimate": 20.0,
+    "provisional": true,
+    "rank": null,
+    "source_record_ids": [
+      "aa-briefcase-kimi-2026-07-17",
+      "aa-cost-kimi-2026-07-17",
+      "aa-gdpval-kimi-2026-07-17"
+    ],
+    "value": null,
+    "value_methodology": "geometric_mean_v1"
+  },
+  {
+    "capability": {
+      "coverage": 0.275,
+      "coverage_details": {
+        "capability_families_represented": 1,
+        "capability_families_total": 3,
+        "capability_family_weighted": 0.5789473684210527
+      },
+      "diagnostics": [],
+      "provisional": true,
+      "score": 0.0,
+      "source_record_ids": [
+        "aa-coding-muse-2026-07-17"
+      ]
+    },
+    "capability_domains": [
+      "software_engineering"
+    ],
+    "cohort_id": "e8aa08bb1fedbc01",
+    "cohort_model_ids": [
+      "claude-fable-5-max-fallback",
+      "glm-5.2-max",
+      "gpt-5.6-sol-max",
+      "grok-4.5-high",
+      "kimi-k3-max",
+      "muse-spark-1.1-xhigh"
+    ],
+    "confidence": "low",
+    "confidence_reasons": [
+      "15% weighted coverage",
+      "1/5 capability domains represented",
+      "0/6 efficiency workload classes",
+      "1 source organizations",
+      "100% independent/community evidence",
+      "confidence capped at Low: insufficient capability breadth"
+    ],
+    "config_fingerprint": "99c41879c8592d19bef45e4c53fda179eb4074921c175cd424db50a8011123cc",
+    "coverage": {
+      "capability_domains_represented": 1,
+      "capability_domains_total": 5,
+      "capability_family_weighted": 0.5789473684210527,
+      "economics_workload_weighted": 0.0,
+      "economics_workloads_represented": 0,
+      "economics_workloads_total": 6,
+      "efficiency_workload_weighted": 0.0,
+      "efficiency_workloads_represented": 0,
+      "efficiency_workloads_total": 6,
+      "independent_evidence_share": 1.0,
+      "overall_weighted": 0.15125000000000002,
+      "source_organization_count": 1
+    },
+    "diagnostics": [
+      "attempted-task cost excluded from headline Economics/aa-intelligence-index-july-2026",
+      "not eligible for headline Overall ranking"
+    ],
+    "economics": {
+      "coverage": 0.0,
+      "coverage_details": {
+        "economics_workload_weighted": 0.0,
+        "economics_workloads_represented": 0,
+        "economics_workloads_total": 6
+      },
+      "diagnostics": [
+        "attempted-task cost excluded from headline Economics/aa-intelligence-index-july-2026"
+      ],
+      "provisional": false,
+      "score": null,
+      "source_record_ids": [
+        "aa-cost-muse-2026-07-17"
+      ]
+    },
+    "efficiency": {
+      "coverage": 0.0,
+      "coverage_details": {
+        "efficiency_workload_weighted": 0.0,
+        "efficiency_workloads_represented": 0,
+        "efficiency_workloads_total": 6
+      },
+      "diagnostics": [],
+      "provisional": false,
+      "score": null,
+      "source_record_ids": []
+    },
+    "eligible": false,
+    "evaluation_date": "2026-07-17",
+    "evidence_quality_share": 1.0,
+    "formula_version": "umi-methodology-v0.2-draft",
+    "headline_overall": null,
+    "model_id": "muse-spark-1.1-xhigh",
+    "normalization_version": "umi-normalization-v0.2",
+    "overall_coverage": 0.15125000000000002,
+    "partial_overall_estimate": 0.0,
+    "provisional": true,
+    "rank": null,
+    "source_record_ids": [
+      "aa-coding-muse-2026-07-17",
+      "aa-cost-muse-2026-07-17"
+    ],
+    "value": null,
+    "value_methodology": "geometric_mean_v1"
+  }
+]

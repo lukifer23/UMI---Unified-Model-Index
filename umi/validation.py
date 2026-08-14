@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import hashlib
 from dataclasses import dataclass
+from pathlib import Path
 from typing import TypeVar
 
 from umi.config import ProjectConfig
-from umi.loading import Dataset
-from umi.schemas import Provenance
+from umi.loading import Dataset, SourceRegistry
+from umi.schemas import ExternalIndexMeasurement, Provenance, TaskEconomicsMeasurement
 
 T = TypeVar("T")
 
@@ -56,6 +58,8 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
         *dataset.benchmarks,
         *dataset.pricing,
         *dataset.efficiency,
+        *dataset.task_economics,
+        *dataset.external_indexes,
     ]
     for record_id in sorted(_duplicates([item.record_id for item in provenance])):
         errors.append(f"duplicate record id: {record_id}")
@@ -130,6 +134,31 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
                 f"record {efficiency_record.record_id} is not ingestion-ready: cohort key missing"
             )
 
+    linked_records: tuple[TaskEconomicsMeasurement | ExternalIndexMeasurement, ...] = (
+        *dataset.task_economics,
+        *dataset.external_indexes,
+    )
+    for record in linked_records:
+        if record.model_id not in model_ids:
+            errors.append(f"record {record.record_id} has unknown model: {record.model_id}")
+            continue
+        model = next(item for item in dataset.models if item.id == record.model_id)
+        if record.model_snapshot_id != model.snapshot_id:
+            errors.append(
+                f"record {record.record_id} snapshot does not match model {record.model_id}"
+            )
+        if record.cohort_key == "unspecified":
+            warnings.append(f"record {record.record_id} is not ingestion-ready: cohort key missing")
+        if record.raw_artifact_available is not True:
+            warnings.append(
+                f"record {record.record_id} is not ingestion-ready: raw artifact not retained"
+            )
+        if not record.evaluator or record.configuration_verified is not True:
+            warnings.append(
+                f"record {record.record_id} is not ingestion-ready: "
+                "evaluator/configuration unverified"
+            )
+
     if family_ids != {definition.family for definition in config.benchmarks}:
         missing = {definition.family for definition in config.benchmarks} - family_ids
         unused = family_ids - {definition.family for definition in config.benchmarks}
@@ -173,4 +202,50 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
         if count > 1:
             warnings.append(f"conflicting benchmark measurements preserved for {key[0]}/{key[1]}")
 
+    return ValidationReport(tuple(sorted(set(errors))), tuple(sorted(set(warnings))))
+
+
+def validate_source_registry(
+    registry: SourceRegistry, registry_path: str | Path, dataset: Dataset | None = None
+) -> ValidationReport:
+    errors: list[str] = []
+    warnings: list[str] = []
+    path = Path(registry_path)
+    for snapshot_id in sorted(_duplicates([item.id for item in registry.snapshots])):
+        errors.append(f"duplicate source snapshot id: {snapshot_id}")
+    registry_urls = {str(item.source.url) for item in registry.snapshots}
+    registry_ids = {item.id for item in registry.snapshots}
+    registry_root = path.parent.resolve()
+    for snapshot in registry.snapshots:
+        artifact = (registry_root / snapshot.artifact_path).resolve()
+        if not artifact.is_relative_to(registry_root):
+            errors.append(f"source snapshot {snapshot.id} artifact escapes registry directory")
+            continue
+        if not artifact.is_file():
+            errors.append(f"source snapshot {snapshot.id} artifact is missing: {artifact}")
+            continue
+        digest = hashlib.sha256(artifact.read_bytes()).hexdigest()
+        if digest != snapshot.artifact_sha256:
+            errors.append(f"source snapshot {snapshot.id} artifact checksum mismatch")
+    if dataset is not None:
+        for model in dataset.models:
+            if not model.source_snapshot_ids:
+                warnings.append(f"model {model.id} has no source snapshot references")
+            for snapshot_id in model.source_snapshot_ids:
+                if snapshot_id not in registry_ids:
+                    errors.append(
+                        f"model {model.id} references unknown source snapshot: {snapshot_id}"
+                    )
+        records: tuple[Provenance, ...] = (
+            *dataset.benchmarks,
+            *dataset.pricing,
+            *dataset.efficiency,
+            *dataset.task_economics,
+            *dataset.external_indexes,
+        )
+        for record in records:
+            if str(record.source.url) not in registry_urls:
+                warnings.append(
+                    f"record {record.record_id} source URL is absent from source registry"
+                )
     return ValidationReport(tuple(sorted(set(errors))), tuple(sorted(set(warnings))))

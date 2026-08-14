@@ -24,8 +24,8 @@ def provenance() -> dict[str, object]:
 
 
 def test_configuration_is_deterministic_and_complete() -> None:
-    first = load_project_config(ROOT / "config")
-    second = load_project_config(ROOT / "config")
+    first = load_project_config(ROOT / "tests" / "fixtures" / "config")
+    second = load_project_config(ROOT / "tests" / "fixtures" / "config")
     assert first.fingerprint == second.fingerprint
     assert len(first.fingerprint) == 64
     assert sum(first.weights.capability_domains.values()) == pytest.approx(1.0)
@@ -64,7 +64,7 @@ def test_efficiency_rejects_bad_rates_counts_and_empty_observations() -> None:
 
 
 def test_unknown_fields_and_units_are_rejected() -> None:
-    path = ROOT / "config"
+    path = ROOT / "tests" / "fixtures" / "config"
     raw = load_project_config(path).benchmarks[0].model_dump(mode="json")
     raw["unit"] = "requests_per_fortnight"
     from umi.schemas import BenchmarkDefinition

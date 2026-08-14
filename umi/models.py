@@ -6,8 +6,11 @@ from umi.schemas import (
     BenchmarkMeasurement,
     CoverageSummary,
     EfficiencyMeasurement,
+    ExternalIndexMeasurement,
     ModelConfiguration,
     PricingRecord,
+    SourceSnapshot,
+    TaskEconomicsMeasurement,
 )
 
 __all__ = [
@@ -15,7 +18,10 @@ __all__ = [
     "BenchmarkFamilyDefinition",
     "BenchmarkMeasurement",
     "EfficiencyMeasurement",
+    "ExternalIndexMeasurement",
     "ModelConfiguration",
     "PricingRecord",
+    "SourceSnapshot",
+    "TaskEconomicsMeasurement",
     "CoverageSummary",
 ]

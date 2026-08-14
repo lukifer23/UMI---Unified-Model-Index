@@ -1,0 +1,10 @@
+capture_id: aa-muse-spark-1.1-page-2026-08-14
+capture_type: manually-reviewed-fact-transcription
+source_url: https://artificialanalysis.ai/models/muse-spark-1-1/
+accessed: 2026-08-14
+facts:
+  model: Muse Spark 1.1 (xhigh)
+  provider: Meta
+  release_date: 2026-07-09
+limitations:
+  - Mutable model page used for identity metadata only, not measurement values.

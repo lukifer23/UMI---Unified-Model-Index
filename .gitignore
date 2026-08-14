@@ -13,3 +13,5 @@ dist/
 build/
 data/processed/*
 !data/processed/.gitkeep
+!data/processed/pilot-2026-07-17/
+!data/processed/pilot-2026-07-17/**

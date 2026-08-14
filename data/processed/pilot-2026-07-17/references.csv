@@ -1,0 +1,13 @@
+cohort_key,measurement_type,metric_id,model_id,record_id,scoring_role,unit_or_basis,value
+aa-intelligence-index-2026-07-17,external_index,artificial-analysis-intelligence-index,claude-fable-5-max-fallback,aa-index-fable-2026-07-17,reference_only,score,60.0
+aa-intelligence-index-2026-07-17,external_index,artificial-analysis-intelligence-index,glm-5.2-max,aa-index-glm-2026-07-17,reference_only,score,51.0
+aa-intelligence-index-2026-07-17,external_index,artificial-analysis-intelligence-index,gpt-5.6-sol-max,aa-index-sol-2026-07-17,reference_only,score,59.0
+aa-intelligence-index-2026-07-17,external_index,artificial-analysis-intelligence-index,grok-4.5-high,aa-index-grok-2026-07-17,reference_only,score,54.0
+aa-intelligence-index-2026-07-17,external_index,artificial-analysis-intelligence-index,kimi-k3-max,aa-index-kimi-2026-07-17,reference_only,score,57.0
+aa-intelligence-index-2026-07-17,external_index,artificial-analysis-intelligence-index,muse-spark-1.1-xhigh,aa-index-muse-2026-07-17,reference_only,score,51.0
+aa-intelligence-index-cost-2026-07-17,task_economics,aa-intelligence-index-july-2026,claude-fable-5-max-fallback,aa-cost-fable-2026-07-17,reference_only,attempted_task,2.75
+aa-intelligence-index-cost-2026-07-17,task_economics,aa-intelligence-index-july-2026,glm-5.2-max,aa-cost-glm-2026-07-17,reference_only,attempted_task,0.32
+aa-intelligence-index-cost-2026-07-17,task_economics,aa-intelligence-index-july-2026,gpt-5.6-sol-max,aa-cost-sol-2026-07-17,reference_only,attempted_task,1.04
+aa-intelligence-index-cost-2026-07-17,task_economics,aa-intelligence-index-july-2026,grok-4.5-high,aa-cost-grok-2026-07-17,reference_only,attempted_task,0.31
+aa-intelligence-index-cost-2026-07-17,task_economics,aa-intelligence-index-july-2026,kimi-k3-max,aa-cost-kimi-2026-07-17,reference_only,attempted_task,0.94
+aa-intelligence-index-cost-2026-07-17,task_economics,aa-intelligence-index-july-2026,muse-spark-1.1-xhigh,aa-cost-muse-2026-07-17,reference_only,attempted_task,0.26

@@ -10,7 +10,7 @@ ROOT = Path(__file__).parents[1]
 
 @pytest.fixture(scope="session")
 def config() -> ProjectConfig:
-    return load_project_config(ROOT / "config")
+    return load_project_config(ROOT / "tests" / "fixtures" / "config")
 
 
 @pytest.fixture(scope="session")

@@ -63,6 +63,7 @@ class ConfigurationEffort(StrEnum):
     MEDIUM = "medium"
     HIGH = "high"
     MAX = "max"
+    XHIGH = "xhigh"
     CUSTOM = "custom"
 
 
@@ -79,6 +80,11 @@ class ValueFormula(StrEnum):
     GEOMETRIC = "geometric_mean_v1"
     WEIGHTED_GEOMETRIC = "weighted_geometric_v1"
     HARMONIC = "harmonic_mean_v1"
+
+
+class CostBasis(StrEnum):
+    ATTEMPTED_TASK = "attempted_task"
+    SUCCESSFUL_TASK = "successful_task"
 
 
 class Source(StrictModel):
@@ -112,6 +118,7 @@ class ModelConfiguration(StrictModel):
     configuration: ConfigurationEffort
     snapshot_id: Identifier = "unspecified"
     api_model_id: str | None = None
+    source_snapshot_ids: tuple[Identifier, ...] = ()
     open_weights: bool
     context_window: int | None = Field(default=None, gt=0)
     notes: str | None = None
@@ -236,6 +243,40 @@ class EfficiencyMeasurement(Provenance):
         if not any(value is not None for value in observed):
             raise ValueError("efficiency record must contain at least one observation")
         return self
+
+
+class TaskEconomicsMeasurement(Provenance):
+    model_id: Identifier
+    workload: Identifier
+    workload_category: WorkloadCategory
+    cohort_key: Identifier
+    model_snapshot_id: Identifier
+    evaluation_date: date
+    cost_basis: CostBasis
+    mean_cost_usd: NonNegative
+    number_of_tasks: int | None = Field(default=None, gt=0)
+
+
+class ExternalIndexMeasurement(Provenance):
+    index_id: Identifier
+    model_id: Identifier
+    value: float
+    unit: Unit
+    direction: Direction
+    cohort_key: Identifier
+    model_snapshot_id: Identifier
+    evaluation_date: date
+
+
+class SourceSnapshot(StrictModel):
+    id: Identifier
+    title: str = Field(min_length=1)
+    source: Source
+    published: date | None = None
+    as_of: date
+    artifact_path: str = Field(min_length=1)
+    artifact_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    notes: str = Field(min_length=1)
 
 
 class ComponentScore(StrictModel):

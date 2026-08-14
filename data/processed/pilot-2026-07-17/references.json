@@ -1,0 +1,122 @@
+[
+  {
+    "cohort_key": "aa-intelligence-index-2026-07-17",
+    "measurement_type": "external_index",
+    "metric_id": "artificial-analysis-intelligence-index",
+    "model_id": "claude-fable-5-max-fallback",
+    "record_id": "aa-index-fable-2026-07-17",
+    "scoring_role": "reference_only",
+    "unit_or_basis": "score",
+    "value": 60.0
+  },
+  {
+    "cohort_key": "aa-intelligence-index-2026-07-17",
+    "measurement_type": "external_index",
+    "metric_id": "artificial-analysis-intelligence-index",
+    "model_id": "glm-5.2-max",
+    "record_id": "aa-index-glm-2026-07-17",
+    "scoring_role": "reference_only",
+    "unit_or_basis": "score",
+    "value": 51.0
+  },
+  {
+    "cohort_key": "aa-intelligence-index-2026-07-17",
+    "measurement_type": "external_index",
+    "metric_id": "artificial-analysis-intelligence-index",
+    "model_id": "gpt-5.6-sol-max",
+    "record_id": "aa-index-sol-2026-07-17",
+    "scoring_role": "reference_only",
+    "unit_or_basis": "score",
+    "value": 59.0
+  },
+  {
+    "cohort_key": "aa-intelligence-index-2026-07-17",
+    "measurement_type": "external_index",
+    "metric_id": "artificial-analysis-intelligence-index",
+    "model_id": "grok-4.5-high",
+    "record_id": "aa-index-grok-2026-07-17",
+    "scoring_role": "reference_only",
+    "unit_or_basis": "score",
+    "value": 54.0
+  },
+  {
+    "cohort_key": "aa-intelligence-index-2026-07-17",
+    "measurement_type": "external_index",
+    "metric_id": "artificial-analysis-intelligence-index",
+    "model_id": "kimi-k3-max",
+    "record_id": "aa-index-kimi-2026-07-17",
+    "scoring_role": "reference_only",
+    "unit_or_basis": "score",
+    "value": 57.0
+  },
+  {
+    "cohort_key": "aa-intelligence-index-2026-07-17",
+    "measurement_type": "external_index",
+    "metric_id": "artificial-analysis-intelligence-index",
+    "model_id": "muse-spark-1.1-xhigh",
+    "record_id": "aa-index-muse-2026-07-17",
+    "scoring_role": "reference_only",
+    "unit_or_basis": "score",
+    "value": 51.0
+  },
+  {
+    "cohort_key": "aa-intelligence-index-cost-2026-07-17",
+    "measurement_type": "task_economics",
+    "metric_id": "aa-intelligence-index-july-2026",
+    "model_id": "claude-fable-5-max-fallback",
+    "record_id": "aa-cost-fable-2026-07-17",
+    "scoring_role": "reference_only",
+    "unit_or_basis": "attempted_task",
+    "value": 2.75
+  },
+  {
+    "cohort_key": "aa-intelligence-index-cost-2026-07-17",
+    "measurement_type": "task_economics",
+    "metric_id": "aa-intelligence-index-july-2026",
+    "model_id": "glm-5.2-max",
+    "record_id": "aa-cost-glm-2026-07-17",
+    "scoring_role": "reference_only",
+    "unit_or_basis": "attempted_task",
+    "value": 0.32
+  },
+  {
+    "cohort_key": "aa-intelligence-index-cost-2026-07-17",
+    "measurement_type": "task_economics",
+    "metric_id": "aa-intelligence-index-july-2026",
+    "model_id": "gpt-5.6-sol-max",
+    "record_id": "aa-cost-sol-2026-07-17",
+    "scoring_role": "reference_only",
+    "unit_or_basis": "attempted_task",
+    "value": 1.04
+  },
+  {
+    "cohort_key": "aa-intelligence-index-cost-2026-07-17",
+    "measurement_type": "task_economics",
+    "metric_id": "aa-intelligence-index-july-2026",
+    "model_id": "grok-4.5-high",
+    "record_id": "aa-cost-grok-2026-07-17",
+    "scoring_role": "reference_only",
+    "unit_or_basis": "attempted_task",
+    "value": 0.31
+  },
+  {
+    "cohort_key": "aa-intelligence-index-cost-2026-07-17",
+    "measurement_type": "task_economics",
+    "metric_id": "aa-intelligence-index-july-2026",
+    "model_id": "kimi-k3-max",
+    "record_id": "aa-cost-kimi-2026-07-17",
+    "scoring_role": "reference_only",
+    "unit_or_basis": "attempted_task",
+    "value": 0.94
+  },
+  {
+    "cohort_key": "aa-intelligence-index-cost-2026-07-17",
+    "measurement_type": "task_economics",
+    "metric_id": "aa-intelligence-index-july-2026",
+    "model_id": "muse-spark-1.1-xhigh",
+    "record_id": "aa-cost-muse-2026-07-17",
+    "scoring_role": "reference_only",
+    "unit_or_basis": "attempted_task",
+    "value": 0.26
+  }
+]

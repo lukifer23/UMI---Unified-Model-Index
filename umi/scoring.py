@@ -41,6 +41,15 @@ def score_dataset(dataset: Dataset, config: ProjectConfig) -> list[ScoringResult
     cohort_id = hashlib.sha256(
         (config.fingerprint + "\0" + "\0".join(cohort_model_ids)).encode()
     ).hexdigest()[:16]
+    observed_dates = [
+        item.evaluation_date for item in dataset.benchmarks if item.evaluation_date is not None
+    ]
+    observed_dates.extend(
+        item.evaluation_date for item in dataset.efficiency if item.evaluation_date is not None
+    )
+    observed_dates.extend(item.evaluation_date for item in dataset.task_economics)
+    observed_dates.extend(item.evaluation_date for item in dataset.external_indexes)
+    evaluation_date = max(observed_dates) if observed_dates else config.eligibility.release_end
     for model in sorted(dataset.models, key=lambda item: item.id):
         cap = capability.components[model.id]
         eff = efficiency.components[model.id]
@@ -100,6 +109,9 @@ def score_dataset(dataset: Dataset, config: ProjectConfig) -> list[ScoringResult
             overall is not None
             and overall_coverage >= config.eligibility.minimum_overall_coverage
             and len(domains) >= config.eligibility.minimum_capability_domains
+            and config.eligibility.release_start
+            <= model.release_date
+            <= config.eligibility.release_end
             and (
                 eff.score is None
                 or efficiency_workload_coverage
@@ -129,6 +141,13 @@ def score_dataset(dataset: Dataset, config: ProjectConfig) -> list[ScoringResult
                 *eff.diagnostics,
                 *econ.diagnostics,
                 *([] if eligible else ["not eligible for headline Overall ranking"]),
+                *(
+                    []
+                    if config.eligibility.release_start
+                    <= model.release_date
+                    <= config.eligibility.release_end
+                    else ["model release date is outside the configured eligibility window"]
+                ),
             }
         )
         results.append(
@@ -176,7 +195,7 @@ def score_dataset(dataset: Dataset, config: ProjectConfig) -> list[ScoringResult
                 ),
                 cohort_id=cohort_id,
                 cohort_model_ids=cohort_model_ids,
-                evaluation_date=config.eligibility.release_end,
+                evaluation_date=evaluation_date,
                 normalization_version="umi-normalization-v0.2",
                 config_fingerprint=config.fingerprint,
                 formula_version="umi-methodology-v0.2-draft",

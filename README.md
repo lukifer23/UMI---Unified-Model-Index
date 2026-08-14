@@ -8,10 +8,11 @@ This initial milestone contains the schemas, configuration, scoring engine, anal
 
 ```powershell
 uv sync --extra dev
-uv run umi validate --data-dir tests/fixtures
-uv run umi rank --data-dir tests/fixtures --format json
-uv run umi sensitivity --data-dir tests/fixtures
-uv run umi value-sensitivity --data-dir tests/fixtures
+uv run umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config
+uv run umi rank --data-dir tests/fixtures --config-dir tests/fixtures/config --format json
+uv run umi sensitivity --data-dir tests/fixtures --config-dir tests/fixtures/config
+uv run umi value-sensitivity --data-dir tests/fixtures --config-dir tests/fixtures/config
+uv run umi references --data-dir data/raw --config-dir config
 uv run umi correlations --data-dir tests/fixtures
 uv run umi pareto --data-dir tests/fixtures
 ```
@@ -24,6 +25,7 @@ Use `--config-dir config` to select another configuration directory and `--outpu
 | `rank` | Calculate Capability, Efficiency, Economics, Overall, Value, coverage, confidence, and ranks. |
 | `sensitivity` | Re-rank the cohort under every configured Overall weighting set. |
 | `value-sensitivity` | Test experimental Value formulas and report rank ranges. |
+| `references` | Export typed non-scoring external indexes and task-cost observations. |
 | `correlations` | Calculate pairwise Pearson, Spearman, and overlap counts for benchmark measurements. |
 | `pareto` | Find dominated models for capability versus cost, effective tokens, and latency. |
 
@@ -77,3 +79,16 @@ The v1 formulas are explicit hypotheses, not claims of objective truth. Scores a
 ## Recommended next milestone
 
 Build a source registry and a small, manually reviewed ingestion adapter for one independent evaluator. Populate a narrow cross-model slice, retain the raw capture alongside parsed records, and produce a validation report before broadening coverage. Do not begin with bulk scraping.
+
+## First real-data pilot
+
+`data/raw/` now contains a six-configuration snapshot transcribed from Artificial
+Analysis's dated July 17, 2026 frontier article. The checksummed fact capture and
+registry are under `data/sources/`; reproducible outputs are under
+`data/processed/pilot-2026-07-17/`.
+
+This pilot intentionally publishes **no UMI headline ranking**. It has only one or
+two represented Capability domains per model, no Efficiency runs, one evaluator,
+and cost per attempted—not successful—task. The complete Artificial Analysis
+Intelligence Index is retained as an external reference rather than misclassified
+as a UMI domain. See `PILOT_REPORT.md` for the data-quality decision.

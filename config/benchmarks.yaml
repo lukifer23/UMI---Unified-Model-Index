@@ -1,47 +1,38 @@
 families:
-  - {id: synthetic-general-family, domain: general_reasoning, weight: 1.0, cap: 1.0}
-  - {id: synthetic-code-family, domain: software_engineering, weight: 1.0, cap: 1.0}
-  - {id: synthetic-agent-family, domain: agentic_work, weight: 1.0, cap: 1.0}
-  - {id: synthetic-math-family, domain: math_science, weight: 1.0, cap: 1.0}
-  - {id: synthetic-context-family, domain: context_reliability, weight: 1.0, cap: 1.0}
-benchmarks:
-  - id: synthetic-general
-    name: Synthetic General Reasoning
-    domain: general_reasoning
-    family: synthetic-general-family
-    direction: higher
-    unit: percent
-    representation_weight: 1.0
-    normalization: robust_z
-  - id: synthetic-code
-    name: Synthetic Software Engineering
+  - id: aa-coding-agent-index
     domain: software_engineering
-    family: synthetic-code-family
-    direction: higher
-    unit: percent
-    representation_weight: 1.0
-    normalization: robust_z
-  - id: synthetic-agent
-    name: Synthetic Agent Work
+    weight: 1.0
+    cap: 1.0
+  - id: gdpval-aa-v2
     domain: agentic_work
-    family: synthetic-agent-family
+    weight: 0.60
+    cap: 0.60
+  - id: aa-briefcase
+    domain: agentic_work
+    weight: 0.40
+    cap: 0.40
+benchmarks:
+  - id: aa-coding-agent-index
+    name: Artificial Analysis Coding Agent Index
+    domain: software_engineering
+    family: aa-coding-agent-index
     direction: higher
-    unit: percent
+    unit: score
     representation_weight: 1.0
     normalization: robust_z
-  - id: synthetic-math
-    name: Synthetic Math/Science
-    domain: math_science
-    family: synthetic-math-family
+  - id: gdpval-aa-v2
+    name: GDPval-AA v2
+    domain: agentic_work
+    family: gdpval-aa-v2
     direction: higher
-    unit: percent
+    unit: score
     representation_weight: 1.0
     normalization: robust_z
-  - id: synthetic-context
-    name: Synthetic Context Reliability
-    domain: context_reliability
-    family: synthetic-context-family
+  - id: aa-briefcase
+    name: AA-Briefcase Elo
+    domain: agentic_work
+    family: aa-briefcase
     direction: higher
-    unit: percent
+    unit: score
     representation_weight: 1.0
     normalization: robust_z

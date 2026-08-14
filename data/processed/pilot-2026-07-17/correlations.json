@@ -1,0 +1,41 @@
+[
+  {
+    "benchmark_a": "aa-briefcase",
+    "benchmark_b": "aa-coding-agent-index",
+    "cohort_a": "aa-briefcase-2026-07-17",
+    "cohort_b": "aa-coding-agent-index-2026-07-17",
+    "family_a": "aa-briefcase",
+    "family_b": "aa-coding-agent-index",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 2,
+    "pearson": -1.0,
+    "spearman": -0.9999999999999999
+  },
+  {
+    "benchmark_a": "aa-briefcase",
+    "benchmark_b": "gdpval-aa-v2",
+    "cohort_a": "aa-briefcase-2026-07-17",
+    "cohort_b": "gdpval-aa-v2-2026-07-17",
+    "family_a": "aa-briefcase",
+    "family_b": "gdpval-aa-v2",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 3,
+    "pearson": 0.01566729075436127,
+    "spearman": 0.5
+  },
+  {
+    "benchmark_a": "aa-coding-agent-index",
+    "benchmark_b": "gdpval-aa-v2",
+    "cohort_a": "aa-coding-agent-index-2026-07-17",
+    "cohort_b": "gdpval-aa-v2-2026-07-17",
+    "family_a": "aa-coding-agent-index",
+    "family_b": "gdpval-aa-v2",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 2,
+    "pearson": -1.0,
+    "spearman": -0.9999999999999999
+  }
+]

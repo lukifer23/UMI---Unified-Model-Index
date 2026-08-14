@@ -1,0 +1,28 @@
+measurements:
+  - &index
+    record_id: aa-index-fable-2026-07-17
+    index_id: artificial-analysis-intelligence-index
+    model_id: claude-fable-5-max-fallback
+    model_snapshot_id: claude-fable-5-max-fallback-aa-2026-07-17
+    value: 60
+    unit: score
+    direction: higher
+    cohort_key: aa-intelligence-index-2026-07-17
+    evaluation_date: 2026-07-17
+    source: &source {organization: Artificial Analysis, url: "https://artificialanalysis.ai/articles/four-frontier-launches-in-eight-days-six-labs-now-field-a-model-above-50-on-the-artificial-analysis-intelligence-index", accessed: 2026-08-14}
+    result_type: independent
+    benchmark_version: article-snapshot-2026-07-17
+    harness_version: aa-managed-snapshot-2026-07-17
+    metric_definition: Artificial Analysis Intelligence Index composite score, higher is better
+    evaluator: Artificial Analysis
+    harness_owner: Artificial Analysis
+    run_executor: Artificial Analysis
+    raw_artifact_available: true
+    reproducible: false
+    configuration_verified: true
+    notes: External cross-domain index retained for reference only; excluded from UMI scoring.
+  - {<<: *index, record_id: aa-index-sol-2026-07-17, model_id: gpt-5.6-sol-max, model_snapshot_id: gpt-5.6-sol-max-aa-2026-07-17, value: 59}
+  - {<<: *index, record_id: aa-index-kimi-2026-07-17, model_id: kimi-k3-max, model_snapshot_id: kimi-k3-max-aa-2026-07-17, value: 57}
+  - {<<: *index, record_id: aa-index-grok-2026-07-17, model_id: grok-4.5-high, model_snapshot_id: grok-4.5-high-aa-2026-07-17, value: 54}
+  - {<<: *index, record_id: aa-index-glm-2026-07-17, model_id: glm-5.2-max, model_snapshot_id: glm-5.2-max-aa-2026-07-17, value: 51}
+  - {<<: *index, record_id: aa-index-muse-2026-07-17, model_id: muse-spark-1.1-xhigh, model_snapshot_id: muse-spark-1.1-xhigh-aa-2026-07-17, value: 51}

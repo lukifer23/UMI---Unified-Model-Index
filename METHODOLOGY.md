@@ -7,7 +7,7 @@ This document is authoritative. Code and configuration must not introduce scorin
 
 ## Entity, eligibility, and evidence
 
-The unit of analysis is a model configuration, including reasoning effort. The default release window is 2026-06-15 through 2026-08-14. A model may receive partial component scores, but a headline Overall rank requires at least 60% weighted Overall coverage and Capability evidence in at least three domains.
+The unit of analysis is a model configuration, including reasoning effort. The default release window is 2026-06-15 through 2026-08-14. A model may receive partial component scores, but a headline Overall rank requires a release date inside that window, at least 60% weighted Overall coverage, and Capability evidence in at least three domains.
 
 Every measurement requires provenance, including organization, URL, access date, result type, benchmark version, harness when known, model configuration, tools status, and metric definition. Conflicting measurements are preserved. For scoring, use the median of independent measurements when present; otherwise use the median from the first available tier in this order: community reproduction, vendor reported, derived. Emit a conflict diagnostic whenever more than one candidate record exists.
 
@@ -51,6 +51,29 @@ Economics uses the same explicit workload classes and class budgets. Costs from
 unlike classes are never normalized against each other or interpreted as direct
 price ratios. The first real-data pilot must remain narrow when comparable baskets
 are unavailable.
+
+Observed task-cost records state whether their denominator is an attempted task or
+a successful task. Attempted-task cost is retained as a reference measurement but
+does not enter headline Economics. It must never be converted to successful-task
+cost without a measured success rate from the same compatible cohort.
+
+## External indexes
+
+Third-party composite indexes may be useful reference observations but can span
+multiple UMI domains with undisclosed or incompatible internal weights. UMI stores
+them as typed external-index measurements and never assigns them to a convenient
+Capability domain. They are excluded from Capability, Overall, and Value unless a
+future methodology defines an explicit cross-domain mapping.
+
+## First real-data pilot
+
+The first pilot is a dated snapshot, not a current leaderboard mirror. It uses the
+Artificial Analysis article published 2026-07-17 and the six configurations named
+there. Values are transcribed into an inspectable fact capture with source location
+notes. Mutable current model pages are not mixed into that snapshot. The pilot may
+produce partial component estimates, but no headline rank is expected because the
+source does not supply three compatible UMI Capability domains or observed
+successful-task cost.
 
 `CostPerSuccessfulTask = MeanCostPerAttempt / SuccessRate`. Headline Economics uses comparable observed cost per successful task only. Advertised input, cached-input, output, cache-write, reasoning-token, long-context, and tool pricing are stored and validated but are not converted into a headline score until workload baskets exist.
 

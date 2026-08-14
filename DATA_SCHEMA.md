@@ -2,7 +2,8 @@
 
 ## v0.2 adversarial-hardening additions
 
-- Models carry immutable `snapshot_id` and optional provider `api_model_id` values.
+- Models carry immutable `snapshot_id`, optional provider `api_model_id`, and
+  `source_snapshot_ids` linking identity facts to the source registry.
 - Provenance preserves evaluator, harness-owner, executor, raw-artifact,
   reproducibility, and configuration-verification metadata when known.
 - Measurements carry `cohort_key`, `model_snapshot_id`, and `evaluation_date`;
@@ -17,6 +18,21 @@
 - Output has `partial_overall_estimate` and nullable `headline_overall`, never an
   ambiguous `overall`, plus Value methodology, confidence reasons,
   multi-dimensional coverage, and cohort identity.
+
+## Real-pilot record types
+
+`task_economics.yaml` stores observed task cost with an explicit `cost_basis` of
+`attempted_task` or `successful_task`. Only successful-task records may enter
+headline Economics. `external_indexes.yaml` stores third-party composite indexes
+with their own unit, direction, cohort, and provenance; these records are reference
+observations and do not enter UMI scoring.
+
+`data/sources/registry.yaml` contains source snapshots with publication/as-of/access
+dates, a relative artifact path, and SHA-256 checksum. Validation detects missing or
+modified captures and warns when measurement URLs are absent from the registry.
+`configuration_verified: true` means UMI verified the recorded configuration facts
+against the cited source; it does not mean the evaluator run was independently
+reproduced. `reproducible` records that separate property.
 
 All raw files are YAML documents containing a top-level list named for the record type. IDs use lowercase ASCII letters, digits, dots, underscores, or hyphens and must begin with an alphanumeric character. Unknown fields are rejected.
 

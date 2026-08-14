@@ -14,12 +14,13 @@ from pydantic import BaseModel, ValidationError
 from analysis.correlations import benchmark_correlations
 from analysis.pareto_metrics import pareto_dimensions
 from analysis.rankings import rank_results
+from analysis.references import reference_observations
 from analysis.sensitivity import analyze_sensitivity
 from analysis.value_sensitivity import analyze_value_sensitivity
 from umi.config import load_project_config
-from umi.loading import load_dataset
+from umi.loading import load_dataset, load_source_registry
 from umi.scoring import score_dataset
-from umi.validation import DataValidationError, validate_dataset
+from umi.validation import DataValidationError, validate_dataset, validate_source_registry
 
 
 def _primitive(value: Any) -> Any:
@@ -77,6 +78,7 @@ def _add_common(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--config-dir", default="config")
     parser.add_argument("--format", choices=("json", "csv"), default="json")
     parser.add_argument("--output")
+    parser.add_argument("--source-registry")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -87,6 +89,7 @@ def build_parser() -> argparse.ArgumentParser:
         "rank",
         "sensitivity",
         "value-sensitivity",
+        "references",
         "correlations",
         "pareto",
     ):
@@ -105,6 +108,14 @@ def run(args: argparse.Namespace) -> int:
     dataset = load_dataset(args.data_dir)
     if args.command == "validate":
         report = validate_dataset(dataset, config)
+        if args.source_registry:
+            source_report = validate_source_registry(
+                load_source_registry(args.source_registry), args.source_registry, dataset
+            )
+            report = type(report)(
+                errors=tuple(sorted({*report.errors, *source_report.errors})),
+                warnings=tuple(sorted({*report.warnings, *source_report.warnings})),
+            )
         _emit(
             {"valid": report.valid, "errors": report.errors, "warnings": report.warnings},
             args.format,
@@ -113,7 +124,9 @@ def run(args: argparse.Namespace) -> int:
         return 0 if report.valid else 1
     results = score_dataset(dataset, config)
     payload: Any
-    if args.command == "rank":
+    if args.command == "references":
+        payload = reference_observations(dataset)
+    elif args.command == "rank":
         ranked = rank_results(results, eligible_only=not args.include_provisional)
         payload = [{"rank": item.rank, **item.result.model_dump(mode="json")} for item in ranked]
     elif args.command == "sensitivity":

@@ -6,30 +6,73 @@ from umi._component import ComponentComputation, consolidate_numeric, weighted_a
 from umi.config import ProjectConfig
 from umi.loading import Dataset
 from umi.normalize import normalize_cohort
-from umi.schemas import ComponentScore, Direction, EfficiencyMeasurement, Provenance
+from umi.schemas import (
+    ComponentScore,
+    CostBasis,
+    Direction,
+    EfficiencyMeasurement,
+    Provenance,
+    TaskEconomicsMeasurement,
+)
 
 
 def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputation:
     grouped: dict[tuple[str, str, str], list[EfficiencyMeasurement]] = defaultdict(list)
-    for item in dataset.efficiency:
-        grouped[(item.workload, item.cohort_key, item.model_id)].append(item)
-    category_scores: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
+    for efficiency_record in dataset.efficiency:
+        grouped[
+            (
+                efficiency_record.workload,
+                efficiency_record.cohort_key,
+                efficiency_record.model_id,
+            )
+        ].append(efficiency_record)
+    direct: dict[tuple[str, str, str], list[TaskEconomicsMeasurement]] = defaultdict(list)
     evidence: dict[str, list[Provenance]] = defaultdict(list)
-    provisional: dict[str, bool] = defaultdict(bool)
     diagnostics: dict[str, list[str]] = defaultdict(list)
-    for workload, cohort_key in sorted({(key[0], key[1]) for key in grouped}):
+    for economics_record in dataset.task_economics:
+        if economics_record.cost_basis == CostBasis.SUCCESSFUL_TASK:
+            direct[
+                (
+                    economics_record.workload,
+                    economics_record.cohort_key,
+                    economics_record.model_id,
+                )
+            ].append(economics_record)
+        else:
+            evidence[economics_record.model_id].append(economics_record)
+            diagnostics[economics_record.model_id].append(
+                f"attempted-task cost excluded from headline Economics/{economics_record.workload}"
+            )
+    category_scores: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
+    provisional: dict[str, bool] = defaultdict(bool)
+    cohort_keys = {(key[0], key[1]) for key in grouped} | {(key[0], key[1]) for key in direct}
+    for workload, cohort_key in sorted(cohort_keys):
         costs: dict[str, float] = {}
         categories: dict[str, str] = {}
-        for (candidate, candidate_cohort, model_id), records in grouped.items():
+        for (candidate, candidate_cohort, model_id), direct_records in direct.items():
             if candidate != workload or candidate_cohort != cohort_key:
                 continue
-            categories[model_id] = records[0].workload_category.value
-            cost, selected, conflict = consolidate_numeric(records, "mean_cost_per_attempt")
-            success, _, _ = consolidate_numeric(records, "success_rate")
+            categories[model_id] = direct_records[0].workload_category.value
+            cost, direct_selected, conflict = consolidate_numeric(direct_records, "mean_cost_usd")
+            if cost is not None:
+                costs[model_id] = cost
+                evidence[model_id].extend(direct_selected)
+            if conflict:
+                diagnostics[model_id].append(f"conflict consolidated for economics/{workload}")
+        for (candidate, candidate_cohort, model_id), efficiency_records in grouped.items():
+            if candidate != workload or candidate_cohort != cohort_key:
+                continue
+            if (candidate, candidate_cohort, model_id) in direct:
+                continue
+            categories[model_id] = efficiency_records[0].workload_category.value
+            cost, efficiency_selected, conflict = consolidate_numeric(
+                efficiency_records, "mean_cost_per_attempt"
+            )
+            success, _, _ = consolidate_numeric(efficiency_records, "success_rate")
             if cost is None or success is None:
                 continue
             costs[model_id] = float("inf") if success == 0 else cost / success
-            evidence[model_id].extend(selected)
+            evidence[model_id].extend(efficiency_selected)
             if conflict:
                 diagnostics[model_id].append(f"conflict consolidated for economics/{workload}")
         normalized = normalize_cohort(

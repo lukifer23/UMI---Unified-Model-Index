@@ -1,0 +1,27 @@
+capture_id: aa-frontier-2026-07-17
+capture_type: manually-reviewed-fact-transcription
+source_url: https://artificialanalysis.ai/articles/four-frontier-launches-in-eight-days-six-labs-now-field-a-model-above-50-on-the-artificial-analysis-intelligence-index
+published: 2026-07-17
+accessed: 2026-08-14
+facts:
+  intelligence_index:
+    source_location: article lines 17, 20, 25, and 31
+    values: {claude-fable-5-max-fallback: 60, gpt-5.6-sol-max: 59, kimi-k3-max: 57, grok-4.5-high: 54, glm-5.2-max: 51, muse-spark-1.1-xhigh: 51}
+  cost_per_attempted_index_task_usd:
+    source_location: article lines 27, 28, and 40
+    values: {claude-fable-5-max-fallback: 2.75, gpt-5.6-sol-max: 1.04, kimi-k3-max: 0.94, grok-4.5-high: 0.31, glm-5.2-max: 0.32, muse-spark-1.1-xhigh: 0.26}
+  coding_agent_index:
+    source_location: article line 37
+    values: {gpt-5.6-sol-max: 80, claude-fable-5-max-fallback: 77, grok-4.5-high: 76, muse-spark-1.1-xhigh: 69}
+    harnesses: {gpt-5.6-sol-max: Codex, claude-fable-5-max-fallback: Claude Code, grok-4.5-high: Grok Build, muse-spark-1.1-xhigh: Opencode}
+  gdpval_aa_v2_elo:
+    source_location: article line 26
+    values: {claude-fable-5-max-fallback: 1760, gpt-5.6-sol-max: 1748, kimi-k3-max: 1668}
+  aa_briefcase_elo:
+    source_location: article line 26
+    values: {claude-fable-5-max-fallback: 1583, gpt-5.6-sol-max: 1495, kimi-k3-max: 1547}
+limitations:
+  - The article is a dated summary, not a raw evaluation export.
+  - Exact API endpoint revisions, task counts, and harness code versions are not published.
+  - Cost is per attempted index task; a success-rate denominator is not published.
+  - The Intelligence Index is cross-domain and is excluded from UMI Capability scoring.

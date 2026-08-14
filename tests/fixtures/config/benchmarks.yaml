@@ -1,0 +1,12 @@
+families:
+  - {id: synthetic-general-family, domain: general_reasoning, weight: 1.0, cap: 1.0}
+  - {id: synthetic-code-family, domain: software_engineering, weight: 1.0, cap: 1.0}
+  - {id: synthetic-agent-family, domain: agentic_work, weight: 1.0, cap: 1.0}
+  - {id: synthetic-math-family, domain: math_science, weight: 1.0, cap: 1.0}
+  - {id: synthetic-context-family, domain: context_reliability, weight: 1.0, cap: 1.0}
+benchmarks:
+  - {id: synthetic-general, name: Synthetic General Reasoning, domain: general_reasoning, family: synthetic-general-family, direction: higher, unit: percent, representation_weight: 1.0, normalization: robust_z}
+  - {id: synthetic-code, name: Synthetic Software Engineering, domain: software_engineering, family: synthetic-code-family, direction: higher, unit: percent, representation_weight: 1.0, normalization: robust_z}
+  - {id: synthetic-agent, name: Synthetic Agent Work, domain: agentic_work, family: synthetic-agent-family, direction: higher, unit: percent, representation_weight: 1.0, normalization: robust_z}
+  - {id: synthetic-math, name: Synthetic Math/Science, domain: math_science, family: synthetic-math-family, direction: higher, unit: percent, representation_weight: 1.0, normalization: robust_z}
+  - {id: synthetic-context, name: Synthetic Context Reliability, domain: context_reliability, family: synthetic-context-family, direction: higher, unit: percent, representation_weight: 1.0, normalization: robust_z}

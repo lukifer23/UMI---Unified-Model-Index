@@ -1,0 +1,7 @@
+{
+  "errors": [],
+  "valid": true,
+  "warnings": [
+    "model claude-fable-5-max-fallback is outside the configured release window"
+  ]
+}

@@ -8,8 +8,11 @@ from pydantic import BaseModel, ConfigDict
 from umi.schemas import (
     BenchmarkMeasurement,
     EfficiencyMeasurement,
+    ExternalIndexMeasurement,
     ModelConfiguration,
     PricingRecord,
+    SourceSnapshot,
+    TaskEconomicsMeasurement,
 )
 
 
@@ -19,6 +22,13 @@ class Dataset(BaseModel):
     benchmarks: tuple[BenchmarkMeasurement, ...]
     pricing: tuple[PricingRecord, ...]
     efficiency: tuple[EfficiencyMeasurement, ...]
+    task_economics: tuple[TaskEconomicsMeasurement, ...]
+    external_indexes: tuple[ExternalIndexMeasurement, ...]
+
+
+class SourceRegistry(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+    snapshots: tuple[SourceSnapshot, ...]
 
 
 def _records(path: Path, key: str) -> list[object]:
@@ -48,4 +58,20 @@ def load_dataset(data_dir: str | Path) -> Dataset:
             EfficiencyMeasurement.model_validate(item)
             for item in _records(root / "task_efficiency.yaml", "measurements")
         ),
+        task_economics=tuple(
+            TaskEconomicsMeasurement.model_validate(item)
+            for item in _records(root / "task_economics.yaml", "measurements")
+        ),
+        external_indexes=tuple(
+            ExternalIndexMeasurement.model_validate(item)
+            for item in _records(root / "external_indexes.yaml", "measurements")
+        ),
+    )
+
+
+def load_source_registry(path: str | Path) -> SourceRegistry:
+    return SourceRegistry(
+        snapshots=tuple(
+            SourceSnapshot.model_validate(item) for item in _records(Path(path), "snapshots")
+        )
     )
