@@ -15,7 +15,7 @@ TIER_ORDER = (
 )
 
 
-def evidence_quality_share(records: Iterable[Provenance]) -> float:
+def independent_or_community_evidence_share(records: Iterable[Provenance]) -> float:
     items = list(records)
     if not items:
         return 0.0

@@ -1,6 +1,8 @@
 {
   "errors": [],
-  "valid": true,
+  "readiness_failures": [],
+  "schema_valid": true,
+  "scoring_ready": true,
   "warnings": [
     "model claude-fable-5-max-fallback is outside the configured release window"
   ]

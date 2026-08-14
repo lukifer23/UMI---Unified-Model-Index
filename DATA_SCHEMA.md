@@ -1,77 +1,190 @@
-# UMI data schema
+# UMI v0.2.1 data schema
 
-## v0.2 adversarial-hardening additions
+The generated JSON Schemas in `schemas/` are the machine-readable authority. This document explains
+their intended use. Run `python scripts/generate_schemas.py` after changing a Pydantic model; the test
+suite fails if committed schemas drift.
 
-- Models carry immutable `snapshot_id`, optional provider `api_model_id`, and
-  `source_snapshot_ids` linking identity facts to the source registry.
-- Provenance preserves evaluator, harness-owner, executor, raw-artifact,
-  reproducibility, and configuration-verification metadata when known.
-- Measurements carry `cohort_key`, `model_snapshot_id`, and `evaluation_date`;
-  different cohort keys are never normalized together.
-- Optional uncertainty fields preserve task/trial/sample counts, pass@k, standard
-  error, and confidence intervals without pretending v0.2 propagates them.
-- Benchmark configuration separates family `weight` and `cap` from each member's
-  `representation_weight`.
-- Workload categories are `coding_agents`, `research_analysis`,
-  `tool_use_agents`, `browser_computer_use`, `general_interaction`, and
-  `long_horizon`.
-- Output has `partial_overall_estimate` and nullable `headline_overall`, never an
-  ambiguous `overall`, plus Value methodology, confidence reasons,
-  multi-dimensional coverage, and cohort identity.
+All Pydantic records are frozen, reject unknown fields, and reject source NaN and infinity. IDs match
+`^[a-z0-9][a-z0-9._-]*$`. YAML is an immutable input format; derived results retain source record IDs.
 
-## Real-pilot record types
+## Dataset files
 
-`task_economics.yaml` stores observed task cost with an explicit `cost_basis` of
-`attempted_task` or `successful_task`. Only successful-task records may enter
-headline Economics. `external_indexes.yaml` stores third-party composite indexes
-with their own unit, direction, cohort, and provenance; these records are reference
-observations and do not enter UMI scoring.
+`load_dataset(DATA_DIR)` reads these top-level lists:
 
-`data/sources/registry.yaml` contains source snapshots with publication/as-of/access
-dates, a relative artifact path, and SHA-256 checksum. Validation detects missing or
-modified captures and warns when measurement URLs are absent from the registry.
-`configuration_verified: true` means UMI verified the recorded configuration facts
-against the cited source; it does not mean the evaluator run was independently
-reproduced. `reproducible` records that separate property.
+| File | Key | Record type |
+|---|---|---|
+| `models.yaml` | `models` | `ModelConfiguration` |
+| `benchmarks.yaml` | `measurements` | `BenchmarkMeasurement` |
+| `pricing.yaml` | `pricing` | `PricingRecord` |
+| `task_efficiency.yaml` | `measurements` | `EfficiencyMeasurement` |
+| `task_economics.yaml` | `measurements` | `TaskEconomicsMeasurement` |
+| `external_indexes.yaml` | `measurements` | `ExternalIndexMeasurement` |
 
-All raw files are YAML documents containing a top-level list named for the record type. IDs use lowercase ASCII letters, digits, dots, underscores, or hyphens and must begin with an alphanumeric character. Unknown fields are rejected.
+## Common provenance
 
-## Provenance
+Every measurement contains:
 
 ```yaml
-record_id: bm-synthetic-a
+record_id: unique-record-id
 source:
-  organization: UMI synthetic fixture
-  url: https://example.invalid/umi/synthetic
+  organization: Evaluator name
+  url: https://source.example/result
   accessed: 2026-08-14
-result_type: independent
-benchmark_version: synthetic-v1
-harness_version: synthetic-harness-v1
-metric_definition: Synthetic percentage for tests only
-tools_enabled: false
-notes: SYNTHETIC TEST DATA
+result_type: independent  # independent | community_reproduction | vendor_reported | derived
+record_status: ready      # ready | diagnostic_only | synthetic | invalid
+metric_definition: Exact numerator, denominator, aggregation, and interpretation
+benchmark_version: published-version
+harness_version: published-harness-version
+evaluator: Evaluator name
+harness_owner: Harness owner
+run_executor: Run executor
+raw_artifact_available: true
+source_artifact_id: registry-snapshot-id
+reproducible: false
+configuration_verified: true
+serving_provider: Optional serving provider
+endpoint_id: Optional immutable endpoint/deployment ID
+service_tier: Optional service tier
 ```
 
-Valid result types are `independent`, `community_reproduction`, `vendor_reported`, and `derived`.
+Optional notes and tool metadata preserve published context. Readiness requirements are enforced by
+record type and model status; missing published sample-size fields remain null rather than invented.
 
-## Models
+## Model configuration and deployment
 
-`models.yaml` contains `models`. Required fields are `id`, `family`, `provider`, `release_date`, `configuration`, and `open_weights`. Configuration effort is one of `standard`, `off`, `low`, `medium`, `high`, `max`, or `custom`. Optional fields include `context_window`, `notes`, and `synthetic`.
+```yaml
+id: model-config-id
+family: Marketing family
+provider: Model developer (legacy-compatible field)
+model_developer: Optional explicit developer
+release_date: 2026-07-09
+configuration: max
+snapshot_id: immutable-snapshot-id
+api_model_id: Optional provider model identifier
+serving_provider: Optional deployment provider
+endpoint_id: Optional immutable serving endpoint
+service_tier: Optional tier
+region: Optional region
+hardware: Optional material hardware
+source_snapshot_ids: [registry-snapshot-id]
+open_weights: false
+synthetic: false
+```
 
-## Benchmark definitions and measurements
+`configuration` is one of `standard`, `off`, `low`, `medium`, `high`, `max`, `xhigh`, or `custom`.
+Capability may omit deployment fields only when the source genuinely evaluates a model snapshot
+independently of serving. Deployment-dependent records must match configured deployment fields.
 
-Definitions in `config/benchmarks.yaml` specify `id`, `name`, `domain`, `family`, direction, unit, weight, normalization strategy, optional parent aggregates, optional constituent IDs, and domain cap.
+## Benchmark configuration
 
-`benchmarks.yaml` contains measurements with `record_id`, `benchmark_id`, `model_id`, numeric `value`, provenance fields, and optional workload/evaluation settings. A record must resolve to known model and benchmark IDs.
+Benchmark definitions specify `id`, `name`, `domain`, `family`, `direction`, `unit`, positive
+`representation_weight`, normalization, optional `representation_group`, and aggregate/constituent
+links. Aliases use the same representation group. Families specify `id`, domain, weight, and cap.
 
-## Pricing
+Family weights in each represented domain sum to one, every weight is at most its cap, and caps sum
+to at least one. Aggregate/constituent links must stay inside one family.
 
-`pricing.yaml` contains dated advertised prices per million tokens and tool charges. Prices are nonnegative USD values. Long-context surcharges are labeled strings mapped to nonnegative prices. Pricing is not interchangeable with observed task cost.
+Benchmark measurements add:
 
-## Task efficiency and observed economics
+```yaml
+benchmark_id: benchmark-id
+model_id: model-config-id
+model_snapshot_id: immutable-snapshot-id
+value: 72.4
+cohort_key: benchmark-harness-v3-pass1-tools
+evaluation_date: 2026-08-10
+evaluation_settings: {reasoning_effort: max, pass_at_k: 1}
+number_of_tasks: 500       # optional
+number_of_trials: 1        # optional
+sample_count: 500          # optional
+pass_at_k: 1               # optional
+standard_error: 0.8        # optional
+confidence_interval: [70.8, 74.0]  # optional
+```
 
-`task_efficiency.yaml` contains records keyed by model and workload. Each record has a typed `workload_category`: `general`, `coding`, `agentic`, `research`, `browser`, or `multimodal`. Required observations are `attempts` and `success_rate` in `[0,1]`; optional nonnegative fields include token counts, turns, seconds, tool calls, and `mean_cost_per_attempt`. Derived effective metrics use the methodology's success adjustment. Zero success remains measured failure.
+The unit must be a supported enum and percentages/rates must respect their declared bounds.
 
-## Derived output
+## Efficiency and Economics
 
-Score results contain `model_id`, component scores, Value, Overall, coverage percentage, confidence, eligibility, provisional status, domains represented, evidence-quality share, source record IDs, diagnostics, formula version, and configuration SHA-256 fingerprint. JSON output uses stable key ordering; CSV flattens lists with `|`.
+Efficiency measurements require model/workload/category/cohort identity, attempts, success rate in
+`[0,1]`, and at least one nonnegative observation:
+
+```yaml
+model_id: model-config-id
+model_snapshot_id: immutable-snapshot-id
+workload: workload-id
+workload_category: coding_agents
+cohort_key: workload-harness-v2
+evaluation_date: 2026-08-10
+attempts: 100
+success_rate: 0.72
+mean_total_tokens: 12000
+mean_turns: 8
+mean_wall_seconds: 91
+mean_tool_calls: 14
+mean_cost_per_attempt: 1.35
+```
+
+Supported workload categories are `coding_agents`, `research_analysis`, `tool_use_agents`,
+`browser_computer_use`, `general_interaction`, and `long_horizon`. Legacy short aliases migrate on
+load. Success-adjusted derived values are not stored back into YAML.
+
+Task Economics records use `cost_basis: attempted_task|successful_task` and nonnegative
+`mean_cost_usd`. Only `successful_task` directly scores. Attempt-cost observations may score only
+when paired with the same Efficiency record's success rate; UMI never joins a numerator and rate
+from different records.
+
+Pricing records preserve advertised input/output/cache/reasoning/tool prices but do not substitute
+for observed successful-task Economics in v0.2.1.
+
+## External indexes
+
+External index records preserve an index ID, model/snapshot, value, unit, direction, cohort, date,
+and full provenance. They are diagnostic/reference evidence in v0.2.1 and are excluded from the
+scored-data fingerprint. A later multi-source methodology must define their source role and overlap
+budget before they can affect UMI.
+
+## Validation result
+
+`umi validate` separates structure from readiness:
+
+```json
+{
+  "schema_valid": true,
+  "scoring_ready": false,
+  "errors": [],
+  "readiness_failures": ["record x: immutable model snapshot is unspecified"],
+  "warnings": []
+}
+```
+
+Structural/referential errors include duplicate IDs, unknown models/benchmarks, snapshot collisions,
+invalid family budgets, invalid status, and multiple ready cohorts without a merge policy.
+Readiness failures exclude records from normal scoring without pretending the YAML is malformed.
+
+## Scoring result
+
+See `schemas/scoring-result.schema.json` for all fields. Important output distinctions are:
+
+- `partial_overall_estimate`: reweighted analytical estimate over available components;
+- `headline_overall`: null unless every headline eligibility invariant passes;
+- component `score`, hierarchical `coverage`, `provisional`, provenance IDs, and diagnostics;
+- `scoring_ready`, `eligible`, confidence and explicit confidence reasons;
+- Value scenario, formula, and parameters;
+- detailed domain/family/representation/metric/workload/source coverage;
+- `dataset_fingerprint`, `scored_data_fingerprint`, `cohort_id`, `data_as_of`, version metadata, and
+  release window.
+
+JSON output is deterministic and disallows NaN/infinity. CSV output flattens nested fields and joins
+lists with `|`.
+
+## Configuration files
+
+- `weights.yaml`: domain, Efficiency metric, workload, Overall, and sensitivity weights;
+- `benchmarks.yaml`: families and benchmark representations;
+- `eligibility.yaml`: release window, component/Overall coverage, breadth, and confidence thresholds;
+- `normalization.yaml`: cohort thresholds, default strategy, correlation overlap, and log metrics;
+- `value.yaml`: named, distinct experimental Value scenarios and baseline.
+
+Every scoring-relevant field must affect behavior. Configuration is canonically serialized and
+hashed into `config_fingerprint`.

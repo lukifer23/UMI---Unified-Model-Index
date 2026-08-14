@@ -5,6 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from umi.config import load_project_config
+from umi.schema_export import rendered_schemas
 from umi.schemas import EfficiencyMeasurement, PricingRecord
 
 ROOT = Path(__file__).parents[1]
@@ -73,3 +74,8 @@ def test_unknown_fields_and_units_are_rejected() -> None:
         BenchmarkDefinition.model_validate(raw)
     with pytest.raises(ValidationError):
         BenchmarkDefinition.model_validate({**raw, "unit": "score", "secret_weight": 4})
+
+
+def test_committed_json_schemas_match_pydantic_models() -> None:
+    for name, rendered in rendered_schemas().items():
+        assert (ROOT / "schemas" / name).read_text(encoding="utf-8") == rendered

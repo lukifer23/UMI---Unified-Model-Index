@@ -9,7 +9,7 @@ from umi.economics import score_economics
 from umi.efficiency import score_efficiency
 from umi.fingerprints import dataset_fingerprint
 from umi.loading import Dataset
-from umi.provenance import evidence_quality_share
+from umi.provenance import independent_or_community_evidence_share
 from umi.readiness import ScoredRecord, is_scoring_ready, scoring_dataset
 from umi.schemas import Confidence, CoverageSummary, Domain, ScoringResult
 from umi.validation import validate_dataset
@@ -121,9 +121,15 @@ def score_dataset(
         ):
             records_by_id[record.record_id] = cast(ScoredRecord, record)
         component_quality = {
-            "capability": evidence_quality_share(capability.evidence.get(model.id, ())),
-            "efficiency": evidence_quality_share(efficiency.evidence.get(model.id, ())),
-            "economics": evidence_quality_share(economics.evidence.get(model.id, ())),
+            "capability": independent_or_community_evidence_share(
+                capability.evidence.get(model.id, ())
+            ),
+            "efficiency": independent_or_community_evidence_share(
+                efficiency.evidence.get(model.id, ())
+            ),
+            "economics": independent_or_community_evidence_share(
+                economics.evidence.get(model.id, ())
+            ),
         }
         quality_numerator = (
             weights.capability * cap.coverage * component_quality["capability"]
@@ -186,15 +192,25 @@ def score_dataset(
         if not eligible:
             confidence = Confidence.LOW
             confidence_reasons.append("confidence forced to Low: headline eligibility failed")
-        if provisional and confidence == Confidence.HIGH:
-            confidence = Confidence.MEDIUM
-            confidence_reasons.append("confidence capped at Medium: provisional normalization")
-        if any("conflict" in item for item in all_diagnostics) and confidence == Confidence.HIGH:
-            confidence = Confidence.MEDIUM
-            confidence_reasons.append("confidence capped at Medium: selected-evidence conflict")
-        if len(organizations) < 2 and confidence == Confidence.HIGH:
-            confidence = Confidence.MEDIUM
-            confidence_reasons.append("confidence capped at Medium: single-source dependence")
+        if provisional:
+            confidence_reasons.append("one or more contributing results are provisional")
+            if confidence == Confidence.HIGH:
+                confidence = Confidence.MEDIUM
+                confidence_reasons.append("confidence capped at Medium: provisional normalization")
+        if any("conflict" in item for item in all_diagnostics):
+            confidence_reasons.append("selected evidence contains an unresolved conflict")
+            if confidence == Confidence.HIGH:
+                confidence = Confidence.MEDIUM
+                confidence_reasons.append(
+                    "confidence capped at Medium: selected-evidence conflict"
+                )
+        if len(organizations) < 2:
+            confidence_reasons.append("evidence depends on one source organization")
+            if confidence == Confidence.HIGH:
+                confidence = Confidence.MEDIUM
+                confidence_reasons.append("confidence capped at Medium: single-source dependence")
+        if records_by_id and quality == 0:
+            confidence_reasons.append("selected evidence is vendor-reported or derived only")
         if len(domains) < config.eligibility.minimum_capability_domains:
             confidence = Confidence.LOW
             confidence_reasons.append("confidence forced to Low: insufficient capability breadth")

@@ -1,94 +1,131 @@
 # UMI — Unified Model Index
 
-UMI is a Python-first, auditable framework for comparing specific AI model configurations across capability, efficiency, economics, overall performance, and value. It is designed to answer how much useful capability a user receives for the money and inference effort required—not merely which model tops the most benchmarks.
+UMI is an auditable Python library and CLI for scoring model configurations across Capability,
+Efficiency, Economics, Overall, and experimental Value. Version 0.2.1 stabilizes scoring and
+data-readiness invariants before a multi-source real-data pilot.
 
-This initial milestone contains the schemas, configuration, scoring engine, analysis utilities, CLI, and synthetic test data. It intentionally contains **no real model measurements or rankings**.
+There is currently no publishable real UMI ranking. The checked-in synthetic fixtures demonstrate
+the engine; the narrow Artificial Analysis capture remains a provenance pilot, not a unified score.
 
-## Quick start
+## Install and verify
 
-```powershell
+Python 3.11 or newer and [uv](https://docs.astral.sh/uv/) are required.
+
+```bash
 uv sync --extra dev
+uv run pytest
+uv run ruff check .
+uv run mypy
+```
+
+The lockfile is committed. Use `uv sync --frozen` when reproducing an existing lock.
+
+## CLI
+
+Run the complete synthetic pipeline:
+
+```bash
 uv run umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config
 uv run umi rank --data-dir tests/fixtures --config-dir tests/fixtures/config --format json
 uv run umi sensitivity --data-dir tests/fixtures --config-dir tests/fixtures/config
 uv run umi value-sensitivity --data-dir tests/fixtures --config-dir tests/fixtures/config
-uv run umi references --data-dir data/raw --config-dir config
-uv run umi correlations --data-dir tests/fixtures
-uv run umi pareto --data-dir tests/fixtures
+uv run umi correlations --data-dir tests/fixtures --config-dir tests/fixtures/config
+uv run umi pareto --data-dir tests/fixtures --config-dir tests/fixtures/config
 ```
 
-Use `--config-dir config` to select another configuration directory and `--output PATH` to write deterministic JSON or CSV instead of stdout.
+`validate` reports `schema_valid` and `scoring_ready` separately. `rank` publishes only eligible
+headlines by default; `--include-provisional` shows partial results without turning them into
+headlines. `--allow-unready` is development-only: affected results remain provisional, Low
+confidence, and unranked.
 
-| Command | Purpose |
-| --- | --- |
-| `validate` | Parse strict schemas and report referential, duplication, overlap, eligibility, and provenance diagnostics. |
-| `rank` | Calculate Capability, Efficiency, Economics, Overall, Value, coverage, confidence, and ranks. |
-| `sensitivity` | Re-rank the cohort under every configured Overall weighting set. |
-| `value-sensitivity` | Test experimental Value formulas and report rank ranges. |
-| `references` | Export typed non-scoring external indexes and task-cost observations. |
-| `correlations` | Calculate pairwise Pearson, Spearman, and overlap counts for benchmark measurements. |
-| `pareto` | Find dominated models for capability versus cost, effective tokens, and latency. |
+JSON and CSV output are deterministic. Every result contains component scores, hierarchical
+coverage, confidence reasons, provenance record IDs, configuration and dataset fingerprints,
+cohort identity, and engine/formula/normalization versions.
 
-## Synthetic demonstration
+## Python API
 
-The checked-in fixture produces the following **synthetic-only** Overall results. These values demonstrate tradeoffs and are not claims about real models.
+```python
+from umi import load_dataset, load_project_config, score_dataset
 
-| Rank | Synthetic configuration | Overall | Capability | Efficiency | Economics |
-| ---: | --- | ---: | ---: | ---: | ---: |
-| 1 | synthetic-alpha | 65.5 | 85.3 | 40.9 | 41.8 |
-| 2 | synthetic-beta | 59.4 | 70.7 | 45.2 | 46.2 |
-| 3 | synthetic-gamma | 50.0 | 50.0 | 50.0 | 50.0 |
-| 4 | synthetic-delta | 38.8 | 26.5 | 52.9 | 55.0 |
-| 5 | synthetic-epsilon | 32.3 | 11.8 | 56.7 | 58.2 |
+dataset = load_dataset("tests/fixtures")
+config = load_project_config("tests/fixtures/config")
+results = score_dataset(dataset, config)
 
-These figures are rounded presentation values; machine output retains full
-precision. Sensitivity and Value-sensitivity outputs expose rank movement when a
-fixture or future cohort is unstable rather than hiding it.
+for result in results:
+    print(result.model_id, result.headline_overall, result.confidence)
+```
+
+Analysis APIs are in `analysis`: ranking, Overall sensitivity, Value sensitivity, correlation, and
+workload/cohort-specific Pareto frontiers.
+
+## Scoring at a glance
+
+The default partial Overall formula is:
+
+```text
+0.55 * Capability + 0.25 * Efficiency + 0.20 * Economics
+```
+
+Missing evidence may produce `partial_overall_estimate`, but a headline requires all three component
+scores, component-specific minimum coverage, at least 60% weighted Overall coverage, Capability in
+three domains, sufficient Efficiency workload coverage, an eligible release date, and scoring-ready
+evidence.
+
+Attempt-level tokens, turns, wall time, tool calls, and cost are divided by the same record's success
+rate before provenance selection and median consolidation. Zero success is an explicit worst outcome,
+not missing data. Capability and coverage aggregate hierarchically across representations, families,
+and domains.
+
+The complete specification is [METHODOLOGY.md](METHODOLOGY.md). Do not infer scoring behavior from a
+README summary.
+
+## Repository layout
+
+```text
+analysis/             sensitivity, correlations, rankings, Pareto tools
+config/               default scoring policy
+data/raw/             narrow manually captured provenance pilot
+data/sources/         source registry and checksummed captures
+schemas/              generated machine-readable JSON Schemas
+scripts/              deterministic schema generator
+tests/fixtures/        conspicuously synthetic scoring data
+umi/                   typed schemas, validation, readiness, scoring, CLI
+METHODOLOGY.md         authoritative formulas and policy
+DATA_SCHEMA.md         explanatory schema guide
+SOURCE_READINESS.md    enforced ingestion gate
+AGENTS.md              repository safeguards
+```
 
 ## Architecture
 
-- `config/` holds all weights, thresholds, benchmark metadata, and normalization rules.
-- `data/raw/` is reserved for immutable, sourced real-world YAML records.
-- `umi/` contains strict schemas, validation, normalization, component scorers, orchestration, and the CLI.
-- `analysis/` contains ranking, sensitivity, correlation, and Pareto utilities.
-- `tests/fixtures/` contains conspicuously synthetic data used by tests and examples only.
+Loading preserves frozen source records. Validation checks structural integrity separately from
+scoring readiness. The readiness layer filters records before every scorer. Capability, Efficiency,
+and Economics normalize only compatible cohorts, return selected provenance, and calculate
+hierarchical coverage. The scoring layer applies headline and confidence rules and fingerprints the
+complete and scored datasets. Analysis tools reuse readiness and compatibility rules.
 
-```text
-.
-├── analysis/       ranking, sensitivity, correlation, and Pareto utilities
-├── config/         benchmark, weight, normalization, and eligibility policy
-├── data/           empty real-data inputs plus source-note storage
-├── tests/          behavioral tests and synthetic-only fixtures
-├── umi/            schemas, validation, scoring components, orchestration, CLI
-├── AGENTS.md       guardrails for future coding agents
-├── DATA_SCHEMA.md  input and output contracts
-└── METHODOLOGY.md  authoritative scoring decisions
+Pydantic generates `schemas/dataset.schema.json`, `schemas/config.schema.json`, and
+`schemas/scoring-result.schema.json`. Regenerate them after model changes:
+
+```bash
+uv run python scripts/generate_schemas.py
 ```
 
-All derived results include source record identifiers, diagnostics, coverage, confidence, eligibility, and a configuration fingerprint. See [METHODOLOGY.md](METHODOLOGY.md) for scoring policy and [DATA_SCHEMA.md](DATA_SCHEMA.md) for record contracts.
+## Current limitations
 
-## Limitations
+- UMI scores are cohort-relative and change when the scored cohort changes.
+- Weights and eligibility thresholds are transparent hypotheses, not empirical calibration.
+- Sample sizes and intervals are preserved but not propagated through scoring.
+- No fixed reference cohort, anchor scale, decorrelation weighting, or cross-workload cost basket
+  exists yet.
+- External composites such as Epoch ECI and preference leaderboards such as Arena cannot be added as
+  unrestricted benchmark votes; their overlap and construct roles must be specified first.
+- The current real capture uses one evaluator and lacks Efficiency/successful-task Economics breadth,
+  so it cannot produce a headline UMI score.
 
-The serialized API distinguishes diagnostic `partial_overall_estimate` from
-nullable publishable `headline_overall`; it never emits an ambiguous `overall`.
-Results include workload/family/source coverage, confidence reasons, experimental
-Value methodology, and the exact scoring cohort. Value is not an established fact.
+## Next milestone
 
-The v1 formulas are explicit hypotheses, not claims of objective truth. Scores are cohort-relative. Small cohorts are provisional. Nominal API pricing is stored but excluded from headline Economics until defensible workload baskets exist. Empirical decorrelation and formal uncertainty intervals remain future work.
-
-## Recommended next milestone
-
-Build a source registry and a small, manually reviewed ingestion adapter for one independent evaluator. Populate a narrow cross-model slice, retain the raw capture alongside parsed records, and produce a validation report before broadening coverage. Do not begin with bulk scraping.
-
-## First real-data pilot
-
-`data/raw/` now contains a six-configuration snapshot transcribed from Artificial
-Analysis's dated July 17, 2026 frontier article. The checksummed fact capture and
-registry are under `data/sources/`; reproducible outputs are under
-`data/processed/pilot-2026-07-17/`.
-
-This pilot intentionally publishes **no UMI headline ranking**. It has only one or
-two represented Capability domains per model, no Efficiency runs, one evaluator,
-and cost per attempted—not successful—task. The complete Artificial Analysis
-Intelligence Index is retained as an external reference rather than misclassified
-as a UMI domain. See `PILOT_REPORT.md` for the data-quality decision.
+After v0.2.1 is accepted, the next task is a four-to-six-configuration, manually reviewed source
+crosswalk—not a broad scrape. It should inventory exact overlap among Artificial Analysis, Epoch ECI
+or its underlying benchmark data, Arena, and selected task-level benchmarks; assign each source a
+scoring/reference role; freeze source snapshots; and ingest only exact configuration/cohort matches.

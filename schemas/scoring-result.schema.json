@@ -1,0 +1,453 @@
+{
+  "$defs": {
+    "ComponentScore": {
+      "additionalProperties": false,
+      "properties": {
+        "coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Coverage",
+          "type": "number"
+        },
+        "coverage_details": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "title": "Coverage Details",
+          "type": "object"
+        },
+        "diagnostics": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Diagnostics",
+          "type": "array"
+        },
+        "provisional": {
+          "default": false,
+          "title": "Provisional",
+          "type": "boolean"
+        },
+        "score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Score"
+        },
+        "source_record_ids": {
+          "default": [],
+          "items": {
+            "pattern": "^[a-z0-9][a-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Source Record Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "score",
+        "coverage"
+      ],
+      "title": "ComponentScore",
+      "type": "object"
+    },
+    "Confidence": {
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "title": "Confidence",
+      "type": "string"
+    },
+    "CoverageSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "capability_domain_weighted": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Capability Domain Weighted",
+          "type": "number"
+        },
+        "capability_domains_represented": {
+          "minimum": 0,
+          "title": "Capability Domains Represented",
+          "type": "integer"
+        },
+        "capability_domains_total": {
+          "exclusiveMinimum": 0,
+          "title": "Capability Domains Total",
+          "type": "integer"
+        },
+        "capability_families_represented": {
+          "minimum": 0,
+          "title": "Capability Families Represented",
+          "type": "integer"
+        },
+        "capability_families_total": {
+          "minimum": 0,
+          "title": "Capability Families Total",
+          "type": "integer"
+        },
+        "capability_family_weighted": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Capability Family Weighted",
+          "type": "number"
+        },
+        "capability_representation_weighted": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Capability Representation Weighted",
+          "type": "number"
+        },
+        "capability_representations_represented": {
+          "minimum": 0,
+          "title": "Capability Representations Represented",
+          "type": "integer"
+        },
+        "capability_representations_total": {
+          "minimum": 0,
+          "title": "Capability Representations Total",
+          "type": "integer"
+        },
+        "economics_workload_weighted": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Economics Workload Weighted",
+          "type": "number"
+        },
+        "economics_workloads_represented": {
+          "minimum": 0,
+          "title": "Economics Workloads Represented",
+          "type": "integer"
+        },
+        "economics_workloads_total": {
+          "exclusiveMinimum": 0,
+          "title": "Economics Workloads Total",
+          "type": "integer"
+        },
+        "efficiency_category_metric_coverage": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Efficiency Category Metric Coverage",
+          "type": "object"
+        },
+        "efficiency_metric_weighted": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Efficiency Metric Weighted",
+          "type": "number"
+        },
+        "efficiency_workload_weighted": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Efficiency Workload Weighted",
+          "type": "number"
+        },
+        "efficiency_workloads_represented": {
+          "minimum": 0,
+          "title": "Efficiency Workloads Represented",
+          "type": "integer"
+        },
+        "efficiency_workloads_total": {
+          "exclusiveMinimum": 0,
+          "title": "Efficiency Workloads Total",
+          "type": "integer"
+        },
+        "independent_or_community_evidence_share": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Independent Or Community Evidence Share",
+          "type": "number"
+        },
+        "overall_weighted": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Overall Weighted",
+          "type": "number"
+        },
+        "source_organization_count": {
+          "minimum": 0,
+          "title": "Source Organization Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "overall_weighted",
+        "capability_domains_represented",
+        "capability_domains_total",
+        "capability_domain_weighted",
+        "capability_family_weighted",
+        "capability_representation_weighted",
+        "capability_families_represented",
+        "capability_families_total",
+        "capability_representations_represented",
+        "capability_representations_total",
+        "efficiency_workloads_represented",
+        "efficiency_workloads_total",
+        "efficiency_workload_weighted",
+        "efficiency_metric_weighted",
+        "economics_workloads_represented",
+        "economics_workloads_total",
+        "economics_workload_weighted",
+        "independent_or_community_evidence_share",
+        "source_organization_count"
+      ],
+      "title": "CoverageSummary",
+      "type": "object"
+    },
+    "Domain": {
+      "enum": [
+        "general_reasoning",
+        "software_engineering",
+        "agentic_work",
+        "math_science",
+        "context_reliability"
+      ],
+      "title": "Domain",
+      "type": "string"
+    },
+    "ValueFormula": {
+      "enum": [
+        "geometric_mean_v1",
+        "weighted_geometric_v1",
+        "harmonic_mean_v1"
+      ],
+      "title": "ValueFormula",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "capability": {
+      "$ref": "#/$defs/ComponentScore"
+    },
+    "capability_domains": {
+      "items": {
+        "$ref": "#/$defs/Domain"
+      },
+      "title": "Capability Domains",
+      "type": "array"
+    },
+    "cohort_id": {
+      "title": "Cohort Id",
+      "type": "string"
+    },
+    "cohort_model_ids": {
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "title": "Cohort Model Ids",
+      "type": "array"
+    },
+    "confidence": {
+      "$ref": "#/$defs/Confidence"
+    },
+    "confidence_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Confidence Reasons",
+      "type": "array"
+    },
+    "config_fingerprint": {
+      "title": "Config Fingerprint",
+      "type": "string"
+    },
+    "coverage": {
+      "$ref": "#/$defs/CoverageSummary"
+    },
+    "data_as_of": {
+      "format": "date",
+      "title": "Data As Of",
+      "type": "string"
+    },
+    "dataset_fingerprint": {
+      "title": "Dataset Fingerprint",
+      "type": "string"
+    },
+    "diagnostics": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Diagnostics",
+      "type": "array"
+    },
+    "economics": {
+      "$ref": "#/$defs/ComponentScore"
+    },
+    "efficiency": {
+      "$ref": "#/$defs/ComponentScore"
+    },
+    "eligible": {
+      "title": "Eligible",
+      "type": "boolean"
+    },
+    "engine_version": {
+      "title": "Engine Version",
+      "type": "string"
+    },
+    "formula_version": {
+      "title": "Formula Version",
+      "type": "string"
+    },
+    "headline_overall": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Headline Overall"
+    },
+    "independent_or_community_evidence_share": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Independent Or Community Evidence Share",
+      "type": "number"
+    },
+    "model_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Model Id",
+      "type": "string"
+    },
+    "normalization_version": {
+      "title": "Normalization Version",
+      "type": "string"
+    },
+    "overall_coverage": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Overall Coverage",
+      "type": "number"
+    },
+    "partial_overall_estimate": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Partial Overall Estimate"
+    },
+    "provisional": {
+      "title": "Provisional",
+      "type": "boolean"
+    },
+    "release_date": {
+      "format": "date",
+      "title": "Release Date",
+      "type": "string"
+    },
+    "release_window_end": {
+      "format": "date",
+      "title": "Release Window End",
+      "type": "string"
+    },
+    "release_window_start": {
+      "format": "date",
+      "title": "Release Window Start",
+      "type": "string"
+    },
+    "scored_data_fingerprint": {
+      "title": "Scored Data Fingerprint",
+      "type": "string"
+    },
+    "scoring_ready": {
+      "title": "Scoring Ready",
+      "type": "boolean"
+    },
+    "source_record_ids": {
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "title": "Source Record Ids",
+      "type": "array"
+    },
+    "value": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Value"
+    },
+    "value_formula": {
+      "$ref": "#/$defs/ValueFormula"
+    },
+    "value_parameters": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Value Parameters",
+      "type": "object"
+    },
+    "value_scenario": {
+      "title": "Value Scenario",
+      "type": "string"
+    }
+  },
+  "required": [
+    "model_id",
+    "release_date",
+    "capability",
+    "efficiency",
+    "economics",
+    "partial_overall_estimate",
+    "headline_overall",
+    "value",
+    "value_scenario",
+    "value_formula",
+    "overall_coverage",
+    "confidence",
+    "eligible",
+    "scoring_ready",
+    "provisional",
+    "capability_domains",
+    "independent_or_community_evidence_share",
+    "source_record_ids",
+    "diagnostics",
+    "confidence_reasons",
+    "coverage",
+    "cohort_id",
+    "cohort_model_ids",
+    "dataset_fingerprint",
+    "scored_data_fingerprint",
+    "data_as_of",
+    "release_window_start",
+    "release_window_end",
+    "engine_version",
+    "normalization_version",
+    "config_fingerprint",
+    "formula_version"
+  ],
+  "title": "ScoringResult",
+  "type": "object"
+}

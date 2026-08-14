@@ -1,144 +1,260 @@
-# UMI methodology (v0.2-draft)
+# UMI methodology v0.2.1
 
-> **Status:** adversarially hardened pre-ingestion specification. Scores remain
-> cohort-relative and experimental. No UMI score is a timeless model property.
+This document is the authority for UMI scoring behavior. Configuration files contain the
+current policy values; code must not contradict this document. UMI v0.2.1 stabilizes scoring
+invariants for a manually reviewed pilot. It does not publish a real multi-source UMI ranking.
 
-This document is authoritative. Code and configuration must not introduce scoring behavior that is absent here.
+## Scored entity
 
-## Entity, eligibility, and evidence
+A UMI configuration is an immutable model snapshot plus inference effort. Where Efficiency or
+Economics is measured, it also includes the serving provider, endpoint, and service tier.
+Region or hardware is recorded when material. Capability from one deployment is not silently
+combined with deployment-dependent cost or latency from another.
 
-The unit of analysis is a model configuration, including reasoning effort. The default release window is 2026-06-15 through 2026-08-14. A model may receive partial component scores, but a headline Overall rank requires a release date inside that window, at least 60% weighted Overall coverage, and Capability evidence in at least three domains.
+The model family is descriptive. The configuration/deployment is the scored entity.
 
-Every measurement requires provenance, including organization, URL, access date, result type, benchmark version, harness when known, model configuration, tools status, and metric definition. Conflicting measurements are preserved. For scoring, use the median of independent measurements when present; otherwise use the median from the first available tier in this order: community reproduction, vendor reported, derived. Emit a conflict diagnostic whenever more than one candidate record exists.
+## Record readiness
+
+Every source record has a status: `ready`, `diagnostic_only`, `synthetic`, or `invalid`.
+
+- `ready` real records score only when identity, provenance, compatibility, and artifact fields
+  pass the enforced readiness gate in `SOURCE_READINESS.md`.
+- `diagnostic_only` records remain loadable and auditable but never influence scores.
+- `synthetic` records may score only in conspicuously synthetic fixtures.
+- `invalid` records fail structural validation.
+
+Normal scoring filters unready real records. `--allow-unready` is a development-only override.
+Any model actually influenced by overridden evidence is provisional, receives Low confidence,
+and has both `headline_overall` and publishable rank suppressed.
+
+## Identity and compatibility cohorts
+
+A benchmark comparison series is `(benchmark_id, cohort_key)`. A workload comparison series is
+`(workload_category, workload, cohort_key)`. Cohort keys must encode materially relevant harness,
+benchmark, prompt, tool, retry, pass@k, effort, and endpoint settings. Labels alone never establish
+equivalence.
+
+At most one ready scoring cohort may exist for a benchmark representation or workload identity
+without an explicit future merge policy. Additional cohorts must be diagnostic. UMI does not
+average local percentiles from disconnected cohorts and does not infer cohort equivalence.
+
+## Consolidation and conflicts
+
+Raw records remain immutable. Within one model and compatible series, UMI selects the first
+available provenance tier in this order:
+
+1. independent;
+2. community reproduction;
+3. vendor reported;
+4. derived.
+
+It then takes the median of selected values. Multiple candidates emit a conflict diagnostic and
+selected record IDs remain in the result. For success-adjusted metrics, derivation occurs on each
+record before tier selection and median consolidation; numerators and success rates from separate
+records are never paired.
 
 ## Normalization
 
-Normalization occurs within a comparable metric, version, workload, and evaluation setting cohort. Scores are relative to that cohort.
+Normalization is cohort-relative and deterministic.
 
-For five or more finite observations, apply the configured transform, then compute `z = (x - median) / (1.4826 × MAD)` and map with `100 × NormalCDF(z)`. Log-skewed lower-is-better metrics use `log1p(x)` before normalization. Lower-is-better scores are inverted after transformation. If MAD is zero, use average-rank percentiles.
+- At least five observations: apply the configured transform, then robust z-scores using
+  `z = (x - median(x)) / (1.4826 * MAD)`, followed by the standard normal CDF mapped to 0–100.
+- Two to four observations: use average-rank percentiles and mark contributing models provisional.
+- One observation: leave the series unscored.
+- Zero MAD: fall back to average-rank percentiles.
+- Cost, token, turn, latency, tool-call, and successful-task cost metrics use `log1p` when listed in
+  `normalization.yaml`.
+- Lower-is-better metrics are inverted after transformation so that every normalized score has
+  “higher is better” semantics.
 
-For two through four observations, use average-rank percentiles and mark the result provisional. A singleton is unscored. A measured zero-success run is the explicit worst outcome for effective cost/tokens, not missing evidence. Scores are rounded only for presentation.
+Source NaN and infinity are invalid. Internally derived positive infinity is reserved for measured
+zero-success outcomes and normalizes to the explicit worst result. Scores are relative to their
+dataset fingerprint and are not timeless absolute measurements.
 
 ## Capability
 
-Capability has three distinct weight layers: capability-domain weights;
-benchmark-family weights within each domain plus an independently configured
-maximum family influence (`cap`); and representation weights for benchmark members
-within a family. Family weights in a domain sum to one. Effective family influence
-is `min(weight, cap)`. Members share one family budget, so aliases, aggregates, and
-constituents cannot manufacture additional influence.
+Default domain weights are:
 
-Default domain weights are general reasoning 27.5%, software engineering 27.5%, agentic work 20%, math/science 15%, and context/reliability 10%. Benchmark weights are allocated inside each domain.
+| Domain | Weight |
+|---|---:|
+| General reasoning | 0.275 |
+| Software engineering | 0.275 |
+| Agentic work | 0.200 |
+| Math/science | 0.150 |
+| Context/reliability | 0.100 |
 
-Benchmark families are weight budgets. An aggregate and its known constituents share a family budget; adding another representation of the same underlying benchmark cannot increase that family's total influence. Within a family, available benchmark weights are renormalized to the configured family budget. Domain caps prevent excess influence. Empirical correlation is diagnostic only in v1.
+Capability is hierarchical: representations belong to families and families belong to domains.
+Aliases with the same `representation_group` share one representation budget. Aggregates and known
+constituents must share a family so adding an overlapping label cannot create a new family vote.
+
+For family `f`:
+
+```text
+FamilyCoverage_f = sum(available representation weights)
+                   / sum(configured representation weights)
+```
+
+The family score is the weighted mean over available representation groups. For domain `d`:
+
+```text
+DomainScore_d = weighted mean of available FamilyScore_f using family.weight
+DomainCoverage_d = sum_f family.weight_f * FamilyCoverage_f
+```
+
+Finally:
+
+```text
+Capability = weighted mean of available DomainScore_d
+CapabilityCoverage = sum_d domain.weight_d * DomainCoverage_d
+```
+
+Family weights in each configured domain sum to one. In v0.2.1, `family.cap` is a configuration
+guard: `family.weight <= family.cap`, and domain caps sum to at least one. Scoring uses
+`family.weight` directly. A cap does not prevent a family from dominating a partial diagnostic
+estimate when other families are missing; hierarchical coverage and headline eligibility expose
+that limitation.
 
 ## Efficiency
 
-Every workload belongs to one configured class: `coding_agents`,
-`research_analysis`, `tool_use_agents`, `browser_computer_use`,
-`general_interaction`, or `long_horizon`. Metrics are normalized inside a compatible
-workload cohort, averaged inside their class, then combined using configured class
-weights. Multiple workloads in one class share its budget. Missing classes are
-reweighted only for a partial estimate and reduce weighted Efficiency coverage.
-UMI does not invent a neutral prior; sparse support remains visible and can prevent
-headline eligibility.
+Default metric weights are 50% effective tokens, 20% effective turns, 20% effective wall time,
+and 10% effective tool calls. Workload-class weights are configured separately.
 
-The default metric weights are effective tokens per successful task 50%, turns per task 20%, wall-clock seconds per task 20%, and tool calls per task 10%. `EffectiveTokens = MeanTokensPerAttempt / SuccessRate`. Missing metrics are excluded and remaining weights are renormalized; coverage records the omitted weight.
+For every individual source record `i` and attempt-level resource `x`:
+
+```text
+EffectiveResource_i = MeanResourcePerAttempt_i / SuccessRate_i
+```
+
+This rule applies to tokens, turns, wall time, and tool calls. At zero success every effective
+resource is positive infinity and receives the worst normalized result. UMI therefore measures
+resources per successful outcome and never rewards fast failure.
+
+Within a workload class `c`:
+
+```text
+MetricCoverage_c = sum(weights of available effective metrics)
+EfficiencyCoverage = sum_c WorkloadWeight_c * MetricCoverage_c
+```
+
+The partial workload score may reweight across available metrics, but coverage retains every
+omitted metric weight. One 10%-weight tool-call observation cannot create full workload coverage.
 
 ## Economics
 
-Economics uses the same explicit workload classes and class budgets. Costs from
-unlike classes are never normalized against each other or interpreted as direct
-price ratios. The first real-data pilot must remain narrow when comparable baskets
-are unavailable.
+Headline Economics uses comparable observed cost per successful task. Advertised prices and
+attempted-task costs are reference-only until a defensible conversion or workload basket exists.
 
-Observed task-cost records state whether their denominator is an attempted task or
-a successful task. Attempted-task cost is retained as a reference measurement but
-does not enter headline Economics. It must never be converted to successful-task
-cost without a measured success rate from the same compatible cohort.
+For an attempt-cost source record:
 
-## External indexes
+```text
+CostPerSuccessfulTask_i = MeanCostPerAttempt_i / SuccessRate_i
+```
 
-Third-party composite indexes may be useful reference observations but can span
-multiple UMI domains with undisclosed or incompatible internal weights. UMI stores
-them as typed external-index measurements and never assigns them to a convenient
-Capability domain. They are excluded from Capability, Overall, and Value unless a
-future methodology defines an explicit cross-domain mapping.
+The ratio is derived per record before consolidation. Zero success is positive infinity and the
+worst outcome. Economics is normalized only within one workload/cohort series. Coverage is the sum
+of configured workload-class weights with comparable successful-task cost evidence. Costs from
+unrelated coding, research, browser, or other workloads are not pooled.
 
-## First real-data pilot
+## Overall and headline eligibility
 
-The first pilot is a dated snapshot, not a current leaderboard mirror. It uses the
-Artificial Analysis article published 2026-07-17 and the six configurations named
-there. Values are transcribed into an inspectable fact capture with source location
-notes. Mutable current model pages are not mixed into that snapshot. The pilot may
-produce partial component estimates, but no headline rank is expected because the
-source does not supply three compatible UMI Capability domains or observed
-successful-task cost.
+The default partial estimate is:
 
-`CostPerSuccessfulTask = MeanCostPerAttempt / SuccessRate`. Headline Economics uses comparable observed cost per successful task only. Advertised input, cached-input, output, cache-write, reasoning-token, long-context, and tool pricing are stored and validated but are not converted into a headline score until workload baskets exist.
+```text
+PartialOverall = 0.55 * Capability + 0.25 * Efficiency + 0.20 * Economics
+```
 
-## Overall, Value, coverage, and confidence
+Missing components are reweighted only for `partial_overall_estimate`. The weighted coverage is:
 
-The renormalized diagnostic number is serialized as `partial_overall_estimate`.
-`headline_overall` is populated only when eligibility rules pass; otherwise it is
-`null`. There is intentionally no ambiguous serialized `overall` field.
+```text
+OverallCoverage = 0.55 * CapabilityCoverage
+                + 0.25 * EfficiencyCoverage
+                + 0.20 * EconomicsCoverage
+```
 
-Value is **experimental**. Its configured candidates are geometric mean,
-weighted geometric mean, and harmonic mean. No candidate is declared correct.
-Output identifies the selected formula and Value sensitivity reports score/rank
-ranges. A raw-cost formula is deferred until compatible observed-cost baskets
-exist.
+A publishable `headline_overall` requires all of the following:
 
-Confidence is capped at Medium when selected evidence comes from fewer than two
-source organizations and at Low when fewer than three Capability domains are
-represented. Coverage, cohort size, provisional normalization, conflicts,
-vendor-only evidence, sparse workloads, and source diversity are returned as
-explicit reasons.
+- all three component scores are present;
+- Capability coverage at least 0.60;
+- Efficiency coverage at least 0.50;
+- Economics coverage at least 0.40;
+- weighted Overall coverage at least 0.60;
+- Capability evidence in at least three domains;
+- weighted Efficiency workload coverage at least 0.50;
+- model release date inside the configured release window;
+- scoring-ready evidence only.
 
-Coverage metadata separately reports weighted Overall coverage, Capability domain
-and family coverage, Efficiency and Economics workload-class counts and weighted
-coverage, independent/community share, and distinct source organizations.
-Measurement count is not evidence breadth.
+The component thresholds are v0.2.1 hypotheses, not empirically calibrated universal constants.
+Failure leaves component scores and the partial estimate visible but sets `headline_overall` to
+null and suppresses headline rank.
 
-The default Overall score is `0.55C + 0.25E + 0.20X`. Missing components are renormalized over available component weights; weighted coverage is always reported. Configured sensitivity sets are 55/25/20, 60/20/20, 50/30/20, 60/25/15, and 50/25/25.
+## Value is experimental
 
-Value is separate: `sqrt(Capability × observed-cost-efficiency score)`. It is unavailable without both inputs.
+Value requires Capability and normalized observed Economics. It is not an established construct.
+Configured v0.2.1 scenarios are:
 
-Confidence is High at coverage >=80% and independent/community evidence share >=75%; Medium at coverage >=60% and that evidence share >=50%; otherwise Low. Evidence quality is weighted first by the headline component weight and component coverage; selected records within a component contribute equally in v0.1. Any small-cohort normalization or failed headline eligibility marks the result provisional.
+```text
+balanced_geometric = Capability^0.50 * Economics^0.50
+capability_heavy   = Capability^0.70 * Economics^0.30
+harmonic           = 2 * Capability * Economics / (Capability + Economics)
+```
 
-Aggregate/constituent metadata must use the same benchmark-family ID. Validation rejects an overlap declared across different families, ensuring the scoring engine places every known overlap inside one shared family budget.
+Scenario names must be unique, the baseline must exist, and mathematically duplicate hypotheses
+are rejected. Value output identifies the scenario, formula, and parameters. Value sensitivity
+reports score/rank ranges, maximum movement, scenario count, and stability. No Value formula is
+declared correct, and publishable Value ranking is limited to headline-eligible configurations.
 
-## Sensitivity, correlation, and Pareto analysis
+## Coverage and confidence
 
-Sensitivity analysis recomputes scores and reports baseline rank, rank range, score range, maximum rank movement, and stability (`1 - rank_range/(ranked_models-1)`, with one model defined as 1). Correlation output includes Pearson, Spearman, and overlap count; interpretive flags require the configured minimum overlap. Correlation does not alter v1 scores.
+Coverage is not an observation count. UMI separately exposes domain, family, representation,
+Efficiency metric/workload, Economics workload, evidence-quality, and source-organization breadth.
 
-A model is Pareto dominated when another model is at least as capable and no more costly/inefficient, with one strict improvement. Equal points do not dominate each other. Outputs name all dominators.
+Confidence is rule-based. Initial High/Medium candidates use configured coverage and
+independent-or-community evidence thresholds. These caps then apply:
 
-## Cohort identity and evaluation compatibility
+- failed headline eligibility forces Low Overall confidence;
+- unready overridden evidence forces Low and suppresses headlines;
+- insufficient Capability breadth forces Low;
+- provisional normalization prevents High;
+- unresolved selected-evidence conflicts prevent High;
+- evidence from one source organization caps confidence at Medium.
 
-Every result records a deterministic cohort ID, sorted cohort model IDs,
-evaluation date, normalization version, and configuration fingerprint. Adding or
-removing models can change existing scores, even with robust normalization.
+Every result includes human-readable reasons. UMI never emits `confidence=high` with a provisional
+headline result.
 
-Benchmark labels alone never establish comparability. Every measurement carries a
-`cohort_key` and model snapshot identifier. The key represents benchmark/harness
-versions, scaffold, tools, retry policy, effort, context, pass@k, endpoint snapshot,
-and other material settings. Different keys normalize separately and share the
-benchmark representation budget. A model ID associated with multiple snapshots is
-an error. Optional task/trial/sample counts, standard error, and confidence
-interval are preserved but do not yet alter scores.
+## Sensitivity and analyses
 
-## Unresolved questions
+Overall sensitivity recomputes the partial score, weighted coverage, headline eligibility, and
+ranking for every weight scenario. Models may enter or exit eligibility. Output reports baseline
+eligibility, eligible/ineligible scenario counts, rank and score ranges, movement, and stability.
 
-- How should nominal price baskets vary by workload and context length?
-- When is overlap sufficient for empirical correlation-based weight reduction?
-- How should formal measurement uncertainty and benchmark sampling error propagate?
-- How should heterogeneous workload categories combine without hiding user-specific tradeoffs?
-- Should evidence tiers receive calibrated quality weights once validation history exists?
-- Should fixed reference cohorts, anchors, or period-specific scales replace fully
-  relative cohorts?
-- What documented tolerance, if any, should turn near-equal scores into analytical
-  ties? Exact ties currently receive average ranks; presentation rounds to one decimal.
-- How should sample uncertainty and rank/value sensitivity affect confidence?
-- Very low nonzero success remains unclipped; log transforms reduce leverage without
-  hiding catastrophic failure, while zero remains explicit worst.
+Correlation treats each `(benchmark_id, cohort_key)` as a separate series, aligns raw directions so
+better always points upward, reports Pearson, Spearman, overlap, families, and known overlap, and
+withholds interpretation below the configured overlap threshold or for constant series.
+
+Pareto analysis is explicitly scoped by metric, workload category, workload, and cohort key. It
+reports dominator IDs. UMI creates no universal cost or efficiency frontier from incomparable tasks.
+
+## Dataset identity
+
+`dataset_fingerprint` hashes canonical serialized complete input data. `scored_data_fingerprint`
+hashes the exact readiness-filtered inputs used by scoring; pricing and external reference indexes
+are excluded in v0.2.1. Both include model/deployment identity, raw values, success rates, dates,
+cohort and evaluation settings, provenance, configuration fingerprint, and engine/formula/
+normalization versions. Records are sorted before SHA-256 hashing and no current timestamp is used.
+
+`cohort_id` is the first 16 hexadecimal characters of `scored_data_fingerprint`. `data_as_of` is the
+latest included scoring evaluation date, or the configured release-window end if none exists.
+Changing a scored value, success rate, snapshot, cohort, record set, or scoring configuration changes
+the scored fingerprint. Adding diagnostic-only evidence changes the complete fingerprint but not the
+scored fingerprint.
+
+## Remaining limitations and research questions
+
+- Scores remain cohort-relative; frozen normalization baselines and anchor models are deferred.
+- Domain, family, workload, and component weights are policy hypotheses, not empirical estimates.
+- No formal uncertainty propagation uses sample sizes or confidence intervals yet.
+- No automatic benchmark decorrelation or overlap down-weighting is performed.
+- No cross-workload Economics basket has been justified.
+- External composites such as ECI and preference signals such as Arena need explicit source roles
+  and overlap budgets before a multi-source ranking can be published.
+- Model endpoint drift can still be unknowable when a provider does not publish immutable revisions.

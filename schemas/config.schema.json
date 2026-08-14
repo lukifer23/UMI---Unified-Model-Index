@@ -1,0 +1,505 @@
+{
+  "$defs": {
+    "BenchmarkDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "constituents": {
+          "default": [],
+          "items": {
+            "pattern": "^[a-z0-9][a-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Constituents",
+          "type": "array"
+        },
+        "direction": {
+          "$ref": "#/$defs/Direction"
+        },
+        "domain": {
+          "$ref": "#/$defs/Domain"
+        },
+        "family": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Family",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "normalization": {
+          "$ref": "#/$defs/NormalizationStrategy"
+        },
+        "parent_aggregates": {
+          "default": [],
+          "items": {
+            "pattern": "^[a-z0-9][a-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Parent Aggregates",
+          "type": "array"
+        },
+        "representation_group": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Representation Group"
+        },
+        "representation_weight": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "title": "Representation Weight",
+          "type": "number"
+        },
+        "unit": {
+          "$ref": "#/$defs/Unit"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "domain",
+        "family",
+        "direction",
+        "unit",
+        "normalization"
+      ],
+      "title": "BenchmarkDefinition",
+      "type": "object"
+    },
+    "BenchmarkFamilyDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "cap": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Cap",
+          "type": "number"
+        },
+        "domain": {
+          "$ref": "#/$defs/Domain"
+        },
+        "id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "weight": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Weight",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "domain",
+        "weight",
+        "cap"
+      ],
+      "title": "BenchmarkFamilyDefinition",
+      "type": "object"
+    },
+    "Direction": {
+      "enum": [
+        "higher",
+        "lower"
+      ],
+      "title": "Direction",
+      "type": "string"
+    },
+    "Domain": {
+      "enum": [
+        "general_reasoning",
+        "software_engineering",
+        "agentic_work",
+        "math_science",
+        "context_reliability"
+      ],
+      "title": "Domain",
+      "type": "string"
+    },
+    "EligibilityConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "high_confidence_coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "High Confidence Coverage",
+          "type": "number"
+        },
+        "high_confidence_quality_share": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "High Confidence Quality Share",
+          "type": "number"
+        },
+        "medium_confidence_coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Medium Confidence Coverage",
+          "type": "number"
+        },
+        "medium_confidence_quality_share": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Medium Confidence Quality Share",
+          "type": "number"
+        },
+        "minimum_capability_domains": {
+          "minimum": 1,
+          "title": "Minimum Capability Domains",
+          "type": "integer"
+        },
+        "minimum_component_coverage": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Minimum Component Coverage",
+          "type": "object"
+        },
+        "minimum_efficiency_workload_coverage": {
+          "default": 0.5,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Minimum Efficiency Workload Coverage",
+          "type": "number"
+        },
+        "minimum_overall_coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Minimum Overall Coverage",
+          "type": "number"
+        },
+        "release_end": {
+          "format": "date",
+          "title": "Release End",
+          "type": "string"
+        },
+        "release_start": {
+          "format": "date",
+          "title": "Release Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "release_start",
+        "release_end",
+        "minimum_overall_coverage",
+        "minimum_capability_domains",
+        "high_confidence_coverage",
+        "high_confidence_quality_share",
+        "medium_confidence_coverage",
+        "medium_confidence_quality_share",
+        "minimum_component_coverage"
+      ],
+      "title": "EligibilityConfig",
+      "type": "object"
+    },
+    "NormalizationConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "correlation_min_overlap": {
+          "minimum": 2,
+          "title": "Correlation Min Overlap",
+          "type": "integer"
+        },
+        "default_strategy": {
+          "$ref": "#/$defs/NormalizationStrategy"
+        },
+        "log_metrics": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Log Metrics",
+          "type": "array"
+        },
+        "minimum_rank_cohort": {
+          "minimum": 2,
+          "title": "Minimum Rank Cohort",
+          "type": "integer"
+        },
+        "minimum_robust_cohort": {
+          "minimum": 2,
+          "title": "Minimum Robust Cohort",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "minimum_robust_cohort",
+        "minimum_rank_cohort",
+        "correlation_min_overlap",
+        "default_strategy",
+        "log_metrics"
+      ],
+      "title": "NormalizationConfig",
+      "type": "object"
+    },
+    "NormalizationStrategy": {
+      "enum": [
+        "robust_z",
+        "percentile"
+      ],
+      "title": "NormalizationStrategy",
+      "type": "string"
+    },
+    "OverallWeights": {
+      "additionalProperties": false,
+      "properties": {
+        "capability": {
+          "minimum": 0,
+          "title": "Capability",
+          "type": "number"
+        },
+        "economics": {
+          "minimum": 0,
+          "title": "Economics",
+          "type": "number"
+        },
+        "efficiency": {
+          "minimum": 0,
+          "title": "Efficiency",
+          "type": "number"
+        }
+      },
+      "required": [
+        "capability",
+        "efficiency",
+        "economics"
+      ],
+      "title": "OverallWeights",
+      "type": "object"
+    },
+    "SensitivityWeights": {
+      "additionalProperties": false,
+      "properties": {
+        "capability": {
+          "minimum": 0,
+          "title": "Capability",
+          "type": "number"
+        },
+        "economics": {
+          "minimum": 0,
+          "title": "Economics",
+          "type": "number"
+        },
+        "efficiency": {
+          "minimum": 0,
+          "title": "Efficiency",
+          "type": "number"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "capability",
+        "efficiency",
+        "economics",
+        "name"
+      ],
+      "title": "SensitivityWeights",
+      "type": "object"
+    },
+    "Unit": {
+      "enum": [
+        "percent",
+        "score",
+        "tokens",
+        "seconds",
+        "turns",
+        "calls",
+        "usd"
+      ],
+      "title": "Unit",
+      "type": "string"
+    },
+    "ValueConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline": {
+          "minLength": 1,
+          "title": "Baseline",
+          "type": "string"
+        },
+        "scenarios": {
+          "items": {
+            "$ref": "#/$defs/ValueScenario"
+          },
+          "title": "Scenarios",
+          "type": "array"
+        }
+      },
+      "required": [
+        "baseline",
+        "scenarios"
+      ],
+      "title": "ValueConfig",
+      "type": "object"
+    },
+    "ValueFormula": {
+      "enum": [
+        "geometric_mean_v1",
+        "weighted_geometric_v1",
+        "harmonic_mean_v1"
+      ],
+      "title": "ValueFormula",
+      "type": "string"
+    },
+    "ValueScenario": {
+      "additionalProperties": false,
+      "properties": {
+        "alpha": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Alpha"
+        },
+        "formula": {
+          "$ref": "#/$defs/ValueFormula"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "formula"
+      ],
+      "title": "ValueScenario",
+      "type": "object"
+    },
+    "WeightConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "capability_domains": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "propertyNames": {
+            "$ref": "#/$defs/Domain"
+          },
+          "title": "Capability Domains",
+          "type": "object"
+        },
+        "efficiency": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Efficiency",
+          "type": "object"
+        },
+        "overall": {
+          "$ref": "#/$defs/OverallWeights"
+        },
+        "sensitivity_sets": {
+          "items": {
+            "$ref": "#/$defs/SensitivityWeights"
+          },
+          "title": "Sensitivity Sets",
+          "type": "array"
+        },
+        "workload_weights": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "propertyNames": {
+            "$ref": "#/$defs/WorkloadCategory"
+          },
+          "title": "Workload Weights",
+          "type": "object"
+        }
+      },
+      "required": [
+        "capability_domains",
+        "efficiency",
+        "workload_weights",
+        "overall",
+        "sensitivity_sets"
+      ],
+      "title": "WeightConfig",
+      "type": "object"
+    },
+    "WorkloadCategory": {
+      "enum": [
+        "coding_agents",
+        "research_analysis",
+        "tool_use_agents",
+        "browser_computer_use",
+        "general_interaction",
+        "long_horizon"
+      ],
+      "title": "WorkloadCategory",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "benchmarks": {
+      "items": {
+        "$ref": "#/$defs/BenchmarkDefinition"
+      },
+      "title": "Benchmarks",
+      "type": "array"
+    },
+    "eligibility": {
+      "$ref": "#/$defs/EligibilityConfig"
+    },
+    "families": {
+      "items": {
+        "$ref": "#/$defs/BenchmarkFamilyDefinition"
+      },
+      "title": "Families",
+      "type": "array"
+    },
+    "fingerprint": {
+      "title": "Fingerprint",
+      "type": "string"
+    },
+    "normalization": {
+      "$ref": "#/$defs/NormalizationConfig"
+    },
+    "value": {
+      "$ref": "#/$defs/ValueConfig"
+    },
+    "weights": {
+      "$ref": "#/$defs/WeightConfig"
+    }
+  },
+  "required": [
+    "weights",
+    "normalization",
+    "eligibility",
+    "benchmarks",
+    "families",
+    "value",
+    "fingerprint"
+  ],
+  "title": "ProjectConfig",
+  "type": "object"
+}

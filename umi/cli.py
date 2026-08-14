@@ -75,7 +75,10 @@ def _emit(payload: Any, output_format: str, output: str | None) -> None:
 
 def _add_common(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--data-dir", default="data/raw")
-    parser.add_argument("--config-dir", default="config")
+    parser.add_argument(
+        "--config-dir",
+        help="Configuration directory; defaults to DATA_DIR/config when present, otherwise config",
+    )
     parser.add_argument("--format", choices=("json", "csv"), default="json")
     parser.add_argument("--output")
     parser.add_argument("--source-registry")
@@ -109,7 +112,9 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def run(args: argparse.Namespace) -> int:
-    config = load_project_config(args.config_dir)
+    colocated_config = Path(args.data_dir) / "config"
+    config_dir = args.config_dir or (colocated_config if colocated_config.is_dir() else "config")
+    config = load_project_config(config_dir)
     dataset = load_dataset(args.data_dir)
     if args.command == "validate":
         report = validate_dataset(dataset, config)

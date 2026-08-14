@@ -45,3 +45,11 @@ def test_rank_csv_is_flat_and_deterministic(capsys: pytest.CaptureFixture[str]) 
     assert len(rows) == 5
     assert "capability.score" in rows[0]
     assert "source_record_ids" in rows[0]
+
+
+def test_fixture_config_is_auto_discovered(capsys: pytest.CaptureFixture[str]) -> None:
+    args = build_parser().parse_args(
+        ["validate", "--data-dir", str(ROOT / "tests" / "fixtures")]
+    )
+    assert run(args) == 0
+    assert json.loads(capsys.readouterr().out)["scoring_ready"] is True

@@ -5,8 +5,10 @@ from math import inf, nan
 import pytest
 from pydantic import ValidationError
 
+from analysis.correlations import benchmark_correlations
 from analysis.pareto_metrics import pareto_dimensions
-from umi.config import ProjectConfig, ValueConfig
+from analysis.sensitivity import analyze_sensitivity
+from umi.config import ProjectConfig, SensitivityWeights, ValueConfig
 from umi.derived_metrics import consolidate_cost_per_success
 from umi.fingerprints import dataset_fingerprint
 from umi.loading import Dataset
@@ -14,7 +16,10 @@ from umi.schemas import (
     BenchmarkDefinition,
     BenchmarkFamilyDefinition,
     BenchmarkMeasurement,
+    CostBasis,
+    Direction,
     RecordStatus,
+    TaskEconomicsMeasurement,
 )
 from umi.scoring import score_dataset
 from umi.validation import validate_dataset
@@ -210,3 +215,123 @@ def test_pareto_results_are_workload_and_cohort_scoped(
         "coding_agents",
         "research_analysis",
     }
+
+
+def test_headline_requires_efficiency_even_with_direct_economics(
+    synthetic_dataset: Dataset, config: ProjectConfig
+) -> None:
+    source = synthetic_dataset.efficiency[0]
+    economics = tuple(
+        TaskEconomicsMeasurement.model_validate(
+            {
+                **source.model_dump(mode="python", exclude={
+                    "attempts",
+                    "success_rate",
+                    "mean_input_tokens",
+                    "mean_output_tokens",
+                    "mean_reasoning_tokens",
+                    "mean_cached_tokens",
+                    "mean_total_tokens",
+                    "mean_turns",
+                    "mean_wall_seconds",
+                    "mean_tool_calls",
+                    "mean_cost_per_attempt",
+                }),
+                "record_id": f"direct-economics-{model.id}",
+                "model_id": model.id,
+                "cost_basis": CostBasis.SUCCESSFUL_TASK,
+                "mean_cost_usd": float(index + 1),
+                "evaluation_date": "2026-08-14",
+                "model_snapshot_id": "unspecified",
+            }
+        )
+        for index, model in enumerate(synthetic_dataset.models)
+    )
+    dataset = synthetic_dataset.model_copy(
+        update={"efficiency": (), "task_economics": economics}
+    )
+    results = score_dataset(dataset, config)
+    assert all(item.capability.score is not None for item in results)
+    assert all(item.efficiency.score is None for item in results)
+    assert all(item.economics.score is not None for item in results)
+    assert all(item.headline_overall is None for item in results)
+
+
+def test_sensitivity_recomputes_eligibility_per_scenario(
+    synthetic_dataset: Dataset, config: ProjectConfig
+) -> None:
+    result = score_dataset(synthetic_dataset, config)[0]
+    result = result.model_copy(
+        update={
+            "capability": result.capability.model_copy(update={"coverage": 0.60}),
+            "efficiency": result.efficiency.model_copy(update={"coverage": 0.50}),
+            "economics": result.economics.model_copy(update={"coverage": 0.40}),
+            "eligible": False,
+            "headline_overall": None,
+        }
+    )
+    scenarios = (
+        SensitivityWeights(name="baseline", capability=0.55, efficiency=0.25, economics=0.20),
+        SensitivityWeights(
+            name="capability-heavy", capability=0.90, efficiency=0.05, economics=0.05
+        ),
+    )
+    custom = config.model_copy(
+        update={
+            "weights": config.weights.model_copy(update={"sensitivity_sets": scenarios}),
+            "eligibility": config.eligibility.model_copy(
+                update={"minimum_overall_coverage": 0.55}
+            ),
+        }
+    )
+    sensitivity = analyze_sensitivity([result], custom)[0]
+    assert not sensitivity.baseline_eligible
+    assert sensitivity.eligible_scenario_count == 1
+    assert sensitivity.ineligible_scenario_count == 1
+    assert sensitivity.eligibility_changed
+
+
+def test_correlations_align_metric_direction_and_exclude_diagnostics(
+    synthetic_dataset: Dataset, config: ProjectConfig
+) -> None:
+    lower_definition = next(
+        item for item in config.benchmarks if item.id == "synthetic-code"
+    ).model_copy(update={"direction": Direction.LOWER})
+    changed_definitions = tuple(
+        lower_definition if item.id == lower_definition.id else item
+        for item in config.benchmarks
+    )
+    changed_config = config.model_copy(update={"benchmarks": changed_definitions})
+    diagnostic = synthetic_dataset.benchmarks[0].model_copy(
+        update={
+            "record_id": "diagnostic-other-cohort",
+            "cohort_key": "diagnostic-cohort",
+            "record_status": RecordStatus.DIAGNOSTIC_ONLY,
+        }
+    )
+    dataset = synthetic_dataset.model_copy(
+        update={"benchmarks": (*synthetic_dataset.benchmarks, diagnostic)}
+    )
+    output = benchmark_correlations(dataset, minimum_overlap=5, config=changed_config)
+    pair = next(
+        item
+        for item in output
+        if {item.benchmark_a, item.benchmark_b} == {"synthetic-general", "synthetic-code"}
+    )
+    assert pair.spearman == pytest.approx(-1.0)
+    assert all(item.cohort_a != "diagnostic-cohort" for item in output)
+
+
+def test_default_normalization_strategy_affects_efficiency_scores(
+    synthetic_dataset: Dataset, config: ProjectConfig
+) -> None:
+    robust = score_dataset(synthetic_dataset, config)[0].efficiency.score
+    percentile_config = config.model_copy(
+        update={
+            "normalization": config.normalization.model_copy(
+                update={"default_strategy": "percentile"}
+            )
+        }
+    )
+    percentile = score_dataset(synthetic_dataset, percentile_config)[0].efficiency.score
+    assert robust != percentile
