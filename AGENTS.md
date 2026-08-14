@@ -37,3 +37,9 @@
     unresolved methodology instead of hiding an assumption.
 20. Before handoff run `uv run pytest`, coverage, `uv run ruff check .`, strict `uv run mypy`, and all
     CLI smoke commands. Do not claim checks that were not executed.
+21. Keep acquisition separate from ingestion. Adapters must be deterministic, offline, and consume
+    frozen artifacts; no credentials, scraping, or runtime HTTP belongs in scoring.
+22. Require exact model, release, effort, and relevant deployment crosswalks. Never infer omitted
+    effort or map fallback/composite aliases to plain configurations.
+23. Validate licenses, attribution, redistribution scope, revisions, and checksums. Unknown
+    redistribution rights mean facts-and-citations only.

@@ -43,7 +43,8 @@ the override.
 ## Source registry
 
 Source captures live under `data/sources/`. The registry records source URL, access/as-of dates,
-artifact path, and SHA-256. Validation checks path containment, existence, checksum, model snapshot
+artifact path, SHA-256, upstream revision, content type, adapter version, license, attribution, and
+redistribution scope. Validation checks path containment, existence, checksum, model snapshot
 references, record artifact references, and source URL registration. A boolean
 `raw_artifact_available` without an artifact reference is not enough for real scoring readiness.
 
@@ -59,3 +60,10 @@ Before an adapter is allowed to emit `ready`:
 6. prove that diagnostic rows are excluded and multiple cohorts fail safely;
 7. add adversarial fixtures for missing identity, non-finite values, and version collisions;
 8. run validation, tests, Ruff, mypy, and CLI smoke tests.
+
+The v0.3 crosswalk must prove exact model, release, effort, and relevant deployment identity.
+Missing effort, mismatched effort, fallback/composite aliases, collisions, and revision mismatches
+reject the row. A valid diagnostic row remains auditable but cannot score.
+
+Acquisition is separate from ingestion. Adapters consume frozen local artifacts only; runtime HTTP,
+scraping, and credentials are prohibited in the scoring path.

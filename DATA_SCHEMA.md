@@ -1,4 +1,4 @@
-# UMI v0.2.1 data schema
+# UMI v0.3 data schema
 
 The generated JSON Schemas in `schemas/` are the machine-readable authority. This document explains
 their intended use. Run `python scripts/generate_schemas.py` after changing a Pydantic model; the test
@@ -32,6 +32,8 @@ source:
   accessed: 2026-08-14
 result_type: independent  # independent | community_reproduction | vendor_reported | derived
 record_status: ready      # ready | diagnostic_only | synthetic | invalid
+signal_role: task         # composite | preference | task | efficiency | economics | reference
+scoring_disposition: scored  # scored | diagnostic_only
 metric_definition: Exact numerator, denominator, aggregation, and interpretation
 benchmark_version: published-version
 harness_version: published-harness-version
@@ -129,20 +131,38 @@ Supported workload categories are `coding_agents`, `research_analysis`, `tool_us
 `browser_computer_use`, `general_interaction`, and `long_horizon`. Legacy short aliases migrate on
 load. Success-adjusted derived values are not stored back into YAML.
 
-Task Economics records use `cost_basis: attempted_task|successful_task` and nonnegative
-`mean_cost_usd`. Only `successful_task` directly scores. Attempt-cost observations may score only
-when paired with the same Efficiency record's success rate; UMI never joins a numerator and rate
-from different records.
+Task Economics records use `cost_basis: attempted_task|successful_task`, nonnegative
+`mean_cost_usd`, and `aggregation_statistic: arithmetic_mean|median|total|unspecified`. Only
+arithmetic means can enter mean-based success adjustment. UMI never joins a numerator and rate from
+different records or silently treats a median, total, or ambiguous “average” as a mean.
 
 Pricing records preserve advertised input/output/cache/reasoning/tool prices but do not substitute
-for observed successful-task Economics in v0.2.1.
+for observed successful-task Economics in v0.3.
 
 ## External indexes
 
 External index records preserve an index ID, model/snapshot, value, unit, direction, cohort, date,
-and full provenance. They are diagnostic/reference evidence in v0.2.1 and are excluded from the
-scored-data fingerprint. A later multi-source methodology must define their source role and overlap
-budget before they can affect UMI.
+and full provenance. In v0.3, AA indices, Epoch ECI rows, and Arena text/style-control ratings are
+explicitly diagnostic-only and excluded from the scored-data fingerprint.
+
+## Source, crosswalk, overlap, and adapter contracts
+
+Each source snapshot requires content type, upstream revision, adapter ID, license ID, attribution,
+redistribution scope, artifact path, and SHA-256. Missing documentation, missing files, or checksum
+mismatches fail validation.
+
+Each crosswalk entry records the literal source model identifier and effort, canonical configuration
+and effort, match evidence, artifact revision, and exact/rejected status. Exact entries require equal
+non-null effort; rejected entries require a reason. Duplicate aliases and many-to-one collisions are
+invalid.
+
+The directed overlap graph uses `contains`, `derived_from`, `duplicate_measurement`, `shared_tasks`,
+`shared_construct`, and `unknown_overlap` edges. Cycles and unrestricted scored
+aggregate/constituent pairs are invalid.
+
+Each offline adapter returns accepted typed records, diagnostic records, rejected rows, and stable
+diagnostics. Rejected and diagnostic evidence affects the complete audit fingerprint; only accepted
+scoring records affect the scored-data fingerprint.
 
 ## Validation result
 
@@ -185,6 +205,7 @@ lists with `|`.
 - `eligibility.yaml`: release window, component/Overall coverage, breadth, and confidence thresholds;
 - `normalization.yaml`: cohort thresholds, default strategy, correlation overlap, and log metrics;
 - `value.yaml`: named, distinct experimental Value scenarios and baseline.
+- `overlap.yaml`: signal roles, dispositions, budget groups, and directed overlap evidence.
 
 Every scoring-relevant field must affect behavior. Configuration is canonically serialized and
 hashed into `config_fingerprint`.

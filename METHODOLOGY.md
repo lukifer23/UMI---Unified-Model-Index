@@ -156,7 +156,7 @@ Capability = weighted mean of available DomainScore_d
 CapabilityCoverage = sum_d domain.weight_d * DomainCoverage_d
 ```
 
-Family weights in each configured domain sum to one. In v0.2.1, `family.cap` is a configuration
+Family weights in each configured domain sum to one. In v0.3, `family.cap` is a configuration
 guard: `family.weight <= family.cap`, and domain caps sum to at least one. Scoring uses
 `family.weight` directly. A cap does not prevent a family from dominating a partial diagnostic
 estimate when other families are missing; hierarchical coverage and headline eligibility expose
@@ -231,14 +231,14 @@ A publishable `headline_overall` requires all of the following:
 - model release date inside the configured release window;
 - scoring-ready evidence only.
 
-The component thresholds are v0.2.1 hypotheses, not empirically calibrated universal constants.
+The inherited v0.2.1 component thresholds are hypotheses, not empirically calibrated constants.
 Failure leaves component scores and the partial estimate visible but sets `headline_overall` to
 null and suppresses headline rank.
 
 ## Value is experimental
 
 Value requires Capability and normalized observed Economics. It is not an established construct.
-Configured v0.2.1 scenarios are:
+Configured Overall-weight scenarios are:
 
 ```text
 balanced_geometric = Capability^0.50 * Economics^0.50
@@ -286,7 +286,7 @@ reports dominator IDs. UMI creates no universal cost or efficiency frontier from
 
 `dataset_fingerprint` hashes canonical serialized complete input data. `scored_data_fingerprint`
 hashes the exact readiness-filtered inputs used by scoring; pricing and external reference indexes
-are excluded in v0.2.1. Both include model/deployment identity, raw values, success rates, dates,
+are excluded in v0.3. Both include model/deployment identity, raw values, success rates, dates,
 cohort and evaluation settings, provenance, configuration fingerprint, and engine/formula/
 normalization versions. Records are sorted before SHA-256 hashing and no current timestamp is used.
 
@@ -303,6 +303,6 @@ scored fingerprint.
 - No formal uncertainty propagation uses sample sizes or confidence intervals yet.
 - No automatic benchmark decorrelation or overlap down-weighting is performed.
 - No cross-workload Economics basket has been justified.
-- External composites such as ECI and preference signals such as Arena need explicit source roles
-  and overlap budgets before a multi-source ranking can be published.
+- Family-budget calibration, empirical decorrelation, and uncertainty propagation remain research
+  questions; v0.3 exposes equal-family and source-ablation results instead of hiding uncertainty.
 - Model endpoint drift can still be unknowable when a provider does not publish immutable revisions.

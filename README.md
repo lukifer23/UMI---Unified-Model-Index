@@ -1,131 +1,112 @@
 # UMI — Unified Model Index
 
-UMI is an auditable Python library and CLI for scoring model configurations across Capability,
-Efficiency, Economics, Overall, and experimental Value. Version 0.2.1 stabilizes scoring and
-data-readiness invariants before a multi-source real-data pilot.
+UMI is an auditable Python library and CLI for comparing exact model configurations across
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3 adds a real,
+five-configuration, multi-source evidence pilot. It does **not** publish a headline UMI score:
+the evidence supports provisional partial Capability estimates only.
 
-There is currently no publishable real UMI ranking. The checked-in synthetic fixtures demonstrate
-the engine; the narrow Artificial Analysis capture remains a provenance pilot, not a unified score.
+The pilot cohort is Claude Opus 5 Max, Claude Fable 5 Max, GPT-5.6 Sol Max, Kimi K3 Max, and
+GLM-5.2 Max. Its frozen sources are Artificial Analysis public facts, Epoch ECI, LM Arena Agent and
+text/style-control rows, and DeepSWE v1.1 facts. Every source row is accepted only through an exact
+model-and-effort crosswalk.
 
 ## Install and verify
 
 Python 3.11 or newer and [uv](https://docs.astral.sh/uv/) are required.
 
 ```bash
-uv sync --extra dev
+uv sync --frozen
 uv run pytest
 uv run ruff check .
 uv run mypy
 ```
 
-The lockfile is committed. Use `uv sync --frozen` when reproducing an existing lock.
+## Reproduce the v0.3 pilot
 
-## CLI
+All adapters are pure and offline. Acquisition is separate; the committed build reads only frozen
+artifacts.
 
-Run the complete synthetic pipeline:
+`scripts/freeze_v03_open_sources.py --accept-network` is the explicit acquisition path for Epoch and
+Arena. It is never called by ingestion or scoring. AA and DeepSWE remain reviewed-fact inputs.
 
 ```bash
-uv run umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config
-uv run umi rank --data-dir tests/fixtures --config-dir tests/fixtures/config --format json
-uv run umi sensitivity --data-dir tests/fixtures --config-dir tests/fixtures/config
-uv run umi value-sensitivity --data-dir tests/fixtures --config-dir tests/fixtures/config
-uv run umi correlations --data-dir tests/fixtures --config-dir tests/fixtures/config
-uv run umi pareto --data-dir tests/fixtures --config-dir tests/fixtures/config
+uv run python scripts/build_v03_pilot.py
+uv run umi sources validate --data-dir data/pilots/v0.3/raw
+uv run umi crosswalk
+uv run umi overlap
+uv run umi ingest --source aa
+uv run umi ingest --source epoch
+uv run umi ingest --source arena-agent
+uv run umi ingest --source arena-text
+uv run umi ingest --source deepswe
+uv run umi rank --data-dir data/pilots/v0.3/raw --include-provisional
+uv run umi pilot-sensitivity --data-dir data/pilots/v0.3/raw
+uv run umi correlations --data-dir data/pilots/v0.3/raw
+uv run umi pareto --data-dir data/pilots/v0.3/raw
 ```
 
-`validate` reports `schema_valid` and `scoring_ready` separately. `rank` publishes only eligible
-headlines by default; `--include-provisional` shows partial results without turning them into
-headlines. `--allow-unready` is development-only: affected results remain provisional, Low
-confidence, and unranked.
+Every real-pilot result is labeled `real evidence, provisional partial ranking`. All
+`headline_overall` fields and publishable ranks are null. `--include-provisional` exposes partial
+results without promoting them to a leaderboard.
 
-JSON and CSV output are deterministic. Every result contains component scores, hierarchical
-coverage, confidence reasons, provenance record IDs, configuration and dataset fingerprints,
-cohort identity, and engine/formula/normalization versions.
-
-## Python API
-
-```python
-from umi import load_dataset, load_project_config, score_dataset
-
-dataset = load_dataset("tests/fixtures")
-config = load_project_config("tests/fixtures/config")
-results = score_dataset(dataset, config)
-
-for result in results:
-    print(result.model_id, result.headline_overall, result.confidence)
-```
-
-Analysis APIs are in `analysis`: ranking, Overall sensitivity, Value sensitivity, correlation, and
-workload/cohort-specific Pareto frontiers.
-
-## Scoring at a glance
-
-The default partial Overall formula is:
-
-```text
-0.55 * Capability + 0.25 * Efficiency + 0.20 * Economics
-```
-
-Missing evidence may produce `partial_overall_estimate`, but a headline requires all three component
-scores, component-specific minimum coverage, at least 60% weighted Overall coverage, Capability in
-three domains, sufficient Efficiency workload coverage, an eligible release date, and scoring-ready
-evidence.
-
-Attempt-level tokens, turns, wall time, tool calls, and cost are divided by the same record's success
-rate before provenance selection and median consolidation. Zero success is an explicit worst outcome,
-not missing data. Capability and coverage aggregate hierarchically across representations, families,
-and domains.
-
-The complete specification is [METHODOLOGY.md](METHODOLOGY.md). Do not infer scoring behavior from a
-README summary.
-
-## Repository layout
-
-```text
-analysis/             sensitivity, correlations, rankings, Pareto tools
-config/               default scoring policy
-data/raw/             narrow manually captured provenance pilot
-data/sources/         source registry and checksummed captures
-schemas/              generated machine-readable JSON Schemas
-scripts/              deterministic schema generator
-tests/fixtures/        conspicuously synthetic scoring data
-umi/                   typed schemas, validation, readiness, scoring, CLI
-METHODOLOGY.md         authoritative formulas and policy
-DATA_SCHEMA.md         explanatory schema guide
-SOURCE_READINESS.md    enforced ingestion gate
-AGENTS.md              repository safeguards
-```
+The synthetic engine demonstration remains available under `tests/fixtures` and is always labeled
+as synthetic.
 
 ## Architecture
 
-Loading preserves frozen source records. Validation checks structural integrity separately from
-scoring readiness. The readiness layer filters records before every scorer. Capability, Efficiency,
-and Economics normalize only compatible cohorts, return selected provenance, and calculate
-hierarchical coverage. The scoring layer applies headline and confidence rules and fingerprints the
-complete and scored datasets. Analysis tools reuse readiness and compatibility rules.
-
-Pydantic generates `schemas/dataset.schema.json`, `schemas/config.schema.json`, and
-`schemas/scoring-result.schema.json`. Regenerate them after model changes:
-
-```bash
-uv run python scripts/generate_schemas.py
+```text
+frozen artifacts -> offline adapters -> exact crosswalk -> readiness filter
+                 -> overlap/family budgets -> compatible-cohort normalization
+                 -> component estimates -> eligibility/publication gates
 ```
+
+- `METHODOLOGY.md` is authoritative for formulas and policy.
+- `data/sources/registry.yaml` records checksums, revisions, licenses, attribution, and redistribution.
+- `data/sources/v0.3/crosswalk.yaml` records every exact match and reviewed rejection.
+- `config/overlap.yaml` assigns signal roles and directed overlap relationships.
+- `data/pilots/v0.3/raw/` contains generated typed inputs; `processed/` contains deterministic reports.
+- `umi/adapters/` contains source-specific, no-network transformations.
+- `schemas/` contains generated JSON Schemas for data, config, source, crosswalk, overlap, and output.
+
+Complete and scored-data fingerprints are deliberately different. Rejected and diagnostic evidence,
+crosswalk decisions, adapter versions, and artifact checksums affect the complete fingerprint. Only
+accepted scoring evidence affects the scored fingerprint. The overlap policy is included through the
+configuration fingerprint.
+
+## Scoring summary
+
+The default Overall formula remains:
+
+```text
+0.55 × Capability + 0.25 × Efficiency + 0.20 × Economics
+```
+
+Capability retains the five domain weights and v0.3 fixes within-domain benchmark-family budgets.
+DeepSWE pass rate contributes to software engineering. Exact Arena Agent aggregate rows contribute
+to agentic work for three configurations. AA composites, ECI rows, Arena text ratings, and DeepSWE
+resource summaries are diagnostic only.
+
+DeepSWE's published “Avg cost”, output tokens, and steps are not treated as arithmetic means because
+the captured source does not establish that statistic. They therefore cannot be divided by success
+rate or enter Efficiency/Economics. This prevents a convenient but unsupported headline.
 
 ## Current limitations
 
-- UMI scores are cohort-relative and change when the scored cohort changes.
-- Weights and eligibility thresholds are transparent hypotheses, not empirical calibration.
-- Sample sizes and intervals are preserved but not propagated through scoring.
-- No fixed reference cohort, anchor scale, decorrelation weighting, or cross-workload cost basket
-  exists yet.
-- External composites such as Epoch ECI and preference leaderboards such as Arena cannot be added as
-  unrestricted benchmark votes; their overlap and construct roles must be specified first.
-- The current real capture uses one evaluator and lacks Efficiency/successful-task Economics breadth,
-  so it cannot produce a headline UMI score.
+- Only two Capability domains have scored evidence; three are required for headline eligibility.
+- Efficiency and Economics evidence is coding-only and, in this capture, not mean-qualified.
+- Fable 5 Max predates the unchanged 2026-06-15 release-window start.
+- Scores are cohort-relative; no fixed anchor cohort or formal uncertainty propagation exists.
+- Family budgets are documented pilot hypotheses, not empirical decorrelation weights.
+- Arena text/style-control is a bounded diagnostic snapshot, not a complete historical extract.
+- No frontend, database, scraper, credentials, or live network path is part of the scoring library.
 
-## Next milestone
+See [PILOT_REPORT.md](PILOT_REPORT.md), [SOURCE_READINESS.md](SOURCE_READINESS.md), and
+[SOURCES_AND_LICENSES.md](SOURCES_AND_LICENSES.md) for the audit trail and publication decision.
 
-After v0.2.1 is accepted, the next task is a four-to-six-configuration, manually reviewed source
-crosswalk—not a broad scrape. It should inventory exact overlap among Artificial Analysis, Epoch ECI
-or its underlying benchmark data, Arena, and selected task-level benchmarks; assign each source a
-scoring/reference role; freeze source snapshots; and ingest only exact configuration/cohort matches.
+## Recommended next ingestion task
+
+Freeze exact, task-level public facts for HLE, GPQA Diamond/CritPt, and one context/reliability family
+for the same five configurations, including evaluation dates, harness versions, task counts, and
+configuration evidence. In parallel, obtain an explicitly arithmetic-mean, attempt-level resource
+export covering at least three configured workload categories. Do not broaden the cohort or relax a
+gate to manufacture a headline.

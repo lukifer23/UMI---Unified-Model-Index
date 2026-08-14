@@ -1,56 +1,58 @@
-# Artificial Analysis provenance pilot — 2026-07-17 snapshot
+# UMI v0.3 multi-source pilot report
 
-## Decision
+## Publication decision
 
-Accepted as a source-readiness and partial-Capability exercise. Rejected as a Unified Model Index
-ranking. It contains one evaluator, two represented UMI domains, no Efficiency observations, and no
-comparable cost per successful task. Every `headline_overall` and rank is therefore null.
+**Real evidence, provisional partial ranking. No headline UMI score or publishable rank.**
 
-This is not the multi-source UMI product goal. Epoch ECI, Arena, and complementary task-level
-benchmarks require a separate, reviewed source-role and overlap plan after v0.2.1.
+The five configurations remain visible, but none passes the inherited v0.2.1 coverage, component,
+workload, and Capability-domain gates. This is the expected outcome, not a failed run.
 
-## Captured cohort
+## Accepted scored evidence
 
-The six configurations are Claude Fable 5 max with fallback, GPT-5.6 Sol max, Kimi K3 max, Grok 4.5
-high, GLM-5.2 max, and Muse Spark 1.1 xhigh. The dated capture contains:
+| Configuration | DeepSWE v1.1 pass rate | Arena Agent | Partial Capability | Headline |
+|---|---:|---:|---:|---:|
+| Claude Opus 5 Max | 74% ± 4 | 0.11998 | 89.33 | null |
+| Claude Fable 5 Max | 70% ± 4 | rejected: High only | 50.00 | null |
+| GPT-5.6 Sol Max | 73% ± 3 | rejected: xHigh only | 75.00 | null |
+| Kimi K3 Max | 69% ± 5 | 0.10538 | 44.85 | null |
+| GLM-5.2 Max | 44% ± 2 | 0.06711 | ~0.00 | null |
 
-- six Artificial Analysis Intelligence Index reference observations;
-- six costs per attempted Intelligence Index task;
-- four Coding Agent Index measurements;
-- three GDPval-AA v2 Elo measurements;
-- three AA-Briefcase Elo measurements.
+Partial Capability is cohort-relative and combines only the fixed software-engineering and agentic
+family budgets available to each exact configuration. It is not an Overall score. Fable is also
+release-window-ineligible because its 2026-06-09 release predates the 2026-06-15 start.
 
-| Configuration | AA Intelligence Index | Cost / attempted task | Coding Agent Index | GDPval-AA v2 | AA-Briefcase |
-|---|---:|---:|---:|---:|---:|
-| Claude Fable 5 max + fallback | 60 | $2.75 | 77 | 1760 | 1583 |
-| GPT-5.6 Sol max | 59 | $1.04 | 80 | 1748 | 1495 |
-| Kimi K3 max | 57 | $0.94 | — | 1668 | 1547 |
-| Grok 4.5 high | 54 | $0.31 | 76 | — | — |
-| GLM-5.2 max | 51 | $0.32 | — | — | — |
-| Muse Spark 1.1 xhigh | 51 | $0.26 | 69 | — | — |
+## Diagnostic evidence
 
-## v0.2.1 readiness result
+- Artificial Analysis Intelligence values are composite references. The Fable value is rejected
+  because its label includes an Opus 4.8 fallback deployment.
+- Epoch ECI input rows are retained as diagnostic references because their source matrix combines
+  heterogeneous harnesses/settings and ECI selects highest results across settings.
+- Arena text/style-control ratings are diagnostic preference evidence. Missing or non-Max effort
+  labels are rejected.
+- DeepSWE cost, token, and step summaries are retained but cannot enter mean-based success adjustment;
+  the captured source does not establish arithmetic-mean semantics.
 
-All scoring records now reference the checksummed `aa-frontier-2026-07-17` capture. Structural
-validation and source readiness pass. Claude Fable 5 retains a release-window warning. Passing source
-readiness means records are safe to process; it does not mean the evidence basket is broad enough for
-a headline.
+## Why no headline exists
 
-## Interpretation
+- scored Capability covers only software engineering and agentic work, below the three-domain gate;
+- Efficiency coverage is below 0.50 and Economics coverage is below 0.40;
+- all potentially useful resource evidence is confined to coding and is statistic-ambiguous;
+- missing workload evidence is not reweighted to make the cohort eligible.
 
-Partial Capability estimates exist for five configurations and remain provisional because each
-contributing cohort has only three or four observations. GLM-5.2 has no scored domain-specific record
-in the article. No configuration has three Capability domains, Efficiency, or successful-task
-Economics. Attempted-task costs and the AA Intelligence Index remain reference-only.
+The generated [partial ranking](data/pilots/v0.3/processed/partial-ranking.json) has null ranks and
+null `headline_overall` for every model. The [source readiness report](data/pilots/v0.3/processed/source-readiness.json),
+[overlap report](data/pilots/v0.3/processed/overlap.json), and
+[pilot sensitivity report](data/pilots/v0.3/processed/pilot-sensitivity.json) are machine-readable.
 
-The outputs in `data/processed/pilot-2026-07-17/` were regenerated with engine/formula/normalization
-v0.2.1 and contain complete/scored fingerprints. They are diagnostic artifacts, not public rankings.
+## Sensitivity result
 
-## What the next real-data task must add
+Equal-family and source-ablation scenarios are computed without relaxing publication gates. Removing
+a source does not redistribute or enlarge its domain budget. Every scenario continues to have a null
+headline. These scenarios expose how dependent the partial Capability values are on the pilot's two
+scored sources.
 
-Before another score is published, define exact source roles and overlap budgets for Artificial
-Analysis, Epoch ECI or its underlying benchmark records, Arena preference data, and selected
-task-level benchmarks. Freeze source snapshots and build an exact model/deployment crosswalk. A
-four-to-six-configuration pilot should proceed only where at least three independent source
-organizations, three Capability domains, Efficiency workload evidence, and successful-task Economics
-can be represented without fuzzy identity joins.
+## Reproducibility
+
+The pilot build is deterministic and offline. It records exact source revisions, checksums, adapter
+versions, accepted records, diagnostics, and rejected rows. The complete audit fingerprint changes
+when diagnostic/rejected evidence changes; the scored fingerprint does not.
