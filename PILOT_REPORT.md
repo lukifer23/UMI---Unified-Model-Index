@@ -9,16 +9,17 @@ workload, and Capability-domain gates. This is the expected outcome, not a faile
 
 ## Accepted scored evidence
 
-| Configuration | DeepSWE v1.1 pass rate | Arena Agent | Partial Capability | Headline |
+| Configuration | DeepSWE v1.1 | GPQA Diamond | Model-specific partial Capability | Headline |
 |---|---:|---:|---:|---:|
-| Claude Opus 5 Max | 74% ± 4 | diagnostic: no immutable snapshot | 100.00 | null |
-| Claude Fable 5 Max | 70% ± 4 | rejected: High only | 50.00 | null |
-| GPT-5.6 Sol Max | 73% ± 3 | rejected: xHigh only | 75.00 | null |
-| Kimi K3 Max | 69% ± 5 | diagnostic: no immutable snapshot | 25.00 | null |
-| GLM-5.2 Max | 44% ± 2 | diagnostic: no immutable snapshot | ~0.00 | null |
+| Claude Opus 5 Max | 74% ± 4 | 93.88% (SE 1.48) | 100.00 | null |
+| Claude Fable 5 Max | 70% ± 4 | rejected: fallback absence unverified | 50.00 (DeepSWE only) | null |
+| GPT-5.6 Sol Max | 73% ± 3 | 93.50% (SE 1.57) | 71.90 | null |
+| Kimi K3 Max | 69% ± 5 | 93.12% (SE 1.49) | 28.10 | null |
+| GLM-5.2 Max | 44% ± 2 | 91.86% (SE 1.61) | 0.00 | null |
 
-Partial Capability is cohort-relative and currently covers DeepSWE's fixed software-engineering
-budget only. It is not an Overall score. Fable is also
+Partial Capability is cohort-relative. Four models cover the fixed DeepSWE and GPQA budgets—26.25%
+of Capability across two domains—while Fable covers only DeepSWE at 16.5%. Those model-specific
+partials are not directly rankable across evidence profiles and are not Overall scores. Fable is also
 release-window-ineligible because its 2026-06-09 release predates the 2026-06-15 start.
 
 ## Diagnostic evidence
@@ -27,6 +28,8 @@ release-window-ineligible because its 2026-06-09 release predates the 2026-06-15
   because its label includes an Opus 4.8 fallback deployment.
 - Epoch ECI input rows are retained as diagnostic references because their source matrix combines
   heterogeneous harnesses/settings and ECI selects highest results across settings.
+- Epoch's raw GPQA archive supplies four scoring-ready exact Max rows. Fable is rejected because the
+  CSV does not prove fallback routing was absent and the linked run log was access-controlled.
 - Arena Agent and text/style-control ratings are diagnostic preference evidence. The Agent artifact
   has exact labels and efforts but no immutable snapshot/deployment identity; missing or non-Max
   effort labels are rejected.
@@ -40,7 +43,7 @@ release-window-ineligible because its 2026-06-09 release predates the 2026-06-15
 
 ## Why no headline exists
 
-- scored Capability covers only software engineering, below the three-domain gate;
+- scored Capability covers software engineering and math/science, below the three-domain gate;
 - Efficiency coverage is below 0.50 and Economics coverage is below 0.40;
 - all potentially useful resource evidence is confined to coding and is statistic-ambiguous;
 - missing workload evidence is not reweighted to make the cohort eligible.
@@ -48,9 +51,9 @@ release-window-ineligible because its 2026-06-09 release predates the 2026-06-15
 The generated [model-specific partial estimates](data/pilots/v0.3/processed/model-specific-partial-estimates.json)
 have no model-specific rank and null `headline_overall` for every model. The five-model
 [common-evidence comparison](data/pilots/v0.3/processed/common-evidence-five-model-comparison.json)
-uses DeepSWE only; the exact three-model
+uses DeepSWE only because Fable's GPQA identity is not cleared; the exact three-model
 [common-evidence comparison](data/pilots/v0.3/processed/common-evidence-three-model-comparison.json)
-also uses DeepSWE only under the current strict identity policy. Both are provisional and separately
+also uses both series under the current strict identity policy. Both are provisional and separately
 labeled. The [source-bound uncertainty report](data/pilots/v0.3/processed/source-bound-uncertainty.json)
 re-scores one published bound at a time; it is not probabilistic propagation. The
 [source readiness report](data/pilots/v0.3/processed/source-readiness.json),

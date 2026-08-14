@@ -17,14 +17,15 @@ from umi.adapters import (
     adapt_arena_json,
     adapt_deepswe_facts,
     adapt_epoch_csv,
+    adapt_epoch_gpqa_zip,
     adapt_lab_release_facts,
     assemble_pilot_dataset,
 )
-from umi.bundle import validate_scoring_bundle
+from umi.bundle import ScoringBundle, validate_scoring_bundle
 from umi.config import load_project_config
 from umi.loading import load_model_crosswalk, load_source_registry
 from umi.schemas import ModelConfiguration, ScoringDisposition
-from umi.scoring import score_dataset
+from umi.scoring import score_bundle
 from umi.source_policy import source_readiness_matrix, validate_crosswalk
 from umi.validation import validate_dataset, validate_source_registry
 
@@ -57,6 +58,12 @@ def main() -> None:
             crosswalk,
             source_id="epoch-eci",
             artifact_id="epoch-eci-matrix-2026-08-14",
+        ),
+        adapt_epoch_gpqa_zip(
+            SOURCE_ROOT / "epoch-benchmark-data-2026-08-14.zip",
+            crosswalk,
+            source_id="epoch-benchmarks",
+            artifact_id="epoch-benchmark-data-2026-08-14",
         ),
         adapt_arena_json(
             SOURCE_ROOT / "arena-agent-2026-08-14.json",
@@ -186,7 +193,14 @@ def main() -> None:
     (PROCESSED_ROOT / "source-readiness.json").write_text(
         json.dumps(source_report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
-    estimates = [item.model_dump(mode="json") for item in score_dataset(dataset, config)]
+    bundle = ScoringBundle(
+        dataset=dataset,
+        config=config,
+        source_registry=registry,
+        crosswalk=crosswalk,
+        registry_path=ROOT / "data" / "sources" / "registry.yaml",
+    )
+    estimates = [item.model_dump(mode="json") for item in score_bundle(bundle)]
     (PROCESSED_ROOT / "model-specific-partial-estimates.json").write_text(
         json.dumps(estimates, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )

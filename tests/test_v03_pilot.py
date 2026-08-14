@@ -10,11 +10,13 @@ from pydantic import ValidationError
 from analysis.gaps import pilot_gap_report
 from analysis.pilot_sensitivity import analyze_pilot_sensitivity, family_budget_snapshot
 from scripts.build_v03_pilot import main as build_v03_pilot
+from scripts.freeze_v03_open_sources import _zip_content_sha256
 from umi.adapters import (
     adapt_aa_facts,
     adapt_arena_json,
     adapt_deepswe_facts,
     adapt_epoch_csv,
+    adapt_epoch_gpqa_zip,
     adapt_lab_release_facts,
 )
 from umi.bundle import load_scoring_bundle, validate_scoring_bundle
@@ -22,10 +24,12 @@ from umi.config import ProjectConfig, load_project_config
 from umi.derived_metrics import derive_efficiency_metric
 from umi.fingerprints import dataset_fingerprint
 from umi.loading import load_dataset, load_model_crosswalk, load_source_registry
+from umi.readiness import readiness_failures
 from umi.schemas import (
     AggregationStatistic,
     ArtifactCaptureType,
     CrosswalkStatus,
+    IdentityAssurance,
     ModelCrosswalk,
     ModelCrosswalkEntry,
     OverlapEdge,
@@ -67,7 +71,7 @@ def test_frozen_registry_checksums_and_license_contract(pilot_dataset) -> None:
     )
     assert report.errors == ()
     pilot_snapshots = [item for item in registry.snapshots if "v0.3/" in item.artifact_path]
-    assert len(pilot_snapshots) == 9
+    assert len(pilot_snapshots) == 10
     assert all(item.license_id and item.attribution and item.adapter_id for item in pilot_snapshots)
 
 
@@ -124,6 +128,33 @@ def test_real_pilot_requires_a_valid_governance_bundle(
         "signal policy does not permit scoring" in error
         for error in validate_scoring_bundle(
             pilot_dataset, diagnostic_policy, registry, registry_path, crosswalk
+        )
+    )
+
+    inferred_models = tuple(
+        item.model_copy(update={"identity_assurance": IdentityAssurance.INFERRED})
+        if item.id == scored.model_id
+        else item
+        for item in pilot_dataset.models
+    )
+    inferred_identity = pilot_dataset.model_copy(update={"models": inferred_models})
+    assert any(
+        "identity assurance is below label_exact" in error
+        for error in validate_scoring_bundle(
+            inferred_identity, pilot_config, registry, registry_path, crosswalk
+        )
+    )
+
+    efficiency = next(item for item in pilot_dataset.efficiency if item.model_id == scored.model_id)
+    assert "deployment identity is not verified for endpoint-sensitive evidence" in (
+        readiness_failures(
+            efficiency.model_copy(
+                update={
+                    "record_status": RecordStatus.READY,
+                    "scoring_disposition": ScoringDisposition.SCORED,
+                }
+            ),
+            next(item for item in pilot_dataset.models if item.id == scored.model_id),
         )
     )
 
@@ -255,7 +286,7 @@ def test_epoch_and_arena_adapter_dispositions(crosswalk) -> None:
         "kimi-k3-max",
         "glm-5.2-max",
     }
-    assert all(item.model_snapshot_id == "unspecified" for item in arena.benchmarks)
+    assert all(item.provider_snapshot_id is None for item in arena.benchmarks)
     assert all(item.evaluation_date is None for item in arena.benchmarks)
     assert all(item.leaderboard_publish_date is not None for item in arena.benchmarks)
     assert all(
@@ -271,6 +302,34 @@ def test_epoch_and_arena_adapter_dispositions(crosswalk) -> None:
     )
     assert any("Fable" in item.source_row_id for item in arena.rejections)
     assert any("Sol" in item.source_row_id for item in arena.rejections)
+
+
+def test_epoch_gpqa_is_exact_common_scored_capability(crosswalk) -> None:
+    assert _zip_content_sha256(SOURCES / "epoch-benchmark-data-2026-08-14.zip") == (
+        "2b818e5b5ad1fcdba9f04616d6f1c7f71714a3d045967dbf09a7e13bf557f009"
+    )
+    result = adapt_epoch_gpqa_zip(
+        SOURCES / "epoch-benchmark-data-2026-08-14.zip",
+        crosswalk,
+        source_id="epoch-benchmarks",
+        artifact_id="epoch-benchmark-data-2026-08-14",
+    )
+    assert len(result.benchmarks) == 4
+    assert {item.source_row_id for item in result.rejections} == {"claude-fable-5_max"}
+    assert {item.model_id for item in result.benchmarks} == {
+        "claude-opus-5-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "glm-5.2-max",
+    }
+    assert all(item.signal_id == "gpqa-diamond" for item in result.benchmarks)
+    assert all(item.provider_snapshot_id is None for item in result.benchmarks)
+    assert all(
+        item.uncertainty is not None
+        and item.uncertainty.kind == UncertaintyKind.STANDARD_ERROR
+        and item.number_of_trials is None
+        for item in result.benchmarks
+    )
 
 
 def test_lab_release_facts_preserve_tariffs_and_claims(crosswalk) -> None:
@@ -315,7 +374,7 @@ def test_reviewed_adapter_rejects_schema_drift(monkeypatch, crosswalk) -> None:
 
 def test_overlap_cycles_and_unrestricted_double_count_are_rejected(pilot_config) -> None:
     reverse = OverlapEdge(
-        source="aa-hle",
+        source="hle",
         target="aa-intelligence-v4.1",
         relation=OverlapRelation.DERIVED_FROM,
         evidence="adversarial cycle",
@@ -362,7 +421,7 @@ def test_documented_overlap_edges_cover_known_composites(pilot_config) -> None:
     edges = {(item.source, item.target, item.relation) for item in pilot_config.overlap.edges}
     assert ("epoch-eci", "deepswe-v1.1", OverlapRelation.CONTAINS) in edges
     assert ("arena-agent", "arena-agent-signals", OverlapRelation.CONTAINS) in edges
-    assert ("aa-intelligence-v4.1", "aa-hle", OverlapRelation.CONTAINS) in edges
+    assert ("aa-intelligence-v4.1", "hle", OverlapRelation.CONTAINS) in edges
 
 
 def test_fixed_family_budgets_and_source_ablation(pilot_dataset, pilot_config) -> None:
@@ -399,7 +458,15 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
         for item in results.values()
     )
     assert all(item.headline_overall is None and not item.eligible for item in results.values())
-    assert {item.coverage.capability_absolute_weighted for item in results.values()} == {0.165}
+    assert {
+        item.model_id: item.coverage.capability_absolute_weighted for item in results.values()
+    } == {
+        "claude-fable-5-max": 0.165,
+        "claude-opus-5-max": 0.2625,
+        "glm-5.2-max": 0.2625,
+        "gpt-5.6-sol-max": 0.2625,
+        "kimi-k3-max": 0.2625,
+    }
     assert all(
         item.efficiency.score is None and item.economics.score is None for item in results.values()
     )

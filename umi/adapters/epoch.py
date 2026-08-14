@@ -8,6 +8,7 @@ from umi.adapters.common import exact_entry, identifier
 from umi.adapters.models import AdaptationResult, AdapterRejection
 from umi.schemas import (
     ArtifactCaptureType,
+    ConfigurationVerification,
     Direction,
     ExternalIndexMeasurement,
     ModelCrosswalk,
@@ -66,7 +67,7 @@ def adapt_epoch_csv(
                     ),
                     index_id=benchmark,
                     model_id=match.canonical_model_id,
-                    model_snapshot_id=match.canonical_model_id,
+                    source_model_id=source_model_id,
                     value=float(row["performance"]),
                     unit=Unit.PERCENT,
                     direction=Direction.HIGHER,
@@ -89,7 +90,12 @@ def adapt_epoch_csv(
                     source_registry_snapshot_id=artifact_id,
                     crosswalk_entry_id=match.id,
                     signal_id="epoch-eci",
-                    configuration_verified=True,
+                    configuration_verification=ConfigurationVerification(
+                        model_label_exact=True,
+                        release_label_exact=True,
+                        effort_label_exact=True,
+                        fallback_absent=True,
+                    ),
                     record_status=RecordStatus.DIAGNOSTIC_ONLY,
                     signal_role=SignalRole.REFERENCE,
                     scoring_disposition=ScoringDisposition.DIAGNOSTIC_ONLY,

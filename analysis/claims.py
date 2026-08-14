@@ -14,7 +14,6 @@ def calibrate_release_claims(dataset: Dataset) -> list[dict[str, object]]:
             record
             for record in dataset.benchmarks
             if record.model_id == claim.model_id
-            and record.model_snapshot_id == claim.model_snapshot_id
             and record.benchmark_id == claim.benchmark_id
             and record.cohort_key == claim.cohort_key
             and record.evaluation_date == claim.evaluation_date

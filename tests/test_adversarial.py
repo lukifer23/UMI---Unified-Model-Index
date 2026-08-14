@@ -46,9 +46,11 @@ def test_capability_only_is_never_serialized_as_headline(
 
 
 def test_snapshot_collision_is_rejected(synthetic_dataset: Dataset, config: ProjectConfig) -> None:
-    model = synthetic_dataset.models[0].model_copy(update={"snapshot_id": "alpha-snapshot-a"})
+    model = synthetic_dataset.models[0].model_copy(
+        update={"provider_snapshot_id": "alpha-snapshot-a"}
+    )
     measurement = synthetic_dataset.benchmarks[0].model_copy(
-        update={"model_snapshot_id": "alpha-snapshot-b"}
+        update={"provider_snapshot_id": "alpha-snapshot-b"}
     )
     dataset = synthetic_dataset.model_copy(
         update={
@@ -57,7 +59,8 @@ def test_snapshot_collision_is_rejected(synthetic_dataset: Dataset, config: Proj
         }
     )
     assert any(
-        "snapshot does not match" in error for error in validate_dataset(dataset, config).errors
+        "provider snapshot does not match" in error
+        for error in validate_dataset(dataset, config).errors
     )
 
 

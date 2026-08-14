@@ -5,8 +5,8 @@
       "cohort_key": "deepswe-v1.1-2026-08-13"
     }
   ],
-  "common_evidence_profile_id": "a44a0d5046e9384dae70be4eeb0345959ad54a296307208db6aad7429692f2a9",
-  "comparison_group_id": "40d8ad703a7a4beaeb61eef154e06408f77cc6cc5c114c46460b17e610dc362f",
+  "common_evidence_profile_id": "90057562f9576952ca44e66dd453c8dfe7c9153d754c5973d062f4909e61560e",
+  "comparison_group_id": "577b9f4d407aa95c96cdefcd2072d133e44592fcc2d3dd124a32b11e779be49e",
   "comparison_model_ids": [
     "claude-fable-5-max",
     "claude-opus-5-max",

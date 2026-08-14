@@ -16,12 +16,14 @@ UMI separates parseability from scoring readiness. `umi validate` reports `schem
 - evaluator when published;
 - exact metric definition;
 - benchmark or workload version and harness version;
-- immutable model snapshot matching the scored configuration;
+- typed model identity with assurance at least `label_exact` for Capability;
+- exact model, release, and inference-effort labels with fallback/composite behavior ruled out;
 - evaluation date;
 - non-`unspecified` compatibility cohort key;
-- explicit configuration verification;
-- retained raw/inspectable artifact plus `source_artifact_id`;
-- serving provider, endpoint, and service-tier match when those fields define the scored deployment;
+- structured configuration verification;
+- retained inspectable artifact plus `source_artifact_id` and an accurate `capture_type`;
+- verified deployment identity for Efficiency/Economics, including serving provider, endpoint, and
+  service tier when those fields define the scored deployment;
 - benchmark/workload identity, direction, unit, and category supplied by typed/configured fields;
 - no conflicting second ready cohort for the same benchmark representation or workload identity.
 
@@ -44,19 +46,19 @@ the override.
 
 Source captures live under `data/sources/`. The registry records source URL, access/as-of dates,
 artifact path, SHA-256, upstream revision, content type, adapter version, license, attribution, and
-redistribution scope. Validation checks path containment, existence, checksum, model snapshot
-references, record artifact references, and source URL registration. A boolean
-`raw_artifact_available` without an artifact reference is not enough for real scoring readiness.
+redistribution scope. Validation checks path containment, existence, checksum, model evidence
+artifact references, record artifact references, and source URL registration. `capture_type`
+distinguishes raw payloads, archived snapshots, reviewed extracts, citations, and derived artifacts.
 
 ## Adapter acceptance checklist
 
 Before an adapter is allowed to emit `ready`:
 
 1. freeze or retain an inspectable source artifact;
-2. map exact model snapshot and deployment identity without fuzzy joins;
+2. map the exact typed model identity and deployment facts without fuzzy joins or invented snapshots;
 3. define benchmark/workload and compatibility cohort deterministically;
 4. preserve raw numeric values and published sample metadata;
-5. assign provenance tier and configuration verification honestly;
+5. assign provenance tier, capture type, and structured configuration verification honestly;
 6. prove that diagnostic rows are excluded and multiple cohorts fail safely;
 7. add adversarial fixtures for missing identity, non-finite values, and version collisions;
 8. run validation, tests, Ruff, mypy, and CLI smoke tests.

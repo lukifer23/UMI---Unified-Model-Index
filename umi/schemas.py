@@ -73,6 +73,24 @@ class ConfigurationEffort(StrEnum):
     CUSTOM = "custom"
 
 
+class IdentityKind(StrEnum):
+    IMMUTABLE_PROVIDER_SNAPSHOT = "immutable_provider_snapshot"
+    IMMUTABLE_OPEN_WEIGHT_REVISION = "immutable_open_weight_revision"
+    PROVIDER_VERSIONED_ENDPOINT = "provider_versioned_endpoint"
+    DATED_ENDPOINT_ALIAS = "dated_endpoint_alias"
+    NAMED_RELEASE = "named_release"
+    MARKETING_CONFIGURATION = "marketing_configuration"
+    UNKNOWN = "unknown"
+
+
+class IdentityAssurance(StrEnum):
+    VERIFIED = "verified"
+    STRONGLY_SUPPORTED = "strongly_supported"
+    LABEL_EXACT = "label_exact"
+    INFERRED = "inferred"
+    UNKNOWN = "unknown"
+
+
 class WorkloadCategory(StrEnum):
     CODING = "coding_agents"
     RESEARCH = "research_analysis"
@@ -155,6 +173,17 @@ class Source(StrictModel):
     accessed: date
 
 
+class ConfigurationVerification(StrictModel):
+    model_label_exact: bool = False
+    release_label_exact: bool = False
+    effort_label_exact: bool = False
+    fallback_absent: bool = False
+    provider_snapshot_verified: bool = False
+    endpoint_verified: bool = False
+    service_tier_verified: bool = False
+    deployment_identity_verified: bool = False
+
+
 class Provenance(StrictModel):
     record_id: Identifier
     source: Source
@@ -174,12 +203,14 @@ class Provenance(StrictModel):
     raw_artifact_available: bool | None = None
     capture_type: ArtifactCaptureType | None = None
     reproducible: bool | None = None
-    configuration_verified: bool | None = None
+    configuration_verification: ConfigurationVerification | None = None
     record_status: RecordStatus = RecordStatus.READY
     source_artifact_id: Identifier | None = None
     source_registry_snapshot_id: Identifier | None = None
     crosswalk_entry_id: Identifier | None = None
     signal_id: Identifier | None = None
+    source_model_id: str | None = None
+    provider_snapshot_id: str | None = None
     serving_provider: str | None = None
     endpoint_id: str | None = None
     service_tier: str | None = None
@@ -193,7 +224,11 @@ class ModelConfiguration(StrictModel):
     provider: str = Field(min_length=1)
     release_date: date
     configuration: ConfigurationEffort
-    snapshot_id: Identifier = "unspecified"
+    identity_kind: IdentityKind = IdentityKind.UNKNOWN
+    identity_assurance: IdentityAssurance = IdentityAssurance.UNKNOWN
+    named_release: str | None = None
+    provider_snapshot_id: str | None = None
+    open_weight_revision: str | None = None
     api_model_id: str | None = None
     model_developer: str | None = None
     serving_provider: str | None = None
@@ -201,7 +236,7 @@ class ModelConfiguration(StrictModel):
     service_tier: str | None = None
     region: str | None = None
     hardware: str | None = None
-    source_snapshot_ids: tuple[Identifier, ...] = ()
+    evidence_artifact_ids: tuple[Identifier, ...] = ()
     open_weights: bool
     context_window: int | None = Field(default=None, gt=0)
     notes: str | None = None
@@ -260,7 +295,6 @@ class BenchmarkMeasurement(Provenance):
     model_id: Identifier
     value: float
     cohort_key: Identifier = "unspecified"
-    model_snapshot_id: Identifier = "unspecified"
     evaluation_date: date | None = None
     workload: Identifier | None = None
     evaluation_settings: dict[str, Any] = Field(default_factory=dict)
@@ -306,7 +340,6 @@ class EfficiencyMeasurement(Provenance):
     workload: Identifier
     workload_category: WorkloadCategory
     cohort_key: Identifier = "unspecified"
-    model_snapshot_id: Identifier = "unspecified"
     evaluation_date: date | None = None
     attempts: int = Field(gt=0)
     success_rate: Rate
@@ -362,7 +395,6 @@ class TaskEconomicsMeasurement(Provenance):
     workload: Identifier
     workload_category: WorkloadCategory
     cohort_key: Identifier
-    model_snapshot_id: Identifier
     evaluation_date: date
     cost_basis: CostBasis
     mean_cost_usd: NonNegative
@@ -377,7 +409,6 @@ class ExternalIndexMeasurement(Provenance):
     unit: Unit
     direction: Direction
     cohort_key: Identifier
-    model_snapshot_id: Identifier
     evaluation_date: date | None = None
 
 
@@ -386,7 +417,6 @@ class ReleaseClaim(Provenance):
 
     claim_text: str = Field(min_length=1)
     model_id: Identifier
-    model_snapshot_id: Identifier
     benchmark_id: Identifier
     value: float
     unit: Unit

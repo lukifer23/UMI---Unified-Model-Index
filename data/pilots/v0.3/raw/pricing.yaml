@@ -12,11 +12,20 @@ pricing:
   evaluator: Anthropic
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: anthropic-release-facts-2026-08-14
   source_registry_snapshot_id: anthropic-release-facts-2026-08-14
   crosswalk_entry_id: anthropic-release-opus-max
+  source_model_id: Claude Opus 5 (Max)
   signal_role: economics
   scoring_disposition: diagnostic_only
   model_id: claude-opus-5-max
@@ -42,11 +51,20 @@ pricing:
   evaluator: Anthropic
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: anthropic-release-facts-2026-08-14
   source_registry_snapshot_id: anthropic-release-facts-2026-08-14
   crosswalk_entry_id: anthropic-release-fable-max
+  source_model_id: Claude Fable 5 (Max)
   signal_role: economics
   scoring_disposition: diagnostic_only
   model_id: claude-fable-5-max
@@ -71,11 +89,20 @@ pricing:
   evaluator: OpenAI
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: openai-release-facts-2026-08-14
   source_registry_snapshot_id: openai-release-facts-2026-08-14
   crosswalk_entry_id: openai-release-sol-max
+  source_model_id: GPT-5.6 Sol (Max)
   signal_role: economics
   scoring_disposition: diagnostic_only
   model_id: gpt-5.6-sol-max
@@ -102,11 +129,20 @@ pricing:
   evaluator: Moonshot AI
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: kimi-release-facts-2026-08-14
   source_registry_snapshot_id: kimi-release-facts-2026-08-14
   crosswalk_entry_id: kimi-release-k3-max
+  source_model_id: Kimi K3 (Max)
   signal_role: economics
   scoring_disposition: diagnostic_only
   model_id: kimi-k3-max
@@ -129,11 +165,20 @@ pricing:
   evaluator: Z.ai
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: zai-release-facts-2026-08-14
   source_registry_snapshot_id: zai-release-facts-2026-08-14
   crosswalk_entry_id: zai-release-glm-max
+  source_model_id: GLM-5.2 (Max)
   signal_role: economics
   scoring_disposition: diagnostic_only
   model_id: glm-5.2-max

@@ -47,7 +47,15 @@ source_registry_snapshot_id: registry-snapshot-id
 crosswalk_entry_id: exact-crosswalk-entry-id
 signal_id: overlap-policy-signal-id
 reproducible: false
-configuration_verified: true
+configuration_verification:
+  model_label_exact: true
+  release_label_exact: true
+  effort_label_exact: true
+  fallback_absent: true
+  provider_snapshot_verified: false
+  endpoint_verified: false
+  service_tier_verified: false
+  deployment_identity_verified: false
 serving_provider: Optional serving provider
 endpoint_id: Optional immutable endpoint/deployment ID
 service_tier: Optional service tier
@@ -69,21 +77,28 @@ provider: Model developer (legacy-compatible field)
 model_developer: Optional explicit developer
 release_date: 2026-07-09
 configuration: max
-snapshot_id: immutable-snapshot-id
+identity_kind: named_release
+identity_assurance: label_exact
+named_release: Published model release name
+provider_snapshot_id: null  # only a genuine provider-published immutable identifier
+open_weight_revision: null
 api_model_id: Optional provider model identifier
 serving_provider: Optional deployment provider
 endpoint_id: Optional immutable serving endpoint
 service_tier: Optional tier
 region: Optional region
 hardware: Optional material hardware
-source_snapshot_ids: [registry-snapshot-id]
+evidence_artifact_ids: [registry-snapshot-id]
 open_weights: false
 synthetic: false
 ```
 
 `configuration` is one of `standard`, `off`, `low`, `medium`, `high`, `max`, `xhigh`, or `custom`.
-Capability may omit deployment fields only when the source genuinely evaluates a model snapshot
-independently of serving. Deployment-dependent records must match configured deployment fields.
+Identity kind distinguishes immutable provider snapshots, immutable open-weight revisions,
+versioned or dated endpoints, named releases, marketing configurations, and unknown identity.
+Identity assurance is `verified`, `strongly_supported`, `label_exact`, `inferred`, or `unknown`.
+Capability may use exact named-release evidence provisionally. Endpoint-sensitive Efficiency and
+Economics require verified deployment identity.
 
 ## Benchmark configuration
 
@@ -99,7 +114,8 @@ Benchmark measurements add:
 ```yaml
 benchmark_id: benchmark-id
 model_id: model-config-id
-model_snapshot_id: immutable-snapshot-id
+source_model_id: exact-upstream-model-label
+provider_snapshot_id: null
 value: 72.4
 cohort_key: benchmark-harness-v3-pass1-tools
 evaluation_date: 2026-08-10
@@ -124,7 +140,8 @@ Efficiency measurements require model/workload/category/cohort identity, attempt
 
 ```yaml
 model_id: model-config-id
-model_snapshot_id: immutable-snapshot-id
+source_model_id: exact-upstream-model-label
+provider_snapshot_id: null
 workload: workload-id
 workload_category: coding_agents
 cohort_key: workload-harness-v2
@@ -154,7 +171,8 @@ write tariff. Missing cache-write or storage prices remain absent rather than be
 
 ## External indexes
 
-External index records preserve an index ID, model/snapshot, value, unit, direction, cohort, date,
+External index records preserve an index ID, canonical and upstream model identity, value, unit,
+direction, cohort, date,
 and full provenance. In v0.3, AA indices, Epoch ECI rows, and Arena text/style-control ratings are
 explicitly diagnostic-only and excluded from the scored-data fingerprint.
 
@@ -191,12 +209,12 @@ scoring records affect the scored-data fingerprint.
   "schema_valid": true,
   "scoring_ready": false,
   "errors": [],
-  "readiness_failures": ["record x: immutable model snapshot is unspecified"],
+  "readiness_failures": ["record x: model identity assurance is below label_exact"],
   "warnings": []
 }
 ```
 
-Structural/referential errors include duplicate IDs, unknown models/benchmarks, snapshot collisions,
+Structural/referential errors include duplicate IDs, unknown models/benchmarks, provider-snapshot collisions,
 invalid family budgets, invalid status, and multiple ready cohorts without a merge policy.
 Readiness failures exclude records from normal scoring without pretending the YAML is malformed.
 

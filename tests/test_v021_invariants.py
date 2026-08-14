@@ -38,7 +38,7 @@ def test_unready_real_record_is_blocked_and_override_suppresses_headline(
     report = validate_dataset(dataset, config)
     assert report.schema_valid
     assert not report.scoring_ready
-    assert any("snapshot" in failure for failure in report.readiness_failures)
+    assert any("identity assurance" in failure for failure in report.readiness_failures)
 
     normal = {item.model_id: item for item in score_dataset(dataset, config)}[model_id]
     assert normal.capability.score is None
@@ -168,7 +168,7 @@ def test_dataset_fingerprint_tracks_values_snapshots_cohorts_and_order(
     benchmark = synthetic_dataset.benchmarks[0]
     for update in (
         {"value": benchmark.value + 1},
-        {"model_snapshot_id": "different-snapshot"},
+        {"provider_snapshot_id": "different-snapshot"},
         {"cohort_key": "different-cohort"},
     ):
         changed_record = benchmark.model_copy(update=update)
@@ -203,7 +203,7 @@ def test_scored_fingerprint_excludes_diagnostics_but_tracks_scoring_context(
         update={
             "models": (
                 baseline.models[0].model_copy(
-                    update={"source_snapshot_ids": ("diagnostic-only-artifact",)}
+                    update={"evidence_artifact_ids": ("diagnostic-only-artifact",)}
                 ),
                 *baseline.models[1:],
             )
@@ -287,7 +287,6 @@ def test_headline_requires_efficiency_even_with_direct_economics(
                 "cost_basis": CostBasis.SUCCESSFUL_TASK,
                 "mean_cost_usd": float(index + 1),
                 "evaluation_date": "2026-08-14",
-                "model_snapshot_id": "unspecified",
             }
         )
         for index, model in enumerate(synthetic_dataset.models)

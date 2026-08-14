@@ -1,4 +1,224 @@
 measurements:
+- record_id: epoch-gpqa-claude-opus-5-max-d3mtastumfvjr4fjmnhwry
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: gpqa-diamond-1.0.6
+  harness_version: epoch-inspect-simple-evals-gpqa-1.0.6
+  metric_definition: Mean GPQA Diamond accuracy in percent across the published run
+  notes: Raw Epoch export retained. Exact provider endpoint and trial count are not
+    claimed; those omissions do not block provisional Capability use.
+  evaluator: Epoch AI
+  harness_owner: Epoch AI
+  run_executor: Epoch AI
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-gpqa-opus-max
+  signal_id: gpqa-diamond
+  source_model_id: claude-opus-5_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: gpqa-diamond
+  model_id: claude-opus-5-max
+  value: 93.87626262626263
+  cohort_key: epoch-gpqa-diamond-1.0.6-simple-evals
+  evaluation_date: '2026-07-24'
+  evaluation_settings:
+    prompt_family: simple-evals-zero-shot-chain-of-thought
+    answer_format: 'ANSWER: LETTER'
+    temperature: provider_api_default
+    question_count: 198
+    source_run_id: D3mtasTumfvjR4fjmnHWRy
+    logs_url: null
+  number_of_tasks: 198
+  uncertainty:
+    kind: standard_error
+    standard_error: 1.4782015056089346
+    source_fields:
+    - stderr
+    notes: Standard error published by Epoch; trial count is not inferred.
+- record_id: epoch-gpqa-kimi-k3-max-b8mapue3eywuzassnqe7c9
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: gpqa-diamond-1.0.6
+  harness_version: epoch-inspect-simple-evals-gpqa-1.0.6
+  metric_definition: Mean GPQA Diamond accuracy in percent across the published run
+  notes: Raw Epoch export retained. Exact provider endpoint and trial count are not
+    claimed; those omissions do not block provisional Capability use.
+  evaluator: Epoch AI
+  harness_owner: Epoch AI
+  run_executor: Epoch AI
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-gpqa-kimi-max
+  signal_id: gpqa-diamond
+  source_model_id: kimi-k3_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: gpqa-diamond
+  model_id: kimi-k3-max
+  value: 93.11868686868688
+  cohort_key: epoch-gpqa-diamond-1.0.6-simple-evals
+  evaluation_date: '2026-07-16'
+  evaluation_settings:
+    prompt_family: simple-evals-zero-shot-chain-of-thought
+    answer_format: 'ANSWER: LETTER'
+    temperature: provider_api_default
+    question_count: 198
+    source_run_id: B8MaPUe3EYwUZASsNqE7C9
+    logs_url: null
+  number_of_tasks: 198
+  uncertainty:
+    kind: standard_error
+    standard_error: 1.493722536419486
+    source_fields:
+    - stderr
+    notes: Standard error published by Epoch; trial count is not inferred.
+- record_id: epoch-gpqa-gpt-5.6-sol-max-nukcgzrecbsxkcknj9bk37
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: gpqa-diamond-1.0.6
+  harness_version: epoch-inspect-simple-evals-gpqa-1.0.6
+  metric_definition: Mean GPQA Diamond accuracy in percent across the published run
+  notes: Raw Epoch export retained. Exact provider endpoint and trial count are not
+    claimed; those omissions do not block provisional Capability use.
+  evaluator: Epoch AI
+  harness_owner: Epoch AI
+  run_executor: Epoch AI
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-gpqa-sol-max
+  signal_id: gpqa-diamond
+  source_model_id: gpt-5.6-sol_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: gpqa-diamond
+  model_id: gpt-5.6-sol-max
+  value: 93.49747474747475
+  cohort_key: epoch-gpqa-diamond-1.0.6-simple-evals
+  evaluation_date: '2026-07-09'
+  evaluation_settings:
+    prompt_family: simple-evals-zero-shot-chain-of-thought
+    answer_format: 'ANSWER: LETTER'
+    temperature: provider_api_default
+    question_count: 198
+    source_run_id: nuKCgZReCBsXKCkNj9bK37
+    logs_url: null
+  number_of_tasks: 198
+  uncertainty:
+    kind: standard_error
+    standard_error: 1.570109070867593
+    source_fields:
+    - stderr
+    notes: Standard error published by Epoch; trial count is not inferred.
+- record_id: epoch-gpqa-glm-5.2-max-c5kpb4axzmygrywwqbkfmv
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-06-16'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: gpqa-diamond-1.0.6
+  harness_version: epoch-inspect-simple-evals-gpqa-1.0.6
+  metric_definition: Mean GPQA Diamond accuracy in percent across the published run
+  notes: Raw Epoch export retained. Exact provider endpoint and trial count are not
+    claimed; those omissions do not block provisional Capability use.
+  evaluator: Epoch AI
+  harness_owner: Epoch AI
+  run_executor: Epoch AI
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-gpqa-glm-max
+  signal_id: gpqa-diamond
+  source_model_id: glm-5.2_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: gpqa-diamond
+  model_id: glm-5.2-max
+  value: 91.85606060606061
+  cohort_key: epoch-gpqa-diamond-1.0.6-simple-evals
+  evaluation_date: '2026-06-24'
+  evaluation_settings:
+    prompt_family: simple-evals-zero-shot-chain-of-thought
+    answer_format: 'ANSWER: LETTER'
+    temperature: provider_api_default
+    question_count: 198
+    source_run_id: c5kpB4axzmygRywWqBKFmv
+    logs_url: null
+  number_of_tasks: 198
+  uncertainty:
+    kind: standard_error
+    standard_error: 1.6123207533687733
+    source_fields:
+    - stderr
+    notes: Standard error published by Epoch; trial count is not inferred.
 - record_id: arena-agent-claude-opus-5-max-2026-08-12
   source:
     organization: Arena
@@ -15,19 +235,27 @@ measurements:
   evaluator: Arena
   raw_artifact_available: true
   capture_type: archived_source_snapshot
-  configuration_verified: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: arena-agent-2026-08-14
   source_registry_snapshot_id: arena-agent-2026-08-14
   crosswalk_entry_id: arena-agent-opus-max
   signal_id: arena-agent
+  source_model_id: Claude Opus 5 (Max)
   signal_role: preference
   scoring_disposition: diagnostic_only
   benchmark_id: arena-agent
   model_id: claude-opus-5-max
   value: 0.11998377869814668
   cohort_key: arena-agent-ips-2026-08-12
-  model_snapshot_id: unspecified
   evaluation_settings:
     category: overall
     observation_count: 1803690
@@ -58,19 +286,27 @@ measurements:
   evaluator: Arena
   raw_artifact_available: true
   capture_type: archived_source_snapshot
-  configuration_verified: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: arena-agent-2026-08-14
   source_registry_snapshot_id: arena-agent-2026-08-14
   crosswalk_entry_id: arena-agent-kimi-max
   signal_id: arena-agent
+  source_model_id: Kimi K3 (Max)
   signal_role: preference
   scoring_disposition: diagnostic_only
   benchmark_id: arena-agent
   model_id: kimi-k3-max
   value: 0.10537803205413024
   cohort_key: arena-agent-ips-2026-08-12
-  model_snapshot_id: unspecified
   evaluation_settings:
     category: overall
     observation_count: 2431944
@@ -101,19 +337,27 @@ measurements:
   evaluator: Arena
   raw_artifact_available: true
   capture_type: archived_source_snapshot
-  configuration_verified: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: arena-agent-2026-08-14
   source_registry_snapshot_id: arena-agent-2026-08-14
   crosswalk_entry_id: arena-agent-glm-max
   signal_id: arena-agent
+  source_model_id: GLM 5.2 (Max)
   signal_role: preference
   scoring_disposition: diagnostic_only
   benchmark_id: arena-agent
   model_id: glm-5.2-max
   value: 0.06710906067840385
   cohort_key: arena-agent-ips-2026-08-12
-  model_snapshot_id: unspecified
   evaluation_settings:
     category: overall
     observation_count: 2305627
@@ -142,19 +386,27 @@ measurements:
   run_executor: Datacurve
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: ready
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-opus-max
   signal_id: deepswe-v1.1
+  source_model_id: Claude Opus 5 max
   signal_role: task
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1
   model_id: claude-opus-5-max
   value: 74.0
   cohort_key: deepswe-v1.1-2026-08-13
-  model_snapshot_id: claude-opus-5-max
   evaluation_date: '2026-08-13'
   evaluation_settings:
     agent: mini-swe-agent
@@ -181,19 +433,27 @@ measurements:
   run_executor: Datacurve
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: ready
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-fable-max
   signal_id: deepswe-v1.1
+  source_model_id: Claude Fable 5 max
   signal_role: task
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1
   model_id: claude-fable-5-max
   value: 70.0
   cohort_key: deepswe-v1.1-2026-08-13
-  model_snapshot_id: claude-fable-5-max
   evaluation_date: '2026-08-13'
   evaluation_settings:
     agent: mini-swe-agent
@@ -220,19 +480,27 @@ measurements:
   run_executor: Datacurve
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: ready
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-sol-max
   signal_id: deepswe-v1.1
+  source_model_id: GPT-5.6 Sol max
   signal_role: task
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1
   model_id: gpt-5.6-sol-max
   value: 73.0
   cohort_key: deepswe-v1.1-2026-08-13
-  model_snapshot_id: gpt-5.6-sol-max
   evaluation_date: '2026-08-13'
   evaluation_settings:
     agent: mini-swe-agent
@@ -259,19 +527,27 @@ measurements:
   run_executor: Datacurve
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: ready
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-kimi-max
   signal_id: deepswe-v1.1
+  source_model_id: Kimi K3 max
   signal_role: task
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1
   model_id: kimi-k3-max
   value: 69.0
   cohort_key: deepswe-v1.1-2026-08-13
-  model_snapshot_id: kimi-k3-max
   evaluation_date: '2026-08-13'
   evaluation_settings:
     agent: mini-swe-agent
@@ -298,19 +574,27 @@ measurements:
   run_executor: Datacurve
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: ready
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-glm-max
   signal_id: deepswe-v1.1
+  source_model_id: GLM-5.2 max
   signal_role: task
   scoring_disposition: scored
   benchmark_id: deepswe-v1.1
   model_id: glm-5.2-max
   value: 44.0
   cohort_key: deepswe-v1.1-2026-08-13
-  model_snapshot_id: glm-5.2-max
   evaluation_date: '2026-08-13'
   evaluation_settings:
     agent: mini-swe-agent

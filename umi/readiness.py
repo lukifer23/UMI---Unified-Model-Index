@@ -7,6 +7,7 @@ from umi.schemas import (
     BenchmarkMeasurement,
     EfficiencyMeasurement,
     ExternalIndexMeasurement,
+    IdentityAssurance,
     ModelConfiguration,
     Provenance,
     RecordStatus,
@@ -20,6 +21,14 @@ ScoredRecord = (
     | TaskEconomicsMeasurement
     | ExternalIndexMeasurement
 )
+
+IDENTITY_ASSURANCE_ORDER = {
+    IdentityAssurance.UNKNOWN: 0,
+    IdentityAssurance.INFERRED: 1,
+    IdentityAssurance.LABEL_EXACT: 2,
+    IdentityAssurance.STRONGLY_SUPPORTED: 3,
+    IdentityAssurance.VERIFIED: 4,
+}
 
 
 def readiness_failures(record: ScoredRecord, model: ModelConfiguration) -> tuple[str, ...]:
@@ -48,14 +57,32 @@ def readiness_failures(record: ScoredRecord, model: ModelConfiguration) -> tuple
         failures.append("benchmark or workload version is missing")
     if not record.harness_version:
         failures.append("harness version is missing")
-    if record.configuration_verified is not True:
-        failures.append("configuration is not verified")
+    verification = record.configuration_verification
+    if verification is None:
+        failures.append("structured configuration verification is missing")
+    else:
+        if not verification.model_label_exact or not verification.release_label_exact:
+            failures.append("model or release label is not exact")
+        if not verification.effort_label_exact:
+            failures.append("inference effort is not exact")
+        if not verification.fallback_absent:
+            failures.append("fallback or composite deployment is not ruled out")
+        if isinstance(record, (EfficiencyMeasurement, TaskEconomicsMeasurement)) and not (
+            verification.deployment_identity_verified
+        ):
+            failures.append("deployment identity is not verified for endpoint-sensitive evidence")
     if record.raw_artifact_available is not True or not record.source_artifact_id:
         failures.append("retained source artifact reference is missing")
     if record.cohort_key == "unspecified":
         failures.append("compatibility cohort key is unspecified")
-    if record.model_snapshot_id == "unspecified" or model.snapshot_id == "unspecified":
-        failures.append("immutable model snapshot is unspecified")
+    if IDENTITY_ASSURANCE_ORDER[model.identity_assurance] < IDENTITY_ASSURANCE_ORDER[
+        IdentityAssurance.LABEL_EXACT
+    ]:
+        failures.append("model identity assurance is below label_exact")
+    if model.named_release is None:
+        failures.append("named release is missing")
+    if record.provider_snapshot_id and record.provider_snapshot_id != model.provider_snapshot_id:
+        failures.append("provider snapshot does not match the scored configuration")
     if record.evaluation_date is None:
         failures.append("evaluation date is missing")
     if model.endpoint_id and record.endpoint_id != model.endpoint_id:

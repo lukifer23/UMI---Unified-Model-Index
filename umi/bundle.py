@@ -11,6 +11,7 @@ from umi.loading import (
     load_model_crosswalk,
     load_source_registry,
 )
+from umi.readiness import readiness_failures
 from umi.schemas import (
     BenchmarkMeasurement,
     CrosswalkStatus,
@@ -42,7 +43,8 @@ def validate_scoring_bundle(
     registry_path: str | Path,
     crosswalk: ModelCrosswalk,
 ) -> tuple[str, ...]:
-    errors: set[str] = set(validate_dataset(dataset, config).errors)
+    dataset_report = validate_dataset(dataset, config)
+    errors: set[str] = set(dataset_report.errors)
     registry_report = validate_source_registry(registry, registry_path, dataset)
     errors.update(registry_report.errors)
     crosswalk_report = validate_crosswalk(crosswalk, dataset, registry)
@@ -53,6 +55,7 @@ def validate_scoring_bundle(
     definitions = {item.id: item for item in config.benchmarks}
     entries = {item.id: item for item in crosswalk.entries}
     snapshots = {item.id: item for item in registry.snapshots}
+    models = {item.id: item for item in dataset.models}
     records: tuple[
         BenchmarkMeasurement | EfficiencyMeasurement | TaskEconomicsMeasurement, ...
     ] = (*dataset.benchmarks, *dataset.efficiency, *dataset.task_economics)
@@ -60,8 +63,23 @@ def validate_scoring_bundle(
         if record.scoring_disposition != ScoringDisposition.SCORED:
             continue
         prefix = f"record {record.record_id}"
+        model = models.get(record.model_id)
+        if model is not None:
+            errors.update(
+                f"{prefix}: {failure}" for failure in readiness_failures(record, model)
+            )
         if record.capture_type is None:
             errors.add(f"{prefix} lacks capture_type")
+        verification = record.configuration_verification
+        if verification is None or not all(
+            (
+                verification.model_label_exact,
+                verification.release_label_exact,
+                verification.effort_label_exact,
+                verification.fallback_absent,
+            )
+        ):
+            errors.add(f"{prefix} lacks exact structured configuration verification")
         if record.signal_id is None:
             errors.add(f"{prefix} lacks signal_id")
         else:
@@ -95,6 +113,8 @@ def validate_scoring_bundle(
                 errors.add(f"{prefix} crosswalk entry is not exact")
             if entry.canonical_model_id != record.model_id:
                 errors.add(f"{prefix} crosswalk model differs from record model")
+            if entry.source_model_id != record.source_model_id:
+                errors.add(f"{prefix} source model label differs from crosswalk")
             if entry.source_artifact_id != record.source_artifact_id:
                 errors.add(f"{prefix} crosswalk artifact differs from record artifact")
             if snapshot is not None and entry.upstream_revision != snapshot.upstream_revision:

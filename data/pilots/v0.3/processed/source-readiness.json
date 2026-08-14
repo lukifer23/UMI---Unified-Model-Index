@@ -563,6 +563,14 @@
       "source_artifact_id": "epoch-eci-matrix-2026-08-14"
     },
     {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-gpqa-claude-opus-5-max-d3mtastumfvjr4fjmnhwry",
+      "scoring_ready": true,
+      "source_artifact_id": "epoch-benchmark-data-2026-08-14"
+    },
+    {
       "disposition": "diagnostic_only",
       "failures": [
         "signal policy is diagnostic-only"
@@ -601,6 +609,30 @@
       "record_id": "epoch-gpqa-diamond-kimi-k3-max-m136",
       "scoring_ready": false,
       "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-gpqa-glm-5.2-max-c5kpb4axzmygrywwqbkfmv",
+      "scoring_ready": true,
+      "source_artifact_id": "epoch-benchmark-data-2026-08-14"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-gpqa-gpt-5.6-sol-max-nukcgzrecbsxkcknj9bk37",
+      "scoring_ready": true,
+      "source_artifact_id": "epoch-benchmark-data-2026-08-14"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-gpqa-kimi-k3-max-b8mapue3eywuzassnqe7c9",
+      "scoring_ready": true,
+      "source_artifact_id": "epoch-benchmark-data-2026-08-14"
     },
     {
       "disposition": "diagnostic_only",

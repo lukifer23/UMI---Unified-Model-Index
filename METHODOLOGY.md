@@ -16,9 +16,10 @@ Every signal is classified as composite, preference, task, efficiency, economics
 and as scored or diagnostic-only. Artificial Analysis Intelligence/Coding/Agentic indices and the
 Epoch Capabilities Index are diagnostic composites. Arena text ratings and Arena Agent are
 diagnostic preference evidence. The frozen Arena Agent artifact provides exact model labels and
-effort, but not an immutable source snapshot or deployment identifier; it therefore cannot score.
-Its constituent signals share its representation budget and remain diagnostic. Exact Artificial
-Analysis task results and DeepSWE v1.1 may score only after the ordinary readiness gate passes.
+effort, but not an immutable provider snapshot or deployment identifier. The aggregate is excluded
+because it is diagnostic preference evidence, not because named-release identity is categorically
+insufficient for Capability. Its constituent signals share its representation budget and remain
+diagnostic. Exact task results may score only after the ordinary readiness gate passes.
 
 The directed overlap graph records containment, derivation, duplicate measurements, shared tasks,
 shared constructs, and unknown overlap. It must be acyclic. Two scored signals connected by a known
@@ -62,8 +63,10 @@ Weights are never redefined merely to manufacture eligibility.
 
 ## Scored entity
 
-A UMI configuration is an immutable model snapshot plus inference effort. Where Efficiency or
-Economics is measured, it also includes the serving provider, endpoint, and service tier.
+A UMI configuration is an explicitly typed model identity plus inference effort. It may be a named
+release, versioned endpoint, immutable provider snapshot, or immutable open-weight revision; UMI
+does not upgrade one kind into another. Where Efficiency or Economics is measured, it also includes
+the serving provider, endpoint, and service tier.
 Region or hardware is recorded when material. Capability from one deployment is not silently
 combined with deployment-dependent cost or latency from another.
 
@@ -91,10 +94,10 @@ cohort, evaluation date, and the claim's retained source artifact. Claims are no
 measurements and never score merely because they resemble one.
 
 UMI may compare a claim only with a ready, independent or community-reproduction benchmark
-measurement that matches all of: canonical configuration, immutable snapshot, benchmark
+measurement that matches all of: canonical configuration, compatible typed identity, benchmark
 representation, unit, direction, and compatibility cohort. A comparison reports the signed and
 absolute difference and preserves both record IDs. Missing compatible evidence, a different
-cohort, a different snapshot, a different unit or direction, a non-independent observation, or
+cohort, an incompatible identity, a different unit or direction, a non-independent observation, or
 an unready observation is an explicit non-comparison, not a zero difference or an inferred match.
 
 Claim-calibration reports are descriptive. They may show compatibility coverage and error for the
@@ -112,7 +115,7 @@ per-attempt resource use and success before deriving cost per successful task. T
 claims change the complete audit fingerprint but not the scored fingerprint unless a future,
 documented scoring rule explicitly consumes them.
 
-Descriptive model notes and diagnostic `source_snapshot_ids` are excluded from the scored
+Descriptive model notes and diagnostic `evidence_artifact_ids` are excluded from the scored
 fingerprint and retained in the complete audit fingerprint. Otherwise adding a citation to an
 unchanged scored configuration would falsely create a new scoring cohort.
 
@@ -142,6 +145,20 @@ not a substitute for this bundle.
 Benchmark definitions bind one overlap-policy signal and budget group. A budget group resolves to
 one `(domain, family, representation_group)` allocation; mappings across domains or families are
 invalid. Record-level `scoring_disposition` cannot override a diagnostic policy.
+
+## Model identity truthfulness
+
+UMI scores the canonical configuration ID, not a marketing family and not an assumed provider
+checkpoint. Every model declares an `identity_kind` and `identity_assurance`. The pilot configurations
+are exact named releases at Max effort with `label_exact` assurance; none is represented as an
+immutable provider snapshot. `evidence_artifact_ids` are source captures, not model snapshots.
+
+Capability records may score provisionally when the named release, release label, and effort label
+are exact, fallback/composite behavior is ruled out, the evidence date is known, and identity
+assurance is at least `label_exact`. Efficiency and Economics additionally require verified
+deployment identity because endpoint, serving provider, service tier, caching, and latency can
+materially change those measurements. A `provider_snapshot_id` may be populated only when the
+provider actually publishes an immutable identifier.
 
 ## Consolidation and conflicts
 
@@ -407,7 +424,7 @@ Records are sorted before SHA-256 hashing and no current timestamp is used.
 
 `cohort_id` is the first 16 hexadecimal characters of `scored_data_fingerprint`. `data_as_of` is the
 latest included scoring evaluation date, or the configured release-window end if none exists.
-Changing a scored value, success rate, snapshot, cohort, record set, or scoring configuration changes
+Changing a scored value, success rate, typed identity, cohort, record set, or scoring configuration changes
 the scored fingerprint. Adding diagnostic-only evidence changes the complete fingerprint but not the
 scored fingerprint.
 

@@ -14,19 +14,27 @@ measurements:
   run_executor: Datacurve
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-opus-max
   signal_id: deepswe-v1.1
+  source_model_id: Claude Opus 5 max
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: claude-opus-5-max
   workload: deepswe-v1.1
   workload_category: coding_agents
   cohort_key: deepswe-v1.1-2026-08-13
-  model_snapshot_id: claude-opus-5-max
   evaluation_date: '2026-08-13'
   attempts: 113
   success_rate: 0.74
@@ -49,19 +57,27 @@ measurements:
   run_executor: Datacurve
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-fable-max
   signal_id: deepswe-v1.1
+  source_model_id: Claude Fable 5 max
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: claude-fable-5-max
   workload: deepswe-v1.1
   workload_category: coding_agents
   cohort_key: deepswe-v1.1-2026-08-13
-  model_snapshot_id: claude-fable-5-max
   evaluation_date: '2026-08-13'
   attempts: 113
   success_rate: 0.7
@@ -84,19 +100,27 @@ measurements:
   run_executor: Datacurve
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-sol-max
   signal_id: deepswe-v1.1
+  source_model_id: GPT-5.6 Sol max
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: gpt-5.6-sol-max
   workload: deepswe-v1.1
   workload_category: coding_agents
   cohort_key: deepswe-v1.1-2026-08-13
-  model_snapshot_id: gpt-5.6-sol-max
   evaluation_date: '2026-08-13'
   attempts: 113
   success_rate: 0.73
@@ -119,19 +143,27 @@ measurements:
   run_executor: Datacurve
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-kimi-max
   signal_id: deepswe-v1.1
+  source_model_id: Kimi K3 max
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: kimi-k3-max
   workload: deepswe-v1.1
   workload_category: coding_agents
   cohort_key: deepswe-v1.1-2026-08-13
-  model_snapshot_id: kimi-k3-max
   evaluation_date: '2026-08-13'
   attempts: 113
   success_rate: 0.69
@@ -154,19 +186,27 @@ measurements:
   run_executor: Datacurve
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: deepswe-v1.1-2026-08-13
   source_registry_snapshot_id: deepswe-v1.1-2026-08-13
   crosswalk_entry_id: deepswe-glm-max
   signal_id: deepswe-v1.1
+  source_model_id: GLM-5.2 max
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: glm-5.2-max
   workload: deepswe-v1.1
   workload_category: coding_agents
   cohort_key: deepswe-v1.1-2026-08-13
-  model_snapshot_id: glm-5.2-max
   evaluation_date: '2026-08-13'
   attempts: 113
   success_rate: 0.44

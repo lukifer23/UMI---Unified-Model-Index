@@ -77,17 +77,16 @@
           "title": "Cohort Key",
           "type": "string"
         },
-        "configuration_verified": {
+        "configuration_verification": {
           "anyOf": [
             {
-              "type": "boolean"
+              "$ref": "#/$defs/ConfigurationVerification"
             },
             {
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Configuration Verified"
+          "default": null
         },
         "crosswalk_entry_id": {
           "anyOf": [
@@ -217,12 +216,6 @@
           "default": null,
           "title": "Model Release Date"
         },
-        "model_snapshot_id": {
-          "default": "unspecified",
-          "pattern": "^[a-z0-9][a-z0-9._-]*$",
-          "title": "Model Snapshot Id",
-          "type": "string"
-        },
         "notes": {
           "anyOf": [
             {
@@ -273,6 +266,18 @@
           ],
           "default": null,
           "title": "Pass At K"
+        },
+        "provider_snapshot_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Snapshot Id"
         },
         "raw_artifact_available": {
           "anyOf": [
@@ -396,6 +401,18 @@
           "default": null,
           "title": "Source Artifact Id"
         },
+        "source_model_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Model Id"
+        },
         "source_published_date": {
           "anyOf": [
             {
@@ -475,6 +492,53 @@
       "title": "BenchmarkMeasurement",
       "type": "object"
     },
+    "ConfigurationVerification": {
+      "additionalProperties": false,
+      "properties": {
+        "deployment_identity_verified": {
+          "default": false,
+          "title": "Deployment Identity Verified",
+          "type": "boolean"
+        },
+        "effort_label_exact": {
+          "default": false,
+          "title": "Effort Label Exact",
+          "type": "boolean"
+        },
+        "endpoint_verified": {
+          "default": false,
+          "title": "Endpoint Verified",
+          "type": "boolean"
+        },
+        "fallback_absent": {
+          "default": false,
+          "title": "Fallback Absent",
+          "type": "boolean"
+        },
+        "model_label_exact": {
+          "default": false,
+          "title": "Model Label Exact",
+          "type": "boolean"
+        },
+        "provider_snapshot_verified": {
+          "default": false,
+          "title": "Provider Snapshot Verified",
+          "type": "boolean"
+        },
+        "release_label_exact": {
+          "default": false,
+          "title": "Release Label Exact",
+          "type": "boolean"
+        },
+        "service_tier_verified": {
+          "default": false,
+          "title": "Service Tier Verified",
+          "type": "boolean"
+        }
+      },
+      "title": "ConfigurationVerification",
+      "type": "object"
+    },
     "CostBasis": {
       "enum": [
         "attempted_task",
@@ -532,17 +596,16 @@
           "title": "Cohort Key",
           "type": "string"
         },
-        "configuration_verified": {
+        "configuration_verification": {
           "anyOf": [
             {
-              "type": "boolean"
+              "$ref": "#/$defs/ConfigurationVerification"
             },
             {
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Configuration Verified"
+          "default": null
         },
         "crosswalk_entry_id": {
           "anyOf": [
@@ -784,12 +847,6 @@
           "default": null,
           "title": "Model Release Date"
         },
-        "model_snapshot_id": {
-          "default": "unspecified",
-          "pattern": "^[a-z0-9][a-z0-9._-]*$",
-          "title": "Model Snapshot Id",
-          "type": "string"
-        },
         "notes": {
           "anyOf": [
             {
@@ -840,6 +897,18 @@
           ],
           "default": null,
           "title": "Observed Output Tokens Summary"
+        },
+        "provider_snapshot_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Snapshot Id"
         },
         "raw_artifact_available": {
           "anyOf": [
@@ -950,6 +1019,18 @@
           "default": null,
           "title": "Source Artifact Id"
         },
+        "source_model_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Model Id"
+        },
         "source_published_date": {
           "anyOf": [
             {
@@ -1048,17 +1129,16 @@
           "title": "Cohort Key",
           "type": "string"
         },
-        "configuration_verified": {
+        "configuration_verification": {
           "anyOf": [
             {
-              "type": "boolean"
+              "$ref": "#/$defs/ConfigurationVerification"
             },
             {
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Configuration Verified"
+          "default": null
         },
         "crosswalk_entry_id": {
           "anyOf": [
@@ -1191,11 +1271,6 @@
           "default": null,
           "title": "Model Release Date"
         },
-        "model_snapshot_id": {
-          "pattern": "^[a-z0-9][a-z0-9._-]*$",
-          "title": "Model Snapshot Id",
-          "type": "string"
-        },
         "notes": {
           "anyOf": [
             {
@@ -1207,6 +1282,18 @@
           ],
           "default": null,
           "title": "Notes"
+        },
+        "provider_snapshot_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Snapshot Id"
         },
         "raw_artifact_available": {
           "anyOf": [
@@ -1317,6 +1404,18 @@
           "default": null,
           "title": "Source Artifact Id"
         },
+        "source_model_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Model Id"
+        },
         "source_published_date": {
           "anyOf": [
             {
@@ -1373,8 +1472,7 @@
         "value",
         "unit",
         "direction",
-        "cohort_key",
-        "model_snapshot_id"
+        "cohort_key"
       ],
       "title": "ExternalIndexMeasurement",
       "type": "object"
@@ -1543,17 +1641,16 @@
           ],
           "default": null
         },
-        "configuration_verified": {
+        "configuration_verification": {
           "anyOf": [
             {
-              "type": "boolean"
+              "$ref": "#/$defs/ConfigurationVerification"
             },
             {
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Configuration Verified"
+          "default": null
         },
         "crosswalk_entry_id": {
           "anyOf": [
@@ -1722,6 +1819,18 @@
           "default": null,
           "title": "Output Per Million"
         },
+        "provider_snapshot_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Snapshot Id"
+        },
         "raw_artifact_available": {
           "anyOf": [
             {
@@ -1844,6 +1953,18 @@
           "default": null,
           "title": "Source Artifact Id"
         },
+        "source_model_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Model Id"
+        },
         "source_published_date": {
           "anyOf": [
             {
@@ -1954,17 +2075,16 @@
           "title": "Cohort Key",
           "type": "string"
         },
-        "configuration_verified": {
+        "configuration_verification": {
           "anyOf": [
             {
-              "type": "boolean"
+              "$ref": "#/$defs/ConfigurationVerification"
             },
             {
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Configuration Verified"
+          "default": null
         },
         "crosswalk_entry_id": {
           "anyOf": [
@@ -2084,11 +2204,6 @@
           "default": null,
           "title": "Model Release Date"
         },
-        "model_snapshot_id": {
-          "pattern": "^[a-z0-9][a-z0-9._-]*$",
-          "title": "Model Snapshot Id",
-          "type": "string"
-        },
         "notes": {
           "anyOf": [
             {
@@ -2100,6 +2215,18 @@
           ],
           "default": null,
           "title": "Notes"
+        },
+        "provider_snapshot_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Snapshot Id"
         },
         "raw_artifact_available": {
           "anyOf": [
@@ -2210,6 +2337,18 @@
           "default": null,
           "title": "Source Artifact Id"
         },
+        "source_model_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Model Id"
+        },
         "source_published_date": {
           "anyOf": [
             {
@@ -2263,7 +2402,6 @@
         "metric_definition",
         "claim_text",
         "model_id",
-        "model_snapshot_id",
         "benchmark_id",
         "value",
         "unit",
@@ -2368,17 +2506,16 @@
           "title": "Cohort Key",
           "type": "string"
         },
-        "configuration_verified": {
+        "configuration_verification": {
           "anyOf": [
             {
-              "type": "boolean"
+              "$ref": "#/$defs/ConfigurationVerification"
             },
             {
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Configuration Verified"
+          "default": null
         },
         "cost_basis": {
           "$ref": "#/$defs/CostBasis"
@@ -2503,11 +2640,6 @@
           "default": null,
           "title": "Model Release Date"
         },
-        "model_snapshot_id": {
-          "pattern": "^[a-z0-9][a-z0-9._-]*$",
-          "title": "Model Snapshot Id",
-          "type": "string"
-        },
         "notes": {
           "anyOf": [
             {
@@ -2532,6 +2664,18 @@
           ],
           "default": null,
           "title": "Number Of Tasks"
+        },
+        "provider_snapshot_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Snapshot Id"
         },
         "raw_artifact_available": {
           "anyOf": [
@@ -2642,6 +2786,18 @@
           "default": null,
           "title": "Source Artifact Id"
         },
+        "source_model_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Model Id"
+        },
         "source_published_date": {
           "anyOf": [
             {
@@ -2698,7 +2854,6 @@
         "workload",
         "workload_category",
         "cohort_key",
-        "model_snapshot_id",
         "evaluation_date",
         "cost_basis",
         "mean_cost_usd"

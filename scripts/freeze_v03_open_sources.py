@@ -5,6 +5,7 @@ import hashlib
 import json
 import time
 import urllib.request
+import zipfile
 from pathlib import Path
 from typing import cast
 from urllib.error import HTTPError, URLError
@@ -36,6 +37,18 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _zip_content_sha256(path: Path) -> str:
+    """Hash member names and bytes while ignoring mutable ZIP container metadata."""
+    with zipfile.ZipFile(path) as archive:
+        members = [
+            {"path": name, "sha256": hashlib.sha256(archive.read(name)).hexdigest()}
+            for name in sorted(archive.namelist())
+            if not name.endswith("/")
+        ]
+    payload = json.dumps(members, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode()).hexdigest()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Acquire openly redistributable v0.3 artifacts")
     parser.add_argument(
@@ -64,6 +77,17 @@ def main() -> None:
     artifacts: list[dict[str, object]] = [
         {"path": epoch_path.name, "url": epoch_url, "sha256": _sha256(epoch_path)}
     ]
+    benchmark_data_url = "https://epoch.ai/data/benchmark_data.zip"
+    benchmark_data_path = destination / "epoch-benchmark-data.zip"
+    _download(benchmark_data_url, benchmark_data_path)
+    artifacts.append(
+        {
+            "path": benchmark_data_path.name,
+            "url": benchmark_data_url,
+            "sha256": _sha256(benchmark_data_path),
+            "content_sha256": _zip_content_sha256(benchmark_data_path),
+        }
+    )
     arena_base = (
         "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset/resolve/"
         f"{ARENA_REVISION}"

@@ -32,7 +32,8 @@ All adapters are pure and offline. Acquisition is separate; the committed build 
 artifacts.
 
 `uv run --no-sync python scripts/freeze_v03_open_sources.py --accept-network --snapshot-id ID` is the explicit,
-non-overwriting acquisition path for Epoch and Arena. It writes a checksum manifest to a fresh
+non-overwriting acquisition path for Epoch ECI, the complete Benchmarking Hub archive, and Arena.
+It writes a checksum manifest to a fresh
 snapshot directory and is never called by ingestion or scoring. Arena acquisition freezes the
 revision-addressed raw Parquet files; promotion into adapter input is a separate reviewed step.
 AA, DeepSWE, and lab releases remain reviewed-fact inputs.
@@ -105,9 +106,10 @@ The default Overall formula remains:
 ```
 
 Capability retains the five domain weights and v0.3 fixes within-domain benchmark-family budgets.
-DeepSWE pass rate contributes to software engineering. Arena Agent rows retain exact source labels,
-effort, construct, and source-declared intervals, but are diagnostic: the frozen artifact does not
-identify an immutable model snapshot or deployment. AA composites, ECI rows, Arena text ratings, and
+DeepSWE pass rate contributes to software engineering and Epoch's frozen GPQA Diamond runs
+contribute to math/science. The pilot identities are exact named releases and efforts, not claimed
+immutable provider snapshots. Arena Agent rows retain exact source labels, effort, construct, and
+source-declared intervals, but remain diagnostic preference evidence. AA composites, ECI rows, Arena text ratings, and
 DeepSWE resource summaries are diagnostic only.
 
 DeepSWE's published “Avg cost”, output tokens, and steps are not treated as arithmetic means because

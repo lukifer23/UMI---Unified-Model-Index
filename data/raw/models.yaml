@@ -4,8 +4,7 @@ models:
     provider: Anthropic
     release_date: 2026-06-09
     configuration: max
-    snapshot_id: claude-fable-5-max-fallback-aa-2026-07-17
-    source_snapshot_ids: [aa-frontier-2026-07-17]
+    evidence_artifact_ids: [aa-frontier-2026-07-17]
     open_weights: false
     notes: Artificial Analysis configuration includes adaptive reasoning and Opus 4.8 fallback; immutable provider endpoint was not published.
   - id: gpt-5.6-sol-max
@@ -13,8 +12,7 @@ models:
     provider: OpenAI
     release_date: 2026-07-09
     configuration: max
-    snapshot_id: gpt-5.6-sol-max-aa-2026-07-17
-    source_snapshot_ids: [aa-frontier-2026-07-17, aa-gpt-5.6-sol-page-2026-08-14]
+    evidence_artifact_ids: [aa-frontier-2026-07-17, aa-gpt-5.6-sol-page-2026-08-14]
     open_weights: false
     notes: Artificial Analysis July 17 snapshot; immutable provider endpoint was not published.
   - id: kimi-k3-max
@@ -22,8 +20,7 @@ models:
     provider: Moonshot AI
     release_date: 2026-07-16
     configuration: max
-    snapshot_id: kimi-k3-max-aa-2026-07-17
-    source_snapshot_ids: [aa-frontier-2026-07-17]
+    evidence_artifact_ids: [aa-frontier-2026-07-17]
     open_weights: true
     notes: Artificial Analysis July 17 snapshot; immutable evaluated endpoint was not published.
   - id: grok-4.5-high
@@ -31,8 +28,7 @@ models:
     provider: SpaceXAI
     release_date: 2026-07-08
     configuration: high
-    snapshot_id: grok-4.5-high-aa-2026-07-17
-    source_snapshot_ids: [aa-frontier-2026-07-17]
+    evidence_artifact_ids: [aa-frontier-2026-07-17]
     open_weights: false
     notes: Artificial Analysis July 17 snapshot; immutable provider endpoint was not published.
   - id: glm-5.2-max
@@ -40,8 +36,7 @@ models:
     provider: Z AI
     release_date: 2026-06-16
     configuration: max
-    snapshot_id: glm-5.2-max-aa-2026-07-17
-    source_snapshot_ids: [aa-frontier-2026-07-17, aa-glm-5.2-page-2026-08-14]
+    evidence_artifact_ids: [aa-frontier-2026-07-17, aa-glm-5.2-page-2026-08-14]
     open_weights: true
     notes: Artificial Analysis July 17 snapshot; evaluated provider mix and immutable endpoint were not published in the article.
   - id: muse-spark-1.1-xhigh
@@ -49,7 +44,6 @@ models:
     provider: Meta
     release_date: 2026-07-09
     configuration: xhigh
-    snapshot_id: muse-spark-1.1-xhigh-aa-2026-07-17
-    source_snapshot_ids: [aa-frontier-2026-07-17, aa-muse-spark-1.1-page-2026-08-14]
+    evidence_artifact_ids: [aa-frontier-2026-07-17, aa-muse-spark-1.1-page-2026-08-14]
     open_weights: false
     notes: Artificial Analysis July 17 snapshot; immutable provider endpoint was not published.

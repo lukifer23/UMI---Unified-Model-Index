@@ -89,8 +89,14 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
     )
     series = cast(list[dict[str, str]], comparison["common_benchmark_series"])
     scores = cast(list[dict[str, object]], comparison["scores"])
-    assert series == [{"benchmark_id": "deepswe-v1.1", "cohort_key": "deepswe-v1.1-2026-08-13"}]
-    assert {item["coverage"] for item in scores} == {0.165}
+    assert series == [
+        {"benchmark_id": "deepswe-v1.1", "cohort_key": "deepswe-v1.1-2026-08-13"},
+        {
+            "benchmark_id": "gpqa-diamond",
+            "cohort_key": "epoch-gpqa-diamond-1.0.6-simple-evals",
+        },
+    ]
+    assert {item["coverage"] for item in scores} == {0.2625}
 
 
 def test_source_bound_sensitivity_preserves_declared_margin_without_probability_model(
@@ -102,3 +108,4 @@ def test_source_bound_sensitivity_preserves_declared_margin_without_probability_
     assert kimi["source_bound_upper"] == 74.0
     assert kimi["uncertainty"]["kind"] == "published_margin"
     assert "not probabilistic" in kimi["method"]
+    assert all(item["benchmark_id"] != "gpqa-diamond" for item in report)

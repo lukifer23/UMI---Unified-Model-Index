@@ -3,7 +3,7 @@ measurements:
     record_id: aa-coding-sol-2026-07-17
     benchmark_id: aa-coding-agent-index
     model_id: gpt-5.6-sol-max
-    model_snapshot_id: gpt-5.6-sol-max-aa-2026-07-17
+    source_model_id: gpt-5.6-sol-max-aa-2026-07-17
     value: 80
     cohort_key: aa-coding-agent-index-2026-07-17
     evaluation_date: 2026-07-17
@@ -20,31 +20,30 @@ measurements:
     raw_artifact_available: true
     source_artifact_id: aa-frontier-2026-07-17
     reproducible: false
-    configuration_verified: true
     notes: Transcribed from the dated article; underlying harness code version was not published.
-  - {<<: *common, record_id: aa-coding-fable-2026-07-17, model_id: claude-fable-5-max-fallback, model_snapshot_id: claude-fable-5-max-fallback-aa-2026-07-17, value: 77, evaluation_settings: {agent_harness: Claude Code, fallback: Opus 4.8, harness_version_published: false}}
-  - {<<: *common, record_id: aa-coding-grok-2026-07-17, model_id: grok-4.5-high, model_snapshot_id: grok-4.5-high-aa-2026-07-17, value: 76, evaluation_settings: {agent_harness: Grok Build, harness_version_published: false}}
-  - {<<: *common, record_id: aa-coding-muse-2026-07-17, model_id: muse-spark-1.1-xhigh, model_snapshot_id: muse-spark-1.1-xhigh-aa-2026-07-17, value: 69, evaluation_settings: {agent_harness: Opencode, harness_version_published: false}}
+  - {<<: *common, record_id: aa-coding-fable-2026-07-17, model_id: claude-fable-5-max-fallback, source_model_id: claude-fable-5-max-fallback-aa-2026-07-17, value: 77, evaluation_settings: {agent_harness: Claude Code, fallback: Opus 4.8, harness_version_published: false}}
+  - {<<: *common, record_id: aa-coding-grok-2026-07-17, model_id: grok-4.5-high, source_model_id: grok-4.5-high-aa-2026-07-17, value: 76, evaluation_settings: {agent_harness: Grok Build, harness_version_published: false}}
+  - {<<: *common, record_id: aa-coding-muse-2026-07-17, model_id: muse-spark-1.1-xhigh, source_model_id: muse-spark-1.1-xhigh-aa-2026-07-17, value: 69, evaluation_settings: {agent_harness: Opencode, harness_version_published: false}}
   - &gdpval
     <<: *common
     record_id: aa-gdpval-kimi-2026-07-17
     benchmark_id: gdpval-aa-v2
     model_id: kimi-k3-max
-    model_snapshot_id: kimi-k3-max-aa-2026-07-17
+    source_model_id: kimi-k3-max-aa-2026-07-17
     value: 1668
     cohort_key: gdpval-aa-v2-2026-07-17
     evaluation_settings: {article_snapshot: 2026-07-17}
     benchmark_version: gdpval-aa-v2
     metric_definition: GDPval-AA v2 Elo score, higher is better
     tools_enabled: null
-  - {<<: *gdpval, record_id: aa-gdpval-fable-2026-07-17, model_id: claude-fable-5-max-fallback, model_snapshot_id: claude-fable-5-max-fallback-aa-2026-07-17, value: 1760}
-  - {<<: *gdpval, record_id: aa-gdpval-sol-2026-07-17, model_id: gpt-5.6-sol-max, model_snapshot_id: gpt-5.6-sol-max-aa-2026-07-17, value: 1748}
+  - {<<: *gdpval, record_id: aa-gdpval-fable-2026-07-17, model_id: claude-fable-5-max-fallback, source_model_id: claude-fable-5-max-fallback-aa-2026-07-17, value: 1760}
+  - {<<: *gdpval, record_id: aa-gdpval-sol-2026-07-17, model_id: gpt-5.6-sol-max, source_model_id: gpt-5.6-sol-max-aa-2026-07-17, value: 1748}
   - &briefcase
     <<: *common
     record_id: aa-briefcase-kimi-2026-07-17
     benchmark_id: aa-briefcase
     model_id: kimi-k3-max
-    model_snapshot_id: kimi-k3-max-aa-2026-07-17
+    source_model_id: kimi-k3-max-aa-2026-07-17
     value: 1547
     cohort_key: aa-briefcase-2026-07-17
     evaluation_settings: {article_snapshot: 2026-07-17, private_benchmark: true}
@@ -52,5 +51,5 @@ measurements:
     metric_definition: AA-Briefcase Elo score for long-horizon knowledge work, higher is better
     tools_enabled: null
     reproducible: false
-  - {<<: *briefcase, record_id: aa-briefcase-fable-2026-07-17, model_id: claude-fable-5-max-fallback, model_snapshot_id: claude-fable-5-max-fallback-aa-2026-07-17, value: 1583}
-  - {<<: *briefcase, record_id: aa-briefcase-sol-2026-07-17, model_id: gpt-5.6-sol-max, model_snapshot_id: gpt-5.6-sol-max-aa-2026-07-17, value: 1495}
+  - {<<: *briefcase, record_id: aa-briefcase-fable-2026-07-17, model_id: claude-fable-5-max-fallback, source_model_id: claude-fable-5-max-fallback-aa-2026-07-17, value: 1583}
+  - {<<: *briefcase, record_id: aa-briefcase-sol-2026-07-17, model_id: gpt-5.6-sol-max, source_model_id: gpt-5.6-sol-max-aa-2026-07-17, value: 1495}

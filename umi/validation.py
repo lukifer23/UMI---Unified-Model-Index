@@ -89,8 +89,10 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
         model = models[item.model_id]
         if item.record_status == RecordStatus.INVALID:
             errors.append(f"record {item.record_id} has invalid record status")
-        if item.model_snapshot_id != "unspecified" and item.model_snapshot_id != model.snapshot_id:
-            errors.append(f"record {item.record_id} snapshot does not match model {item.model_id}")
+        if item.provider_snapshot_id and item.provider_snapshot_id != model.provider_snapshot_id:
+            errors.append(
+                f"record {item.record_id} provider snapshot does not match model {item.model_id}"
+            )
         for failure in readiness_failures(item, model):
             if failure != "record is diagnostic-only":
                 readiness.append(f"record {item.record_id}: {failure}")
@@ -107,9 +109,13 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
             errors.append(f"record {record.record_id} has unknown model: {record.model_id}")
             continue
         model = models[record.model_id]
-        if record.model_snapshot_id != model.snapshot_id:
+        if (
+            record.provider_snapshot_id
+            and record.provider_snapshot_id != model.provider_snapshot_id
+        ):
             errors.append(
-                f"record {record.record_id} snapshot does not match model {record.model_id}"
+                f"record {record.record_id} provider snapshot does not match model "
+                f"{record.model_id}"
             )
     for claim in dataset.release_claims:
         if claim.model_id not in model_ids:
@@ -119,9 +125,11 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
             errors.append(
                 f"release claim {claim.record_id} has unknown benchmark: {claim.benchmark_id}"
             )
-        if claim.model_snapshot_id != models[claim.model_id].snapshot_id:
+        if claim.provider_snapshot_id and claim.provider_snapshot_id != models[
+            claim.model_id
+        ].provider_snapshot_id:
             errors.append(
-                f"record {claim.record_id} snapshot does not match model {claim.model_id}"
+                f"record {claim.record_id} provider snapshot does not match model {claim.model_id}"
             )
 
     if family_ids != {definition.family for definition in config.benchmarks}:
@@ -234,9 +242,9 @@ def validate_source_registry(
             errors.append(f"source snapshot {snapshot.id} artifact checksum mismatch")
     if dataset is not None:
         for model in dataset.models:
-            if not model.source_snapshot_ids:
-                warnings.append(f"model {model.id} has no source snapshot references")
-            for snapshot_id in model.source_snapshot_ids:
+            if not model.evidence_artifact_ids:
+                warnings.append(f"model {model.id} has no evidence artifact references")
+            for snapshot_id in model.evidence_artifact_ids:
                 if snapshot_id not in registry_ids:
                     errors.append(
                         f"model {model.id} references unknown source snapshot: {snapshot_id}"

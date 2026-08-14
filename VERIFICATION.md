@@ -10,9 +10,9 @@ project contract.
 | `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.1 as a wheel from the committed lock |
 | `uv run --no-sync python -m scripts.build_v03_pilot` | passed; rebuilt all raw and processed pilot artifacts offline |
 | `uv run --no-sync python -m umi.schemas` | passed; regenerated the machine-readable schemas |
-| `PYTHONPATH=. uv run --no-sync pytest --cov=umi --cov=analysis --cov-fail-under=90` | 88 passed; 93.19% combined `umi`/`analysis` coverage |
+| `PYTHONPATH=. uv run --no-sync pytest --cov=umi --cov=analysis --cov-fail-under=90` | 89 passed; 93.20% combined `umi`/`analysis` coverage |
 | `PYTHONPATH=. uv run --no-sync ruff check .` | passed |
-| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 46 source files |
+| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 47 source files |
 | `umi sources validate` | passed |
 | `umi crosswalk` and `umi overlap` | passed |
 | `umi bundle validate --data-dir data/pilots/v0.3/raw` | passed; all scored records have exact source, crosswalk, signal, budget, revision, checksum, and capture-type bindings |
@@ -30,6 +30,15 @@ README rather than hidden as a local workaround.
 
 - The newly acquired Epoch CSV is byte-identical to the frozen reviewed artifact at SHA-256
   `946538f24b2d16cbbccc54c554d86e5afb6d4b3f175bf9bdeae2af61869658b6`.
+- The complete Epoch Benchmarking Hub archive is frozen at SHA-256
+  `35a7c21ba7d535514ebcf9bbe7b8265d2e2da40ef6b1fa63fe49323c3395a18b`;
+  four exact Max-effort GPQA Diamond rows are adapted from the raw CSV member. Fable is rejected
+  because fallback absence is not established.
+- A later same-day acquisition produced a different ZIP-container hash because member timestamps
+  changed, while all 77 extracted member names and bytes remained identical at semantic content hash
+  `2b818e5b5ad1fcdba9f04616d6f1c7f71714a3d045967dbf09a7e13bf557f009`.
+  Crosswalk revision binding uses this semantic content hash; registry integrity still checks the
+  frozen container bytes.
 - The pinned Arena agent Parquet has 47 rows; all 47 frozen reviewed rows match their upstream rows.
 - The pinned Arena text-style-control Parquet has 10,262 rows; the deliberately bounded 100-row
   frozen review sample matches the first 100 upstream rows.
@@ -39,13 +48,13 @@ README rather than hidden as a local workaround.
 
 ## Publication assertions
 
-- Five exact canonical configurations are visible, each with a verified release snapshot and
+- Five exact canonical named-release configurations are visible, each with label-exact identity and
   first-party nominal pricing record.
-- The configured capability matrix contains 65 model/benchmark cells: 5 ready scored, 3 diagnostic
-  measurements, 9 diagnostic references, 2 vendor-claim-only, and 46 missing.
+- The configured capability matrix contains 65 model/benchmark cells: 9 ready scored, 3 diagnostic
+  measurements, 5 diagnostic references, 2 vendor-claim-only, and 46 missing.
 - Every model-specific score is labeled `real evidence — model-specific partial estimate`; it is not
-  a UMI rank. The estimates use only one of 13 capability families and have 16.5% capability weight
-  coverage.
+  a UMI rank. Four estimates use two of 13 capability families across two domains with 26.25%
+  Capability coverage; Fable remains on one family at 16.5% because fallback absence is unverified.
 - Every publishable rank and every `headline_overall` remains null.
 - No workload category has ready all-model Efficiency evidence or successful-task Economics
   evidence. Nominal token tariffs are not converted into task costs without observed task usage and
@@ -80,7 +89,7 @@ umi/                              validation, readiness, scoring, fingerprinting
 ## Remaining evidence required for a real headline UMI
 
 - exact-configuration, common-cohort capability results for the 46 missing cells, beginning with
-  HLE, Terminal-Bench, SciCode, GPQA Diamond/CritPt, ARC-AGI, and long-context/reliability evidence;
+  HLE, Terminal-Bench, SciCode, CritPt, ARC-AGI, and long-context/reliability evidence;
 - arithmetic-mean attempt-level cost, input/output/cache-token use, wall time, turn count, and task
   success for the five models across at least three configured workload categories;
 - independent replication or auditable raw result artifacts for vendor-only claims;

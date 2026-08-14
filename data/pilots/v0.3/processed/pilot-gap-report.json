@@ -1,9 +1,9 @@
 {
   "capability_cell_counts": {
     "diagnostic_measurement": 3,
-    "diagnostic_reference": 9,
+    "diagnostic_reference": 5,
     "missing": 46,
-    "ready_scored": 5,
+    "ready_scored": 9,
     "vendor_claim_only": 2
   },
   "capability_cells": [
@@ -401,9 +401,9 @@
       "family": "gpqa-diamond",
       "model_id": "claude-opus-5-max",
       "record_ids": [
-        "epoch-gpqa-diamond-claude-opus-5-max-m25"
+        "epoch-gpqa-claude-opus-5-max-d3mtastumfvjr4fjmnhwry"
       ],
-      "status": "diagnostic_reference"
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "gpqa-diamond",
@@ -411,9 +411,9 @@
       "family": "gpqa-diamond",
       "model_id": "glm-5.2-max",
       "record_ids": [
-        "epoch-gpqa-diamond-glm-5.2-max-m53"
+        "epoch-gpqa-glm-5.2-max-c5kpb4axzmygrywwqbkfmv"
       ],
-      "status": "diagnostic_reference"
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "gpqa-diamond",
@@ -421,9 +421,9 @@
       "family": "gpqa-diamond",
       "model_id": "gpt-5.6-sol-max",
       "record_ids": [
-        "epoch-gpqa-diamond-gpt-5.6-sol-max-m87"
+        "epoch-gpqa-gpt-5.6-sol-max-nukcgzrecbsxkcknj9bk37"
       ],
-      "status": "diagnostic_reference"
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "gpqa-diamond",
@@ -431,9 +431,9 @@
       "family": "gpqa-diamond",
       "model_id": "kimi-k3-max",
       "record_ids": [
-        "epoch-gpqa-diamond-kimi-k3-max-m136"
+        "epoch-gpqa-kimi-k3-max-b8mapue3eywuzassnqe7c9"
       ],
-      "status": "diagnostic_reference"
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "critpt",

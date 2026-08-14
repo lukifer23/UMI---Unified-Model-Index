@@ -12,12 +12,21 @@ measurements:
   evaluator: Artificial Analysis
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: aa-public-facts-2026-08-14
   source_registry_snapshot_id: aa-public-facts-2026-08-14
   crosswalk_entry_id: aa-opus-max
   signal_id: aa-intelligence-v4.1
+  source_model_id: Claude Opus 5 (Max)
   signal_role: composite
   scoring_disposition: diagnostic_only
   index_id: aa-intelligence-index
@@ -26,7 +35,6 @@ measurements:
   unit: score
   direction: higher
   cohort_key: aa-public-page-2026-08-14-2026-08-14
-  model_snapshot_id: claude-opus-5-max
   evaluation_date: '2026-08-14'
 - record_id: aa-aa-intelligence-index-gpt-5.6-sol-max-2026-08-14
   source:
@@ -41,12 +49,21 @@ measurements:
   evaluator: Artificial Analysis
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: aa-public-facts-2026-08-14
   source_registry_snapshot_id: aa-public-facts-2026-08-14
   crosswalk_entry_id: aa-sol-max
   signal_id: aa-intelligence-v4.1
+  source_model_id: GPT-5.6 Sol (Max)
   signal_role: composite
   scoring_disposition: diagnostic_only
   index_id: aa-intelligence-index
@@ -55,7 +72,6 @@ measurements:
   unit: score
   direction: higher
   cohort_key: aa-public-page-2026-08-14-2026-08-14
-  model_snapshot_id: gpt-5.6-sol-max
   evaluation_date: '2026-08-14'
 - record_id: aa-aa-intelligence-index-kimi-k3-max-2026-08-14
   source:
@@ -70,12 +86,21 @@ measurements:
   evaluator: Artificial Analysis
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: aa-public-facts-2026-08-14
   source_registry_snapshot_id: aa-public-facts-2026-08-14
   crosswalk_entry_id: aa-kimi-max
   signal_id: aa-intelligence-v4.1
+  source_model_id: Kimi K3 (Max)
   signal_role: composite
   scoring_disposition: diagnostic_only
   index_id: aa-intelligence-index
@@ -84,7 +109,6 @@ measurements:
   unit: score
   direction: higher
   cohort_key: aa-public-page-2026-08-14-2026-08-14
-  model_snapshot_id: kimi-k3-max
   evaluation_date: '2026-08-14'
 - record_id: aa-aa-intelligence-index-glm-5.2-max-2026-08-14
   source:
@@ -99,12 +123,21 @@ measurements:
   evaluator: Artificial Analysis
   raw_artifact_available: true
   capture_type: reviewed_fact_extract
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: aa-public-facts-2026-08-14
   source_registry_snapshot_id: aa-public-facts-2026-08-14
   crosswalk_entry_id: aa-glm-max
   signal_id: aa-intelligence-v4.1
+  source_model_id: GLM-5.2 (Max)
   signal_role: composite
   scoring_disposition: diagnostic_only
   index_id: aa-intelligence-index
@@ -113,7 +146,6 @@ measurements:
   unit: score
   direction: higher
   cohort_key: aa-public-page-2026-08-14-2026-08-14
-  model_snapshot_id: glm-5.2-max
   evaluation_date: '2026-08-14'
 - record_id: epoch-gpqa-diamond-kimi-k3-max-m136
   source:
@@ -131,12 +163,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-kimi-max
   signal_id: epoch-eci
+  source_model_id: kimi-k3_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: gpqa-diamond
@@ -145,7 +186,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-gpqa-diamond-2026-08-14
-  model_snapshot_id: kimi-k3-max
 - record_id: epoch-otis-mock-aime-2024-2025-kimi-k3-max-m136
   source:
     organization: Epoch AI
@@ -162,12 +202,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-kimi-max
   signal_id: epoch-eci
+  source_model_id: kimi-k3_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: otis-mock-aime-2024-2025
@@ -176,7 +225,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-otis-mock-aime-2024-2025-2026-08-14
-  model_snapshot_id: kimi-k3-max
 - record_id: epoch-weirdml-kimi-k3-max-m136
   source:
     organization: Epoch AI
@@ -193,12 +241,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-kimi-max
   signal_id: epoch-eci
+  source_model_id: kimi-k3_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: weirdml
@@ -207,7 +264,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-weirdml-2026-08-14
-  model_snapshot_id: kimi-k3-max
 - record_id: epoch-chess-puzzles-kimi-k3-max-m136
   source:
     organization: Epoch AI
@@ -224,12 +280,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-kimi-max
   signal_id: epoch-eci
+  source_model_id: kimi-k3_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: chess-puzzles
@@ -238,7 +303,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-chess-puzzles-2026-08-14
-  model_snapshot_id: kimi-k3-max
 - record_id: epoch-simpleqa-verified-kimi-k3-max-m136
   source:
     organization: Epoch AI
@@ -255,12 +319,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-kimi-max
   signal_id: epoch-eci
+  source_model_id: kimi-k3_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: simpleqa-verified
@@ -269,7 +342,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-simpleqa-verified-2026-08-14
-  model_snapshot_id: kimi-k3-max
 - record_id: epoch-critpt-kimi-k3-max-m136
   source:
     organization: Epoch AI
@@ -286,12 +358,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-kimi-max
   signal_id: epoch-eci
+  source_model_id: kimi-k3_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: critpt
@@ -300,7 +381,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-critpt-2026-08-14
-  model_snapshot_id: kimi-k3-max
 - record_id: epoch-arc-agi-kimi-k3-max-m136
   source:
     organization: Epoch AI
@@ -317,12 +397,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-kimi-max
   signal_id: epoch-eci
+  source_model_id: kimi-k3_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: arc-agi
@@ -331,7 +420,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-arc-agi-2026-08-14
-  model_snapshot_id: kimi-k3-max
 - record_id: epoch-arc-agi-2-kimi-k3-max-m136
   source:
     organization: Epoch AI
@@ -348,12 +436,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-kimi-max
   signal_id: epoch-eci
+  source_model_id: kimi-k3_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: arc-agi-2
@@ -362,7 +459,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-arc-agi-2-2026-08-14
-  model_snapshot_id: kimi-k3-max
 - record_id: epoch-frontiermath-tiers-1-3-v2-private-kimi-k3-max-m136
   source:
     organization: Epoch AI
@@ -379,12 +475,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-kimi-max
   signal_id: epoch-eci
+  source_model_id: kimi-k3_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tiers-1-3-v2-private
@@ -393,7 +498,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tiers-1-3-v2-private-2026-08-14
-  model_snapshot_id: kimi-k3-max
 - record_id: epoch-frontiermath-tier-4-v2-private-kimi-k3-max-m136
   source:
     organization: Epoch AI
@@ -410,12 +514,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-kimi-max
   signal_id: epoch-eci
+  source_model_id: kimi-k3_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tier-4-v2-private
@@ -424,7 +537,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tier-4-v2-private-2026-08-14
-  model_snapshot_id: kimi-k3-max
 - record_id: epoch-mystery-game-puzzles-kimi-k3-max-m136
   source:
     organization: Epoch AI
@@ -441,12 +553,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-kimi-max
   signal_id: epoch-eci
+  source_model_id: kimi-k3_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: mystery-game-puzzles
@@ -455,7 +576,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-mystery-game-puzzles-2026-08-14
-  model_snapshot_id: kimi-k3-max
 - record_id: epoch-surface-evolver-bench-kimi-k3-max-m136
   source:
     organization: Epoch AI
@@ -472,12 +592,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-kimi-max
   signal_id: epoch-eci
+  source_model_id: kimi-k3_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: surface-evolver-bench
@@ -486,7 +615,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-surface-evolver-bench-2026-08-14
-  model_snapshot_id: kimi-k3-max
 - record_id: epoch-deepswe-kimi-k3-max-m136
   source:
     organization: Epoch AI
@@ -503,12 +631,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-kimi-max
   signal_id: epoch-eci
+  source_model_id: kimi-k3_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: deepswe
@@ -517,7 +654,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-deepswe-2026-08-14
-  model_snapshot_id: kimi-k3-max
 - record_id: epoch-otis-mock-aime-2024-2025-claude-fable-5-max-m16
   source:
     organization: Epoch AI
@@ -534,12 +670,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-fable-max
   signal_id: epoch-eci
+  source_model_id: claude-fable-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: otis-mock-aime-2024-2025
@@ -548,7 +693,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-otis-mock-aime-2024-2025-2026-08-14
-  model_snapshot_id: claude-fable-5-max
 - record_id: epoch-weirdml-claude-fable-5-max-m16
   source:
     organization: Epoch AI
@@ -565,12 +709,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-fable-max
   signal_id: epoch-eci
+  source_model_id: claude-fable-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: weirdml
@@ -579,7 +732,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-weirdml-2026-08-14
-  model_snapshot_id: claude-fable-5-max
 - record_id: epoch-chess-puzzles-claude-fable-5-max-m16
   source:
     organization: Epoch AI
@@ -596,12 +748,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-fable-max
   signal_id: epoch-eci
+  source_model_id: claude-fable-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: chess-puzzles
@@ -610,7 +771,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-chess-puzzles-2026-08-14
-  model_snapshot_id: claude-fable-5-max
 - record_id: epoch-simplebench-claude-fable-5-max-m16
   source:
     organization: Epoch AI
@@ -627,12 +787,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-fable-max
   signal_id: epoch-eci
+  source_model_id: claude-fable-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: simplebench
@@ -641,7 +810,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-simplebench-2026-08-14
-  model_snapshot_id: claude-fable-5-max
 - record_id: epoch-critpt-claude-fable-5-max-m16
   source:
     organization: Epoch AI
@@ -658,12 +826,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-fable-max
   signal_id: epoch-eci
+  source_model_id: claude-fable-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: critpt
@@ -672,7 +849,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-critpt-2026-08-14
-  model_snapshot_id: claude-fable-5-max
 - record_id: epoch-frontiermath-tiers-1-3-v2-private-claude-fable-5-max-m16
   source:
     organization: Epoch AI
@@ -689,12 +865,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-fable-max
   signal_id: epoch-eci
+  source_model_id: claude-fable-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tiers-1-3-v2-private
@@ -703,7 +888,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tiers-1-3-v2-private-2026-08-14
-  model_snapshot_id: claude-fable-5-max
 - record_id: epoch-frontiermath-tier-4-v2-private-claude-fable-5-max-m16
   source:
     organization: Epoch AI
@@ -720,12 +904,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-fable-max
   signal_id: epoch-eci
+  source_model_id: claude-fable-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tier-4-v2-private
@@ -734,7 +927,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tier-4-v2-private-2026-08-14
-  model_snapshot_id: claude-fable-5-max
 - record_id: epoch-ebr-bench-claude-fable-5-max-m16
   source:
     organization: Epoch AI
@@ -751,12 +943,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-fable-max
   signal_id: epoch-eci
+  source_model_id: claude-fable-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: ebr-bench
@@ -765,7 +966,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-ebr-bench-2026-08-14
-  model_snapshot_id: claude-fable-5-max
 - record_id: epoch-mystery-game-puzzles-claude-fable-5-max-m16
   source:
     organization: Epoch AI
@@ -782,12 +982,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-fable-max
   signal_id: epoch-eci
+  source_model_id: claude-fable-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: mystery-game-puzzles
@@ -796,7 +1005,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-mystery-game-puzzles-2026-08-14
-  model_snapshot_id: claude-fable-5-max
 - record_id: epoch-posttrainbench-claude-fable-5-max-m16
   source:
     organization: Epoch AI
@@ -813,12 +1021,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-fable-max
   signal_id: epoch-eci
+  source_model_id: claude-fable-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: posttrainbench
@@ -827,7 +1044,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-posttrainbench-2026-08-14
-  model_snapshot_id: claude-fable-5-max
 - record_id: epoch-cursorbench-claude-fable-5-max-m16
   source:
     organization: Epoch AI
@@ -844,12 +1060,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-fable-max
   signal_id: epoch-eci
+  source_model_id: claude-fable-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: cursorbench
@@ -858,7 +1083,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-cursorbench-2026-08-14
-  model_snapshot_id: claude-fable-5-max
 - record_id: epoch-proofbench-claude-fable-5-max-m16
   source:
     organization: Epoch AI
@@ -875,12 +1099,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-fable-max
   signal_id: epoch-eci
+  source_model_id: claude-fable-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: proofbench
@@ -889,7 +1122,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-proofbench-2026-08-14
-  model_snapshot_id: claude-fable-5-max
 - record_id: epoch-gpqa-diamond-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -906,12 +1138,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: gpqa-diamond
@@ -920,7 +1161,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-gpqa-diamond-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-otis-mock-aime-2024-2025-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -937,12 +1177,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: otis-mock-aime-2024-2025
@@ -951,7 +1200,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-otis-mock-aime-2024-2025-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-weirdml-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -968,12 +1216,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: weirdml
@@ -982,7 +1239,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-weirdml-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-chess-puzzles-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -999,12 +1255,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: chess-puzzles
@@ -1013,7 +1278,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-chess-puzzles-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-simpleqa-verified-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -1030,12 +1294,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: simpleqa-verified
@@ -1044,7 +1317,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-simpleqa-verified-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-critpt-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -1061,12 +1333,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: critpt
@@ -1075,7 +1356,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-critpt-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-arc-agi-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -1092,12 +1372,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: arc-agi
@@ -1106,7 +1395,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-arc-agi-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-arc-agi-2-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -1123,12 +1411,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: arc-agi-2
@@ -1137,7 +1434,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-arc-agi-2-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-frontiermath-tiers-1-3-v2-private-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -1154,12 +1450,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tiers-1-3-v2-private
@@ -1168,7 +1473,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tiers-1-3-v2-private-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-frontiermath-tier-4-v2-private-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -1185,12 +1489,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tier-4-v2-private
@@ -1199,7 +1512,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tier-4-v2-private-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-ebr-bench-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -1216,12 +1528,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: ebr-bench
@@ -1230,7 +1551,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-ebr-bench-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-mystery-game-puzzles-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -1247,12 +1567,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: mystery-game-puzzles
@@ -1261,7 +1590,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-mystery-game-puzzles-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-frontiercode-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -1278,12 +1606,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiercode
@@ -1292,7 +1629,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-frontiercode-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-apex-agents-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -1309,12 +1645,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: apex-agents
@@ -1323,7 +1668,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-apex-agents-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-cursorbench-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -1340,12 +1684,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: cursorbench
@@ -1354,7 +1707,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-cursorbench-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-deepswe-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -1371,12 +1723,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: deepswe
@@ -1385,7 +1746,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-deepswe-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-proofbench-claude-opus-5-max-m25
   source:
     organization: Epoch AI
@@ -1402,12 +1762,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-opus-max
   signal_id: epoch-eci
+  source_model_id: claude-opus-5_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: proofbench
@@ -1416,7 +1785,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-proofbench-2026-08-14
-  model_snapshot_id: claude-opus-5-max
 - record_id: epoch-gpqa-diamond-glm-5.2-max-m53
   source:
     organization: Epoch AI
@@ -1433,12 +1801,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-glm-max
   signal_id: epoch-eci
+  source_model_id: glm-5.2_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: gpqa-diamond
@@ -1447,7 +1824,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-gpqa-diamond-2026-08-14
-  model_snapshot_id: glm-5.2-max
 - record_id: epoch-otis-mock-aime-2024-2025-glm-5.2-max-m53
   source:
     organization: Epoch AI
@@ -1464,12 +1840,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-glm-max
   signal_id: epoch-eci
+  source_model_id: glm-5.2_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: otis-mock-aime-2024-2025
@@ -1478,7 +1863,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-otis-mock-aime-2024-2025-2026-08-14
-  model_snapshot_id: glm-5.2-max
 - record_id: epoch-weirdml-glm-5.2-max-m53
   source:
     organization: Epoch AI
@@ -1495,12 +1879,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-glm-max
   signal_id: epoch-eci
+  source_model_id: glm-5.2_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: weirdml
@@ -1509,7 +1902,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-weirdml-2026-08-14
-  model_snapshot_id: glm-5.2-max
 - record_id: epoch-chess-puzzles-glm-5.2-max-m53
   source:
     organization: Epoch AI
@@ -1526,12 +1918,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-glm-max
   signal_id: epoch-eci
+  source_model_id: glm-5.2_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: chess-puzzles
@@ -1540,7 +1941,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-chess-puzzles-2026-08-14
-  model_snapshot_id: glm-5.2-max
 - record_id: epoch-simpleqa-verified-glm-5.2-max-m53
   source:
     organization: Epoch AI
@@ -1557,12 +1957,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-glm-max
   signal_id: epoch-eci
+  source_model_id: glm-5.2_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: simpleqa-verified
@@ -1571,7 +1980,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-simpleqa-verified-2026-08-14
-  model_snapshot_id: glm-5.2-max
 - record_id: epoch-critpt-glm-5.2-max-m53
   source:
     organization: Epoch AI
@@ -1588,12 +1996,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-glm-max
   signal_id: epoch-eci
+  source_model_id: glm-5.2_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: critpt
@@ -1602,7 +2019,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-critpt-2026-08-14
-  model_snapshot_id: glm-5.2-max
 - record_id: epoch-swe-bench-verified-glm-5.2-max-m53
   source:
     organization: Epoch AI
@@ -1619,12 +2035,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-glm-max
   signal_id: epoch-eci
+  source_model_id: glm-5.2_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: swe-bench-verified
@@ -1633,7 +2058,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-swe-bench-verified-2026-08-14
-  model_snapshot_id: glm-5.2-max
 - record_id: epoch-frontiermath-tiers-1-3-v2-private-glm-5.2-max-m53
   source:
     organization: Epoch AI
@@ -1650,12 +2074,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-glm-max
   signal_id: epoch-eci
+  source_model_id: glm-5.2_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tiers-1-3-v2-private
@@ -1664,7 +2097,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tiers-1-3-v2-private-2026-08-14
-  model_snapshot_id: glm-5.2-max
 - record_id: epoch-frontiermath-tier-4-v2-private-glm-5.2-max-m53
   source:
     organization: Epoch AI
@@ -1681,12 +2113,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-glm-max
   signal_id: epoch-eci
+  source_model_id: glm-5.2_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tier-4-v2-private
@@ -1695,7 +2136,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tier-4-v2-private-2026-08-14
-  model_snapshot_id: glm-5.2-max
 - record_id: epoch-ebr-bench-glm-5.2-max-m53
   source:
     organization: Epoch AI
@@ -1712,12 +2152,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-glm-max
   signal_id: epoch-eci
+  source_model_id: glm-5.2_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: ebr-bench
@@ -1726,7 +2175,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-ebr-bench-2026-08-14
-  model_snapshot_id: glm-5.2-max
 - record_id: epoch-posttrainbench-glm-5.2-max-m53
   source:
     organization: Epoch AI
@@ -1743,12 +2191,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-glm-max
   signal_id: epoch-eci
+  source_model_id: glm-5.2_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: posttrainbench
@@ -1757,7 +2214,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-posttrainbench-2026-08-14
-  model_snapshot_id: glm-5.2-max
 - record_id: epoch-cursorbench-glm-5.2-max-m53
   source:
     organization: Epoch AI
@@ -1774,12 +2230,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-glm-max
   signal_id: epoch-eci
+  source_model_id: glm-5.2_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: cursorbench
@@ -1788,7 +2253,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-cursorbench-2026-08-14
-  model_snapshot_id: glm-5.2-max
 - record_id: epoch-deepswe-glm-5.2-max-m53
   source:
     organization: Epoch AI
@@ -1805,12 +2269,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-glm-max
   signal_id: epoch-eci
+  source_model_id: glm-5.2_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: deepswe
@@ -1819,7 +2292,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-deepswe-2026-08-14
-  model_snapshot_id: glm-5.2-max
 - record_id: epoch-proofbench-glm-5.2-max-m53
   source:
     organization: Epoch AI
@@ -1836,12 +2308,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-glm-max
   signal_id: epoch-eci
+  source_model_id: glm-5.2_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: proofbench
@@ -1850,7 +2331,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-proofbench-2026-08-14
-  model_snapshot_id: glm-5.2-max
 - record_id: epoch-gpqa-diamond-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
@@ -1867,12 +2347,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-sol-max
   signal_id: epoch-eci
+  source_model_id: gpt-5.6-sol_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: gpqa-diamond
@@ -1881,7 +2370,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-gpqa-diamond-2026-08-14
-  model_snapshot_id: gpt-5.6-sol-max
 - record_id: epoch-otis-mock-aime-2024-2025-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
@@ -1898,12 +2386,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-sol-max
   signal_id: epoch-eci
+  source_model_id: gpt-5.6-sol_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: otis-mock-aime-2024-2025
@@ -1912,7 +2409,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-otis-mock-aime-2024-2025-2026-08-14
-  model_snapshot_id: gpt-5.6-sol-max
 - record_id: epoch-simpleqa-verified-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
@@ -1929,12 +2425,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-sol-max
   signal_id: epoch-eci
+  source_model_id: gpt-5.6-sol_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: simpleqa-verified
@@ -1943,7 +2448,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-simpleqa-verified-2026-08-14
-  model_snapshot_id: gpt-5.6-sol-max
 - record_id: epoch-critpt-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
@@ -1960,12 +2464,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-sol-max
   signal_id: epoch-eci
+  source_model_id: gpt-5.6-sol_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: critpt
@@ -1974,7 +2487,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-critpt-2026-08-14
-  model_snapshot_id: gpt-5.6-sol-max
 - record_id: epoch-arc-agi-2-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
@@ -1991,12 +2503,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-sol-max
   signal_id: epoch-eci
+  source_model_id: gpt-5.6-sol_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: arc-agi-2
@@ -2005,7 +2526,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-arc-agi-2-2026-08-14
-  model_snapshot_id: gpt-5.6-sol-max
 - record_id: epoch-frontiermath-tiers-1-3-v2-private-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
@@ -2022,12 +2542,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-sol-max
   signal_id: epoch-eci
+  source_model_id: gpt-5.6-sol_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: frontiermath-tiers-1-3-v2-private
@@ -2036,7 +2565,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-frontiermath-tiers-1-3-v2-private-2026-08-14
-  model_snapshot_id: gpt-5.6-sol-max
 - record_id: epoch-ebr-bench-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
@@ -2053,12 +2581,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-sol-max
   signal_id: epoch-eci
+  source_model_id: gpt-5.6-sol_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: ebr-bench
@@ -2067,7 +2604,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-ebr-bench-2026-08-14
-  model_snapshot_id: gpt-5.6-sol-max
 - record_id: epoch-mystery-game-puzzles-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
@@ -2084,12 +2620,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-sol-max
   signal_id: epoch-eci
+  source_model_id: gpt-5.6-sol_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: mystery-game-puzzles
@@ -2098,7 +2643,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-mystery-game-puzzles-2026-08-14
-  model_snapshot_id: gpt-5.6-sol-max
 - record_id: epoch-posttrainbench-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
@@ -2115,12 +2659,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-sol-max
   signal_id: epoch-eci
+  source_model_id: gpt-5.6-sol_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: posttrainbench
@@ -2129,7 +2682,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-posttrainbench-2026-08-14
-  model_snapshot_id: gpt-5.6-sol-max
 - record_id: epoch-cursorbench-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
@@ -2146,12 +2698,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-sol-max
   signal_id: epoch-eci
+  source_model_id: gpt-5.6-sol_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: cursorbench
@@ -2160,7 +2721,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-cursorbench-2026-08-14
-  model_snapshot_id: gpt-5.6-sol-max
 - record_id: epoch-deepswe-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
@@ -2177,12 +2737,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-sol-max
   signal_id: epoch-eci
+  source_model_id: gpt-5.6-sol_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: deepswe
@@ -2191,7 +2760,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-deepswe-2026-08-14
-  model_snapshot_id: gpt-5.6-sol-max
 - record_id: epoch-proofbench-gpt-5.6-sol-max-m87
   source:
     organization: Epoch AI
@@ -2208,12 +2776,21 @@ measurements:
   evaluator: Epoch AI
   raw_artifact_available: true
   capture_type: raw_upstream_payload
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: epoch-eci-matrix-2026-08-14
   source_registry_snapshot_id: epoch-eci-matrix-2026-08-14
   crosswalk_entry_id: epoch-sol-max
   signal_id: epoch-eci
+  source_model_id: gpt-5.6-sol_max
   signal_role: reference
   scoring_disposition: diagnostic_only
   index_id: proofbench
@@ -2222,7 +2799,6 @@ measurements:
   unit: percent
   direction: higher
   cohort_key: epoch-eci-matrix-proofbench-2026-08-14
-  model_snapshot_id: gpt-5.6-sol-max
 - record_id: arena-text-claude-opus-5-max-2026-08-12
   source:
     organization: Arena
@@ -2237,12 +2813,21 @@ measurements:
   evaluator: Arena
   raw_artifact_available: true
   capture_type: archived_source_snapshot
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: arena-text-2026-08-14
   source_registry_snapshot_id: arena-text-2026-08-14
   crosswalk_entry_id: arena-text-opus-max
   signal_id: arena-text
+  source_model_id: claude-opus-5-max
   signal_role: preference
   scoring_disposition: diagnostic_only
   index_id: arena-text-style-control
@@ -2251,7 +2836,6 @@ measurements:
   unit: score
   direction: higher
   cohort_key: arena-text-style-control-2026-08-12
-  model_snapshot_id: claude-opus-5-max
 - record_id: arena-text-kimi-k3-max-2026-08-12
   source:
     organization: Arena
@@ -2266,12 +2850,21 @@ measurements:
   evaluator: Arena
   raw_artifact_available: true
   capture_type: archived_source_snapshot
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: arena-text-2026-08-14
   source_registry_snapshot_id: arena-text-2026-08-14
   crosswalk_entry_id: arena-text-kimi-max
   signal_id: arena-text
+  source_model_id: kimi-k3-max
   signal_role: preference
   scoring_disposition: diagnostic_only
   index_id: arena-text-style-control
@@ -2280,7 +2873,6 @@ measurements:
   unit: score
   direction: higher
   cohort_key: arena-text-style-control-2026-08-12
-  model_snapshot_id: kimi-k3-max
 - record_id: arena-text-glm-5.2-max-2026-08-12
   source:
     organization: Arena
@@ -2295,12 +2887,21 @@ measurements:
   evaluator: Arena
   raw_artifact_available: true
   capture_type: archived_source_snapshot
-  configuration_verified: true
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
   record_status: diagnostic_only
   source_artifact_id: arena-text-2026-08-14
   source_registry_snapshot_id: arena-text-2026-08-14
   crosswalk_entry_id: arena-text-glm-max
   signal_id: arena-text
+  source_model_id: glm-5.2-max
   signal_role: preference
   scoring_disposition: diagnostic_only
   index_id: arena-text-style-control
@@ -2309,4 +2910,3 @@ measurements:
   unit: score
   direction: higher
   cohort_key: arena-text-style-control-2026-08-12
-  model_snapshot_id: glm-5.2-max
