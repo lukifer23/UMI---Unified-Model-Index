@@ -56,6 +56,12 @@ class Confidence(StrEnum):
     LOW = "low"
 
 
+class UncertaintyKind(StrEnum):
+    CONFIDENCE_INTERVAL = "confidence_interval"
+    PUBLISHED_MARGIN = "published_margin"
+    STANDARD_ERROR = "standard_error"
+
+
 class ConfigurationEffort(StrEnum):
     STANDARD = "standard"
     OFF = "off"
@@ -207,6 +213,30 @@ class BenchmarkFamilyDefinition(StrictModel):
     cap: float = Field(gt=0, le=1)
 
 
+class MeasurementUncertainty(StrictModel):
+    """Literal uncertainty metadata supplied by one source record."""
+
+    kind: UncertaintyKind
+    lower: float | None = None
+    upper: float | None = None
+    margin: NonNegative | None = None
+    standard_error: NonNegative | None = None
+    confidence_level: Rate | None = None
+    source_fields: tuple[str, ...] = Field(min_length=1)
+    notes: str | None = None
+
+    @model_validator(mode="after")
+    def validate_declared_form(self) -> MeasurementUncertainty:
+        if self.kind == UncertaintyKind.CONFIDENCE_INTERVAL:
+            if self.lower is None or self.upper is None or self.lower > self.upper:
+                raise ValueError("confidence interval requires ordered lower and upper bounds")
+        if self.kind == UncertaintyKind.PUBLISHED_MARGIN and self.margin is None:
+            raise ValueError("published margin requires a margin")
+        if self.kind == UncertaintyKind.STANDARD_ERROR and self.standard_error is None:
+            raise ValueError("standard error requires standard_error")
+        return self
+
+
 class BenchmarkMeasurement(Provenance):
     benchmark_id: Identifier
     model_id: Identifier
@@ -220,14 +250,7 @@ class BenchmarkMeasurement(Provenance):
     number_of_trials: int | None = Field(default=None, gt=0)
     sample_count: int | None = Field(default=None, gt=0)
     pass_at_k: int | None = Field(default=None, gt=0)
-    standard_error: NonNegative | None = None
-    confidence_interval: tuple[float, float] | None = None
-
-    @model_validator(mode="after")
-    def validate_interval(self) -> BenchmarkMeasurement:
-        if self.confidence_interval and self.confidence_interval[0] > self.confidence_interval[1]:
-            raise ValueError("confidence interval lower bound must not exceed upper bound")
-        return self
+    uncertainty: MeasurementUncertainty | None = None
 
 
 class PricingRecord(Provenance):

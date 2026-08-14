@@ -7,25 +7,36 @@ measurements:
   result_type: independent
   benchmark_version: arena-agent-2026-08-12
   harness_version: arena-agent-ips-2026-08-12
-  metric_definition: Arena Agent inverse-propensity-scored aggregate
+  metric_definition: Arena Agent overall inverse-propensity-scored preference aggregate
+  notes: Exact source model label and effort are crosswalked, but source snapshot
+    and deployment identity are absent; retained as diagnostic preference evidence.
   evaluator: Arena
   raw_artifact_available: true
-  configuration_verified: true
-  record_status: ready
+  configuration_verified: false
+  record_status: diagnostic_only
   source_artifact_id: arena-agent-2026-08-14
   signal_role: preference
-  scoring_disposition: scored
+  scoring_disposition: diagnostic_only
   benchmark_id: arena-agent
   model_id: claude-opus-5-max
   value: 0.11998377869814668
   cohort_key: arena-agent-ips-2026-08-12
-  model_snapshot_id: claude-opus-5-max
+  model_snapshot_id: unspecified
   evaluation_date: '2026-08-12'
-  evaluation_settings: {}
+  evaluation_settings:
+    category: overall
+    observation_count: 1803690
+    session_count: 15509
+    identity_limit: source artifact lacks immutable snapshot/deployment
   sample_count: 1803690
-  confidence_interval:
-  - 0.10285979384253591
-  - 0.13710776355375745
+  uncertainty:
+    kind: confidence_interval
+    lower: 0.10285979384253591
+    upper: 0.13710776355375745
+    source_fields:
+    - score_ci_lower
+    - score_ci_upper
+    notes: The frozen artifact does not state a confidence level.
 - record_id: arena-agent-kimi-k3-max-2026-08-12
   source:
     organization: Arena
@@ -34,25 +45,36 @@ measurements:
   result_type: independent
   benchmark_version: arena-agent-2026-08-12
   harness_version: arena-agent-ips-2026-08-12
-  metric_definition: Arena Agent inverse-propensity-scored aggregate
+  metric_definition: Arena Agent overall inverse-propensity-scored preference aggregate
+  notes: Exact source model label and effort are crosswalked, but source snapshot
+    and deployment identity are absent; retained as diagnostic preference evidence.
   evaluator: Arena
   raw_artifact_available: true
-  configuration_verified: true
-  record_status: ready
+  configuration_verified: false
+  record_status: diagnostic_only
   source_artifact_id: arena-agent-2026-08-14
   signal_role: preference
-  scoring_disposition: scored
+  scoring_disposition: diagnostic_only
   benchmark_id: arena-agent
   model_id: kimi-k3-max
   value: 0.10537803205413024
   cohort_key: arena-agent-ips-2026-08-12
-  model_snapshot_id: kimi-k3-max
+  model_snapshot_id: unspecified
   evaluation_date: '2026-08-12'
-  evaluation_settings: {}
+  evaluation_settings:
+    category: overall
+    observation_count: 2431944
+    session_count: 28369
+    identity_limit: source artifact lacks immutable snapshot/deployment
   sample_count: 2431944
-  confidence_interval:
-  - 0.0949879141434995
-  - 0.11576814996476098
+  uncertainty:
+    kind: confidence_interval
+    lower: 0.0949879141434995
+    upper: 0.11576814996476098
+    source_fields:
+    - score_ci_lower
+    - score_ci_upper
+    notes: The frozen artifact does not state a confidence level.
 - record_id: arena-agent-glm-5.2-max-2026-08-12
   source:
     organization: Arena
@@ -61,25 +83,36 @@ measurements:
   result_type: independent
   benchmark_version: arena-agent-2026-08-12
   harness_version: arena-agent-ips-2026-08-12
-  metric_definition: Arena Agent inverse-propensity-scored aggregate
+  metric_definition: Arena Agent overall inverse-propensity-scored preference aggregate
+  notes: Exact source model label and effort are crosswalked, but source snapshot
+    and deployment identity are absent; retained as diagnostic preference evidence.
   evaluator: Arena
   raw_artifact_available: true
-  configuration_verified: true
-  record_status: ready
+  configuration_verified: false
+  record_status: diagnostic_only
   source_artifact_id: arena-agent-2026-08-14
   signal_role: preference
-  scoring_disposition: scored
+  scoring_disposition: diagnostic_only
   benchmark_id: arena-agent
   model_id: glm-5.2-max
   value: 0.06710906067840385
   cohort_key: arena-agent-ips-2026-08-12
-  model_snapshot_id: glm-5.2-max
+  model_snapshot_id: unspecified
   evaluation_date: '2026-08-12'
-  evaluation_settings: {}
+  evaluation_settings:
+    category: overall
+    observation_count: 2305627
+    session_count: 53295
+    identity_limit: source artifact lacks immutable snapshot/deployment
   sample_count: 2305627
-  confidence_interval:
-  - 0.05821120403956
-  - 0.0760069173172477
+  uncertainty:
+    kind: confidence_interval
+    lower: 0.05821120403956
+    upper: 0.0760069173172477
+    source_fields:
+    - score_ci_lower
+    - score_ci_upper
+    notes: The frozen artifact does not state a confidence level.
 - record_id: deepswe-score-claude-opus-5-max-2026-08-13
   source:
     organization: Datacurve
@@ -108,9 +141,13 @@ measurements:
     agent: mini-swe-agent
     task_count: 113
   number_of_tasks: 113
-  confidence_interval:
-  - 70.0
-  - 78.0
+  uncertainty:
+    kind: published_margin
+    margin: 4.0
+    source_fields:
+    - confidence_interval_percent
+    notes: Published plus-or-minus margin; the frozen reviewed fact does not state
+      a confidence level or interval construction.
 - record_id: deepswe-score-claude-fable-5-max-2026-08-13
   source:
     organization: Datacurve
@@ -139,9 +176,13 @@ measurements:
     agent: mini-swe-agent
     task_count: 113
   number_of_tasks: 113
-  confidence_interval:
-  - 66.0
-  - 74.0
+  uncertainty:
+    kind: published_margin
+    margin: 4.0
+    source_fields:
+    - confidence_interval_percent
+    notes: Published plus-or-minus margin; the frozen reviewed fact does not state
+      a confidence level or interval construction.
 - record_id: deepswe-score-gpt-5.6-sol-max-2026-08-13
   source:
     organization: Datacurve
@@ -170,9 +211,13 @@ measurements:
     agent: mini-swe-agent
     task_count: 113
   number_of_tasks: 113
-  confidence_interval:
-  - 70.0
-  - 76.0
+  uncertainty:
+    kind: published_margin
+    margin: 3.0
+    source_fields:
+    - confidence_interval_percent
+    notes: Published plus-or-minus margin; the frozen reviewed fact does not state
+      a confidence level or interval construction.
 - record_id: deepswe-score-kimi-k3-max-2026-08-13
   source:
     organization: Datacurve
@@ -201,9 +246,13 @@ measurements:
     agent: mini-swe-agent
     task_count: 113
   number_of_tasks: 113
-  confidence_interval:
-  - 64.0
-  - 74.0
+  uncertainty:
+    kind: published_margin
+    margin: 5.0
+    source_fields:
+    - confidence_interval_percent
+    notes: Published plus-or-minus margin; the frozen reviewed fact does not state
+      a confidence level or interval construction.
 - record_id: deepswe-score-glm-5.2-max-2026-08-13
   source:
     organization: Datacurve
@@ -232,6 +281,10 @@ measurements:
     agent: mini-swe-agent
     task_count: 113
   number_of_tasks: 113
-  confidence_interval:
-  - 42.0
-  - 46.0
+  uncertainty:
+    kind: published_margin
+    margin: 2.0
+    source_fields:
+    - confidence_interval_percent
+    notes: Published plus-or-minus margin; the frozen reviewed fact does not state
+      a confidence level or interval construction.

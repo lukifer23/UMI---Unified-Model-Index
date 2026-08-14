@@ -25,9 +25,11 @@ from umi.schemas import (
     ModelCrosswalkEntry,
     OverlapEdge,
     OverlapRelation,
+    RecordStatus,
     ScoringDisposition,
     SignalPolicy,
     SignalRole,
+    UncertaintyKind,
 )
 from umi.scoring import score_dataset
 from umi.source_policy import validate_crosswalk
@@ -138,7 +140,12 @@ def test_adapters_are_offline_deterministic_and_role_safe(monkeypatch, crosswalk
     )
     deep = adapt_deepswe_facts(SOURCES / "deepswe-reviewed-facts-2026-08-13.yaml", crosswalk)
     assert len(deep.benchmarks) == 5
-    assert all(item.confidence_interval is not None for item in deep.benchmarks)
+    assert all(item.uncertainty is not None for item in deep.benchmarks)
+    assert all(
+        item.uncertainty is not None
+        and item.uncertainty.kind == UncertaintyKind.PUBLISHED_MARGIN
+        for item in deep.benchmarks
+    )
     assert all(
         item.aggregation_statistic == AggregationStatistic.UNSPECIFIED for item in deep.efficiency
     )
@@ -172,6 +179,14 @@ def test_epoch_and_arena_adapter_dispositions(crosswalk) -> None:
         "kimi-k3-max",
         "glm-5.2-max",
     }
+    assert all(item.model_snapshot_id == "unspecified" for item in arena.benchmarks)
+    assert all(item.record_status == RecordStatus.DIAGNOSTIC_ONLY for item in arena.benchmarks)
+    assert all(
+        item.uncertainty is not None
+        and item.uncertainty.kind == UncertaintyKind.CONFIDENCE_INTERVAL
+        and item.uncertainty.confidence_level is None
+        for item in arena.benchmarks
+    )
     assert any("Fable" in item.source_row_id for item in arena.rejections)
     assert any("Sol" in item.source_row_id for item in arena.rejections)
 
@@ -272,7 +287,7 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
     assert all(item.headline_overall is None and not item.eligible for item in results.values())
     assert {
         item.coverage.capability_absolute_weighted for item in results.values()
-    } == {0.165, 0.21500000000000002}
+    } == {0.165}
     assert all(
         item.efficiency.score is None and item.economics.score is None for item in results.values()
     )

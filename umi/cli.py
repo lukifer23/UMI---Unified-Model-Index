@@ -18,6 +18,7 @@ from analysis.pilot_sensitivity import analyze_pilot_sensitivity
 from analysis.rankings import rank_results
 from analysis.references import reference_observations
 from analysis.sensitivity import analyze_sensitivity
+from analysis.uncertainty import source_bound_capability_sensitivity
 from analysis.value_sensitivity import analyze_value_sensitivity
 from umi.adapters import (
     adapt_aa_facts,
@@ -117,6 +118,7 @@ def build_parser() -> argparse.ArgumentParser:
         "pareto",
         "pilot-sensitivity",
         "compare",
+        "uncertainty",
     ):
         child = subparsers.add_parser(command)
         _add_common(child)
@@ -265,6 +267,8 @@ def run(args: argparse.Namespace) -> int:
         payload = reference_observations(dataset)
     elif args.command == "compare":
         payload = common_capability_comparison(dataset, config, tuple(args.models))
+    elif args.command == "uncertainty":
+        payload = source_bound_capability_sensitivity(dataset, config)
     elif args.command == "rank":
         ranked = rank_results(results, eligible_only=not args.include_provisional)
         payload = [{"rank": item.rank, **item.result.model_dump(mode="json")} for item in ranked]

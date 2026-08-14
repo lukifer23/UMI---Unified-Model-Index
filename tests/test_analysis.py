@@ -7,6 +7,7 @@ from analysis.correlations import benchmark_correlations
 from analysis.pareto import ParetoPoint, pareto_frontier
 from analysis.rankings import rank_results
 from analysis.sensitivity import analyze_sensitivity
+from analysis.uncertainty import source_bound_capability_sensitivity
 from umi.config import ProjectConfig
 from umi.loading import Dataset
 from umi.scoring import score_dataset
@@ -78,7 +79,7 @@ def test_common_evidence_comparison_excludes_model_specific_support(
     assert {item["coverage"] for item in scores} == {0.165}
 
 
-def test_three_model_common_evidence_uses_arena_and_deepswe(
+def test_three_model_common_evidence_excludes_unready_arena_support(
     real_pilot_dataset: Dataset, real_pilot_config: ProjectConfig
 ) -> None:
     comparison = common_capability_comparison(
@@ -88,5 +89,16 @@ def test_three_model_common_evidence_uses_arena_and_deepswe(
     )
     series = cast(list[dict[str, str]], comparison["common_benchmark_series"])
     scores = cast(list[dict[str, object]], comparison["scores"])
-    assert len(series) == 2
-    assert {item["coverage"] for item in scores} == {0.21500000000000002}
+    assert series == [{"benchmark_id": "deepswe-v1.1", "cohort_key": "deepswe-v1.1-2026-08-13"}]
+    assert {item["coverage"] for item in scores} == {0.165}
+
+
+def test_source_bound_sensitivity_preserves_declared_margin_without_probability_model(
+    real_pilot_dataset: Dataset, real_pilot_config: ProjectConfig
+) -> None:
+    report = source_bound_capability_sensitivity(real_pilot_dataset, real_pilot_config)
+    kimi = next(item for item in report if item["model_id"] == "kimi-k3-max")
+    assert kimi["source_bound_lower"] == 64.0
+    assert kimi["source_bound_upper"] == 74.0
+    assert kimi["uncertainty"]["kind"] == "published_margin"
+    assert "not probabilistic" in kimi["method"]

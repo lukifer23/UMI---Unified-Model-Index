@@ -100,8 +100,11 @@ number_of_tasks: 500       # optional
 number_of_trials: 1        # optional
 sample_count: 500          # optional
 pass_at_k: 1               # optional
-standard_error: 0.8        # optional
-confidence_interval: [70.8, 74.0]  # optional
+uncertainty:
+  kind: published_margin  # confidence_interval | published_margin | standard_error
+  margin: 1.6
+  source_fields: [publisher_margin_column]
+  confidence_level: null  # never inferred
 ```
 
 The unit must be a supported enum and percentages/rates must respect their declared bounds.

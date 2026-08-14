@@ -1,0 +1,127 @@
+[
+  {
+    "benchmark_id": "deepswe-v1.1",
+    "capability_when_record_at_lower_bound": 25.0,
+    "capability_when_record_at_upper_bound": 87.5,
+    "central_capability": 50.0,
+    "central_value": 70.0,
+    "cohort_key": "deepswe-v1.1-2026-08-13",
+    "method": "one-record-at-a-time source-bound sensitivity; not probabilistic propagation",
+    "model_id": "claude-fable-5-max",
+    "record_id": "deepswe-score-claude-fable-5-max-2026-08-13",
+    "source_bound_lower": 66.0,
+    "source_bound_upper": 74.0,
+    "uncertainty": {
+      "confidence_level": null,
+      "kind": "published_margin",
+      "lower": null,
+      "margin": 4.0,
+      "notes": "Published plus-or-minus margin; the frozen reviewed fact does not state a confidence level or interval construction.",
+      "source_fields": [
+        "confidence_interval_percent"
+      ],
+      "standard_error": null,
+      "upper": null
+    }
+  },
+  {
+    "benchmark_id": "deepswe-v1.1",
+    "capability_when_record_at_lower_bound": 62.5,
+    "capability_when_record_at_upper_bound": 100.0,
+    "central_capability": 100.0,
+    "central_value": 74.0,
+    "cohort_key": "deepswe-v1.1-2026-08-13",
+    "method": "one-record-at-a-time source-bound sensitivity; not probabilistic propagation",
+    "model_id": "claude-opus-5-max",
+    "record_id": "deepswe-score-claude-opus-5-max-2026-08-13",
+    "source_bound_lower": 70.0,
+    "source_bound_upper": 78.0,
+    "uncertainty": {
+      "confidence_level": null,
+      "kind": "published_margin",
+      "lower": null,
+      "margin": 4.0,
+      "notes": "Published plus-or-minus margin; the frozen reviewed fact does not state a confidence level or interval construction.",
+      "source_fields": [
+        "confidence_interval_percent"
+      ],
+      "standard_error": null,
+      "upper": null
+    }
+  },
+  {
+    "benchmark_id": "deepswe-v1.1",
+    "capability_when_record_at_lower_bound": 0.0,
+    "capability_when_record_at_upper_bound": 0.0,
+    "central_capability": 0.0,
+    "central_value": 44.0,
+    "cohort_key": "deepswe-v1.1-2026-08-13",
+    "method": "one-record-at-a-time source-bound sensitivity; not probabilistic propagation",
+    "model_id": "glm-5.2-max",
+    "record_id": "deepswe-score-glm-5.2-max-2026-08-13",
+    "source_bound_lower": 42.0,
+    "source_bound_upper": 46.0,
+    "uncertainty": {
+      "confidence_level": null,
+      "kind": "published_margin",
+      "lower": null,
+      "margin": 2.0,
+      "notes": "Published plus-or-minus margin; the frozen reviewed fact does not state a confidence level or interval construction.",
+      "source_fields": [
+        "confidence_interval_percent"
+      ],
+      "standard_error": null,
+      "upper": null
+    }
+  },
+  {
+    "benchmark_id": "deepswe-v1.1",
+    "capability_when_record_at_lower_bound": 62.5,
+    "capability_when_record_at_upper_bound": 100.0,
+    "central_capability": 75.0,
+    "central_value": 73.0,
+    "cohort_key": "deepswe-v1.1-2026-08-13",
+    "method": "one-record-at-a-time source-bound sensitivity; not probabilistic propagation",
+    "model_id": "gpt-5.6-sol-max",
+    "record_id": "deepswe-score-gpt-5.6-sol-max-2026-08-13",
+    "source_bound_lower": 70.0,
+    "source_bound_upper": 76.0,
+    "uncertainty": {
+      "confidence_level": null,
+      "kind": "published_margin",
+      "lower": null,
+      "margin": 3.0,
+      "notes": "Published plus-or-minus margin; the frozen reviewed fact does not state a confidence level or interval construction.",
+      "source_fields": [
+        "confidence_interval_percent"
+      ],
+      "standard_error": null,
+      "upper": null
+    }
+  },
+  {
+    "benchmark_id": "deepswe-v1.1",
+    "capability_when_record_at_lower_bound": 25.0,
+    "capability_when_record_at_upper_bound": 87.5,
+    "central_capability": 25.0,
+    "central_value": 69.0,
+    "cohort_key": "deepswe-v1.1-2026-08-13",
+    "method": "one-record-at-a-time source-bound sensitivity; not probabilistic propagation",
+    "model_id": "kimi-k3-max",
+    "record_id": "deepswe-score-kimi-k3-max-2026-08-13",
+    "source_bound_lower": 64.0,
+    "source_bound_upper": 74.0,
+    "uncertainty": {
+      "confidence_level": null,
+      "kind": "published_margin",
+      "lower": null,
+      "margin": 5.0,
+      "notes": "Published plus-or-minus margin; the frozen reviewed fact does not state a confidence level or interval construction.",
+      "source_fields": [
+        "confidence_interval_percent"
+      ],
+      "standard_error": null,
+      "upper": null
+    }
+  }
+]

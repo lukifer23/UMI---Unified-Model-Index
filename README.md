@@ -47,6 +47,7 @@ uv run --no-sync umi ingest --source deepswe
 uv run --no-sync umi estimates --data-dir data/pilots/v0.3/raw
 uv run --no-sync umi compare --data-dir data/pilots/v0.3/raw --models claude-fable-5-max claude-opus-5-max glm-5.2-max gpt-5.6-sol-max kimi-k3-max
 uv run --no-sync umi compare --data-dir data/pilots/v0.3/raw --models claude-opus-5-max kimi-k3-max glm-5.2-max
+uv run --no-sync umi uncertainty --data-dir data/pilots/v0.3/raw
 uv run --no-sync umi pilot-sensitivity --data-dir data/pilots/v0.3/raw
 uv run --no-sync umi correlations --data-dir data/pilots/v0.3/raw
 uv run --no-sync umi pareto --data-dir data/pilots/v0.3/raw
@@ -89,9 +90,10 @@ The default Overall formula remains:
 ```
 
 Capability retains the five domain weights and v0.3 fixes within-domain benchmark-family budgets.
-DeepSWE pass rate contributes to software engineering. Exact Arena Agent aggregate rows contribute
-to agentic work for three configurations. AA composites, ECI rows, Arena text ratings, and DeepSWE
-resource summaries are diagnostic only.
+DeepSWE pass rate contributes to software engineering. Arena Agent rows retain exact source labels,
+effort, construct, and source-declared intervals, but are diagnostic: the frozen artifact does not
+identify an immutable model snapshot or deployment. AA composites, ECI rows, Arena text ratings, and
+DeepSWE resource summaries are diagnostic only.
 
 DeepSWE's published “Avg cost”, output tokens, and steps are not treated as arithmetic means because
 the captured source does not establish that statistic. They therefore cannot be divided by success

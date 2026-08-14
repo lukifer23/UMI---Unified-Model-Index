@@ -11,14 +11,14 @@ workload, and Capability-domain gates. This is the expected outcome, not a faile
 
 | Configuration | DeepSWE v1.1 pass rate | Arena Agent | Partial Capability | Headline |
 |---|---:|---:|---:|---:|
-| Claude Opus 5 Max | 74% ± 4 | 0.11998 | 100.00 | null |
+| Claude Opus 5 Max | 74% ± 4 | diagnostic: no immutable snapshot | 100.00 | null |
 | Claude Fable 5 Max | 70% ± 4 | rejected: High only | 50.00 | null |
 | GPT-5.6 Sol Max | 73% ± 3 | rejected: xHigh only | 75.00 | null |
-| Kimi K3 Max | 69% ± 5 | 0.10538 | 30.81 | null |
-| GLM-5.2 Max | 44% ± 2 | 0.06711 | ~0.00 | null |
+| Kimi K3 Max | 69% ± 5 | diagnostic: no immutable snapshot | 25.00 | null |
+| GLM-5.2 Max | 44% ± 2 | diagnostic: no immutable snapshot | ~0.00 | null |
 
-Partial Capability is cohort-relative and combines only the fixed software-engineering and agentic
-family budgets available to each exact configuration. It is not an Overall score. Fable is also
+Partial Capability is cohort-relative and currently covers DeepSWE's fixed software-engineering
+budget only. It is not an Overall score. Fable is also
 release-window-ineligible because its 2026-06-09 release predates the 2026-06-15 start.
 
 ## Diagnostic evidence
@@ -27,8 +27,9 @@ release-window-ineligible because its 2026-06-09 release predates the 2026-06-15
   because its label includes an Opus 4.8 fallback deployment.
 - Epoch ECI input rows are retained as diagnostic references because their source matrix combines
   heterogeneous harnesses/settings and ECI selects highest results across settings.
-- Arena text/style-control ratings are diagnostic preference evidence. Missing or non-Max effort
-  labels are rejected.
+- Arena Agent and text/style-control ratings are diagnostic preference evidence. The Agent artifact
+  has exact labels and efforts but no immutable snapshot/deployment identity; missing or non-Max
+  effort labels are rejected.
 - DeepSWE cost, token, and step summaries are retained but cannot enter mean-based success adjustment;
   the captured source does not establish arithmetic-mean semantics.
 
@@ -44,7 +45,9 @@ have no model-specific rank and null `headline_overall` for every model. The fiv
 [common-evidence comparison](data/pilots/v0.3/processed/common-evidence-five-model-comparison.json)
 uses DeepSWE only; the exact three-model
 [common-evidence comparison](data/pilots/v0.3/processed/common-evidence-three-model-comparison.json)
-uses DeepSWE and Arena Agent. Both are provisional and separately labeled. The
+also uses DeepSWE only under the current strict identity policy. Both are provisional and separately
+labeled. The [source-bound uncertainty report](data/pilots/v0.3/processed/source-bound-uncertainty.json)
+re-scores one published bound at a time; it is not probabilistic propagation. The
 [source readiness report](data/pilots/v0.3/processed/source-readiness.json),
 [overlap report](data/pilots/v0.3/processed/overlap.json), and
 [pilot sensitivity report](data/pilots/v0.3/processed/pilot-sensitivity.json) are machine-readable.

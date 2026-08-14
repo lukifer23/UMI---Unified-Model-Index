@@ -9,6 +9,7 @@ import yaml
 from pydantic import TypeAdapter
 
 from analysis.compare import common_capability_comparison
+from analysis.uncertainty import source_bound_capability_sensitivity
 from umi.adapters import (
     adapt_aa_facts,
     adapt_arena_json,
@@ -137,6 +138,13 @@ def main() -> None:
     estimates = [item.model_dump(mode="json") for item in score_dataset(dataset, config)]
     (PROCESSED_ROOT / "model-specific-partial-estimates.json").write_text(
         json.dumps(estimates, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    (PROCESSED_ROOT / "source-bound-uncertainty.json").write_text(
+        json.dumps(
+            source_bound_capability_sensitivity(dataset, config), indent=2, sort_keys=True
+        )
+        + "\n",
+        encoding="utf-8",
     )
     five_models = tuple(model.id for model in models)
     three_models = ("claude-opus-5-max", "kimi-k3-max", "glm-5.2-max")

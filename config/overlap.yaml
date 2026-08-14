@@ -4,7 +4,7 @@ signals:
   - {id: aa-agentic-index, role: composite, disposition: diagnostic_only}
   - {id: epoch-eci, role: composite, disposition: diagnostic_only}
   - {id: arena-text, role: preference, disposition: diagnostic_only}
-  - {id: arena-agent, role: preference, disposition: scored, budget_group: arena-agent}
+  - {id: arena-agent, role: preference, disposition: diagnostic_only, budget_group: arena-agent}
   - {id: arena-agent-signals, role: preference, disposition: diagnostic_only, budget_group: arena-agent}
   - {id: deepswe-v1.1, role: task, disposition: scored, budget_group: deepswe-v1.1}
   - {id: aa-hle, role: task, disposition: scored, budget_group: aa-hle}

@@ -14,10 +14,11 @@ matches are diagnostic or rejected. Fable 5 remains outside the unchanged releas
 
 Every signal is classified as composite, preference, task, efficiency, economics, or reference,
 and as scored or diagnostic-only. Artificial Analysis Intelligence/Coding/Agentic indices and the
-Epoch Capabilities Index are diagnostic composites. Arena text ratings are diagnostic preference
-evidence. The exact-match Arena Agent aggregate may score; its constituent signals share its
-representation budget and remain diagnostic. Exact Artificial Analysis task results and DeepSWE
-v1.1 may score only after the ordinary readiness gate passes.
+Epoch Capabilities Index are diagnostic composites. Arena text ratings and Arena Agent are
+diagnostic preference evidence. The frozen Arena Agent artifact provides exact model labels and
+effort, but not an immutable source snapshot or deployment identifier; it therefore cannot score.
+Its constituent signals share its representation budget and remain diagnostic. Exact Artificial
+Analysis task results and DeepSWE v1.1 may score only after the ordinary readiness gate passes.
 
 The directed overlap graph records containment, derivation, duplicate measurements, shared tasks,
 shared constructs, and unknown overlap. It must be acyclic. Two scored signals connected by a known
@@ -140,6 +141,19 @@ The baseline robust-z threshold is eight observations. Five-model pilot series t
 average-rank percentiles, are explicitly marked small-cohort, and cannot be presented as precise
 interval-scale differences. Robust-z and capped-robust-z remain sensitivity methods to be reported
 separately; neither changes headline eligibility.
+
+## Typed uncertainty
+
+Uncertainty is source-declared metadata, not a fabricated error model. A measurement may retain a
+typed confidence interval with its known confidence level, a published plus-or-minus margin whose
+confidence level is unknown, or a standard error. Bounds, units, source-field labels, and missing
+confidence levels are preserved explicitly. A published margin is not upgraded to a 95% confidence
+interval, and a source interval with no stated level retains `confidence_level: null`.
+
+UMI may calculate deterministic bounded sensitivity only when a source supplies usable numeric
+bounds. It must label the result as source-bound sensitivity, preserve the central estimate, and
+never treat bound endpoints as independent observations. No confidence interval is synthesized from
+sample count, and uncertainty alone cannot change readiness, coverage, weights, or eligibility.
 
 Source NaN and infinity are invalid. Internally derived positive infinity is reserved for measured
 zero-success outcomes and normalizes to the explicit worst result. Scores are relative to their
@@ -360,7 +374,8 @@ scored fingerprint.
 
 - Scores remain cohort-relative; frozen normalization baselines and anchor models are deferred.
 - Domain, family, workload, and component weights are policy hypotheses, not empirical estimates.
-- No formal uncertainty propagation uses sample sizes or confidence intervals yet.
+- Typed source-declared uncertainty is preserved, but no broad probabilistic propagation across
+  heterogeneous benchmark constructs is justified yet.
 - No automatic benchmark decorrelation or overlap down-weighting is performed.
 - No cross-workload Economics basket has been justified.
 - Family-budget calibration, empirical decorrelation, and uncertainty propagation remain research

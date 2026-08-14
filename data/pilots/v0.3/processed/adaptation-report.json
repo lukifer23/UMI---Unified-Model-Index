@@ -1,7 +1,7 @@
 {
-  "complete_audit_fingerprint": "2998fed12a707e9e6e93c5c35d70afc526b4d754ef7c486ebbc0b16d07dae6c6",
+  "complete_audit_fingerprint": "05cd651df40334be73c9295684c4d6696dc5e9cc736ea9f81ea5657fc41b364f",
   "label": "real evidence \u2014 model-specific partial estimate",
-  "scored_audit_fingerprint": "ba9956d81fef991f18f232582e90c1981b15518a1a527a5f10b8ef33a5d214b3",
+  "scored_audit_fingerprint": "740a78670a08168f51b64c276aa37ec159776d93728c1f54ac38d890f04a6996",
   "sources": [
     {
       "adapter_id": "aa-reviewed-facts-v1",
@@ -2612,32 +2612,33 @@
           "benchmark_id": "arena-agent",
           "benchmark_version": "arena-agent-2026-08-12",
           "cohort_key": "arena-agent-ips-2026-08-12",
-          "confidence_interval": [
-            0.10285979384253591,
-            0.13710776355375745
-          ],
-          "configuration_verified": true,
+          "configuration_verified": false,
           "endpoint_id": null,
           "evaluation_date": "2026-08-12",
-          "evaluation_settings": {},
+          "evaluation_settings": {
+            "category": "overall",
+            "identity_limit": "source artifact lacks immutable snapshot/deployment",
+            "observation_count": 1803690,
+            "session_count": 15509
+          },
           "evaluator": "Arena",
           "harness_owner": null,
           "harness_version": "arena-agent-ips-2026-08-12",
-          "metric_definition": "Arena Agent inverse-propensity-scored aggregate",
+          "metric_definition": "Arena Agent overall inverse-propensity-scored preference aggregate",
           "model_id": "claude-opus-5-max",
-          "model_snapshot_id": "claude-opus-5-max",
-          "notes": null,
+          "model_snapshot_id": "unspecified",
+          "notes": "Exact source model label and effort are crosswalked, but source snapshot and deployment identity are absent; retained as diagnostic preference evidence.",
           "number_of_tasks": null,
           "number_of_trials": null,
           "pass_at_k": null,
           "raw_artifact_available": true,
           "record_id": "arena-agent-claude-opus-5-max-2026-08-12",
-          "record_status": "ready",
+          "record_status": "diagnostic_only",
           "reproducible": null,
           "result_type": "independent",
           "run_executor": null,
           "sample_count": 1803690,
-          "scoring_disposition": "scored",
+          "scoring_disposition": "diagnostic_only",
           "service_tier": null,
           "serving_provider": null,
           "signal_role": "preference",
@@ -2647,8 +2648,20 @@
             "url": "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset"
           },
           "source_artifact_id": "arena-agent-2026-08-14",
-          "standard_error": null,
           "tools_enabled": null,
+          "uncertainty": {
+            "confidence_level": null,
+            "kind": "confidence_interval",
+            "lower": 0.10285979384253591,
+            "margin": null,
+            "notes": "The frozen artifact does not state a confidence level.",
+            "source_fields": [
+              "score_ci_lower",
+              "score_ci_upper"
+            ],
+            "standard_error": null,
+            "upper": 0.13710776355375745
+          },
           "value": 0.11998377869814668,
           "workload": null
         },
@@ -2656,32 +2669,33 @@
           "benchmark_id": "arena-agent",
           "benchmark_version": "arena-agent-2026-08-12",
           "cohort_key": "arena-agent-ips-2026-08-12",
-          "confidence_interval": [
-            0.0949879141434995,
-            0.11576814996476098
-          ],
-          "configuration_verified": true,
+          "configuration_verified": false,
           "endpoint_id": null,
           "evaluation_date": "2026-08-12",
-          "evaluation_settings": {},
+          "evaluation_settings": {
+            "category": "overall",
+            "identity_limit": "source artifact lacks immutable snapshot/deployment",
+            "observation_count": 2431944,
+            "session_count": 28369
+          },
           "evaluator": "Arena",
           "harness_owner": null,
           "harness_version": "arena-agent-ips-2026-08-12",
-          "metric_definition": "Arena Agent inverse-propensity-scored aggregate",
+          "metric_definition": "Arena Agent overall inverse-propensity-scored preference aggregate",
           "model_id": "kimi-k3-max",
-          "model_snapshot_id": "kimi-k3-max",
-          "notes": null,
+          "model_snapshot_id": "unspecified",
+          "notes": "Exact source model label and effort are crosswalked, but source snapshot and deployment identity are absent; retained as diagnostic preference evidence.",
           "number_of_tasks": null,
           "number_of_trials": null,
           "pass_at_k": null,
           "raw_artifact_available": true,
           "record_id": "arena-agent-kimi-k3-max-2026-08-12",
-          "record_status": "ready",
+          "record_status": "diagnostic_only",
           "reproducible": null,
           "result_type": "independent",
           "run_executor": null,
           "sample_count": 2431944,
-          "scoring_disposition": "scored",
+          "scoring_disposition": "diagnostic_only",
           "service_tier": null,
           "serving_provider": null,
           "signal_role": "preference",
@@ -2691,8 +2705,20 @@
             "url": "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset"
           },
           "source_artifact_id": "arena-agent-2026-08-14",
-          "standard_error": null,
           "tools_enabled": null,
+          "uncertainty": {
+            "confidence_level": null,
+            "kind": "confidence_interval",
+            "lower": 0.0949879141434995,
+            "margin": null,
+            "notes": "The frozen artifact does not state a confidence level.",
+            "source_fields": [
+              "score_ci_lower",
+              "score_ci_upper"
+            ],
+            "standard_error": null,
+            "upper": 0.11576814996476098
+          },
           "value": 0.10537803205413024,
           "workload": null
         },
@@ -2700,32 +2726,33 @@
           "benchmark_id": "arena-agent",
           "benchmark_version": "arena-agent-2026-08-12",
           "cohort_key": "arena-agent-ips-2026-08-12",
-          "confidence_interval": [
-            0.05821120403956,
-            0.0760069173172477
-          ],
-          "configuration_verified": true,
+          "configuration_verified": false,
           "endpoint_id": null,
           "evaluation_date": "2026-08-12",
-          "evaluation_settings": {},
+          "evaluation_settings": {
+            "category": "overall",
+            "identity_limit": "source artifact lacks immutable snapshot/deployment",
+            "observation_count": 2305627,
+            "session_count": 53295
+          },
           "evaluator": "Arena",
           "harness_owner": null,
           "harness_version": "arena-agent-ips-2026-08-12",
-          "metric_definition": "Arena Agent inverse-propensity-scored aggregate",
+          "metric_definition": "Arena Agent overall inverse-propensity-scored preference aggregate",
           "model_id": "glm-5.2-max",
-          "model_snapshot_id": "glm-5.2-max",
-          "notes": null,
+          "model_snapshot_id": "unspecified",
+          "notes": "Exact source model label and effort are crosswalked, but source snapshot and deployment identity are absent; retained as diagnostic preference evidence.",
           "number_of_tasks": null,
           "number_of_trials": null,
           "pass_at_k": null,
           "raw_artifact_available": true,
           "record_id": "arena-agent-glm-5.2-max-2026-08-12",
-          "record_status": "ready",
+          "record_status": "diagnostic_only",
           "reproducible": null,
           "result_type": "independent",
           "run_executor": null,
           "sample_count": 2305627,
-          "scoring_disposition": "scored",
+          "scoring_disposition": "diagnostic_only",
           "service_tier": null,
           "serving_provider": null,
           "signal_role": "preference",
@@ -2735,8 +2762,20 @@
             "url": "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset"
           },
           "source_artifact_id": "arena-agent-2026-08-14",
-          "standard_error": null,
           "tools_enabled": null,
+          "uncertainty": {
+            "confidence_level": null,
+            "kind": "confidence_interval",
+            "lower": 0.05821120403956,
+            "margin": null,
+            "notes": "The frozen artifact does not state a confidence level.",
+            "source_fields": [
+              "score_ci_lower",
+              "score_ci_upper"
+            ],
+            "standard_error": null,
+            "upper": 0.0760069173172477
+          },
           "value": 0.06710906067840385,
           "workload": null
         }
@@ -2948,10 +2987,6 @@
           "benchmark_id": "deepswe-v1.1",
           "benchmark_version": "v1.1",
           "cohort_key": "deepswe-v1.1-2026-08-13",
-          "confidence_interval": [
-            70.0,
-            78.0
-          ],
           "configuration_verified": true,
           "endpoint_id": null,
           "evaluation_date": "2026-08-13",
@@ -2986,8 +3021,19 @@
             "url": "https://deepswe.datacurve.ai/"
           },
           "source_artifact_id": "deepswe-v1.1-2026-08-13",
-          "standard_error": null,
           "tools_enabled": null,
+          "uncertainty": {
+            "confidence_level": null,
+            "kind": "published_margin",
+            "lower": null,
+            "margin": 4.0,
+            "notes": "Published plus-or-minus margin; the frozen reviewed fact does not state a confidence level or interval construction.",
+            "source_fields": [
+              "confidence_interval_percent"
+            ],
+            "standard_error": null,
+            "upper": null
+          },
           "value": 74.0,
           "workload": null
         },
@@ -2995,10 +3041,6 @@
           "benchmark_id": "deepswe-v1.1",
           "benchmark_version": "v1.1",
           "cohort_key": "deepswe-v1.1-2026-08-13",
-          "confidence_interval": [
-            66.0,
-            74.0
-          ],
           "configuration_verified": true,
           "endpoint_id": null,
           "evaluation_date": "2026-08-13",
@@ -3033,8 +3075,19 @@
             "url": "https://deepswe.datacurve.ai/"
           },
           "source_artifact_id": "deepswe-v1.1-2026-08-13",
-          "standard_error": null,
           "tools_enabled": null,
+          "uncertainty": {
+            "confidence_level": null,
+            "kind": "published_margin",
+            "lower": null,
+            "margin": 4.0,
+            "notes": "Published plus-or-minus margin; the frozen reviewed fact does not state a confidence level or interval construction.",
+            "source_fields": [
+              "confidence_interval_percent"
+            ],
+            "standard_error": null,
+            "upper": null
+          },
           "value": 70.0,
           "workload": null
         },
@@ -3042,10 +3095,6 @@
           "benchmark_id": "deepswe-v1.1",
           "benchmark_version": "v1.1",
           "cohort_key": "deepswe-v1.1-2026-08-13",
-          "confidence_interval": [
-            70.0,
-            76.0
-          ],
           "configuration_verified": true,
           "endpoint_id": null,
           "evaluation_date": "2026-08-13",
@@ -3080,8 +3129,19 @@
             "url": "https://deepswe.datacurve.ai/"
           },
           "source_artifact_id": "deepswe-v1.1-2026-08-13",
-          "standard_error": null,
           "tools_enabled": null,
+          "uncertainty": {
+            "confidence_level": null,
+            "kind": "published_margin",
+            "lower": null,
+            "margin": 3.0,
+            "notes": "Published plus-or-minus margin; the frozen reviewed fact does not state a confidence level or interval construction.",
+            "source_fields": [
+              "confidence_interval_percent"
+            ],
+            "standard_error": null,
+            "upper": null
+          },
           "value": 73.0,
           "workload": null
         },
@@ -3089,10 +3149,6 @@
           "benchmark_id": "deepswe-v1.1",
           "benchmark_version": "v1.1",
           "cohort_key": "deepswe-v1.1-2026-08-13",
-          "confidence_interval": [
-            64.0,
-            74.0
-          ],
           "configuration_verified": true,
           "endpoint_id": null,
           "evaluation_date": "2026-08-13",
@@ -3127,8 +3183,19 @@
             "url": "https://deepswe.datacurve.ai/"
           },
           "source_artifact_id": "deepswe-v1.1-2026-08-13",
-          "standard_error": null,
           "tools_enabled": null,
+          "uncertainty": {
+            "confidence_level": null,
+            "kind": "published_margin",
+            "lower": null,
+            "margin": 5.0,
+            "notes": "Published plus-or-minus margin; the frozen reviewed fact does not state a confidence level or interval construction.",
+            "source_fields": [
+              "confidence_interval_percent"
+            ],
+            "standard_error": null,
+            "upper": null
+          },
           "value": 69.0,
           "workload": null
         },
@@ -3136,10 +3203,6 @@
           "benchmark_id": "deepswe-v1.1",
           "benchmark_version": "v1.1",
           "cohort_key": "deepswe-v1.1-2026-08-13",
-          "confidence_interval": [
-            42.0,
-            46.0
-          ],
           "configuration_verified": true,
           "endpoint_id": null,
           "evaluation_date": "2026-08-13",
@@ -3174,8 +3237,19 @@
             "url": "https://deepswe.datacurve.ai/"
           },
           "source_artifact_id": "deepswe-v1.1-2026-08-13",
-          "standard_error": null,
           "tools_enabled": null,
+          "uncertainty": {
+            "confidence_level": null,
+            "kind": "published_margin",
+            "lower": null,
+            "margin": 2.0,
+            "notes": "Published plus-or-minus margin; the frozen reviewed fact does not state a confidence level or interval construction.",
+            "source_fields": [
+              "confidence_interval_percent"
+            ],
+            "standard_error": null,
+            "upper": null
+          },
           "value": 44.0,
           "workload": null
         }

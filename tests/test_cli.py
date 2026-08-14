@@ -10,7 +10,8 @@ ROOT = Path(__file__).parents[1]
 
 
 @pytest.mark.parametrize(
-    "command", ["validate", "rank", "estimates", "sensitivity", "correlations", "pareto"]
+    "command",
+    ["validate", "rank", "estimates", "uncertainty", "sensitivity", "correlations", "pareto"],
 )
 def test_every_cli_command_emits_json(command: str, capsys: pytest.CaptureFixture[str]) -> None:
     args = build_parser().parse_args(

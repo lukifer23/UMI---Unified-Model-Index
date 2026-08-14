@@ -12,12 +12,14 @@ from umi.schemas import (
     Direction,
     EfficiencyMeasurement,
     ExternalIndexMeasurement,
+    MeasurementUncertainty,
     ModelCrosswalk,
     RecordStatus,
     ResultType,
     ScoringDisposition,
     SignalRole,
     Source,
+    UncertaintyKind,
     Unit,
     WorkloadCategory,
 )
@@ -104,11 +106,14 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
                 evaluation_date=as_of,
                 evaluation_settings={"agent": "mini-swe-agent", "task_count": raw["task_count"]},
                 number_of_tasks=int(str(raw["task_count"])),
-                confidence_interval=(
-                    float(cast(float, row["pass_rate_percent"]))
-                    - float(cast(float, row["confidence_interval_percent"])),
-                    float(cast(float, row["pass_rate_percent"]))
-                    + float(cast(float, row["confidence_interval_percent"])),
+                uncertainty=MeasurementUncertainty(
+                    kind=UncertaintyKind.PUBLISHED_MARGIN,
+                    margin=float(cast(float, row["confidence_interval_percent"])),
+                    source_fields=("confidence_interval_percent",),
+                    notes=(
+                        "Published plus-or-minus margin; the frozen reviewed fact does not state "
+                        "a confidence level or interval construction."
+                    ),
                 ),
                 metric_definition="DeepSWE v1.1 task resolution rate in percent",
                 source=source,

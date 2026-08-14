@@ -36,28 +36,6 @@
           "title": "Cohort Key",
           "type": "string"
         },
-        "confidence_interval": {
-          "anyOf": [
-            {
-              "maxItems": 2,
-              "minItems": 2,
-              "prefixItems": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "number"
-                }
-              ],
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Confidence Interval"
-        },
         "configuration_verified": {
           "anyOf": [
             {
@@ -312,19 +290,6 @@
           "default": null,
           "title": "Source Artifact Id"
         },
-        "standard_error": {
-          "anyOf": [
-            {
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Standard Error"
-        },
         "tools_enabled": {
           "anyOf": [
             {
@@ -336,6 +301,17 @@
           ],
           "default": null,
           "title": "Tools Enabled"
+        },
+        "uncertainty": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MeasurementUncertainty"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "value": {
           "title": "Value",
@@ -1072,6 +1048,105 @@
         "evaluation_date"
       ],
       "title": "ExternalIndexMeasurement",
+      "type": "object"
+    },
+    "MeasurementUncertainty": {
+      "additionalProperties": false,
+      "description": "Literal uncertainty metadata supplied by one source record.",
+      "properties": {
+        "confidence_level": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence Level"
+        },
+        "kind": {
+          "$ref": "#/$defs/UncertaintyKind"
+        },
+        "lower": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lower"
+        },
+        "margin": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Margin"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "source_fields": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Source Fields",
+          "type": "array"
+        },
+        "standard_error": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Standard Error"
+        },
+        "upper": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Upper"
+        }
+      },
+      "required": [
+        "kind",
+        "source_fields"
+      ],
+      "title": "MeasurementUncertainty",
       "type": "object"
     },
     "ModelConfiguration": {
@@ -1893,6 +1968,15 @@
       ],
       "title": "TaskEconomicsMeasurement",
       "type": "object"
+    },
+    "UncertaintyKind": {
+      "enum": [
+        "confidence_interval",
+        "published_margin",
+        "standard_error"
+      ],
+      "title": "UncertaintyKind",
+      "type": "string"
     },
     "Unit": {
       "enum": [

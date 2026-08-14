@@ -11,12 +11,14 @@ from umi.schemas import (
     BenchmarkMeasurement,
     Direction,
     ExternalIndexMeasurement,
+    MeasurementUncertainty,
     ModelCrosswalk,
     RecordStatus,
     ResultType,
     ScoringDisposition,
     SignalRole,
     Source,
+    UncertaintyKind,
     Unit,
 )
 
@@ -60,26 +62,43 @@ def adapt_arena_json(
                     record_id=identifier(f"arena-agent-{match.canonical_model_id}-{published}"),
                     benchmark_id="arena-agent",
                     model_id=match.canonical_model_id,
-                    model_snapshot_id=match.canonical_model_id,
+                    model_snapshot_id="unspecified",
                     value=float(cast(float, row["score"])),
                     cohort_key=identifier(f"arena-agent-ips-{published}"),
                     evaluation_date=published,
                     sample_count=int(float(cast(float, row["observation_count"]))),
-                    confidence_interval=(
-                        float(cast(float, row["score_ci_lower"])),
-                        float(cast(float, row["score_ci_upper"])),
+                    uncertainty=MeasurementUncertainty(
+                        kind=UncertaintyKind.CONFIDENCE_INTERVAL,
+                        lower=float(cast(float, row["score_ci_lower"])),
+                        upper=float(cast(float, row["score_ci_upper"])),
+                        source_fields=("score_ci_lower", "score_ci_upper"),
+                        notes="The frozen artifact does not state a confidence level.",
                     ),
                     source=source,
                     result_type=ResultType.INDEPENDENT,
                     benchmark_version=f"arena-agent-{published}",
                     harness_version=f"arena-agent-ips-{published}",
-                    metric_definition="Arena Agent inverse-propensity-scored aggregate",
+                    metric_definition=(
+                        "Arena Agent overall inverse-propensity-scored preference aggregate"
+                    ),
                     evaluator="Arena",
                     raw_artifact_available=True,
                     source_artifact_id=artifact_id,
-                    configuration_verified=True,
+                    configuration_verified=False,
+                    record_status=RecordStatus.DIAGNOSTIC_ONLY,
                     signal_role=SignalRole.PREFERENCE,
-                    scoring_disposition=ScoringDisposition.SCORED,
+                    scoring_disposition=ScoringDisposition.DIAGNOSTIC_ONLY,
+                    evaluation_settings={
+                        "category": str(row["category"]),
+                        "observation_count": int(float(cast(float, row["observation_count"]))),
+                        "session_count": int(float(cast(float, row["session_count"]))),
+                        "identity_limit": "source artifact lacks immutable snapshot/deployment",
+                    },
+                    notes=(
+                        "Exact source model label and effort are crosswalked, but source snapshot "
+                        "and deployment identity are absent; retained as diagnostic preference "
+                        "evidence."
+                    ),
                 )
             )
         else:
