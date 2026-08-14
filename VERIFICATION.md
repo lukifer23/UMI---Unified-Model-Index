@@ -21,7 +21,8 @@ contract.
 ## Publication assertions
 
 - Five exact canonical configurations are visible.
-- Every row is labeled `real evidence, provisional partial ranking`.
+- Every model-specific row is labeled `real evidence — model-specific partial estimate`; it is not
+  a rank. Any provisional ranks are emitted only by an explicit common-evidence comparison group.
 - Every publishable rank is null.
 - Every `headline_overall` is null.
 - Efficiency and Economics remain unscored because captured DeepSWE summaries do not prove

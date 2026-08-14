@@ -16,3 +16,13 @@ def config() -> ProjectConfig:
 @pytest.fixture(scope="session")
 def synthetic_dataset() -> Dataset:
     return load_dataset(ROOT / "tests" / "fixtures")
+
+
+@pytest.fixture(scope="session")
+def real_pilot_config() -> ProjectConfig:
+    return load_project_config(ROOT / "config")
+
+
+@pytest.fixture(scope="session")
+def real_pilot_dataset() -> Dataset:
+    return load_dataset(ROOT / "data" / "pilots" / "v0.3" / "raw")

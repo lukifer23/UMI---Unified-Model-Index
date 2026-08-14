@@ -2,136 +2,168 @@ from __future__ import annotations
 
 from collections import defaultdict
 
-from umi._component import ComponentComputation, consolidate_numeric, weighted_available
+from umi._component import ComponentComputation, consolidate_numeric
 from umi.config import ProjectConfig
+from umi.evidence_profiles import capability_profile
 from umi.loading import Dataset
 from umi.normalize import normalize_cohort
-from umi.schemas import BenchmarkMeasurement, ComponentScore, Domain, Provenance
+from umi.schemas import (
+    BenchmarkMeasurement,
+    ComponentScore,
+    Domain,
+    EvidenceBenchmarkSeries,
+    Provenance,
+)
 
 
 def score_capability(dataset: Dataset, config: ProjectConfig) -> ComponentComputation:
+    """Score with one flattened configured weight per representation group."""
     definitions = {item.id: item for item in config.benchmarks}
     grouped: dict[tuple[str, str, str], list[BenchmarkMeasurement]] = defaultdict(list)
     for item in dataset.benchmarks:
         grouped[(item.benchmark_id, item.cohort_key, item.model_id)].append(item)
 
-    benchmark_scores: dict[str, dict[str, float]] = defaultdict(dict)
-    provisional_cohorts: set[tuple[str, str, str]] = set()
-    selected_by_model: dict[str, list[Provenance]] = defaultdict(list)
+    scores: dict[tuple[str, str, str], float] = {}
+    selected: dict[tuple[str, str, str], tuple[Provenance, ...]] = {}
+    provisional: set[tuple[str, str, str]] = set()
     diagnostics: dict[str, list[str]] = defaultdict(list)
-    series = sorted({(benchmark_id, cohort_key) for benchmark_id, cohort_key, _ in grouped})
-    for benchmark_id, cohort_key in series:
-        definition = definitions[benchmark_id]
+    for benchmark_id, cohort_key in sorted({key[:2] for key in grouped}):
         raw: dict[str, float] = {}
-        for (candidate_id, candidate_cohort, model_id), records in grouped.items():
-            if (candidate_id, candidate_cohort) != (benchmark_id, cohort_key):
+        for (candidate, cohort, model_id), source_records in grouped.items():
+            if (candidate, cohort) != (benchmark_id, cohort_key):
                 continue
-            value, selected, conflict = consolidate_numeric(records, "value")
+            value, records_selected, conflict = consolidate_numeric(source_records, "value")
             if value is not None:
                 raw[model_id] = value
-                selected_by_model[model_id].extend(selected)
+                selected[(benchmark_id, cohort_key, model_id)] = tuple(records_selected)
             if conflict:
                 diagnostics[model_id].append(f"conflict consolidated for {benchmark_id}")
-        normalized = normalize_cohort(
+        outcome = normalize_cohort(
             raw,
-            direction=definition.direction,
-            strategy=definition.normalization,
+            direction=definitions[benchmark_id].direction,
+            strategy=definitions[benchmark_id].normalization,
             minimum_robust_cohort=config.normalization.minimum_robust_cohort,
             minimum_rank_cohort=config.normalization.minimum_rank_cohort,
         )
-        for model_id, score in normalized.scores.items():
-            if score is not None:
-                benchmark_scores[benchmark_id][model_id] = score
-                if normalized.provisional:
-                    provisional_cohorts.add((benchmark_id, cohort_key, model_id))
+        for model_id, value in outcome.scores.items():
+            if value is not None:
+                scores[(benchmark_id, cohort_key, model_id)] = value
+                if outcome.provisional:
+                    provisional.add((benchmark_id, cohort_key, model_id))
+
+    groups: list[tuple[Domain, str, str, float, str]] = []
+    for family in config.families:
+        members = [item for item in config.benchmarks if item.family == family.id]
+        by_group: dict[str, list[str]] = defaultdict(list)
+        for member in members:
+            by_group[member.representation_group or member.id].append(member.id)
+        group_weights = {
+            group_id: max(definitions[item].representation_weight for item in aliases)
+            for group_id, aliases in by_group.items()
+        }
+        total = sum(group_weights.values())
+        if total == 0:
+            continue
+        for group_id, aliases in by_group.items():
+            canonical = min(aliases)
+            groups.append(
+                (
+                    family.domain,
+                    family.id,
+                    group_id,
+                    config.weights.capability_domains[family.domain]
+                    * family.weight
+                    * group_weights[group_id]
+                    / total,
+                    canonical,
+                )
+            )
 
     output: dict[str, ComponentScore] = {}
-    model_domains: dict[str, tuple[Domain, ...]] = {}
-    total_representation_groups = len(
-        {
-            (item.family, item.representation_group or item.id)
-            for item in config.benchmarks
-        }
-    )
+    evidence: dict[str, tuple[Provenance, ...]] = {}
+    domains: dict[str, tuple[Domain, ...]] = {}
     for model in dataset.models:
-        domain_values: dict[str, float | None] = {}
-        domain_coverage: dict[Domain, float] = {}
-        represented_domains: list[Domain] = []
-        represented_families = 0
-        represented_groups = 0
-        provisional_ids: set[str] = set()
-
-        for domain in Domain:
-            family_values: dict[str, float | None] = {}
-            family_weights: dict[str, float] = {}
-            coverage_value = 0.0
-            for family in (item for item in config.families if item.domain == domain):
-                members = [item for item in config.benchmarks if item.family == family.id]
-                groups: dict[str, list[str]] = defaultdict(list)
-                for member in members:
-                    groups[member.representation_group or member.id].append(member.id)
-                group_values: dict[str, float | None] = {}
-                group_weights: dict[str, float] = {}
-                for group_id, aliases in groups.items():
-                    values: list[float] = []
-                    for alias in aliases:
-                        alias_value = benchmark_scores.get(alias, {}).get(model.id)
-                        if alias_value is not None:
-                            values.append(alias_value)
-                    group_values[group_id] = sum(values) / len(values) if values else None
-                    group_weights[group_id] = max(
-                        definitions[alias].representation_weight for alias in aliases
-                    )
-                    if values:
-                        represented_groups += 1
-                        for alias in aliases:
-                            for benchmark_id, cohort_key, model_id in provisional_cohorts:
-                                if alias == benchmark_id and model_id == model.id:
-                                    provisional_ids.add(f"{benchmark_id}/{cohort_key}")
-                family_score, family_coverage = weighted_available(group_values, group_weights)
-                family_values[family.id] = family_score
-                family_weights[family.id] = family.weight
-                coverage_value += family.weight * family_coverage
-                if family_score is not None:
-                    represented_families += 1
-            domain_score, _ = weighted_available(family_values, family_weights)
-            domain_values[domain.value] = domain_score
-            domain_coverage[domain] = coverage_value
-            if domain_score is not None:
-                represented_domains.append(domain)
-
-        score, _ = weighted_available(
-            domain_values,
-            {key.value: value for key, value in config.weights.capability_domains.items()},
-        )
-        coverage = sum(
-            config.weights.capability_domains[domain] * domain_coverage.get(domain, 0.0)
-            for domain in config.weights.capability_domains
-        )
-        if provisional_ids:
-            diagnostics[model.id].append(
-                "provisional normalization cohorts: " + ", ".join(sorted(provisional_ids))
+        available: list[tuple[EvidenceBenchmarkSeries, float, float, tuple[Provenance, ...]]] = []
+        small_series: list[str] = []
+        for domain, family_id, group_id, weight, benchmark_id in groups:
+            matches = [
+                (cohort, value)
+                for (candidate, cohort, model_id), value in scores.items()
+                if candidate == benchmark_id and model_id == model.id
+            ]
+            if len(matches) != 1:
+                continue
+            cohort, value = matches[0]
+            series = EvidenceBenchmarkSeries(
+                benchmark_id=benchmark_id,
+                cohort_key=cohort,
+                domain=domain,
+                family=family_id,
+                representation_group=group_id,
+                signal_id=benchmark_id,
+                budget_group=group_id,
             )
+            selected_records = selected[(benchmark_id, cohort, model.id)]
+            available.append((series, weight, value, selected_records))
+            if (benchmark_id, cohort, model.id) in provisional:
+                small_series.append(f"{benchmark_id}/{cohort}")
+        coverage = sum(item[1] for item in available)
+        score = sum(item[1] * item[2] for item in available) / coverage if coverage else None
         evidence_records = tuple(
-            {item.record_id: item for item in selected_by_model[model.id]}.values()
+            {
+                record.record_id: record
+                for *_, selected_records in available
+                for record in selected_records
+            }.values()
+        )
+        profile = capability_profile((item[0] for item in available), evidence_records, config)
+        if small_series:
+            diagnostics[model.id].append(
+                "provisional normalization cohorts: " + ", ".join(sorted(small_series))
+            )
+        represented_domains = tuple(
+            sorted({item[0].domain for item in available}, key=lambda item: item.value)
         )
         output[model.id] = ComponentScore(
             score=score,
             coverage=coverage,
-            provisional=bool(provisional_ids),
+            provisional=bool(small_series),
             source_record_ids=tuple(sorted(item.record_id for item in evidence_records)),
             diagnostics=tuple(sorted(set(diagnostics[model.id]))),
             coverage_details={
-                "capability_domain_weighted": coverage,
-                "capability_family_weighted": coverage,
-                "capability_representation_weighted": coverage,
-                "capability_families_represented": represented_families,
+                "capability_total_weighted": coverage,
+                "capability_families_represented": len({item[0].family for item in available}),
                 "capability_families_total": len(config.families),
-                "capability_representations_represented": represented_groups,
-                "capability_representations_total": total_representation_groups,
+                "capability_representations_represented": len(available),
+                "capability_representations_total": len(groups),
             },
+            evidence_profile=profile,
         )
-        model_domains[model.id] = tuple(represented_domains)
-    return ComponentComputation(
-        output, {key: tuple(value) for key, value in selected_by_model.items()}, model_domains
-    )
+        evidence[model.id] = evidence_records
+        domains[model.id] = represented_domains
+
+    for model_id, component in output.items():
+        profile_id = component.evidence_profile.id if component.evidence_profile else None
+        peers = tuple(
+            sorted(
+                other_id
+                for other_id, other in output.items()
+                if other_id != model_id
+                and other.evidence_profile
+                and other.evidence_profile.id == profile_id
+            )
+        )
+        output[model_id] = component.model_copy(
+            update={
+                "directly_comparable_model_ids": peers,
+                "comparability_status": (
+                    "directly_comparable" if peers else "different_evidence_profile"
+                ),
+                "comparability_reasons": (
+                    ("same capability support series and configuration",)
+                    if peers
+                    else ("no other model has the same capability evidence profile",)
+                ),
+            }
+        )
+    return ComponentComputation(output, evidence, domains)

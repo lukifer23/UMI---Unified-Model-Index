@@ -1,5 +1,8 @@
+from typing import cast
+
 import pytest
 
+from analysis.compare import common_capability_comparison
 from analysis.correlations import benchmark_correlations
 from analysis.pareto import ParetoPoint, pareto_frontier
 from analysis.rankings import rank_results
@@ -52,3 +55,38 @@ def test_pareto_dominance_and_equal_points() -> None:
     assert not output["a"].dominated
     assert not output["c"].dominated
     assert not output["d"].dominated
+
+
+def test_common_evidence_comparison_excludes_model_specific_support(
+    real_pilot_dataset: Dataset, real_pilot_config: ProjectConfig
+) -> None:
+    comparison = common_capability_comparison(
+        real_pilot_dataset,
+        real_pilot_config,
+        (
+            "claude-opus-5-max",
+            "claude-fable-5-max",
+            "gpt-5.6-sol-max",
+            "kimi-k3-max",
+            "glm-5.2-max",
+        ),
+    )
+    assert comparison["common_benchmark_series"] == [
+        {"benchmark_id": "deepswe-v1.1", "cohort_key": "deepswe-v1.1-2026-08-13"}
+    ]
+    scores = cast(list[dict[str, object]], comparison["scores"])
+    assert {item["coverage"] for item in scores} == {0.165}
+
+
+def test_three_model_common_evidence_uses_arena_and_deepswe(
+    real_pilot_dataset: Dataset, real_pilot_config: ProjectConfig
+) -> None:
+    comparison = common_capability_comparison(
+        real_pilot_dataset,
+        real_pilot_config,
+        ("claude-opus-5-max", "kimi-k3-max", "glm-5.2-max"),
+    )
+    series = cast(list[dict[str, str]], comparison["common_benchmark_series"])
+    scores = cast(list[dict[str, object]], comparison["scores"])
+    assert len(series) == 2
+    assert {item["coverage"] for item in scores} == {0.21500000000000002}

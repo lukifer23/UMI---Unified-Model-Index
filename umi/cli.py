@@ -11,6 +11,7 @@ from typing import Any
 
 from pydantic import BaseModel, ValidationError
 
+from analysis.compare import common_capability_comparison
 from analysis.correlations import benchmark_correlations
 from analysis.pareto_metrics import pareto_dimensions
 from analysis.pilot_sensitivity import analyze_pilot_sensitivity
@@ -108,12 +109,14 @@ def build_parser() -> argparse.ArgumentParser:
     for command in (
         "validate",
         "rank",
+        "estimates",
         "sensitivity",
         "value-sensitivity",
         "references",
         "correlations",
         "pareto",
         "pilot-sensitivity",
+        "compare",
     ):
         child = subparsers.add_parser(command)
         _add_common(child)
@@ -122,6 +125,7 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Include models not eligible for headlines",
     )
+    subparsers.choices["compare"].add_argument("--models", nargs="+", required=True)
     sources = subparsers.add_parser("sources")
     source_commands = sources.add_subparsers(dest="sources_command", required=True)
     source_validate = source_commands.add_parser("validate")
@@ -259,9 +263,13 @@ def run(args: argparse.Namespace) -> int:
     payload: Any
     if args.command == "references":
         payload = reference_observations(dataset)
+    elif args.command == "compare":
+        payload = common_capability_comparison(dataset, config, tuple(args.models))
     elif args.command == "rank":
         ranked = rank_results(results, eligible_only=not args.include_provisional)
         payload = [{"rank": item.rank, **item.result.model_dump(mode="json")} for item in ranked]
+    elif args.command == "estimates":
+        payload = [item.model_dump(mode="json") for item in results]
     elif args.command == "sensitivity":
         payload = analyze_sensitivity(results, config)
     elif args.command == "value-sensitivity":

@@ -1,7 +1,7 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3 adds a real,
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.1 adds a real,
 five-configuration, multi-source evidence pilot. It does **not** publish a headline UMI score:
 the evidence supports provisional partial Capability estimates only.
 
@@ -44,15 +44,17 @@ uv run --no-sync umi ingest --source epoch
 uv run --no-sync umi ingest --source arena-agent
 uv run --no-sync umi ingest --source arena-text
 uv run --no-sync umi ingest --source deepswe
-uv run --no-sync umi rank --data-dir data/pilots/v0.3/raw --include-provisional
+uv run --no-sync umi estimates --data-dir data/pilots/v0.3/raw
+uv run --no-sync umi compare --data-dir data/pilots/v0.3/raw --models claude-fable-5-max claude-opus-5-max glm-5.2-max gpt-5.6-sol-max kimi-k3-max
+uv run --no-sync umi compare --data-dir data/pilots/v0.3/raw --models claude-opus-5-max kimi-k3-max glm-5.2-max
 uv run --no-sync umi pilot-sensitivity --data-dir data/pilots/v0.3/raw
 uv run --no-sync umi correlations --data-dir data/pilots/v0.3/raw
 uv run --no-sync umi pareto --data-dir data/pilots/v0.3/raw
 ```
 
-Every real-pilot result is labeled `real evidence, provisional partial ranking`. All
-`headline_overall` fields and publishable ranks are null. `--include-provisional` exposes partial
-results without promoting them to a leaderboard.
+Every model-specific output is labeled `real evidence — model-specific partial estimate`; it is
+not a ranking. All `headline_overall` fields are null. `umi compare` produces a separately labeled,
+provisional rank only after explicitly restricting the requested models to their common evidence.
 
 The synthetic engine demonstration remains available under `tests/fixtures` and is always labeled
 as synthetic.

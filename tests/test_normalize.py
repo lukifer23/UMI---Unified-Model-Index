@@ -5,12 +5,12 @@ from umi.schemas import Direction
 
 
 def test_robust_z_is_deterministic_and_directional() -> None:
-    values = {f"m{index}": float(index) for index in range(1, 6)}
+    values = {f"m{index}": float(index) for index in range(1, 9)}
     first = normalize_cohort(values, direction=Direction.HIGHER)
     second = normalize_cohort(dict(reversed(list(values.items()))), direction=Direction.HIGHER)
     assert first.method == "robust_z"
     assert first.scores == second.scores
-    assert first.scores["m5"] > first.scores["m1"]  # type: ignore[operator]
+    assert first.scores["m8"] > first.scores["m1"]  # type: ignore[operator]
 
 
 def test_small_cohort_uses_average_rank_percentiles_and_marks_provisional() -> None:
@@ -27,9 +27,12 @@ def test_singleton_is_unscored() -> None:
 
 
 def test_zero_mad_falls_back_to_percentiles() -> None:
-    result = normalize_cohort({"a": 1, "b": 1, "c": 1, "d": 1, "e": 2}, direction=Direction.HIGHER)
+    result = normalize_cohort(
+        {"a": 1, "b": 1, "c": 1, "d": 1, "e": 1, "f": 1, "g": 1, "h": 2},
+        direction=Direction.HIGHER,
+    )
     assert result.method == "percentile_zero_mad"
-    assert result.scores["e"] == 100.0
+    assert result.scores["h"] == 100.0
 
 
 def test_positive_infinity_is_worst_for_lower_is_better() -> None:

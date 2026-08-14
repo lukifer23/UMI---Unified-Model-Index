@@ -266,10 +266,13 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
         "glm-5.2-max",
     }
     assert all(
-        item.publication_label == "real evidence, provisional partial ranking"
+        item.publication_label == "real evidence — model-specific partial estimate"
         for item in results.values()
     )
     assert all(item.headline_overall is None and not item.eligible for item in results.values())
+    assert {
+        item.coverage.capability_absolute_weighted for item in results.values()
+    } == {0.165, 0.21500000000000002}
     assert all(
         item.efficiency.score is None and item.economics.score is None for item in results.values()
     )

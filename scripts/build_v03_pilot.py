@@ -8,6 +8,7 @@ from typing import Any
 import yaml
 from pydantic import TypeAdapter
 
+from analysis.compare import common_capability_comparison
 from umi.adapters import (
     adapt_aa_facts,
     adapt_arena_json,
@@ -15,8 +16,10 @@ from umi.adapters import (
     adapt_epoch_csv,
     assemble_pilot_dataset,
 )
+from umi.config import load_project_config
 from umi.loading import load_model_crosswalk, load_source_registry
 from umi.schemas import ModelConfiguration, ScoringDisposition
+from umi.scoring import score_dataset
 
 ROOT = Path(__file__).parents[1]
 SOURCE_ROOT = ROOT / "data" / "sources" / "v0.3"
@@ -122,7 +125,7 @@ def main() -> None:
         encoding="utf-8",
     )
     report = {
-        "label": "real evidence, provisional partial ranking",
+        "label": "real evidence — model-specific partial estimate",
         "sources": [item.model_dump(mode="json") for item in results],
         "scored_audit_fingerprint": dataset.scored_audit_fingerprint,
         "complete_audit_fingerprint": dataset.complete_audit_fingerprint,
@@ -130,6 +133,21 @@ def main() -> None:
     (PROCESSED_ROOT / "adaptation-report.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
+    config = load_project_config(ROOT / "config")
+    estimates = [item.model_dump(mode="json") for item in score_dataset(dataset, config)]
+    (PROCESSED_ROOT / "model-specific-partial-estimates.json").write_text(
+        json.dumps(estimates, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    five_models = tuple(model.id for model in models)
+    three_models = ("claude-opus-5-max", "kimi-k3-max", "glm-5.2-max")
+    for name, model_ids in (
+        ("common-evidence-five-model-comparison.json", five_models),
+        ("common-evidence-three-model-comparison.json", three_models),
+    ):
+        comparison = common_capability_comparison(dataset, config, model_ids)
+        (PROCESSED_ROOT / name).write_text(
+            json.dumps(comparison, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
 
 
 if __name__ == "__main__":

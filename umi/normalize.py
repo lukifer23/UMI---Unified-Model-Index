@@ -33,7 +33,7 @@ def normalize_cohort(
     direction: Direction,
     strategy: NormalizationStrategy = NormalizationStrategy.ROBUST_Z,
     log_transform: bool = False,
-    minimum_robust_cohort: int = 5,
+    minimum_robust_cohort: int = 8,
     minimum_rank_cohort: int = 2,
 ) -> NormalizedCohort:
     if not values:

@@ -242,7 +242,7 @@ def score_dataset(
             publication_label=(
                 "synthetic demonstration — not a real model ranking"
                 if model.synthetic
-                else "real evidence, provisional partial ranking"
+                else "real evidence — model-specific partial estimate"
             ),
             release_date=model.release_date,
             capability=cap,
@@ -275,14 +275,8 @@ def score_dataset(
                 overall_weighted=overall_coverage,
                 capability_domains_represented=len(domains),
                 capability_domains_total=len(Domain),
-                capability_domain_weighted=float(
-                    cap.coverage_details.get("capability_domain_weighted", 0.0)
-                ),
-                capability_family_weighted=float(
-                    cap.coverage_details.get("capability_family_weighted", 0.0)
-                ),
-                capability_representation_weighted=float(
-                    cap.coverage_details.get("capability_representation_weighted", 0.0)
+                capability_absolute_weighted=float(
+                    cap.coverage_details.get("capability_total_weighted", 0.0)
                 ),
                 capability_families_represented=int(
                     cap.coverage_details.get("capability_families_represented", 0)

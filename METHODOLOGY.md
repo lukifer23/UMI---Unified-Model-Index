@@ -1,7 +1,7 @@
-# UMI methodology v0.3
+# UMI methodology v0.3.1
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3 adds a manually reviewed,
+current policy values; code must not contradict this document. UMI v0.3.1 retains the manually reviewed,
 multi-source evidence pilot. It does not publish a headline UMI ranking.
 
 ## v0.3 source roles and exact identity
@@ -75,6 +75,27 @@ Normal scoring filters unready real records. `--allow-unready` is a development-
 Any model actually influenced by overridden evidence is provisional, receives Low confidence,
 and has both `headline_overall` and publishable rank suppressed.
 
+## Release claims and calibration (v0.3.1 evidence contract)
+
+A lab release claim is a first-class, immutable diagnostic record. It records the literal claim,
+the exact configuration, benchmark representation, raw value, unit, direction, compatibility
+cohort, evaluation date, and the claim's retained source artifact. Claims are not benchmark
+measurements and never score merely because they resemble one.
+
+UMI may compare a claim only with a ready, independent or community-reproduction benchmark
+measurement that matches all of: canonical configuration, immutable snapshot, benchmark
+representation, unit, direction, and compatibility cohort. A comparison reports the signed and
+absolute difference and preserves both record IDs. Missing compatible evidence, a different
+cohort, a different snapshot, a different unit or direction, a non-independent observation, or
+an unready observation is an explicit non-comparison, not a zero difference or an inferred match.
+
+Claim-calibration reports are descriptive. They may show compatibility coverage and error for the
+specific claims represented in a frozen dataset; they do not assign a universal truthfulness score
+to a lab, normalize claims into benchmark results, or alter UMI weights, confidence, readiness, or
+headline eligibility. Any future use of vendor-reported atomic measurements remains subject to the
+ordinary provenance-tier and readiness rules and must be ingested as a separately typed
+measurement with an explicit overlap decision.
+
 ## Identity and compatibility cohorts
 
 A benchmark comparison series is `(benchmark_id, cohort_key)`. A workload comparison series is
@@ -105,15 +126,20 @@ records are never paired.
 
 Normalization is cohort-relative and deterministic.
 
-- At least five observations: apply the configured transform, then robust z-scores using
+- At least eight observations: apply the configured transform, then robust z-scores using
   `z = (x - median(x)) / (1.4826 * MAD)`, followed by the standard normal CDF mapped to 0–100.
-- Two to four observations: use average-rank percentiles and mark contributing models provisional.
+- Two to seven observations: use average-rank percentiles and mark contributing models provisional.
 - One observation: leave the series unscored.
 - Zero MAD: fall back to average-rank percentiles.
 - Cost, token, turn, latency, tool-call, and successful-task cost metrics use `log1p` when listed in
   `normalization.yaml`.
 - Lower-is-better metrics are inverted after transformation so that every normalized score has
   “higher is better” semantics.
+
+The baseline robust-z threshold is eight observations. Five-model pilot series therefore use
+average-rank percentiles, are explicitly marked small-cohort, and cannot be presented as precise
+interval-scale differences. Robust-z and capped-robust-z remain sensitivity methods to be reported
+separately; neither changes headline eligibility.
 
 Source NaN and infinity are invalid. Internally derived positive infinity is reserved for measured
 zero-success outcomes and normalizes to the explicit worst result. Scores are relative to their
@@ -155,6 +181,40 @@ Finally:
 Capability = weighted mean of available DomainScore_d
 CapabilityCoverage = sum_d domain.weight_d * DomainCoverage_d
 ```
+
+### v0.3.1 partial-evidence weighting and comparability
+
+For a scoring representation group `r`, UMI computes one flattened configured budget:
+
+```text
+AbsoluteWeight_r = DomainWeight_r × FamilyWeight_r
+                   × RepresentationWeight_r / SumFamilyRepresentationWeights_r
+```
+
+For a partial Capability estimate, UMI uses only available representation groups in both the
+numerator and denominator:
+
+```text
+PartialCapability = sum(AbsoluteWeight_r × NormalizedScore_r) / sum(AbsoluteWeight_r)
+CapabilityCoverage = sum(AbsoluteWeight_r)
+```
+
+It does not renormalize an available family to a full domain budget before combining domains.
+For example, DeepSWE retains its configured absolute budget of `0.275 × 0.60 = 0.165`, and Arena
+Agent retains `0.20 × 0.25 = 0.05`; their relative influence when both are available is therefore
+their configured 0.165:0.05 ratio. Missing Terminal-Bench or SciCode lowers coverage and does not
+make DeepSWE a full software-engineering vote.
+
+Aliases in one `representation_group` use a deterministic canonical representation. Additional
+aliases do not increase coverage or budget, and they cannot alter a score merely by being added.
+
+Every component result exposes an evidence profile. Its `id` hashes its methodological support
+series and configuration; its `evidence_record_fingerprint` separately hashes the exact selected
+records. Two partial estimates are directly comparable only when they share formula and
+normalization versions, configuration fingerprint, and evidence-profile ID. Model-specific partial
+estimates are never a shared ranking. A common-evidence comparison first intersects the ready
+benchmark series `(benchmark_id, cohort_key)` available to every requested configuration, then
+recomputes each score using only that intersection.
 
 Family weights in each configured domain sum to one. In v0.3, `family.cap` is a configuration
 guard: `family.weight <= family.cap`, and domain caps sum to at least one. Scoring uses

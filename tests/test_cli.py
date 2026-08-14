@@ -9,7 +9,9 @@ from umi.cli import build_parser, run
 ROOT = Path(__file__).parents[1]
 
 
-@pytest.mark.parametrize("command", ["validate", "rank", "sensitivity", "correlations", "pareto"])
+@pytest.mark.parametrize(
+    "command", ["validate", "rank", "estimates", "sensitivity", "correlations", "pareto"]
+)
 def test_every_cli_command_emits_json(command: str, capsys: pytest.CaptureFixture[str]) -> None:
     args = build_parser().parse_args(
         [
@@ -45,6 +47,25 @@ def test_rank_csv_is_flat_and_deterministic(capsys: pytest.CaptureFixture[str]) 
     assert len(rows) == 5
     assert "capability.score" in rows[0]
     assert "source_record_ids" in rows[0]
+
+
+def test_estimates_are_not_serialized_as_a_ranking(capsys: pytest.CaptureFixture[str]) -> None:
+    args = build_parser().parse_args(
+        [
+            "estimates",
+            "--data-dir",
+            str(ROOT / "data" / "pilots" / "v0.3" / "raw"),
+            "--config-dir",
+            str(ROOT / "config"),
+        ]
+    )
+    assert run(args) == 0
+    estimates = json.loads(capsys.readouterr().out)
+    assert len(estimates) == 5
+    assert all("rank" not in item for item in estimates)
+    assert {item["publication_label"] for item in estimates} == {
+        "real evidence — model-specific partial estimate"
+    }
 
 
 def test_fixture_config_is_auto_discovered(capsys: pytest.CaptureFixture[str]) -> None:
@@ -128,5 +149,5 @@ def test_v03_policy_and_publication_commands(capsys: pytest.CaptureFixture[str])
     assert len(ranked) == 5
     assert all(item["rank"] is None and item["headline_overall"] is None for item in ranked)
     assert {item["publication_label"] for item in ranked} == {
-        "real evidence, provisional partial ranking"
+        "real evidence — model-specific partial estimate"
     }

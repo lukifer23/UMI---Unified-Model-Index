@@ -2,7 +2,7 @@
 
 ## Publication decision
 
-**Real evidence, provisional partial ranking. No headline UMI score or publishable rank.**
+**Real evidence — model-specific partial estimates. No headline UMI score or model-specific rank.**
 
 The five configurations remain visible, but none passes the inherited v0.2.1 coverage, component,
 workload, and Capability-domain gates. This is the expected outcome, not a failed run.
@@ -11,10 +11,10 @@ workload, and Capability-domain gates. This is the expected outcome, not a faile
 
 | Configuration | DeepSWE v1.1 pass rate | Arena Agent | Partial Capability | Headline |
 |---|---:|---:|---:|---:|
-| Claude Opus 5 Max | 74% ± 4 | 0.11998 | 89.33 | null |
+| Claude Opus 5 Max | 74% ± 4 | 0.11998 | 100.00 | null |
 | Claude Fable 5 Max | 70% ± 4 | rejected: High only | 50.00 | null |
 | GPT-5.6 Sol Max | 73% ± 3 | rejected: xHigh only | 75.00 | null |
-| Kimi K3 Max | 69% ± 5 | 0.10538 | 44.85 | null |
+| Kimi K3 Max | 69% ± 5 | 0.10538 | 30.81 | null |
 | GLM-5.2 Max | 44% ± 2 | 0.06711 | ~0.00 | null |
 
 Partial Capability is cohort-relative and combines only the fixed software-engineering and agentic
@@ -39,8 +39,13 @@ release-window-ineligible because its 2026-06-09 release predates the 2026-06-15
 - all potentially useful resource evidence is confined to coding and is statistic-ambiguous;
 - missing workload evidence is not reweighted to make the cohort eligible.
 
-The generated [partial ranking](data/pilots/v0.3/processed/partial-ranking.json) has null ranks and
-null `headline_overall` for every model. The [source readiness report](data/pilots/v0.3/processed/source-readiness.json),
+The generated [model-specific partial estimates](data/pilots/v0.3/processed/model-specific-partial-estimates.json)
+have no model-specific rank and null `headline_overall` for every model. The five-model
+[common-evidence comparison](data/pilots/v0.3/processed/common-evidence-five-model-comparison.json)
+uses DeepSWE only; the exact three-model
+[common-evidence comparison](data/pilots/v0.3/processed/common-evidence-three-model-comparison.json)
+uses DeepSWE and Arena Agent. Both are provisional and separately labeled. The
+[source readiness report](data/pilots/v0.3/processed/source-readiness.json),
 [overlap report](data/pilots/v0.3/processed/overlap.json), and
 [pilot sensitivity report](data/pilots/v0.3/processed/pilot-sensitivity.json) are machine-readable.
 

@@ -415,15 +415,40 @@ class ComponentScore(StrictModel):
     source_record_ids: tuple[Identifier, ...] = ()
     diagnostics: tuple[str, ...] = ()
     coverage_details: dict[str, float | int | str] = Field(default_factory=dict)
+    evidence_profile: EvidenceProfile | None = None
+    directly_comparable_model_ids: tuple[Identifier, ...] = ()
+    comparability_status: str = "insufficient_common_support"
+    comparability_reasons: tuple[str, ...] = ()
+
+
+class EvidenceBenchmarkSeries(StrictModel):
+    benchmark_id: Identifier
+    cohort_key: Identifier
+    domain: Domain
+    family: Identifier
+    representation_group: Identifier
+    signal_id: Identifier
+    budget_group: Identifier
+
+
+class EvidenceProfile(StrictModel):
+    id: str = Field(pattern=r"^[a-f0-9]{64}$")
+    estimate_scope: str = Field(min_length=1)
+    benchmark_series: tuple[EvidenceBenchmarkSeries, ...] = ()
+    workload_series: tuple[str, ...] = ()
+    domain_ids: tuple[Domain, ...] = ()
+    family_ids: tuple[Identifier, ...] = ()
+    source_organizations: tuple[str, ...] = ()
+    contributing_record_ids: tuple[Identifier, ...] = ()
+    methodology_fingerprint: str = Field(pattern=r"^[a-f0-9]{64}$")
+    evidence_record_fingerprint: str = Field(pattern=r"^[a-f0-9]{64}$")
 
 
 class CoverageSummary(StrictModel):
     overall_weighted: float = Field(ge=0, le=1)
     capability_domains_represented: int = Field(ge=0)
     capability_domains_total: int = Field(gt=0)
-    capability_domain_weighted: float = Field(ge=0, le=1)
-    capability_family_weighted: float = Field(ge=0, le=1)
-    capability_representation_weighted: float = Field(ge=0, le=1)
+    capability_absolute_weighted: float = Field(ge=0, le=1)
     capability_families_represented: int = Field(ge=0)
     capability_families_total: int = Field(ge=0)
     capability_representations_represented: int = Field(ge=0)

@@ -3,6 +3,19 @@
     "ComponentScore": {
       "additionalProperties": false,
       "properties": {
+        "comparability_reasons": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Comparability Reasons",
+          "type": "array"
+        },
+        "comparability_status": {
+          "default": "insufficient_common_support",
+          "title": "Comparability Status",
+          "type": "string"
+        },
         "coverage": {
           "maximum": 1,
           "minimum": 0,
@@ -33,6 +46,26 @@
           },
           "title": "Diagnostics",
           "type": "array"
+        },
+        "directly_comparable_model_ids": {
+          "default": [],
+          "items": {
+            "pattern": "^[a-z0-9][a-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Directly Comparable Model Ids",
+          "type": "array"
+        },
+        "evidence_profile": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EvidenceProfile"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "provisional": {
           "default": false,
@@ -79,10 +112,10 @@
     "CoverageSummary": {
       "additionalProperties": false,
       "properties": {
-        "capability_domain_weighted": {
+        "capability_absolute_weighted": {
           "maximum": 1,
           "minimum": 0,
-          "title": "Capability Domain Weighted",
+          "title": "Capability Absolute Weighted",
           "type": "number"
         },
         "capability_domains_represented": {
@@ -104,18 +137,6 @@
           "minimum": 0,
           "title": "Capability Families Total",
           "type": "integer"
-        },
-        "capability_family_weighted": {
-          "maximum": 1,
-          "minimum": 0,
-          "title": "Capability Family Weighted",
-          "type": "number"
-        },
-        "capability_representation_weighted": {
-          "maximum": 1,
-          "minimum": 0,
-          "title": "Capability Representation Weighted",
-          "type": "number"
         },
         "capability_representations_represented": {
           "minimum": 0,
@@ -194,9 +215,7 @@
         "overall_weighted",
         "capability_domains_represented",
         "capability_domains_total",
-        "capability_domain_weighted",
-        "capability_family_weighted",
-        "capability_representation_weighted",
+        "capability_absolute_weighted",
         "capability_families_represented",
         "capability_families_total",
         "capability_representations_represented",
@@ -224,6 +243,138 @@
       ],
       "title": "Domain",
       "type": "string"
+    },
+    "EvidenceBenchmarkSeries": {
+      "additionalProperties": false,
+      "properties": {
+        "benchmark_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Benchmark Id",
+          "type": "string"
+        },
+        "budget_group": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Budget Group",
+          "type": "string"
+        },
+        "cohort_key": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Cohort Key",
+          "type": "string"
+        },
+        "domain": {
+          "$ref": "#/$defs/Domain"
+        },
+        "family": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Family",
+          "type": "string"
+        },
+        "representation_group": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Representation Group",
+          "type": "string"
+        },
+        "signal_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Signal Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "benchmark_id",
+        "cohort_key",
+        "domain",
+        "family",
+        "representation_group",
+        "signal_id",
+        "budget_group"
+      ],
+      "title": "EvidenceBenchmarkSeries",
+      "type": "object"
+    },
+    "EvidenceProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "benchmark_series": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/EvidenceBenchmarkSeries"
+          },
+          "title": "Benchmark Series",
+          "type": "array"
+        },
+        "contributing_record_ids": {
+          "default": [],
+          "items": {
+            "pattern": "^[a-z0-9][a-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Contributing Record Ids",
+          "type": "array"
+        },
+        "domain_ids": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Domain"
+          },
+          "title": "Domain Ids",
+          "type": "array"
+        },
+        "estimate_scope": {
+          "minLength": 1,
+          "title": "Estimate Scope",
+          "type": "string"
+        },
+        "evidence_record_fingerprint": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Evidence Record Fingerprint",
+          "type": "string"
+        },
+        "family_ids": {
+          "default": [],
+          "items": {
+            "pattern": "^[a-z0-9][a-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Family Ids",
+          "type": "array"
+        },
+        "id": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "methodology_fingerprint": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Methodology Fingerprint",
+          "type": "string"
+        },
+        "source_organizations": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Organizations",
+          "type": "array"
+        },
+        "workload_series": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Workload Series",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "estimate_scope",
+        "methodology_fingerprint",
+        "evidence_record_fingerprint"
+      ],
+      "title": "EvidenceProfile",
+      "type": "object"
     },
     "ValueFormula": {
       "enum": [
