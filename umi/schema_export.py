@@ -5,14 +5,19 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
+from umi.adapters.models import AdaptationResult
 from umi.config import ProjectConfig
-from umi.loading import Dataset
-from umi.schemas import ScoringResult
+from umi.loading import Dataset, SourceRegistry
+from umi.schemas import ModelCrosswalk, OverlapPolicy, ScoringResult
 
 SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "dataset.schema.json": Dataset,
     "config.schema.json": ProjectConfig,
     "scoring-result.schema.json": ScoringResult,
+    "source-registry.schema.json": SourceRegistry,
+    "model-crosswalk.schema.json": ModelCrosswalk,
+    "overlap-policy.schema.json": OverlapPolicy,
+    "adaptation-result.schema.json": AdaptationResult,
 }
 
 
@@ -28,4 +33,3 @@ def generate_schemas(output_dir: str | Path) -> None:
     root.mkdir(parents=True, exist_ok=True)
     for name, rendered in rendered_schemas().items():
         (root / name).write_text(rendered, encoding="utf-8")
-

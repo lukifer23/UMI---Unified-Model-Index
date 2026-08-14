@@ -1,0 +1,177 @@
+{
+  "config_fingerprint": "529a2867e045459a31069d6e9a097ccf0bd4232ed966a1a7cb4167710141bc3e",
+  "edges": [
+    {
+      "evidence": "AA Intelligence v4.1 methodology",
+      "relation": "contains",
+      "source": "aa-intelligence-v4.1",
+      "target": "aa-hle"
+    },
+    {
+      "evidence": "AA Intelligence v4.1 methodology",
+      "relation": "contains",
+      "source": "aa-intelligence-v4.1",
+      "target": "aa-terminalbench-2.1"
+    },
+    {
+      "evidence": "AA Intelligence v4.1 methodology",
+      "relation": "contains",
+      "source": "aa-intelligence-v4.1",
+      "target": "aa-scicode"
+    },
+    {
+      "evidence": "AA Intelligence v4.1 methodology",
+      "relation": "contains",
+      "source": "aa-intelligence-v4.1",
+      "target": "aa-gdpval-v2"
+    },
+    {
+      "evidence": "AA Intelligence v4.1 methodology",
+      "relation": "contains",
+      "source": "aa-intelligence-v4.1",
+      "target": "aa-tau3-banking"
+    },
+    {
+      "evidence": "AA Intelligence v4.1 methodology",
+      "relation": "contains",
+      "source": "aa-intelligence-v4.1",
+      "target": "aa-gpqa-diamond"
+    },
+    {
+      "evidence": "AA Intelligence v4.1 methodology",
+      "relation": "contains",
+      "source": "aa-intelligence-v4.1",
+      "target": "aa-critpt"
+    },
+    {
+      "evidence": "AA Intelligence v4.1 methodology",
+      "relation": "contains",
+      "source": "aa-intelligence-v4.1",
+      "target": "aa-lcr"
+    },
+    {
+      "evidence": "AA Intelligence v4.1 methodology",
+      "relation": "contains",
+      "source": "aa-intelligence-v4.1",
+      "target": "aa-omniscience"
+    },
+    {
+      "evidence": "Epoch included-benchmarks documentation",
+      "relation": "contains",
+      "source": "epoch-eci",
+      "target": "deepswe-v1.1"
+    },
+    {
+      "evidence": "Arena leaderboard dataset card",
+      "relation": "contains",
+      "source": "arena-agent",
+      "target": "arena-agent-signals"
+    }
+  ],
+  "errors": [],
+  "signals": [
+    {
+      "budget_group": null,
+      "disposition": "diagnostic_only",
+      "id": "aa-intelligence-v4.1",
+      "role": "composite"
+    },
+    {
+      "budget_group": null,
+      "disposition": "diagnostic_only",
+      "id": "aa-coding-index",
+      "role": "composite"
+    },
+    {
+      "budget_group": null,
+      "disposition": "diagnostic_only",
+      "id": "aa-agentic-index",
+      "role": "composite"
+    },
+    {
+      "budget_group": null,
+      "disposition": "diagnostic_only",
+      "id": "epoch-eci",
+      "role": "composite"
+    },
+    {
+      "budget_group": null,
+      "disposition": "diagnostic_only",
+      "id": "arena-text",
+      "role": "preference"
+    },
+    {
+      "budget_group": "arena-agent",
+      "disposition": "scored",
+      "id": "arena-agent",
+      "role": "preference"
+    },
+    {
+      "budget_group": "arena-agent",
+      "disposition": "diagnostic_only",
+      "id": "arena-agent-signals",
+      "role": "preference"
+    },
+    {
+      "budget_group": "deepswe-v1.1",
+      "disposition": "scored",
+      "id": "deepswe-v1.1",
+      "role": "task"
+    },
+    {
+      "budget_group": "aa-hle",
+      "disposition": "scored",
+      "id": "aa-hle",
+      "role": "task"
+    },
+    {
+      "budget_group": "aa-terminalbench-2.1",
+      "disposition": "scored",
+      "id": "aa-terminalbench-2.1",
+      "role": "task"
+    },
+    {
+      "budget_group": "aa-scicode",
+      "disposition": "scored",
+      "id": "aa-scicode",
+      "role": "task"
+    },
+    {
+      "budget_group": "aa-gdpval-v2",
+      "disposition": "scored",
+      "id": "aa-gdpval-v2",
+      "role": "task"
+    },
+    {
+      "budget_group": "aa-tau3-banking",
+      "disposition": "scored",
+      "id": "aa-tau3-banking",
+      "role": "task"
+    },
+    {
+      "budget_group": "aa-gpqa-diamond",
+      "disposition": "scored",
+      "id": "aa-gpqa-diamond",
+      "role": "task"
+    },
+    {
+      "budget_group": "aa-critpt",
+      "disposition": "scored",
+      "id": "aa-critpt",
+      "role": "task"
+    },
+    {
+      "budget_group": "aa-lcr",
+      "disposition": "scored",
+      "id": "aa-lcr",
+      "role": "task"
+    },
+    {
+      "budget_group": "aa-omniscience",
+      "disposition": "scored",
+      "id": "aa-omniscience",
+      "role": "task"
+    }
+  ],
+  "valid": true
+}

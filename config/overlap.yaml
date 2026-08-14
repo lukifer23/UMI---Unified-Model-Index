@@ -1,0 +1,30 @@
+signals:
+  - {id: aa-intelligence-v4.1, role: composite, disposition: diagnostic_only}
+  - {id: aa-coding-index, role: composite, disposition: diagnostic_only}
+  - {id: aa-agentic-index, role: composite, disposition: diagnostic_only}
+  - {id: epoch-eci, role: composite, disposition: diagnostic_only}
+  - {id: arena-text, role: preference, disposition: diagnostic_only}
+  - {id: arena-agent, role: preference, disposition: scored, budget_group: arena-agent}
+  - {id: arena-agent-signals, role: preference, disposition: diagnostic_only, budget_group: arena-agent}
+  - {id: deepswe-v1.1, role: task, disposition: scored, budget_group: deepswe-v1.1}
+  - {id: aa-hle, role: task, disposition: scored, budget_group: aa-hle}
+  - {id: aa-terminalbench-2.1, role: task, disposition: scored, budget_group: aa-terminalbench-2.1}
+  - {id: aa-scicode, role: task, disposition: scored, budget_group: aa-scicode}
+  - {id: aa-gdpval-v2, role: task, disposition: scored, budget_group: aa-gdpval-v2}
+  - {id: aa-tau3-banking, role: task, disposition: scored, budget_group: aa-tau3-banking}
+  - {id: aa-gpqa-diamond, role: task, disposition: scored, budget_group: aa-gpqa-diamond}
+  - {id: aa-critpt, role: task, disposition: scored, budget_group: aa-critpt}
+  - {id: aa-lcr, role: task, disposition: scored, budget_group: aa-lcr}
+  - {id: aa-omniscience, role: task, disposition: scored, budget_group: aa-omniscience}
+edges:
+  - {source: aa-intelligence-v4.1, target: aa-hle, relation: contains, evidence: "AA Intelligence v4.1 methodology"}
+  - {source: aa-intelligence-v4.1, target: aa-terminalbench-2.1, relation: contains, evidence: "AA Intelligence v4.1 methodology"}
+  - {source: aa-intelligence-v4.1, target: aa-scicode, relation: contains, evidence: "AA Intelligence v4.1 methodology"}
+  - {source: aa-intelligence-v4.1, target: aa-gdpval-v2, relation: contains, evidence: "AA Intelligence v4.1 methodology"}
+  - {source: aa-intelligence-v4.1, target: aa-tau3-banking, relation: contains, evidence: "AA Intelligence v4.1 methodology"}
+  - {source: aa-intelligence-v4.1, target: aa-gpqa-diamond, relation: contains, evidence: "AA Intelligence v4.1 methodology"}
+  - {source: aa-intelligence-v4.1, target: aa-critpt, relation: contains, evidence: "AA Intelligence v4.1 methodology"}
+  - {source: aa-intelligence-v4.1, target: aa-lcr, relation: contains, evidence: "AA Intelligence v4.1 methodology"}
+  - {source: aa-intelligence-v4.1, target: aa-omniscience, relation: contains, evidence: "AA Intelligence v4.1 methodology"}
+  - {source: epoch-eci, target: deepswe-v1.1, relation: contains, evidence: "Epoch included-benchmarks documentation"}
+  - {source: arena-agent, target: arena-agent-signals, relation: contains, evidence: "Arena leaderboard dataset card"}

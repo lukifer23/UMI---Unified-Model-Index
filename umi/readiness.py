@@ -10,6 +10,7 @@ from umi.schemas import (
     ModelConfiguration,
     Provenance,
     RecordStatus,
+    ScoringDisposition,
     TaskEconomicsMeasurement,
 )
 
@@ -22,6 +23,8 @@ ScoredRecord = (
 
 
 def readiness_failures(record: ScoredRecord, model: ModelConfiguration) -> tuple[str, ...]:
+    if record.scoring_disposition == ScoringDisposition.DIAGNOSTIC_ONLY:
+        return ("signal policy is diagnostic-only",)
     if record.record_status == RecordStatus.INVALID:
         return ("record status is invalid",)
     if record.record_status == RecordStatus.DIAGNOSTIC_ONLY:
@@ -83,6 +86,8 @@ def scored_records(dataset: Dataset, *, allow_unready: bool = False) -> tuple[Pr
             RecordStatus.INVALID,
         }:
             continue
+        if record.scoring_disposition == ScoringDisposition.DIAGNOSTIC_ONLY:
+            continue
         if allow_unready or is_scoring_ready(record, model):
             output.append(record)
     return tuple(output)
@@ -100,6 +105,8 @@ def scoring_dataset(dataset: Dataset, *, allow_unready: bool = False) -> tuple[D
             RecordStatus.INVALID,
         }:
             return False
+        if record.scoring_disposition == ScoringDisposition.DIAGNOSTIC_ONLY:
+            return False
         ready = is_scoring_ready(record, model)
         if allow_unready and not ready:
             unready_used = True
@@ -114,6 +121,8 @@ def scoring_dataset(dataset: Dataset, *, allow_unready: bool = False) -> tuple[D
                 "pricing": (),
                 # External indexes are diagnostic references in v0.2.1.
                 "external_indexes": (),
+                # The scored fingerprint retains the accepted-record audit manifest only.
+                "complete_audit_fingerprint": None,
             }
         ),
         unready_used,

@@ -357,6 +357,11 @@
       "title": "Provisional",
       "type": "boolean"
     },
+    "publication_label": {
+      "default": "provisional result",
+      "title": "Publication Label",
+      "type": "string"
+    },
     "release_date": {
       "format": "date",
       "title": "Release Date",

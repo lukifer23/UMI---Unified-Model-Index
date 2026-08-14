@@ -1,0 +1,40 @@
+source_id: deepswe
+artifact_id: deepswe-v1.1-2026-08-13
+as_of: 2026-08-13
+benchmark_version: v1.1
+task_count: 113
+source:
+  organization: Datacurve
+  url: https://deepswe.datacurve.ai/
+  accessed: 2026-08-14
+rows:
+  - source_model_id: Claude Opus 5 max
+    pass_rate_percent: 74
+    confidence_interval_percent: 4
+    cost_usd: 11.84
+    output_tokens: 118000
+    agent_steps: 99
+  - source_model_id: Claude Fable 5 max
+    pass_rate_percent: 70
+    confidence_interval_percent: 4
+    cost_usd: 21.63
+    output_tokens: 119000
+    agent_steps: 88
+  - source_model_id: GPT-5.6 Sol max
+    pass_rate_percent: 73
+    confidence_interval_percent: 3
+    cost_usd: 8.39
+    output_tokens: 60000
+    agent_steps: 61
+  - source_model_id: Kimi K3 max
+    pass_rate_percent: 69
+    confidence_interval_percent: 5
+    cost_usd: 4.65
+    output_tokens: 81000
+    agent_steps: 98
+  - source_model_id: GLM-5.2 max
+    pass_rate_percent: 44
+    confidence_interval_percent: 2
+    cost_usd: 3.92
+    output_tokens: 78000
+    agent_steps: 129

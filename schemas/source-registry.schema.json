@@ -1,0 +1,168 @@
+{
+  "$defs": {
+    "RedistributionScope": {
+      "enum": [
+        "full_artifact",
+        "facts_only",
+        "reference_only"
+      ],
+      "title": "RedistributionScope",
+      "type": "string"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "accessed": {
+          "format": "date",
+          "title": "Accessed",
+          "type": "string"
+        },
+        "organization": {
+          "minLength": 1,
+          "title": "Organization",
+          "type": "string"
+        },
+        "url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "organization",
+        "url",
+        "accessed"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "SourceSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "adapter_id": {
+          "default": "reviewed-facts-v1",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Adapter Id",
+          "type": "string"
+        },
+        "artifact_path": {
+          "minLength": 1,
+          "title": "Artifact Path",
+          "type": "string"
+        },
+        "artifact_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Artifact Sha256",
+          "type": "string"
+        },
+        "as_of": {
+          "format": "date",
+          "title": "As Of",
+          "type": "string"
+        },
+        "attribution": {
+          "default": "See source URL",
+          "minLength": 1,
+          "title": "Attribution",
+          "type": "string"
+        },
+        "content_type": {
+          "default": "application/yaml",
+          "minLength": 1,
+          "title": "Content Type",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "license_id": {
+          "default": "documented-legacy",
+          "minLength": 1,
+          "title": "License Id",
+          "type": "string"
+        },
+        "license_url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "License Url"
+        },
+        "notes": {
+          "minLength": 1,
+          "title": "Notes",
+          "type": "string"
+        },
+        "published": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Published"
+        },
+        "redistribution_scope": {
+          "$ref": "#/$defs/RedistributionScope",
+          "default": "facts_only"
+        },
+        "source": {
+          "$ref": "#/$defs/Source"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "upstream_revision": {
+          "default": "manual",
+          "minLength": 1,
+          "title": "Upstream Revision",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "source",
+        "as_of",
+        "artifact_path",
+        "artifact_sha256",
+        "notes"
+      ],
+      "title": "SourceSnapshot",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "snapshots": {
+      "items": {
+        "$ref": "#/$defs/SourceSnapshot"
+      },
+      "title": "Snapshots",
+      "type": "array"
+    }
+  },
+  "required": [
+    "snapshots"
+  ],
+  "title": "SourceRegistry",
+  "type": "object"
+}

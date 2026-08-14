@@ -1,0 +1,7 @@
+scored_audit_fingerprint: ba9956d81fef991f18f232582e90c1981b15518a1a527a5f10b8ef33a5d214b3
+complete_audit_fingerprint: 2998fed12a707e9e6e93c5c35d70afc526b4d754ef7c486ebbc0b16d07dae6c6
+adapter_versions:
+- aa-reviewed-facts-v1
+- arena-dataset-viewer-v1
+- deepswe-reviewed-facts-v1
+- epoch-eci-csv-v1

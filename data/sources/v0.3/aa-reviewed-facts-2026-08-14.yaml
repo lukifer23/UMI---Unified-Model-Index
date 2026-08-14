@@ -1,0 +1,33 @@
+source_id: artificial-analysis
+artifact_id: aa-public-facts-2026-08-14
+as_of: 2026-08-14
+source:
+  organization: Artificial Analysis
+  url: https://artificialanalysis.ai/leaderboards/models
+  accessed: 2026-08-14
+rows:
+  - source_model_id: Claude Opus 5 (Max)
+    index_id: aa-intelligence-index
+    index_version: public-page-2026-08-14
+    value: 61
+    metric_definition: Artificial Analysis Intelligence Index public-page value
+  - source_model_id: Claude Fable 5 (Max) + Claude Opus 4.8 fallback
+    index_id: aa-intelligence-index
+    index_version: public-page-2026-08-14
+    value: 60
+    metric_definition: Artificial Analysis Intelligence Index public-page value
+  - source_model_id: GPT-5.6 Sol (Max)
+    index_id: aa-intelligence-index
+    index_version: public-page-2026-08-14
+    value: 59
+    metric_definition: Artificial Analysis Intelligence Index public-page value
+  - source_model_id: Kimi K3 (Max)
+    index_id: aa-intelligence-index
+    index_version: public-page-2026-08-14
+    value: 57
+    metric_definition: Artificial Analysis Intelligence Index public-page value
+  - source_model_id: GLM-5.2 (Max)
+    index_id: aa-intelligence-index
+    index_version: public-page-2026-08-14
+    value: 51
+    metric_definition: Artificial Analysis Intelligence Index public-page value

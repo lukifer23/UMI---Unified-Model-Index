@@ -1,0 +1,56 @@
+models:
+- id: claude-opus-5-max
+  family: Claude Opus 5
+  provider: Anthropic
+  release_date: 2026-07-24
+  configuration: max
+  snapshot_id: claude-opus-5-max
+  model_developer: Anthropic
+  source_snapshot_ids: [aa-public-facts-2026-08-14, epoch-eci-matrix-2026-08-14,
+    arena-agent-2026-08-14, arena-text-2026-08-14, deepswe-v1.1-2026-08-13]
+  open_weights: false
+  synthetic: false
+- id: claude-fable-5-max
+  family: Claude Fable 5
+  provider: Anthropic
+  release_date: 2026-06-09
+  configuration: max
+  snapshot_id: claude-fable-5-max
+  model_developer: Anthropic
+  source_snapshot_ids: [epoch-eci-matrix-2026-08-14, deepswe-v1.1-2026-08-13]
+  open_weights: false
+  notes: Outside the unchanged v0.2.1 release window; AA fallback composite is rejected.
+  synthetic: false
+- id: gpt-5.6-sol-max
+  family: GPT-5.6 Sol
+  provider: OpenAI
+  release_date: 2026-07-09
+  configuration: max
+  snapshot_id: gpt-5.6-sol-max
+  model_developer: OpenAI
+  source_snapshot_ids: [aa-public-facts-2026-08-14, epoch-eci-matrix-2026-08-14,
+    deepswe-v1.1-2026-08-13]
+  open_weights: false
+  synthetic: false
+- id: kimi-k3-max
+  family: Kimi K3
+  provider: Moonshot AI
+  release_date: 2026-07-16
+  configuration: max
+  snapshot_id: kimi-k3-max
+  model_developer: Moonshot AI
+  source_snapshot_ids: [aa-public-facts-2026-08-14, epoch-eci-matrix-2026-08-14,
+    arena-agent-2026-08-14, arena-text-2026-08-14, deepswe-v1.1-2026-08-13]
+  open_weights: true
+  synthetic: false
+- id: glm-5.2-max
+  family: GLM-5.2
+  provider: Z.ai
+  release_date: 2026-06-16
+  configuration: max
+  snapshot_id: glm-5.2-max
+  model_developer: Z.ai
+  source_snapshot_ids: [aa-public-facts-2026-08-14, epoch-eci-matrix-2026-08-14,
+    arena-agent-2026-08-14, arena-text-2026-08-14, deepswe-v1.1-2026-08-13]
+  open_weights: true
+  synthetic: false

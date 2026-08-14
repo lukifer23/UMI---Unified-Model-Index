@@ -1,8 +1,56 @@
-# UMI methodology v0.2.1
+# UMI methodology v0.3
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.2.1 stabilizes scoring
-invariants for a manually reviewed pilot. It does not publish a real multi-source UMI ranking.
+current policy values; code must not contradict this document. UMI v0.3 adds a manually reviewed,
+multi-source evidence pilot. It does not publish a headline UMI ranking.
+
+## v0.3 source roles and exact identity
+
+The pilot cohort is Claude Opus 5 Max, Claude Fable 5 Max, GPT-5.6 Sol Max, Kimi K3 Max,
+and GLM-5.2 Max. It is a union cohort: a source need not cover every configuration, but every
+accepted row must have an explicit one-to-one crosswalk proving the source model identifier and
+inference effort. Missing effort, fallback configurations, aggregated model labels, and fuzzy name
+matches are diagnostic or rejected. Fable 5 remains outside the unchanged release window.
+
+Every signal is classified as composite, preference, task, efficiency, economics, or reference,
+and as scored or diagnostic-only. Artificial Analysis Intelligence/Coding/Agentic indices and the
+Epoch Capabilities Index are diagnostic composites. Arena text ratings are diagnostic preference
+evidence. The exact-match Arena Agent aggregate may score; its constituent signals share its
+representation budget and remain diagnostic. Exact Artificial Analysis task results and DeepSWE
+v1.1 may score only after the ordinary readiness gate passes.
+
+The directed overlap graph records containment, derivation, duplicate measurements, shared tasks,
+shared constructs, and unknown overlap. It must be acyclic. Two scored signals connected by a known
+overlap relation must share one explicit budget group; a diagnostic composite has zero scoring
+budget. Adding a source never enlarges a domain budget.
+
+Pilot family budgets are hypotheses:
+
+| Domain | Families |
+|---|---|
+| General reasoning | HLE 1.00 |
+| Software engineering | DeepSWE 0.60; Terminal-Bench 2.1 0.25; SciCode 0.15 |
+| Agentic work | GDPval-AA v2 0.45; tau3-Banking 0.30; Arena Agent 0.25 |
+| Math/science | GPQA Diamond 0.65; CritPt 0.35 |
+| Context/reliability | AA-LCR 0.50; AA-Omniscience 0.50 |
+
+Equal-family and source-ablation scenarios test these allocations. They do not relax coverage or
+publication gates.
+
+## Aggregation statistics
+
+Source statistics are typed as arithmetic mean, median, total, or unspecified. Only an arithmetic
+mean per attempt may enter mean-based success adjustment. Medians, totals, a bare "average", agent
+steps, and other semantically unmatched summaries remain visible but do not masquerade as means.
+DeepSWE pass rate may contribute Capability. Cost contributes Economics only when its source fact
+explicitly establishes arithmetic mean cost per attempted task; the per-success value remains
+`mean cost per attempt / success rate`. Token, step, duration, or cost summaries without compatible
+mean semantics remain diagnostic.
+
+Because the v0.3 pilot has Efficiency and Economics evidence only for coding work, their weighted
+workload coverage cannot reach the existing 0.50 and 0.40 component gates. Partial component and
+Overall estimates may be shown, but every `headline_overall` and publishable rank must remain null.
+Weights are never redefined merely to manufacture eligibility.
 
 ## Scored entity
 

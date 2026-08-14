@@ -1,0 +1,872 @@
+{
+  "crosswalk_errors": [],
+  "crosswalk_valid": true,
+  "readiness": [
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "aa-aa-intelligence-index-claude-opus-5-max-2026-08-14",
+      "scoring_ready": false,
+      "source_artifact_id": "aa-public-facts-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "aa-aa-intelligence-index-glm-5.2-max-2026-08-14",
+      "scoring_ready": false,
+      "source_artifact_id": "aa-public-facts-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "aa-aa-intelligence-index-gpt-5.6-sol-max-2026-08-14",
+      "scoring_ready": false,
+      "source_artifact_id": "aa-public-facts-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "aa-aa-intelligence-index-kimi-k3-max-2026-08-14",
+      "scoring_ready": false,
+      "source_artifact_id": "aa-public-facts-2026-08-14"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "claude-opus-5-max",
+      "record_id": "arena-agent-claude-opus-5-max-2026-08-12",
+      "scoring_ready": true,
+      "source_artifact_id": "arena-agent-2026-08-14"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "glm-5.2-max",
+      "record_id": "arena-agent-glm-5.2-max-2026-08-12",
+      "scoring_ready": true,
+      "source_artifact_id": "arena-agent-2026-08-14"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "kimi-k3-max",
+      "record_id": "arena-agent-kimi-k3-max-2026-08-12",
+      "scoring_ready": true,
+      "source_artifact_id": "arena-agent-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "arena-text-claude-opus-5-max-2026-08-12",
+      "scoring_ready": false,
+      "source_artifact_id": "arena-text-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "arena-text-glm-5.2-max-2026-08-12",
+      "scoring_ready": false,
+      "source_artifact_id": "arena-text-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "arena-text-kimi-k3-max-2026-08-12",
+      "scoring_ready": false,
+      "source_artifact_id": "arena-text-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-fable-5-max",
+      "record_id": "deepswe-resource-summary-claude-fable-5-max-2026-08-13",
+      "scoring_ready": false,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "deepswe-resource-summary-claude-opus-5-max-2026-08-13",
+      "scoring_ready": false,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "deepswe-resource-summary-glm-5.2-max-2026-08-13",
+      "scoring_ready": false,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "deepswe-resource-summary-gpt-5.6-sol-max-2026-08-13",
+      "scoring_ready": false,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "deepswe-resource-summary-kimi-k3-max-2026-08-13",
+      "scoring_ready": false,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "claude-fable-5-max",
+      "record_id": "deepswe-score-claude-fable-5-max-2026-08-13",
+      "scoring_ready": true,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "claude-opus-5-max",
+      "record_id": "deepswe-score-claude-opus-5-max-2026-08-13",
+      "scoring_ready": true,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "glm-5.2-max",
+      "record_id": "deepswe-score-glm-5.2-max-2026-08-13",
+      "scoring_ready": true,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "deepswe-score-gpt-5.6-sol-max-2026-08-13",
+      "scoring_ready": true,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "kimi-k3-max",
+      "record_id": "deepswe-score-kimi-k3-max-2026-08-13",
+      "scoring_ready": true,
+      "source_artifact_id": "deepswe-v1.1-2026-08-13"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-apex-agents-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-arc-agi-2-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-arc-agi-2-gpt-5.6-sol-max-m87",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-arc-agi-2-kimi-k3-max-m136",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-arc-agi-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-arc-agi-kimi-k3-max-m136",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-fable-5-max",
+      "record_id": "epoch-chess-puzzles-claude-fable-5-max-m16",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-chess-puzzles-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-chess-puzzles-glm-5.2-max-m53",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-chess-puzzles-kimi-k3-max-m136",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-fable-5-max",
+      "record_id": "epoch-critpt-claude-fable-5-max-m16",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-critpt-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-critpt-glm-5.2-max-m53",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-critpt-gpt-5.6-sol-max-m87",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-critpt-kimi-k3-max-m136",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-fable-5-max",
+      "record_id": "epoch-cursorbench-claude-fable-5-max-m16",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-cursorbench-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-cursorbench-glm-5.2-max-m53",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-cursorbench-gpt-5.6-sol-max-m87",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-deepswe-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-deepswe-glm-5.2-max-m53",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-deepswe-gpt-5.6-sol-max-m87",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-deepswe-kimi-k3-max-m136",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-fable-5-max",
+      "record_id": "epoch-ebr-bench-claude-fable-5-max-m16",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-ebr-bench-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-ebr-bench-glm-5.2-max-m53",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-ebr-bench-gpt-5.6-sol-max-m87",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-frontiercode-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-fable-5-max",
+      "record_id": "epoch-frontiermath-tier-4-v2-private-claude-fable-5-max-m16",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-frontiermath-tier-4-v2-private-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-frontiermath-tier-4-v2-private-glm-5.2-max-m53",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-frontiermath-tier-4-v2-private-kimi-k3-max-m136",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-fable-5-max",
+      "record_id": "epoch-frontiermath-tiers-1-3-v2-private-claude-fable-5-max-m16",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-frontiermath-tiers-1-3-v2-private-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-frontiermath-tiers-1-3-v2-private-glm-5.2-max-m53",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-frontiermath-tiers-1-3-v2-private-gpt-5.6-sol-max-m87",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-frontiermath-tiers-1-3-v2-private-kimi-k3-max-m136",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-gpqa-diamond-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-gpqa-diamond-glm-5.2-max-m53",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-gpqa-diamond-gpt-5.6-sol-max-m87",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-gpqa-diamond-kimi-k3-max-m136",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-fable-5-max",
+      "record_id": "epoch-mystery-game-puzzles-claude-fable-5-max-m16",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-mystery-game-puzzles-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-mystery-game-puzzles-gpt-5.6-sol-max-m87",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-mystery-game-puzzles-kimi-k3-max-m136",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-fable-5-max",
+      "record_id": "epoch-otis-mock-aime-2024-2025-claude-fable-5-max-m16",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-otis-mock-aime-2024-2025-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-otis-mock-aime-2024-2025-glm-5.2-max-m53",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-otis-mock-aime-2024-2025-gpt-5.6-sol-max-m87",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-otis-mock-aime-2024-2025-kimi-k3-max-m136",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-fable-5-max",
+      "record_id": "epoch-posttrainbench-claude-fable-5-max-m16",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-posttrainbench-glm-5.2-max-m53",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-posttrainbench-gpt-5.6-sol-max-m87",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-fable-5-max",
+      "record_id": "epoch-proofbench-claude-fable-5-max-m16",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-proofbench-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-proofbench-glm-5.2-max-m53",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-proofbench-gpt-5.6-sol-max-m87",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-fable-5-max",
+      "record_id": "epoch-simplebench-claude-fable-5-max-m16",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-simpleqa-verified-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-simpleqa-verified-glm-5.2-max-m53",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "epoch-simpleqa-verified-gpt-5.6-sol-max-m87",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-simpleqa-verified-kimi-k3-max-m136",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-surface-evolver-bench-kimi-k3-max-m136",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-swe-bench-verified-glm-5.2-max-m53",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-fable-5-max",
+      "record_id": "epoch-weirdml-claude-fable-5-max-m16",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-weirdml-claude-opus-5-max-m25",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-weirdml-glm-5.2-max-m53",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    },
+    {
+      "disposition": "diagnostic_only",
+      "failures": [
+        "signal policy is diagnostic-only"
+      ],
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-weirdml-kimi-k3-max-m136",
+      "scoring_ready": false,
+      "source_artifact_id": "epoch-eci-matrix-2026-08-14"
+    }
+  ],
+  "schema_valid": true,
+  "source_errors": []
+}

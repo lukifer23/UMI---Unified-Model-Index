@@ -13,6 +13,9 @@ from umi.schemas import (
     BenchmarkFamilyDefinition,
     Domain,
     NormalizationStrategy,
+    OverlapPolicy,
+    OverlapRelation,
+    ScoringDisposition,
     ValueFormula,
     WorkloadCategory,
 )
@@ -145,6 +148,7 @@ class ProjectConfig(ConfigModel):
     benchmarks: tuple[BenchmarkDefinition, ...]
     families: tuple[BenchmarkFamilyDefinition, ...]
     value: ValueConfig
+    overlap: OverlapPolicy = OverlapPolicy()
     fingerprint: str
 
     @model_validator(mode="after")
@@ -169,6 +173,58 @@ class ProjectConfig(ConfigModel):
                 raise ValueError(f"family caps for {domain.value} must sum to at least 1")
         return self
 
+    @model_validator(mode="after")
+    def validate_overlap_policy(self) -> ProjectConfig:
+        signals = {item.id: item for item in self.overlap.signals}
+        if len(signals) != len(self.overlap.signals):
+            raise ValueError("overlap signal IDs must be unique")
+        graph: dict[str, set[str]] = {signal_id: set() for signal_id in signals}
+        for edge in self.overlap.edges:
+            if edge.source not in signals or edge.target not in signals:
+                raise ValueError("overlap edges must reference configured signals")
+            if edge.source == edge.target:
+                raise ValueError("overlap edges cannot be self-referential")
+            graph[edge.source].add(edge.target)
+            source = signals[edge.source]
+            target = signals[edge.target]
+            if (
+                source.disposition == ScoringDisposition.SCORED
+                and target.disposition == ScoringDisposition.SCORED
+                and edge.relation
+                in {
+                    OverlapRelation.CONTAINS,
+                    OverlapRelation.DERIVED_FROM,
+                    OverlapRelation.DUPLICATE_MEASUREMENT,
+                    OverlapRelation.SHARED_TASKS,
+                    OverlapRelation.SHARED_CONSTRUCT,
+                }
+                and (
+                    source.budget_group is None
+                    or source.budget_group != target.budget_group
+                )
+            ):
+                raise ValueError(
+                    f"overlapping scored signals {source.id} and {target.id} must share a budget"
+                )
+
+        visiting: set[str] = set()
+        visited: set[str] = set()
+
+        def visit(node: str) -> None:
+            if node in visiting:
+                raise ValueError("overlap graph must be acyclic")
+            if node in visited:
+                return
+            visiting.add(node)
+            for child in graph[node]:
+                visit(child)
+            visiting.remove(node)
+            visited.add(node)
+
+        for signal_id in sorted(graph):
+            visit(signal_id)
+        return self
+
 
 def _read_yaml(path: Path) -> object:
     with path.open(encoding="utf-8") as handle:
@@ -182,6 +238,10 @@ def load_project_config(config_dir: str | Path) -> ProjectConfig:
     raw_eligibility = _read_yaml(root / "eligibility.yaml")
     raw_benchmarks = _read_yaml(root / "benchmarks.yaml")
     raw_value = _read_yaml(root / "value.yaml")
+    overlap_path = root / "overlap.yaml"
+    raw_overlap = (
+        _read_yaml(overlap_path) if overlap_path.is_file() else {"signals": [], "edges": []}
+    )
     if not isinstance(raw_benchmarks, dict):
         raise ValueError("benchmarks.yaml must be a mapping")
     canonical = json.dumps(
@@ -191,6 +251,7 @@ def load_project_config(config_dir: str | Path) -> ProjectConfig:
             "eligibility": raw_eligibility,
             "benchmarks": raw_benchmarks,
             "value": raw_value,
+            "overlap": raw_overlap,
         },
         sort_keys=True,
         default=str,
@@ -207,5 +268,6 @@ def load_project_config(config_dir: str | Path) -> ProjectConfig:
             BenchmarkFamilyDefinition.model_validate(item) for item in raw_benchmarks["families"]
         ),
         value=ValueConfig.model_validate(raw_value),
+        overlap=OverlapPolicy.model_validate(raw_overlap),
         fingerprint=hashlib.sha256(canonical.encode()).hexdigest(),
     )

@@ -1,0 +1,117 @@
+from __future__ import annotations
+
+import json
+from datetime import date
+from pathlib import Path
+from typing import cast
+
+from umi.adapters.common import exact_entry, identifier
+from umi.adapters.models import AdaptationResult, AdapterRejection
+from umi.schemas import (
+    BenchmarkMeasurement,
+    Direction,
+    ExternalIndexMeasurement,
+    ModelCrosswalk,
+    RecordStatus,
+    ResultType,
+    ScoringDisposition,
+    SignalRole,
+    Source,
+    Unit,
+)
+
+
+def adapt_arena_json(
+    path: str | Path,
+    crosswalk: ModelCrosswalk,
+    *,
+    source_id: str,
+    artifact_id: str,
+    upstream_revision: str,
+    subset: str,
+) -> AdaptationResult:
+    del upstream_revision  # validated by the crosswalk/registry contract
+    with Path(path).open(encoding="utf-8") as handle:
+        raw = json.load(handle)
+    source = Source.model_validate(
+        {
+            "organization": "Arena",
+            "url": "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset",
+            "accessed": date(2026, 8, 14),
+        }
+    )
+    benchmarks: list[BenchmarkMeasurement] = []
+    references: list[ExternalIndexMeasurement] = []
+    rejected: list[AdapterRejection] = []
+    for wrapper in cast(list[dict[str, object]], raw["rows"]):
+        row = cast(dict[str, object], wrapper["row"])
+        source_model_id = str(row["model_name"])
+        match = exact_entry(crosswalk, source_id, artifact_id, source_model_id)
+        if match is None or match.canonical_model_id is None:
+            if any(name in source_model_id for name in ("Claude", "GPT", "Kimi", "GLM")):
+                rejected.append(
+                    AdapterRejection(source_row_id=source_model_id, reason="no exact effort match")
+                )
+            continue
+        published = date.fromisoformat(str(row["leaderboard_publish_date"])[:10])
+        if subset == "agent":
+            benchmarks.append(
+                BenchmarkMeasurement(
+                    record_id=identifier(f"arena-agent-{match.canonical_model_id}-{published}"),
+                    benchmark_id="arena-agent",
+                    model_id=match.canonical_model_id,
+                    model_snapshot_id=match.canonical_model_id,
+                    value=float(cast(float, row["score"])),
+                    cohort_key=identifier(f"arena-agent-ips-{published}"),
+                    evaluation_date=published,
+                    sample_count=int(float(cast(float, row["observation_count"]))),
+                    confidence_interval=(
+                        float(cast(float, row["score_ci_lower"])),
+                        float(cast(float, row["score_ci_upper"])),
+                    ),
+                    source=source,
+                    result_type=ResultType.INDEPENDENT,
+                    benchmark_version=f"arena-agent-{published}",
+                    harness_version=f"arena-agent-ips-{published}",
+                    metric_definition="Arena Agent inverse-propensity-scored aggregate",
+                    evaluator="Arena",
+                    raw_artifact_available=True,
+                    source_artifact_id=artifact_id,
+                    configuration_verified=True,
+                    signal_role=SignalRole.PREFERENCE,
+                    scoring_disposition=ScoringDisposition.SCORED,
+                )
+            )
+        else:
+            references.append(
+                ExternalIndexMeasurement(
+                    record_id=identifier(f"arena-text-{match.canonical_model_id}-{published}"),
+                    index_id="arena-text-style-control",
+                    model_id=match.canonical_model_id,
+                    model_snapshot_id=match.canonical_model_id,
+                    value=float(cast(float, row["rating"])),
+                    unit=Unit.SCORE,
+                    direction=Direction.HIGHER,
+                    cohort_key=identifier(f"arena-text-style-control-{published}"),
+                    evaluation_date=published,
+                    source=source,
+                    result_type=ResultType.INDEPENDENT,
+                    benchmark_version=f"arena-text-style-control-{published}",
+                    harness_version=f"arena-bradley-terry-{published}",
+                    metric_definition="Arena text style-controlled Bradley-Terry rating",
+                    evaluator="Arena",
+                    raw_artifact_available=True,
+                    source_artifact_id=artifact_id,
+                    configuration_verified=True,
+                    record_status=RecordStatus.DIAGNOSTIC_ONLY,
+                    signal_role=SignalRole.PREFERENCE,
+                    scoring_disposition=ScoringDisposition.DIAGNOSTIC_ONLY,
+                )
+            )
+    return AdaptationResult(
+        source_id=source_id,
+        adapter_id="arena-dataset-viewer-v1",
+        benchmarks=tuple(benchmarks),
+        external_indexes=tuple(references),
+        rejections=tuple(rejected),
+    )

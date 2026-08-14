@@ -98,8 +98,8 @@
           "type": "string"
         },
         "weight": {
-          "exclusiveMinimum": 0,
           "maximum": 1,
+          "minimum": 0,
           "title": "Weight",
           "type": "number"
         }
@@ -283,6 +283,80 @@
       "title": "OverallWeights",
       "type": "object"
     },
+    "OverlapEdge": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "minLength": 1,
+          "title": "Evidence",
+          "type": "string"
+        },
+        "relation": {
+          "$ref": "#/$defs/OverlapRelation"
+        },
+        "source": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Source",
+          "type": "string"
+        },
+        "target": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "relation",
+        "evidence"
+      ],
+      "title": "OverlapEdge",
+      "type": "object"
+    },
+    "OverlapPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "edges": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/OverlapEdge"
+          },
+          "title": "Edges",
+          "type": "array"
+        },
+        "signals": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/SignalPolicy"
+          },
+          "title": "Signals",
+          "type": "array"
+        }
+      },
+      "title": "OverlapPolicy",
+      "type": "object"
+    },
+    "OverlapRelation": {
+      "enum": [
+        "contains",
+        "derived_from",
+        "duplicate_measurement",
+        "shared_tasks",
+        "shared_construct",
+        "unknown_overlap"
+      ],
+      "title": "OverlapRelation",
+      "type": "string"
+    },
+    "ScoringDisposition": {
+      "enum": [
+        "scored",
+        "diagnostic_only"
+      ],
+      "title": "ScoringDisposition",
+      "type": "string"
+    },
     "SensitivityWeights": {
       "additionalProperties": false,
       "properties": {
@@ -315,6 +389,54 @@
       ],
       "title": "SensitivityWeights",
       "type": "object"
+    },
+    "SignalPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "budget_group": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Budget Group"
+        },
+        "disposition": {
+          "$ref": "#/$defs/ScoringDisposition"
+        },
+        "id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/$defs/SignalRole"
+        }
+      },
+      "required": [
+        "id",
+        "role",
+        "disposition"
+      ],
+      "title": "SignalPolicy",
+      "type": "object"
+    },
+    "SignalRole": {
+      "enum": [
+        "composite",
+        "preference",
+        "task",
+        "efficiency",
+        "economics",
+        "reference"
+      ],
+      "title": "SignalRole",
+      "type": "string"
     },
     "Unit": {
       "enum": [
@@ -483,6 +605,13 @@
     },
     "normalization": {
       "$ref": "#/$defs/NormalizationConfig"
+    },
+    "overlap": {
+      "$ref": "#/$defs/OverlapPolicy",
+      "default": {
+        "edges": [],
+        "signals": []
+      }
     },
     "value": {
       "$ref": "#/$defs/ValueConfig"

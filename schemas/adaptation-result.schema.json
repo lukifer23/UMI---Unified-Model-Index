@@ -1,5 +1,24 @@
 {
   "$defs": {
+    "AdapterRejection": {
+      "additionalProperties": false,
+      "properties": {
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "source_row_id": {
+          "title": "Source Row Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_row_id",
+        "reason"
+      ],
+      "title": "AdapterRejection",
+      "type": "object"
+    },
     "AggregationStatistic": {
       "enum": [
         "arithmetic_mean",
@@ -366,20 +385,6 @@
       ],
       "title": "BenchmarkMeasurement",
       "type": "object"
-    },
-    "ConfigurationEffort": {
-      "enum": [
-        "standard",
-        "off",
-        "low",
-        "medium",
-        "high",
-        "max",
-        "xhigh",
-        "custom"
-      ],
-      "title": "ConfigurationEffort",
-      "type": "string"
     },
     "CostBasis": {
       "enum": [
@@ -1074,486 +1079,6 @@
       "title": "ExternalIndexMeasurement",
       "type": "object"
     },
-    "ModelConfiguration": {
-      "additionalProperties": false,
-      "properties": {
-        "api_model_id": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Api Model Id"
-        },
-        "configuration": {
-          "$ref": "#/$defs/ConfigurationEffort"
-        },
-        "context_window": {
-          "anyOf": [
-            {
-              "exclusiveMinimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Context Window"
-        },
-        "endpoint_id": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Endpoint Id"
-        },
-        "family": {
-          "minLength": 1,
-          "title": "Family",
-          "type": "string"
-        },
-        "hardware": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Hardware"
-        },
-        "id": {
-          "pattern": "^[a-z0-9][a-z0-9._-]*$",
-          "title": "Id",
-          "type": "string"
-        },
-        "model_developer": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Model Developer"
-        },
-        "notes": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Notes"
-        },
-        "open_weights": {
-          "title": "Open Weights",
-          "type": "boolean"
-        },
-        "provider": {
-          "minLength": 1,
-          "title": "Provider",
-          "type": "string"
-        },
-        "region": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Region"
-        },
-        "release_date": {
-          "format": "date",
-          "title": "Release Date",
-          "type": "string"
-        },
-        "service_tier": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Service Tier"
-        },
-        "serving_provider": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Serving Provider"
-        },
-        "snapshot_id": {
-          "default": "unspecified",
-          "pattern": "^[a-z0-9][a-z0-9._-]*$",
-          "title": "Snapshot Id",
-          "type": "string"
-        },
-        "source_snapshot_ids": {
-          "default": [],
-          "items": {
-            "pattern": "^[a-z0-9][a-z0-9._-]*$",
-            "type": "string"
-          },
-          "title": "Source Snapshot Ids",
-          "type": "array"
-        },
-        "synthetic": {
-          "default": false,
-          "title": "Synthetic",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "id",
-        "family",
-        "provider",
-        "release_date",
-        "configuration",
-        "open_weights"
-      ],
-      "title": "ModelConfiguration",
-      "type": "object"
-    },
-    "PricingRecord": {
-      "additionalProperties": false,
-      "properties": {
-        "benchmark_version": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Benchmark Version"
-        },
-        "cache_write_per_million": {
-          "anyOf": [
-            {
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Cache Write Per Million"
-        },
-        "cached_input_per_million": {
-          "anyOf": [
-            {
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Cached Input Per Million"
-        },
-        "configuration_verified": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Configuration Verified"
-        },
-        "currency": {
-          "default": "USD",
-          "pattern": "^[A-Z]{3}$",
-          "title": "Currency",
-          "type": "string"
-        },
-        "effective_date": {
-          "format": "date",
-          "title": "Effective Date",
-          "type": "string"
-        },
-        "endpoint_id": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Endpoint Id"
-        },
-        "evaluator": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Evaluator"
-        },
-        "harness_owner": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Harness Owner"
-        },
-        "harness_version": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Harness Version"
-        },
-        "input_per_million": {
-          "anyOf": [
-            {
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Input Per Million"
-        },
-        "long_context_surcharge": {
-          "additionalProperties": {
-            "minimum": 0,
-            "type": "number"
-          },
-          "title": "Long Context Surcharge",
-          "type": "object"
-        },
-        "metric_definition": {
-          "minLength": 1,
-          "title": "Metric Definition",
-          "type": "string"
-        },
-        "model_id": {
-          "pattern": "^[a-z0-9][a-z0-9._-]*$",
-          "title": "Model Id",
-          "type": "string"
-        },
-        "notes": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Notes"
-        },
-        "output_per_million": {
-          "anyOf": [
-            {
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Output Per Million"
-        },
-        "raw_artifact_available": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Raw Artifact Available"
-        },
-        "reasoning_token_pricing": {
-          "anyOf": [
-            {
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Reasoning Token Pricing"
-        },
-        "record_id": {
-          "pattern": "^[a-z0-9][a-z0-9._-]*$",
-          "title": "Record Id",
-          "type": "string"
-        },
-        "record_status": {
-          "$ref": "#/$defs/RecordStatus",
-          "default": "ready"
-        },
-        "reproducible": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Reproducible"
-        },
-        "result_type": {
-          "$ref": "#/$defs/ResultType"
-        },
-        "run_executor": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Run Executor"
-        },
-        "scoring_disposition": {
-          "$ref": "#/$defs/ScoringDisposition",
-          "default": "scored"
-        },
-        "service_tier": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Service Tier"
-        },
-        "serving_provider": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Serving Provider"
-        },
-        "signal_role": {
-          "$ref": "#/$defs/SignalRole",
-          "default": "task"
-        },
-        "source": {
-          "$ref": "#/$defs/Source"
-        },
-        "source_artifact_id": {
-          "anyOf": [
-            {
-              "pattern": "^[a-z0-9][a-z0-9._-]*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Source Artifact Id"
-        },
-        "tool_costs": {
-          "additionalProperties": {
-            "minimum": 0,
-            "type": "number"
-          },
-          "title": "Tool Costs",
-          "type": "object"
-        },
-        "tools_enabled": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Tools Enabled"
-        }
-      },
-      "required": [
-        "record_id",
-        "source",
-        "result_type",
-        "metric_definition",
-        "model_id",
-        "effective_date"
-      ],
-      "title": "PricingRecord",
-      "type": "object"
-    },
     "RecordStatus": {
       "enum": [
         "ready",
@@ -1922,34 +1447,28 @@
   },
   "additionalProperties": false,
   "properties": {
-    "adapter_versions": {
-      "default": [],
-      "items": {
-        "type": "string"
-      },
-      "title": "Adapter Versions",
-      "type": "array"
+    "adapter_id": {
+      "title": "Adapter Id",
+      "type": "string"
     },
     "benchmarks": {
+      "default": [],
       "items": {
         "$ref": "#/$defs/BenchmarkMeasurement"
       },
       "title": "Benchmarks",
       "type": "array"
     },
-    "complete_audit_fingerprint": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Complete Audit Fingerprint"
+    "diagnostics": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Diagnostics",
+      "type": "array"
     },
     "efficiency": {
+      "default": [],
       "items": {
         "$ref": "#/$defs/EfficiencyMeasurement"
       },
@@ -1957,39 +1476,27 @@
       "type": "array"
     },
     "external_indexes": {
+      "default": [],
       "items": {
         "$ref": "#/$defs/ExternalIndexMeasurement"
       },
       "title": "External Indexes",
       "type": "array"
     },
-    "models": {
+    "rejections": {
+      "default": [],
       "items": {
-        "$ref": "#/$defs/ModelConfiguration"
+        "$ref": "#/$defs/AdapterRejection"
       },
-      "title": "Models",
+      "title": "Rejections",
       "type": "array"
     },
-    "pricing": {
-      "items": {
-        "$ref": "#/$defs/PricingRecord"
-      },
-      "title": "Pricing",
-      "type": "array"
-    },
-    "scored_audit_fingerprint": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Scored Audit Fingerprint"
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
     },
     "task_economics": {
+      "default": [],
       "items": {
         "$ref": "#/$defs/TaskEconomicsMeasurement"
       },
@@ -1998,13 +1505,9 @@
     }
   },
   "required": [
-    "models",
-    "benchmarks",
-    "pricing",
-    "efficiency",
-    "task_economics",
-    "external_indexes"
+    "source_id",
+    "adapter_id"
   ],
-  "title": "Dataset",
+  "title": "AdaptationResult",
   "type": "object"
 }

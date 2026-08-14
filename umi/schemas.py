@@ -94,6 +94,47 @@ class RecordStatus(StrEnum):
     INVALID = "invalid"
 
 
+class AggregationStatistic(StrEnum):
+    ARITHMETIC_MEAN = "arithmetic_mean"
+    MEDIAN = "median"
+    TOTAL = "total"
+    UNSPECIFIED = "unspecified"
+
+
+class SignalRole(StrEnum):
+    COMPOSITE = "composite"
+    PREFERENCE = "preference"
+    TASK = "task"
+    EFFICIENCY = "efficiency"
+    ECONOMICS = "economics"
+    REFERENCE = "reference"
+
+
+class ScoringDisposition(StrEnum):
+    SCORED = "scored"
+    DIAGNOSTIC_ONLY = "diagnostic_only"
+
+
+class CrosswalkStatus(StrEnum):
+    EXACT = "exact"
+    REJECTED = "rejected"
+
+
+class OverlapRelation(StrEnum):
+    CONTAINS = "contains"
+    DERIVED_FROM = "derived_from"
+    DUPLICATE_MEASUREMENT = "duplicate_measurement"
+    SHARED_TASKS = "shared_tasks"
+    SHARED_CONSTRUCT = "shared_construct"
+    UNKNOWN_OVERLAP = "unknown_overlap"
+
+
+class RedistributionScope(StrEnum):
+    FULL_ARTIFACT = "full_artifact"
+    FACTS_ONLY = "facts_only"
+    REFERENCE_ONLY = "reference_only"
+
+
 class Source(StrictModel):
     organization: str = Field(min_length=1)
     url: HttpUrl
@@ -120,6 +161,8 @@ class Provenance(StrictModel):
     serving_provider: str | None = None
     endpoint_id: str | None = None
     service_tier: str | None = None
+    signal_role: SignalRole = SignalRole.TASK
+    scoring_disposition: ScoringDisposition = ScoringDisposition.SCORED
 
 
 class ModelConfiguration(StrictModel):
@@ -160,7 +203,7 @@ class BenchmarkDefinition(StrictModel):
 class BenchmarkFamilyDefinition(StrictModel):
     id: Identifier
     domain: Domain
-    weight: float = Field(gt=0, le=1)
+    weight: float = Field(ge=0, le=1)
     cap: float = Field(gt=0, le=1)
 
 
@@ -233,6 +276,10 @@ class EfficiencyMeasurement(Provenance):
     mean_wall_seconds: NonNegative | None = None
     mean_tool_calls: NonNegative | None = None
     mean_cost_per_attempt: NonNegative | None = None
+    observed_output_tokens_summary: NonNegative | None = None
+    observed_agent_steps_summary: NonNegative | None = None
+    observed_cost_summary_usd: NonNegative | None = None
+    aggregation_statistic: AggregationStatistic = AggregationStatistic.ARITHMETIC_MEAN
 
     @field_validator("workload_category", mode="before")
     @classmethod
@@ -258,6 +305,9 @@ class EfficiencyMeasurement(Provenance):
             self.mean_wall_seconds,
             self.mean_tool_calls,
             self.mean_cost_per_attempt,
+            self.observed_output_tokens_summary,
+            self.observed_agent_steps_summary,
+            self.observed_cost_summary_usd,
         )
         if not any(value is not None for value in observed):
             raise ValueError("efficiency record must contain at least one observation")
@@ -274,6 +324,7 @@ class TaskEconomicsMeasurement(Provenance):
     cost_basis: CostBasis
     mean_cost_usd: NonNegative
     number_of_tasks: int | None = Field(default=None, gt=0)
+    aggregation_statistic: AggregationStatistic = AggregationStatistic.ARITHMETIC_MEAN
 
 
 class ExternalIndexMeasurement(Provenance):
@@ -295,7 +346,66 @@ class SourceSnapshot(StrictModel):
     as_of: date
     artifact_path: str = Field(min_length=1)
     artifact_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    content_type: str = Field(default="application/yaml", min_length=1)
+    upstream_revision: str = Field(default="manual", min_length=1)
+    adapter_id: Identifier = "reviewed-facts-v1"
+    license_id: str = Field(default="documented-legacy", min_length=1)
+    license_url: HttpUrl | None = None
+    attribution: str = Field(default="See source URL", min_length=1)
+    redistribution_scope: RedistributionScope = RedistributionScope.FACTS_ONLY
     notes: str = Field(min_length=1)
+
+
+class ModelCrosswalkEntry(StrictModel):
+    id: Identifier
+    source_id: Identifier
+    source_artifact_id: Identifier
+    upstream_revision: str = Field(min_length=1)
+    source_model_id: str = Field(min_length=1)
+    source_effort: ConfigurationEffort | None
+    canonical_model_id: Identifier | None
+    canonical_effort: ConfigurationEffort | None
+    match_evidence: str = Field(min_length=1)
+    status: CrosswalkStatus
+    rejection_reason: str | None = None
+
+    @model_validator(mode="after")
+    def exact_match_is_complete(self) -> ModelCrosswalkEntry:
+        if self.status == CrosswalkStatus.EXACT:
+            if self.source_effort is None or self.canonical_effort is None:
+                raise ValueError("exact crosswalk entries require source and canonical effort")
+            if self.canonical_model_id is None:
+                raise ValueError("exact crosswalk entries require a canonical model")
+            if self.source_effort != self.canonical_effort:
+                raise ValueError("exact crosswalk effort must match canonical effort")
+            if self.rejection_reason is not None:
+                raise ValueError("exact crosswalk entries cannot have a rejection reason")
+        elif not self.rejection_reason:
+            raise ValueError("rejected crosswalk entries require a rejection reason")
+        return self
+
+
+class ModelCrosswalk(StrictModel):
+    entries: tuple[ModelCrosswalkEntry, ...]
+
+
+class SignalPolicy(StrictModel):
+    id: Identifier
+    role: SignalRole
+    disposition: ScoringDisposition
+    budget_group: Identifier | None = None
+
+
+class OverlapEdge(StrictModel):
+    source: Identifier
+    target: Identifier
+    relation: OverlapRelation
+    evidence: str = Field(min_length=1)
+
+
+class OverlapPolicy(StrictModel):
+    signals: tuple[SignalPolicy, ...] = ()
+    edges: tuple[OverlapEdge, ...] = ()
 
 
 class ComponentScore(StrictModel):
@@ -332,6 +442,7 @@ class CoverageSummary(StrictModel):
 
 class ScoringResult(StrictModel):
     model_id: Identifier
+    publication_label: str = "provisional result"
     release_date: date
     capability: ComponentScore
     efficiency: ComponentScore

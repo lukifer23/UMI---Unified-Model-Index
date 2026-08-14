@@ -1,0 +1,237 @@
+measurements:
+- record_id: arena-agent-claude-opus-5-max-2026-08-12
+  source:
+    organization: Arena
+    url: https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset
+    accessed: '2026-08-14'
+  result_type: independent
+  benchmark_version: arena-agent-2026-08-12
+  harness_version: arena-agent-ips-2026-08-12
+  metric_definition: Arena Agent inverse-propensity-scored aggregate
+  evaluator: Arena
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: ready
+  source_artifact_id: arena-agent-2026-08-14
+  signal_role: preference
+  scoring_disposition: scored
+  benchmark_id: arena-agent
+  model_id: claude-opus-5-max
+  value: 0.11998377869814668
+  cohort_key: arena-agent-ips-2026-08-12
+  model_snapshot_id: claude-opus-5-max
+  evaluation_date: '2026-08-12'
+  evaluation_settings: {}
+  sample_count: 1803690
+  confidence_interval:
+  - 0.10285979384253591
+  - 0.13710776355375745
+- record_id: arena-agent-kimi-k3-max-2026-08-12
+  source:
+    organization: Arena
+    url: https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset
+    accessed: '2026-08-14'
+  result_type: independent
+  benchmark_version: arena-agent-2026-08-12
+  harness_version: arena-agent-ips-2026-08-12
+  metric_definition: Arena Agent inverse-propensity-scored aggregate
+  evaluator: Arena
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: ready
+  source_artifact_id: arena-agent-2026-08-14
+  signal_role: preference
+  scoring_disposition: scored
+  benchmark_id: arena-agent
+  model_id: kimi-k3-max
+  value: 0.10537803205413024
+  cohort_key: arena-agent-ips-2026-08-12
+  model_snapshot_id: kimi-k3-max
+  evaluation_date: '2026-08-12'
+  evaluation_settings: {}
+  sample_count: 2431944
+  confidence_interval:
+  - 0.0949879141434995
+  - 0.11576814996476098
+- record_id: arena-agent-glm-5.2-max-2026-08-12
+  source:
+    organization: Arena
+    url: https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset
+    accessed: '2026-08-14'
+  result_type: independent
+  benchmark_version: arena-agent-2026-08-12
+  harness_version: arena-agent-ips-2026-08-12
+  metric_definition: Arena Agent inverse-propensity-scored aggregate
+  evaluator: Arena
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: ready
+  source_artifact_id: arena-agent-2026-08-14
+  signal_role: preference
+  scoring_disposition: scored
+  benchmark_id: arena-agent
+  model_id: glm-5.2-max
+  value: 0.06710906067840385
+  cohort_key: arena-agent-ips-2026-08-12
+  model_snapshot_id: glm-5.2-max
+  evaluation_date: '2026-08-12'
+  evaluation_settings: {}
+  sample_count: 2305627
+  confidence_interval:
+  - 0.05821120403956
+  - 0.0760069173172477
+- record_id: deepswe-score-claude-opus-5-max-2026-08-13
+  source:
+    organization: Datacurve
+    url: https://deepswe.datacurve.ai/
+    accessed: '2026-08-14'
+  result_type: independent
+  benchmark_version: v1.1
+  harness_version: pier-mini-swe-agent-deepswe-v1.1
+  metric_definition: DeepSWE v1.1 task resolution rate in percent
+  evaluator: Datacurve
+  harness_owner: Datacurve
+  run_executor: Datacurve
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: ready
+  source_artifact_id: deepswe-v1.1-2026-08-13
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: deepswe-v1.1
+  model_id: claude-opus-5-max
+  value: 74.0
+  cohort_key: deepswe-v1.1-2026-08-13
+  model_snapshot_id: claude-opus-5-max
+  evaluation_date: '2026-08-13'
+  evaluation_settings:
+    agent: mini-swe-agent
+    task_count: 113
+  number_of_tasks: 113
+  confidence_interval:
+  - 70.0
+  - 78.0
+- record_id: deepswe-score-claude-fable-5-max-2026-08-13
+  source:
+    organization: Datacurve
+    url: https://deepswe.datacurve.ai/
+    accessed: '2026-08-14'
+  result_type: independent
+  benchmark_version: v1.1
+  harness_version: pier-mini-swe-agent-deepswe-v1.1
+  metric_definition: DeepSWE v1.1 task resolution rate in percent
+  evaluator: Datacurve
+  harness_owner: Datacurve
+  run_executor: Datacurve
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: ready
+  source_artifact_id: deepswe-v1.1-2026-08-13
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: deepswe-v1.1
+  model_id: claude-fable-5-max
+  value: 70.0
+  cohort_key: deepswe-v1.1-2026-08-13
+  model_snapshot_id: claude-fable-5-max
+  evaluation_date: '2026-08-13'
+  evaluation_settings:
+    agent: mini-swe-agent
+    task_count: 113
+  number_of_tasks: 113
+  confidence_interval:
+  - 66.0
+  - 74.0
+- record_id: deepswe-score-gpt-5.6-sol-max-2026-08-13
+  source:
+    organization: Datacurve
+    url: https://deepswe.datacurve.ai/
+    accessed: '2026-08-14'
+  result_type: independent
+  benchmark_version: v1.1
+  harness_version: pier-mini-swe-agent-deepswe-v1.1
+  metric_definition: DeepSWE v1.1 task resolution rate in percent
+  evaluator: Datacurve
+  harness_owner: Datacurve
+  run_executor: Datacurve
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: ready
+  source_artifact_id: deepswe-v1.1-2026-08-13
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: deepswe-v1.1
+  model_id: gpt-5.6-sol-max
+  value: 73.0
+  cohort_key: deepswe-v1.1-2026-08-13
+  model_snapshot_id: gpt-5.6-sol-max
+  evaluation_date: '2026-08-13'
+  evaluation_settings:
+    agent: mini-swe-agent
+    task_count: 113
+  number_of_tasks: 113
+  confidence_interval:
+  - 70.0
+  - 76.0
+- record_id: deepswe-score-kimi-k3-max-2026-08-13
+  source:
+    organization: Datacurve
+    url: https://deepswe.datacurve.ai/
+    accessed: '2026-08-14'
+  result_type: independent
+  benchmark_version: v1.1
+  harness_version: pier-mini-swe-agent-deepswe-v1.1
+  metric_definition: DeepSWE v1.1 task resolution rate in percent
+  evaluator: Datacurve
+  harness_owner: Datacurve
+  run_executor: Datacurve
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: ready
+  source_artifact_id: deepswe-v1.1-2026-08-13
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: deepswe-v1.1
+  model_id: kimi-k3-max
+  value: 69.0
+  cohort_key: deepswe-v1.1-2026-08-13
+  model_snapshot_id: kimi-k3-max
+  evaluation_date: '2026-08-13'
+  evaluation_settings:
+    agent: mini-swe-agent
+    task_count: 113
+  number_of_tasks: 113
+  confidence_interval:
+  - 64.0
+  - 74.0
+- record_id: deepswe-score-glm-5.2-max-2026-08-13
+  source:
+    organization: Datacurve
+    url: https://deepswe.datacurve.ai/
+    accessed: '2026-08-14'
+  result_type: independent
+  benchmark_version: v1.1
+  harness_version: pier-mini-swe-agent-deepswe-v1.1
+  metric_definition: DeepSWE v1.1 task resolution rate in percent
+  evaluator: Datacurve
+  harness_owner: Datacurve
+  run_executor: Datacurve
+  raw_artifact_available: true
+  configuration_verified: true
+  record_status: ready
+  source_artifact_id: deepswe-v1.1-2026-08-13
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: deepswe-v1.1
+  model_id: glm-5.2-max
+  value: 44.0
+  cohort_key: deepswe-v1.1-2026-08-13
+  model_snapshot_id: glm-5.2-max
+  evaluation_date: '2026-08-13'
+  evaluation_settings:
+    agent: mini-swe-agent
+    task_count: 113
+  number_of_tasks: 113
+  confidence_interval:
+  - 42.0
+  - 46.0

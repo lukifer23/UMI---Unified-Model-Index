@@ -3,7 +3,7 @@ from __future__ import annotations
 from statistics import median
 
 from umi.provenance import select_best_tier
-from umi.schemas import EfficiencyMeasurement
+from umi.schemas import AggregationStatistic, EfficiencyMeasurement
 
 EFFICIENCY_ATTRIBUTES = {
     "effective_tokens": "mean_total_tokens",
@@ -20,6 +20,8 @@ def success_adjusted(value: float | None, success_rate: float) -> float | None:
 
 
 def derive_efficiency_metric(record: EfficiencyMeasurement, metric: str) -> float | None:
+    if record.aggregation_statistic != AggregationStatistic.ARITHMETIC_MEAN:
+        return None
     attribute = EFFICIENCY_ATTRIBUTES[metric]
     return success_adjusted(getattr(record, attribute), record.success_rate)
 
@@ -41,7 +43,12 @@ def consolidate_derived(
 def consolidate_cost_per_success(
     records: list[EfficiencyMeasurement],
 ) -> tuple[float | None, list[EfficiencyMeasurement], bool]:
-    candidates = [record for record in records if record.mean_cost_per_attempt is not None]
+    candidates = [
+        record
+        for record in records
+        if record.mean_cost_per_attempt is not None
+        and record.aggregation_statistic == AggregationStatistic.ARITHMETIC_MEAN
+    ]
     if not candidates:
         return None, [], len(records) > 1
     selected = list(select_best_tier(candidates))

@@ -8,6 +8,7 @@ from umi.derived_metrics import consolidate_cost_per_success
 from umi.loading import Dataset
 from umi.normalize import normalize_cohort
 from umi.schemas import (
+    AggregationStatistic,
     ComponentScore,
     CostBasis,
     Direction,
@@ -25,7 +26,10 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
     evidence: dict[str, list[Provenance]] = defaultdict(list)
     diagnostics: dict[str, list[str]] = defaultdict(list)
     for economics_record in dataset.task_economics:
-        if economics_record.cost_basis == CostBasis.SUCCESSFUL_TASK:
+        if (
+            economics_record.cost_basis == CostBasis.SUCCESSFUL_TASK
+            and economics_record.aggregation_statistic == AggregationStatistic.ARITHMETIC_MEAN
+        ):
             direct[
                 (
                     economics_record.workload,
@@ -35,8 +39,13 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
             ].append(economics_record)
         else:
             evidence[economics_record.model_id].append(economics_record)
+            reason = (
+                "attempted-task cost"
+                if economics_record.cost_basis == CostBasis.ATTEMPTED_TASK
+                else f"{economics_record.aggregation_statistic.value} cost"
+            )
             diagnostics[economics_record.model_id].append(
-                f"attempted-task cost excluded from Economics/{economics_record.workload}"
+                f"{reason} excluded from Economics/{economics_record.workload}"
             )
 
     category_scores: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))

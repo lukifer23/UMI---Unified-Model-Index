@@ -34,6 +34,9 @@ def canonical_dataset_payload(dataset: Dataset, config: ProjectConfig) -> dict[s
         "engine_version": ENGINE_VERSION,
         "formula_version": FORMULA_VERSION,
         "normalization_version": NORMALIZATION_VERSION,
+        "scored_audit_fingerprint": dataset.scored_audit_fingerprint,
+        "complete_audit_fingerprint": dataset.complete_audit_fingerprint,
+        "adapter_versions": sorted(dataset.adapter_versions),
     }
 
 

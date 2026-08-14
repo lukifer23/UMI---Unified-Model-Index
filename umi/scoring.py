@@ -239,6 +239,11 @@ def score_dataset(
         )
         result = ScoringResult(
             model_id=model.id,
+            publication_label=(
+                "synthetic demonstration — not a real model ranking"
+                if model.synthetic
+                else "real evidence, provisional partial ranking"
+            ),
             release_date=model.release_date,
             capability=cap,
             efficiency=eff,

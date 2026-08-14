@@ -205,6 +205,10 @@ def validate_source_registry(
     registry_ids = {item.id for item in registry.snapshots}
     registry_root = path.parent.resolve()
     for snapshot in registry.snapshots:
+        if not snapshot.license_id.strip() or not snapshot.attribution.strip():
+            errors.append(f"source snapshot {snapshot.id} lacks license or attribution metadata")
+        if not snapshot.upstream_revision.strip() or not snapshot.adapter_id.strip():
+            errors.append(f"source snapshot {snapshot.id} lacks revision or adapter metadata")
         artifact = (registry_root / snapshot.artifact_path).resolve()
         if not artifact.is_relative_to(registry_root):
             errors.append(f"source snapshot {snapshot.id} artifact escapes registry directory")

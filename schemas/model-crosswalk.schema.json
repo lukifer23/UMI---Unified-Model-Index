@@ -1,0 +1,137 @@
+{
+  "$defs": {
+    "ConfigurationEffort": {
+      "enum": [
+        "standard",
+        "off",
+        "low",
+        "medium",
+        "high",
+        "max",
+        "xhigh",
+        "custom"
+      ],
+      "title": "ConfigurationEffort",
+      "type": "string"
+    },
+    "CrosswalkStatus": {
+      "enum": [
+        "exact",
+        "rejected"
+      ],
+      "title": "CrosswalkStatus",
+      "type": "string"
+    },
+    "ModelCrosswalkEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "canonical_effort": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ConfigurationEffort"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "canonical_model_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Canonical Model Id"
+        },
+        "id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "match_evidence": {
+          "minLength": 1,
+          "title": "Match Evidence",
+          "type": "string"
+        },
+        "rejection_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rejection Reason"
+        },
+        "source_artifact_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Source Artifact Id",
+          "type": "string"
+        },
+        "source_effort": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ConfigurationEffort"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_model_id": {
+          "minLength": 1,
+          "title": "Source Model Id",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/CrosswalkStatus"
+        },
+        "upstream_revision": {
+          "minLength": 1,
+          "title": "Upstream Revision",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "source_id",
+        "source_artifact_id",
+        "upstream_revision",
+        "source_model_id",
+        "source_effort",
+        "canonical_model_id",
+        "canonical_effort",
+        "match_evidence",
+        "status"
+      ],
+      "title": "ModelCrosswalkEntry",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "entries": {
+      "items": {
+        "$ref": "#/$defs/ModelCrosswalkEntry"
+      },
+      "title": "Entries",
+      "type": "array"
+    }
+  },
+  "required": [
+    "entries"
+  ],
+  "title": "ModelCrosswalk",
+  "type": "object"
+}

@@ -1,4 +1,89 @@
 snapshots:
+  - id: aa-public-facts-2026-08-14
+    title: Artificial Analysis manually reviewed v0.3 public facts
+    source:
+      organization: Artificial Analysis
+      url: https://artificialanalysis.ai/data-api/docs
+      accessed: 2026-08-14
+    as_of: 2026-08-14
+    artifact_path: v0.3/aa-reviewed-facts-2026-08-14.yaml
+    artifact_sha256: a39aed96f3b55e32e7a67d3dae9fe19c71b57c9d791f6ff40207c760dcd079b0
+    content_type: application/yaml
+    upstream_revision: manual-public-facts-2026-08-14
+    adapter_id: aa-reviewed-facts-v1
+    license_id: terms-governed-no-redistribution-assumed
+    license_url: https://artificialanalysis.ai/data-api/docs
+    attribution: Data sourced from Artificial Analysis public model pages; artificialanalysis.ai
+    redistribution_scope: facts_only
+    notes: Public factual transcription only; no API payload or page copy is committed.
+  - id: epoch-eci-matrix-2026-08-14
+    title: Epoch ECI benchmark input matrix
+    source:
+      organization: Epoch AI
+      url: https://epoch.ai/data/eci_benchmarks.csv
+      accessed: 2026-08-14
+    as_of: 2026-08-14
+    artifact_path: v0.3/epoch-eci-benchmarks-2026-08-14.csv
+    artifact_sha256: 946538f24b2d16cbbccc54c554d86e5afb6d4b3f175bf9bdeae2af61869658b6
+    content_type: text/csv
+    upstream_revision: dab4f8ac0d14ec7022da01684fa2c707f73749eb
+    adapter_id: epoch-eci-csv-v1
+    license_id: MIT-implementation-with-Epoch-data-attribution
+    license_url: https://github.com/epoch-research/eci-public/blob/dab4f8ac0d14ec7022da01684fa2c707f73749eb/LICENSE
+    attribution: Epoch AI, ECI public data and documentation
+    redistribution_scope: full_artifact
+    notes: Official CSV frozen with the contemporaneous eci-public implementation commit.
+  - id: arena-agent-2026-08-14
+    title: Arena Agent leaderboard revision snapshot
+    source:
+      organization: Arena
+      url: https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset
+      accessed: 2026-08-14
+    as_of: 2026-08-14
+    artifact_path: v0.3/arena-agent-2026-08-14.json
+    artifact_sha256: 063639a8aa0409e1d5f7ab5bb1fc0f59f4e51a9c0e8c9468bba4586958064203
+    content_type: application/json
+    upstream_revision: 08dd89df7a8aa9df2ead3799f6422af4ad2e97a7
+    adapter_id: arena-dataset-viewer-v1
+    license_id: CC-BY-4.0
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    attribution: LM Arena leaderboard historical dataset by LMSYS Org, CC BY 4.0
+    redistribution_scope: full_artifact
+    notes: Complete 47-row agent subset returned by the pinned Dataset Viewer revision.
+  - id: arena-text-2026-08-14
+    title: Arena text style-control diagnostic snapshot, first 100 rows
+    source:
+      organization: Arena
+      url: https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset
+      accessed: 2026-08-14
+    as_of: 2026-08-14
+    artifact_path: v0.3/arena-text-style-control-2026-08-14.json
+    artifact_sha256: d33cb7be20fda4e25902d1a1545be7bed2d7417e460278c9776a7989c5315f2a
+    content_type: application/json
+    upstream_revision: 08dd89df7a8aa9df2ead3799f6422af4ad2e97a7
+    adapter_id: arena-dataset-viewer-v1
+    license_id: CC-BY-4.0
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    attribution: LM Arena leaderboard historical dataset by LMSYS Org, CC BY 4.0
+    redistribution_scope: full_artifact
+    notes: Bounded diagnostic capture; row count and pagination metadata are retained in the artifact.
+  - id: deepswe-v1.1-2026-08-13
+    title: DeepSWE v1.1 manually reviewed leaderboard facts
+    source:
+      organization: Datacurve
+      url: https://deepswe.datacurve.ai/
+      accessed: 2026-08-14
+    published: 2026-08-13
+    as_of: 2026-08-13
+    artifact_path: v0.3/deepswe-reviewed-facts-2026-08-13.yaml
+    artifact_sha256: 447549e6caa326bd494c781ed86bd583f3d30493803cf12d99d6815ccdb47782
+    content_type: application/yaml
+    upstream_revision: 435ee89ec2f2e2289f33b0da4f992f0b7b7266b9
+    adapter_id: deepswe-reviewed-facts-v1
+    license_id: leaderboard-data-license-not-established
+    attribution: DeepSWE v1.1 leaderboard facts by Datacurve
+    redistribution_scope: facts_only
+    notes: Facts and citations only; no gated tasks, trajectories, or full page content.
   - id: aa-frontier-2026-07-17
     title: "Four frontier launches in eight days: six labs now field a model above 50"
     source:

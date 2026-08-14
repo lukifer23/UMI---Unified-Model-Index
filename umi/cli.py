@@ -17,9 +17,21 @@ from analysis.rankings import rank_results
 from analysis.references import reference_observations
 from analysis.sensitivity import analyze_sensitivity
 from analysis.value_sensitivity import analyze_value_sensitivity
+from umi.adapters import (
+    adapt_aa_facts,
+    adapt_arena_json,
+    adapt_deepswe_facts,
+    adapt_epoch_csv,
+)
 from umi.config import load_project_config
-from umi.loading import load_dataset, load_source_registry
+from umi.loading import load_dataset, load_model_crosswalk, load_source_registry
 from umi.scoring import score_dataset
+from umi.source_policy import (
+    overlap_report,
+    source_readiness_matrix,
+    validate_crosswalk,
+    validate_overlap,
+)
 from umi.validation import DataValidationError, validate_dataset, validate_source_registry
 
 
@@ -108,14 +120,116 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Include models not eligible for headlines",
     )
+    sources = subparsers.add_parser("sources")
+    source_commands = sources.add_subparsers(dest="sources_command", required=True)
+    source_validate = source_commands.add_parser("validate")
+    _add_common(source_validate)
+    source_validate.set_defaults(source_registry="data/sources/registry.yaml")
+    source_validate.add_argument("--crosswalk", default="data/sources/v0.3/crosswalk.yaml")
+
+    ingest = subparsers.add_parser("ingest")
+    ingest.add_argument(
+        "--source",
+        required=True,
+        choices=("aa", "epoch", "arena-agent", "arena-text", "deepswe"),
+    )
+    ingest.add_argument("--artifact")
+    ingest.add_argument("--crosswalk", default="data/sources/v0.3/crosswalk.yaml")
+    ingest.add_argument("--format", choices=("json", "csv"), default="json")
+    ingest.add_argument("--output")
+
+    crosswalk = subparsers.add_parser("crosswalk")
+    crosswalk.add_argument("--data-dir", default="data/pilots/v0.3/raw")
+    crosswalk.add_argument("--crosswalk", default="data/sources/v0.3/crosswalk.yaml")
+    crosswalk.add_argument("--source-registry", default="data/sources/registry.yaml")
+    crosswalk.add_argument("--format", choices=("json", "csv"), default="json")
+    crosswalk.add_argument("--output")
+
+    overlap = subparsers.add_parser("overlap")
+    overlap.add_argument("--config-dir", default="config")
+    overlap.add_argument("--format", choices=("json", "csv"), default="json")
+    overlap.add_argument("--output")
     return parser
 
 
+def _adapt_source(args: argparse.Namespace) -> Any:
+    root = Path("data/sources/v0.3")
+    crosswalk = load_model_crosswalk(args.crosswalk)
+    defaults = {
+        "aa": root / "aa-reviewed-facts-2026-08-14.yaml",
+        "epoch": root / "epoch-eci-benchmarks-2026-08-14.csv",
+        "arena-agent": root / "arena-agent-2026-08-14.json",
+        "arena-text": root / "arena-text-style-control-2026-08-14.json",
+        "deepswe": root / "deepswe-reviewed-facts-2026-08-13.yaml",
+    }
+    artifact = Path(args.artifact) if args.artifact else defaults[args.source]
+    if args.source == "aa":
+        return adapt_aa_facts(artifact, crosswalk)
+    if args.source == "epoch":
+        return adapt_epoch_csv(
+            artifact,
+            crosswalk,
+            source_id="epoch-eci",
+            artifact_id="epoch-eci-matrix-2026-08-14",
+        )
+    if args.source in {"arena-agent", "arena-text"}:
+        return adapt_arena_json(
+            artifact,
+            crosswalk,
+            source_id=args.source,
+            artifact_id=f"{args.source}-2026-08-14",
+            upstream_revision="08dd89df7a8aa9df2ead3799f6422af4ad2e97a7",
+            subset="agent" if args.source == "arena-agent" else "text_style_control",
+        )
+    return adapt_deepswe_facts(artifact, crosswalk)
+
+
 def run(args: argparse.Namespace) -> int:
+    if args.command == "ingest":
+        _emit(_adapt_source(args), args.format, args.output)
+        return 0
+    if args.command == "crosswalk":
+        crosswalk_policy_report = validate_crosswalk(
+            load_model_crosswalk(args.crosswalk),
+            load_dataset(args.data_dir),
+            load_source_registry(args.source_registry),
+        )
+        _emit(crosswalk_policy_report, args.format, args.output)
+        return 0 if crosswalk_policy_report.valid else 1
+    if args.command == "overlap":
+        config = load_project_config(args.config_dir)
+        overlap_policy_report = validate_overlap(config.overlap)
+        _emit(
+            {
+                "valid": overlap_policy_report.valid,
+                "errors": overlap_policy_report.errors,
+                **overlap_report(config),
+            },
+            args.format,
+            args.output,
+        )
+        return 0 if overlap_policy_report.valid else 1
+
     colocated_config = Path(args.data_dir) / "config"
     config_dir = args.config_dir or (colocated_config if colocated_config.is_dir() else "config")
     config = load_project_config(config_dir)
     dataset = load_dataset(args.data_dir)
+    if args.command == "sources":
+        registry = load_source_registry(args.source_registry)
+        data_report = validate_dataset(dataset, config)
+        registry_report = validate_source_registry(registry, args.source_registry, dataset)
+        crosswalk_report = validate_crosswalk(
+            load_model_crosswalk(args.crosswalk), dataset, registry
+        )
+        source_payload = {
+            "schema_valid": data_report.schema_valid and not registry_report.errors,
+            "crosswalk_valid": crosswalk_report.valid,
+            "source_errors": registry_report.errors,
+            "crosswalk_errors": crosswalk_report.errors,
+            "readiness": source_readiness_matrix(dataset),
+        }
+        _emit(source_payload, args.format, args.output)
+        return 0 if source_payload["schema_valid"] and source_payload["crosswalk_valid"] else 1
     if args.command == "validate":
         report = validate_dataset(dataset, config)
         if args.source_registry:
