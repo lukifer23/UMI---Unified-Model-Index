@@ -192,4 +192,3 @@ class ScoringResult(StrictModel):
     source_record_ids: tuple[Identifier, ...]
     diagnostics: tuple[str, ...]
     config_fingerprint: str
-

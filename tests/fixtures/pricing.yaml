@@ -1,0 +1,6 @@
+pricing:
+  - &price {record_id: price-alpha, model_id: synthetic-alpha, currency: USD, effective_date: 2026-08-14, input_per_million: 10, output_per_million: 30, source: {organization: UMI Synthetic Fixture, url: "https://example.invalid/umi/synthetic", accessed: 2026-08-14}, result_type: vendor_reported, metric_definition: SYNTHETIC advertised API price for schema tests, notes: SYNTHETIC TEST DATA}
+  - {<<: *price, record_id: price-beta, model_id: synthetic-beta, input_per_million: 8, output_per_million: 24}
+  - {<<: *price, record_id: price-gamma, model_id: synthetic-gamma, input_per_million: 6, output_per_million: 18}
+  - {<<: *price, record_id: price-delta, model_id: synthetic-delta, input_per_million: 4, output_per_million: 12}
+  - {<<: *price, record_id: price-epsilon, model_id: synthetic-epsilon, input_per_million: 2, output_per_million: 6}

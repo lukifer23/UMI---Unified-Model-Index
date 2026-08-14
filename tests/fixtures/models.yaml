@@ -1,0 +1,7 @@
+models:
+  - {id: synthetic-alpha, family: Synthetic Alpha, provider: UMI Test Lab, release_date: 2026-07-01, configuration: medium, open_weights: false, synthetic: true, notes: SYNTHETIC TEST DATA ONLY}
+  - {id: synthetic-beta, family: Synthetic Beta, provider: UMI Test Lab, release_date: 2026-07-02, configuration: high, open_weights: true, synthetic: true, notes: SYNTHETIC TEST DATA ONLY}
+  - {id: synthetic-gamma, family: Synthetic Gamma, provider: UMI Test Lab, release_date: 2026-07-03, configuration: max, open_weights: false, synthetic: true, notes: SYNTHETIC TEST DATA ONLY}
+  - {id: synthetic-delta, family: Synthetic Delta, provider: UMI Test Lab, release_date: 2026-07-04, configuration: medium, open_weights: true, synthetic: true, notes: SYNTHETIC TEST DATA ONLY}
+  - {id: synthetic-epsilon, family: Synthetic Epsilon, provider: UMI Test Lab, release_date: 2026-07-05, configuration: high, open_weights: false, synthetic: true, notes: SYNTHETIC TEST DATA ONLY}
+

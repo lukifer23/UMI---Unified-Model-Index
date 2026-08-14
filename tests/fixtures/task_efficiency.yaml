@@ -1,0 +1,7 @@
+measurements:
+  - &eff {record_id: eff-alpha, model_id: synthetic-alpha, workload: synthetic-agent-task, attempts: 100, success_rate: 0.90, mean_total_tokens: 9000, mean_turns: 8, mean_wall_seconds: 100, mean_tool_calls: 12, mean_cost_per_attempt: 1.80, source: {organization: UMI Synthetic Fixture, url: "https://example.invalid/umi/synthetic", accessed: 2026-08-14}, result_type: independent, benchmark_version: synthetic-v1, harness_version: synthetic-harness-v1, metric_definition: SYNTHETIC agent workload for tests only, tools_enabled: true, notes: SYNTHETIC TEST DATA}
+  - {<<: *eff, record_id: eff-beta, model_id: synthetic-beta, success_rate: 0.85, mean_total_tokens: 7000, mean_turns: 7, mean_wall_seconds: 80, mean_tool_calls: 10, mean_cost_per_attempt: 1.20}
+  - {<<: *eff, record_id: eff-gamma, model_id: synthetic-gamma, success_rate: 0.80, mean_total_tokens: 6000, mean_turns: 6, mean_wall_seconds: 70, mean_tool_calls: 9, mean_cost_per_attempt: 0.90}
+  - {<<: *eff, record_id: eff-delta, model_id: synthetic-delta, success_rate: 0.70, mean_total_tokens: 5000, mean_turns: 6, mean_wall_seconds: 60, mean_tool_calls: 8, mean_cost_per_attempt: 0.55}
+  - {<<: *eff, record_id: eff-epsilon, model_id: synthetic-epsilon, success_rate: 0.60, mean_total_tokens: 4000, mean_turns: 5, mean_wall_seconds: 50, mean_tool_calls: 7, mean_cost_per_attempt: 0.30}
+

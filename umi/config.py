@@ -43,7 +43,10 @@ class WeightConfig(ConfigModel):
             ("capability_domains", self.capability_domains),
             ("efficiency", self.efficiency),
         ):
-            if any(value < 0 for value in weights.values()) or abs(sum(weights.values()) - 1) > 1e-9:
+            if (
+                any(value < 0 for value in weights.values())
+                or abs(sum(weights.values()) - 1) > 1e-9
+            ):
                 raise ValueError(f"{name} weights must be nonnegative and sum to 1")
         return self
 
@@ -116,4 +119,3 @@ def load_project_config(config_dir: str | Path) -> ProjectConfig:
         ),
         fingerprint=hashlib.sha256(canonical.encode()).hexdigest(),
     )
-

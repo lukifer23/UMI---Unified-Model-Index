@@ -1,0 +1,18 @@
+measurements:
+  - &base {record_id: bm-general-alpha, benchmark_id: synthetic-general, model_id: synthetic-alpha, value: 92, source: {organization: UMI Synthetic Fixture, url: "https://example.invalid/umi/synthetic", accessed: 2026-08-14}, result_type: independent, benchmark_version: synthetic-v1, harness_version: synthetic-harness-v1, metric_definition: SYNTHETIC percentage for tests only, tools_enabled: false, notes: SYNTHETIC TEST DATA}
+  - {<<: *base, record_id: bm-general-beta, model_id: synthetic-beta, value: 86}
+  - {<<: *base, record_id: bm-general-gamma, model_id: synthetic-gamma, value: 80}
+  - {<<: *base, record_id: bm-general-delta, model_id: synthetic-delta, value: 74}
+  - {<<: *base, record_id: bm-general-epsilon, model_id: synthetic-epsilon, value: 68}
+  - {<<: *base, record_id: bm-general-epsilon-vendor, model_id: synthetic-epsilon, value: 99, result_type: vendor_reported}
+  - {<<: *base, record_id: bm-code-alpha, benchmark_id: synthetic-code, model_id: synthetic-alpha, value: 88}
+  - {<<: *base, record_id: bm-code-beta, benchmark_id: synthetic-code, model_id: synthetic-beta, value: 82}
+  - {<<: *base, record_id: bm-code-gamma, benchmark_id: synthetic-code, model_id: synthetic-gamma, value: 78}
+  - {<<: *base, record_id: bm-code-delta, benchmark_id: synthetic-code, model_id: synthetic-delta, value: 70}
+  - {<<: *base, record_id: bm-code-epsilon, benchmark_id: synthetic-code, model_id: synthetic-epsilon, value: 64}
+  - {<<: *base, record_id: bm-agent-alpha, benchmark_id: synthetic-agent, model_id: synthetic-alpha, value: 84}
+  - {<<: *base, record_id: bm-agent-beta, benchmark_id: synthetic-agent, model_id: synthetic-beta, value: 80}
+  - {<<: *base, record_id: bm-agent-gamma, benchmark_id: synthetic-agent, model_id: synthetic-gamma, value: 72}
+  - {<<: *base, record_id: bm-agent-delta, benchmark_id: synthetic-agent, model_id: synthetic-delta, value: 66}
+  - {<<: *base, record_id: bm-agent-epsilon, benchmark_id: synthetic-agent, model_id: synthetic-epsilon, value: 60}
+
