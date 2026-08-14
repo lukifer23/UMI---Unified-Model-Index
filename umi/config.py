@@ -8,7 +8,14 @@ from pathlib import Path
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-from umi.schemas import BenchmarkDefinition, Domain, NormalizationStrategy
+from umi.schemas import (
+    BenchmarkDefinition,
+    BenchmarkFamilyDefinition,
+    Domain,
+    NormalizationStrategy,
+    ValueFormula,
+    WorkloadCategory,
+)
 
 
 class ConfigModel(BaseModel):
@@ -34,6 +41,7 @@ class SensitivityWeights(OverallWeights):
 class WeightConfig(ConfigModel):
     capability_domains: dict[Domain, float]
     efficiency: dict[str, float]
+    workload_weights: dict[WorkloadCategory, float]
     overall: OverallWeights
     sensitivity_sets: tuple[SensitivityWeights, ...]
 
@@ -42,6 +50,7 @@ class WeightConfig(ConfigModel):
         for name, weights in (
             ("capability_domains", self.capability_domains),
             ("efficiency", self.efficiency),
+            ("workload_weights", self.workload_weights),
         ):
             if (
                 any(value < 0 for value in weights.values())
@@ -68,6 +77,7 @@ class EligibilityConfig(ConfigModel):
     high_confidence_quality_share: float = Field(ge=0, le=1)
     medium_confidence_coverage: float = Field(ge=0, le=1)
     medium_confidence_quality_share: float = Field(ge=0, le=1)
+    minimum_efficiency_workload_coverage: float = Field(default=0.50, ge=0, le=1)
 
     @model_validator(mode="after")
     def validate_ranges(self) -> EligibilityConfig:
@@ -78,12 +88,37 @@ class EligibilityConfig(ConfigModel):
         return self
 
 
+class ValueConfig(ConfigModel):
+    baseline: ValueFormula
+    alpha: float = Field(default=0.5, ge=0, le=1)
+    sensitivity_formulas: tuple[ValueFormula, ...]
+
+
 class ProjectConfig(ConfigModel):
     weights: WeightConfig
     normalization: NormalizationConfig
     eligibility: EligibilityConfig
     benchmarks: tuple[BenchmarkDefinition, ...]
+    families: tuple[BenchmarkFamilyDefinition, ...]
+    value: ValueConfig
     fingerprint: str
+
+    @model_validator(mode="after")
+    def validate_family_budgets(self) -> ProjectConfig:
+        family_ids = {item.id for item in self.families}
+        if len(family_ids) != len(self.families):
+            raise ValueError("benchmark family IDs must be unique")
+        for benchmark in self.benchmarks:
+            family = next((item for item in self.families if item.id == benchmark.family), None)
+            if family is None:
+                raise ValueError(f"benchmark {benchmark.id} references unknown family")
+            if family.domain != benchmark.domain:
+                raise ValueError(f"benchmark {benchmark.id} domain differs from its family")
+        for domain in self.weights.capability_domains:
+            weights = [item.weight for item in self.families if item.domain == domain]
+            if weights and abs(sum(weights) - 1.0) > 1e-9:
+                raise ValueError(f"family weights for {domain.value} must sum to 1")
+        return self
 
 
 def _read_yaml(path: Path) -> object:
@@ -97,6 +132,7 @@ def load_project_config(config_dir: str | Path) -> ProjectConfig:
     raw_normalization = _read_yaml(root / "normalization.yaml")
     raw_eligibility = _read_yaml(root / "eligibility.yaml")
     raw_benchmarks = _read_yaml(root / "benchmarks.yaml")
+    raw_value = _read_yaml(root / "value.yaml")
     if not isinstance(raw_benchmarks, dict):
         raise ValueError("benchmarks.yaml must be a mapping")
     canonical = json.dumps(
@@ -105,6 +141,7 @@ def load_project_config(config_dir: str | Path) -> ProjectConfig:
             "normalization": raw_normalization,
             "eligibility": raw_eligibility,
             "benchmarks": raw_benchmarks,
+            "value": raw_value,
         },
         sort_keys=True,
         default=str,
@@ -117,5 +154,9 @@ def load_project_config(config_dir: str | Path) -> ProjectConfig:
         benchmarks=tuple(
             BenchmarkDefinition.model_validate(item) for item in raw_benchmarks["benchmarks"]
         ),
+        families=tuple(
+            BenchmarkFamilyDefinition.model_validate(item) for item in raw_benchmarks["families"]
+        ),
+        value=ValueConfig.model_validate(raw_value),
         fingerprint=hashlib.sha256(canonical.encode()).hexdigest(),
     )

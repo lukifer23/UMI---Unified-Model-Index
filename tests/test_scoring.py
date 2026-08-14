@@ -16,7 +16,8 @@ def test_synthetic_pipeline_is_eligible_traceable_and_cohort_relative(
     assert all(item.overall_coverage == pytest.approx(0.8625) for item in results.values())
     assert all(item.evidence_quality_share == 1 for item in results.values())
     assert all(item.config_fingerprint == config.fingerprint for item in results.values())
-    assert all(item.formula_version == "umi-methodology-v0.1" for item in results.values())
+    assert all(item.formula_version == "umi-methodology-v0.2-draft" for item in results.values())
+    assert all(item.headline_overall == item.partial_overall_estimate for item in results.values())
     assert (
         results["synthetic-alpha"].capability.score > results["synthetic-epsilon"].capability.score
     )
@@ -35,9 +36,15 @@ def test_independent_measurement_wins_over_vendor_conflict(
 def test_zero_success_is_explicit_worst_economics(
     synthetic_dataset: Dataset, config: ProjectConfig
 ) -> None:
-    failed = synthetic_dataset.efficiency[-1].model_copy(update={"success_rate": 0.0})
     dataset = synthetic_dataset.model_copy(
-        update={"efficiency": (*synthetic_dataset.efficiency[:-1], failed)}
+        update={
+            "efficiency": tuple(
+                item.model_copy(update={"success_rate": 0.0})
+                if item.model_id == "synthetic-epsilon"
+                else item
+                for item in synthetic_dataset.efficiency
+            )
+        }
     )
     result = {item.model_id: item for item in score_dataset(dataset, config)}["synthetic-epsilon"]
     assert result.economics.score == 0.0

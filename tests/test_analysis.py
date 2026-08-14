@@ -11,7 +11,7 @@ from umi.scoring import score_dataset
 
 def test_rankings_use_average_tied_ranks(synthetic_dataset: Dataset, config: ProjectConfig) -> None:
     results = score_dataset(synthetic_dataset, config)[:2]
-    tied = [item.model_copy(update={"overall": 50.0}) for item in results]
+    tied = [item.model_copy(update={"headline_overall": 50.0}) for item in results]
     assert [item.rank for item in rank_results(tied)] == [1.5, 1.5]
 
 

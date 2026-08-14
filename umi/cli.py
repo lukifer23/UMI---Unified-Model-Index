@@ -15,6 +15,7 @@ from analysis.correlations import benchmark_correlations
 from analysis.pareto_metrics import pareto_dimensions
 from analysis.rankings import rank_results
 from analysis.sensitivity import analyze_sensitivity
+from analysis.value_sensitivity import analyze_value_sensitivity
 from umi.config import load_project_config
 from umi.loading import load_dataset
 from umi.scoring import score_dataset
@@ -81,7 +82,14 @@ def _add_common(parser: argparse.ArgumentParser) -> None:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="umi", description="Unified Model Index CLI")
     subparsers = parser.add_subparsers(dest="command", required=True)
-    for command in ("validate", "rank", "sensitivity", "correlations", "pareto"):
+    for command in (
+        "validate",
+        "rank",
+        "sensitivity",
+        "value-sensitivity",
+        "correlations",
+        "pareto",
+    ):
         child = subparsers.add_parser(command)
         _add_common(child)
     subparsers.choices["rank"].add_argument(
@@ -110,8 +118,12 @@ def run(args: argparse.Namespace) -> int:
         payload = [{"rank": item.rank, **item.result.model_dump(mode="json")} for item in ranked]
     elif args.command == "sensitivity":
         payload = analyze_sensitivity(results, config)
+    elif args.command == "value-sensitivity":
+        payload = analyze_value_sensitivity(results, config)
     elif args.command == "correlations":
-        payload = benchmark_correlations(dataset, config.normalization.correlation_min_overlap)
+        payload = benchmark_correlations(
+            dataset, config.normalization.correlation_min_overlap, config
+        )
     else:
         payload = [
             {"dimension": dimension, **asdict(item)}

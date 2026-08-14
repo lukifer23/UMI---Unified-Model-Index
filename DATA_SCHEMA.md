@@ -1,5 +1,23 @@
 # UMI data schema
 
+## v0.2 adversarial-hardening additions
+
+- Models carry immutable `snapshot_id` and optional provider `api_model_id` values.
+- Provenance preserves evaluator, harness-owner, executor, raw-artifact,
+  reproducibility, and configuration-verification metadata when known.
+- Measurements carry `cohort_key`, `model_snapshot_id`, and `evaluation_date`;
+  different cohort keys are never normalized together.
+- Optional uncertainty fields preserve task/trial/sample counts, pass@k, standard
+  error, and confidence intervals without pretending v0.2 propagates them.
+- Benchmark configuration separates family `weight` and `cap` from each member's
+  `representation_weight`.
+- Workload categories are `coding_agents`, `research_analysis`,
+  `tool_use_agents`, `browser_computer_use`, `general_interaction`, and
+  `long_horizon`.
+- Output has `partial_overall_estimate` and nullable `headline_overall`, never an
+  ambiguous `overall`, plus Value methodology, confidence reasons,
+  multi-dimensional coverage, and cohort identity.
+
 All raw files are YAML documents containing a top-level list named for the record type. IDs use lowercase ASCII letters, digits, dots, underscores, or hyphens and must begin with an alphanumeric character. Unknown fields are rejected.
 
 ## Provenance

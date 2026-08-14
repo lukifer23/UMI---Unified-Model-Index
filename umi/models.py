@@ -2,7 +2,9 @@
 
 from umi.schemas import (
     BenchmarkDefinition,
+    BenchmarkFamilyDefinition,
     BenchmarkMeasurement,
+    CoverageSummary,
     EfficiencyMeasurement,
     ModelConfiguration,
     PricingRecord,
@@ -10,8 +12,10 @@ from umi.schemas import (
 
 __all__ = [
     "BenchmarkDefinition",
+    "BenchmarkFamilyDefinition",
     "BenchmarkMeasurement",
     "EfficiencyMeasurement",
     "ModelConfiguration",
     "PricingRecord",
+    "CoverageSummary",
 ]

@@ -4,7 +4,7 @@ from datetime import date
 from enum import StrEnum
 from typing import Annotated, Any
 
-from pydantic import BaseModel, ConfigDict, Field, HttpUrl, model_validator
+from pydantic import BaseModel, ConfigDict, Field, HttpUrl, field_validator, model_validator
 
 Identifier = Annotated[str, Field(pattern=r"^[a-z0-9][a-z0-9._-]*$")]
 NonNegative = Annotated[float, Field(ge=0)]
@@ -67,12 +67,18 @@ class ConfigurationEffort(StrEnum):
 
 
 class WorkloadCategory(StrEnum):
-    GENERAL = "general"
-    CODING = "coding"
-    AGENTIC = "agentic"
-    RESEARCH = "research"
-    BROWSER = "browser"
-    MULTIMODAL = "multimodal"
+    CODING = "coding_agents"
+    RESEARCH = "research_analysis"
+    TOOL_USE = "tool_use_agents"
+    BROWSER = "browser_computer_use"
+    GENERAL = "general_interaction"
+    LONG_HORIZON = "long_horizon"
+
+
+class ValueFormula(StrEnum):
+    GEOMETRIC = "geometric_mean_v1"
+    WEIGHTED_GEOMETRIC = "weighted_geometric_v1"
+    HARMONIC = "harmonic_mean_v1"
 
 
 class Source(StrictModel):
@@ -90,6 +96,12 @@ class Provenance(StrictModel):
     metric_definition: str = Field(min_length=1)
     tools_enabled: bool | None = None
     notes: str | None = None
+    evaluator: str | None = None
+    harness_owner: str | None = None
+    run_executor: str | None = None
+    raw_artifact_available: bool | None = None
+    reproducible: bool | None = None
+    configuration_verified: bool | None = None
 
 
 class ModelConfiguration(StrictModel):
@@ -98,6 +110,8 @@ class ModelConfiguration(StrictModel):
     provider: str = Field(min_length=1)
     release_date: date
     configuration: ConfigurationEffort
+    snapshot_id: Identifier = "unspecified"
+    api_model_id: str | None = None
     open_weights: bool
     context_window: int | None = Field(default=None, gt=0)
     notes: str | None = None
@@ -111,19 +125,40 @@ class BenchmarkDefinition(StrictModel):
     family: Identifier
     direction: Direction
     unit: Unit
-    weight: float = Field(gt=0)
+    representation_weight: float = Field(default=1.0, gt=0)
     normalization: NormalizationStrategy
     parent_aggregates: tuple[Identifier, ...] = ()
     constituents: tuple[Identifier, ...] = ()
-    domain_cap: float = Field(default=1.0, gt=0, le=1)
+
+
+class BenchmarkFamilyDefinition(StrictModel):
+    id: Identifier
+    domain: Domain
+    weight: float = Field(gt=0, le=1)
+    cap: float = Field(gt=0, le=1)
 
 
 class BenchmarkMeasurement(Provenance):
     benchmark_id: Identifier
     model_id: Identifier
     value: float
+    cohort_key: Identifier = "unspecified"
+    model_snapshot_id: Identifier = "unspecified"
+    evaluation_date: date | None = None
     workload: Identifier | None = None
     evaluation_settings: dict[str, Any] = Field(default_factory=dict)
+    number_of_tasks: int | None = Field(default=None, gt=0)
+    number_of_trials: int | None = Field(default=None, gt=0)
+    sample_count: int | None = Field(default=None, gt=0)
+    pass_at_k: int | None = Field(default=None, gt=0)
+    standard_error: NonNegative | None = None
+    confidence_interval: tuple[float, float] | None = None
+
+    @model_validator(mode="after")
+    def validate_interval(self) -> BenchmarkMeasurement:
+        if self.confidence_interval and self.confidence_interval[0] > self.confidence_interval[1]:
+            raise ValueError("confidence interval lower bound must not exceed upper bound")
+        return self
 
 
 class PricingRecord(Provenance):
@@ -158,6 +193,9 @@ class EfficiencyMeasurement(Provenance):
     model_id: Identifier
     workload: Identifier
     workload_category: WorkloadCategory
+    cohort_key: Identifier = "unspecified"
+    model_snapshot_id: Identifier = "unspecified"
+    evaluation_date: date | None = None
     attempts: int = Field(gt=0)
     success_rate: Rate
     mean_input_tokens: NonNegative | None = None
@@ -169,6 +207,18 @@ class EfficiencyMeasurement(Provenance):
     mean_wall_seconds: NonNegative | None = None
     mean_tool_calls: NonNegative | None = None
     mean_cost_per_attempt: NonNegative | None = None
+
+    @field_validator("workload_category", mode="before")
+    @classmethod
+    def migrate_legacy_workload_category(cls, value: object) -> object:
+        aliases = {
+            "agentic": WorkloadCategory.TOOL_USE,
+            "coding": WorkloadCategory.CODING,
+            "research": WorkloadCategory.RESEARCH,
+            "browser": WorkloadCategory.BROWSER,
+            "general": WorkloadCategory.GENERAL,
+        }
+        return aliases.get(value, value) if isinstance(value, str) else value
 
     @model_validator(mode="after")
     def require_observation(self) -> EfficiencyMeasurement:
@@ -194,6 +244,22 @@ class ComponentScore(StrictModel):
     provisional: bool = False
     source_record_ids: tuple[Identifier, ...] = ()
     diagnostics: tuple[str, ...] = ()
+    coverage_details: dict[str, float | int | str] = Field(default_factory=dict)
+
+
+class CoverageSummary(StrictModel):
+    overall_weighted: float = Field(ge=0, le=1)
+    capability_domains_represented: int = Field(ge=0)
+    capability_domains_total: int = Field(gt=0)
+    capability_family_weighted: float = Field(ge=0, le=1)
+    efficiency_workloads_represented: int = Field(ge=0)
+    efficiency_workloads_total: int = Field(gt=0)
+    efficiency_workload_weighted: float = Field(ge=0, le=1)
+    economics_workloads_represented: int = Field(ge=0)
+    economics_workloads_total: int = Field(gt=0)
+    economics_workload_weighted: float = Field(ge=0, le=1)
+    independent_evidence_share: float = Field(ge=0, le=1)
+    source_organization_count: int = Field(ge=0)
 
 
 class ScoringResult(StrictModel):
@@ -201,8 +267,10 @@ class ScoringResult(StrictModel):
     capability: ComponentScore
     efficiency: ComponentScore
     economics: ComponentScore
-    overall: float | None
+    partial_overall_estimate: float | None
+    headline_overall: float | None
     value: float | None
+    value_methodology: ValueFormula
     overall_coverage: float = Field(ge=0, le=1)
     confidence: Confidence
     eligible: bool
@@ -211,5 +279,11 @@ class ScoringResult(StrictModel):
     evidence_quality_share: float = Field(ge=0, le=1)
     source_record_ids: tuple[Identifier, ...]
     diagnostics: tuple[str, ...]
+    confidence_reasons: tuple[str, ...]
+    coverage: CoverageSummary
+    cohort_id: str
+    cohort_model_ids: tuple[Identifier, ...]
+    evaluation_date: date
+    normalization_version: str
     config_fingerprint: str
     formula_version: str

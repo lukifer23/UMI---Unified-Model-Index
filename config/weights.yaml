@@ -9,6 +9,13 @@ efficiency:
   turns: 0.20
   wall_seconds: 0.20
   tool_calls: 0.10
+workload_weights:
+  coding_agents: 0.25
+  research_analysis: 0.20
+  tool_use_agents: 0.20
+  browser_computer_use: 0.15
+  general_interaction: 0.10
+  long_horizon: 0.10
 overall:
   capability: 0.55
   efficiency: 0.25
@@ -19,4 +26,3 @@ sensitivity_sets:
   - {name: efficiency_30, capability: 0.50, efficiency: 0.30, economics: 0.20}
   - {name: economics_15, capability: 0.60, efficiency: 0.25, economics: 0.15}
   - {name: economics_25, capability: 0.50, efficiency: 0.25, economics: 0.25}
-

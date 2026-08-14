@@ -16,27 +16,29 @@ METRICS = {
 }
 
 
-def _selected_records(dataset: Dataset) -> dict[tuple[str, str], list[EfficiencyMeasurement]]:
-    grouped: dict[tuple[str, str], list[EfficiencyMeasurement]] = defaultdict(list)
+def _selected_records(dataset: Dataset) -> dict[tuple[str, str, str], list[EfficiencyMeasurement]]:
+    grouped: dict[tuple[str, str, str], list[EfficiencyMeasurement]] = defaultdict(list)
     for item in dataset.efficiency:
-        grouped[(item.workload, item.model_id)].append(item)
+        grouped[(item.workload, item.cohort_key, item.model_id)].append(item)
     return grouped
 
 
 def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComputation:
     grouped = _selected_records(dataset)
-    metric_model_scores: dict[str, dict[str, list[float]]] = {
-        metric: defaultdict(list) for metric in METRICS
+    metric_category_scores: dict[str, dict[str, dict[str, list[float]]]] = {
+        metric: defaultdict(lambda: defaultdict(list)) for metric in METRICS
     }
     selected_by_model: dict[str, list[Provenance]] = defaultdict(list)
     provisional_by_model: dict[str, bool] = defaultdict(bool)
     diagnostics: dict[str, list[str]] = defaultdict(list)
 
-    for workload in sorted({key[0] for key in grouped}):
+    for workload, cohort_key in sorted({(key[0], key[1]) for key in grouped}):
         consolidated: dict[str, dict[str, float]] = {metric: {} for metric in METRICS}
-        for (candidate_workload, model_id), records in grouped.items():
-            if candidate_workload != workload:
+        categories: dict[str, str] = {}
+        for (candidate_workload, candidate_cohort, model_id), records in grouped.items():
+            if candidate_workload != workload or candidate_cohort != cohort_key:
                 continue
+            categories[model_id] = records[0].workload_category.value
             best = []
             for metric, attribute in METRICS.items():
                 value, selected, conflict = consolidate_numeric(records, attribute)
@@ -62,18 +64,25 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
             )
             for model_id, score in normalized.scores.items():
                 if score is not None:
-                    metric_model_scores[metric][model_id].append(score)
+                    metric_category_scores[metric][categories[model_id]][model_id].append(score)
                     provisional_by_model[model_id] |= normalized.provisional
 
     output: dict[str, ComponentScore] = {}
     for model in dataset.models:
-        component_values: dict[str, float | None] = {
-            metric: (
-                sum(scores[model.id]) / len(scores[model.id]) if scores.get(model.id) else None
+        category_values: dict[str, float | None] = {}
+        for category in config.weights.workload_weights:
+            metric_values = {}
+            for metric in METRICS:
+                scores = metric_category_scores[metric].get(category.value, {}).get(model.id, [])
+                metric_values[metric] = sum(scores) / len(scores) if scores else None
+            category_values[category.value], _ = weighted_available(
+                metric_values, config.weights.efficiency
             )
-            for metric, scores in metric_model_scores.items()
-        }
-        score, coverage = weighted_available(component_values, config.weights.efficiency)
+        score, coverage = weighted_available(
+            category_values,
+            {key.value: value for key, value in config.weights.workload_weights.items()},
+        )
+        represented = sum(value is not None for value in category_values.values())
         records_by_id = {item.record_id: item for item in selected_by_model[model.id]}
         output[model.id] = ComponentScore(
             score=score,
@@ -81,6 +90,11 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
             provisional=provisional_by_model[model.id],
             source_record_ids=tuple(sorted(records_by_id)),
             diagnostics=tuple(sorted(set(diagnostics[model.id]))),
+            coverage_details={
+                "efficiency_workloads_represented": represented,
+                "efficiency_workloads_total": len(config.weights.workload_weights),
+                "efficiency_workload_weighted": coverage,
+            },
         )
     return ComponentComputation(
         output, {key: tuple(value) for key, value in selected_by_model.items()}, {}

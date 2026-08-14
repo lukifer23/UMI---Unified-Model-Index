@@ -36,7 +36,7 @@ def analyze_sensitivity(
         ordered = sorted(scores, key=lambda key: (-scores[key], key))
         # Average tied ranks are delegated through temporary result copies.
         temporary = [
-            item.model_copy(update={"overall": scores[item.model_id]})
+            item.model_copy(update={"headline_overall": scores[item.model_id]})
             for item in eligible
             if item.model_id in scores
         ]

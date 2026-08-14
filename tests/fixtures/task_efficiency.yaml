@@ -4,3 +4,29 @@ measurements:
   - {<<: *eff, record_id: eff-gamma, model_id: synthetic-gamma, success_rate: 0.80, mean_total_tokens: 6000, mean_turns: 6, mean_wall_seconds: 70, mean_tool_calls: 9, mean_cost_per_attempt: 0.90}
   - {<<: *eff, record_id: eff-delta, model_id: synthetic-delta, success_rate: 0.70, mean_total_tokens: 5000, mean_turns: 6, mean_wall_seconds: 60, mean_tool_calls: 8, mean_cost_per_attempt: 0.55}
   - {<<: *eff, record_id: eff-epsilon, model_id: synthetic-epsilon, success_rate: 0.60, mean_total_tokens: 4000, mean_turns: 5, mean_wall_seconds: 50, mean_tool_calls: 7, mean_cost_per_attempt: 0.30}
+  # Broad synthetic basket. Reused values isolate coverage behavior from performance.
+  - {<<: *eff, record_id: eff-alpha-coding, model_id: synthetic-alpha, workload: synthetic-coding, workload_category: coding_agents}
+  - {<<: *eff, record_id: eff-beta-coding, model_id: synthetic-beta, workload: synthetic-coding, workload_category: coding_agents}
+  - {<<: *eff, record_id: eff-gamma-coding, model_id: synthetic-gamma, workload: synthetic-coding, workload_category: coding_agents}
+  - {<<: *eff, record_id: eff-delta-coding, model_id: synthetic-delta, workload: synthetic-coding, workload_category: coding_agents}
+  - {<<: *eff, record_id: eff-epsilon-coding, model_id: synthetic-epsilon, workload: synthetic-coding, workload_category: coding_agents}
+  - {<<: *eff, record_id: eff-alpha-research, model_id: synthetic-alpha, workload: synthetic-research, workload_category: research_analysis}
+  - {<<: *eff, record_id: eff-beta-research, model_id: synthetic-beta, workload: synthetic-research, workload_category: research_analysis}
+  - {<<: *eff, record_id: eff-gamma-research, model_id: synthetic-gamma, workload: synthetic-research, workload_category: research_analysis}
+  - {<<: *eff, record_id: eff-delta-research, model_id: synthetic-delta, workload: synthetic-research, workload_category: research_analysis}
+  - {<<: *eff, record_id: eff-epsilon-research, model_id: synthetic-epsilon, workload: synthetic-research, workload_category: research_analysis}
+  - {<<: *eff, record_id: eff-alpha-browser, model_id: synthetic-alpha, workload: synthetic-browser, workload_category: browser_computer_use}
+  - {<<: *eff, record_id: eff-beta-browser, model_id: synthetic-beta, workload: synthetic-browser, workload_category: browser_computer_use}
+  - {<<: *eff, record_id: eff-gamma-browser, model_id: synthetic-gamma, workload: synthetic-browser, workload_category: browser_computer_use}
+  - {<<: *eff, record_id: eff-delta-browser, model_id: synthetic-delta, workload: synthetic-browser, workload_category: browser_computer_use}
+  - {<<: *eff, record_id: eff-epsilon-browser, model_id: synthetic-epsilon, workload: synthetic-browser, workload_category: browser_computer_use}
+  - {<<: *eff, record_id: eff-alpha-general, model_id: synthetic-alpha, workload: synthetic-general-interaction, workload_category: general_interaction}
+  - {<<: *eff, record_id: eff-beta-general, model_id: synthetic-beta, workload: synthetic-general-interaction, workload_category: general_interaction}
+  - {<<: *eff, record_id: eff-gamma-general, model_id: synthetic-gamma, workload: synthetic-general-interaction, workload_category: general_interaction}
+  - {<<: *eff, record_id: eff-delta-general, model_id: synthetic-delta, workload: synthetic-general-interaction, workload_category: general_interaction}
+  - {<<: *eff, record_id: eff-epsilon-general, model_id: synthetic-epsilon, workload: synthetic-general-interaction, workload_category: general_interaction}
+  - {<<: *eff, record_id: eff-alpha-long, model_id: synthetic-alpha, workload: synthetic-long-horizon, workload_category: long_horizon}
+  - {<<: *eff, record_id: eff-beta-long, model_id: synthetic-beta, workload: synthetic-long-horizon, workload_category: long_horizon}
+  - {<<: *eff, record_id: eff-gamma-long, model_id: synthetic-gamma, workload: synthetic-long-horizon, workload_category: long_horizon}
+  - {<<: *eff, record_id: eff-delta-long, model_id: synthetic-delta, workload: synthetic-long-horizon, workload_category: long_horizon}
+  - {<<: *eff, record_id: eff-epsilon-long, model_id: synthetic-epsilon, workload: synthetic-long-horizon, workload_category: long_horizon}

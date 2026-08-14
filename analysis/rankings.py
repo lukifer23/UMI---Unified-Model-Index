@@ -14,7 +14,7 @@ class RankedResult:
 
 
 def rank_results(
-    results: list[ScoringResult], *, metric: str = "overall", eligible_only: bool = True
+    results: list[ScoringResult], *, metric: str = "headline_overall", eligible_only: bool = True
 ) -> list[RankedResult]:
     candidates = [item for item in results if not eligible_only or item.eligible]
     values: list[tuple[ScoringResult, float]] = []

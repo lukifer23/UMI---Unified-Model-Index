@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+
 from umi._component import weighted_available
 from umi.capability import score_capability
 from umi.config import OverallWeights, ProjectConfig
@@ -7,7 +9,7 @@ from umi.economics import score_economics
 from umi.efficiency import score_efficiency
 from umi.loading import Dataset
 from umi.provenance import evidence_quality_share
-from umi.schemas import Confidence, ScoringResult
+from umi.schemas import Confidence, CoverageSummary, Domain, ScoringResult
 from umi.validation import validate_dataset
 from umi.value import value_score
 
@@ -35,6 +37,10 @@ def score_dataset(dataset: Dataset, config: ProjectConfig) -> list[ScoringResult
     economics = score_economics(dataset, config)
     weights = config.weights.overall
     results: list[ScoringResult] = []
+    cohort_model_ids = tuple(sorted(model.id for model in dataset.models))
+    cohort_id = hashlib.sha256(
+        (config.fingerprint + "\0" + "\0".join(cohort_model_ids)).encode()
+    ).hexdigest()[:16]
     for model in sorted(dataset.models, key=lambda item: item.id):
         cap = capability.components[model.id]
         eff = efficiency.components[model.id]
@@ -87,11 +93,36 @@ def score_dataset(dataset: Dataset, config: ProjectConfig) -> list[ScoringResult
         else:
             confidence = Confidence.LOW
         domains = capability.domains.get(model.id, ())
+        efficiency_workload_coverage = float(
+            eff.coverage_details.get("efficiency_workload_weighted", 0.0)
+        )
         eligible = (
             overall is not None
             and overall_coverage >= config.eligibility.minimum_overall_coverage
             and len(domains) >= config.eligibility.minimum_capability_domains
+            and (
+                eff.score is None
+                or efficiency_workload_coverage
+                >= config.eligibility.minimum_efficiency_workload_coverage
+            )
         )
+        organizations = {record.source.organization for record in records_by_id.values()}
+        confidence_reasons = [
+            f"{overall_coverage:.0%} weighted coverage",
+            f"{len(domains)}/{len(Domain)} capability domains represented",
+            (
+                f"{int(eff.coverage_details.get('efficiency_workloads_represented', 0))}/"
+                f"{len(config.weights.workload_weights)} efficiency workload classes"
+            ),
+            f"{len(organizations)} source organizations",
+            f"{quality:.0%} independent/community evidence",
+        ]
+        if len(organizations) < 2 and confidence == Confidence.HIGH:
+            confidence = Confidence.MEDIUM
+            confidence_reasons.append("confidence capped at Medium: single-source dependence")
+        if len(domains) < config.eligibility.minimum_capability_domains:
+            confidence = Confidence.LOW
+            confidence_reasons.append("confidence capped at Low: insufficient capability breadth")
         diagnostics = sorted(
             {
                 *cap.diagnostics,
@@ -106,8 +137,10 @@ def score_dataset(dataset: Dataset, config: ProjectConfig) -> list[ScoringResult
                 capability=cap,
                 efficiency=eff,
                 economics=econ,
-                overall=overall,
-                value=value_score(cap.score, econ.score),
+                partial_overall_estimate=overall,
+                headline_overall=overall if eligible else None,
+                value=value_score(cap.score, econ.score, config.value.baseline, config.value.alpha),
+                value_methodology=config.value.baseline,
                 overall_coverage=overall_coverage,
                 confidence=confidence,
                 eligible=eligible,
@@ -118,8 +151,35 @@ def score_dataset(dataset: Dataset, config: ProjectConfig) -> list[ScoringResult
                 evidence_quality_share=quality,
                 source_record_ids=tuple(sorted(records_by_id)),
                 diagnostics=tuple(diagnostics),
+                confidence_reasons=tuple(confidence_reasons),
+                coverage=CoverageSummary(
+                    overall_weighted=overall_coverage,
+                    capability_domains_represented=len(domains),
+                    capability_domains_total=len(Domain),
+                    capability_family_weighted=float(
+                        cap.coverage_details.get("capability_family_weighted", 0.0)
+                    ),
+                    efficiency_workloads_represented=int(
+                        eff.coverage_details.get("efficiency_workloads_represented", 0)
+                    ),
+                    efficiency_workloads_total=len(config.weights.workload_weights),
+                    efficiency_workload_weighted=efficiency_workload_coverage,
+                    economics_workloads_represented=int(
+                        econ.coverage_details.get("economics_workloads_represented", 0)
+                    ),
+                    economics_workloads_total=len(config.weights.workload_weights),
+                    economics_workload_weighted=float(
+                        econ.coverage_details.get("economics_workload_weighted", 0.0)
+                    ),
+                    independent_evidence_share=quality,
+                    source_organization_count=len(organizations),
+                ),
+                cohort_id=cohort_id,
+                cohort_model_ids=cohort_model_ids,
+                evaluation_date=config.eligibility.release_end,
+                normalization_version="umi-normalization-v0.2",
                 config_fingerprint=config.fingerprint,
-                formula_version="umi-methodology-v0.1",
+                formula_version="umi-methodology-v0.2-draft",
             )
         )
     return results
