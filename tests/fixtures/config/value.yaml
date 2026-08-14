@@ -1,3 +1,5 @@
-baseline: geometric_mean_v1
-alpha: 0.5
-sensitivity_formulas: [geometric_mean_v1, weighted_geometric_v1, harmonic_mean_v1]
+baseline: balanced_geometric
+scenarios:
+  - {name: balanced_geometric, formula: weighted_geometric_v1, alpha: 0.50}
+  - {name: capability_heavy, formula: weighted_geometric_v1, alpha: 0.70}
+  - {name: harmonic, formula: harmonic_mean_v1}

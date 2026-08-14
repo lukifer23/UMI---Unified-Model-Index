@@ -76,7 +76,10 @@ def test_harness_mismatch_creates_singleton_cohorts_not_false_comparison(
     dataset = synthetic_dataset.model_copy(
         update={"models": models, "benchmarks": tuple(records), "efficiency": (), "pricing": ()}
     )
-    assert all(item.capability.score is None for item in score_dataset(dataset, config))
+    from umi.validation import DataValidationError
+
+    with pytest.raises(DataValidationError, match="multiple scoring cohorts"):
+        score_dataset(dataset, config)
 
 
 def test_one_percent_and_zero_success_are_stable_and_explicit(
@@ -98,10 +101,9 @@ def test_one_percent_and_zero_success_are_stable_and_explicit(
     }
     assert results["synthetic-delta"].economics.score is not None
     assert results["synthetic-epsilon"].economics.score == 0.0
-    # Tokens receive the worst score, while observed turns/time/tool-call metrics
-    # remain valid evidence and keep the composite above zero.
+    # Every attempt-level resource is success-adjusted; fast failure earns no credit.
     assert results["synthetic-epsilon"].efficiency.score is not None
-    assert 0.0 < results["synthetic-epsilon"].efficiency.score < 100.0
+    assert results["synthetic-epsilon"].efficiency.score == 0.0
 
 
 def test_single_evaluator_caps_high_confidence_and_value_is_sensitive(

@@ -7,3 +7,7 @@ high_confidence_quality_share: 0.75
 medium_confidence_coverage: 0.60
 medium_confidence_quality_share: 0.50
 minimum_efficiency_workload_coverage: 0.50
+minimum_component_coverage:
+  capability: 0.60
+  efficiency: 0.50
+  economics: 0.40

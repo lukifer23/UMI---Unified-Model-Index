@@ -38,10 +38,10 @@ def normalize_cohort(
 ) -> NormalizedCohort:
     if not values:
         return NormalizedCohort({}, True, "unscored")
+    if len(values) < minimum_rank_cohort:
+        return NormalizedCohort({key: None for key in values}, True, "singleton")
     finite = {key: value for key, value in values.items() if np.isfinite(value)}
     exceptional = set(values) - set(finite)
-    if len(finite) < minimum_rank_cohort:
-        return NormalizedCohort({key: None for key in values}, True, "singleton")
 
     transformed = dict(finite)
     if log_transform:
@@ -49,8 +49,12 @@ def normalize_cohort(
             raise ValueError("log normalization requires nonnegative values")
         transformed = {key: float(np.log1p(value)) for key, value in transformed.items()}
 
-    provisional = len(finite) < minimum_robust_cohort
-    use_percentile = strategy == NormalizationStrategy.PERCENTILE or provisional
+    provisional = len(values) < minimum_robust_cohort
+    use_percentile = (
+        strategy == NormalizationStrategy.PERCENTILE
+        or provisional
+        or len(finite) < 2
+    )
     method = "percentile"
     scores: dict[str, float | None]
     if not use_percentile:
@@ -69,9 +73,13 @@ def normalize_cohort(
                 scores[key] = score if direction == Direction.HIGHER else 100.0 - score
             method = "robust_z"
     if use_percentile:
-        scores = _percentiles(transformed, direction)
+        percentile_values = {
+            key: (float(np.log1p(value)) if log_transform and np.isfinite(value) else value)
+            for key, value in values.items()
+        }
+        scores = _percentiles(percentile_values, direction)
 
-    for key in exceptional:
+    for key in (exceptional if not use_percentile else ()):
         # Positive infinity is the explicit worst outcome for lower-is-better metrics.
         scores[key] = 0.0 if direction == Direction.LOWER and values[key] > 0 else 100.0
     return NormalizedCohort(scores, provisional, method)

@@ -4,6 +4,7 @@ from collections import defaultdict
 
 from umi._component import ComponentComputation, consolidate_numeric, weighted_available
 from umi.config import ProjectConfig
+from umi.derived_metrics import consolidate_cost_per_success
 from umi.loading import Dataset
 from umi.normalize import normalize_cohort
 from umi.schemas import (
@@ -17,15 +18,9 @@ from umi.schemas import (
 
 
 def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputation:
-    grouped: dict[tuple[str, str, str], list[EfficiencyMeasurement]] = defaultdict(list)
-    for efficiency_record in dataset.efficiency:
-        grouped[
-            (
-                efficiency_record.workload,
-                efficiency_record.cohort_key,
-                efficiency_record.model_id,
-            )
-        ].append(efficiency_record)
+    efficiency: dict[tuple[str, str, str], list[EfficiencyMeasurement]] = defaultdict(list)
+    for record in dataset.efficiency:
+        efficiency[(record.workload, record.cohort_key, record.model_id)].append(record)
     direct: dict[tuple[str, str, str], list[TaskEconomicsMeasurement]] = defaultdict(list)
     evidence: dict[str, list[Provenance]] = defaultdict(list)
     diagnostics: dict[str, list[str]] = defaultdict(list)
@@ -41,51 +36,59 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
         else:
             evidence[economics_record.model_id].append(economics_record)
             diagnostics[economics_record.model_id].append(
-                f"attempted-task cost excluded from headline Economics/{economics_record.workload}"
+                f"attempted-task cost excluded from Economics/{economics_record.workload}"
             )
+
     category_scores: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
-    provisional: dict[str, bool] = defaultdict(bool)
-    cohort_keys = {(key[0], key[1]) for key in grouped} | {(key[0], key[1]) for key in direct}
-    for workload, cohort_key in sorted(cohort_keys):
+    provisional_by_model: dict[str, set[str]] = defaultdict(set)
+    series = sorted(
+        {(workload, cohort) for workload, cohort, _ in efficiency}
+        | {(workload, cohort) for workload, cohort, _ in direct}
+    )
+    for workload, cohort_key in series:
         costs: dict[str, float] = {}
         categories: dict[str, str] = {}
-        for (candidate, candidate_cohort, model_id), direct_records in direct.items():
-            if candidate != workload or candidate_cohort != cohort_key:
+        for (candidate, cohort, model_id), direct_records in direct.items():
+            if (candidate, cohort) != (workload, cohort_key):
                 continue
             categories[model_id] = direct_records[0].workload_category.value
-            cost, direct_selected, conflict = consolidate_numeric(direct_records, "mean_cost_usd")
-            if cost is not None:
-                costs[model_id] = cost
+            value, direct_selected, conflict = consolidate_numeric(
+                direct_records, "mean_cost_usd"
+            )
+            if value is not None:
+                costs[model_id] = value
                 evidence[model_id].extend(direct_selected)
             if conflict:
                 diagnostics[model_id].append(f"conflict consolidated for economics/{workload}")
-        for (candidate, candidate_cohort, model_id), efficiency_records in grouped.items():
-            if candidate != workload or candidate_cohort != cohort_key:
-                continue
-            if (candidate, candidate_cohort, model_id) in direct:
+        for (candidate, cohort, model_id), efficiency_records in efficiency.items():
+            if (candidate, cohort) != (workload, cohort_key) or (
+                candidate,
+                cohort,
+                model_id,
+            ) in direct:
                 continue
             categories[model_id] = efficiency_records[0].workload_category.value
-            cost, efficiency_selected, conflict = consolidate_numeric(
-                efficiency_records, "mean_cost_per_attempt"
+            value, efficiency_selected, conflict = consolidate_cost_per_success(
+                efficiency_records
             )
-            success, _, _ = consolidate_numeric(efficiency_records, "success_rate")
-            if cost is None or success is None:
-                continue
-            costs[model_id] = float("inf") if success == 0 else cost / success
-            evidence[model_id].extend(efficiency_selected)
+            if value is not None:
+                costs[model_id] = value
+                evidence[model_id].extend(efficiency_selected)
             if conflict:
                 diagnostics[model_id].append(f"conflict consolidated for economics/{workload}")
         normalized = normalize_cohort(
             costs,
             direction=Direction.LOWER,
-            log_transform=True,
+            strategy=config.normalization.default_strategy,
+            log_transform="cost_per_success" in config.normalization.log_metrics,
             minimum_robust_cohort=config.normalization.minimum_robust_cohort,
             minimum_rank_cohort=config.normalization.minimum_rank_cohort,
         )
         for model_id, score in normalized.scores.items():
             if score is not None:
                 category_scores[categories[model_id]][model_id].append(score)
-                provisional[model_id] |= normalized.provisional
+                if normalized.provisional:
+                    provisional_by_model[model_id].add(f"{workload}/{cohort_key}/cost_per_success")
 
     output: dict[str, ComponentScore] = {}
     for model in dataset.models:
@@ -103,11 +106,16 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
             {key.value: value for key, value in config.weights.workload_weights.items()},
         )
         represented = sum(value is not None for value in category_values.values())
+        provisional_ids = provisional_by_model[model.id]
+        if provisional_ids:
+            diagnostics[model.id].append(
+                "provisional normalization cohorts: " + ", ".join(sorted(provisional_ids))
+            )
         records_by_id = {item.record_id: item for item in evidence[model.id]}
         output[model.id] = ComponentScore(
             score=score,
             coverage=coverage,
-            provisional=provisional[model.id],
+            provisional=bool(provisional_ids),
             source_record_ids=tuple(sorted(records_by_id)),
             diagnostics=tuple(sorted(set(diagnostics[model.id]))),
             coverage_details={

@@ -18,6 +18,7 @@ measurements:
     harness_owner: Artificial Analysis
     run_executor: Artificial Analysis
     raw_artifact_available: true
+    source_artifact_id: aa-frontier-2026-07-17
     reproducible: false
     configuration_verified: true
     notes: Attempted-task denominator; success rate is not published and no successful-task cost is derived.

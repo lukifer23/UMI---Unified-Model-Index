@@ -7,7 +7,8 @@ from typing import TypeVar
 
 from umi.config import ProjectConfig
 from umi.loading import Dataset, SourceRegistry
-from umi.schemas import ExternalIndexMeasurement, Provenance, TaskEconomicsMeasurement
+from umi.readiness import ScoredRecord, is_scoring_ready, readiness_failures
+from umi.schemas import EfficiencyMeasurement, Provenance, RecordStatus, TaskEconomicsMeasurement
 
 T = TypeVar("T")
 
@@ -16,10 +17,19 @@ T = TypeVar("T")
 class ValidationReport:
     errors: tuple[str, ...]
     warnings: tuple[str, ...]
+    readiness_failures: tuple[str, ...] = ()
 
     @property
     def valid(self) -> bool:
         return not self.errors
+
+    @property
+    def schema_valid(self) -> bool:
+        return not self.errors
+
+    @property
+    def scoring_ready(self) -> bool:
+        return self.schema_valid and not self.readiness_failures
 
     def raise_for_errors(self) -> None:
         if self.errors:
@@ -45,7 +55,9 @@ def _duplicates(values: list[T]) -> set[T]:
 def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationReport:
     errors: list[str] = []
     warnings: list[str] = []
+    readiness: list[str] = []
     model_ids = {model.id for model in dataset.models}
+    models = {model.id: model for model in dataset.models}
     benchmark_ids = {benchmark.id for benchmark in config.benchmarks}
     family_ids = {family.id for family in config.families}
 
@@ -64,99 +76,39 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
     for record_id in sorted(_duplicates([item.record_id for item in provenance])):
         errors.append(f"duplicate record id: {record_id}")
 
-    for item in dataset.benchmarks:
+    scored_inputs: tuple[ScoredRecord, ...] = (
+        *dataset.benchmarks,
+        *dataset.efficiency,
+        *dataset.task_economics,
+    )
+    for item in scored_inputs:
         if item.model_id not in model_ids:
-            errors.append(f"benchmark {item.record_id} has unknown model: {item.model_id}")
+            errors.append(f"record {item.record_id} has unknown model: {item.model_id}")
+            continue
+        model = models[item.model_id]
+        if item.record_status == RecordStatus.INVALID:
+            errors.append(f"record {item.record_id} has invalid record status")
+        if item.model_snapshot_id != "unspecified" and item.model_snapshot_id != model.snapshot_id:
+            errors.append(f"record {item.record_id} snapshot does not match model {item.model_id}")
+        for failure in readiness_failures(item, model):
+            if failure != "record is diagnostic-only":
+                readiness.append(f"record {item.record_id}: {failure}")
+    for item in dataset.benchmarks:
         if item.benchmark_id not in benchmark_ids:
             errors.append(f"benchmark {item.record_id} has unknown benchmark: {item.benchmark_id}")
-        model = next(
-            (candidate for candidate in dataset.models if candidate.id == item.model_id), None
-        )
-        if (
-            model
-            and model.snapshot_id != "unspecified"
-            and item.model_snapshot_id != model.snapshot_id
-        ):
-            errors.append(
-                f"benchmark {item.record_id} snapshot does not match model {item.model_id}"
-            )
-        if item.cohort_key == "unspecified":
-            warnings.append(
-                f"benchmark {item.record_id} is not ingestion-ready: cohort key missing"
-            )
-        if not item.benchmark_version or not item.harness_version:
-            warnings.append(
-                f"benchmark {item.record_id} is not ingestion-ready: version metadata incomplete"
-            )
-        if item.evaluation_date is None or item.model_snapshot_id == "unspecified":
-            warnings.append(
-                f"benchmark {item.record_id} is not ingestion-ready: snapshot/date missing"
-            )
-        if item.raw_artifact_available is not True:
-            warnings.append(
-                f"benchmark {item.record_id} is not ingestion-ready: raw artifact not retained"
-            )
-        if not item.evaluator or item.configuration_verified is not True:
-            warnings.append(
-                f"benchmark {item.record_id} is not ingestion-ready: "
-                "evaluator/configuration unverified"
-            )
     for linked_record in dataset.pricing:
         if linked_record.model_id not in model_ids:
             errors.append(
                 f"record {linked_record.record_id} has unknown model: {linked_record.model_id}"
             )
-    for efficiency_record in dataset.efficiency:
-        if efficiency_record.model_id not in model_ids:
-            errors.append(
-                f"record {efficiency_record.record_id} has unknown model: "
-                f"{efficiency_record.model_id}"
-            )
-        model = next(
-            (
-                candidate
-                for candidate in dataset.models
-                if candidate.id == efficiency_record.model_id
-            ),
-            None,
-        )
-        if (
-            model
-            and model.snapshot_id != "unspecified"
-            and efficiency_record.model_snapshot_id != model.snapshot_id
-        ):
-            errors.append(
-                f"record {efficiency_record.record_id} snapshot does not match model "
-                f"{efficiency_record.model_id}"
-            )
-        if efficiency_record.cohort_key == "unspecified":
-            warnings.append(
-                f"record {efficiency_record.record_id} is not ingestion-ready: cohort key missing"
-            )
-
-    linked_records: tuple[TaskEconomicsMeasurement | ExternalIndexMeasurement, ...] = (
-        *dataset.task_economics,
-        *dataset.external_indexes,
-    )
-    for record in linked_records:
+    for record in dataset.external_indexes:
         if record.model_id not in model_ids:
             errors.append(f"record {record.record_id} has unknown model: {record.model_id}")
             continue
-        model = next(item for item in dataset.models if item.id == record.model_id)
+        model = models[record.model_id]
         if record.model_snapshot_id != model.snapshot_id:
             errors.append(
                 f"record {record.record_id} snapshot does not match model {record.model_id}"
-            )
-        if record.cohort_key == "unspecified":
-            warnings.append(f"record {record.record_id} is not ingestion-ready: cohort key missing")
-        if record.raw_artifact_available is not True:
-            warnings.append(
-                f"record {record.record_id} is not ingestion-ready: raw artifact not retained"
-            )
-        if not record.evaluator or record.configuration_verified is not True:
-            warnings.append(
-                f"record {record.record_id} is not ingestion-ready: "
-                "evaluator/configuration unverified"
             )
 
     if family_ids != {definition.family for definition in config.benchmarks}:
@@ -168,6 +120,10 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
         families = [item for item in config.families if item.domain == domain]
         if families and abs(sum(item.weight for item in families) - 1.0) > 1e-9:
             errors.append(f"family weights for {domain.value} must sum to 1")
+        if any(item.weight > item.cap for item in families):
+            errors.append(f"family weight exceeds cap in {domain.value}")
+        if families and sum(item.cap for item in families) < 1.0 - 1e-9:
+            errors.append(f"family caps for {domain.value} must sum to at least 1")
     for definition in config.benchmarks:
         family = next((item for item in config.families if item.id == definition.family), None)
         if family and family.domain != definition.domain:
@@ -194,6 +150,34 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
         if model.synthetic and not (model.notes and "SYNTHETIC" in model.notes.upper()):
             warnings.append(f"synthetic model {model.id} should be conspicuously labeled in notes")
 
+    ready_benchmark_cohorts: dict[str, set[str]] = {}
+    for item in dataset.benchmarks:
+        candidate_model = models.get(item.model_id)
+        if candidate_model and is_scoring_ready(item, candidate_model):
+            ready_benchmark_cohorts.setdefault(item.benchmark_id, set()).add(item.cohort_key)
+    for benchmark_id, cohorts in sorted(ready_benchmark_cohorts.items()):
+        if len(cohorts) > 1:
+            errors.append(
+                f"benchmark {benchmark_id} has multiple scoring cohorts without a merge policy: "
+                f"{', '.join(sorted(cohorts))}"
+            )
+    ready_workload_cohorts: dict[tuple[str, str], set[str]] = {}
+    workload_inputs: tuple[EfficiencyMeasurement | TaskEconomicsMeasurement, ...] = (
+        *dataset.efficiency,
+        *dataset.task_economics,
+    )
+    for item in workload_inputs:
+        candidate_model = models.get(item.model_id)
+        if candidate_model and is_scoring_ready(item, candidate_model):
+            key = (item.workload_category.value, item.workload)
+            ready_workload_cohorts.setdefault(key, set()).add(item.cohort_key)
+    for (category, workload), cohorts in sorted(ready_workload_cohorts.items()):
+        if len(cohorts) > 1:
+            errors.append(
+                f"workload {category}/{workload} has multiple scoring cohorts without a merge "
+                f"policy: {', '.join(sorted(cohorts))}"
+            )
+
     conflicts: dict[tuple[str, str], int] = {}
     for item in dataset.benchmarks:
         key = (item.model_id, item.benchmark_id)
@@ -202,7 +186,11 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
         if count > 1:
             warnings.append(f"conflicting benchmark measurements preserved for {key[0]}/{key[1]}")
 
-    return ValidationReport(tuple(sorted(set(errors))), tuple(sorted(set(warnings))))
+    return ValidationReport(
+        tuple(sorted(set(errors))),
+        tuple(sorted(set(warnings))),
+        tuple(sorted(set(readiness))),
+    )
 
 
 def validate_source_registry(
@@ -244,6 +232,11 @@ def validate_source_registry(
             *dataset.external_indexes,
         )
         for record in records:
+            if record.source_artifact_id and record.source_artifact_id not in registry_ids:
+                errors.append(
+                    f"record {record.record_id} references unknown source artifact: "
+                    f"{record.source_artifact_id}"
+                )
             if str(record.source.url) not in registry_urls:
                 warnings.append(
                     f"record {record.record_id} source URL is absent from source registry"

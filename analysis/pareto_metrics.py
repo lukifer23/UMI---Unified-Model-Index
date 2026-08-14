@@ -1,49 +1,80 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from statistics import median
+from dataclasses import dataclass
 
-from analysis.pareto import ParetoPoint, ParetoResult, pareto_frontier
+from analysis.pareto import ParetoPoint, pareto_frontier
+from umi._component import consolidate_numeric
+from umi.derived_metrics import consolidate_cost_per_success, consolidate_derived
 from umi.loading import Dataset
-from umi.provenance import select_best_tier
-from umi.schemas import EfficiencyMeasurement, ScoringResult
+from umi.readiness import scoring_dataset
+from umi.schemas import CostBasis, EfficiencyMeasurement, ScoringResult, TaskEconomicsMeasurement
 
 
-def _median_by_model(
-    records: tuple[EfficiencyMeasurement, ...], attribute: str, success_adjusted: bool = False
-) -> dict[str, float]:
-    grouped: dict[str, list[EfficiencyMeasurement]] = defaultdict(list)
-    for record in records:
-        if getattr(record, attribute) is not None:
-            grouped[record.model_id].append(record)
-    output = {}
-    for model_id, items in grouped.items():
-        selected = select_best_tier(items)
-        values = []
-        for item in selected:
-            value = float(getattr(item, attribute))
-            if success_adjusted:
-                value = float("inf") if item.success_rate == 0 else value / item.success_rate
-            values.append(value)
-        output[model_id] = median(values)
-    return output
+@dataclass(frozen=True)
+class ScopedParetoResult:
+    metric: str
+    workload_category: str
+    workload: str
+    cohort_key: str
+    model_id: str
+    dominated: bool
+    dominator_ids: tuple[str, ...]
 
 
 def pareto_dimensions(
     dataset: Dataset, results: list[ScoringResult]
-) -> dict[str, list[ParetoResult]]:
+) -> list[ScopedParetoResult]:
+    dataset, _ = scoring_dataset(dataset)
     capability = {item.model_id: item.capability.score for item in results}
-    expenses = {
-        "cost_per_success": _median_by_model(dataset.efficiency, "mean_cost_per_attempt", True),
-        "effective_tokens": _median_by_model(dataset.efficiency, "mean_total_tokens", True),
-        "latency": _median_by_model(dataset.efficiency, "mean_wall_seconds"),
-    }
-    output = {}
-    for name, values in expenses.items():
+    efficiency: dict[tuple[str, str, str], list[EfficiencyMeasurement]] = defaultdict(list)
+    for record in dataset.efficiency:
+        efficiency[(record.workload, record.cohort_key, record.model_id)].append(record)
+    direct: dict[tuple[str, str, str], list[TaskEconomicsMeasurement]] = defaultdict(list)
+    for economics_record in dataset.task_economics:
+        if economics_record.cost_basis == CostBasis.SUCCESSFUL_TASK:
+            direct[
+                (
+                    economics_record.workload,
+                    economics_record.cohort_key,
+                    economics_record.model_id,
+                )
+            ].append(economics_record)
+
+    series_values: dict[tuple[str, str, str, str], dict[str, float]] = defaultdict(dict)
+    for (workload, cohort, model_id), records in efficiency.items():
+        category = records[0].workload_category.value
+        for metric in ("effective_tokens", "effective_wall_time"):
+            value, _, _ = consolidate_derived(records, metric)
+            if value is not None:
+                series_values[(metric, category, workload, cohort)][model_id] = value
+        if (workload, cohort, model_id) not in direct:
+            value, _, _ = consolidate_cost_per_success(records)
+            if value is not None:
+                series_values[("cost_per_success", category, workload, cohort)][model_id] = value
+    for (workload, cohort, model_id), direct_records in direct.items():
+        category = direct_records[0].workload_category.value
+        value, _, _ = consolidate_numeric(direct_records, "mean_cost_usd")
+        if value is not None:
+            series_values[("cost_per_success", category, workload, cohort)][model_id] = value
+
+    output: list[ScopedParetoResult] = []
+    for (metric, category, workload, cohort), values in sorted(series_values.items()):
         points = []
         for model_id, expense in values.items():
             capability_value = capability.get(model_id)
             if capability_value is not None:
                 points.append(ParetoPoint(model_id, capability_value, expense))
-        output[name] = pareto_frontier(points)
+        for result in pareto_frontier(points):
+            output.append(
+                ScopedParetoResult(
+                    metric=metric,
+                    workload_category=category,
+                    workload=workload,
+                    cohort_key=cohort,
+                    model_id=result.model_id,
+                    dominated=result.dominated,
+                    dominator_ids=result.dominator_ids,
+                )
+            )
     return output

@@ -6,9 +6,9 @@ capability_domains:
   context_reliability: 0.10
 efficiency:
   effective_tokens: 0.50
-  turns: 0.20
-  wall_seconds: 0.20
-  tool_calls: 0.10
+  effective_turns: 0.20
+  effective_wall_time: 0.20
+  effective_tool_calls: 0.10
 workload_weights:
   coding_agents: 0.25
   research_analysis: 0.20

@@ -1,0 +1,120 @@
+from __future__ import annotations
+
+from collections.abc import Iterable
+
+from umi.loading import Dataset
+from umi.schemas import (
+    BenchmarkMeasurement,
+    EfficiencyMeasurement,
+    ExternalIndexMeasurement,
+    ModelConfiguration,
+    Provenance,
+    RecordStatus,
+    TaskEconomicsMeasurement,
+)
+
+ScoredRecord = (
+    BenchmarkMeasurement
+    | EfficiencyMeasurement
+    | TaskEconomicsMeasurement
+    | ExternalIndexMeasurement
+)
+
+
+def readiness_failures(record: ScoredRecord, model: ModelConfiguration) -> tuple[str, ...]:
+    if record.record_status == RecordStatus.INVALID:
+        return ("record status is invalid",)
+    if record.record_status == RecordStatus.DIAGNOSTIC_ONLY:
+        return ("record is diagnostic-only",)
+    if model.synthetic or record.record_status == RecordStatus.SYNTHETIC:
+        if not model.synthetic or record.record_status not in {
+            RecordStatus.SYNTHETIC,
+            RecordStatus.READY,
+        }:
+            return ("synthetic status does not match the model",)
+        return ()
+
+    failures: list[str] = []
+    if record.record_status != RecordStatus.READY:
+        failures.append("record status is not ready")
+    if record.source.organization.strip().lower() in {"", "unknown", "unspecified"}:
+        failures.append("source organization is unknown")
+    if not record.evaluator:
+        failures.append("evaluator is missing")
+    if not record.benchmark_version:
+        failures.append("benchmark or workload version is missing")
+    if not record.harness_version:
+        failures.append("harness version is missing")
+    if record.configuration_verified is not True:
+        failures.append("configuration is not verified")
+    if record.raw_artifact_available is not True or not record.source_artifact_id:
+        failures.append("retained source artifact reference is missing")
+    if record.cohort_key == "unspecified":
+        failures.append("compatibility cohort key is unspecified")
+    if record.model_snapshot_id == "unspecified" or model.snapshot_id == "unspecified":
+        failures.append("immutable model snapshot is unspecified")
+    if record.evaluation_date is None:
+        failures.append("evaluation date is missing")
+    if model.endpoint_id and record.endpoint_id != model.endpoint_id:
+        failures.append("deployment endpoint does not match the scored configuration")
+    if model.serving_provider and record.serving_provider != model.serving_provider:
+        failures.append("serving provider does not match the scored configuration")
+    if model.service_tier and record.service_tier != model.service_tier:
+        failures.append("service tier does not match the scored configuration")
+    return tuple(failures)
+
+
+def is_scoring_ready(record: ScoredRecord, model: ModelConfiguration) -> bool:
+    return not readiness_failures(record, model)
+
+
+def scored_records(dataset: Dataset, *, allow_unready: bool = False) -> tuple[Provenance, ...]:
+    models = {model.id: model for model in dataset.models}
+    records: Iterable[ScoredRecord] = (
+        *dataset.benchmarks,
+        *dataset.efficiency,
+        *dataset.task_economics,
+    )
+    output: list[Provenance] = []
+    for record in records:
+        model = models.get(record.model_id)
+        if model is None or record.record_status in {
+            RecordStatus.DIAGNOSTIC_ONLY,
+            RecordStatus.INVALID,
+        }:
+            continue
+        if allow_unready or is_scoring_ready(record, model):
+            output.append(record)
+    return tuple(output)
+
+
+def scoring_dataset(dataset: Dataset, *, allow_unready: bool = False) -> tuple[Dataset, bool]:
+    models = {model.id: model for model in dataset.models}
+    unready_used = False
+
+    def include(record: ScoredRecord) -> bool:
+        nonlocal unready_used
+        model = models.get(record.model_id)
+        if model is None or record.record_status in {
+            RecordStatus.DIAGNOSTIC_ONLY,
+            RecordStatus.INVALID,
+        }:
+            return False
+        ready = is_scoring_ready(record, model)
+        if allow_unready and not ready:
+            unready_used = True
+        return ready or allow_unready
+
+    return (
+        dataset.model_copy(
+            update={
+                "benchmarks": tuple(item for item in dataset.benchmarks if include(item)),
+                "efficiency": tuple(item for item in dataset.efficiency if include(item)),
+                "task_economics": tuple(item for item in dataset.task_economics if include(item)),
+                "pricing": (),
+                # External indexes are diagnostic references in v0.2.1.
+                "external_indexes": (),
+            }
+        ),
+        unready_used,
+    )

@@ -10,7 +10,8 @@ from scipy.stats import pearsonr, spearmanr
 from umi.config import ProjectConfig
 from umi.loading import Dataset
 from umi.provenance import select_best_tier
-from umi.schemas import BenchmarkMeasurement
+from umi.readiness import scoring_dataset
+from umi.schemas import BenchmarkMeasurement, Direction
 
 
 @dataclass(frozen=True)
@@ -26,19 +27,28 @@ class CorrelationResult:
     family_a: str | None = None
     family_b: str | None = None
     known_overlap: bool = False
+    direction_a: str | None = None
+    direction_b: str | None = None
 
 
 def benchmark_correlations(
     dataset: Dataset, minimum_overlap: int = 5, config: ProjectConfig | None = None
 ) -> list[CorrelationResult]:
+    if config is not None:
+        dataset, _ = scoring_dataset(dataset)
+    definitions = {item.id: item for item in config.benchmarks} if config else {}
     grouped: dict[tuple[str, str, str], list[BenchmarkMeasurement]] = {}
     for item in dataset.benchmarks:
         grouped.setdefault((item.benchmark_id, item.cohort_key, item.model_id), []).append(item)
     matrix: dict[tuple[str, str], dict[str, float]] = {}
     for (benchmark_id, cohort_key, model_id), records in grouped.items():
         selected = select_best_tier(records)
-        matrix.setdefault((benchmark_id, cohort_key), {})[model_id] = median(
+        value = median(
             float(item.value) for item in selected
+        )
+        definition = definitions.get(benchmark_id)
+        matrix.setdefault((benchmark_id, cohort_key), {})[model_id] = (
+            -value if definition and definition.direction == Direction.LOWER else value
         )
     output: list[CorrelationResult] = []
     for key_a, key_b in combinations(sorted(matrix), 2):
@@ -53,7 +63,6 @@ def benchmark_correlations(
             if np.ptp(values_a) > 0 and np.ptp(values_b) > 0:
                 pearson = float(pearsonr(values_a, values_b).statistic)
                 spearman = float(spearmanr(values_a, values_b).statistic)
-        definitions = {item.id: item for item in config.benchmarks} if config else {}
         definition_a = definitions.get(benchmark_a)
         definition_b = definitions.get(benchmark_b)
         known_overlap = bool(
@@ -78,6 +87,8 @@ def benchmark_correlations(
                 definition_a.family if definition_a else None,
                 definition_b.family if definition_b else None,
                 known_overlap,
+                definition_a.direction.value if definition_a else None,
+                definition_b.direction.value if definition_b else None,
             )
         )
     return output

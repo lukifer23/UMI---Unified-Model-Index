@@ -78,6 +78,7 @@ class EligibilityConfig(ConfigModel):
     medium_confidence_coverage: float = Field(ge=0, le=1)
     medium_confidence_quality_share: float = Field(ge=0, le=1)
     minimum_efficiency_workload_coverage: float = Field(default=0.50, ge=0, le=1)
+    minimum_component_coverage: dict[str, float]
 
     @model_validator(mode="after")
     def validate_ranges(self) -> EligibilityConfig:
@@ -85,13 +86,56 @@ class EligibilityConfig(ConfigModel):
             raise ValueError("release_start must not follow release_end")
         if self.high_confidence_coverage < self.medium_confidence_coverage:
             raise ValueError("high confidence coverage must be at least medium")
+        required = {"capability", "efficiency", "economics"}
+        if set(self.minimum_component_coverage) != required:
+            raise ValueError(
+                "minimum_component_coverage must define capability, efficiency, economics"
+            )
+        if any(not 0 <= value <= 1 for value in self.minimum_component_coverage.values()):
+            raise ValueError("minimum component coverage values must be between 0 and 1")
         return self
 
 
+class ValueScenario(ConfigModel):
+    name: str = Field(min_length=1)
+    formula: ValueFormula
+    alpha: float | None = Field(default=None, ge=0, le=1)
+
+    @model_validator(mode="after")
+    def validate_formula_parameters(self) -> ValueScenario:
+        if self.formula == ValueFormula.WEIGHTED_GEOMETRIC and self.alpha is None:
+            raise ValueError("weighted geometric Value scenarios require alpha")
+        if self.formula != ValueFormula.WEIGHTED_GEOMETRIC and self.alpha is not None:
+            raise ValueError("alpha is only valid for weighted geometric Value scenarios")
+        return self
+
+    def mathematical_signature(self) -> tuple[str, float | None]:
+        if self.formula == ValueFormula.GEOMETRIC:
+            return (ValueFormula.WEIGHTED_GEOMETRIC.value, 0.5)
+        return (self.formula.value, self.alpha)
+
+
 class ValueConfig(ConfigModel):
-    baseline: ValueFormula
-    alpha: float = Field(default=0.5, ge=0, le=1)
-    sensitivity_formulas: tuple[ValueFormula, ...]
+    baseline: str = Field(min_length=1)
+    scenarios: tuple[ValueScenario, ...]
+
+    @model_validator(mode="after")
+    def validate_scenarios(self) -> ValueConfig:
+        names = [scenario.name for scenario in self.scenarios]
+        if len(names) != len(set(names)):
+            raise ValueError("Value scenario names must be unique")
+        if self.baseline not in names:
+            raise ValueError("Value baseline must name a configured scenario")
+        signatures = [scenario.mathematical_signature() for scenario in self.scenarios]
+        if len(signatures) != len(set(signatures)):
+            raise ValueError("Value scenarios must be mathematically distinct")
+        if len(signatures) < 2:
+            raise ValueError("at least two distinct Value scenarios are required")
+        return self
+
+    @property
+    def baseline_scenario(self) -> ValueScenario:
+        return next(item for item in self.scenarios if item.name == self.baseline)
 
 
 class ProjectConfig(ConfigModel):
@@ -115,9 +159,14 @@ class ProjectConfig(ConfigModel):
             if family.domain != benchmark.domain:
                 raise ValueError(f"benchmark {benchmark.id} domain differs from its family")
         for domain in self.weights.capability_domains:
-            weights = [item.weight for item in self.families if item.domain == domain]
+            domain_families = [item for item in self.families if item.domain == domain]
+            weights = [item.weight for item in domain_families]
             if weights and abs(sum(weights) - 1.0) > 1e-9:
                 raise ValueError(f"family weights for {domain.value} must sum to 1")
+            if any(item.weight > item.cap for item in domain_families):
+                raise ValueError(f"family weight exceeds cap in {domain.value}")
+            if domain_families and sum(item.cap for item in domain_families) < 1.0 - 1e-9:
+                raise ValueError(f"family caps for {domain.value} must sum to at least 1")
         return self
 
 

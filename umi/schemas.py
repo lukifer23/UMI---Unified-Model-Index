@@ -12,7 +12,7 @@ Rate = Annotated[float, Field(ge=0, le=1)]
 
 
 class StrictModel(BaseModel):
-    model_config = ConfigDict(extra="forbid", frozen=True)
+    model_config = ConfigDict(extra="forbid", frozen=True, allow_inf_nan=False)
 
 
 class ResultType(StrEnum):
@@ -87,6 +87,13 @@ class CostBasis(StrEnum):
     SUCCESSFUL_TASK = "successful_task"
 
 
+class RecordStatus(StrEnum):
+    READY = "ready"
+    DIAGNOSTIC_ONLY = "diagnostic_only"
+    SYNTHETIC = "synthetic"
+    INVALID = "invalid"
+
+
 class Source(StrictModel):
     organization: str = Field(min_length=1)
     url: HttpUrl
@@ -108,6 +115,11 @@ class Provenance(StrictModel):
     raw_artifact_available: bool | None = None
     reproducible: bool | None = None
     configuration_verified: bool | None = None
+    record_status: RecordStatus = RecordStatus.READY
+    source_artifact_id: Identifier | None = None
+    serving_provider: str | None = None
+    endpoint_id: str | None = None
+    service_tier: str | None = None
 
 
 class ModelConfiguration(StrictModel):
@@ -118,6 +130,12 @@ class ModelConfiguration(StrictModel):
     configuration: ConfigurationEffort
     snapshot_id: Identifier = "unspecified"
     api_model_id: str | None = None
+    model_developer: str | None = None
+    serving_provider: str | None = None
+    endpoint_id: str | None = None
+    service_tier: str | None = None
+    region: str | None = None
+    hardware: str | None = None
     source_snapshot_ids: tuple[Identifier, ...] = ()
     open_weights: bool
     context_window: int | None = Field(default=None, gt=0)
@@ -133,6 +151,7 @@ class BenchmarkDefinition(StrictModel):
     direction: Direction
     unit: Unit
     representation_weight: float = Field(default=1.0, gt=0)
+    representation_group: Identifier | None = None
     normalization: NormalizationStrategy
     parent_aggregates: tuple[Identifier, ...] = ()
     constituents: tuple[Identifier, ...] = ()
@@ -292,39 +311,56 @@ class CoverageSummary(StrictModel):
     overall_weighted: float = Field(ge=0, le=1)
     capability_domains_represented: int = Field(ge=0)
     capability_domains_total: int = Field(gt=0)
+    capability_domain_weighted: float = Field(ge=0, le=1)
     capability_family_weighted: float = Field(ge=0, le=1)
+    capability_representation_weighted: float = Field(ge=0, le=1)
+    capability_families_represented: int = Field(ge=0)
+    capability_families_total: int = Field(ge=0)
+    capability_representations_represented: int = Field(ge=0)
+    capability_representations_total: int = Field(ge=0)
     efficiency_workloads_represented: int = Field(ge=0)
     efficiency_workloads_total: int = Field(gt=0)
     efficiency_workload_weighted: float = Field(ge=0, le=1)
+    efficiency_metric_weighted: float = Field(ge=0, le=1)
+    efficiency_category_metric_coverage: dict[str, float] = Field(default_factory=dict)
     economics_workloads_represented: int = Field(ge=0)
     economics_workloads_total: int = Field(gt=0)
     economics_workload_weighted: float = Field(ge=0, le=1)
-    independent_evidence_share: float = Field(ge=0, le=1)
+    independent_or_community_evidence_share: float = Field(ge=0, le=1)
     source_organization_count: int = Field(ge=0)
 
 
 class ScoringResult(StrictModel):
     model_id: Identifier
+    release_date: date
     capability: ComponentScore
     efficiency: ComponentScore
     economics: ComponentScore
     partial_overall_estimate: float | None
     headline_overall: float | None
     value: float | None
-    value_methodology: ValueFormula
+    value_scenario: str
+    value_formula: ValueFormula
+    value_parameters: dict[str, float] = Field(default_factory=dict)
     overall_coverage: float = Field(ge=0, le=1)
     confidence: Confidence
     eligible: bool
+    scoring_ready: bool
     provisional: bool
     capability_domains: tuple[Domain, ...]
-    evidence_quality_share: float = Field(ge=0, le=1)
+    independent_or_community_evidence_share: float = Field(ge=0, le=1)
     source_record_ids: tuple[Identifier, ...]
     diagnostics: tuple[str, ...]
     confidence_reasons: tuple[str, ...]
     coverage: CoverageSummary
     cohort_id: str
     cohort_model_ids: tuple[Identifier, ...]
-    evaluation_date: date
+    dataset_fingerprint: str
+    scored_data_fingerprint: str
+    data_as_of: date
+    release_window_start: date
+    release_window_end: date
+    engine_version: str
     normalization_version: str
     config_fingerprint: str
     formula_version: str

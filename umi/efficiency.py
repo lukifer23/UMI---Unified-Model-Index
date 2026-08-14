@@ -2,98 +2,106 @@ from __future__ import annotations
 
 from collections import defaultdict
 
-from umi._component import ComponentComputation, consolidate_numeric, weighted_available
+from umi._component import ComponentComputation, weighted_available
 from umi.config import ProjectConfig
+from umi.derived_metrics import EFFICIENCY_ATTRIBUTES, consolidate_derived
 from umi.loading import Dataset
 from umi.normalize import normalize_cohort
 from umi.schemas import ComponentScore, Direction, EfficiencyMeasurement, Provenance
 
-METRICS = {
-    "effective_tokens": "mean_total_tokens",
-    "turns": "mean_turns",
-    "wall_seconds": "mean_wall_seconds",
-    "tool_calls": "mean_tool_calls",
-}
 
-
-def _selected_records(dataset: Dataset) -> dict[tuple[str, str, str], list[EfficiencyMeasurement]]:
+def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComputation:
     grouped: dict[tuple[str, str, str], list[EfficiencyMeasurement]] = defaultdict(list)
     for item in dataset.efficiency:
         grouped[(item.workload, item.cohort_key, item.model_id)].append(item)
-    return grouped
 
-
-def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComputation:
-    grouped = _selected_records(dataset)
-    metric_category_scores: dict[str, dict[str, dict[str, list[float]]]] = {
-        metric: defaultdict(lambda: defaultdict(list)) for metric in METRICS
+    scores: dict[str, dict[str, dict[str, list[float]]]] = {
+        metric: defaultdict(lambda: defaultdict(list)) for metric in EFFICIENCY_ATTRIBUTES
     }
     selected_by_model: dict[str, list[Provenance]] = defaultdict(list)
-    provisional_by_model: dict[str, bool] = defaultdict(bool)
+    provisional_by_model: dict[str, set[str]] = defaultdict(set)
     diagnostics: dict[str, list[str]] = defaultdict(list)
+    series = sorted({(workload, cohort) for workload, cohort, _ in grouped})
 
-    for workload, cohort_key in sorted({(key[0], key[1]) for key in grouped}):
-        consolidated: dict[str, dict[str, float]] = {metric: {} for metric in METRICS}
+    for workload, cohort_key in series:
+        raw_by_metric: dict[str, dict[str, float]] = {
+            metric: {} for metric in EFFICIENCY_ATTRIBUTES
+        }
         categories: dict[str, str] = {}
         for (candidate_workload, candidate_cohort, model_id), records in grouped.items():
-            if candidate_workload != workload or candidate_cohort != cohort_key:
+            if (candidate_workload, candidate_cohort) != (workload, cohort_key):
                 continue
             categories[model_id] = records[0].workload_category.value
-            best = []
-            for metric, attribute in METRICS.items():
-                value, selected, conflict = consolidate_numeric(records, attribute)
-                best.extend(selected)
-                if value is None:
-                    continue
-                if metric == "effective_tokens":
-                    success, _, _ = consolidate_numeric(records, "success_rate")
-                    if success is None:
-                        continue
-                    value = float("inf") if success == 0 else value / success
-                consolidated[metric][model_id] = value
+            for metric in EFFICIENCY_ATTRIBUTES:
+                value, selected, conflict = consolidate_derived(records, metric)
+                if value is not None:
+                    raw_by_metric[metric][model_id] = value
+                    selected_by_model[model_id].extend(selected)
                 if conflict:
-                    diagnostics[model_id].append(f"conflict consolidated for efficiency/{workload}")
-            selected_by_model[model_id].extend(best)
-        for metric, raw_values in consolidated.items():
+                    diagnostics[model_id].append(
+                        f"conflict consolidated for efficiency/{workload}/{metric}"
+                    )
+        for metric, raw_values in raw_by_metric.items():
             normalized = normalize_cohort(
                 raw_values,
                 direction=Direction.LOWER,
+                strategy=config.normalization.default_strategy,
                 log_transform=metric in config.normalization.log_metrics,
                 minimum_robust_cohort=config.normalization.minimum_robust_cohort,
                 minimum_rank_cohort=config.normalization.minimum_rank_cohort,
             )
             for model_id, score in normalized.scores.items():
                 if score is not None:
-                    metric_category_scores[metric][categories[model_id]][model_id].append(score)
-                    provisional_by_model[model_id] |= normalized.provisional
+                    category = categories[model_id]
+                    scores[metric][category][model_id].append(score)
+                    if normalized.provisional:
+                        provisional_by_model[model_id].add(
+                            f"{workload}/{cohort_key}/{metric}"
+                        )
 
     output: dict[str, ComponentScore] = {}
     for model in dataset.models:
         category_values: dict[str, float | None] = {}
+        category_metric_coverage: dict[str, float] = {}
         for category in config.weights.workload_weights:
-            metric_values = {}
-            for metric in METRICS:
-                scores = metric_category_scores[metric].get(category.value, {}).get(model.id, [])
-                metric_values[metric] = sum(scores) / len(scores) if scores else None
-            category_values[category.value], _ = weighted_available(
+            metric_values: dict[str, float | None] = {}
+            for metric in EFFICIENCY_ATTRIBUTES:
+                values = scores[metric].get(category.value, {}).get(model.id, [])
+                metric_values[metric] = sum(values) / len(values) if values else None
+            category_values[category.value], metric_coverage = weighted_available(
                 metric_values, config.weights.efficiency
             )
-        score, coverage = weighted_available(
+            category_metric_coverage[category.value] = metric_coverage
+        score, _ = weighted_available(
             category_values,
             {key.value: value for key, value in config.weights.workload_weights.items()},
         )
-        represented = sum(value is not None for value in category_values.values())
+        coverage = sum(
+            weight * category_metric_coverage[category.value]
+            for category, weight in config.weights.workload_weights.items()
+        )
+        represented = sum(value > 0 for value in category_metric_coverage.values())
+        provisional_ids = provisional_by_model[model.id]
+        if provisional_ids:
+            diagnostics[model.id].append(
+                "provisional normalization cohorts: " + ", ".join(sorted(provisional_ids))
+            )
         records_by_id = {item.record_id: item for item in selected_by_model[model.id]}
         output[model.id] = ComponentScore(
             score=score,
             coverage=coverage,
-            provisional=provisional_by_model[model.id],
+            provisional=bool(provisional_ids),
             source_record_ids=tuple(sorted(records_by_id)),
             diagnostics=tuple(sorted(set(diagnostics[model.id]))),
             coverage_details={
                 "efficiency_workloads_represented": represented,
                 "efficiency_workloads_total": len(config.weights.workload_weights),
                 "efficiency_workload_weighted": coverage,
+                "efficiency_metric_weighted": coverage,
+                **{
+                    f"efficiency_metric_coverage_{category}": value
+                    for category, value in category_metric_coverage.items()
+                },
             },
         )
     return ComponentComputation(

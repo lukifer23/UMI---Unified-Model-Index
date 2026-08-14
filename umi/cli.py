@@ -79,6 +79,11 @@ def _add_common(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--format", choices=("json", "csv"), default="json")
     parser.add_argument("--output")
     parser.add_argument("--source-registry")
+    parser.add_argument(
+        "--allow-unready",
+        action="store_true",
+        help="Development-only: score unready records provisionally; headlines remain suppressed",
+    )
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -115,14 +120,21 @@ def run(args: argparse.Namespace) -> int:
             report = type(report)(
                 errors=tuple(sorted({*report.errors, *source_report.errors})),
                 warnings=tuple(sorted({*report.warnings, *source_report.warnings})),
+                readiness_failures=report.readiness_failures,
             )
         _emit(
-            {"valid": report.valid, "errors": report.errors, "warnings": report.warnings},
+            {
+                "schema_valid": report.schema_valid,
+                "scoring_ready": report.scoring_ready,
+                "errors": report.errors,
+                "readiness_failures": report.readiness_failures,
+                "warnings": report.warnings,
+            },
             args.format,
             args.output,
         )
-        return 0 if report.valid else 1
-    results = score_dataset(dataset, config)
+        return 0 if report.scoring_ready else 1
+    results = score_dataset(dataset, config, allow_unready=args.allow_unready)
     payload: Any
     if args.command == "references":
         payload = reference_observations(dataset)
@@ -138,11 +150,7 @@ def run(args: argparse.Namespace) -> int:
             dataset, config.normalization.correlation_min_overlap, config
         )
     else:
-        payload = [
-            {"dimension": dimension, **asdict(item)}
-            for dimension, items in pareto_dimensions(dataset, results).items()
-            for item in items
-        ]
+        payload = pareto_dimensions(dataset, results)
     _emit(payload, args.format, args.output)
     return 0
 

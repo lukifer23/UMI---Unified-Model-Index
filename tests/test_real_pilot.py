@@ -40,7 +40,7 @@ def test_real_pilot_is_traceable_but_not_headline_eligible() -> None:
     assert all(not item.eligible for item in results)
     assert all(item.headline_overall is None for item in results)
     assert all(item.value is None for item in results)
-    assert all(item.evaluation_date.isoformat() == "2026-07-17" for item in results)
+    assert all(item.data_as_of.isoformat() == "2026-07-17" for item in results)
     assert all(
         any("attempted-task cost excluded" in message for message in item.diagnostics)
         for item in results
@@ -95,7 +95,9 @@ def test_real_pilot_cli_validates_registry_and_exports_stable_csv(
         ]
     )
     assert run(validate_args) == 0
-    assert '"valid": true' in capsys.readouterr().out
+    validation = capsys.readouterr().out
+    assert '"schema_valid": true' in validation
+    assert '"scoring_ready": true' in validation
 
     reference_args = build_parser().parse_args(
         [
