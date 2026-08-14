@@ -119,7 +119,7 @@ snapshots:
     license_url: https://creativecommons.org/licenses/by/4.0/
     attribution: Epoch AI, AI Benchmarking Hub, 2026
     redistribution_scope: full_artifact
-    notes: Official raw export frozen whole; GPQA, SciCode, and CritPt are adapted under the cited AA v4.1.1 public protocol profile.
+    notes: Official raw export frozen whole; GPQA, SciCode, CritPt, and verified ARC-AGI-2 rows are adapted under cited public protocols.
   - id: arena-agent-2026-08-14
     title: Arena Agent leaderboard revision snapshot
     source:

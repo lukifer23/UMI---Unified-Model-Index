@@ -1,6 +1,7 @@
 from umi.adapters.arena import adapt_arena_json
 from umi.adapters.epoch import adapt_epoch_csv
 from umi.adapters.epoch_benchmarks import (
+    adapt_epoch_arc_agi_2_zip,
     adapt_epoch_benchmarks_zip,
     adapt_epoch_external_benchmarks_zip,
     adapt_epoch_gpqa_zip,
@@ -15,6 +16,7 @@ __all__ = [
     "adapt_arena_json",
     "adapt_deepswe_facts",
     "adapt_epoch_benchmarks_zip",
+    "adapt_epoch_arc_agi_2_zip",
     "adapt_epoch_csv",
     "adapt_epoch_external_benchmarks_zip",
     "adapt_epoch_gpqa_zip",

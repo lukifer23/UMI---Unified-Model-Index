@@ -8,7 +8,7 @@
   },
   {
     "baseline_change": 0.0,
-    "capability_score": 87.36842105263158,
+    "capability_score": 76.9620253164557,
     "headline_overall": null,
     "model_id": "claude-opus-5-max",
     "scenario": "ablate_arena-agent-2026-08-14"
@@ -22,14 +22,14 @@
   },
   {
     "baseline_change": 0.0,
-    "capability_score": 75.43859649122807,
+    "capability_score": 82.27848101265822,
     "headline_overall": null,
     "model_id": "gpt-5.6-sol-max",
     "scenario": "ablate_arena-agent-2026-08-14"
   },
   {
     "baseline_change": 0.0,
-    "capability_score": 37.19298245614035,
+    "capability_score": 26.83544303797468,
     "headline_overall": null,
     "model_id": "kimi-k3-max",
     "scenario": "ablate_arena-agent-2026-08-14"
@@ -42,8 +42,8 @@
     "scenario": "ablate_deepswe-v1.1-2026-08-13"
   },
   {
-    "baseline_change": -10.89783281733746,
-    "capability_score": 76.47058823529412,
+    "baseline_change": -11.562785772729455,
+    "capability_score": 65.39923954372624,
     "headline_overall": null,
     "model_id": "claude-opus-5-max",
     "scenario": "ablate_deepswe-v1.1-2026-08-13"
@@ -56,15 +56,15 @@
     "scenario": "ablate_deepswe-v1.1-2026-08-13"
   },
   {
-    "baseline_change": 0.378396972824234,
-    "capability_score": 75.8169934640523,
+    "baseline_change": 3.6530779227030052,
+    "capability_score": 85.93155893536122,
     "headline_overall": null,
     "model_id": "gpt-5.6-sol-max",
     "scenario": "ablate_deepswe-v1.1-2026-08-13"
   },
   {
-    "baseline_change": 10.519435844513247,
-    "capability_score": 47.712418300653596,
+    "baseline_change": 0.9212109544207578,
+    "capability_score": 27.75665399239544,
     "headline_overall": null,
     "model_id": "kimi-k3-max",
     "scenario": "ablate_deepswe-v1.1-2026-08-13"
@@ -77,7 +77,7 @@
     "scenario": "ablate_epoch-benchmark-data-2026-08-14"
   },
   {
-    "baseline_change": 12.631578947368425,
+    "baseline_change": 23.037974683544306,
     "capability_score": 100.0,
     "headline_overall": null,
     "model_id": "claude-opus-5-max",
@@ -91,14 +91,14 @@
     "scenario": "ablate_epoch-benchmark-data-2026-08-14"
   },
   {
-    "baseline_change": -0.43859649122806843,
+    "baseline_change": -7.278481012658219,
     "capability_score": 75.0,
     "headline_overall": null,
     "model_id": "gpt-5.6-sol-max",
     "scenario": "ablate_epoch-benchmark-data-2026-08-14"
   },
   {
-    "baseline_change": -12.19298245614035,
+    "baseline_change": -1.835443037974681,
     "capability_score": 25.0,
     "headline_overall": null,
     "model_id": "kimi-k3-max",
@@ -112,8 +112,8 @@
     "scenario": "equal_family"
   },
   {
-    "baseline_change": -13.201754385964904,
-    "capability_score": 74.16666666666667,
+    "baseline_change": -9.852880773682827,
+    "capability_score": 67.10914454277287,
     "headline_overall": null,
     "model_id": "claude-opus-5-max",
     "scenario": "equal_family"
@@ -126,15 +126,15 @@
     "scenario": "equal_family"
   },
   {
-    "baseline_change": 1.0197368421052602,
-    "capability_score": 76.45833333333333,
+    "baseline_change": 1.0548523206751241,
+    "capability_score": 83.33333333333334,
     "headline_overall": null,
     "model_id": "gpt-5.6-sol-max",
     "scenario": "equal_family"
   },
   {
-    "baseline_change": 12.18201754385965,
-    "capability_score": 49.375,
+    "baseline_change": 8.120309174414704,
+    "capability_score": 34.955752212389385,
     "headline_overall": null,
     "model_id": "kimi-k3-max",
     "scenario": "equal_family"

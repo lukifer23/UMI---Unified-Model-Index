@@ -631,6 +631,165 @@ measurements:
   number_of_tasks: 70
   number_of_trials: 350
   pass_at_k: 1
+- record_id: epoch-arc-agi-2-gpt-5.6-sol-max-reciqjzyogw8gyglw
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-07-09'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: arc-agi-2-semi-private-120
+  harness_version: arc-prize-verified-policy-2026-08-14
+  metric_definition: Percent of semi-private ARC-AGI-2 tasks solved with up to two
+    exact-grid predictions per test output
+  tools_enabled: false
+  notes: ARC Prize verified-leaderboard result redistributed by Epoch. Cost per task
+    is preserved as source metadata but does not enter Economics without exact deployment
+    and billing provenance. Evaluation date is not exposed.
+  evaluator: ARC Prize Foundation
+  harness_owner: ARC Prize Foundation
+  run_executor: ARC Prize Foundation
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-benchmarks-sol-max
+  signal_id: arc-agi-2
+  source_model_id: gpt-5.6-sol_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: arc-agi-2
+  model_id: gpt-5.6-sol-max
+  value: 92.5
+  cohort_key: arc-prize-verified-arc-agi-2-semi-private-pass2
+  evaluation_settings:
+    source_archive_member: arc_agi_2_external.csv
+    source_row_key: recIQjZYogw8GYgLW
+    source_display_name: GPT-5.6 Sol (Max)
+    source_cost_per_task_usd: 1.44
+    evaluation_set: semi-private
+    attempts_per_test_output: 2
+    methodology_url: https://arcprize.org/policy
+  number_of_tasks: 120
+  pass_at_k: 2
+- record_id: epoch-arc-agi-2-claude-opus-5-max-recryrmlezuut9acr
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-07-24'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: arc-agi-2-semi-private-120
+  harness_version: arc-prize-verified-policy-2026-08-14
+  metric_definition: Percent of semi-private ARC-AGI-2 tasks solved with up to two
+    exact-grid predictions per test output
+  tools_enabled: false
+  notes: ARC Prize verified-leaderboard result redistributed by Epoch. Cost per task
+    is preserved as source metadata but does not enter Economics without exact deployment
+    and billing provenance. Evaluation date is not exposed.
+  evaluator: ARC Prize Foundation
+  harness_owner: ARC Prize Foundation
+  run_executor: ARC Prize Foundation
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-benchmarks-opus-max
+  signal_id: arc-agi-2
+  source_model_id: claude-opus-5_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: arc-agi-2
+  model_id: claude-opus-5-max
+  value: 90.42
+  cohort_key: arc-prize-verified-arc-agi-2-semi-private-pass2
+  evaluation_settings:
+    source_archive_member: arc_agi_2_external.csv
+    source_row_key: recRyRMLEzUUt9Acr
+    source_display_name: Claude Opus 5 (Max)
+    source_cost_per_task_usd: null
+    evaluation_set: semi-private
+    attempts_per_test_output: 2
+    methodology_url: https://arcprize.org/policy
+  number_of_tasks: 120
+  pass_at_k: 2
+- record_id: epoch-arc-agi-2-kimi-k3-max-rec4whjt7mjgylj9q
+  source:
+    organization: Epoch AI
+    url: https://epoch.ai/data/benchmark_data.zip
+    accessed: '2026-08-14'
+  model_release_date: '2026-07-16'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: arc-agi-2-semi-private-120
+  harness_version: arc-prize-verified-policy-2026-08-14
+  metric_definition: Percent of semi-private ARC-AGI-2 tasks solved with up to two
+    exact-grid predictions per test output
+  tools_enabled: false
+  notes: ARC Prize verified-leaderboard result redistributed by Epoch. Cost per task
+    is preserved as source metadata but does not enter Economics without exact deployment
+    and billing provenance. Evaluation date is not exposed.
+  evaluator: ARC Prize Foundation
+  harness_owner: ARC Prize Foundation
+  run_executor: ARC Prize Foundation
+  raw_artifact_available: true
+  capture_type: raw_upstream_payload
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: epoch-benchmark-data-2026-08-14
+  source_registry_snapshot_id: epoch-benchmark-data-2026-08-14
+  crosswalk_entry_id: epoch-benchmarks-kimi-max
+  signal_id: arc-agi-2
+  source_model_id: kimi-k3_max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: arc-agi-2
+  model_id: kimi-k3-max
+  value: 60.416666666666664
+  cohort_key: arc-prize-verified-arc-agi-2-semi-private-pass2
+  evaluation_settings:
+    source_archive_member: arc_agi_2_external.csv
+    source_row_key: rec4wHjT7MjgYLj9Q
+    source_display_name: Kimi K3 (Max)
+    source_cost_per_task_usd: 1.5926940250000003
+    evaluation_set: semi-private
+    attempts_per_test_output: 2
+    methodology_url: https://arcprize.org/policy
+  number_of_tasks: 120
+  pass_at_k: 2
 - record_id: arena-agent-claude-opus-5-max-2026-08-12
   source:
     organization: Arena

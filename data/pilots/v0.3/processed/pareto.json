@@ -12,8 +12,10 @@
   },
   {
     "cohort_key": "deepswe-v1.1-2026-08-13",
-    "dominated": false,
-    "dominator_ids": [],
+    "dominated": true,
+    "dominator_ids": [
+      "gpt-5.6-sol-max"
+    ],
     "metric": "effective_agent_steps",
     "model_id": "claude-opus-5-max",
     "workload": "deepswe-v1.1",
@@ -68,8 +70,10 @@
   },
   {
     "cohort_key": "deepswe-v1.1-2026-08-13",
-    "dominated": false,
-    "dominator_ids": [],
+    "dominated": true,
+    "dominator_ids": [
+      "gpt-5.6-sol-max"
+    ],
     "metric": "effective_input_tokens",
     "model_id": "claude-opus-5-max",
     "workload": "deepswe-v1.1",
@@ -123,8 +127,10 @@
   },
   {
     "cohort_key": "deepswe-v1.1-2026-08-13",
-    "dominated": false,
-    "dominator_ids": [],
+    "dominated": true,
+    "dominator_ids": [
+      "gpt-5.6-sol-max"
+    ],
     "metric": "effective_output_tokens",
     "model_id": "claude-opus-5-max",
     "workload": "deepswe-v1.1",

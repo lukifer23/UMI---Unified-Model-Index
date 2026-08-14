@@ -1,5 +1,5 @@
 {
-  "config_fingerprint": "72ae3a5fb95bb261cdd32afb5b6d75b8a018f5ba1047e838a7731c5c44b05235",
+  "config_fingerprint": "97ee08d361e603252286b0137d80e778130e19b3bbf5af36ec3dfd64358278c7",
   "edges": [
     {
       "evidence": "AA Intelligence v4.1 methodology",
@@ -60,6 +60,12 @@
       "relation": "contains",
       "source": "epoch-eci",
       "target": "deepswe-v1.1"
+    },
+    {
+      "evidence": "Epoch included-benchmarks documentation",
+      "relation": "contains",
+      "source": "epoch-eci",
+      "target": "arc-agi-2"
     },
     {
       "evidence": "Datacurve DeepSWE leaderboard payload",
@@ -145,6 +151,12 @@
       "budget_group": "hle",
       "disposition": "scored",
       "id": "hle",
+      "role": "task"
+    },
+    {
+      "budget_group": "arc-agi-2",
+      "disposition": "scored",
+      "id": "arc-agi-2",
       "role": "task"
     },
     {

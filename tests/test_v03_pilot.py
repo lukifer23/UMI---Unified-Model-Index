@@ -16,6 +16,7 @@ from umi.adapters import (
     adapt_aa_facts,
     adapt_arena_json,
     adapt_deepswe_facts,
+    adapt_epoch_arc_agi_2_zip,
     adapt_epoch_csv,
     adapt_epoch_external_benchmarks_zip,
     adapt_epoch_gpqa_zip,
@@ -400,6 +401,31 @@ def test_epoch_external_benchmarks_preserve_source_date_and_reject_fallback(
     }
 
 
+def test_epoch_arc_agi_2_accepts_only_exact_verified_max_rows(crosswalk) -> None:
+    result = adapt_epoch_arc_agi_2_zip(
+        SOURCES / "epoch-benchmark-data-2026-08-14.zip",
+        crosswalk,
+        source_id="epoch-benchmarks",
+        artifact_id="epoch-benchmark-data-2026-08-14",
+    )
+    assert {
+        item.model_id: item.value for item in result.benchmarks
+    } == pytest.approx(
+        {
+            "claude-opus-5-max": 90.42,
+            "gpt-5.6-sol-max": 92.5,
+            "kimi-k3-max": 60.416666666666664,
+        }
+    )
+    assert all(item.number_of_tasks == 120 and item.pass_at_k == 2 for item in result.benchmarks)
+    assert all(item.tools_enabled is False for item in result.benchmarks)
+    assert all(item.evaluation_date is None for item in result.benchmarks)
+    assert {item.source_row_id for item in result.rejections} == {
+        "arc_agi_2_external.csv:recKlOZaCgYdWkVtG",
+        "arc_agi_2_external.csv:recMTvejGGEdgJHsM",
+    }
+
+
 def test_lab_release_facts_preserve_tariffs_and_claims(crosswalk) -> None:
     openai = adapt_lab_release_facts(SOURCES / "openai-release-facts-2026-08-14.yaml", crosswalk)
     assert len(openai.pricing) == 1
@@ -423,7 +449,7 @@ def test_gap_report_counts_every_configured_model_benchmark_cell(
     assert len(report["capability_cells"]) == len(pilot_dataset.models) * len(
         pilot_config.benchmarks
     )
-    assert sum(report["capability_cell_counts"].values()) == 65
+    assert sum(report["capability_cell_counts"].values()) == 70
     assert all(report["pricing_record_ids"].values())
     assert any(
         str(pilot_config.eligibility.minimum_capability_domains) in blocker
@@ -488,6 +514,7 @@ def test_overlap_cycles_and_unrestricted_double_count_are_rejected(pilot_config)
 def test_documented_overlap_edges_cover_known_composites(pilot_config) -> None:
     edges = {(item.source, item.target, item.relation) for item in pilot_config.overlap.edges}
     assert ("epoch-eci", "deepswe-v1.1", OverlapRelation.CONTAINS) in edges
+    assert ("epoch-eci", "arc-agi-2", OverlapRelation.CONTAINS) in edges
     assert ("arena-agent", "arena-agent-signals", OverlapRelation.CONTAINS) in edges
     assert ("aa-intelligence-v4.1", "hle", OverlapRelation.CONTAINS) in edges
 
@@ -530,20 +557,20 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
         item.model_id: item.coverage.capability_absolute_weighted for item in results.values()
     } == {
         "claude-fable-5-max": 0.165,
-        "claude-opus-5-max": 0.35625,
+        "claude-opus-5-max": 0.49375,
         "glm-5.2-max": 0.35625,
-        "gpt-5.6-sol-max": 0.35625,
-        "kimi-k3-max": 0.35625,
+        "gpt-5.6-sol-max": 0.49375,
+        "kimi-k3-max": 0.49375,
     }
     assert {
         item.model_id: item.capability.score for item in results.values()
     } == pytest.approx(
         {
             "claude-fable-5-max": 50.0,
-            "claude-opus-5-max": 87.36842105263158,
+            "claude-opus-5-max": 76.9620253164557,
             "glm-5.2-max": 0.0,
-            "gpt-5.6-sol-max": 75.43859649122807,
-            "kimi-k3-max": 37.19298245614035,
+            "gpt-5.6-sol-max": 82.27848101265822,
+            "kimi-k3-max": 26.83544303797468,
         }
     )
     assert {

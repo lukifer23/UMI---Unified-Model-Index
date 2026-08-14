@@ -1,4 +1,4 @@
-# UMI v0.3.3 verification record
+# UMI v0.3.4 verification record
 
 Verified on 2026-08-14 from `main` on macOS with Python 3.14.3 against the Python 3.11+
 project contract.
@@ -7,10 +7,10 @@ project contract.
 
 | Check | Outcome |
 |---|---|
-| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.3 as a wheel from the committed lock |
+| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.4 as a wheel from the committed lock |
 | `uv run --no-sync python -m scripts.build_v03_pilot` | passed; rebuilt all raw and processed pilot artifacts offline |
 | schema equality test against `umi.schema_export.rendered_schemas()` | passed; committed machine-readable schemas remain current |
-| `PYTHONPATH=. uv run --no-sync pytest` | 94 passed; 93% combined `umi`/`analysis` coverage |
+| `PYTHONPATH=. uv run --no-sync pytest` | 95 passed; 93% combined `umi`/`analysis` coverage |
 | `PYTHONPATH=. uv run --no-sync ruff check .` | passed |
 | `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 48 source files |
 | `umi sources validate` | passed |
@@ -51,11 +51,12 @@ README rather than hidden as a local workaround.
 
 - Five exact canonical named-release configurations are visible, each with label-exact identity and
   first-party nominal pricing record.
-- The configured capability matrix contains 65 model/benchmark cells: 17 ready scored, 3 diagnostic
-  measurements, 1 diagnostic reference, 2 vendor-claim-only, and 42 missing.
+- The configured capability matrix contains 70 model/benchmark cells: 20 ready scored, 3 diagnostic
+  measurements, 1 diagnostic reference, 2 vendor-claim-only, and 44 missing.
 - Every model-specific score is labeled `real evidence — model-specific partial estimate`; it is not
-  a UMI rank. Four estimates use four of 13 capability families across two domains with 35.625%
-  Capability coverage; Fable remains on one family at 16.5% because fallback absence is unverified.
+  a UMI rank. Opus, Sol, and Kimi use five of 14 Capability families across three domains with
+  49.375% coverage; GLM uses four families across two domains at 35.625%; Fable remains on one
+  family at 16.5%.
 - Every publishable rank and every `headline_overall` remains null.
 - No workload category has ready all-model Efficiency evidence or successful-task Economics
   evidence. Nominal token tariffs are not converted into task costs without observed task usage and
@@ -89,7 +90,7 @@ umi/                              validation, readiness, scoring, fingerprinting
 
 ## Remaining evidence required for a real headline UMI
 
-- exact-configuration, common-cohort capability results for the 42 missing cells, beginning with
+- exact-configuration, common-cohort capability results for the 44 missing cells, beginning with
   HLE, Terminal-Bench, ARC-AGI, and long-context/reliability evidence;
 - arithmetic-mean attempt-level cost, input/output/cache-token use, wall time, turn count, and task
   success for the five models across at least three configured workload categories;

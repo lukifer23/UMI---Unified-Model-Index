@@ -1,11 +1,11 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.3 extends the real,
-five-configuration, multi-source pilot with exact DeepSWE, GPQA Diamond, SciCode, and CritPt results
-plus DeepSWE confidence intervals and harness-resource means. It does **not** publish a headline UMI
-score: the evidence supports only provisional, model-specific partial Capability and Efficiency
-estimates.
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.4 extends the real,
+five-configuration, multi-source pilot with exact DeepSWE, GPQA Diamond, SciCode, CritPt, and
+ARC-AGI-2 results plus DeepSWE confidence intervals and harness-resource means. It does **not**
+publish a headline UMI score: the evidence supports only provisional, model-specific partial
+Capability and Efficiency estimates.
 
 The pilot cohort is Claude Opus 5 Max, Claude Fable 5 Max, GPT-5.6 Sol Max, Kimi K3 Max, and
 GLM-5.2 Max. Its frozen sources are Artificial Analysis public facts, Epoch ECI and Benchmarking Hub
@@ -109,8 +109,9 @@ The default Overall formula remains:
 ```
 
 Capability retains the five domain weights and fixed within-domain benchmark-family budgets.
-DeepSWE and SciCode contribute to software engineering; GPQA Diamond and CritPt contribute to
-math/science. The frozen Epoch archive supplies exact Max rows for Opus, Sol, Kimi, and GLM. Fable's
+ARC-AGI-2 contributes to general reasoning; DeepSWE and SciCode contribute to software engineering;
+GPQA Diamond and CritPt contribute to math/science. The frozen Epoch archive supplies exact Max rows
+for Opus, Sol, Kimi, and GLM on the AA benchmarks, and exact ARC rows for Opus, Sol, and Kimi. Fable's
 archive rows remain rejected because SciCode and CritPt identify an Opus 4.8 fallback composite and
 GPQA does not establish fallback absence. The pilot identities are exact named releases and efforts,
 not claimed immutable provider snapshots. Arena Agent rows retain exact source labels, effort,
@@ -124,9 +125,9 @@ whole or unlock Economics.
 
 ## Current limitations
 
-- Only two Capability domains have scored evidence; three are required for headline eligibility.
-- Four configurations have 35.625% Capability coverage; Fable has 16.5%, so their model-specific
-  partials are not one shared ranking.
+- Opus, Sol, and Kimi have 49.375% Capability coverage across three domains; GLM has 35.625% across
+  two, and Fable has 16.5% across one. All remain below the 60% Capability coverage gate, and their
+  model-specific partials are not one shared ranking.
 - Efficiency has only 4.5% absolute coverage; Economics has no ready evidence.
 - Fable 5 Max predates the unchanged 2026-06-15 release-window start.
 - Scores are cohort-relative; no fixed anchor cohort or formal uncertainty propagation exists.

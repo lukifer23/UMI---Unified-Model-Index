@@ -58,6 +58,12 @@ EXTERNAL_BENCHMARKS = (
     },
 )
 
+ARC_AGI_2_DISPLAY_NAMES = {
+    "claude-opus-5_max": "Claude Opus 5 (Max)",
+    "gpt-5.6-sol_max": "GPT-5.6 Sol (Max)",
+    "kimi-k3_max": "Kimi K3 (Max)",
+}
+
 
 def adapt_epoch_benchmarks_zip(
     path: str | Path,
@@ -73,11 +79,127 @@ def adapt_epoch_benchmarks_zip(
     external = adapt_epoch_external_benchmarks_zip(
         path, crosswalk, source_id=source_id, artifact_id=artifact_id
     )
+    arc_agi_2 = adapt_epoch_arc_agi_2_zip(
+        path, crosswalk, source_id=source_id, artifact_id=artifact_id
+    )
     return AdaptationResult(
         source_id=source_id,
         adapter_id="epoch-benchmark-zip-v2",
-        benchmarks=(*gpqa.benchmarks, *external.benchmarks),
-        rejections=(*gpqa.rejections, *external.rejections),
+        benchmarks=(*gpqa.benchmarks, *external.benchmarks, *arc_agi_2.benchmarks),
+        rejections=(*gpqa.rejections, *external.rejections, *arc_agi_2.rejections),
+    )
+
+
+def adapt_epoch_arc_agi_2_zip(
+    path: str | Path,
+    crosswalk: ModelCrosswalk,
+    *,
+    source_id: str,
+    artifact_id: str,
+) -> AdaptationResult:
+    """Adapt exact verified ARC-AGI-2 Max rows and reject label/effort conflicts."""
+    source = Source.model_validate(
+        {
+            "organization": "Epoch AI",
+            "url": "https://epoch.ai/data/benchmark_data.zip",
+            "accessed": date(2026, 8, 14),
+        }
+    )
+    with zipfile.ZipFile(path) as archive:
+        payload = archive.read("arc_agi_2_external.csv").decode("utf-8")
+
+    records: list[BenchmarkMeasurement] = []
+    rejected: list[AdapterRejection] = []
+    relevant_source_ids = {*ARC_AGI_2_DISPLAY_NAMES, "glm-5.2_unknown"}
+    for row in csv.DictReader(io.StringIO(payload)):
+        source_model_id = row["Model version"]
+        if source_model_id not in relevant_source_ids:
+            continue
+        expected_display_name = ARC_AGI_2_DISPLAY_NAMES.get(source_model_id)
+        if expected_display_name is not None and row["Name"] != expected_display_name:
+            rejected.append(
+                AdapterRejection(
+                    source_row_id=f"arc_agi_2_external.csv:{row['id']}",
+                    reason=(
+                        f"source/display effort conflict: {source_model_id} is Max but "
+                        f"display label is {row['Name']!r}"
+                    ),
+                )
+            )
+            continue
+        match = exact_entry(crosswalk, source_id, artifact_id, source_model_id)
+        if match is None or match.canonical_model_id is None:
+            rejected.append(
+                AdapterRejection(
+                    source_row_id=f"arc_agi_2_external.csv:{row['id']}",
+                    reason="no exact Max-effort crosswalk",
+                )
+            )
+            continue
+        cost_per_task = float(row["Cost per task"]) if row["Cost per task"] else None
+        records.append(
+            BenchmarkMeasurement(
+                record_id=identifier(
+                    f"epoch-arc-agi-2-{match.canonical_model_id}-{row['id']}"
+                ),
+                benchmark_id="arc-agi-2",
+                model_id=match.canonical_model_id,
+                source_model_id=source_model_id,
+                value=float(row["Score"]) * 100.0,
+                cohort_key="arc-prize-verified-arc-agi-2-semi-private-pass2",
+                evaluation_date=None,
+                model_release_date=date.fromisoformat(row["Release date"]),
+                measurement_as_of_date=date(2026, 8, 14),
+                evaluation_settings={
+                    "source_archive_member": "arc_agi_2_external.csv",
+                    "source_row_key": row["id"],
+                    "source_display_name": row["Name"],
+                    "source_cost_per_task_usd": cost_per_task,
+                    "evaluation_set": "semi-private",
+                    "attempts_per_test_output": 2,
+                    "methodology_url": "https://arcprize.org/policy",
+                },
+                number_of_tasks=120,
+                pass_at_k=2,
+                source=source,
+                result_type=ResultType.INDEPENDENT,
+                benchmark_version="arc-agi-2-semi-private-120",
+                harness_version="arc-prize-verified-policy-2026-08-14",
+                metric_definition=(
+                    "Percent of semi-private ARC-AGI-2 tasks solved with up to two exact-grid "
+                    "predictions per test output"
+                ),
+                evaluator="ARC Prize Foundation",
+                harness_owner="ARC Prize Foundation",
+                run_executor="ARC Prize Foundation",
+                tools_enabled=False,
+                raw_artifact_available=True,
+                capture_type=ArtifactCaptureType.RAW_UPSTREAM_PAYLOAD,
+                reproducible=False,
+                configuration_verification=ConfigurationVerification(
+                    model_label_exact=True,
+                    release_label_exact=True,
+                    effort_label_exact=True,
+                    fallback_absent=True,
+                ),
+                source_artifact_id=artifact_id,
+                source_registry_snapshot_id=artifact_id,
+                crosswalk_entry_id=match.id,
+                signal_id="arc-agi-2",
+                signal_role=SignalRole.TASK,
+                scoring_disposition=ScoringDisposition.SCORED,
+                notes=(
+                    "ARC Prize verified-leaderboard result redistributed by Epoch. Cost per task "
+                    "is preserved as source metadata but does not enter Economics without exact "
+                    "deployment and billing provenance. Evaluation date is not exposed."
+                ),
+            )
+        )
+    return AdaptationResult(
+        source_id=source_id,
+        adapter_id="epoch-arc-agi-2-zip-v1",
+        benchmarks=tuple(records),
+        rejections=tuple(rejected),
     )
 
 

@@ -1,7 +1,7 @@
-# UMI methodology v0.3.3
+# UMI methodology v0.3.4
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3.3 retains the manually reviewed,
+current policy values; code must not contradict this document. UMI v0.3.4 retains the manually reviewed,
 multi-source evidence pilot. It does not publish a headline UMI ranking.
 
 ## v0.3 source roles and exact identity
@@ -30,7 +30,7 @@ Pilot family budgets are hypotheses:
 
 | Domain | Families |
 |---|---|
-| General reasoning | HLE 1.00 |
+| General reasoning | HLE 0.50; ARC-AGI-2 0.50 |
 | Software engineering | DeepSWE 0.60; Terminal-Bench 2.1 0.25; SciCode 0.15 |
 | Agentic work | GDPval-AA v2 0.60; tau3-Banking 0.40; Arena Agent diagnostic 0.00 |
 | Math/science | GPQA Diamond 0.65; CritPt 0.35 |
@@ -38,6 +38,14 @@ Pilot family budgets are hypotheses:
 
 Equal-family and source-ablation scenarios test these allocations. They do not relax coverage or
 publication gates.
+
+ARC-AGI-2 and HLE split the General-reasoning domain equally as a transparent pilot hypothesis:
+ARC-AGI-2 measures few-shot fluid abstraction and exact grid transformation, while HLE measures
+broad expert-level question answering. Neither may stand in for the other. The split is fixed before
+ARC scores enter normalization, and missing HLE remains missing coverage rather than being
+reweighted into ARC-AGI-2. ARC records use the verified semi-private 120-task leaderboard, pass@2,
+one published run, direct input-to-output prediction, and no client-side tools. Unknown effort and
+source/display-label conflicts are rejected.
 
 Arena Agent's aggregate is a causal/field-utility preference construct rather than an atomic task
 success measurement. v0.3.1 therefore follows the constituent-first policy: the aggregate remains
@@ -313,7 +321,7 @@ that limitation.
 
 ## Efficiency
 
-The v0.3.3 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
+The v0.3.4 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
 10% effective reasoning tokens, 10% effective cached tokens, 10% effective turns, 15% effective
 agent steps, 15% effective wall time, and 10% effective tool calls. These are policy weights, not
 empirically learned parameters. Token subtypes are kept distinct: a total-token field is not scored

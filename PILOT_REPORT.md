@@ -9,19 +9,19 @@ workload, and Capability-domain gates. This is the expected outcome, not a faile
 
 ## Accepted scored evidence
 
-| Configuration | DeepSWE v1.1 (95% CI) | GPQA | SciCode | CritPt | Partial Capability | Partial Efficiency | Headline |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Claude Opus 5 Max | 73.65% (69.78–77.52) | 93.88% | 55.67% | 29.14% | 87.37 | 41.67 | null |
-| Claude Fable 5 Max | 69.72% (65.69–73.76) | rejected | rejected | rejected | 50.00 | 50.00 | null |
-| GPT-5.6 Sol Max | 72.67% (69.84–75.50) | 93.50% | 56.13% | 32.30% | 75.44 | 100.00 | null |
-| Kimi K3 Max | 68.51% (63.98–73.05) | 93.12% | 58.68% | 23.40% | 37.19 | 58.33 | null |
-| GLM-5.2 Max | 43.78% (42.05–45.50) | 91.86% | 50.46% | 20.86% | 0.00 | 0.00 | null |
+| Configuration | ARC-AGI-2 | DeepSWE v1.1 (95% CI) | GPQA | SciCode | CritPt | Partial Capability | Partial Efficiency | Headline |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Claude Opus 5 Max | 90.42% | 73.65% (69.78–77.52) | 93.88% | 55.67% | 29.14% | 76.96 | 41.67 | null |
+| Claude Fable 5 Max | missing | 69.72% (65.69–73.76) | rejected | rejected | rejected | 50.00 | 50.00 | null |
+| GPT-5.6 Sol Max | 92.50% | 72.67% (69.84–75.50) | 93.50% | 56.13% | 32.30% | 82.28 | 100.00 | null |
+| Kimi K3 Max | 60.42% | 68.51% (63.98–73.05) | 93.12% | 58.68% | 23.40% | 26.84 | 58.33 | null |
+| GLM-5.2 Max | rejected: unknown effort | 43.78% (42.05–45.50) | 91.86% | 50.46% | 20.86% | 0.00 | 0.00 | null |
 
-Partial Capability is cohort-relative. Four models cover the fixed DeepSWE, SciCode, GPQA, and
-CritPt budgets—35.625% of Capability across two domains—while Fable covers only DeepSWE at 16.5%.
-Those model-specific partials are not directly rankable across evidence profiles and are not Overall
-scores. Fable is also release-window-ineligible because its 2026-06-09 release predates the
-2026-06-15 start.
+Partial Capability is cohort-relative. Opus, Sol, and Kimi cover 49.375% across ARC-AGI-2 plus the
+four earlier task families and three domains. GLM covers 35.625% across four families and two domains;
+Fable covers only DeepSWE at 16.5%. Those model-specific partials are not directly rankable across
+evidence profiles and are not Overall scores. Fable is also release-window-ineligible because its
+2026-06-09 release predates the 2026-06-15 start.
 
 ## Diagnostic evidence
 
@@ -35,6 +35,9 @@ scores. Fable is also release-window-ineligible because its 2026-06-09 release p
   configurations. Their execution dates are not established, so UMI keeps `evaluation_date` null
   and uses the frozen measurement-as-of date for freshness. Fable's rows explicitly include Opus
   4.8 fallback and are rejected.
+- ARC Prize verified-leaderboard ARC-AGI-2 rows score for Opus, Sol, and Kimi on the semi-private
+  120-task pass@2 cohort. One duplicate Opus source ID whose display label says High is rejected,
+  as is GLM's unknown-effort row. Published task cost is retained as metadata, not Economics.
 - Arena Agent and text/style-control ratings are diagnostic preference evidence. The Agent artifact
   has exact labels and efforts but no immutable snapshot/deployment identity; missing or non-Max
   effort labels are rejected.
@@ -49,7 +52,8 @@ scores. Fable is also release-window-ineligible because its 2026-06-09 release p
 
 ## Why no headline exists
 
-- scored Capability covers software engineering and math/science, below the three-domain gate;
+- Opus, Sol, and Kimi reach three Capability domains but only 0.49375 weighted coverage, below 0.60;
+  GLM and Fable also remain below the three-domain breadth gate;
 - Efficiency coverage is 0.045, below 0.50, and Economics coverage is zero, below 0.40;
 - ready resources cover only DeepSWE in one of three configured coding families and three of eight metrics;
 - missing workload evidence is not reweighted to make the cohort eligible.

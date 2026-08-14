@@ -17,8 +17,8 @@
       "cohort_key": "aa-v4.1.1-scicode-test-288-background-pass1"
     }
   ],
-  "common_evidence_profile_id": "8ef661729ce67588cdf62dc81fa6d6697a5e4e833e201e32027baaaedbedaa7d",
-  "comparison_group_id": "95028a44e0c07927780289dbf42439088b7fb3e1d5b52bcc84df855e5eaa0fb7",
+  "common_evidence_profile_id": "c031559360980050d9da79a4f0f6317845c443343275bbb1f84f17b133f69cb6",
+  "comparison_group_id": "fb0e4022280c947537b52a0fb4c301c9c7d1787f143704858c8720be8715d2da",
   "comparison_model_ids": [
     "claude-opus-5-max",
     "glm-5.2-max",

@@ -2,8 +2,8 @@
   "capability_cell_counts": {
     "diagnostic_measurement": 3,
     "diagnostic_reference": 1,
-    "missing": 42,
-    "ready_scored": 17,
+    "missing": 44,
+    "ready_scored": 20,
     "vendor_claim_only": 2
   },
   "capability_cells": [
@@ -46,6 +46,52 @@
       "model_id": "kimi-k3-max",
       "record_ids": [],
       "status": "missing"
+    },
+    {
+      "benchmark_id": "arc-agi-2",
+      "domain": "general_reasoning",
+      "family": "arc-agi-2",
+      "model_id": "claude-fable-5-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "arc-agi-2",
+      "domain": "general_reasoning",
+      "family": "arc-agi-2",
+      "model_id": "claude-opus-5-max",
+      "record_ids": [
+        "epoch-arc-agi-2-claude-opus-5-max-recryrmlezuut9acr"
+      ],
+      "status": "ready_scored"
+    },
+    {
+      "benchmark_id": "arc-agi-2",
+      "domain": "general_reasoning",
+      "family": "arc-agi-2",
+      "model_id": "glm-5.2-max",
+      "record_ids": [],
+      "status": "missing"
+    },
+    {
+      "benchmark_id": "arc-agi-2",
+      "domain": "general_reasoning",
+      "family": "arc-agi-2",
+      "model_id": "gpt-5.6-sol-max",
+      "record_ids": [
+        "epoch-arc-agi-2-gpt-5.6-sol-max-reciqjzyogw8gyglw"
+      ],
+      "status": "ready_scored"
+    },
+    {
+      "benchmark_id": "arc-agi-2",
+      "domain": "general_reasoning",
+      "family": "arc-agi-2",
+      "model_id": "kimi-k3-max",
+      "record_ids": [
+        "epoch-arc-agi-2-kimi-k3-max-rec4whjt7mjgylj9q"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "deepswe-v1.1",
