@@ -121,6 +121,7 @@ def scoring_dataset(dataset: Dataset, *, allow_unready: bool = False) -> tuple[D
                 "pricing": (),
                 # External indexes are diagnostic references in v0.2.1.
                 "external_indexes": (),
+                "release_claims": (),
                 # The scored fingerprint retains the accepted-record audit manifest only.
                 "complete_audit_fingerprint": None,
             }

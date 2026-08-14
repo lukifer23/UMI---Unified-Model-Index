@@ -14,6 +14,7 @@ from umi.schemas import (
     ModelCrosswalk,
     ModelCrosswalkEntry,
     PricingRecord,
+    ReleaseClaim,
     SourceSnapshot,
     TaskEconomicsMeasurement,
 )
@@ -27,6 +28,7 @@ class Dataset(BaseModel):
     efficiency: tuple[EfficiencyMeasurement, ...]
     task_economics: tuple[TaskEconomicsMeasurement, ...]
     external_indexes: tuple[ExternalIndexMeasurement, ...]
+    release_claims: tuple[ReleaseClaim, ...] = ()
     scored_audit_fingerprint: str | None = None
     complete_audit_fingerprint: str | None = None
     adapter_versions: tuple[str, ...] = ()
@@ -43,6 +45,10 @@ def _records(path: Path, key: str) -> list[object]:
     if not isinstance(data, dict) or not isinstance(data.get(key), list):
         raise ValueError(f"{path} must contain a top-level {key} list")
     return list(data[key])
+
+
+def _optional_records(path: Path, key: str) -> list[object]:
+    return _records(path, key) if path.is_file() else []
 
 
 def load_dataset(data_dir: str | Path) -> Dataset:
@@ -79,6 +85,10 @@ def load_dataset(data_dir: str | Path) -> Dataset:
         external_indexes=tuple(
             ExternalIndexMeasurement.model_validate(item)
             for item in _records(root / "external_indexes.yaml", "measurements")
+        ),
+        release_claims=tuple(
+            ReleaseClaim.model_validate(item)
+            for item in _optional_records(root / "release_claims.yaml", "claims")
         ),
         scored_audit_fingerprint=(
             str(audit["scored_audit_fingerprint"])

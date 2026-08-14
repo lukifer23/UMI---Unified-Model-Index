@@ -31,6 +31,7 @@ def complete_audit_payload(dataset: Dataset, config: ProjectConfig) -> dict[str,
         *dataset.efficiency,
         *dataset.task_economics,
         *dataset.external_indexes,
+        *dataset.release_claims,
     )
     return {
         "models": _ordered(dataset.models, "id"),

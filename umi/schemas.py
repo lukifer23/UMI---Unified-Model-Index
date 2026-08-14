@@ -361,6 +361,28 @@ class ExternalIndexMeasurement(Provenance):
     evaluation_date: date
 
 
+class ReleaseClaim(Provenance):
+    """Literal lab release claim retained for descriptive calibration only."""
+
+    claim_text: str = Field(min_length=1)
+    model_id: Identifier
+    model_snapshot_id: Identifier
+    benchmark_id: Identifier
+    value: float
+    unit: Unit
+    direction: Direction
+    cohort_key: Identifier
+    evaluation_date: date
+
+    @model_validator(mode="after")
+    def diagnostic_only(self) -> ReleaseClaim:
+        if self.record_status != RecordStatus.DIAGNOSTIC_ONLY:
+            raise ValueError("release claims must be diagnostic-only")
+        if self.scoring_disposition != ScoringDisposition.DIAGNOSTIC_ONLY:
+            raise ValueError("release claims cannot be scored")
+        return self
+
+
 class SourceSnapshot(StrictModel):
     id: Identifier
     title: str = Field(min_length=1)

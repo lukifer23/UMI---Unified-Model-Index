@@ -1639,6 +1639,266 @@
       "title": "RecordStatus",
       "type": "string"
     },
+    "ReleaseClaim": {
+      "additionalProperties": false,
+      "description": "Literal lab release claim retained for descriptive calibration only.",
+      "properties": {
+        "benchmark_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Benchmark Id",
+          "type": "string"
+        },
+        "benchmark_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Benchmark Version"
+        },
+        "claim_text": {
+          "minLength": 1,
+          "title": "Claim Text",
+          "type": "string"
+        },
+        "cohort_key": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Cohort Key",
+          "type": "string"
+        },
+        "configuration_verified": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Configuration Verified"
+        },
+        "direction": {
+          "$ref": "#/$defs/Direction"
+        },
+        "endpoint_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Endpoint Id"
+        },
+        "evaluation_date": {
+          "format": "date",
+          "title": "Evaluation Date",
+          "type": "string"
+        },
+        "evaluator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evaluator"
+        },
+        "harness_owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Harness Owner"
+        },
+        "harness_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Harness Version"
+        },
+        "metric_definition": {
+          "minLength": 1,
+          "title": "Metric Definition",
+          "type": "string"
+        },
+        "model_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "model_snapshot_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Model Snapshot Id",
+          "type": "string"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "raw_artifact_available": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Artifact Available"
+        },
+        "record_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Record Id",
+          "type": "string"
+        },
+        "record_status": {
+          "$ref": "#/$defs/RecordStatus",
+          "default": "ready"
+        },
+        "reproducible": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reproducible"
+        },
+        "result_type": {
+          "$ref": "#/$defs/ResultType"
+        },
+        "run_executor": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Executor"
+        },
+        "scoring_disposition": {
+          "$ref": "#/$defs/ScoringDisposition",
+          "default": "scored"
+        },
+        "service_tier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Service Tier"
+        },
+        "serving_provider": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Serving Provider"
+        },
+        "signal_role": {
+          "$ref": "#/$defs/SignalRole",
+          "default": "task"
+        },
+        "source": {
+          "$ref": "#/$defs/Source"
+        },
+        "source_artifact_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Artifact Id"
+        },
+        "tools_enabled": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tools Enabled"
+        },
+        "unit": {
+          "$ref": "#/$defs/Unit"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "record_id",
+        "source",
+        "result_type",
+        "metric_definition",
+        "claim_text",
+        "model_id",
+        "model_snapshot_id",
+        "benchmark_id",
+        "value",
+        "unit",
+        "direction",
+        "cohort_key",
+        "evaluation_date"
+      ],
+      "title": "ReleaseClaim",
+      "type": "object"
+    },
     "ResultType": {
       "enum": [
         "independent",
@@ -2059,6 +2319,14 @@
         "$ref": "#/$defs/PricingRecord"
       },
       "title": "Pricing",
+      "type": "array"
+    },
+    "release_claims": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ReleaseClaim"
+      },
+      "title": "Release Claims",
       "type": "array"
     },
     "scored_audit_fingerprint": {

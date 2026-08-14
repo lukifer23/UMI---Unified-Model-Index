@@ -11,6 +11,7 @@ from typing import Any
 
 from pydantic import BaseModel, ValidationError
 
+from analysis.claims import calibrate_release_claims
 from analysis.compare import common_capability_comparison
 from analysis.correlations import benchmark_correlations
 from analysis.pareto_metrics import pareto_dimensions
@@ -119,6 +120,7 @@ def build_parser() -> argparse.ArgumentParser:
         "pilot-sensitivity",
         "compare",
         "uncertainty",
+        "claims",
     ):
         child = subparsers.add_parser(command)
         _add_common(child)
@@ -269,6 +271,8 @@ def run(args: argparse.Namespace) -> int:
         payload = common_capability_comparison(dataset, config, tuple(args.models))
     elif args.command == "uncertainty":
         payload = source_bound_capability_sensitivity(dataset, config)
+    elif args.command == "claims":
+        payload = calibrate_release_claims(dataset)
     elif args.command == "rank":
         ranked = rank_results(results, eligible_only=not args.include_provisional)
         payload = [{"rank": item.rank, **item.result.model_dump(mode="json")} for item in ranked]

@@ -8,6 +8,7 @@ from typing import Any
 import yaml
 from pydantic import TypeAdapter
 
+from analysis.claims import calibrate_release_claims
 from analysis.compare import common_capability_comparison
 from analysis.uncertainty import source_bound_capability_sensitivity
 from umi.adapters import (
@@ -144,6 +145,10 @@ def main() -> None:
             source_bound_capability_sensitivity(dataset, config), indent=2, sort_keys=True
         )
         + "\n",
+        encoding="utf-8",
+    )
+    (PROCESSED_ROOT / "release-claim-calibration.json").write_text(
+        json.dumps(calibrate_release_claims(dataset), indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
     five_models = tuple(model.id for model in models)
