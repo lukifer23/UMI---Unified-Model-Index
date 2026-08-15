@@ -140,12 +140,17 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
             "cohort_key": "epoch-gpqa-diamond-1.0.6-simple-evals",
         },
         {
+            "benchmark_id": "hle",
+            "canonical_representation_group": "hle",
+            "cohort_key": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge",
+        },
+        {
             "benchmark_id": "scicode",
             "canonical_representation_group": "scicode",
             "cohort_key": "aa-v4.1.1-scicode-test-288-background-pass1",
         },
     ]
-    assert {item["coverage"] for item in scores} == {0.35625}
+    assert {item["coverage"] for item in scores} == {0.49375}
 
     five_model = common_capability_comparison(
         real_pilot_dataset,
@@ -185,8 +190,14 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
         for item in cast(list[dict[str, object]], comparison["normalization_panels"])
         if item["benchmark_id"] == "gpqa-diamond"
     )
+    hle_panel = next(
+        item
+        for item in cast(list[dict[str, object]], comparison["normalization_panels"])
+        if item["benchmark_id"] == "hle"
+    )
     assert len(cast(list[str], deep_panel["model_ids"])) == 5
     assert len(cast(list[str], gpqa_panel["model_ids"])) == 4
+    assert len(cast(list[str], hle_panel["model_ids"])) == 4
     assert deep_panel["requested_strategy"] == "robust_z"
     assert deep_panel["applied_strategy"] == "percentile"
     assert cast(dict[str, object], deep_panel["normalization_trace"])[

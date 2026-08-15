@@ -37,7 +37,9 @@ def adapt_aa_facts(path: str | Path, crosswalk: ModelCrosswalk) -> AdaptationRes
     source = Source.model_validate(raw["source"])
     as_of = date.fromisoformat(str(raw["as_of"]))
     records: list[ExternalIndexMeasurement] = []
+    benchmarks: list[BenchmarkMeasurement] = []
     rejected: list[AdapterRejection] = []
+    benchmark_raw = cast(dict[str, object] | None, raw.get("benchmark"))
     for row_value in cast(list[object], raw["rows"]):
         row = cast(dict[str, object], row_value)
         source_model_id = str(row["source_model_id"])
@@ -45,6 +47,58 @@ def adapt_aa_facts(path: str | Path, crosswalk: ModelCrosswalk) -> AdaptationRes
         if match is None or match.canonical_model_id is None:
             rejected.append(
                 AdapterRejection(source_row_id=source_model_id, reason="no exact crosswalk")
+            )
+            continue
+        if benchmark_raw is not None:
+            source_rate = float(cast(float, row["source_value_rate"]))
+            benchmarks.append(
+                BenchmarkMeasurement(
+                    record_id=identifier(
+                        f"aa-{benchmark_raw['benchmark_id']}-{match.canonical_model_id}-{as_of}"
+                    ),
+                    benchmark_id=identifier(str(benchmark_raw["benchmark_id"])),
+                    model_id=match.canonical_model_id,
+                    source_model_id=source_model_id,
+                    value=source_rate * 100.0,
+                    cohort_key=identifier(str(benchmark_raw["cohort_key"])),
+                    measurement_as_of_date=as_of,
+                    source=source,
+                    result_type=ResultType.INDEPENDENT,
+                    benchmark_version=str(benchmark_raw["benchmark_version"]),
+                    harness_version=str(benchmark_raw["harness_version"]),
+                    metric_definition=str(benchmark_raw["metric_definition"]),
+                    evaluator=str(benchmark_raw["evaluator"]),
+                    harness_owner=str(benchmark_raw["harness_owner"]),
+                    run_executor=str(benchmark_raw["run_executor"]),
+                    tools_enabled=bool(benchmark_raw["tools_enabled"]),
+                    capture_type=ArtifactCaptureType.REVIEWED_FACT_EXTRACT,
+                    reproducible=bool(benchmark_raw["reproducible"]),
+                    source_artifact_id=artifact_id,
+                    source_registry_snapshot_id=artifact_id,
+                    crosswalk_entry_id=match.id,
+                    signal_id="hle",
+                    configuration_verification=ConfigurationVerification(
+                        model_label_exact=True,
+                        release_label_exact=True,
+                        effort_label_exact=True,
+                        fallback_absent=True,
+                    ),
+                    record_status=RecordStatus.READY,
+                    signal_role=SignalRole.TASK,
+                    scoring_disposition=ScoringDisposition.SCORED,
+                    evaluation_settings={
+                        **cast(dict[str, object], benchmark_raw["evaluation_settings"]),
+                        "source_value_rate": source_rate,
+                    },
+                    number_of_tasks=int(cast(int, benchmark_raw["number_of_tasks"])),
+                    number_of_trials=int(cast(int, benchmark_raw["number_of_trials"])),
+                    sample_count=int(cast(int, benchmark_raw["number_of_tasks"])),
+                    pass_at_k=int(cast(int, benchmark_raw["pass_at_k"])),
+                    notes=(
+                        "Reviewed public-page fact; source rate multiplied by 100 for the "
+                        "configured percent unit. Access date is not an evaluation date."
+                    ),
+                )
             )
             continue
         records.append(
@@ -83,7 +137,8 @@ def adapt_aa_facts(path: str | Path, crosswalk: ModelCrosswalk) -> AdaptationRes
         )
     return AdaptationResult(
         source_id=source_id,
-        adapter_id="aa-reviewed-facts-v1",
+        adapter_id="aa-reviewed-facts-v2" if benchmark_raw is not None else "aa-reviewed-facts-v1",
+        benchmarks=tuple(benchmarks),
         external_indexes=tuple(records),
         rejections=tuple(rejected),
     )

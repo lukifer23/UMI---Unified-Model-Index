@@ -44,6 +44,7 @@ def build_pilot_dashboard(
         "glm-5.2-max": "GLM-5.2",
     }
     benchmark_short_names = {
+        "hle": "HLE",
         "arc-agi-2": "ARC-2",
         "critpt": "CritPt",
         "deepswe-v1.1": "DeepSWE",
@@ -112,7 +113,7 @@ def build_pilot_dashboard(
             "model_id": record.model_id,
             "model_short": model_short_names[record.model_id],
             "benchmark": record.benchmark_id,
-            "benchmark_short": benchmark_short_names[record.benchmark_id],
+            "benchmark_short": benchmark_short_names.get(record.benchmark_id, record.benchmark_id),
             "score": record.value,
             "cohort": record.cohort_key,
             "record_id": record.record_id,
@@ -197,7 +198,7 @@ def build_pilot_dashboard(
         "manifest": {
             "version": 1,
             "surface": "dashboard",
-            "title": "UMI v0.3.4 — five-model pilot evidence report",
+            "title": "UMI v0.3.5 — five-model pilot evidence report",
             "description": (
                 "A reproducible view of current accepted evidence, partial component estimates, "
                 "coverage, and the gates that prevent a headline UMI ranking."

@@ -155,6 +155,7 @@ def build_parser() -> argparse.ArgumentParser:
         required=True,
         choices=(
             "aa",
+            "aa-hle",
             "epoch",
             "epoch-benchmarks",
             "arena-agent",
@@ -194,6 +195,7 @@ def _adapt_source(args: argparse.Namespace) -> Any:
     crosswalk = load_model_crosswalk(args.crosswalk)
     defaults = {
         "aa": root / "aa-reviewed-facts-2026-08-14.yaml",
+        "aa-hle": root / "aa-hle-reviewed-facts-2026-08-14.yaml",
         "epoch": root / "epoch-eci-benchmarks-2026-08-14.csv",
         "epoch-benchmarks": root / "epoch-benchmark-data-2026-08-14.zip",
         "arena-agent": root / "arena-agent-2026-08-14.json",
@@ -205,7 +207,7 @@ def _adapt_source(args: argparse.Namespace) -> Any:
         "lab-zai": root / "zai-release-facts-2026-08-14.yaml",
     }
     artifact = Path(args.artifact) if args.artifact else defaults[args.source]
-    if args.source == "aa":
+    if args.source in {"aa", "aa-hle"}:
         return adapt_aa_facts(artifact, crosswalk)
     if args.source == "epoch":
         return adapt_epoch_csv(

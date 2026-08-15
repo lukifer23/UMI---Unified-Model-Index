@@ -81,7 +81,7 @@ def test_frozen_registry_checksums_and_license_contract(pilot_dataset) -> None:
     )
     assert report.errors == ()
     pilot_snapshots = [item for item in registry.snapshots if "v0.3/" in item.artifact_path]
-    assert len(pilot_snapshots) == 10
+    assert len(pilot_snapshots) == 11
     assert all(item.license_id and item.attribution and item.adapter_id for item in pilot_snapshots)
 
 
@@ -184,15 +184,17 @@ def test_real_pilot_requires_a_valid_governance_bundle(
         for item in pilot_dataset.efficiency
         if item.model_id == scored.model_id and item.signal_id == "deepswe-v1.1-resources"
     )
-    assert readiness_failures(
-        harness_efficiency,
-        next(item for item in pilot_dataset.models if item.id == scored.model_id),
-    ) == ()
+    assert (
+        readiness_failures(
+            harness_efficiency,
+            next(item for item in pilot_dataset.models if item.id == scored.model_id),
+        )
+        == ()
+    )
     efficiency = next(
         item
         for item in pilot_dataset.efficiency
-        if item.model_id == scored.model_id
-        and item.signal_id == "deepswe-v1.1-endpoint-resources"
+        if item.model_id == scored.model_id and item.signal_id == "deepswe-v1.1-endpoint-resources"
     )
     assert "deployment identity is not verified for endpoint-sensitive evidence" in (
         readiness_failures(
@@ -227,30 +229,25 @@ def test_diagnostic_artifact_failure_blocks_strict_audit_but_not_scoring(
         }
     )
 
-    assert validate_scoring_bundle(
-        pilot_dataset, pilot_config, corrupted, registry_path, crosswalk
-    ) == ()
-    strict_report = validate_source_registry(
-        corrupted, registry_path, pilot_dataset
+    assert (
+        validate_scoring_bundle(pilot_dataset, pilot_config, corrupted, registry_path, crosswalk)
+        == ()
     )
+    strict_report = validate_source_registry(corrupted, registry_path, pilot_dataset)
     assert any("checksum mismatch" in error for error in strict_report.errors)
 
 
 def test_score_bundle_rejects_a_forged_acceptance_manifest() -> None:
     registry_path = ROOT / "data" / "sources" / "registry.yaml"
     bundle = load_scoring_bundle(PILOT, ROOT / "config", registry_path, SOURCES / "crosswalk.yaml")
-    forged = bundle.acceptance_manifest.model_copy(
-        update={"fingerprint": "0" * 64}
-    )
+    forged = bundle.acceptance_manifest.model_copy(update={"fingerprint": "0" * 64})
     with pytest.raises(DataValidationError, match="acceptance manifest"):
         score_bundle(bundle.__class__(**{**bundle.__dict__, "acceptance_manifest": forged}))
 
 
 def test_comparison_certificate_is_deterministic_and_source_bound() -> None:
     registry_path = ROOT / "data" / "sources" / "registry.yaml"
-    bundle = load_scoring_bundle(
-        PILOT, ROOT / "config", registry_path, SOURCES / "crosswalk.yaml"
-    )
+    bundle = load_scoring_bundle(PILOT, ROOT / "config", registry_path, SOURCES / "crosswalk.yaml")
     models = ("claude-opus-5-max", "kimi-k3-max", "glm-5.2-max")
     first = build_comparison_certificate(bundle, models)
     second = build_comparison_certificate(bundle, tuple(reversed(models)))
@@ -277,9 +274,7 @@ def test_comparison_certificate_is_deterministic_and_source_bound() -> None:
             bundle.__class__(**{**bundle.__dict__, "acceptance_manifest": forged}), models
         )
 
-    evidence_free = bundle.dataset.models[0].model_copy(
-        update={"id": "evidence-free-model"}
-    )
+    evidence_free = bundle.dataset.models[0].model_copy(update={"id": "evidence-free-model"})
     abstaining_dataset = bundle.dataset.model_copy(
         update={"models": (*bundle.dataset.models, evidence_free)}
     )
@@ -305,8 +300,7 @@ def test_comparison_certificate_is_deterministic_and_source_bound() -> None:
 
 def test_release_claim_non_comparisons_name_the_exact_failed_gate(pilot_dataset) -> None:
     reasons = {
-        item["claim_record_id"]: item["reason"]
-        for item in calibrate_release_claims(pilot_dataset)
+        item["claim_record_id"]: item["reason"] for item in calibrate_release_claims(pilot_dataset)
     }
     assert reasons == {
         "openai-release-claim-deepswe-v1.1-gpt-5.6-sol-max-2026-07-09": "cohort_mismatch",
@@ -388,6 +382,27 @@ def test_adapters_are_offline_deterministic_and_role_safe(monkeypatch, crosswalk
         item.scoring_disposition == ScoringDisposition.DIAGNOSTIC_ONLY
         for item in aa_first.external_indexes
     )
+    aa_hle = adapt_aa_facts(SOURCES / "aa-hle-reviewed-facts-2026-08-14.yaml", crosswalk)
+    assert len(aa_hle.benchmarks) == 4
+    assert len(aa_hle.rejections) == 1
+    assert aa_hle.rejections[0].source_row_id.startswith("Claude Fable 5")
+    assert {item.model_id for item in aa_hle.benchmarks} == {
+        "claude-opus-5-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "glm-5.2-max",
+    }
+    assert all(
+        item.benchmark_id == "hle"
+        and item.evaluation_date is None
+        and item.measurement_as_of_date == date(2026, 8, 14)
+        and item.number_of_tasks == 2158
+        and item.pass_at_k == 1
+        and item.scoring_disposition == ScoringDisposition.SCORED
+        and item.record_status == RecordStatus.READY
+        and item.evaluation_settings["source_value_rate"] * 100 == item.value
+        for item in aa_hle.benchmarks
+    )
     deep = adapt_deepswe_facts(SOURCES / "deepswe-reviewed-facts-2026-08-13.yaml", crosswalk)
     assert len(deep.benchmarks) == 5
     assert all(item.uncertainty is not None for item in deep.benchmarks)
@@ -402,9 +417,7 @@ def test_adapters_are_offline_deterministic_and_role_safe(monkeypatch, crosswalk
         item for item in deep.efficiency if item.signal_id == "deepswe-v1.1-resources"
     ]
     endpoint_records = [
-        item
-        for item in deep.efficiency
-        if item.signal_id == "deepswe-v1.1-endpoint-resources"
+        item for item in deep.efficiency if item.signal_id == "deepswe-v1.1-endpoint-resources"
     ]
     assert len(harness_records) == len(endpoint_records) == 5
     assert all(
@@ -448,9 +461,9 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
             "economics_coverage": 0.0,
             "efficiency_coverage": 0.045,
             "headline_ready": 0,
-            "max_capability_coverage": 0.49375,
+            "max_capability_coverage": 0.6312500000000001,
             "pilot_models": 5,
-            "scored_capability_cells": 20,
+            "scored_capability_cells": 24,
             "total_capability_cells": 70,
         }
     ]
@@ -458,7 +471,7 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
         item["headline"] == "Not eligible"
         for item in dashboard["snapshot"]["datasets"]["model_summary"]
     )
-    assert len(dashboard["snapshot"]["datasets"]["benchmarks"]) == 20
+    assert len(dashboard["snapshot"]["datasets"]["benchmarks"]) == 24
     assert len(dashboard["snapshot"]["datasets"]["resources"]) == 5
     source_ids = {item["id"] for item in dashboard["sources"]}
     assert all(
@@ -590,9 +603,7 @@ def test_epoch_arc_agi_2_accepts_only_exact_verified_max_rows(crosswalk) -> None
         source_id="epoch-benchmarks",
         artifact_id="epoch-benchmark-data-2026-08-14",
     )
-    assert {
-        item.model_id: item.value for item in result.benchmarks
-    } == pytest.approx(
+    assert {item.model_id: item.value for item in result.benchmarks} == pytest.approx(
         {
             "claude-opus-5-max": 90.42,
             "gpt-5.6-sol-max": 92.5,
@@ -638,6 +649,11 @@ def test_gap_report_counts_every_configured_model_benchmark_cell(
         for blocker in report["headline_blockers"]
     )
     assert any("claude-fable-5-max" in blocker for blocker in report["headline_blockers"])
+    assert not any("every model" in blocker for blocker in report["headline_blockers"])
+    assert any(
+        "Capability coverage" in blocker and "glm-5.2-max" in blocker
+        for blocker in report["headline_blockers"]
+    )
 
 
 def test_reviewed_adapter_rejects_schema_drift(monkeypatch, crosswalk) -> None:
@@ -646,6 +662,16 @@ def test_reviewed_adapter_rejects_schema_drift(monkeypatch, crosswalk) -> None:
     monkeypatch.setattr("umi.adapters.reviewed.load_yaml", lambda path: raw)
     with pytest.raises(KeyError, match="pass_rate"):
         adapt_deepswe_facts("offline-malformed-artifact.yaml", crosswalk)
+
+
+def test_aa_hle_adapter_rejects_non_finite_source_rate(monkeypatch, crosswalk) -> None:
+    raw = yaml.safe_load(
+        (SOURCES / "aa-hle-reviewed-facts-2026-08-14.yaml").read_text(encoding="utf-8")
+    )
+    raw["rows"][0]["source_value_rate"] = float("nan")
+    monkeypatch.setattr("umi.adapters.reviewed.load_yaml", lambda path: raw)
+    with pytest.raises(ValidationError, match="finite number"):
+        adapt_aa_facts("offline-non-finite-aa-hle.yaml", crosswalk)
 
 
 def test_overlap_cycles_and_unrestricted_double_count_are_rejected(pilot_config) -> None:
@@ -666,7 +692,7 @@ def test_overlap_cycles_and_unrestricted_double_count_are_rejected(pilot_config)
             "signals": (
                 SignalPolicy(
                     id="aggregate",
-                        role=SignalRole.TASK,
+                    role=SignalRole.TASK,
                     disposition=ScoringDisposition.SCORED,
                     budget_group="aggregate-budget",
                 ),
@@ -767,25 +793,21 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
         item.model_id: item.coverage.capability_absolute_weighted for item in results.values()
     } == {
         "claude-fable-5-max": 0.165,
-        "claude-opus-5-max": 0.49375,
-        "glm-5.2-max": 0.35625,
-        "gpt-5.6-sol-max": 0.49375,
-        "kimi-k3-max": 0.49375,
+        "claude-opus-5-max": 0.6312500000000001,
+        "glm-5.2-max": 0.49375,
+        "gpt-5.6-sol-max": 0.6312500000000001,
+        "kimi-k3-max": 0.6312500000000001,
     }
-    assert {
-        item.model_id: item.capability.score for item in results.values()
-    } == pytest.approx(
+    assert {item.model_id: item.capability.score for item in results.values()} == pytest.approx(
         {
             "claude-fable-5-max": 50.0,
-            "claude-opus-5-max": 76.9620253164557,
+            "claude-opus-5-max": 81.98019801980197,
             "glm-5.2-max": 0.0,
-            "gpt-5.6-sol-max": 82.27848101265822,
-            "kimi-k3-max": 26.83544303797468,
+            "gpt-5.6-sol-max": 78.87788778877888,
+            "kimi-k3-max": 28.25082508250825,
         }
     )
-    assert {
-        item.model_id: item.efficiency.score for item in results.values()
-    } == pytest.approx(
+    assert {item.model_id: item.efficiency.score for item in results.values()} == pytest.approx(
         {
             "claude-fable-5-max": 50.0,
             "claude-opus-5-max": 41.66666666666667,

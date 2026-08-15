@@ -84,3 +84,8 @@ reject the row. A valid diagnostic row remains auditable but cannot score.
 
 Acquisition is separate from ingestion. Adapters consume frozen local artifacts only; runtime HTTP,
 scraping, and credentials are prohibited in the scoring path.
+
+The Artificial Analysis HLE v4.1 adapter consumes a facts-only reviewed extract. It preserves the
+published source rate in `evaluation_settings`, converts that rate to configured percentage points,
+and uses the access date only as `measurement_as_of_date`. The exact fallback-qualified Fable row
+is rejected by crosswalk before measurement construction.

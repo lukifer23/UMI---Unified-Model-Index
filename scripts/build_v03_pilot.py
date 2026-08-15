@@ -60,6 +60,7 @@ def main() -> None:
     registry = load_source_registry(ROOT / "data" / "sources" / "registry.yaml")
     results = (
         adapt_aa_facts(SOURCE_ROOT / "aa-reviewed-facts-2026-08-14.yaml", crosswalk),
+        adapt_aa_facts(SOURCE_ROOT / "aa-hle-reviewed-facts-2026-08-14.yaml", crosswalk),
         adapt_epoch_csv(
             SOURCE_ROOT / "epoch-eci-benchmarks-2026-08-14.csv",
             crosswalk,

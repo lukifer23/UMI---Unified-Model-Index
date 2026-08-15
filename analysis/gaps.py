@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections import Counter
 
+from umi.capability import score_capability
 from umi.config import ProjectConfig
 from umi.economics import score_economics
 from umi.efficiency import score_efficiency
@@ -101,30 +102,58 @@ def pilot_gap_report(dataset: Dataset, config: ProjectConfig) -> dict[str, objec
         <= config.eligibility.release_end
     ]
     scored, _ = scoring_dataset(dataset)
+    capability = score_capability(scored, config)
     efficiency_coverage = min(
         item.coverage for item in score_efficiency(scored, config).components.values()
     )
     economics_coverage = min(
         item.coverage for item in score_economics(scored, config).components.values()
     )
-    blockers = [
-        (
-            "Capability lacks ready evidence in at least "
-            f"{config.eligibility.minimum_capability_domains} configured domains for every model."
-        ),
-        (
-            f"Minimum pilot Efficiency coverage is {efficiency_coverage:.3f}, below the "
-            f"{config.eligibility.minimum_component_coverage['efficiency']:.3f} component gate."
-        ),
-        (
-            f"Minimum pilot Economics coverage is {economics_coverage:.3f}, below the "
-            f"{config.eligibility.minimum_component_coverage['economics']:.3f} component gate."
-        ),
-        (
-            "Token tariffs are not joined to task telemetry until deployment identity, billing "
-            "revision, cache behavior, and tool charges are aligned."
-        ),
-    ]
+    breadth_failures = {
+        model_id: len(capability.domains.get(model_id, ()))
+        for model_id in sorted(models)
+        if len(capability.domains.get(model_id, ())) < config.eligibility.minimum_capability_domains
+    }
+    capability_coverage_failures = {
+        model_id: capability.components[model_id].coverage
+        for model_id in sorted(models)
+        if capability.components[model_id].coverage
+        < config.eligibility.minimum_component_coverage["capability"]
+    }
+    blockers = []
+    if breadth_failures:
+        blockers.append(
+            "Capability breadth below "
+            f"{config.eligibility.minimum_capability_domains} configured domains: "
+            + ", ".join(
+                f"{model_id} ({represented})" for model_id, represented in breadth_failures.items()
+            )
+        )
+    if capability_coverage_failures:
+        blockers.append(
+            "Capability coverage below "
+            f"{config.eligibility.minimum_component_coverage['capability']:.3f}: "
+            + ", ".join(
+                f"{model_id} ({coverage:.3f})"
+                for model_id, coverage in capability_coverage_failures.items()
+            )
+        )
+    blockers.extend(
+        [
+            (
+                f"Minimum pilot Efficiency coverage is {efficiency_coverage:.3f}, below the "
+                f"{config.eligibility.minimum_component_coverage['efficiency']:.3f} component gate."
+            ),
+            (
+                f"Minimum pilot Economics coverage is {economics_coverage:.3f}, below the "
+                f"{config.eligibility.minimum_component_coverage['economics']:.3f} component gate."
+            ),
+            (
+                "Token tariffs are not joined to task telemetry until deployment identity, billing "
+                "revision, cache behavior, and tool charges are aligned."
+            ),
+        ]
+    )
     if ineligible_models:
         blockers.append(
             "Release-window-ineligible configurations: " + ", ".join(sorted(ineligible_models))

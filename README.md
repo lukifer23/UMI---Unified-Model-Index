@@ -1,8 +1,8 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.4 extends the real,
-five-configuration, multi-source pilot with exact DeepSWE, GPQA Diamond, SciCode, CritPt, and
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.5 extends the real,
+five-configuration, multi-source pilot with exact HLE, DeepSWE, GPQA Diamond, SciCode, CritPt, and
 ARC-AGI-2 results plus DeepSWE confidence intervals and harness-resource means. It does **not**
 publish a headline UMI score: the evidence supports only provisional, model-specific partial
 Capability and Efficiency estimates.
@@ -48,6 +48,7 @@ PYTHONPATH=. uv run --no-sync umi sources validate --strict --data-dir data/pilo
 PYTHONPATH=. uv run --no-sync umi crosswalk
 PYTHONPATH=. uv run --no-sync umi overlap
 PYTHONPATH=. uv run --no-sync umi ingest --source aa
+PYTHONPATH=. uv run --no-sync umi ingest --source aa-hle
 PYTHONPATH=. uv run --no-sync umi ingest --source epoch
 PYTHONPATH=. uv run --no-sync umi ingest --source epoch-benchmarks
 PYTHONPATH=. uv run --no-sync umi ingest --source arena-agent
@@ -136,7 +137,7 @@ The default Overall formula remains:
 ```
 
 Capability retains the five domain weights and fixed within-domain benchmark-family budgets.
-ARC-AGI-2 contributes to general reasoning; DeepSWE and SciCode contribute to software engineering;
+HLE and ARC-AGI-2 contribute to general reasoning; DeepSWE and SciCode contribute to software engineering;
 GPQA Diamond and CritPt contribute to math/science. The frozen Epoch archive supplies exact Max rows
 for Opus, Sol, Kimi, and GLM on the AA benchmarks, and exact ARC rows for Opus, Sol, and Kimi. Fable's
 archive rows remain rejected because SciCode and CritPt identify an Opus 4.8 fallback composite and
@@ -145,16 +146,18 @@ not claimed immutable provider snapshots. Arena Agent rows retain exact source l
 construct, and source-declared intervals, but remain diagnostic preference evidence. AA composites,
 ECI rows, and Arena text ratings are also diagnostic. DeepSWE's embedded official leaderboard payload supplies
 arithmetic-mean input/output tokens and agent steps for the same four-run task cohort. Those harness
-resources enter provisional Efficiency after per-record success adjustment. Wall duration and
+resources enter provisional Efficiency after per-record success adjustment. AA's exact HLE v4.1
+facts score for Opus, Sol, Kimi, and GLM on its 2,158-question text-only pass@1 cohort; the published
+Fable result is rejected because it explicitly uses an Opus 4.8 fallback. Wall duration and
 observed dollar cost remain diagnostic until deployment identity is verified. The fixed workload
 hierarchy gives this evidence 4.5% absolute Efficiency coverage; it cannot represent coding as a
 whole or unlock Economics.
 
 ## Current limitations
 
-- Opus, Sol, and Kimi have 49.375% Capability coverage across three domains; GLM has 35.625% across
-  two, and Fable has 16.5% across one. All remain below the 60% Capability coverage gate, and their
-  model-specific partials are not one shared ranking.
+- Opus, Sol, and Kimi have 63.125% Capability coverage across three domains and now clear the
+  Capability-only coverage/breadth gates. GLM has 49.375% across three domains and Fable has 16.5%
+  across one. Model-specific partials remain different evidence profiles, not one shared ranking.
 - Efficiency has only 4.5% absolute coverage; Economics has no ready evidence.
 - Fable 5 Max predates the unchanged 2026-06-15 release-window start.
 - Scores are cohort-relative; no fixed anchor cohort or formal uncertainty propagation exists.
@@ -167,8 +170,7 @@ See [PILOT_REPORT.md](PILOT_REPORT.md), [SOURCE_READINESS.md](SOURCE_READINESS.m
 
 ## Recommended next ingestion task
 
-Freeze exact, task-level public facts for HLE and one context/reliability family for the same five
-configurations, including truthful source dates, harness versions, task counts where established,
-and configuration evidence. In parallel, obtain exact task telemetry for the missing coding
-families and at least two additional configured workload categories. Do not broaden the cohort or
-relax a gate to manufacture a headline.
+Close Fable's HLE cell only with evidence that explicitly rules out fallback, then freeze one
+context/reliability and one agentic task family for the same five configurations. In parallel,
+obtain exact attempt-level telemetry for the missing coding families and at least two additional
+configured workload categories. Do not broaden the cohort or relax a gate to manufacture a headline.

@@ -301,7 +301,7 @@
     ],
     "surface": "dashboard",
     "tables": [],
-    "title": "UMI v0.3.4 \u2014 five-model pilot evidence report",
+    "title": "UMI v0.3.5 \u2014 five-model pilot evidence report",
     "version": 1
   },
   "package_info": {
@@ -329,6 +329,50 @@
     ],
     "datasets": {
       "benchmarks": [
+        {
+          "benchmark": "hle",
+          "benchmark_short": "HLE",
+          "cohort": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "record_id": "aa-hle-claude-opus-5-max-2026-08-14",
+          "score": 54.8656163113994,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "hle",
+          "benchmark_short": "HLE",
+          "cohort": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "record_id": "aa-hle-gpt-5.6-sol-max-2026-08-14",
+          "score": 49.4902687673772,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "hle",
+          "benchmark_short": "HLE",
+          "cohort": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "record_id": "aa-hle-kimi-k3-max-2026-08-14",
+          "score": 46.8952734012975,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "hle",
+          "benchmark_short": "HLE",
+          "cohort": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge",
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "record_id": "aa-hle-glm-5.2-max-2026-08-14",
+          "score": 41.1492122335496,
+          "source": "Artificial Analysis"
+        },
         {
           "benchmark": "gpqa-diamond",
           "benchmark_short": "GPQA",
@@ -556,7 +600,7 @@
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "score": 76.9620253164557
+          "score": 81.98019801980197
         },
         {
           "component": "Eff.",
@@ -584,7 +628,7 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "score": 82.27848101265822
+          "score": 78.87788778877888
         },
         {
           "component": "Eff.",
@@ -598,7 +642,7 @@
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "score": 26.83544303797468
+          "score": 28.25082508250825
         },
         {
           "component": "Eff.",
@@ -625,7 +669,7 @@
       "coverage": [
         {
           "component": "Cap.",
-          "coverage": 0.49375,
+          "coverage": 0.6312500000000001,
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5"
@@ -667,7 +711,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.49375,
+          "coverage": 0.6312500000000001,
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol"
@@ -688,7 +732,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.49375,
+          "coverage": 0.6312500000000001,
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3"
@@ -709,7 +753,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.35625,
+          "coverage": 0.49375,
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2"
@@ -739,11 +783,11 @@
           "status": "Reference"
         },
         {
-          "cells": 44,
+          "cells": 40,
           "status": "Missing"
         },
         {
-          "cells": 20,
+          "cells": 24,
           "status": "Ready"
         },
         {
@@ -753,10 +797,10 @@
       ],
       "model_summary": [
         {
-          "capability": 76.9620253164557,
-          "capability_coverage": 0.49375,
+          "capability": 81.98019801980197,
+          "capability_coverage": 0.6312500000000001,
           "capability_domains": 3,
-          "capability_profile": "b1c1b29533ed",
+          "capability_profile": "dcf77b57e6b3",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -767,7 +811,7 @@
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "partial_overall": 65.93222573839662
+          "partial_overall": 69.3822194719472
         },
         {
           "capability": 50.0,
@@ -787,10 +831,10 @@
           "partial_overall": 50.00000000000001
         },
         {
-          "capability": 82.27848101265822,
-          "capability_coverage": 0.49375,
+          "capability": 78.87788778877888,
+          "capability_coverage": 0.6312500000000001,
           "capability_domains": 3,
-          "capability_profile": "b1c1b29533ed",
+          "capability_profile": "dcf77b57e6b3",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -801,13 +845,13 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "partial_overall": 87.81645569620254
+          "partial_overall": 85.47854785478549
         },
         {
-          "capability": 26.83544303797468,
-          "capability_coverage": 0.49375,
+          "capability": 28.25082508250825,
+          "capability_coverage": 0.6312500000000001,
           "capability_domains": 3,
-          "capability_profile": "b1c1b29533ed",
+          "capability_profile": "dcf77b57e6b3",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -818,13 +862,13 @@
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "partial_overall": 36.67853375527426
+          "partial_overall": 37.651608910891085
         },
         {
           "capability": 0.0,
-          "capability_coverage": 0.35625,
-          "capability_domains": 2,
-          "capability_profile": "b718458713fe",
+          "capability_coverage": 0.49375,
+          "capability_domains": 3,
+          "capability_profile": "c51eaf54c7b6",
           "comparability": "different_score_scale",
           "confidence": "Low",
           "economics": null,
@@ -843,9 +887,9 @@
           "economics_coverage": 0.0,
           "efficiency_coverage": 0.045,
           "headline_ready": 0,
-          "max_capability_coverage": 0.49375,
+          "max_capability_coverage": 0.6312500000000001,
           "pilot_models": 5,
-          "scored_capability_cells": 20,
+          "scored_capability_cells": 24,
           "total_capability_cells": 70
         }
       ],

@@ -1,4 +1,208 @@
 measurements:
+- record_id: aa-hle-claude-opus-5-max-2026-08-14
+  source:
+    organization: Artificial Analysis
+    url: https://artificialanalysis.ai/evaluations/humanitys-last-exam
+    accessed: '2026-08-14'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: hle-may-2025-text-only-2158
+  harness_version: aa-intelligence-v4.1-hle-pass1-gpt4o-judge
+  metric_definition: Percentage of 2,158 text-only HLE answers judged correct at pass@1
+    by the published equality-checker LLM
+  tools_enabled: false
+  notes: Reviewed public-page fact; source rate multiplied by 100 for the configured
+    percent unit. Access date is not an evaluation date.
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: aa-hle-facts-2026-08-14
+  source_registry_snapshot_id: aa-hle-facts-2026-08-14
+  crosswalk_entry_id: aa-hle-opus-max
+  signal_id: hle
+  source_model_id: Claude Opus 5 (Adaptive Reasoning, Max Effort)
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: hle
+  model_id: claude-opus-5-max
+  value: 54.8656163113994
+  cohort_key: aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge
+  evaluation_settings:
+    subset: May 2025 HLE revision, text-only questions
+    scoring: pass@1
+    grader: GPT-4o Aug equality checker from the original HLE implementation
+    source_unit: rate
+    output_unit: percent
+    source_value_rate: 0.548656163113994
+  number_of_tasks: 2158
+  number_of_trials: 1
+  sample_count: 2158
+  pass_at_k: 1
+- record_id: aa-hle-gpt-5.6-sol-max-2026-08-14
+  source:
+    organization: Artificial Analysis
+    url: https://artificialanalysis.ai/evaluations/humanitys-last-exam
+    accessed: '2026-08-14'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: hle-may-2025-text-only-2158
+  harness_version: aa-intelligence-v4.1-hle-pass1-gpt4o-judge
+  metric_definition: Percentage of 2,158 text-only HLE answers judged correct at pass@1
+    by the published equality-checker LLM
+  tools_enabled: false
+  notes: Reviewed public-page fact; source rate multiplied by 100 for the configured
+    percent unit. Access date is not an evaluation date.
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: aa-hle-facts-2026-08-14
+  source_registry_snapshot_id: aa-hle-facts-2026-08-14
+  crosswalk_entry_id: aa-hle-sol-max
+  signal_id: hle
+  source_model_id: GPT-5.6 Sol (max)
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: hle
+  model_id: gpt-5.6-sol-max
+  value: 49.4902687673772
+  cohort_key: aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge
+  evaluation_settings:
+    subset: May 2025 HLE revision, text-only questions
+    scoring: pass@1
+    grader: GPT-4o Aug equality checker from the original HLE implementation
+    source_unit: rate
+    output_unit: percent
+    source_value_rate: 0.494902687673772
+  number_of_tasks: 2158
+  number_of_trials: 1
+  sample_count: 2158
+  pass_at_k: 1
+- record_id: aa-hle-kimi-k3-max-2026-08-14
+  source:
+    organization: Artificial Analysis
+    url: https://artificialanalysis.ai/evaluations/humanitys-last-exam
+    accessed: '2026-08-14'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: hle-may-2025-text-only-2158
+  harness_version: aa-intelligence-v4.1-hle-pass1-gpt4o-judge
+  metric_definition: Percentage of 2,158 text-only HLE answers judged correct at pass@1
+    by the published equality-checker LLM
+  tools_enabled: false
+  notes: Reviewed public-page fact; source rate multiplied by 100 for the configured
+    percent unit. Access date is not an evaluation date.
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: aa-hle-facts-2026-08-14
+  source_registry_snapshot_id: aa-hle-facts-2026-08-14
+  crosswalk_entry_id: aa-hle-kimi-max
+  signal_id: hle
+  source_model_id: Kimi K3 (max)
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: hle
+  model_id: kimi-k3-max
+  value: 46.8952734012975
+  cohort_key: aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge
+  evaluation_settings:
+    subset: May 2025 HLE revision, text-only questions
+    scoring: pass@1
+    grader: GPT-4o Aug equality checker from the original HLE implementation
+    source_unit: rate
+    output_unit: percent
+    source_value_rate: 0.468952734012975
+  number_of_tasks: 2158
+  number_of_trials: 1
+  sample_count: 2158
+  pass_at_k: 1
+- record_id: aa-hle-glm-5.2-max-2026-08-14
+  source:
+    organization: Artificial Analysis
+    url: https://artificialanalysis.ai/evaluations/humanitys-last-exam
+    accessed: '2026-08-14'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: hle-may-2025-text-only-2158
+  harness_version: aa-intelligence-v4.1-hle-pass1-gpt4o-judge
+  metric_definition: Percentage of 2,158 text-only HLE answers judged correct at pass@1
+    by the published equality-checker LLM
+  tools_enabled: false
+  notes: Reviewed public-page fact; source rate multiplied by 100 for the configured
+    percent unit. Access date is not an evaluation date.
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: aa-hle-facts-2026-08-14
+  source_registry_snapshot_id: aa-hle-facts-2026-08-14
+  crosswalk_entry_id: aa-hle-glm-max
+  signal_id: hle
+  source_model_id: GLM-5.2 (max)
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: hle
+  model_id: glm-5.2-max
+  value: 41.1492122335496
+  cohort_key: aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge
+  evaluation_settings:
+    subset: May 2025 HLE revision, text-only questions
+    scoring: pass@1
+    grader: GPT-4o Aug equality checker from the original HLE implementation
+    source_unit: rate
+    output_unit: percent
+    source_value_rate: 0.411492122335496
+  number_of_tasks: 2158
+  number_of_trials: 1
+  sample_count: 2158
+  pass_at_k: 1
 - record_id: epoch-gpqa-claude-opus-5-max-d3mtastumfvjr4fjmnhwry
   source:
     organization: Epoch AI

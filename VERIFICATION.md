@@ -1,4 +1,4 @@
-# UMI v0.3.4 verification record
+# UMI v0.3.5 verification record
 
 Verified on 2026-08-14 from `main` on macOS with Python 3.14.3 against the Python 3.11+
 project contract.
@@ -7,21 +7,21 @@ project contract.
 
 | Check | Outcome |
 |---|---|
-| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.4 as a wheel from the committed lock |
+| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.5 as a wheel from the committed lock |
 | `uv run --no-sync python -m scripts.build_v03_pilot` | passed; rebuilt all raw and processed pilot artifacts offline |
 | schema equality test against `umi.schema_export.rendered_schemas()` | passed; committed machine-readable schemas remain current |
-| `uv run pytest` | 106 passed |
-| `uv run pytest --cov=umi --cov=analysis --cov=scripts --cov-report=term-missing --cov-fail-under=90` | 106 passed; 92.26% combined coverage |
+| `uv run pytest` | 107 passed |
+| `uv run pytest --cov=umi --cov=analysis --cov=scripts --cov-report=term-missing --cov-fail-under=90` | 107 passed; 92.30% combined coverage |
 | `PYTHONPATH=. uv run --no-sync ruff check .` | passed |
 | `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 50 source files |
 | `umi sources validate --strict` | passed; complete registry, crosswalk, licensing, attribution, diagnostic, pricing, and release-claim audit is valid |
 | `umi crosswalk` and `umi overlap` | passed |
-| `umi bundle validate --data-dir data/pilots/v0.3/raw` | passed; acceptance manifest admits 25 records and excludes 8 diagnostic records with 0 unready scored records |
-| all ten offline `umi ingest --source ...` commands | passed: AA, Epoch ECI, Epoch benchmarks, both Arena cohorts, DeepSWE, and four lab-release sources |
+| `umi bundle validate --data-dir data/pilots/v0.3/raw` | passed; acceptance manifest admits 29 records and excludes 8 diagnostic records with 0 unready scored records |
+| all eleven offline `umi ingest --source ...` commands | passed: AA composite facts, AA HLE, Epoch ECI, Epoch benchmarks, both Arena cohorts, DeepSWE, and four lab-release sources |
 | documented validation, ingestion, scoring, comparison, analysis, and certificate CLI flows | passed with valid JSON output |
 | five-model and three-model common-evidence comparisons | passed; Kimi DeepSWE remains 25.0 on the identical five-model panel, and every raw/normalized contribution carries panel and scale identity |
 | joint comparison sensitivity | passed; 32 exhaustive five-model scenarios and 64 exhaustive three-model scenarios, with possible-rank and robust-dominance envelopes and no probability claims |
-| `umi certificate` for Opus/Kimi/GLM | passed; four common stable panels, 12 selected records, exact artifact checksums, 64 joint scenarios, deterministic result fingerprint `e627223a…809ad` |
+| `umi certificate` for Opus/Kimi/GLM | passed; five common stable panels, 15 selected records, three exact artifact checksums, 64 joint scenarios, deterministic result fingerprint `2d8b7474…b306a7` |
 | portable dashboard packaging | passed at 1440 px and 390 px; five charts rendered, source dialog passed, no external-request or browser-error failure |
 | `uv build` plus fresh temporary-environment wheel install outside the checkout | passed on Python 3.14.3; `import umi`, `umi --help`, and the certificate smoke all passed with the same result fingerprint |
 | `umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config` | passed without a source registry; schema and selected scored inputs are valid |
@@ -65,12 +65,13 @@ recorded Linux and Windows compatibility claim.
 
 - Five exact canonical named-release configurations are visible, each with label-exact identity and
   first-party nominal pricing record.
-- The configured capability matrix contains 70 model/benchmark cells: 20 ready scored, 3 diagnostic
-  measurements, 1 diagnostic reference, 2 vendor-claim-only, and 44 missing.
+- The configured capability matrix contains 70 model/benchmark cells: 24 ready scored, 3 diagnostic
+  measurements, 1 diagnostic reference, 2 vendor-claim-only, and 40 missing.
 - Every model-specific score is labeled `real evidence — model-specific partial estimate`; it is not
-  a UMI rank. Opus, Sol, and Kimi use five of 14 Capability families across three domains with
-  49.375% coverage; GLM uses four families across two domains at 35.625%; Fable remains on one
-  family at 16.5%.
+  a UMI rank. Opus, Sol, and Kimi use six of 14 Capability families across three domains with
+  63.125% coverage; GLM uses five families across three domains at 49.375%; Fable remains on one
+  family at 16.5%. Opus, Sol, and Kimi clear the Capability-only coverage and breadth gates, but not
+  the complete headline gates.
 - Every publishable rank and every `headline_overall` remains null.
 - The retained Opus/Kimi/GLM comparison certificate is provisional and source-bound; it is not a
   headline UMI score or public universal rank.
@@ -106,8 +107,8 @@ umi/                              validation, readiness, scoring, fingerprinting
 
 ## Remaining evidence required for a real headline UMI
 
-- exact-configuration, common-cohort capability results for the 44 missing cells, beginning with
-  HLE, Terminal-Bench, ARC-AGI, and long-context/reliability evidence;
+- exact-configuration, common-cohort capability results for the 40 missing cells, beginning with
+  Fable HLE without fallback, Terminal-Bench, agentic work, and long-context/reliability evidence;
 - arithmetic-mean attempt-level cost, input/output/cache-token use, wall time, turn count, and task
   success for the five models across at least three configured workload categories;
 - independent replication or auditable raw result artifacts for vendor-only claims;

@@ -1,7 +1,7 @@
-# UMI methodology v0.3.4
+# UMI methodology v0.3.5
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3.4 retains the manually reviewed,
+current policy values; code must not contradict this document. UMI v0.3.5 retains the manually reviewed,
 multi-source evidence pilot. It does not publish a headline UMI ranking.
 
 ## v0.3 source roles and exact identity
@@ -38,6 +38,15 @@ Pilot family budgets are hypotheses:
 
 Equal-family and source-ablation scenarios test these allocations. They do not relax coverage or
 publication gates.
+
+The Artificial Analysis HLE series is admitted as an independent atomic task signal only for exact
+pilot configurations on its documented Intelligence v4.1 harness: the 2,158-question text-only
+subset of the May 2025 HLE revision, pass@1, with the published equality-checker judge. The frozen
+reviewed-fact extract retains the source rate and converts it deterministically to percentage points
+for UMI's configured HLE unit. Its access date is a measurement-as-of date, not an inferred run
+date. Claude Fable 5's public HLE row explicitly routes through an Opus 4.8 fallback and is rejected
+from the plain Fable Max pilot configuration. The other four exact Max rows may score; their absence
+for Fable remains missing common support and is never imputed.
 
 `BenchmarkFamilyDefinition.cap` is retained only for schema compatibility in v0.3 and is
 deprecated. UMI does not dynamically redistribute family weights through caps; removal is deferred
@@ -422,7 +431,7 @@ that limitation.
 
 ## Efficiency
 
-The v0.3.4 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
+The v0.3.5 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
 10% effective reasoning tokens, 10% effective cached tokens, 10% effective turns, 15% effective
 agent steps, 15% effective wall time, and 10% effective tool calls. These are policy weights, not
 empirically learned parameters. Token subtypes are kept distinct: a total-token field is not scored

@@ -75,6 +75,41 @@
     },
     {
       "applied_strategy": "percentile",
+      "benchmark_id": "hle",
+      "canonical_representation_group": "hle",
+      "cohort_key": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge",
+      "cohort_roles": {
+        "claude-opus-5-max": "normalization_member",
+        "glm-5.2-max": "normalization_member",
+        "gpt-5.6-sol-max": "normalization_member",
+        "kimi-k3-max": "normalization_member"
+      },
+      "cohort_size": 4,
+      "config_fingerprint": "851e2697077086204f83c8c588c215485baa4dc9f0bd7e5571c538acb1b55478",
+      "id": "65397c06b70c5a85d59d62632cf932ba6d107d39f98aca49e76869970331cc00",
+      "model_ids": [
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max"
+      ],
+      "normalization_trace": {
+        "applied_strategy": "percentile",
+        "cohort_size": 4,
+        "direction_inverted": false,
+        "fallback_reason": "below_minimum_robust_cohort",
+        "log_transform": false,
+        "minimum_rank_cohort": 2,
+        "minimum_robust_cohort": 8,
+        "provisional": true,
+        "requested_strategy": "robust_z"
+      },
+      "requested_strategy": "robust_z",
+      "scored_input_fingerprint": "d0d1bcdb90564fff27b7af8a8030d6fbec35fec29ec664ae9e4c7aa877b7fc39",
+      "transformation": "identity"
+    },
+    {
+      "applied_strategy": "percentile",
       "benchmark_id": "critpt",
       "canonical_representation_group": "critpt",
       "cohort_key": "aa-v4.1.1-critpt-70-test-challenges-pass1",
@@ -144,7 +179,7 @@
       "transformation": "identity"
     }
   ],
-  "bundle_fingerprint": "49089c73b2f82da36fbc109bbd7a146174bdc8297a94138bfcc8274413daef7e",
+  "bundle_fingerprint": "5712ade67c859bdb4d019f4986e21ee038cfef622784182f0083451a1753d9ac",
   "central_estimate_ranks": {
     "claude-opus-5-max": 1.0,
     "glm-5.2-max": 3.0,
@@ -168,6 +203,11 @@
       "cohort_key": "epoch-gpqa-diamond-1.0.6-simple-evals"
     },
     {
+      "benchmark_id": "hle",
+      "canonical_representation_group": "hle",
+      "cohort_key": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge"
+    },
+    {
       "benchmark_id": "scicode",
       "canonical_representation_group": "scicode",
       "cohort_key": "aa-v4.1.1-scicode-test-288-background-pass1"
@@ -180,23 +220,23 @@
     "same score-scale, formula, normalization, and configuration identity",
     "exact model, release, effort, and source crosswalks validated by bundle"
   ],
-  "comparison_group_id": "e29938916fff839539e2525f1738f132ba842a84c17340c6bcb0f384a05a2d17",
+  "comparison_group_id": "e175e7ce53071a1f69e57dd42764a86ac0560fcbb2b73f9f203b4276d9313dd3",
   "comparison_model_ids": [
     "claude-opus-5-max",
     "glm-5.2-max",
     "kimi-k3-max"
   ],
   "component_scores": {
-    "claude-opus-5-max": 87.36842105263158,
+    "claude-opus-5-max": 90.88607594936708,
     "glm-5.2-max": 0.0,
-    "kimi-k3-max": 37.19298245614035
+    "kimi-k3-max": 36.118143459915615
   },
   "coverage": {
-    "claude-opus-5-max": 0.35625,
-    "glm-5.2-max": 0.35625,
-    "kimi-k3-max": 0.35625
+    "claude-opus-5-max": 0.49375,
+    "glm-5.2-max": 0.49375,
+    "kimi-k3-max": 0.49375
   },
-  "evidence_profile_id": "b718458713fe858ab69e1ef82e100c458622c0cc1ad44d61cd385c5b9cee7956",
+  "evidence_profile_id": "c51eaf54c7b65193b962ae2b1a572581f09497ac835d2fb2abc007e94b715fbf",
   "identity_assurance": {
     "claude-opus-5-max": "label_exact",
     "glm-5.2-max": "label_exact",
@@ -206,11 +246,40 @@
   "normalization_panel_ids": [
     "1ce7ccc37bf4948f20569baa9ac1aad14732cdb8713bbcd45ce301b1378e9c4a",
     "3d45e5b5b53a0f9dd2629753b95bde53b76e173ac5c6f5ae66cd4d52309d1573",
+    "65397c06b70c5a85d59d62632cf932ba6d107d39f98aca49e76869970331cc00",
     "8e609b1fdc7209c844fc0a3efba43f768f018a02e1bdef2b823b2a3cca8229e9",
     "b2a4b5f04b1e5d4afffa427e8022ef204484e5f2955840b3ebfac7e4845c615b"
   ],
   "normalized_contributions": {
     "claude-opus-5-max": [
+      {
+        "applied_normalization": "percentile",
+        "benchmark_id": "hle",
+        "cohort_key": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge",
+        "configured_absolute_weight": 0.1375,
+        "direction": "higher",
+        "normalization_panel_id": "65397c06b70c5a85d59d62632cf932ba6d107d39f98aca49e76869970331cc00",
+        "normalization_trace": {
+          "applied_strategy": "percentile",
+          "cohort_size": 4,
+          "direction_inverted": false,
+          "fallback_reason": "below_minimum_robust_cohort",
+          "log_transform": false,
+          "minimum_rank_cohort": 2,
+          "minimum_robust_cohort": 8,
+          "provisional": true,
+          "requested_strategy": "robust_z"
+        },
+        "normalized_value": 100.0,
+        "raw_unit": "percent",
+        "raw_value": 54.8656163113994,
+        "requested_normalization": "robust_z",
+        "source_record_ids": [
+          "aa-hle-claude-opus-5-max-2026-08-14"
+        ],
+        "source_uncertainty": null,
+        "weighted_contribution": 13.750000000000002
+      },
       {
         "applied_normalization": "percentile",
         "benchmark_id": "deepswe-v1.1",
@@ -351,6 +420,34 @@
     "glm-5.2-max": [
       {
         "applied_normalization": "percentile",
+        "benchmark_id": "hle",
+        "cohort_key": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge",
+        "configured_absolute_weight": 0.1375,
+        "direction": "higher",
+        "normalization_panel_id": "65397c06b70c5a85d59d62632cf932ba6d107d39f98aca49e76869970331cc00",
+        "normalization_trace": {
+          "applied_strategy": "percentile",
+          "cohort_size": 4,
+          "direction_inverted": false,
+          "fallback_reason": "below_minimum_robust_cohort",
+          "log_transform": false,
+          "minimum_rank_cohort": 2,
+          "minimum_robust_cohort": 8,
+          "provisional": true,
+          "requested_strategy": "robust_z"
+        },
+        "normalized_value": 0.0,
+        "raw_unit": "percent",
+        "raw_value": 41.1492122335496,
+        "requested_normalization": "robust_z",
+        "source_record_ids": [
+          "aa-hle-glm-5.2-max-2026-08-14"
+        ],
+        "source_uncertainty": null,
+        "weighted_contribution": 0.0
+      },
+      {
+        "applied_normalization": "percentile",
         "benchmark_id": "deepswe-v1.1",
         "cohort_key": "deepswe-v1.1-2026-08-13",
         "configured_absolute_weight": 0.165,
@@ -487,6 +584,34 @@
       }
     ],
     "kimi-k3-max": [
+      {
+        "applied_normalization": "percentile",
+        "benchmark_id": "hle",
+        "cohort_key": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge",
+        "configured_absolute_weight": 0.1375,
+        "direction": "higher",
+        "normalization_panel_id": "65397c06b70c5a85d59d62632cf932ba6d107d39f98aca49e76869970331cc00",
+        "normalization_trace": {
+          "applied_strategy": "percentile",
+          "cohort_size": 4,
+          "direction_inverted": false,
+          "fallback_reason": "below_minimum_robust_cohort",
+          "log_transform": false,
+          "minimum_rank_cohort": 2,
+          "minimum_robust_cohort": 8,
+          "provisional": true,
+          "requested_strategy": "robust_z"
+        },
+        "normalized_value": 33.333333333333336,
+        "raw_unit": "percent",
+        "raw_value": 46.8952734012975,
+        "requested_normalization": "robust_z",
+        "source_record_ids": [
+          "aa-hle-kimi-k3-max-2026-08-14"
+        ],
+        "source_uncertainty": null,
+        "weighted_contribution": 4.583333333333334
+      },
       {
         "applied_normalization": "percentile",
         "benchmark_id": "deepswe-v1.1",
@@ -634,10 +759,10 @@
         "stable normalization panel membership held fixed",
         "standard-error intervals use a normal approximation with z=1.96"
       ],
-      "central_composite_score": 87.36842105263158,
+      "central_composite_score": 90.88607594936708,
       "central_estimate_rank": 1.0,
-      "composite_score_max": 87.36842105263158,
-      "composite_score_min": 36.84210526315789,
+      "composite_score_max": 90.88607594936708,
+      "composite_score_min": 54.43037974683545,
       "exhaustive": true,
       "possible_rank_max": 2.0,
       "possible_rank_min": 1.0,
@@ -661,7 +786,7 @@
       ],
       "central_composite_score": 0.0,
       "central_estimate_rank": 3.0,
-      "composite_score_max": 27.36842105263158,
+      "composite_score_max": 19.746835443037973,
       "composite_score_min": 0.0,
       "exhaustive": true,
       "possible_rank_max": 3.0,
@@ -684,10 +809,10 @@
         "stable normalization panel membership held fixed",
         "standard-error intervals use a normal approximation with z=1.96"
       ],
-      "central_composite_score": 37.19298245614035,
+      "central_composite_score": 36.118143459915615,
       "central_estimate_rank": 2.0,
-      "composite_score_max": 90.17543859649122,
-      "composite_score_min": 28.07017543859649,
+      "composite_score_max": 74.34599156118144,
+      "composite_score_min": 29.535864978902953,
       "exhaustive": true,
       "possible_rank_max": 2.0,
       "possible_rank_min": 1.0,
@@ -705,6 +830,14 @@
   },
   "raw_contributions": {
     "claude-opus-5-max": [
+      {
+        "benchmark_id": "hle",
+        "cohort_key": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge",
+        "direction": "higher",
+        "raw_unit": "percent",
+        "raw_value": 54.8656163113994,
+        "source_uncertainty": null
+      },
       {
         "benchmark_id": "deepswe-v1.1",
         "cohort_key": "deepswe-v1.1-2026-08-13",
@@ -764,6 +897,14 @@
     ],
     "glm-5.2-max": [
       {
+        "benchmark_id": "hle",
+        "cohort_key": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge",
+        "direction": "higher",
+        "raw_unit": "percent",
+        "raw_value": 41.1492122335496,
+        "source_uncertainty": null
+      },
+      {
         "benchmark_id": "deepswe-v1.1",
         "cohort_key": "deepswe-v1.1-2026-08-13",
         "direction": "higher",
@@ -822,6 +963,14 @@
     ],
     "kimi-k3-max": [
       {
+        "benchmark_id": "hle",
+        "cohort_key": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge",
+        "direction": "higher",
+        "raw_unit": "percent",
+        "raw_value": 46.8952734012975,
+        "source_uncertainty": null
+      },
+      {
         "benchmark_id": "deepswe-v1.1",
         "cohort_key": "deepswe-v1.1-2026-08-13",
         "direction": "higher",
@@ -879,18 +1028,23 @@
       }
     ]
   },
-  "result_fingerprint": "a916874d46a0c3b60556428f8a52dac23f8899defb32122864449120e98701de",
-  "score_scale_id": "f665645536ba2b638e22057af0a9dcfdd3193fa754fef36dacd028ff659a95b1",
-  "scored_input_fingerprint": "f8aa264ae2c7b7f748da14fc8474f3abeb7f0668402f33960bf2649134a9c892",
+  "result_fingerprint": "2d8b7474592d36f6e86369c93ec0ae2d1dd552d3af00c7d24a4c1196d0b306a7",
+  "score_scale_id": "1c3c3907e9ef8d23ff3d9b4f820ecafbaa4931539e82f2369089c3625a363e2a",
+  "scored_input_fingerprint": "c63fc25ff01a83ca84c8ebac6771056a9f9b7ac44ad95627f0611fbcb90c3529",
   "source_artifact_checksums": {
+    "aa-hle-facts-2026-08-14": "a19161096f61de769e86534513844ac5adfb2dd3cca6df74444e13c4eb70225d",
     "deepswe-v1.1-2026-08-13": "cd8aa2f1c143a11b657ac86507e631bfc33fc5531a36feebd152d09bf2bf496a",
     "epoch-benchmark-data-2026-08-14": "35a7c21ba7d535514ebcf9bbe7b8265d2e2da40ef6b1fa63fe49323c3395a18b"
   },
   "source_artifact_ids": [
+    "aa-hle-facts-2026-08-14",
     "deepswe-v1.1-2026-08-13",
     "epoch-benchmark-data-2026-08-14"
   ],
   "source_record_ids": [
+    "aa-hle-claude-opus-5-max-2026-08-14",
+    "aa-hle-glm-5.2-max-2026-08-14",
+    "aa-hle-kimi-k3-max-2026-08-14",
     "deepswe-score-claude-opus-5-max-2026-08-13",
     "deepswe-score-glm-5.2-max-2026-08-13",
     "deepswe-score-kimi-k3-max-2026-08-13",
