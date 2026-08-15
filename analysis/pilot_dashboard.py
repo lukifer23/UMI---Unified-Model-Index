@@ -50,6 +50,7 @@ def build_pilot_dashboard(
         "cursorbench-3.2": "CursorBench",
         "deepswe-v1.1": "DeepSWE",
         "gpqa-diamond": "GPQA",
+        "gdpval-aa-v2": "GDPval-AA v2",
         "scicode": "SciCode",
     }
     ordered_models = [model.id for model in dataset.models]
@@ -124,10 +125,15 @@ def build_pilot_dashboard(
         if record.scoring_disposition == ScoringDisposition.SCORED
     ]
     benchmark_rows = [
-        row for row in all_benchmark_rows if row["benchmark"] != "cursorbench-3.2"
+        row
+        for row in all_benchmark_rows
+        if row["benchmark"] not in {"cursorbench-3.2", "gdpval-aa-v2"}
     ]
     cursorbench_rows = [
         row for row in all_benchmark_rows if row["benchmark"] == "cursorbench-3.2"
+    ]
+    gdpval_rows = [
+        row for row in all_benchmark_rows if row["benchmark"] == "gdpval-aa-v2"
     ]
     resource_rows = []
     for record in dataset.efficiency:
@@ -205,12 +211,12 @@ def build_pilot_dashboard(
         "manifest": {
             "version": 1,
             "surface": "dashboard",
-            "title": "UMI v0.3.6 — five-model pilot evidence report",
+            "title": "UMI v0.3.7 — five-model pilot evidence report",
             "description": (
                 "A reproducible view of current accepted evidence, partial component estimates, "
                 "coverage, and the gates that prevent a headline UMI ranking."
             ),
-            "generatedAt": "2026-08-14T00:00:00Z",
+            "generatedAt": "2026-08-15T00:00:00Z",
             "filters": [
                 {
                     "id": "model",
@@ -223,6 +229,7 @@ def build_pilot_dashboard(
                         {"dataset": "coverage", "field": "model"},
                         {"dataset": "benchmarks", "field": "model"},
                         {"dataset": "cursorbench", "field": "model"},
+                        {"dataset": "gdpval", "field": "model"},
                         {"dataset": "resources", "field": "model"},
                     ],
                 }
@@ -414,6 +421,28 @@ def build_pilot_dashboard(
                     "layout": "full",
                 },
                 {
+                    "id": "gdpval_scores",
+                    "title": "GDPval-AA v2 professional-work Elo",
+                    "subtitle": (
+                        "Bradley-Terry Elo anchored to human-expert deliverables at 1,000; "
+                        "Fable is absent because its source row uses Opus 4.8 fallback."
+                    ),
+                    "type": "bar",
+                    "dataset": "gdpval",
+                    "sourceId": "accepted_benchmarks",
+                    "encodings": {
+                        "x": {
+                            "field": "model_short",
+                            "type": "nominal",
+                            "label": "Model",
+                        },
+                        "y": {"field": "score", "type": "quantitative", "label": "Elo"},
+                    },
+                    "yAxisTitle": "GDPval-AA v2 Elo",
+                    "valueFormat": "number",
+                    "layout": "full",
+                },
+                {
                     "id": "gap_counts",
                     "title": "Why the index is not yet headline-ready",
                     "subtitle": (
@@ -465,6 +494,7 @@ def build_pilot_dashboard(
                 {"id": "components", "type": "chart", "chartId": "component_scores"},
                 {"id": "benchmarks", "type": "chart", "chartId": "benchmark_scores"},
                 {"id": "cursorbench", "type": "chart", "chartId": "cursorbench_scores"},
+                {"id": "gdpval", "type": "chart", "chartId": "gdpval_scores"},
                 {
                     "id": "resources",
                     "type": "chart",
@@ -488,7 +518,7 @@ def build_pilot_dashboard(
         },
         "snapshot": {
             "version": 1,
-            "generatedAt": "2026-08-14T00:00:00Z",
+            "generatedAt": "2026-08-15T00:00:00Z",
             "status": "partial",
             "datasets": {
                 "overview": overview,
@@ -497,6 +527,7 @@ def build_pilot_dashboard(
                 "coverage": coverage_rows,
                 "benchmarks": benchmark_rows,
                 "cursorbench": cursorbench_rows,
+                "gdpval": gdpval_rows,
                 "resources": resource_rows,
                 "gap_counts": gap_rows,
             },

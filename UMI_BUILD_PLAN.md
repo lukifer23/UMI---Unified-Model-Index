@@ -17,10 +17,14 @@ v0.3 is a good fail-closed pilot. It has immutable records, frozen artifacts, ex
 crosswalks, source/license registry, offline adapters, overlap controls, hierarchical
 coverage, per-record success adjustment, fingerprints, diagnostics, and headline gates.
 
-It does not yet support a public UMI: it has five configurations, two partially scored
-Capability domains, 4.5% DeepSWE-only Efficiency coverage, no ready Economics evidence, hypothesized weights,
-cohort-relative normalization, no propagated uncertainty, and no first-class lab-claim or
-complete agent/scaffold identity model.
+It does not yet support a public UMI. The current five-model pilot has 32 of 75 configured
+Capability cells ready. Opus, Sol, Kimi, and GLM now span four domains and clear the Capability-only
+coverage gate (75.125%, 75.125%, 75.125%, and 61.375% respectively), while Fable remains at 8.25%
+because fallback-qualified evidence is rejected. Efficiency is still 4.5% DeepSWE-only coverage
+and Economics has no ready workload evidence. Weights remain hypotheses, normalization remains
+cohort-relative, and source-bound uncertainty is deterministic endpoint sensitivity rather than a
+fully calibrated probabilistic model. Lab claims are first-class diagnostics but mostly lack an
+independent, cohort-identical comparison.
 
 ## Permanent rules
 

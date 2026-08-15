@@ -90,6 +90,14 @@ published source rate in `evaluation_settings`, converts that rate to configured
 and uses the access date only as `measurement_as_of_date`. The exact fallback-qualified Fable row
 is rejected by crosswalk before measurement construction.
 
+The Artificial Analysis GDPval-AA v2 adapter consumes a facts-only access-date snapshot because
+the public Bradley-Terry reference parameters may change with the comparison pool. Exact Opus, Sol,
+Kimi, and GLM Max rows are ready for Capability with their 95% sandwich-estimator intervals. The
+fallback-qualified Fable row is rejected. Average turns, output-token summaries, and calculated
+cost components remain diagnostic settings: Elo is not a binary success denominator, and the
+published cost combines provider token counts with live typical cache-hit measurements rather than
+an endpoint- and billing-revision-bound task ledger.
+
 The CursorBench 3.2 adapter consumes a facts-only reviewed extract from the official leaderboard.
 Exact Opus, Sol, Kimi, and GLM Max labels are ready for Capability. The Fable row is rejected because
 the public run does not rule out Cursor's documented invisible Fable-to-Opus routing. Cost/task,

@@ -245,6 +245,129 @@ def adapt_cursorbench_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adap
     )
 
 
+def adapt_aa_gdpval_facts(path: str | Path, crosswalk: ModelCrosswalk) -> AdaptationResult:
+    """Adapt a frozen GDPval-AA v2 public fact extract into task evidence."""
+    raw = load_yaml(path)
+    source_id = str(raw["source_id"])
+    artifact_id = str(raw["artifact_id"])
+    source = Source.model_validate(raw["source"])
+    as_of = date.fromisoformat(str(raw["as_of"]))
+    benchmark = cast(dict[str, object], raw["benchmark"])
+    benchmarks: list[BenchmarkMeasurement] = []
+    rejected: list[AdapterRejection] = []
+
+    def finite(row: dict[str, object], key: str) -> float:
+        value = float(cast(float, row[key]))
+        if not math.isfinite(value):
+            raise ValueError(f"GDPval-AA v2 {key} must be finite")
+        return value
+
+    for row_value in cast(list[object], raw["rows"]):
+        row = cast(dict[str, object], row_value)
+        source_model_id = str(row["source_model_id"])
+        elo = finite(row, "elo")
+        lower = finite(row, "ci_lower")
+        upper = finite(row, "ci_upper")
+        if not lower <= elo <= upper:
+            raise ValueError("GDPval-AA v2 confidence interval must contain the Elo estimate")
+        turns = finite(row, "average_turns_per_task")
+        if turns < 0:
+            raise ValueError("GDPval-AA v2 average_turns_per_task must be nonnegative")
+        match = exact_entry(crosswalk, source_id, artifact_id, source_model_id)
+        if match is None or match.canonical_model_id is None:
+            rejected.append(
+                AdapterRejection(source_row_id=source_model_id, reason="no exact crosswalk")
+            )
+            continue
+
+        operational: dict[str, object] = {"average_turns_per_task": turns}
+        for key in ("output_answer_tokens_per_task", "output_reasoning_tokens_per_task"):
+            if key in row:
+                value = finite(row, key)
+                if value < 0:
+                    raise ValueError(f"GDPval-AA v2 {key} must be nonnegative")
+                operational[key] = value
+        if "calculated_cost_components_usd" in row:
+            components = cast(dict[str, object], row["calculated_cost_components_usd"])
+            checked_components: dict[str, float] = {}
+            for key, raw_value in components.items():
+                value = float(cast(float, raw_value))
+                if not math.isfinite(value) or value < 0:
+                    raise ValueError(
+                        "GDPval-AA v2 calculated cost component "
+                        f"{key} must be finite and nonnegative"
+                    )
+                checked_components[str(key)] = value
+            operational["calculated_cost_components_usd"] = checked_components
+
+        benchmarks.append(
+            BenchmarkMeasurement(
+                record_id=identifier(
+                    f"aa-gdpval-v2-{match.canonical_model_id}-{as_of}"
+                ),
+                benchmark_id=identifier(str(benchmark["benchmark_id"])),
+                model_id=match.canonical_model_id,
+                source_model_id=source_model_id,
+                value=elo,
+                cohort_key=identifier(str(benchmark["cohort_key"])),
+                measurement_as_of_date=as_of,
+                source=source,
+                result_type=ResultType.INDEPENDENT,
+                benchmark_version=str(benchmark["benchmark_version"]),
+                harness_version=str(benchmark["harness_version"]),
+                metric_definition=str(benchmark["metric_definition"]),
+                evaluator=str(benchmark["evaluator"]),
+                harness_owner=str(benchmark["harness_owner"]),
+                run_executor=str(benchmark["run_executor"]),
+                tools_enabled=bool(benchmark["tools_enabled"]),
+                capture_type=ArtifactCaptureType.REVIEWED_FACT_EXTRACT,
+                reproducible=bool(benchmark["reproducible"]),
+                source_artifact_id=artifact_id,
+                source_registry_snapshot_id=artifact_id,
+                crosswalk_entry_id=match.id,
+                signal_id="gdpval-aa-v2",
+                configuration_verification=ConfigurationVerification(
+                    model_label_exact=True,
+                    release_label_exact=True,
+                    effort_label_exact=True,
+                    fallback_absent=True,
+                ),
+                record_status=RecordStatus.READY,
+                signal_role=SignalRole.TASK,
+                scoring_disposition=ScoringDisposition.SCORED,
+                evaluation_settings={
+                    **cast(dict[str, object], benchmark["evaluation_settings"]),
+                    **operational,
+                },
+                number_of_tasks=int(cast(int, benchmark["number_of_tasks"])),
+                number_of_trials=int(cast(int, benchmark["number_of_trials"])),
+                sample_count=int(cast(int, benchmark["number_of_tasks"])),
+                uncertainty=MeasurementUncertainty(
+                    kind=UncertaintyKind.CONFIDENCE_INTERVAL,
+                    lower=lower,
+                    upper=upper,
+                    confidence_level=0.95,
+                    source_fields=("ci_lower", "ci_upper", "uncertainty_method"),
+                    notes=str(benchmark["uncertainty_method"]),
+                ),
+                notes=(
+                    "Reviewed public-page Elo snapshot. Per-task operational summaries are "
+                    "diagnostic evaluation settings and do not enter Efficiency or Economics."
+                ),
+            )
+        )
+    return AdaptationResult(
+        source_id=source_id,
+        adapter_id="aa-gdpval-reviewed-facts-v1",
+        benchmarks=tuple(benchmarks),
+        rejections=tuple(rejected),
+        diagnostics=(
+            "GDPval-AA operational summaries remain diagnostic because Elo is not a binary "
+            "success denominator",
+        ),
+    )
+
+
 def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> AdaptationResult:
     raw = load_yaml(path)
     source_id = str(raw["source_id"])

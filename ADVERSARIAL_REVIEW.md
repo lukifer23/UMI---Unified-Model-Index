@@ -1,11 +1,11 @@
-# UMI adversarial review — 2026-08-14
+# UMI adversarial review — 2026-08-15
 
 ## Overall assessment
 
-**Ready for a narrow, manually reviewed pilot; not ready for public rankings or
-bulk ingestion.** The scoring implementation is internally reproducible and now
-harder to misuse, but its weights, Value hypotheses, confidence rules, and relative
-normalization have not been calibrated against real evidence.
+**Ready for a narrow, manually reviewed real-evidence pilot; not ready for a headline
+ranking or bulk ingestion.** Exact GDPval-AA v2, HLE, CursorBench, DeepSWE, GPQA,
+SciCode, CritPt, and ARC-AGI-2 records now exercise the real scoring path, but weights,
+Value hypotheses, confidence rules, and relative normalization remain uncalibrated.
 
 ## Weaknesses found and disposition
 
@@ -72,8 +72,8 @@ determinism.
 - Synthetic calculations: recomputed through library and CLI paths; 35 tests pass
   with 95% line coverage.
 - Static checks: Ruff and strict mypy pass.
-- Source/data claims: no real-data claims are made. Synthetic readiness warnings are
-  expected because fixtures do not impersonate retained real artifacts.
+- Source/data claims: real pilot facts are checksum-bound to frozen artifacts or facts-only
+  extracts; synthetic fixtures remain isolated and never appear as a real ranking.
 
 ## Known remaining failure modes
 
@@ -96,9 +96,9 @@ determinism.
 
 ## Exact next task
 
-Build one manual Artificial Analysis snapshot adapter and source registry for four
-to six configurations. Retain the dated raw capture, map only measurements with
-identifiable model snapshots and compatible harness/workload definitions, run the
-source-readiness gate, and publish a data-quality report before calculating any
-pilot score. Treat missing successful-task cost or incompatible settings as
-unscored—not as values to infer.
+Finish the remaining Artificial Analysis atomic-suite review one cohort at a time: tau3-Banking,
+AA-LCR, and AA-Omniscience. Admit only exact release-and-effort rows, reject fallback composites,
+and keep their operational cost/token fields diagnostic unless a compatible binary success rate
+and deployment identity make success adjustment valid. In parallel, seek a licensed attempt ledger
+that can raise Efficiency and Economics coverage; advertised tariffs and LiteLLM-derived dollars
+must not masquerade as observed task economics.

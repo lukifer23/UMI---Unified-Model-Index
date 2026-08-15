@@ -1,12 +1,17 @@
 {
   "acceptance_manifest": {
     "accepted_artifact_ids": [
+      "aa-gdpval-v2-facts-2026-08-15",
       "aa-hle-facts-2026-08-14",
       "cursorbench-3.2-facts-2026-08-14",
       "deepswe-v1.1-2026-08-13",
       "epoch-benchmark-data-2026-08-14"
     ],
     "accepted_crosswalk_entry_ids": [
+      "aa-gdpval-glm-max",
+      "aa-gdpval-kimi-max",
+      "aa-gdpval-opus-max",
+      "aa-gdpval-sol-max",
       "aa-hle-glm-max",
       "aa-hle-kimi-max",
       "aa-hle-opus-max",
@@ -26,6 +31,10 @@
       "epoch-benchmarks-sol-max"
     ],
     "accepted_record_ids": [
+      "aa-gdpval-v2-claude-opus-5-max-2026-08-15",
+      "aa-gdpval-v2-glm-5.2-max-2026-08-15",
+      "aa-gdpval-v2-gpt-5.6-sol-max-2026-08-15",
+      "aa-gdpval-v2-kimi-k3-max-2026-08-15",
       "aa-hle-claude-opus-5-max-2026-08-14",
       "aa-hle-glm-5.2-max-2026-08-14",
       "aa-hle-gpt-5.6-sol-max-2026-08-14",
@@ -66,6 +75,7 @@
       "cursorbench-3.2",
       "deepswe-v1.1",
       "deepswe-v1.1-resources",
+      "gdpval-aa-v2",
       "gpqa-diamond",
       "hle",
       "scicode"
@@ -81,8 +91,9 @@
       "deepswe-endpoint-resources-kimi-k3-max-2026-08-13"
     ],
     "excluded_unready_record_ids": [],
-    "fingerprint": "e0e6a3204dda6d5623f4b7a43c0f5dcf6000742e38c7a95a1bf1c1a182a2b4ba",
+    "fingerprint": "65fc390faf29a812ed1951064fa57ebd15823b2d52f81b34936152985fcff336",
     "scoring_relevant_adapter_versions": [
+      "aa-gdpval-reviewed-facts-v1",
       "aa-reviewed-facts-v2",
       "cursorbench-reviewed-facts-v1",
       "deepswe-reviewed-facts-v1",
@@ -135,6 +146,38 @@
       "record_id": "aa-aa-intelligence-index-kimi-k3-max-2026-08-14",
       "scoring_ready": false,
       "source_artifact_id": "aa-public-facts-2026-08-14"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "claude-opus-5-max",
+      "record_id": "aa-gdpval-v2-claude-opus-5-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-gdpval-v2-facts-2026-08-15"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "glm-5.2-max",
+      "record_id": "aa-gdpval-v2-glm-5.2-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-gdpval-v2-facts-2026-08-15"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "aa-gdpval-v2-gpt-5.6-sol-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-gdpval-v2-facts-2026-08-15"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "kimi-k3-max",
+      "record_id": "aa-gdpval-v2-kimi-k3-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-gdpval-v2-facts-2026-08-15"
     },
     {
       "disposition": "scored",

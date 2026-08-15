@@ -1,6 +1,7 @@
-scored_audit_fingerprint: 5050889aa89bae95ae419d11d05cc0961838c4771c219bc41117c80e3f3cdac6
-complete_audit_fingerprint: 7636f4d9b4c4671ff25c9903f225da99daae8c9dd63728b183d02cbfd1b2e058
+scored_audit_fingerprint: ec2a977c564a1b4391c2026b70a037297f0c41177698fd332ebc617dd3a87b4d
+complete_audit_fingerprint: b5f6571f626374a62d1b93fed0ebc2873525d6382197b8cba27e125d7d061897
 adapter_versions:
+- aa-gdpval-reviewed-facts-v1
 - aa-reviewed-facts-v2
 - cursorbench-reviewed-facts-v1
 - deepswe-reviewed-facts-v1

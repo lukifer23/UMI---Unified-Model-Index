@@ -1,5 +1,113 @@
 [
   {
+    "benchmark_id": "gdpval-aa-v2",
+    "capability_when_record_at_lower_bound": 84.8585690515807,
+    "capability_when_record_at_upper_bound": 84.8585690515807,
+    "central_capability": 84.8585690515807,
+    "central_value": 1848.77,
+    "cohort_key": "aa-gdpval-v2-public-leaderboard-2026-08-15",
+    "method": "one-record-at-a-time source-bound sensitivity; not probabilistic propagation",
+    "model_id": "claude-opus-5-max",
+    "record_id": "aa-gdpval-v2-claude-opus-5-max-2026-08-15",
+    "source_bound_lower": 1826.4,
+    "source_bound_upper": 1871.14,
+    "uncertainty": {
+      "confidence_level": 0.95,
+      "kind": "confidence_interval",
+      "lower": 1826.4,
+      "margin": null,
+      "notes": "95% confidence interval computed with the sandwich estimator",
+      "source_fields": [
+        "ci_lower",
+        "ci_upper",
+        "uncertainty_method"
+      ],
+      "standard_error": null,
+      "upper": 1871.14
+    }
+  },
+  {
+    "benchmark_id": "gdpval-aa-v2",
+    "capability_when_record_at_lower_bound": 0.0,
+    "capability_when_record_at_upper_bound": 0.0,
+    "central_capability": 0.0,
+    "central_value": 1506.11,
+    "cohort_key": "aa-gdpval-v2-public-leaderboard-2026-08-15",
+    "method": "one-record-at-a-time source-bound sensitivity; not probabilistic propagation",
+    "model_id": "glm-5.2-max",
+    "record_id": "aa-gdpval-v2-glm-5.2-max-2026-08-15",
+    "source_bound_lower": 1491.09,
+    "source_bound_upper": 1521.12,
+    "uncertainty": {
+      "confidence_level": 0.95,
+      "kind": "confidence_interval",
+      "lower": 1491.09,
+      "margin": null,
+      "notes": "95% confidence interval computed with the sandwich estimator",
+      "source_fields": [
+        "ci_lower",
+        "ci_upper",
+        "uncertainty_method"
+      ],
+      "standard_error": null,
+      "upper": 1521.12
+    }
+  },
+  {
+    "benchmark_id": "gdpval-aa-v2",
+    "capability_when_record_at_lower_bound": 76.012201885746,
+    "capability_when_record_at_upper_bound": 76.012201885746,
+    "central_capability": 76.012201885746,
+    "central_value": 1725.18,
+    "cohort_key": "aa-gdpval-v2-public-leaderboard-2026-08-15",
+    "method": "one-record-at-a-time source-bound sensitivity; not probabilistic propagation",
+    "model_id": "gpt-5.6-sol-max",
+    "record_id": "aa-gdpval-v2-gpt-5.6-sol-max-2026-08-15",
+    "source_bound_lower": 1708.82,
+    "source_bound_upper": 1741.53,
+    "uncertainty": {
+      "confidence_level": 0.95,
+      "kind": "confidence_interval",
+      "lower": 1708.82,
+      "margin": null,
+      "notes": "95% confidence interval computed with the sandwich estimator",
+      "source_fields": [
+        "ci_lower",
+        "ci_upper",
+        "uncertainty_method"
+      ],
+      "standard_error": null,
+      "upper": 1741.53
+    }
+  },
+  {
+    "benchmark_id": "gdpval-aa-v2",
+    "capability_when_record_at_lower_bound": 29.977814753189133,
+    "capability_when_record_at_upper_bound": 29.977814753189133,
+    "central_capability": 29.977814753189133,
+    "central_value": 1682.29,
+    "cohort_key": "aa-gdpval-v2-public-leaderboard-2026-08-15",
+    "method": "one-record-at-a-time source-bound sensitivity; not probabilistic propagation",
+    "model_id": "kimi-k3-max",
+    "record_id": "aa-gdpval-v2-kimi-k3-max-2026-08-15",
+    "source_bound_lower": 1662.55,
+    "source_bound_upper": 1702.04,
+    "uncertainty": {
+      "confidence_level": 0.95,
+      "kind": "confidence_interval",
+      "lower": 1662.55,
+      "margin": null,
+      "notes": "95% confidence interval computed with the sandwich estimator",
+      "source_fields": [
+        "ci_lower",
+        "ci_upper",
+        "uncertainty_method"
+      ],
+      "standard_error": null,
+      "upper": 1702.04
+    }
+  },
+  {
     "benchmark_id": "deepswe-v1.1",
     "capability_when_record_at_lower_bound": 25.0,
     "capability_when_record_at_upper_bound": 100.0,
@@ -28,9 +136,9 @@
   },
   {
     "benchmark_id": "deepswe-v1.1",
-    "capability_when_record_at_lower_bound": 78.7128712871287,
-    "capability_when_record_at_upper_bound": 81.98019801980197,
-    "central_capability": 81.98019801980197,
+    "capability_when_record_at_lower_bound": 82.11314475873544,
+    "capability_when_record_at_upper_bound": 84.8585690515807,
+    "central_capability": 84.8585690515807,
     "central_value": 73.64864864864865,
     "cohort_key": "deepswe-v1.1-2026-08-13",
     "method": "one-record-at-a-time source-bound sensitivity; not probabilistic propagation",
@@ -82,9 +190,9 @@
   },
   {
     "benchmark_id": "deepswe-v1.1",
-    "capability_when_record_at_lower_bound": 77.78877887788778,
-    "capability_when_record_at_upper_bound": 81.05610561056105,
-    "central_capability": 77.78877887788778,
+    "capability_when_record_at_lower_bound": 76.012201885746,
+    "capability_when_record_at_upper_bound": 78.75762617859125,
+    "central_capability": 76.012201885746,
     "central_value": 72.66666666666667,
     "cohort_key": "deepswe-v1.1-2026-08-13",
     "method": "one-record-at-a-time source-bound sensitivity; not probabilistic propagation",
@@ -109,9 +217,9 @@
   },
   {
     "benchmark_id": "deepswe-v1.1",
-    "capability_when_record_at_lower_bound": 29.339933993399338,
-    "capability_when_record_at_upper_bound": 35.87458745874587,
-    "central_capability": 29.339933993399338,
+    "capability_when_record_at_lower_bound": 29.977814753189133,
+    "capability_when_record_at_upper_bound": 35.46866333887965,
+    "central_capability": 29.977814753189133,
     "central_value": 68.51441241685144,
     "cohort_key": "deepswe-v1.1-2026-08-13",
     "method": "one-record-at-a-time source-bound sensitivity; not probabilistic propagation",

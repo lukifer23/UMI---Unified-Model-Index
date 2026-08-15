@@ -103,6 +103,23 @@ snapshots:
     attribution: HLE score data and methodology sourced from Artificial Analysis; artificialanalysis.ai
     redistribution_scope: facts_only
     notes: Public factual transcription only; exact source rates retained, no API payload or page copy committed.
+  - id: aa-gdpval-v2-facts-2026-08-15
+    title: Artificial Analysis GDPval-AA v2 reviewed public facts
+    source:
+      organization: Artificial Analysis
+      url: https://artificialanalysis.ai/evaluations/gdpval-aa
+      accessed: 2026-08-15
+    as_of: 2026-08-15
+    artifact_path: v0.3/aa-gdpval-reviewed-facts-2026-08-15.yaml
+    artifact_sha256: 7c18c5ba6483bd4db4826bb45a25d8393b92e5cc4b788cf482f7d9f21808f9cb
+    content_type: application/yaml
+    upstream_revision: public-page-2026-08-15
+    adapter_id: aa-gdpval-reviewed-facts-v1
+    license_id: terms-governed-no-redistribution-assumed
+    license_url: https://artificialanalysis.ai/docs/legal/Terms-of-Use.pdf
+    attribution: GDPval-AA v2 score, uncertainty, operational facts, and methodology sourced from Artificial Analysis; artificialanalysis.ai
+    redistribution_scope: facts_only
+    notes: Public factual transcription only; no page payload, task content, submitted work products, or chart artwork is redistributed.
   - id: cursorbench-3.2-facts-2026-08-14
     title: CursorBench 3.2 reviewed public facts
     source:

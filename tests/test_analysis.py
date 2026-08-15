@@ -140,6 +140,11 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
             "cohort_key": "deepswe-v1.1-2026-08-13",
         },
         {
+            "benchmark_id": "gdpval-aa-v2",
+            "canonical_representation_group": "gdpval-aa-v2",
+            "cohort_key": "aa-gdpval-v2-public-leaderboard-2026-08-15",
+        },
+        {
             "benchmark_id": "gpqa-diamond",
             "canonical_representation_group": "gpqa-diamond",
             "cohort_key": "epoch-gpqa-diamond-1.0.6-simple-evals",
@@ -155,7 +160,7 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
             "cohort_key": "aa-v4.1.1-scicode-test-288-background-pass1",
         },
     ]
-    assert {item["coverage"] for item in scores} == {0.49375}
+    assert {item["coverage"] for item in scores} == {0.61375}
 
     five_model = common_capability_comparison(
         real_pilot_dataset,
@@ -221,7 +226,7 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
         "normalization_panels"
     ]
     intervals = cast(list[dict[str, object]], comparison["sensitivity_intervals"])
-    assert len(intervals) == 6
+    assert len(intervals) == 9
     assert sum(item["interval_origin"] == "derived_from_standard_error" for item in intervals) == 3
     assert all(
         item["assumption"] == "normal_approximation" and item["z_value"] == 1.96
@@ -232,9 +237,9 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
         item["model_id"]: cast(dict[str, object], item["rank_robustness"])
         for item in scores
     }
-    assert all(item["scenario_count"] == 64 and item["exhaustive"] for item in robustness.values())
+    assert all(item["scenario_count"] == 512 and item["exhaustive"] for item in robustness.values())
     assert robustness["glm-5.2-max"]["possible_ranks"] == [3.0]
-    assert robustness["claude-opus-5-max"]["possible_ranks"] == [1.0, 2.0]
+    assert robustness["claude-opus-5-max"]["possible_ranks"] == [1.0]
     assert "glm-5.2-max" in robustness["kimi-k3-max"]["robustly_dominates"]
     assert "probability" not in str(comparison).lower()
 
@@ -243,7 +248,12 @@ def test_source_bound_sensitivity_preserves_declared_margin_without_probability_
     real_pilot_dataset: Dataset, real_pilot_config: ProjectConfig
 ) -> None:
     report = source_bound_capability_sensitivity(real_pilot_dataset, real_pilot_config)
-    kimi = next(item for item in report if item["model_id"] == "kimi-k3-max")
+    kimi = next(
+        item
+        for item in report
+        if item["model_id"] == "kimi-k3-max"
+        and item["benchmark_id"] == "deepswe-v1.1"
+    )
     assert kimi["source_bound_lower"] == pytest.approx(63.97739833756913)
     assert kimi["source_bound_upper"] == pytest.approx(73.05142649613376)
     assert kimi["uncertainty"]["kind"] == "confidence_interval"

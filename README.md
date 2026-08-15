@@ -1,16 +1,17 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.6 extends the real,
-five-configuration, multi-source pilot with exact HLE, CursorBench 3.2, DeepSWE, GPQA Diamond, SciCode, CritPt, and
-ARC-AGI-2 results plus DeepSWE confidence intervals and harness-resource means. It does **not**
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.7 extends the real,
+five-configuration, multi-source pilot with exact GDPval-AA v2, HLE, CursorBench 3.2, DeepSWE,
+GPQA Diamond, SciCode, CritPt, and ARC-AGI-2 results plus DeepSWE confidence intervals and
+harness-resource means. It does **not**
 publish a headline UMI score: the evidence supports only provisional, model-specific partial
 Capability and Efficiency estimates.
 
 The pilot cohort is Claude Opus 5 Max, Claude Fable 5 Max, GPT-5.6 Sol Max, Kimi K3 Max, and
 GLM-5.2 Max. Its frozen sources are Artificial Analysis public facts, Epoch ECI and Benchmarking Hub
-data, CursorBench 3.2 facts, LM Arena Agent and text/style-control rows, and DeepSWE v1.1 facts. Every source row is
-accepted only through an exact model-and-effort crosswalk.
+data, GDPval-AA v2 and CursorBench 3.2 facts, LM Arena Agent and text/style-control rows, and
+DeepSWE v1.1 facts. Every source row is accepted only through an exact model-and-effort crosswalk.
 
 ## Install and verify
 
@@ -49,6 +50,7 @@ PYTHONPATH=. uv run --no-sync umi crosswalk
 PYTHONPATH=. uv run --no-sync umi overlap
 PYTHONPATH=. uv run --no-sync umi ingest --source aa
 PYTHONPATH=. uv run --no-sync umi ingest --source aa-hle
+PYTHONPATH=. uv run --no-sync umi ingest --source aa-gdpval
 PYTHONPATH=. uv run --no-sync umi ingest --source cursorbench
 PYTHONPATH=. uv run --no-sync umi ingest --source epoch
 PYTHONPATH=. uv run --no-sync umi ingest --source epoch-benchmarks
@@ -154,6 +156,12 @@ observed dollar cost remain diagnostic until deployment identity is verified. Th
 hierarchy gives this evidence 4.5% absolute Efficiency coverage; it cannot represent coding as a
 whole or unlock Economics.
 
+GDPval-AA v2 contributes exact Max-effort professional-work Elo results for Opus, Sol, Kimi, and
+GLM from the 220-task, one-run, blind pairwise public cohort. Source-declared 95% confidence
+intervals propagate through comparison sensitivity. Fable's published fallback composite is
+rejected. Average turns, output tokens, and calculated cost components remain diagnostic because
+they are operational summaries or live-price estimates rather than verified billed task records.
+
 CursorBench 3.2 solution-correctness scores contribute for Opus, Sol, Kimi, and GLM. Its Fable row
 is rejected because Cursor documents invisible Fable-to-Opus routing and the leaderboard does not
 prove fallback absence. Published cost/task, tokens/task, and steps/task are retained as diagnostic
@@ -162,9 +170,10 @@ success denominator and verified endpoint plus service-tier identity.
 
 ## Current limitations
 
-- Opus, Sol, and Kimi have 63.125% Capability coverage across three domains and clear the
-  Capability-only coverage/breadth gates. GLM has 49.375% across three domains and Fable has 8.25%
-  across one. Model-specific partials remain different evidence profiles, not one shared ranking.
+- Opus, Sol, and Kimi have 75.125% Capability coverage across four domains and clear the
+  Capability-only coverage/breadth gates. GLM has 61.375% across four domains and also clears those
+  two gates; Fable has 8.25% across one. Model-specific partials remain different evidence profiles,
+  not one shared ranking.
 - Efficiency has only 4.5% absolute coverage; Economics has no ready evidence.
 - Fable 5 Max predates the unchanged 2026-06-15 release-window start.
 - Scores are cohort-relative; no fixed anchor cohort or formal uncertainty propagation exists.

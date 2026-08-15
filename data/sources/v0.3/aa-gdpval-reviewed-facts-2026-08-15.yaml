@@ -1,0 +1,85 @@
+source_id: artificial-analysis-gdpval
+artifact_id: aa-gdpval-v2-facts-2026-08-15
+as_of: 2026-08-15
+source:
+  organization: Artificial Analysis
+  url: https://artificialanalysis.ai/evaluations/gdpval-aa
+  accessed: 2026-08-15
+methodology:
+  url: https://artificialanalysis.ai/methodology/intelligence-benchmarking
+  accessed: 2026-08-15
+benchmark:
+  benchmark_id: gdpval-aa-v2
+  benchmark_version: gdpval-aa-v2-aa-intelligence-v4.1.1
+  harness_version: aa-stirrup-gdpval-aa-v2
+  cohort_key: aa-gdpval-v2-public-leaderboard-2026-08-15
+  number_of_tasks: 220
+  number_of_trials: 1
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  tools_enabled: true
+  reproducible: false
+  metric_definition: Bradley-Terry Elo from blind pairwise judging of GDPval work products, anchored to human-expert deliverables at 1000
+  uncertainty_method: 95% confidence interval computed with the sandwich estimator
+  evaluation_settings:
+    task_source: OpenAI public gold GDPval dataset with documented file-compatibility repairs
+    occupations: 44
+    agent_harness: Artificial Analysis Stirrup
+    sandbox: E2B
+    maximum_turns: 250
+    judge_panel: GPT-5.5 medium, Gemini 3.1 Pro Preview high, Claude Opus 4.8 high
+    judge_assignment: one panel judge sampled per blind pairwise comparison
+    elo_model: Bradley-Terry maximum likelihood with ties counted as half-wins
+    elo_anchor: human expert deliverables at 1000
+    snapshot_policy: reference parameters may change; this access-date snapshot is one compatibility cohort
+    source_unit: Elo
+    operational_metrics_disposition: diagnostic only; Elo is not a binary success denominator and reported cost uses live typical cache-hit measurements
+rows:
+  - source_model_id: Claude Opus 5 (max)
+    elo: 1848.77
+    ci_lower: 1826.40
+    ci_upper: 1871.14
+    average_turns_per_task: 60.4703196347032
+  - source_model_id: Claude Fable 5 (with fallback)
+    elo: 1738.86
+    ci_lower: 1722.54
+    ci_upper: 1755.17
+    average_turns_per_task: 32.8396226415094
+  - source_model_id: GPT-5.6 Sol (max)
+    elo: 1725.18
+    ci_lower: 1708.82
+    ci_upper: 1741.53
+    average_turns_per_task: 45.2054794520548
+    output_answer_tokens_per_task: 22677.1
+    output_reasoning_tokens_per_task: 17905.536363636365
+    calculated_cost_components_usd:
+      answer: 0.680313
+      reasoning: 0.537166090909091
+      cache_write: 0.5279180517120118
+      cache_hit: 1.748087137681221
+      input: 0
+  - source_model_id: Kimi K3 (max)
+    elo: 1682.29
+    ci_lower: 1662.55
+    ci_upper: 1702.04
+    average_turns_per_task: 37.5114155251142
+    output_answer_tokens_per_task: 25869.977272727272
+    output_reasoning_tokens_per_task: 33512.42272727273
+    calculated_cost_components_usd:
+      answer: 0.3880496590909091
+      reasoning: 0.5026863409090909
+      cache_write: 0.49438415502600397
+      cache_hit: 0.7600522663155814
+      input: 0
+  - source_model_id: GLM-5.2 (max)
+    elo: 1506.11
+    ci_lower: 1491.09
+    ci_upper: 1521.12
+    average_turns_per_task: 31.0409090909091
+    calculated_cost_components_usd:
+      answer: 0.09495924
+      reasoning: 0.25156942000000004
+      cache_write: 0
+      cache_hit: 0.29431526266699776
+      input: 0

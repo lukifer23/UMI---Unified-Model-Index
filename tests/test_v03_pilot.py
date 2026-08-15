@@ -20,6 +20,7 @@ from scripts.build_v03_pilot import main as build_v03_pilot
 from scripts.freeze_v03_open_sources import _zip_content_sha256
 from umi.adapters import (
     adapt_aa_facts,
+    adapt_aa_gdpval_facts,
     adapt_arena_json,
     adapt_cursorbench_facts,
     adapt_deepswe_facts,
@@ -82,7 +83,7 @@ def test_frozen_registry_checksums_and_license_contract(pilot_dataset) -> None:
     )
     assert report.errors == ()
     pilot_snapshots = [item for item in registry.snapshots if "v0.3/" in item.artifact_path]
-    assert len(pilot_snapshots) == 12
+    assert len(pilot_snapshots) == 13
     assert all(item.license_id and item.attribution and item.adapter_id for item in pilot_snapshots)
 
 
@@ -305,7 +306,7 @@ def test_release_claim_non_comparisons_name_the_exact_failed_gate(pilot_dataset)
     }
     assert reasons == {
         "openai-release-claim-deepswe-v1.1-gpt-5.6-sol-max-2026-07-09": "cohort_mismatch",
-        "openai-release-claim-gdpval-aa-v2-gpt-5.6-sol-max-2026-07-09": "benchmark_mismatch",
+        "openai-release-claim-gdpval-aa-v2-gpt-5.6-sol-max-2026-07-09": "cohort_mismatch",
         "openai-release-claim-gpqa-diamond-gpt-5.6-sol-max-2026-07-09": "cohort_mismatch",
         "openai-release-claim-terminalbench-2.1-gpt-5.6-sol-max-2026-07-09": "benchmark_mismatch",
     }
@@ -404,6 +405,31 @@ def test_adapters_are_offline_deterministic_and_role_safe(monkeypatch, crosswalk
         and item.evaluation_settings["source_value_rate"] * 100 == item.value
         for item in aa_hle.benchmarks
     )
+    aa_gdpval = adapt_aa_gdpval_facts(
+        SOURCES / "aa-gdpval-reviewed-facts-2026-08-15.yaml", crosswalk
+    )
+    assert len(aa_gdpval.benchmarks) == 4
+    assert len(aa_gdpval.rejections) == 1
+    assert aa_gdpval.rejections[0].source_row_id == "Claude Fable 5 (with fallback)"
+    assert {item.model_id for item in aa_gdpval.benchmarks} == {
+        "claude-opus-5-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "glm-5.2-max",
+    }
+    assert all(
+        item.benchmark_id == "gdpval-aa-v2"
+        and item.measurement_as_of_date == date(2026, 8, 15)
+        and item.evaluation_date is None
+        and item.number_of_tasks == 220
+        and item.number_of_trials == 1
+        and item.scoring_disposition == ScoringDisposition.SCORED
+        and item.record_status == RecordStatus.READY
+        and item.uncertainty is not None
+        and item.uncertainty.confidence_level == 0.95
+        and item.evaluation_settings["average_turns_per_task"] > 0
+        for item in aa_gdpval.benchmarks
+    )
     cursorbench = adapt_cursorbench_facts(
         SOURCES / "cursorbench-reviewed-facts-2026-08-14.yaml", crosswalk
     )
@@ -486,10 +512,10 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
             "economics_coverage": 0.0,
             "efficiency_coverage": 0.045,
             "headline_ready": 0,
-            "max_capability_coverage": 0.6312500000000001,
+            "max_capability_coverage": 0.75125,
             "pilot_models": 5,
-                "scored_capability_cells": 28,
-                "total_capability_cells": 75,
+            "scored_capability_cells": 32,
+            "total_capability_cells": 75,
         }
     ]
     assert all(
@@ -497,6 +523,7 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
         for item in dashboard["snapshot"]["datasets"]["model_summary"]
     )
     assert len(dashboard["snapshot"]["datasets"]["benchmarks"]) == 24
+    assert len(dashboard["snapshot"]["datasets"]["gdpval"]) == 4
     assert len(dashboard["snapshot"]["datasets"]["resources"]) == 5
     source_ids = {item["id"] for item in dashboard["sources"]}
     assert all(
@@ -675,7 +702,7 @@ def test_gap_report_counts_every_configured_model_benchmark_cell(
     )
     assert any("claude-fable-5-max" in blocker for blocker in report["headline_blockers"])
     assert not any("every model" in blocker for blocker in report["headline_blockers"])
-    assert any(
+    assert not any(
         "Capability coverage" in blocker and "glm-5.2-max" in blocker
         for blocker in report["headline_blockers"]
     )
@@ -711,6 +738,18 @@ def test_cursorbench_adapter_rejects_non_finite_operational_fact(
     monkeypatch.setattr("umi.adapters.reviewed.load_yaml", lambda path: raw)
     with pytest.raises(ValueError, match="finite and nonnegative"):
         adapt_cursorbench_facts("offline-non-finite-cursorbench.yaml", crosswalk)
+
+
+def test_gdpval_adapter_rejects_non_finite_elo(monkeypatch, crosswalk) -> None:
+    raw = yaml.safe_load(
+        (SOURCES / "aa-gdpval-reviewed-facts-2026-08-15.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    raw["rows"][0]["elo"] = float("nan")
+    monkeypatch.setattr("umi.adapters.reviewed.load_yaml", lambda path: raw)
+    with pytest.raises(ValueError, match="must be finite"):
+        adapt_aa_gdpval_facts("offline-non-finite-gdpval.yaml", crosswalk)
 
 
 def test_overlap_cycles_and_unrestricted_double_count_are_rejected(pilot_config) -> None:
@@ -833,18 +872,18 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
         item.model_id: item.coverage.capability_absolute_weighted for item in results.values()
     } == {
         "claude-fable-5-max": 0.0825,
-        "claude-opus-5-max": 0.6312500000000001,
-        "glm-5.2-max": 0.49375,
-        "gpt-5.6-sol-max": 0.6312500000000001,
-        "kimi-k3-max": 0.6312500000000001,
+        "claude-opus-5-max": 0.75125,
+        "glm-5.2-max": 0.61375,
+        "gpt-5.6-sol-max": 0.75125,
+        "kimi-k3-max": 0.75125,
     }
     assert {item.model_id: item.capability.score for item in results.values()} == pytest.approx(
         {
             "claude-fable-5-max": 50.0,
-            "claude-opus-5-max": 81.98019801980197,
+            "claude-opus-5-max": 84.8585690515807,
             "glm-5.2-max": 0.0,
-            "gpt-5.6-sol-max": 77.78877887788778,
-            "kimi-k3-max": 29.339933993399338,
+            "gpt-5.6-sol-max": 76.012201885746,
+            "kimi-k3-max": 29.977814753189133,
         }
     )
     assert {item.model_id: item.efficiency.score for item in results.values()} == pytest.approx(

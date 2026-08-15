@@ -38,6 +38,11 @@
         "type": "chart"
       },
       {
+        "chartId": "gdpval_scores",
+        "id": "gdpval",
+        "type": "chart"
+      },
+      {
         "chartId": "effective_input_tokens",
         "id": "resources",
         "type": "chart"
@@ -253,6 +258,29 @@
         "yAxisTitle": "CursorBench score (%)"
       },
       {
+        "dataset": "gdpval",
+        "encodings": {
+          "x": {
+            "field": "model_short",
+            "label": "Model",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "score",
+            "label": "Elo",
+            "type": "quantitative"
+          }
+        },
+        "id": "gdpval_scores",
+        "layout": "full",
+        "sourceId": "accepted_benchmarks",
+        "subtitle": "Bradley-Terry Elo anchored to human-expert deliverables at 1,000; Fable is absent because its source row uses Opus 4.8 fallback.",
+        "title": "GDPval-AA v2 professional-work Elo",
+        "type": "bar",
+        "valueFormat": "number",
+        "yAxisTitle": "GDPval-AA v2 Elo"
+      },
+      {
         "dataset": "gap_counts",
         "encodings": {
           "x": {
@@ -302,13 +330,17 @@
             "field": "model"
           },
           {
+            "dataset": "gdpval",
+            "field": "model"
+          },
+          {
             "dataset": "resources",
             "field": "model"
           }
         ]
       }
     ],
-    "generatedAt": "2026-08-14T00:00:00Z",
+    "generatedAt": "2026-08-15T00:00:00Z",
     "sources": [
       {
         "id": "pilot_estimates",
@@ -333,7 +365,7 @@
     ],
     "surface": "dashboard",
     "tables": [],
-    "title": "UMI v0.3.6 \u2014 five-model pilot evidence report",
+    "title": "UMI v0.3.7 \u2014 five-model pilot evidence report",
     "version": 1
   },
   "package_info": {
@@ -632,7 +664,7 @@
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "score": 81.98019801980197
+          "score": 84.8585690515807
         },
         {
           "component": "Eff.",
@@ -660,7 +692,7 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "score": 77.78877887788778
+          "score": 76.012201885746
         },
         {
           "component": "Eff.",
@@ -674,7 +706,7 @@
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "score": 29.339933993399338
+          "score": 29.977814753189133
         },
         {
           "component": "Eff.",
@@ -701,7 +733,7 @@
       "coverage": [
         {
           "component": "Cap.",
-          "coverage": 0.6312500000000001,
+          "coverage": 0.75125,
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5"
@@ -743,7 +775,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.6312500000000001,
+          "coverage": 0.75125,
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol"
@@ -764,7 +796,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.6312500000000001,
+          "coverage": 0.75125,
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3"
@@ -785,7 +817,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.49375,
+          "coverage": 0.61375,
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2"
@@ -861,24 +893,70 @@
           "status": "Reference"
         },
         {
-          "cells": 41,
+          "cells": 38,
           "status": "Missing"
         },
         {
-          "cells": 28,
+          "cells": 32,
           "status": "Ready"
         },
         {
-          "cells": 2,
+          "cells": 1,
           "status": "Vendor claim"
+        }
+      ],
+      "gdpval": [
+        {
+          "benchmark": "gdpval-aa-v2",
+          "benchmark_short": "GDPval-AA v2",
+          "cohort": "aa-gdpval-v2-public-leaderboard-2026-08-15",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "record_id": "aa-gdpval-v2-claude-opus-5-max-2026-08-15",
+          "score": 1848.77,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "gdpval-aa-v2",
+          "benchmark_short": "GDPval-AA v2",
+          "cohort": "aa-gdpval-v2-public-leaderboard-2026-08-15",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "record_id": "aa-gdpval-v2-gpt-5.6-sol-max-2026-08-15",
+          "score": 1725.18,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "gdpval-aa-v2",
+          "benchmark_short": "GDPval-AA v2",
+          "cohort": "aa-gdpval-v2-public-leaderboard-2026-08-15",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "record_id": "aa-gdpval-v2-kimi-k3-max-2026-08-15",
+          "score": 1682.29,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "gdpval-aa-v2",
+          "benchmark_short": "GDPval-AA v2",
+          "cohort": "aa-gdpval-v2-public-leaderboard-2026-08-15",
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "record_id": "aa-gdpval-v2-glm-5.2-max-2026-08-15",
+          "score": 1506.11,
+          "source": "Artificial Analysis"
         }
       ],
       "model_summary": [
         {
-          "capability": 81.98019801980197,
-          "capability_coverage": 0.6312500000000001,
-          "capability_domains": 3,
-          "capability_profile": "fb0485d88875",
+          "capability": 84.8585690515807,
+          "capability_coverage": 0.75125,
+          "capability_domains": 4,
+          "capability_profile": "f558fccccd64",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -889,7 +967,7 @@
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "partial_overall": 69.3822194719472
+          "partial_overall": 71.36109955629507
         },
         {
           "capability": 50.0,
@@ -909,10 +987,10 @@
           "partial_overall": 50.00000000000001
         },
         {
-          "capability": 77.78877887788778,
-          "capability_coverage": 0.6312500000000001,
-          "capability_domains": 3,
-          "capability_profile": "fb0485d88875",
+          "capability": 76.012201885746,
+          "capability_coverage": 0.75125,
+          "capability_domains": 4,
+          "capability_profile": "f558fccccd64",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -923,13 +1001,13 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "partial_overall": 84.72978547854784
+          "partial_overall": 83.50838879645036
         },
         {
-          "capability": 29.339933993399338,
-          "capability_coverage": 0.6312500000000001,
-          "capability_domains": 3,
-          "capability_profile": "fb0485d88875",
+          "capability": 29.977814753189133,
+          "capability_coverage": 0.75125,
+          "capability_domains": 4,
+          "capability_profile": "f558fccccd64",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -940,13 +1018,13 @@
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "partial_overall": 38.400371287128706
+          "partial_overall": 38.83891430948419
         },
         {
           "capability": 0.0,
-          "capability_coverage": 0.49375,
-          "capability_domains": 3,
-          "capability_profile": "3d142b157bdc",
+          "capability_coverage": 0.61375,
+          "capability_domains": 4,
+          "capability_profile": "2a20ac6b9cdb",
           "comparability": "different_score_scale",
           "confidence": "Low",
           "economics": null,
@@ -965,9 +1043,9 @@
           "economics_coverage": 0.0,
           "efficiency_coverage": 0.045,
           "headline_ready": 0,
-          "max_capability_coverage": 0.6312500000000001,
+          "max_capability_coverage": 0.75125,
           "pilot_models": 5,
-          "scored_capability_cells": 28,
+          "scored_capability_cells": 32,
           "total_capability_cells": 75
         }
       ],
@@ -1029,7 +1107,7 @@
         }
       ]
     },
-    "generatedAt": "2026-08-14T00:00:00Z",
+    "generatedAt": "2026-08-15T00:00:00Z",
     "status": "partial",
     "version": 1
   },

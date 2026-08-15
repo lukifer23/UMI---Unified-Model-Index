@@ -1,7 +1,7 @@
-# UMI methodology v0.3.6
+# UMI methodology v0.3.7
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3.6 retains the manually reviewed,
+current policy values; code must not contradict this document. UMI v0.3.7 retains the manually reviewed,
 multi-source evidence pilot. It does not publish a headline UMI ranking.
 
 ## v0.3 source roles and exact identity
@@ -64,6 +64,29 @@ nor Economics. The Fable 5 Max row is rejected entirely: Cursor documents that a
 request may route to Opus without an in-product indicator, and the leaderboard does not prove that
 such fallback was absent from the evaluated run. The other four exact Max rows may contribute
 Capability; no CursorBench value is imputed for Fable.
+
+GDPval-AA v2 is admitted as an independent agentic-work task signal for exact named-release and
+Max-effort rows. Artificial Analysis runs 220 public GDPval tasks once through its Stirrup agent
+harness, compares submitted work products blindly using a sampled panel of three frontier-model
+judges, and fits a Bradley-Terry rating anchored to human-expert deliverables at 1,000. UMI retains
+the public Elo estimate and its 95% sandwich-estimator confidence interval. Because Artificial
+Analysis may update reference parameters as the comparison pool changes, the access-date snapshot
+defines the compatibility cohort; values from different snapshots are not silently combined.
+
+Claude Fable 5's public GDPval-AA v2 row explicitly includes Opus 4.8 fallback and is rejected from
+the plain Fable Max pilot configuration. The other four exact Max rows may contribute Capability.
+Public per-task turns, token summaries, and calculated cost components are retained as diagnostic
+evaluation settings only: GDPval's Elo is not a binary task-success rate suitable for UMI's
+success-adjustment denominator, and Artificial Analysis states that reported cost combines provider
+token counts with live typical cache-hit measurements rather than the one evaluated deployment's
+billing record. Those operational columns therefore contribute neither Efficiency nor Economics.
+
+DeepSWE's public runner documentation and Pier implementation were also reviewed for Economics
+readiness. Provider-prefixed model examples establish an API family, while Pier/mini-SWE-agent
+derives per-call dollars from LiteLLM's price table. The leaderboard rows do not identify the
+evaluated endpoint, service tier, pricing-table revision, or billing record. DeepSWE mean task cost
+and wall time therefore remain endpoint-sensitive diagnostic evidence; this review does not relax
+their existing readiness disposition.
 
 `BenchmarkFamilyDefinition.cap` is retained only for schema compatibility in v0.3 and is
 deprecated. UMI does not dynamically redistribute family weights through caps; removal is deferred
@@ -449,7 +472,7 @@ that limitation.
 
 ## Efficiency
 
-The v0.3.6 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
+The v0.3.7 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
 10% effective reasoning tokens, 10% effective cached tokens, 10% effective turns, 15% effective
 agent steps, 15% effective wall time, and 10% effective tool calls. These are policy weights, not
 empirically learned parameters. Token subtypes are kept distinct: a total-token field is not scored

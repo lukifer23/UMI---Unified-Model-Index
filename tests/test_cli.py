@@ -82,7 +82,18 @@ def test_fixture_config_is_auto_discovered(capsys: pytest.CaptureFixture[str]) -
 
 
 @pytest.mark.parametrize(
-    "source", ["aa", "epoch", "epoch-benchmarks", "arena-agent", "arena-text", "deepswe"]
+    "source",
+    [
+        "aa",
+        "aa-hle",
+        "aa-gdpval",
+        "cursorbench",
+        "epoch",
+        "epoch-benchmarks",
+        "arena-agent",
+        "arena-text",
+        "deepswe",
+    ],
 )
 def test_v03_ingest_commands_are_offline_and_deterministic(
     source: str, capsys: pytest.CaptureFixture[str]
