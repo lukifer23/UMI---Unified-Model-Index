@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "unified-model-index"
-version = "0.3.10"
+version = "0.3.11"
 description = "Transparent, auditable scoring for AI model capability, efficiency, economics, and value."
 readme = "README.md"
 requires-python = ">=3.11"

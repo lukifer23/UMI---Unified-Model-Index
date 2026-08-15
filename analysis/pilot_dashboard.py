@@ -66,6 +66,7 @@ def build_pilot_dashboard(
         "gdpval-aa-v2": "GDPval-AA v2",
         "scicode": "SciCode",
         "tau3-banking": "τ³-Banking",
+        "terminalbench-2.1": "Terminal-Bench",
     }
     ordered_models = [model.id for model in dataset.models]
     estimates_by_model = {item["model_id"]: item for item in estimates}
@@ -148,6 +149,7 @@ def build_pilot_dashboard(
             "cursorbench-3.2",
             "gdpval-aa-v2",
             "tau3-banking",
+            "terminalbench-2.1",
         }
     ]
     cursorbench_rows = [row for row in all_benchmark_rows if row["benchmark"] == "cursorbench-3.2"]
@@ -155,6 +157,9 @@ def build_pilot_dashboard(
     tau3_rows = [row for row in all_benchmark_rows if row["benchmark"] == "tau3-banking"]
     lcr_rows = [row for row in all_benchmark_rows if row["benchmark"] == "aa-lcr"]
     omniscience_rows = [row for row in all_benchmark_rows if row["benchmark"] == "aa-omniscience"]
+    terminalbench_rows = [
+        row for row in all_benchmark_rows if row["benchmark"] == "terminalbench-2.1"
+    ]
     resource_rows = []
     for record in dataset.efficiency:
         if record.scoring_disposition != ScoringDisposition.SCORED:
@@ -231,7 +236,7 @@ def build_pilot_dashboard(
         "manifest": {
             "version": 1,
             "surface": "dashboard",
-            "title": "UMI v0.3.10 — five-model pilot evidence report",
+            "title": "UMI v0.3.11 — five-model pilot evidence report",
             "description": (
                 "A reproducible view of current accepted evidence, partial component estimates, "
                 "coverage, and the gates that prevent a headline UMI ranking."
@@ -253,6 +258,7 @@ def build_pilot_dashboard(
                         {"dataset": "tau3", "field": "model"},
                         {"dataset": "lcr", "field": "model"},
                         {"dataset": "omniscience", "field": "model"},
+                        {"dataset": "terminalbench", "field": "model"},
                         {"dataset": "resources", "field": "model"},
                     ],
                 }
@@ -532,6 +538,28 @@ def build_pilot_dashboard(
                     "layout": "full",
                 },
                 {
+                    "id": "terminalbench_scores",
+                    "title": "AA Terminal-Bench v2.1 pass@1",
+                    "subtitle": (
+                        "89 terminal tasks repeated three times with Terminus 2 in E2B; "
+                        "Fable is absent because its source row uses Opus fallback."
+                    ),
+                    "type": "bar",
+                    "dataset": "terminalbench",
+                    "sourceId": "accepted_benchmarks",
+                    "encodings": {
+                        "x": {
+                            "field": "model_short",
+                            "type": "nominal",
+                            "label": "Model",
+                        },
+                        "y": {"field": "score", "type": "quantitative", "label": "Pass@1"},
+                    },
+                    "yAxisTitle": "Terminal-Bench v2.1 pass@1 (%)",
+                    "valueFormat": "number",
+                    "layout": "full",
+                },
+                {
                     "id": "gap_counts",
                     "title": "Why the index is not yet headline-ready",
                     "subtitle": (
@@ -592,6 +620,11 @@ def build_pilot_dashboard(
                     "chartId": "omniscience_scores",
                 },
                 {
+                    "id": "terminalbench",
+                    "type": "chart",
+                    "chartId": "terminalbench_scores",
+                },
+                {
                     "id": "resources",
                     "type": "chart",
                     "chartId": "effective_input_tokens",
@@ -628,6 +661,7 @@ def build_pilot_dashboard(
                     "tau3": tau3_rows,
                     "lcr": lcr_rows,
                     "omniscience": omniscience_rows,
+                    "terminalbench": terminalbench_rows,
                     "resources": resource_rows,
                     "gap_counts": gap_rows,
                 }

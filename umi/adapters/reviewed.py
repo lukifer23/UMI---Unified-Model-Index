@@ -396,6 +396,15 @@ def _adapt_aa_pass_rate_facts(
         source_rate = finite_nonnegative(row, "source_value_rate")
         if source_rate > 1:
             raise ValueError(f"{benchmark['benchmark_id']} source_value_rate must not exceed 1")
+        trial_count = int(cast(int, benchmark["number_of_trials"]))
+        successful_trials = source_rate * trial_count
+        if not math.isclose(
+            successful_trials, round(successful_trials), rel_tol=0.0, abs_tol=1e-9
+        ):
+            raise ValueError(
+                f"{benchmark['benchmark_id']} source_value_rate must reconcile to an integer "
+                "pass count"
+            )
 
         operational: dict[str, object] = {}
         for key in (
@@ -411,6 +420,24 @@ def _adapt_aa_pass_rate_facts(
                 str(key): finite_nonnegative({str(key): value}, str(key))
                 for key, value in components.items()
             }
+        if "token_counts" in row:
+            token_values = cast(dict[str, object], row["token_counts"])
+            expected_keys = {"input", "answer", "reasoning", "cacheable_input"}
+            if set(token_values) != expected_keys:
+                raise ValueError(
+                    f"{benchmark['benchmark_id']} token_counts must contain exactly "
+                    "input, answer, reasoning, and cacheable_input"
+                )
+            token_counts = {
+                key: int(cast(int, token_values[key])) for key in sorted(expected_keys)
+            }
+            if any(value < 0 for value in token_counts.values()):
+                raise ValueError(f"{benchmark['benchmark_id']} token_counts must be nonnegative")
+            if token_counts["cacheable_input"] > token_counts["input"]:
+                raise ValueError(
+                    f"{benchmark['benchmark_id']} cacheable_input must not exceed input"
+                )
+            operational["token_counts"] = token_counts
 
         match = exact_entry(crosswalk, source_id, artifact_id, source_model_id)
         if match is None or match.canonical_model_id is None:
@@ -458,8 +485,8 @@ def _adapt_aa_pass_rate_facts(
                     **operational,
                 },
                 number_of_tasks=int(cast(int, benchmark["number_of_tasks"])),
-                number_of_trials=int(cast(int, benchmark["number_of_trials"])),
-                sample_count=int(cast(int, benchmark["number_of_trials"])),
+                number_of_trials=trial_count,
+                sample_count=trial_count,
                 pass_at_k=int(cast(int, benchmark["pass_at_k"])),
                 notes=(
                     "Capability pass rate only. Incomplete operational summaries are retained "
@@ -500,6 +527,22 @@ def adapt_aa_lcr_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptatio
         diagnostic=(
             "AA-LCR operational summaries remain diagnostic because token accounting is "
             "provider-specific and operational coverage is incomplete"
+        ),
+    )
+
+
+def adapt_aa_terminalbench_facts(
+    path: str | Path, crosswalk: ModelCrosswalk
+) -> AdaptationResult:
+    """Adapt the frozen AA Terminal-Bench v2.1 cohort as Capability-only evidence."""
+    return _adapt_aa_pass_rate_facts(
+        path,
+        crosswalk,
+        record_prefix="aa-terminalbench-v2-1",
+        adapter_id="aa-terminalbench-reviewed-facts-v1",
+        diagnostic=(
+            "Terminal-Bench aggregate provider token counts remain diagnostic because "
+            "tokenization and cache semantics are not standardized and attempt rows are absent"
         ),
     )
 

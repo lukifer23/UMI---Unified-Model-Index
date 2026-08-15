@@ -6,6 +6,7 @@
       "aa-lcr-facts-2026-08-15",
       "aa-omniscience-facts-2026-08-15",
       "aa-tau3-banking-facts-2026-08-15",
+      "aa-terminalbench-v2-1-facts-2026-08-15",
       "cursorbench-3.2-facts-2026-08-14",
       "deepswe-v1.1-2026-08-13",
       "epoch-benchmark-data-2026-08-14"
@@ -31,6 +32,10 @@
       "aa-tau3-kimi-max",
       "aa-tau3-opus-max",
       "aa-tau3-sol-max",
+      "aa-terminalbench-glm-max",
+      "aa-terminalbench-kimi-max",
+      "aa-terminalbench-opus-max",
+      "aa-terminalbench-sol-max",
       "cursorbench-glm-max",
       "cursorbench-kimi-max",
       "cursorbench-opus-max",
@@ -66,6 +71,10 @@
       "aa-tau3-banking-glm-5.2-max-2026-08-15",
       "aa-tau3-banking-gpt-5.6-sol-max-2026-08-15",
       "aa-tau3-banking-kimi-k3-max-2026-08-15",
+      "aa-terminalbench-v2-1-claude-opus-5-max-2026-08-15",
+      "aa-terminalbench-v2-1-glm-5.2-max-2026-08-15",
+      "aa-terminalbench-v2-1-gpt-5.6-sol-max-2026-08-15",
+      "aa-terminalbench-v2-1-kimi-k3-max-2026-08-15",
       "cursorbench-3.2-claude-opus-5-max-2026-08-14",
       "cursorbench-3.2-glm-5.2-max-2026-08-14",
       "cursorbench-3.2-gpt-5.6-sol-max-2026-08-14",
@@ -108,7 +117,8 @@
       "gpqa-diamond",
       "hle",
       "scicode",
-      "tau3-banking"
+      "tau3-banking",
+      "terminalbench-2.1"
     ],
     "excluded_diagnostic_record_ids": [
       "arena-agent-claude-opus-5-max-2026-08-12",
@@ -121,13 +131,14 @@
       "deepswe-endpoint-resources-kimi-k3-max-2026-08-13"
     ],
     "excluded_unready_record_ids": [],
-    "fingerprint": "271193e7530db13e51b7622ed4285d255e74c34d458b597ac263966d0d8b4dea",
+    "fingerprint": "cbf41f0f0e5d28df6417f57b12011f6e8c3d7082e2a347916013a7fb5f6f5039",
     "scoring_relevant_adapter_versions": [
       "aa-gdpval-reviewed-facts-v1",
       "aa-lcr-reviewed-facts-v1",
       "aa-omniscience-reviewed-facts-v1",
       "aa-reviewed-facts-v2",
       "aa-tau3-reviewed-facts-v1",
+      "aa-terminalbench-reviewed-facts-v1",
       "cursorbench-reviewed-facts-v1",
       "deepswe-reviewed-facts-v1",
       "epoch-benchmark-zip-v2"
@@ -339,6 +350,38 @@
       "record_id": "aa-tau3-banking-kimi-k3-max-2026-08-15",
       "scoring_ready": true,
       "source_artifact_id": "aa-tau3-banking-facts-2026-08-15"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "claude-opus-5-max",
+      "record_id": "aa-terminalbench-v2-1-claude-opus-5-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-terminalbench-v2-1-facts-2026-08-15"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "glm-5.2-max",
+      "record_id": "aa-terminalbench-v2-1-glm-5.2-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-terminalbench-v2-1-facts-2026-08-15"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "aa-terminalbench-v2-1-gpt-5.6-sol-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-terminalbench-v2-1-facts-2026-08-15"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "kimi-k3-max",
+      "record_id": "aa-terminalbench-v2-1-kimi-k3-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-terminalbench-v2-1-facts-2026-08-15"
     },
     {
       "disposition": "diagnostic_only",

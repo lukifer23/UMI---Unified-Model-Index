@@ -1,0 +1,73 @@
+source_id: artificial-analysis-terminalbench
+artifact_id: aa-terminalbench-v2-1-facts-2026-08-15
+as_of: 2026-08-15
+source:
+  organization: Artificial Analysis
+  url: https://artificialanalysis.ai/evaluations/terminalbench-v2-1
+  accessed: 2026-08-15
+methodology:
+  url: https://artificialanalysis.ai/methodology/intelligence-benchmarking#terminal-bench-v21
+  accessed: 2026-08-15
+benchmark:
+  benchmark_id: terminalbench-2.1
+  benchmark_version: terminal-bench-v2.1-aa-intelligence-v4.1.1
+  harness_version: aa-terminus-2-e2b-250-episodes-3-repeats
+  cohort_key: aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15
+  number_of_tasks: 89
+  number_of_trials: 267
+  repeats_per_task: 3
+  pass_at_k: 1
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  tools_enabled: false
+  reproducible: false
+  metric_definition: share of attempts whose complete task-specific verification suite passes, averaged over three repeats per task and reported as pass@1
+  evaluation_settings:
+    response_type: terminal-based task execution
+    agent_harness: Terminus 2
+    sandbox: E2B
+    task_categories: software engineering; system administration; data processing; model training; security
+    maximum_episodes_per_repeat: 250
+    task_timeout_seconds: 7200 or the task-specific timeout when longer
+    success_condition: every task verification test passes
+    source_unit: rate from 0 to 1
+    client_side_tool_usage_in_index_table: false
+    token_count_source: model API provider
+    token_metrics_disposition: diagnostic only because provider tokenization differs, cacheable input is not an observed cache-hit ledger, and the public aggregate is not attempt-level telemetry
+rows:
+  - source_model_id: Claude Opus 5 (Adaptive Reasoning, Max Effort)
+    source_value_rate: 0.891385767790262
+    token_counts:
+      input: 132353877
+      answer: 1333842
+      reasoning: 3102688
+      cacheable_input: 126095036
+  - source_model_id: Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback)
+    source_value_rate: 0.846441947565543
+    token_counts:
+      input: 76661563
+      answer: 895326
+      reasoning: 3704940
+      cacheable_input: 70817594
+  - source_model_id: GPT-5.6 Sol (max)
+    source_value_rate: 0.880149812734082
+    token_counts:
+      input: 31153636
+      answer: 589903
+      reasoning: 716956
+      cacheable_input: 29223016
+  - source_model_id: Kimi K3 (max)
+    source_value_rate: 0.850187265917603
+    token_counts:
+      input: 52251794
+      answer: 525087
+      reasoning: 1420531
+      cacheable_input: 49461474
+  - source_model_id: GLM-5.2 (max)
+    source_value_rate: 0.779026217228464
+    token_counts:
+      input: 78240101
+      answer: 1097099
+      reasoning: 6166636
+      cacheable_input: 73682807

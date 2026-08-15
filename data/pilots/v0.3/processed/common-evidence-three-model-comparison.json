@@ -49,10 +49,15 @@
       "benchmark_id": "tau3-banking",
       "canonical_representation_group": "tau3-banking",
       "cohort_key": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15"
+    },
+    {
+      "benchmark_id": "terminalbench-2.1",
+      "canonical_representation_group": "terminalbench-2.1",
+      "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15"
     }
   ],
-  "common_evidence_profile_id": "48250e8228b60dbe1024a7bf4d64b86592ce8ea3b2a32a6ba0150e167ae9834d",
-  "comparison_group_id": "c9521e26eb6cb2729e0b96c90059fa4edb70e6f125638df0117c7a219367cca9",
+  "common_evidence_profile_id": "46e332fe3b8ed1ee273d7e92f21e47e13cf8f94959a45a100b71d5a8a5229422",
+  "comparison_group_id": "bff4bef5affd1e48306f0eaf14bfa3029d50b44890ab9547e9e64934450ff080",
   "comparison_model_ids": [
     "claude-opus-5-max",
     "glm-5.2-max",
@@ -413,6 +418,41 @@
       "requested_strategy": "robust_z",
       "scored_input_fingerprint": "d0d1bcdb90564fff27b7af8a8030d6fbec35fec29ec664ae9e4c7aa877b7fc39",
       "transformation": "identity"
+    },
+    {
+      "applied_strategy": "percentile",
+      "benchmark_id": "terminalbench-2.1",
+      "canonical_representation_group": "terminalbench-2.1",
+      "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+      "cohort_roles": {
+        "claude-opus-5-max": "normalization_member",
+        "glm-5.2-max": "normalization_member",
+        "gpt-5.6-sol-max": "normalization_member",
+        "kimi-k3-max": "normalization_member"
+      },
+      "cohort_size": 4,
+      "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
+      "id": "f92609c473d388c7836b6cf333b5bf9226aad70edd3d1f4a3f8dad960110baca",
+      "model_ids": [
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max"
+      ],
+      "normalization_trace": {
+        "applied_strategy": "percentile",
+        "cohort_size": 4,
+        "direction_inverted": false,
+        "fallback_reason": "below_minimum_robust_cohort",
+        "log_transform": false,
+        "minimum_rank_cohort": 2,
+        "minimum_robust_cohort": 8,
+        "provisional": true,
+        "requested_strategy": "robust_z"
+      },
+      "requested_strategy": "robust_z",
+      "scored_input_fingerprint": "87197a22acab28408d133808fe64aac38478c6332c96728631f44407f028aa07",
+      "transformation": "identity"
     }
   ],
   "primary_result_semantics": "raw benchmark metrics",
@@ -420,9 +460,9 @@
   "recommended_missing_evidence": [],
   "score_scale": {
     "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
-    "evidence_profile_id": "48250e8228b60dbe1024a7bf4d64b86592ce8ea3b2a32a6ba0150e167ae9834d",
-    "formula_version": "umi-methodology-v0.3.10",
-    "id": "fc198a62aa255f986257b9d6c325fb1f09ad41c095f0ddae244249c2cbb877e4",
+    "evidence_profile_id": "46e332fe3b8ed1ee273d7e92f21e47e13cf8f94959a45a100b71d5a8a5229422",
+    "formula_version": "umi-methodology-v0.3.11",
+    "id": "f70ec13f00a8c49666b54434571f7da24b9e7f384154c29189be1e05db52b2c5",
     "normalization_panel_ids": [
       "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
       "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
@@ -433,7 +473,8 @@
       "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
       "dbe25767808e7eb7173ba9e601c0c1b08d428a0dd899853548d2c53fa2adbfff",
       "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
-      "e437be94bc145514ec2514c890ac752bec3abcd786747eda0b250f0f3df2d139"
+      "e437be94bc145514ec2514c890ac752bec3abcd786747eda0b250f0f3df2d139",
+      "f92609c473d388c7836b6cf333b5bf9226aad70edd3d1f4a3f8dad960110baca"
     ],
     "normalization_version": "umi-normalization-v0.3.4",
     "scale_kind": "weighted_stable_panel_composite"
@@ -537,6 +578,34 @@
           ],
           "source_uncertainty": null,
           "weighted_contribution": 8.25
+        },
+        {
+          "applied_normalization": "percentile",
+          "benchmark_id": "terminalbench-2.1",
+          "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+          "configured_absolute_weight": 0.06875,
+          "direction": "higher",
+          "normalization_panel_id": "f92609c473d388c7836b6cf333b5bf9226aad70edd3d1f4a3f8dad960110baca",
+          "normalization_trace": {
+            "applied_strategy": "percentile",
+            "cohort_size": 4,
+            "direction_inverted": false,
+            "fallback_reason": "below_minimum_robust_cohort",
+            "log_transform": false,
+            "minimum_rank_cohort": 2,
+            "minimum_robust_cohort": 8,
+            "provisional": true,
+            "requested_strategy": "robust_z"
+          },
+          "normalized_value": 100.0,
+          "raw_unit": "percent",
+          "raw_value": 89.1385767790262,
+          "requested_normalization": "robust_z",
+          "source_record_ids": [
+            "aa-terminalbench-v2-1-claude-opus-5-max-2026-08-15"
+          ],
+          "source_uncertainty": null,
+          "weighted_contribution": 6.875000000000001
         },
         {
           "applied_normalization": "percentile",
@@ -759,8 +828,8 @@
           "weighted_contribution": 5.0
         }
       ],
-      "coverage": 0.7937500000000001,
-      "evidence_profile_id": "48250e8228b60dbe1024a7bf4d64b86592ce8ea3b2a32a6ba0150e167ae9834d",
+      "coverage": 0.8625,
+      "evidence_profile_id": "46e332fe3b8ed1ee273d7e92f21e47e13cf8f94959a45a100b71d5a8a5229422",
       "model_id": "claude-opus-5-max",
       "normalization_panel_ids": [
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
@@ -772,9 +841,10 @@
         "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
         "dbe25767808e7eb7173ba9e601c0c1b08d428a0dd899853548d2c53fa2adbfff",
         "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
-        "e437be94bc145514ec2514c890ac752bec3abcd786747eda0b250f0f3df2d139"
+        "e437be94bc145514ec2514c890ac752bec3abcd786747eda0b250f0f3df2d139",
+        "f92609c473d388c7836b6cf333b5bf9226aad70edd3d1f4a3f8dad960110baca"
       ],
-      "normalized_composite_score": 81.31233595800525,
+      "normalized_composite_score": 82.80193236714976,
       "primary_raw_results": [
         {
           "benchmark_id": "hle",
@@ -811,6 +881,14 @@
           "direction": "higher",
           "raw_unit": "percent",
           "raw_value": 70.0,
+          "source_uncertainty": null
+        },
+        {
+          "benchmark_id": "terminalbench-2.1",
+          "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+          "direction": "higher",
+          "raw_unit": "percent",
+          "raw_value": 89.1385767790262,
           "source_uncertainty": null
         },
         {
@@ -903,10 +981,10 @@
           "stable normalization panel membership held fixed",
           "standard-error intervals use a normal approximation with z=1.96"
         ],
-        "central_composite_score": 81.31233595800525,
+        "central_composite_score": 82.80193236714976,
         "central_estimate_rank": 1.0,
-        "composite_score_max": 81.31233595800525,
-        "composite_score_min": 63.83202099737533,
+        "composite_score_max": 82.80193236714976,
+        "composite_score_min": 66.71497584541063,
         "exhaustive": true,
         "possible_rank_max": 1.0,
         "possible_rank_min": 1.0,
@@ -921,8 +999,8 @@
         "scenario_count": 512,
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
-      "score": 81.31233595800525,
-      "score_scale_id": "fc198a62aa255f986257b9d6c325fb1f09ad41c095f0ddae244249c2cbb877e4",
+      "score": 82.80193236714976,
+      "score_scale_id": "f70ec13f00a8c49666b54434571f7da24b9e7f384154c29189be1e05db52b2c5",
       "score_semantics": "weighted stable-panel percentile composite"
     },
     {
@@ -1020,6 +1098,34 @@
           "requested_normalization": "robust_z",
           "source_record_ids": [
             "cursorbench-3.2-glm-5.2-max-2026-08-14"
+          ],
+          "source_uncertainty": null,
+          "weighted_contribution": 0.0
+        },
+        {
+          "applied_normalization": "percentile",
+          "benchmark_id": "terminalbench-2.1",
+          "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+          "configured_absolute_weight": 0.06875,
+          "direction": "higher",
+          "normalization_panel_id": "f92609c473d388c7836b6cf333b5bf9226aad70edd3d1f4a3f8dad960110baca",
+          "normalization_trace": {
+            "applied_strategy": "percentile",
+            "cohort_size": 4,
+            "direction_inverted": false,
+            "fallback_reason": "below_minimum_robust_cohort",
+            "log_transform": false,
+            "minimum_rank_cohort": 2,
+            "minimum_robust_cohort": 8,
+            "provisional": true,
+            "requested_strategy": "robust_z"
+          },
+          "normalized_value": 0.0,
+          "raw_unit": "percent",
+          "raw_value": 77.9026217228464,
+          "requested_normalization": "robust_z",
+          "source_record_ids": [
+            "aa-terminalbench-v2-1-glm-5.2-max-2026-08-15"
           ],
           "source_uncertainty": null,
           "weighted_contribution": 0.0
@@ -1245,8 +1351,8 @@
           "weighted_contribution": 0.0
         }
       ],
-      "coverage": 0.7937500000000001,
-      "evidence_profile_id": "48250e8228b60dbe1024a7bf4d64b86592ce8ea3b2a32a6ba0150e167ae9834d",
+      "coverage": 0.8625,
+      "evidence_profile_id": "46e332fe3b8ed1ee273d7e92f21e47e13cf8f94959a45a100b71d5a8a5229422",
       "model_id": "glm-5.2-max",
       "normalization_panel_ids": [
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
@@ -1258,9 +1364,10 @@
         "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
         "dbe25767808e7eb7173ba9e601c0c1b08d428a0dd899853548d2c53fa2adbfff",
         "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
-        "e437be94bc145514ec2514c890ac752bec3abcd786747eda0b250f0f3df2d139"
+        "e437be94bc145514ec2514c890ac752bec3abcd786747eda0b250f0f3df2d139",
+        "f92609c473d388c7836b6cf333b5bf9226aad70edd3d1f4a3f8dad960110baca"
       ],
-      "normalized_composite_score": 2.0997375328083994,
+      "normalized_composite_score": 1.9323671497584543,
       "primary_raw_results": [
         {
           "benchmark_id": "hle",
@@ -1297,6 +1404,14 @@
           "direction": "higher",
           "raw_unit": "percent",
           "raw_value": 55.0,
+          "source_uncertainty": null
+        },
+        {
+          "benchmark_id": "terminalbench-2.1",
+          "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+          "direction": "higher",
+          "raw_unit": "percent",
+          "raw_value": 77.9026217228464,
           "source_uncertainty": null
         },
         {
@@ -1389,10 +1504,10 @@
           "stable normalization panel membership held fixed",
           "standard-error intervals use a normal approximation with z=1.96"
         ],
-        "central_composite_score": 2.0997375328083994,
+        "central_composite_score": 1.9323671497584543,
         "central_estimate_rank": 3.0,
-        "composite_score_max": 14.383202099737533,
-        "composite_score_min": 2.0997375328083994,
+        "composite_score_max": 13.23671497584541,
+        "composite_score_min": 1.9323671497584543,
         "exhaustive": true,
         "possible_rank_max": 3.0,
         "possible_rank_min": 3.0,
@@ -1407,8 +1522,8 @@
         "scenario_count": 512,
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
-      "score": 2.0997375328083994,
-      "score_scale_id": "fc198a62aa255f986257b9d6c325fb1f09ad41c095f0ddae244249c2cbb877e4",
+      "score": 1.9323671497584543,
+      "score_scale_id": "f70ec13f00a8c49666b54434571f7da24b9e7f384154c29189be1e05db52b2c5",
       "score_semantics": "weighted stable-panel percentile composite"
     },
     {
@@ -1509,6 +1624,34 @@
           ],
           "source_uncertainty": null,
           "weighted_contribution": 2.7500000000000004
+        },
+        {
+          "applied_normalization": "percentile",
+          "benchmark_id": "terminalbench-2.1",
+          "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+          "configured_absolute_weight": 0.06875,
+          "direction": "higher",
+          "normalization_panel_id": "f92609c473d388c7836b6cf333b5bf9226aad70edd3d1f4a3f8dad960110baca",
+          "normalization_trace": {
+            "applied_strategy": "percentile",
+            "cohort_size": 4,
+            "direction_inverted": false,
+            "fallback_reason": "below_minimum_robust_cohort",
+            "log_transform": false,
+            "minimum_rank_cohort": 2,
+            "minimum_robust_cohort": 8,
+            "provisional": true,
+            "requested_strategy": "robust_z"
+          },
+          "normalized_value": 33.333333333333336,
+          "raw_unit": "percent",
+          "raw_value": 85.0187265917603,
+          "requested_normalization": "robust_z",
+          "source_record_ids": [
+            "aa-terminalbench-v2-1-kimi-k3-max-2026-08-15"
+          ],
+          "source_uncertainty": null,
+          "weighted_contribution": 2.291666666666667
         },
         {
           "applied_normalization": "percentile",
@@ -1731,8 +1874,8 @@
           "weighted_contribution": 1.666666666666667
         }
       ],
-      "coverage": 0.7937500000000001,
-      "evidence_profile_id": "48250e8228b60dbe1024a7bf4d64b86592ce8ea3b2a32a6ba0150e167ae9834d",
+      "coverage": 0.8625,
+      "evidence_profile_id": "46e332fe3b8ed1ee273d7e92f21e47e13cf8f94959a45a100b71d5a8a5229422",
       "model_id": "kimi-k3-max",
       "normalization_panel_ids": [
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
@@ -1744,9 +1887,10 @@
         "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
         "dbe25767808e7eb7173ba9e601c0c1b08d428a0dd899853548d2c53fa2adbfff",
         "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
-        "e437be94bc145514ec2514c890ac752bec3abcd786747eda0b250f0f3df2d139"
+        "e437be94bc145514ec2514c890ac752bec3abcd786747eda0b250f0f3df2d139",
+        "f92609c473d388c7836b6cf333b5bf9226aad70edd3d1f4a3f8dad960110baca"
       ],
-      "normalized_composite_score": 46.8503937007874,
+      "normalized_composite_score": 45.772946859903385,
       "primary_raw_results": [
         {
           "benchmark_id": "hle",
@@ -1783,6 +1927,14 @@
           "direction": "higher",
           "raw_unit": "percent",
           "raw_value": 60.8,
+          "source_uncertainty": null
+        },
+        {
+          "benchmark_id": "terminalbench-2.1",
+          "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+          "direction": "higher",
+          "raw_unit": "percent",
+          "raw_value": 85.0187265917603,
           "source_uncertainty": null
         },
         {
@@ -1875,10 +2027,10 @@
           "stable normalization panel membership held fixed",
           "standard-error intervals use a normal approximation with z=1.96"
         ],
-        "central_composite_score": 46.8503937007874,
+        "central_composite_score": 45.772946859903385,
         "central_estimate_rank": 2.0,
-        "composite_score_max": 62.83464566929133,
-        "composite_score_min": 42.75590551181102,
+        "composite_score_max": 60.48309178743962,
+        "composite_score_min": 42.0048309178744,
         "exhaustive": true,
         "possible_rank_max": 2.0,
         "possible_rank_min": 2.0,
@@ -1894,8 +2046,8 @@
         "scenario_count": 512,
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
-      "score": 46.8503937007874,
-      "score_scale_id": "fc198a62aa255f986257b9d6c325fb1f09ad41c095f0ddae244249c2cbb877e4",
+      "score": 45.772946859903385,
+      "score_scale_id": "f70ec13f00a8c49666b54434571f7da24b9e7f384154c29189be1e05db52b2c5",
       "score_semantics": "weighted stable-panel percentile composite"
     }
   ],

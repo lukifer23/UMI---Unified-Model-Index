@@ -160,6 +160,22 @@
     "spearman": null
   },
   {
+    "benchmark_a": "aa-lcr",
+    "benchmark_b": "terminalbench-2.1",
+    "cohort_a": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+    "cohort_b": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+    "direction_a": "higher",
+    "direction_b": "higher",
+    "family_a": "aa-lcr",
+    "family_b": "terminalbench-2.1",
+    "interpretability_reason": "insufficient_overlap",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 4,
+    "pearson": null,
+    "spearman": null
+  },
+  {
     "benchmark_a": "aa-omniscience",
     "benchmark_b": "arc-agi-2",
     "cohort_a": "aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15",
@@ -304,6 +320,22 @@
     "spearman": null
   },
   {
+    "benchmark_a": "aa-omniscience",
+    "benchmark_b": "terminalbench-2.1",
+    "cohort_a": "aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15",
+    "cohort_b": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+    "direction_a": "higher",
+    "direction_b": "higher",
+    "family_a": "aa-omniscience",
+    "family_b": "terminalbench-2.1",
+    "interpretability_reason": "insufficient_overlap",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 4,
+    "pearson": null,
+    "spearman": null
+  },
+  {
     "benchmark_a": "arc-agi-2",
     "benchmark_b": "critpt",
     "cohort_a": "arc-prize-verified-arc-agi-2-semi-private-pass2",
@@ -432,6 +464,22 @@
     "spearman": null
   },
   {
+    "benchmark_a": "arc-agi-2",
+    "benchmark_b": "terminalbench-2.1",
+    "cohort_a": "arc-prize-verified-arc-agi-2-semi-private-pass2",
+    "cohort_b": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+    "direction_a": "higher",
+    "direction_b": "higher",
+    "family_a": "arc-agi-2",
+    "family_b": "terminalbench-2.1",
+    "interpretability_reason": "insufficient_overlap",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 3,
+    "pearson": null,
+    "spearman": null
+  },
+  {
     "benchmark_a": "critpt",
     "benchmark_b": "cursorbench-3.2",
     "cohort_a": "aa-v4.1.1-critpt-70-test-challenges-pass1",
@@ -544,6 +592,22 @@
     "spearman": null
   },
   {
+    "benchmark_a": "critpt",
+    "benchmark_b": "terminalbench-2.1",
+    "cohort_a": "aa-v4.1.1-critpt-70-test-challenges-pass1",
+    "cohort_b": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+    "direction_a": "higher",
+    "direction_b": "higher",
+    "family_a": "critpt",
+    "family_b": "terminalbench-2.1",
+    "interpretability_reason": "insufficient_overlap",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 4,
+    "pearson": null,
+    "spearman": null
+  },
+  {
     "benchmark_a": "cursorbench-3.2",
     "benchmark_b": "deepswe-v1.1",
     "cohort_a": "cursorbench-3.2-public-leaderboard-2026-08-14",
@@ -640,6 +704,22 @@
     "spearman": null
   },
   {
+    "benchmark_a": "cursorbench-3.2",
+    "benchmark_b": "terminalbench-2.1",
+    "cohort_a": "cursorbench-3.2-public-leaderboard-2026-08-14",
+    "cohort_b": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+    "direction_a": "higher",
+    "direction_b": "higher",
+    "family_a": "cursorbench-3.2",
+    "family_b": "terminalbench-2.1",
+    "interpretability_reason": "insufficient_overlap",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 4,
+    "pearson": null,
+    "spearman": null
+  },
+  {
     "benchmark_a": "deepswe-v1.1",
     "benchmark_b": "gdpval-aa-v2",
     "cohort_a": "deepswe-v1.1-2026-08-13",
@@ -720,6 +800,22 @@
     "spearman": null
   },
   {
+    "benchmark_a": "deepswe-v1.1",
+    "benchmark_b": "terminalbench-2.1",
+    "cohort_a": "deepswe-v1.1-2026-08-13",
+    "cohort_b": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+    "direction_a": "higher",
+    "direction_b": "higher",
+    "family_a": "deepswe-v1.1",
+    "family_b": "terminalbench-2.1",
+    "interpretability_reason": "insufficient_overlap",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 4,
+    "pearson": null,
+    "spearman": null
+  },
+  {
     "benchmark_a": "gdpval-aa-v2",
     "benchmark_b": "gpqa-diamond",
     "cohort_a": "aa-gdpval-v2-public-leaderboard-2026-08-15",
@@ -784,6 +880,22 @@
     "spearman": null
   },
   {
+    "benchmark_a": "gdpval-aa-v2",
+    "benchmark_b": "terminalbench-2.1",
+    "cohort_a": "aa-gdpval-v2-public-leaderboard-2026-08-15",
+    "cohort_b": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+    "direction_a": "higher",
+    "direction_b": "higher",
+    "family_a": "gdpval-aa-v2",
+    "family_b": "terminalbench-2.1",
+    "interpretability_reason": "insufficient_overlap",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 4,
+    "pearson": null,
+    "spearman": null
+  },
+  {
     "benchmark_a": "gpqa-diamond",
     "benchmark_b": "hle",
     "cohort_a": "epoch-gpqa-diamond-1.0.6-simple-evals",
@@ -832,6 +944,22 @@
     "spearman": null
   },
   {
+    "benchmark_a": "gpqa-diamond",
+    "benchmark_b": "terminalbench-2.1",
+    "cohort_a": "epoch-gpqa-diamond-1.0.6-simple-evals",
+    "cohort_b": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+    "direction_a": "higher",
+    "direction_b": "higher",
+    "family_a": "gpqa-diamond",
+    "family_b": "terminalbench-2.1",
+    "interpretability_reason": "insufficient_overlap",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 4,
+    "pearson": null,
+    "spearman": null
+  },
+  {
     "benchmark_a": "hle",
     "benchmark_b": "scicode",
     "cohort_a": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge",
@@ -864,6 +992,22 @@
     "spearman": null
   },
   {
+    "benchmark_a": "hle",
+    "benchmark_b": "terminalbench-2.1",
+    "cohort_a": "aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge",
+    "cohort_b": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+    "direction_a": "higher",
+    "direction_b": "higher",
+    "family_a": "hle",
+    "family_b": "terminalbench-2.1",
+    "interpretability_reason": "insufficient_overlap",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 4,
+    "pearson": null,
+    "spearman": null
+  },
+  {
     "benchmark_a": "scicode",
     "benchmark_b": "tau3-banking",
     "cohort_a": "aa-v4.1.1-scicode-test-288-background-pass1",
@@ -872,6 +1016,38 @@
     "direction_b": "higher",
     "family_a": "scicode",
     "family_b": "tau3-banking",
+    "interpretability_reason": "insufficient_overlap",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 4,
+    "pearson": null,
+    "spearman": null
+  },
+  {
+    "benchmark_a": "scicode",
+    "benchmark_b": "terminalbench-2.1",
+    "cohort_a": "aa-v4.1.1-scicode-test-288-background-pass1",
+    "cohort_b": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+    "direction_a": "higher",
+    "direction_b": "higher",
+    "family_a": "scicode",
+    "family_b": "terminalbench-2.1",
+    "interpretability_reason": "insufficient_overlap",
+    "interpretable": false,
+    "known_overlap": false,
+    "overlap": 4,
+    "pearson": null,
+    "spearman": null
+  },
+  {
+    "benchmark_a": "tau3-banking",
+    "benchmark_b": "terminalbench-2.1",
+    "cohort_a": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+    "cohort_b": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+    "direction_a": "higher",
+    "direction_b": "higher",
+    "family_a": "tau3-banking",
+    "family_b": "terminalbench-2.1",
     "interpretability_reason": "insufficient_overlap",
     "interpretable": false,
     "known_overlap": false,

@@ -171,6 +171,23 @@ snapshots:
     attribution: AA-Omniscience score, answer-count, and operational facts sourced from Artificial Analysis
     redistribution_scope: facts_only
     notes: Public factual transcription only; no page payload, private question content, responses, or chart artwork is redistributed.
+  - id: aa-terminalbench-v2-1-facts-2026-08-15
+    title: Artificial Analysis Terminal-Bench v2.1 reviewed public facts
+    source:
+      organization: Artificial Analysis
+      url: https://artificialanalysis.ai/evaluations/terminalbench-v2-1
+      accessed: 2026-08-15
+    as_of: 2026-08-15
+    artifact_path: v0.3/aa-terminalbench-reviewed-facts-2026-08-15.yaml
+    artifact_sha256: cd785e4364a3119a7c1c0dd05346395cb61b2b57155228b5ab9032a957cabf97
+    content_type: application/yaml
+    upstream_revision: public-page-and-methodology-v4.1.1-2026-08-15
+    adapter_id: aa-terminalbench-reviewed-facts-v1
+    license_id: terms-governed-no-redistribution-assumed
+    license_url: https://artificialanalysis.ai/docs/legal/Terms-of-Use.pdf
+    attribution: Terminal-Bench v2.1 score and token-aggregate facts sourced from Artificial Analysis; benchmark by Stanford researchers, Laude Institute, and the open-source community
+    redistribution_scope: facts_only
+    notes: Public factual transcription only; no page payload, task content, trajectories, verification suites, or chart artwork is redistributed.
   - id: cursorbench-3.2-facts-2026-08-14
     title: CursorBench 3.2 reviewed public facts
     source:

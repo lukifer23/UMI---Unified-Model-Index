@@ -87,6 +87,7 @@ def test_fixture_config_is_auto_discovered(capsys: pytest.CaptureFixture[str]) -
         "aa-gdpval",
         "aa-lcr",
         "aa-omniscience",
+        "aa-terminalbench",
         "aa-tau3",
         "cursorbench",
         "epoch",

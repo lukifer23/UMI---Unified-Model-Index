@@ -24,6 +24,7 @@ from umi.adapters import (
     adapt_aa_lcr_facts,
     adapt_aa_omniscience_facts,
     adapt_aa_tau3_facts,
+    adapt_aa_terminalbench_facts,
     adapt_arena_json,
     adapt_cursorbench_facts,
     adapt_deepswe_facts,
@@ -32,7 +33,7 @@ from umi.adapters import (
     adapt_lab_release_facts,
     assemble_pilot_dataset,
 )
-from umi.bundle import ScoringBundle, build_acceptance_manifest, validate_scoring_bundle
+from umi.bundle import load_scoring_bundle
 from umi.certificate import build_comparison_certificate
 from umi.config import load_project_config
 from umi.loading import load_model_crosswalk, load_source_registry
@@ -77,6 +78,9 @@ def main() -> None:
         ),
         adapt_aa_omniscience_facts(
             SOURCE_ROOT / "aa-omniscience-reviewed-facts-2026-08-15.yaml", crosswalk
+        ),
+        adapt_aa_terminalbench_facts(
+            SOURCE_ROOT / "aa-terminalbench-reviewed-facts-2026-08-15.yaml", crosswalk
         ),
         adapt_cursorbench_facts(
             SOURCE_ROOT / "cursorbench-reviewed-facts-2026-08-14.yaml", crosswalk
@@ -197,21 +201,18 @@ def main() -> None:
         json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     config = load_project_config(ROOT / "config")
-    bundle_errors = validate_scoring_bundle(
-        dataset,
-        config,
-        registry,
+    bundle = load_scoring_bundle(
+        RAW_ROOT,
+        ROOT / "config",
         ROOT / "data" / "sources" / "registry.yaml",
-        crosswalk,
+        SOURCE_ROOT / "crosswalk.yaml",
     )
-    if bundle_errors:
-        raise ValueError("invalid scoring bundle: " + "; ".join(bundle_errors))
     data_report = validate_dataset(dataset, config)
     registry_report = validate_source_registry(
         registry, ROOT / "data" / "sources" / "registry.yaml", dataset
     )
     crosswalk_report = validate_crosswalk(crosswalk, dataset, registry)
-    acceptance_manifest = build_acceptance_manifest(dataset, registry)
+    acceptance_manifest = bundle.acceptance_manifest
     source_report = {
         "schema_valid": data_report.schema_valid,
         "scored_inputs_ready": data_report.scored_inputs_ready,
@@ -225,14 +226,6 @@ def main() -> None:
     }
     (PROCESSED_ROOT / "source-readiness.json").write_text(
         json.dumps(source_report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-    )
-    bundle = ScoringBundle(
-        dataset=dataset,
-        config=config,
-        source_registry=registry,
-        crosswalk=crosswalk,
-        registry_path=ROOT / "data" / "sources" / "registry.yaml",
-        acceptance_manifest=acceptance_manifest,
     )
     scoring_results = score_bundle(bundle)
     estimates = [item.model_dump(mode="json") for item in scoring_results]

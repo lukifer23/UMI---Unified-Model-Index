@@ -28,6 +28,7 @@ from umi.adapters import (
     adapt_aa_lcr_facts,
     adapt_aa_omniscience_facts,
     adapt_aa_tau3_facts,
+    adapt_aa_terminalbench_facts,
     adapt_arena_json,
     adapt_cursorbench_facts,
     adapt_deepswe_facts,
@@ -164,6 +165,7 @@ def build_parser() -> argparse.ArgumentParser:
             "aa-gdpval",
             "aa-lcr",
             "aa-omniscience",
+            "aa-terminalbench",
             "aa-tau3",
             "cursorbench",
             "epoch",
@@ -209,6 +211,7 @@ def _adapt_source(args: argparse.Namespace) -> Any:
         "aa-gdpval": root / "aa-gdpval-reviewed-facts-2026-08-15.yaml",
         "aa-lcr": root / "aa-lcr-reviewed-facts-2026-08-15.yaml",
         "aa-omniscience": root / "aa-omniscience-reviewed-facts-2026-08-15.yaml",
+        "aa-terminalbench": root / "aa-terminalbench-reviewed-facts-2026-08-15.yaml",
         "aa-tau3": root / "aa-tau3-reviewed-facts-2026-08-15.yaml",
         "cursorbench": root / "cursorbench-reviewed-facts-2026-08-14.yaml",
         "epoch": root / "epoch-eci-benchmarks-2026-08-14.csv",
@@ -230,6 +233,8 @@ def _adapt_source(args: argparse.Namespace) -> Any:
         return adapt_aa_lcr_facts(artifact, crosswalk)
     if args.source == "aa-omniscience":
         return adapt_aa_omniscience_facts(artifact, crosswalk)
+    if args.source == "aa-terminalbench":
+        return adapt_aa_terminalbench_facts(artifact, crosswalk)
     if args.source == "aa-tau3":
         return adapt_aa_tau3_facts(artifact, crosswalk)
     if args.source == "cursorbench":

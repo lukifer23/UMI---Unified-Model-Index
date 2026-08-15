@@ -1,8 +1,9 @@
-# UMI methodology v0.3.10
+# UMI methodology v0.3.11
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3.10 retains the manually reviewed,
-multi-source evidence pilot and adds the exact AA-Omniscience cohort. It does not publish a headline UMI ranking.
+current policy values; code must not contradict this document. UMI v0.3.11 retains the manually
+reviewed, multi-source evidence pilot and adds the exact Artificial Analysis Terminal-Bench v2.1
+cohort. It does not publish a headline UMI ranking.
 All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
 produce identical serialized results and certificate fingerprints across supported Python versions;
 this is numerical canonicalization, not a change to weights or score semantics.
@@ -68,6 +69,30 @@ request may route to Opus without an in-product indicator, and the leaderboard d
 such fallback was absent from the evaluated run. The other four exact Max rows may contribute
 Capability; no CursorBench value is imputed for Fable.
 
+The Artificial Analysis Terminal-Bench v2.1 access-date cohort is admitted as an independent
+terminal-agent task signal for exact named-release and Max-effort rows. Artificial Analysis evaluates
+all 89 Terminal-Bench v2.1 tasks with its Terminus 2 harness in an E2B sandbox, repeats every task
+three times, and reports pass@1 over 267 attempts. A task passes only when its complete verification
+suite passes. The harness limits each repeat to 250 episodes and a two-hour timeout, or the task's
+own longer timeout. These task-set, harness, sandbox, repeat, verification, and limit settings jointly
+define the compatibility cohort; results from the official Terminal-Bench leaderboard or another
+agent harness are not silently merged with it.
+
+UMI preserves the source rate and converts it to percentage points. Exact Max rows for Opus, Sol,
+Kimi, and GLM may contribute Capability. Claude Fable 5's public row explicitly uses Opus 4.8
+fallback and is rejected from the plain Fable Max pilot configuration. The adapter verifies that
+each published rate reconciles to an integer number of passes across 267 attempts. Aggregate input, answer,
+reasoning, and cacheable-input counters remain diagnostic. Artificial Analysis uses provider API
+token counts for Intelligence evaluations, so token units differ by model; cacheable input is not
+an observed per-attempt cache-hit or billing ledger; and no attempt-level rows are retained. The
+counters therefore contribute neither Efficiency nor Economics in v0.3.11.
+
+For reviewed pass-rate extracts with an explicit total trial count, the offline adapter requires
+`source_rate × number_of_trials` to be within `1e-9` of an integer pass count. This applies to the
+current τ³-Banking, AA-LCR, and Terminal-Bench cohorts. A rounded or otherwise irreconcilable rate
+must be retained diagnostically or reviewed against a more precise source; it cannot silently enter
+the scored cohort.
+
 GDPval-AA v2 is admitted as an independent agentic-work task signal for exact named-release and
 Max-effort rows. Artificial Analysis runs 220 public GDPval tasks once through its Stirrup agent
 harness, compares submitted work products blindly using a sampled panel of three frontier-model
@@ -100,7 +125,7 @@ Capability. Source-published token, calculated-cost, and decode-time summaries a
 diagnostic evaluation settings. Operational coverage is incomplete across the accepted rows; cost
 uses live price and cache assumptions rather than a billed-run ledger; and the public page describes
 the same decode-time field as minutes in its structured chart metadata but seconds in an auxiliary
-explanation. These fields therefore contribute neither Efficiency nor Economics in v0.3.10.
+explanation. These fields therefore contribute neither Efficiency nor Economics in v0.3.11.
 
 The Artificial Analysis AA-LCR access-date cohort is admitted as an independent context/reliability
 task signal for exact named-release and Max-effort rows. It contains 100 open-answer questions over
@@ -115,7 +140,7 @@ Max pilot configuration. Exact Max rows for Opus, Sol, Kimi, and GLM may contrib
 Published answer/reasoning token, decode-time, and calculated-cost fields are retained diagnostically.
 They are incomplete across accepted rows, provider token counts are not standardized across models,
 and calculated cost is not a deployment- and billing-record-bound attempt ledger. They therefore
-contribute neither Efficiency nor Economics in v0.3.10.
+contribute neither Efficiency nor Economics in v0.3.11.
 
 The Artificial Analysis AA-Omniscience access-date cohort is admitted as an independent factual
 knowledge-reliability task signal for exact named-release and Max-effort rows. It contains 6,000
@@ -136,7 +161,7 @@ upstream time-per-task field, and performance-data-source labels are retained di
 not enter Efficiency or Economics: the facts do not bind a complete endpoint, service tier, price
 revision, and observed billing ledger, the upstream time field's unit is not established in the retained
 public contract, and aggregate totals are not attempt-level workload telemetry. These fields therefore
-contribute neither Efficiency nor Economics in v0.3.10.
+contribute neither Efficiency nor Economics in v0.3.11.
 
 DeepSWE's public runner documentation and Pier implementation were also reviewed for Economics
 readiness. Provider-prefixed model examples establish an API family, while Pier/mini-SWE-agent
@@ -529,7 +554,7 @@ that limitation.
 
 ## Efficiency
 
-The v0.3.10 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
+The v0.3.11 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
 10% effective reasoning tokens, 10% effective cached tokens, 10% effective turns, 15% effective
 agent steps, 15% effective wall time, and 10% effective tool calls. These are policy weights, not
 empirically learned parameters. Token subtypes are kept distinct: a total-token field is not scored

@@ -122,6 +122,14 @@ task total, derived accuracy/attempt/hallucination rates, output-token component
 cost components. Only the source-defined Omniscience Index scores. Operational aggregates remain
 diagnostic without exact endpoint, tier, billing revision, and attempt-ledger identity.
 
+The Artificial Analysis Terminal-Bench v2.1 adapter consumes a facts-only access-date snapshot of
+the common 89-task, three-repeat cohort run with Terminus 2 in an E2B sandbox. Exact Opus, Sol,
+Kimi, and GLM Max rows are ready for Capability; the fallback-qualified Fable row is rejected. The
+adapter preserves the source rates, 267-attempt count, pass@1 semantics, 250-episode ceiling,
+timeout policy, and aggregate provider token counters. The token counters remain diagnostic because
+provider tokenization differs, cacheable input is not an observed cache-hit or billing ledger, and
+attempt-level resource rows are absent.
+
 The CursorBench 3.2 adapter consumes a facts-only reviewed extract from the official leaderboard.
 Exact Opus, Sol, Kimi, and GLM Max labels are ready for Capability. The Fable row is rejected because
 the public run does not rule out Cursor's documented invisible Fable-to-Opus routing. Cost/task,

@@ -58,6 +58,11 @@
         "type": "chart"
       },
       {
+        "chartId": "terminalbench_scores",
+        "id": "terminalbench",
+        "type": "chart"
+      },
+      {
         "chartId": "effective_input_tokens",
         "id": "resources",
         "type": "chart"
@@ -365,6 +370,29 @@
         "yAxisTitle": "AA-Omniscience Index (-100 to 100)"
       },
       {
+        "dataset": "terminalbench",
+        "encodings": {
+          "x": {
+            "field": "model_short",
+            "label": "Model",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "score",
+            "label": "Pass@1",
+            "type": "quantitative"
+          }
+        },
+        "id": "terminalbench_scores",
+        "layout": "full",
+        "sourceId": "accepted_benchmarks",
+        "subtitle": "89 terminal tasks repeated three times with Terminus 2 in E2B; Fable is absent because its source row uses Opus fallback.",
+        "title": "AA Terminal-Bench v2.1 pass@1",
+        "type": "bar",
+        "valueFormat": "number",
+        "yAxisTitle": "Terminal-Bench v2.1 pass@1 (%)"
+      },
+      {
         "dataset": "gap_counts",
         "encodings": {
           "x": {
@@ -430,6 +458,10 @@
             "field": "model"
           },
           {
+            "dataset": "terminalbench",
+            "field": "model"
+          },
+          {
             "dataset": "resources",
             "field": "model"
           }
@@ -461,7 +493,7 @@
     ],
     "surface": "dashboard",
     "tables": [],
-    "title": "UMI v0.3.10 \u2014 five-model pilot evidence report",
+    "title": "UMI v0.3.11 \u2014 five-model pilot evidence report",
     "version": 1
   },
   "package_info": {
@@ -760,7 +792,7 @@
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "score": 76.68903803132
+          "score": 78.291666666667
         },
         {
           "component": "Eff.",
@@ -788,7 +820,7 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "score": 74.20581655481
+          "score": 73.6875
         },
         {
           "component": "Eff.",
@@ -802,7 +834,7 @@
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "score": 39.93288590604
+          "score": 39.479166666667
         },
         {
           "component": "Eff.",
@@ -816,7 +848,7 @@
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2",
-          "score": 2.099737532808
+          "score": 1.932367149758
         },
         {
           "component": "Eff.",
@@ -829,7 +861,7 @@
       "coverage": [
         {
           "component": "Cap.",
-          "coverage": 0.93125,
+          "coverage": 1.0,
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5"
@@ -871,7 +903,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.93125,
+          "coverage": 1.0,
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol"
@@ -892,7 +924,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.93125,
+          "coverage": 1.0,
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3"
@@ -913,7 +945,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.79375,
+          "coverage": 0.8625,
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2"
@@ -989,16 +1021,12 @@
           "status": "Reference"
         },
         {
-          "cells": 26,
+          "cells": 23,
           "status": "Missing"
         },
         {
-          "cells": 44,
+          "cells": 48,
           "status": "Ready"
-        },
-        {
-          "cells": 1,
-          "status": "Vendor claim"
         }
       ],
       "gdpval": [
@@ -1095,10 +1123,10 @@
       ],
       "model_summary": [
         {
-          "capability": 76.68903803132,
-          "capability_coverage": 0.93125,
+          "capability": 78.291666666667,
+          "capability_coverage": 1.0,
           "capability_domains": 5,
-          "capability_profile": "95ec4b50bf3c",
+          "capability_profile": "ff6af43531a4",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -1109,7 +1137,7 @@
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "partial_overall": 65.744546979866
+          "partial_overall": 66.846354166667
         },
         {
           "capability": 50.0,
@@ -1129,10 +1157,10 @@
           "partial_overall": 50.0
         },
         {
-          "capability": 74.20581655481,
-          "capability_coverage": 0.93125,
+          "capability": 73.6875,
+          "capability_coverage": 1.0,
           "capability_domains": 5,
-          "capability_profile": "95ec4b50bf3c",
+          "capability_profile": "ff6af43531a4",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -1143,13 +1171,13 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "partial_overall": 82.266498881432
+          "partial_overall": 81.91015625
         },
         {
-          "capability": 39.93288590604,
-          "capability_coverage": 0.93125,
+          "capability": 39.479166666667,
+          "capability_coverage": 1.0,
           "capability_domains": 5,
-          "capability_profile": "95ec4b50bf3c",
+          "capability_profile": "ff6af43531a4",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -1160,13 +1188,13 @@
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "partial_overall": 45.683025727069
+          "partial_overall": 45.37109375
         },
         {
-          "capability": 2.099737532808,
-          "capability_coverage": 0.79375,
+          "capability": 1.932367149758,
+          "capability_coverage": 0.8625,
           "capability_domains": 5,
-          "capability_profile": "48250e8228b6",
+          "capability_profile": "46e332fe3b8e",
           "comparability": "different_score_scale",
           "confidence": "Low",
           "economics": null,
@@ -1177,7 +1205,7 @@
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2",
-          "partial_overall": 1.443569553806
+          "partial_overall": 1.328502415459
         }
       ],
       "omniscience": [
@@ -1231,9 +1259,9 @@
           "economics_coverage": 0.0,
           "efficiency_coverage": 0.045,
           "headline_ready": 0,
-          "max_capability_coverage": 0.93125,
+          "max_capability_coverage": 1.0,
           "pilot_models": 5,
-          "scored_capability_cells": 44,
+          "scored_capability_cells": 48,
           "total_capability_cells": 75
         }
       ],
@@ -1337,6 +1365,52 @@
           "model_short": "GLM-5.2",
           "record_id": "aa-tau3-banking-glm-5.2-max-2026-08-15",
           "score": 34.639175257732,
+          "source": "Artificial Analysis"
+        }
+      ],
+      "terminalbench": [
+        {
+          "benchmark": "terminalbench-2.1",
+          "benchmark_short": "Terminal-Bench",
+          "cohort": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "record_id": "aa-terminalbench-v2-1-claude-opus-5-max-2026-08-15",
+          "score": 89.138576779026,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "terminalbench-2.1",
+          "benchmark_short": "Terminal-Bench",
+          "cohort": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "record_id": "aa-terminalbench-v2-1-gpt-5.6-sol-max-2026-08-15",
+          "score": 88.014981273408,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "terminalbench-2.1",
+          "benchmark_short": "Terminal-Bench",
+          "cohort": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "record_id": "aa-terminalbench-v2-1-kimi-k3-max-2026-08-15",
+          "score": 85.01872659176,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "terminalbench-2.1",
+          "benchmark_short": "Terminal-Bench",
+          "cohort": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "record_id": "aa-terminalbench-v2-1-glm-5.2-max-2026-08-15",
+          "score": 77.902621722846,
           "source": "Artificial Analysis"
         }
       ]

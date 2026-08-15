@@ -15,7 +15,7 @@ ARENA_REVISION = "08dd89df7a8aa9df2ead3799f6422af4ad2e97a7"
 
 
 def _read_url(url: str, *, attempts: int = 3) -> bytes:
-    request = urllib.request.Request(url, headers={"User-Agent": "UMI-acquisition/0.3.10"})
+    request = urllib.request.Request(url, headers={"User-Agent": "UMI-acquisition/0.3.11"})
     for attempt in range(attempts):
         try:
             with urllib.request.urlopen(  # noqa: S310 - explicit acquisition script

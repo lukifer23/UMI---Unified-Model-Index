@@ -1,8 +1,9 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.10 extends the real,
-five-configuration, multi-source pilot with exact AA-Omniscience, AA-LCR, τ³-Banking, GDPval-AA v2, HLE, CursorBench 3.2, DeepSWE,
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.11 extends the real,
+five-configuration, multi-source pilot with exact AA Terminal-Bench v2.1, AA-Omniscience, AA-LCR,
+τ³-Banking, GDPval-AA v2, HLE, CursorBench 3.2, DeepSWE,
 GPQA Diamond, SciCode, CritPt, and ARC-AGI-2 results plus DeepSWE confidence intervals and
 harness-resource means. It does **not**
 publish a headline UMI score: the evidence supports only provisional, model-specific partial
@@ -10,7 +11,8 @@ Capability and Efficiency estimates.
 
 The pilot cohort is Claude Opus 5 Max, Claude Fable 5 Max, GPT-5.6 Sol Max, Kimi K3 Max, and
 GLM-5.2 Max. Its frozen sources are Artificial Analysis public facts, Epoch ECI and Benchmarking Hub
-data, AA-Omniscience, AA-LCR, τ³-Banking, GDPval-AA v2, and CursorBench 3.2 facts, LM Arena Agent and text/style-control rows, and
+data, AA Terminal-Bench v2.1, AA-Omniscience, AA-LCR, τ³-Banking, GDPval-AA v2, and
+CursorBench 3.2 facts, LM Arena Agent and text/style-control rows, and
 DeepSWE v1.1 facts. Every source row is accepted only through an exact model-and-effort crosswalk.
 
 ## Install and verify
@@ -53,6 +55,7 @@ PYTHONPATH=. uv run --no-sync umi ingest --source aa-hle
 PYTHONPATH=. uv run --no-sync umi ingest --source aa-gdpval
 PYTHONPATH=. uv run --no-sync umi ingest --source aa-lcr
 PYTHONPATH=. uv run --no-sync umi ingest --source aa-omniscience
+PYTHONPATH=. uv run --no-sync umi ingest --source aa-terminalbench
 PYTHONPATH=. uv run --no-sync umi ingest --source aa-tau3
 PYTHONPATH=. uv run --no-sync umi ingest --source cursorbench
 PYTHONPATH=. uv run --no-sync umi ingest --source epoch
@@ -96,6 +99,10 @@ proof. It answers why the values are comparable by binding the requested configu
 acceptance manifest, scored-input fingerprint, common evidence profile, stable panels, score scale,
 raw and normalized contributions, rank envelope, exact selected records, artifacts, and checksums.
 It emits the same structured abstention when the comparison has no common ready support.
+
+The offline pilot builder reloads its generated raw records through the same validated bundle
+factory used by the CLI. A regression test requires the committed certificate and a fresh CLI
+certificate to match exactly, including warnings and the result fingerprint.
 
 The synthetic engine demonstration remains available under `tests/fixtures` and is always labeled
 as synthetic.
@@ -143,7 +150,7 @@ The default Overall formula remains:
 ```
 
 Capability retains the five domain weights and fixed within-domain benchmark-family budgets.
-HLE and ARC-AGI-2 contribute to general reasoning; CursorBench, DeepSWE, and SciCode contribute to software engineering;
+HLE and ARC-AGI-2 contribute to general reasoning; CursorBench, DeepSWE, Terminal-Bench, and SciCode contribute to software engineering;
 GPQA Diamond and CritPt contribute to math/science. The frozen Epoch archive supplies exact Max rows
 for Opus, Sol, Kimi, and GLM on the AA benchmarks, and exact ARC rows for Opus, Sol, and Kimi. Fable's
 archive rows remain rejected because SciCode and CritPt identify an Opus 4.8 fallback composite and
@@ -184,6 +191,12 @@ rate, answer counts, tokens, calculated cost, and upstream time remain reconcile
 does not import the AA Intelligence Index's separate 8% accuracy and 4% non-hallucination weights.
 Fable's fallback-qualified deployment is rejected.
 
+Artificial Analysis Terminal-Bench v2.1 contributes exact Max-effort pass@1 results for Opus, Sol,
+Kimi, and GLM from the common 89-task, three-repeat Terminus 2/E2B cohort. Fable's public row is
+rejected because it explicitly includes Opus 4.8 fallback. Provider-specific aggregate input,
+answer, reasoning, and cacheable-input counters remain diagnostic; they are not comparable
+attempt-level resource or billing ledgers and do not enter Efficiency or Economics.
+
 CursorBench 3.2 solution-correctness scores contribute for Opus, Sol, Kimi, and GLM. Its Fable row
 is rejected because Cursor documents invisible Fable-to-Opus routing and the leaderboard does not
 prove fallback absence. Published cost/task, tokens/task, and steps/task are retained as diagnostic
@@ -192,8 +205,8 @@ success denominator and verified endpoint plus service-tier identity.
 
 ## Current limitations
 
-- Opus, Sol, and Kimi have 93.125% Capability coverage across five domains and clear the
-  Capability-only coverage/breadth gates. GLM has 79.375% across five domains and also clears those
+- Opus, Sol, and Kimi have 100% Capability coverage across five domains and clear the
+  Capability-only coverage/breadth gates. GLM has 86.25% across five domains and also clears those
   two gates; Fable has 8.25% across one. Model-specific partials remain different evidence profiles,
   not one shared ranking.
 - Efficiency has only 4.5% absolute coverage; Economics has no ready evidence.
@@ -208,6 +221,6 @@ See [PILOT_REPORT.md](PILOT_REPORT.md), [SOURCE_READINESS.md](SOURCE_READINESS.m
 
 ## Recommended next ingestion task
 
-Close Fable's HLE, τ³-Banking, AA-LCR, and AA-Omniscience cells only with evidence that explicitly
+Close Fable's HLE, Terminal-Bench, τ³-Banking, AA-LCR, and AA-Omniscience cells only with evidence that explicitly
 rules out fallback. Then obtain exact attempt-level telemetry for the missing coding families and at least two additional
 configured workload categories. Do not broaden the cohort or relax a gate to manufacture a headline.

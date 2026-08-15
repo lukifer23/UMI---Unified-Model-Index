@@ -1,11 +1,12 @@
-scored_audit_fingerprint: af150f23497ab36a5e854b56df736b8119303fa72b1b2739fa28455f741f0f20
-complete_audit_fingerprint: 23c86a79dcb6a5aa18fe37556f8ad972b10e51015e3612f7fa1c4a30289909f0
+scored_audit_fingerprint: 500b6237cf9e9c9b560a92645a0408459ac06579d0710ba89f44934142144e6f
+complete_audit_fingerprint: 826486a05282f80cc96b9c4e53920740b8b3362f98c88c8115d598463300562e
 adapter_versions:
 - aa-gdpval-reviewed-facts-v1
 - aa-lcr-reviewed-facts-v1
 - aa-omniscience-reviewed-facts-v1
 - aa-reviewed-facts-v2
 - aa-tau3-reviewed-facts-v1
+- aa-terminalbench-reviewed-facts-v1
 - cursorbench-reviewed-facts-v1
 - deepswe-reviewed-facts-v1
 - epoch-benchmark-zip-v2

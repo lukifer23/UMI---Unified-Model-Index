@@ -2,9 +2,8 @@
   "capability_cell_counts": {
     "diagnostic_measurement": 3,
     "diagnostic_reference": 1,
-    "missing": 26,
-    "ready_scored": 44,
-    "vendor_claim_only": 1
+    "missing": 23,
+    "ready_scored": 48
   },
   "capability_cells": [
     {
@@ -212,16 +211,20 @@
       "domain": "software_engineering",
       "family": "terminalbench-2.1",
       "model_id": "claude-opus-5-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "aa-terminalbench-v2-1-claude-opus-5-max-2026-08-15"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "terminalbench-2.1",
       "domain": "software_engineering",
       "family": "terminalbench-2.1",
       "model_id": "glm-5.2-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "aa-terminalbench-v2-1-glm-5.2-max-2026-08-15"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "terminalbench-2.1",
@@ -229,17 +232,19 @@
       "family": "terminalbench-2.1",
       "model_id": "gpt-5.6-sol-max",
       "record_ids": [
-        "openai-release-claim-terminalbench-2.1-gpt-5.6-sol-max-2026-07-09"
+        "aa-terminalbench-v2-1-gpt-5.6-sol-max-2026-08-15"
       ],
-      "status": "vendor_claim_only"
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "terminalbench-2.1",
       "domain": "software_engineering",
       "family": "terminalbench-2.1",
       "model_id": "kimi-k3-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "aa-terminalbench-v2-1-kimi-k3-max-2026-08-15"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "scicode",

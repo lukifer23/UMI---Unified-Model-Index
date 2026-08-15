@@ -352,9 +352,44 @@
       "requested_strategy": "robust_z",
       "scored_input_fingerprint": "d0d1bcdb90564fff27b7af8a8030d6fbec35fec29ec664ae9e4c7aa877b7fc39",
       "transformation": "identity"
+    },
+    {
+      "applied_strategy": "percentile",
+      "benchmark_id": "terminalbench-2.1",
+      "canonical_representation_group": "terminalbench-2.1",
+      "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+      "cohort_roles": {
+        "claude-opus-5-max": "normalization_member",
+        "glm-5.2-max": "normalization_member",
+        "gpt-5.6-sol-max": "normalization_member",
+        "kimi-k3-max": "normalization_member"
+      },
+      "cohort_size": 4,
+      "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
+      "id": "f92609c473d388c7836b6cf333b5bf9226aad70edd3d1f4a3f8dad960110baca",
+      "model_ids": [
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max"
+      ],
+      "normalization_trace": {
+        "applied_strategy": "percentile",
+        "cohort_size": 4,
+        "direction_inverted": false,
+        "fallback_reason": "below_minimum_robust_cohort",
+        "log_transform": false,
+        "minimum_rank_cohort": 2,
+        "minimum_robust_cohort": 8,
+        "provisional": true,
+        "requested_strategy": "robust_z"
+      },
+      "requested_strategy": "robust_z",
+      "scored_input_fingerprint": "87197a22acab28408d133808fe64aac38478c6332c96728631f44407f028aa07",
+      "transformation": "identity"
     }
   ],
-  "bundle_fingerprint": "271193e7530db13e51b7622ed4285d255e74c34d458b597ac263966d0d8b4dea",
+  "bundle_fingerprint": "cbf41f0f0e5d28df6417f57b12011f6e8c3d7082e2a347916013a7fb5f6f5039",
   "central_estimate_ranks": {
     "claude-opus-5-max": 1.0,
     "glm-5.2-max": 3.0,
@@ -411,6 +446,11 @@
       "benchmark_id": "tau3-banking",
       "canonical_representation_group": "tau3-banking",
       "cohort_key": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15"
+    },
+    {
+      "benchmark_id": "terminalbench-2.1",
+      "canonical_representation_group": "terminalbench-2.1",
+      "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15"
     }
   ],
   "comparability_basis": [
@@ -420,23 +460,23 @@
     "same score-scale, formula, normalization, and configuration identity",
     "exact model, release, effort, and source crosswalks validated by bundle"
   ],
-  "comparison_group_id": "c9521e26eb6cb2729e0b96c90059fa4edb70e6f125638df0117c7a219367cca9",
+  "comparison_group_id": "bff4bef5affd1e48306f0eaf14bfa3029d50b44890ab9547e9e64934450ff080",
   "comparison_model_ids": [
     "claude-opus-5-max",
     "glm-5.2-max",
     "kimi-k3-max"
   ],
   "component_scores": {
-    "claude-opus-5-max": 81.31233595800525,
-    "glm-5.2-max": 2.0997375328083994,
-    "kimi-k3-max": 46.8503937007874
+    "claude-opus-5-max": 82.80193236714976,
+    "glm-5.2-max": 1.9323671497584543,
+    "kimi-k3-max": 45.772946859903385
   },
   "coverage": {
-    "claude-opus-5-max": 0.7937500000000001,
-    "glm-5.2-max": 0.7937500000000001,
-    "kimi-k3-max": 0.7937500000000001
+    "claude-opus-5-max": 0.8625,
+    "glm-5.2-max": 0.8625,
+    "kimi-k3-max": 0.8625
   },
-  "evidence_profile_id": "48250e8228b60dbe1024a7bf4d64b86592ce8ea3b2a32a6ba0150e167ae9834d",
+  "evidence_profile_id": "46e332fe3b8ed1ee273d7e92f21e47e13cf8f94959a45a100b71d5a8a5229422",
   "identity_assurance": {
     "claude-opus-5-max": "label_exact",
     "glm-5.2-max": "label_exact",
@@ -453,7 +493,8 @@
     "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
     "dbe25767808e7eb7173ba9e601c0c1b08d428a0dd899853548d2c53fa2adbfff",
     "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
-    "e437be94bc145514ec2514c890ac752bec3abcd786747eda0b250f0f3df2d139"
+    "e437be94bc145514ec2514c890ac752bec3abcd786747eda0b250f0f3df2d139",
+    "f92609c473d388c7836b6cf333b5bf9226aad70edd3d1f4a3f8dad960110baca"
   ],
   "normalized_contributions": {
     "claude-opus-5-max": [
@@ -553,6 +594,34 @@
         ],
         "source_uncertainty": null,
         "weighted_contribution": 8.25
+      },
+      {
+        "applied_normalization": "percentile",
+        "benchmark_id": "terminalbench-2.1",
+        "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+        "configured_absolute_weight": 0.06875,
+        "direction": "higher",
+        "normalization_panel_id": "f92609c473d388c7836b6cf333b5bf9226aad70edd3d1f4a3f8dad960110baca",
+        "normalization_trace": {
+          "applied_strategy": "percentile",
+          "cohort_size": 4,
+          "direction_inverted": false,
+          "fallback_reason": "below_minimum_robust_cohort",
+          "log_transform": false,
+          "minimum_rank_cohort": 2,
+          "minimum_robust_cohort": 8,
+          "provisional": true,
+          "requested_strategy": "robust_z"
+        },
+        "normalized_value": 100.0,
+        "raw_unit": "percent",
+        "raw_value": 89.1385767790262,
+        "requested_normalization": "robust_z",
+        "source_record_ids": [
+          "aa-terminalbench-v2-1-claude-opus-5-max-2026-08-15"
+        ],
+        "source_uncertainty": null,
+        "weighted_contribution": 6.875000000000001
       },
       {
         "applied_normalization": "percentile",
@@ -869,6 +938,34 @@
         "requested_normalization": "robust_z",
         "source_record_ids": [
           "cursorbench-3.2-glm-5.2-max-2026-08-14"
+        ],
+        "source_uncertainty": null,
+        "weighted_contribution": 0.0
+      },
+      {
+        "applied_normalization": "percentile",
+        "benchmark_id": "terminalbench-2.1",
+        "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+        "configured_absolute_weight": 0.06875,
+        "direction": "higher",
+        "normalization_panel_id": "f92609c473d388c7836b6cf333b5bf9226aad70edd3d1f4a3f8dad960110baca",
+        "normalization_trace": {
+          "applied_strategy": "percentile",
+          "cohort_size": 4,
+          "direction_inverted": false,
+          "fallback_reason": "below_minimum_robust_cohort",
+          "log_transform": false,
+          "minimum_rank_cohort": 2,
+          "minimum_robust_cohort": 8,
+          "provisional": true,
+          "requested_strategy": "robust_z"
+        },
+        "normalized_value": 0.0,
+        "raw_unit": "percent",
+        "raw_value": 77.9026217228464,
+        "requested_normalization": "robust_z",
+        "source_record_ids": [
+          "aa-terminalbench-v2-1-glm-5.2-max-2026-08-15"
         ],
         "source_uncertainty": null,
         "weighted_contribution": 0.0
@@ -1194,6 +1291,34 @@
       },
       {
         "applied_normalization": "percentile",
+        "benchmark_id": "terminalbench-2.1",
+        "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+        "configured_absolute_weight": 0.06875,
+        "direction": "higher",
+        "normalization_panel_id": "f92609c473d388c7836b6cf333b5bf9226aad70edd3d1f4a3f8dad960110baca",
+        "normalization_trace": {
+          "applied_strategy": "percentile",
+          "cohort_size": 4,
+          "direction_inverted": false,
+          "fallback_reason": "below_minimum_robust_cohort",
+          "log_transform": false,
+          "minimum_rank_cohort": 2,
+          "minimum_robust_cohort": 8,
+          "provisional": true,
+          "requested_strategy": "robust_z"
+        },
+        "normalized_value": 33.333333333333336,
+        "raw_unit": "percent",
+        "raw_value": 85.0187265917603,
+        "requested_normalization": "robust_z",
+        "source_record_ids": [
+          "aa-terminalbench-v2-1-kimi-k3-max-2026-08-15"
+        ],
+        "source_uncertainty": null,
+        "weighted_contribution": 2.291666666666667
+      },
+      {
+        "applied_normalization": "percentile",
         "benchmark_id": "scicode",
         "cohort_key": "aa-v4.1.1-scicode-test-288-background-pass1",
         "configured_absolute_weight": 0.04125,
@@ -1423,10 +1548,10 @@
         "stable normalization panel membership held fixed",
         "standard-error intervals use a normal approximation with z=1.96"
       ],
-      "central_composite_score": 81.31233595800525,
+      "central_composite_score": 82.80193236714976,
       "central_estimate_rank": 1.0,
-      "composite_score_max": 81.31233595800525,
-      "composite_score_min": 63.83202099737533,
+      "composite_score_max": 82.80193236714976,
+      "composite_score_min": 66.71497584541063,
       "exhaustive": true,
       "possible_rank_max": 1.0,
       "possible_rank_min": 1.0,
@@ -1448,10 +1573,10 @@
         "stable normalization panel membership held fixed",
         "standard-error intervals use a normal approximation with z=1.96"
       ],
-      "central_composite_score": 2.0997375328083994,
+      "central_composite_score": 1.9323671497584543,
       "central_estimate_rank": 3.0,
-      "composite_score_max": 14.383202099737533,
-      "composite_score_min": 2.0997375328083994,
+      "composite_score_max": 13.23671497584541,
+      "composite_score_min": 1.9323671497584543,
       "exhaustive": true,
       "possible_rank_max": 3.0,
       "possible_rank_min": 3.0,
@@ -1473,10 +1598,10 @@
         "stable normalization panel membership held fixed",
         "standard-error intervals use a normal approximation with z=1.96"
       ],
-      "central_composite_score": 46.8503937007874,
+      "central_composite_score": 45.772946859903385,
       "central_estimate_rank": 2.0,
-      "composite_score_max": 62.83464566929133,
-      "composite_score_min": 42.75590551181102,
+      "composite_score_max": 60.48309178743962,
+      "composite_score_min": 42.0048309178744,
       "exhaustive": true,
       "possible_rank_max": 2.0,
       "possible_rank_min": 2.0,
@@ -1530,6 +1655,14 @@
         "direction": "higher",
         "raw_unit": "percent",
         "raw_value": 70.0,
+        "source_uncertainty": null
+      },
+      {
+        "benchmark_id": "terminalbench-2.1",
+        "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+        "direction": "higher",
+        "raw_unit": "percent",
+        "raw_value": 89.1385767790262,
         "source_uncertainty": null
       },
       {
@@ -1652,6 +1785,14 @@
         "source_uncertainty": null
       },
       {
+        "benchmark_id": "terminalbench-2.1",
+        "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+        "direction": "higher",
+        "raw_unit": "percent",
+        "raw_value": 77.9026217228464,
+        "source_uncertainty": null
+      },
+      {
         "benchmark_id": "scicode",
         "cohort_key": "aa-v4.1.1-scicode-test-288-background-pass1",
         "direction": "higher",
@@ -1771,6 +1912,14 @@
         "source_uncertainty": null
       },
       {
+        "benchmark_id": "terminalbench-2.1",
+        "cohort_key": "aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+        "direction": "higher",
+        "raw_unit": "percent",
+        "raw_value": 85.0187265917603,
+        "source_uncertainty": null
+      },
+      {
         "benchmark_id": "scicode",
         "cohort_key": "aa-v4.1.1-scicode-test-288-background-pass1",
         "direction": "higher",
@@ -1852,15 +2001,16 @@
       }
     ]
   },
-  "result_fingerprint": "99731f1d593e83f9da017735b4e722d6712f4ac24dcc863fe0ab0a408974b722",
-  "score_scale_id": "fc198a62aa255f986257b9d6c325fb1f09ad41c095f0ddae244249c2cbb877e4",
-  "scored_input_fingerprint": "bf718fe807e9be04c38798a59f05feb6ac80b2b3aa4de65fe3dbe248c7409301",
+  "result_fingerprint": "237bb57342c507efbce7c1b89b605cc18fee7d01317a4f2cdaaec61226a8c5e9",
+  "score_scale_id": "f70ec13f00a8c49666b54434571f7da24b9e7f384154c29189be1e05db52b2c5",
+  "scored_input_fingerprint": "a446a14fe461326fe9a5d4ed5e3de6abd138eec251c8fb1ed18a816267957483",
   "source_artifact_checksums": {
     "aa-gdpval-v2-facts-2026-08-15": "7c18c5ba6483bd4db4826bb45a25d8393b92e5cc4b788cf482f7d9f21808f9cb",
     "aa-hle-facts-2026-08-14": "a19161096f61de769e86534513844ac5adfb2dd3cca6df74444e13c4eb70225d",
     "aa-lcr-facts-2026-08-15": "7d736d8a6dbbfcf1ea8815ab95847284fc7fdb0ec3e90887ab5cbf198e53d221",
     "aa-omniscience-facts-2026-08-15": "f5fbaa93bc0db372b28ffedc402f1a432c5d7ea0a320d0b75e511e3494e9679d",
     "aa-tau3-banking-facts-2026-08-15": "838c0c02ec932059b10a4172123e6ecd6b916c10eba2da105c7751b27614bad9",
+    "aa-terminalbench-v2-1-facts-2026-08-15": "cd785e4364a3119a7c1c0dd05346395cb61b2b57155228b5ab9032a957cabf97",
     "cursorbench-3.2-facts-2026-08-14": "19556c9ff6db835757a5668a65177e8e151759eda751ca6e627a7491e77e54bc",
     "deepswe-v1.1-2026-08-13": "cd8aa2f1c143a11b657ac86507e631bfc33fc5531a36feebd152d09bf2bf496a",
     "epoch-benchmark-data-2026-08-14": "35a7c21ba7d535514ebcf9bbe7b8265d2e2da40ef6b1fa63fe49323c3395a18b"
@@ -1871,6 +2021,7 @@
     "aa-lcr-facts-2026-08-15",
     "aa-omniscience-facts-2026-08-15",
     "aa-tau3-banking-facts-2026-08-15",
+    "aa-terminalbench-v2-1-facts-2026-08-15",
     "cursorbench-3.2-facts-2026-08-14",
     "deepswe-v1.1-2026-08-13",
     "epoch-benchmark-data-2026-08-14"
@@ -1891,6 +2042,9 @@
     "aa-tau3-banking-claude-opus-5-max-2026-08-15",
     "aa-tau3-banking-glm-5.2-max-2026-08-15",
     "aa-tau3-banking-kimi-k3-max-2026-08-15",
+    "aa-terminalbench-v2-1-claude-opus-5-max-2026-08-15",
+    "aa-terminalbench-v2-1-glm-5.2-max-2026-08-15",
+    "aa-terminalbench-v2-1-kimi-k3-max-2026-08-15",
     "cursorbench-3.2-claude-opus-5-max-2026-08-14",
     "cursorbench-3.2-glm-5.2-max-2026-08-14",
     "cursorbench-3.2-kimi-k3-max-2026-08-14",
@@ -1908,5 +2062,8 @@
     "epoch-scicode-kimi-k3-max-kimi-k3_max"
   ],
   "status": "provisional_comparison",
-  "warnings": []
+  "warnings": [
+    "8 diagnostic records excluded",
+    "model claude-fable-5-max is outside the configured release window"
+  ]
 }

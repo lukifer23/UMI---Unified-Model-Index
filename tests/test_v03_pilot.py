@@ -24,6 +24,7 @@ from umi.adapters import (
     adapt_aa_lcr_facts,
     adapt_aa_omniscience_facts,
     adapt_aa_tau3_facts,
+    adapt_aa_terminalbench_facts,
     adapt_arena_json,
     adapt_cursorbench_facts,
     adapt_deepswe_facts,
@@ -86,7 +87,7 @@ def test_frozen_registry_checksums_and_license_contract(pilot_dataset) -> None:
     )
     assert report.errors == ()
     pilot_snapshots = [item for item in registry.snapshots if "v0.3/" in item.artifact_path]
-    assert len(pilot_snapshots) == 16
+    assert len(pilot_snapshots) == 17
     assert all(item.license_id and item.attribution and item.adapter_id for item in pilot_snapshots)
 
 
@@ -272,6 +273,12 @@ def test_comparison_certificate_is_deterministic_and_source_bound() -> None:
     assert set(first.source_artifact_checksums) == set(first.source_artifact_ids)
     assert all(len(value) == 64 for value in first.source_artifact_checksums.values())
     assert any("same evidence-profile ID" == item for item in first.comparability_basis)
+    generated = json.loads(
+        (PILOT.parent / "processed" / "comparison-certificate-three-model.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert generated == first.model_dump(mode="json")
 
     forged = bundle.acceptance_manifest.model_copy(update={"fingerprint": "0" * 64})
     with pytest.raises(DataValidationError, match="acceptance manifest"):
@@ -311,7 +318,7 @@ def test_release_claim_non_comparisons_name_the_exact_failed_gate(pilot_dataset)
         "openai-release-claim-deepswe-v1.1-gpt-5.6-sol-max-2026-07-09": "cohort_mismatch",
         "openai-release-claim-gdpval-aa-v2-gpt-5.6-sol-max-2026-07-09": "cohort_mismatch",
         "openai-release-claim-gpqa-diamond-gpt-5.6-sol-max-2026-07-09": "cohort_mismatch",
-        "openai-release-claim-terminalbench-2.1-gpt-5.6-sol-max-2026-07-09": "benchmark_mismatch",
+        "openai-release-claim-terminalbench-2.1-gpt-5.6-sol-max-2026-07-09": "cohort_mismatch",
     }
 
 
@@ -331,6 +338,7 @@ def test_crosswalk_exactness_and_rejected_aliases(pilot_dataset, crosswalk) -> N
     assert "fallback" in rejected["aa-tau3-fable-fallback-rejected"].lower()
     assert "fallback" in rejected["aa-lcr-fable-fallback-rejected"].lower()
     assert "fallback" in rejected["aa-omniscience-fable-fallback-rejected"].lower()
+    assert "fallback" in rejected["aa-terminalbench-fable-fallback-rejected"].lower()
     assert "effort" in rejected["arena-agent-sol-xhigh-rejected"].lower()
     assert "missing effort" in rejected["arena-text-fable-omitted-rejected"].lower()
 
@@ -534,6 +542,41 @@ def test_adapters_are_offline_deterministic_and_role_safe(monkeypatch, crosswalk
     assert sol_omniscience.evaluation_settings["calculated_cost_usd"]["total"] == pytest.approx(
         767.80317
     )
+    terminalbench = adapt_aa_terminalbench_facts(
+        SOURCES / "aa-terminalbench-reviewed-facts-2026-08-15.yaml", crosswalk
+    )
+    assert len(terminalbench.benchmarks) == 4
+    assert len(terminalbench.rejections) == 1
+    assert "Opus 4.8 Fallback" in terminalbench.rejections[0].source_row_id
+    assert {item.model_id: item.value for item in terminalbench.benchmarks} == pytest.approx(
+        {
+            "claude-opus-5-max": 89.1385767790262,
+            "gpt-5.6-sol-max": 88.0149812734082,
+            "kimi-k3-max": 85.0187265917603,
+            "glm-5.2-max": 77.9026217228464,
+        }
+    )
+    assert all(
+        item.benchmark_id == "terminalbench-2.1"
+        and item.measurement_as_of_date == date(2026, 8, 15)
+        and item.evaluation_date is None
+        and item.number_of_tasks == 89
+        and item.number_of_trials == 267
+        and item.sample_count == 267
+        and item.pass_at_k == 1
+        and item.evaluation_settings["agent_harness"] == "Terminus 2"
+        and item.evaluation_settings["source_value_rate"] * 100 == item.value
+        for item in terminalbench.benchmarks
+    )
+    opus_terminalbench = next(
+        item for item in terminalbench.benchmarks if item.model_id == "claude-opus-5-max"
+    )
+    assert opus_terminalbench.evaluation_settings["token_counts"] == {
+        "answer": 1_333_842,
+        "cacheable_input": 126_095_036,
+        "input": 132_353_877,
+        "reasoning": 3_102_688,
+    }
     cursorbench = adapt_cursorbench_facts(
         SOURCES / "cursorbench-reviewed-facts-2026-08-14.yaml", crosswalk
     )
@@ -613,7 +656,7 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
     assert dashboard["snapshot"]["status"] == "partial"
     overview = dashboard["snapshot"]["datasets"]["overview"]
     assert len(overview) == 1
-    assert overview[0]["max_capability_coverage"] == pytest.approx(0.93125)
+    assert overview[0]["max_capability_coverage"] == pytest.approx(1.0)
     assert {
         key: value for key, value in overview[0].items() if key != "max_capability_coverage"
     } == {
@@ -621,7 +664,7 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
         "efficiency_coverage": 0.045,
         "headline_ready": 0,
         "pilot_models": 5,
-        "scored_capability_cells": 44,
+        "scored_capability_cells": 48,
         "total_capability_cells": 75,
     }
     assert all(
@@ -633,13 +676,14 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
         for item in dashboard["snapshot"]["datasets"]["model_summary"]
         if item["model_id"] == "kimi-k3-max"
     )
-    assert kimi_summary["capability"] == 39.93288590604
-    assert kimi_summary["capability_coverage"] == 0.93125
+    assert kimi_summary["capability"] == 39.479166666667
+    assert kimi_summary["capability_coverage"] == 1.0
     assert len(dashboard["snapshot"]["datasets"]["benchmarks"]) == 24
     assert len(dashboard["snapshot"]["datasets"]["gdpval"]) == 4
     assert len(dashboard["snapshot"]["datasets"]["tau3"]) == 4
     assert len(dashboard["snapshot"]["datasets"]["lcr"]) == 4
     assert len(dashboard["snapshot"]["datasets"]["omniscience"]) == 4
+    assert len(dashboard["snapshot"]["datasets"]["terminalbench"]) == 4
     assert len(dashboard["snapshot"]["datasets"]["resources"]) == 5
     source_ids = {item["id"] for item in dashboard["sources"]}
     assert all(
@@ -886,6 +930,43 @@ def test_lcr_adapter_rejects_out_of_range_source_rate(monkeypatch, crosswalk) ->
     ("mutate", "message"),
     [
         (
+            lambda raw: raw["rows"][0].__setitem__("source_value_rate", float("nan")),
+            "source_value_rate must be finite and nonnegative",
+        ),
+        (
+            lambda raw: raw["rows"][0].__setitem__("source_value_rate", 0.5),
+            "source_value_rate must reconcile to an integer pass count",
+        ),
+        (
+            lambda raw: raw["rows"][0]["token_counts"].__setitem__("reasoning", -1),
+            "token_counts must be nonnegative",
+        ),
+        (
+            lambda raw: raw["rows"][0]["token_counts"].__setitem__(
+                "cacheable_input", raw["rows"][0]["token_counts"]["input"] + 1
+            ),
+            "cacheable_input must not exceed input",
+        ),
+    ],
+)
+def test_terminalbench_adapter_rejects_invalid_source_facts(
+    monkeypatch, crosswalk, mutate, message
+) -> None:
+    raw = yaml.safe_load(
+        (SOURCES / "aa-terminalbench-reviewed-facts-2026-08-15.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    mutate(raw)
+    monkeypatch.setattr("umi.adapters.reviewed.load_yaml", lambda path: raw)
+    with pytest.raises(ValueError, match=message):
+        adapt_aa_terminalbench_facts("offline-invalid-terminalbench.yaml", crosswalk)
+
+
+@pytest.mark.parametrize(
+    ("mutate", "message"),
+    [
+        (
             lambda raw: raw["rows"][0].__setitem__("num_not_attempted", 734),
             "answer counts must be nonnegative and sum to tasks",
         ),
@@ -1033,25 +1114,25 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
     assert all(item.headline_overall is None and not item.eligible for item in results.values())
     # Exact equality is a supported-Python reproducibility gate; math.fsum prevents the same
     # configured weights from serializing differently across supported Python versions.
-    assert results["claude-opus-5-max"].coverage.capability_absolute_weighted == 0.93125
+    assert results["claude-opus-5-max"].coverage.capability_absolute_weighted == 1.0
     assert {
         item.model_id: item.coverage.capability_absolute_weighted for item in results.values()
     } == pytest.approx(
         {
             "claude-fable-5-max": 0.0825,
-            "claude-opus-5-max": 0.93125,
-            "glm-5.2-max": 0.79375,
-            "gpt-5.6-sol-max": 0.93125,
-            "kimi-k3-max": 0.93125,
+            "claude-opus-5-max": 1.0,
+            "glm-5.2-max": 0.8625,
+            "gpt-5.6-sol-max": 1.0,
+            "kimi-k3-max": 1.0,
         }
     )
     assert {item.model_id: item.capability.score for item in results.values()} == pytest.approx(
         {
             "claude-fable-5-max": 50.0,
-            "claude-opus-5-max": 76.68903803131991,
-            "glm-5.2-max": 2.0997375328083994,
-            "gpt-5.6-sol-max": 74.20581655480985,
-            "kimi-k3-max": 39.93288590604027,
+            "claude-opus-5-max": 78.29166666666667,
+            "glm-5.2-max": 1.9323671497584543,
+            "gpt-5.6-sol-max": 73.68750000000001,
+            "kimi-k3-max": 39.47916666666667,
         }
     )
     assert {item.model_id: item.efficiency.score for item in results.values()} == pytest.approx(

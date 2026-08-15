@@ -16,7 +16,7 @@
   },
   {
     "claim_record_id": "openai-release-claim-terminalbench-2.1-gpt-5.6-sol-max-2026-07-09",
-    "reason": "benchmark_mismatch",
+    "reason": "cohort_mismatch",
     "status": "not_comparable"
   }
 ]

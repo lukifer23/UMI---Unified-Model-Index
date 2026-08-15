@@ -1322,6 +1322,270 @@ measurements:
   number_of_tasks: 6000
   number_of_trials: 6000
   sample_count: 6000
+- record_id: aa-terminalbench-v2-1-claude-opus-5-max-2026-08-15
+  source:
+    organization: Artificial Analysis
+    url: https://artificialanalysis.ai/evaluations/terminalbench-v2-1
+    accessed: '2026-08-15'
+  measurement_as_of_date: '2026-08-15'
+  result_type: independent
+  benchmark_version: terminal-bench-v2.1-aa-intelligence-v4.1.1
+  harness_version: aa-terminus-2-e2b-250-episodes-3-repeats
+  metric_definition: share of attempts whose complete task-specific verification suite
+    passes, averaged over three repeats per task and reported as pass@1
+  tools_enabled: false
+  notes: Capability pass rate only. Incomplete operational summaries are retained
+    diagnostically and do not enter Efficiency or Economics.
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: aa-terminalbench-v2-1-facts-2026-08-15
+  source_registry_snapshot_id: aa-terminalbench-v2-1-facts-2026-08-15
+  crosswalk_entry_id: aa-terminalbench-opus-max
+  signal_id: terminalbench-2.1
+  source_model_id: Claude Opus 5 (Adaptive Reasoning, Max Effort)
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: terminalbench-2.1
+  model_id: claude-opus-5-max
+  value: 89.1385767790262
+  cohort_key: aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15
+  evaluation_settings:
+    response_type: terminal-based task execution
+    agent_harness: Terminus 2
+    sandbox: E2B
+    task_categories: software engineering; system administration; data processing;
+      model training; security
+    maximum_episodes_per_repeat: 250
+    task_timeout_seconds: 7200 or the task-specific timeout when longer
+    success_condition: every task verification test passes
+    source_unit: rate from 0 to 1
+    client_side_tool_usage_in_index_table: false
+    token_count_source: model API provider
+    token_metrics_disposition: diagnostic only because provider tokenization differs,
+      cacheable input is not an observed cache-hit ledger, and the public aggregate
+      is not attempt-level telemetry
+    repeats_per_task: 3
+    source_value_rate: 0.891385767790262
+    token_counts:
+      answer: 1333842
+      cacheable_input: 126095036
+      input: 132353877
+      reasoning: 3102688
+  number_of_tasks: 89
+  number_of_trials: 267
+  sample_count: 267
+  pass_at_k: 1
+- record_id: aa-terminalbench-v2-1-gpt-5.6-sol-max-2026-08-15
+  source:
+    organization: Artificial Analysis
+    url: https://artificialanalysis.ai/evaluations/terminalbench-v2-1
+    accessed: '2026-08-15'
+  measurement_as_of_date: '2026-08-15'
+  result_type: independent
+  benchmark_version: terminal-bench-v2.1-aa-intelligence-v4.1.1
+  harness_version: aa-terminus-2-e2b-250-episodes-3-repeats
+  metric_definition: share of attempts whose complete task-specific verification suite
+    passes, averaged over three repeats per task and reported as pass@1
+  tools_enabled: false
+  notes: Capability pass rate only. Incomplete operational summaries are retained
+    diagnostically and do not enter Efficiency or Economics.
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: aa-terminalbench-v2-1-facts-2026-08-15
+  source_registry_snapshot_id: aa-terminalbench-v2-1-facts-2026-08-15
+  crosswalk_entry_id: aa-terminalbench-sol-max
+  signal_id: terminalbench-2.1
+  source_model_id: GPT-5.6 Sol (max)
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: terminalbench-2.1
+  model_id: gpt-5.6-sol-max
+  value: 88.0149812734082
+  cohort_key: aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15
+  evaluation_settings:
+    response_type: terminal-based task execution
+    agent_harness: Terminus 2
+    sandbox: E2B
+    task_categories: software engineering; system administration; data processing;
+      model training; security
+    maximum_episodes_per_repeat: 250
+    task_timeout_seconds: 7200 or the task-specific timeout when longer
+    success_condition: every task verification test passes
+    source_unit: rate from 0 to 1
+    client_side_tool_usage_in_index_table: false
+    token_count_source: model API provider
+    token_metrics_disposition: diagnostic only because provider tokenization differs,
+      cacheable input is not an observed cache-hit ledger, and the public aggregate
+      is not attempt-level telemetry
+    repeats_per_task: 3
+    source_value_rate: 0.880149812734082
+    token_counts:
+      answer: 589903
+      cacheable_input: 29223016
+      input: 31153636
+      reasoning: 716956
+  number_of_tasks: 89
+  number_of_trials: 267
+  sample_count: 267
+  pass_at_k: 1
+- record_id: aa-terminalbench-v2-1-kimi-k3-max-2026-08-15
+  source:
+    organization: Artificial Analysis
+    url: https://artificialanalysis.ai/evaluations/terminalbench-v2-1
+    accessed: '2026-08-15'
+  measurement_as_of_date: '2026-08-15'
+  result_type: independent
+  benchmark_version: terminal-bench-v2.1-aa-intelligence-v4.1.1
+  harness_version: aa-terminus-2-e2b-250-episodes-3-repeats
+  metric_definition: share of attempts whose complete task-specific verification suite
+    passes, averaged over three repeats per task and reported as pass@1
+  tools_enabled: false
+  notes: Capability pass rate only. Incomplete operational summaries are retained
+    diagnostically and do not enter Efficiency or Economics.
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: aa-terminalbench-v2-1-facts-2026-08-15
+  source_registry_snapshot_id: aa-terminalbench-v2-1-facts-2026-08-15
+  crosswalk_entry_id: aa-terminalbench-kimi-max
+  signal_id: terminalbench-2.1
+  source_model_id: Kimi K3 (max)
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: terminalbench-2.1
+  model_id: kimi-k3-max
+  value: 85.0187265917603
+  cohort_key: aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15
+  evaluation_settings:
+    response_type: terminal-based task execution
+    agent_harness: Terminus 2
+    sandbox: E2B
+    task_categories: software engineering; system administration; data processing;
+      model training; security
+    maximum_episodes_per_repeat: 250
+    task_timeout_seconds: 7200 or the task-specific timeout when longer
+    success_condition: every task verification test passes
+    source_unit: rate from 0 to 1
+    client_side_tool_usage_in_index_table: false
+    token_count_source: model API provider
+    token_metrics_disposition: diagnostic only because provider tokenization differs,
+      cacheable input is not an observed cache-hit ledger, and the public aggregate
+      is not attempt-level telemetry
+    repeats_per_task: 3
+    source_value_rate: 0.850187265917603
+    token_counts:
+      answer: 525087
+      cacheable_input: 49461474
+      input: 52251794
+      reasoning: 1420531
+  number_of_tasks: 89
+  number_of_trials: 267
+  sample_count: 267
+  pass_at_k: 1
+- record_id: aa-terminalbench-v2-1-glm-5.2-max-2026-08-15
+  source:
+    organization: Artificial Analysis
+    url: https://artificialanalysis.ai/evaluations/terminalbench-v2-1
+    accessed: '2026-08-15'
+  measurement_as_of_date: '2026-08-15'
+  result_type: independent
+  benchmark_version: terminal-bench-v2.1-aa-intelligence-v4.1.1
+  harness_version: aa-terminus-2-e2b-250-episodes-3-repeats
+  metric_definition: share of attempts whose complete task-specific verification suite
+    passes, averaged over three repeats per task and reported as pass@1
+  tools_enabled: false
+  notes: Capability pass rate only. Incomplete operational summaries are retained
+    diagnostically and do not enter Efficiency or Economics.
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: aa-terminalbench-v2-1-facts-2026-08-15
+  source_registry_snapshot_id: aa-terminalbench-v2-1-facts-2026-08-15
+  crosswalk_entry_id: aa-terminalbench-glm-max
+  signal_id: terminalbench-2.1
+  source_model_id: GLM-5.2 (max)
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: terminalbench-2.1
+  model_id: glm-5.2-max
+  value: 77.9026217228464
+  cohort_key: aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15
+  evaluation_settings:
+    response_type: terminal-based task execution
+    agent_harness: Terminus 2
+    sandbox: E2B
+    task_categories: software engineering; system administration; data processing;
+      model training; security
+    maximum_episodes_per_repeat: 250
+    task_timeout_seconds: 7200 or the task-specific timeout when longer
+    success_condition: every task verification test passes
+    source_unit: rate from 0 to 1
+    client_side_tool_usage_in_index_table: false
+    token_count_source: model API provider
+    token_metrics_disposition: diagnostic only because provider tokenization differs,
+      cacheable input is not an observed cache-hit ledger, and the public aggregate
+      is not attempt-level telemetry
+    repeats_per_task: 3
+    source_value_rate: 0.779026217228464
+    token_counts:
+      answer: 1097099
+      cacheable_input: 73682807
+      input: 78240101
+      reasoning: 6166636
+  number_of_tasks: 89
+  number_of_trials: 267
+  sample_count: 267
+  pass_at_k: 1
 - record_id: cursorbench-3.2-claude-opus-5-max-2026-08-14
   source:
     organization: Cursor
