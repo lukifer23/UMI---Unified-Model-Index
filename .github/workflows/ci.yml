@@ -46,7 +46,8 @@ jobs:
         shell: bash
         run: |
           uv build
-          wheel_path="$(ls -1 dist/unified_model_index-*.whl | head -1)"
+          package_version="$(uv run python -c 'import umi; print(umi.__version__)')"
+          wheel_path="dist/unified_model_index-${package_version}-py3-none-any.whl"
           isolated_dir="$(mktemp -d)"
           uv venv --python 3.12 "$isolated_dir/.venv"
           uv pip install --python "$isolated_dir/.venv/bin/python" "$wheel_path"
@@ -79,7 +80,8 @@ jobs:
         shell: bash
         run: |
           uv build
-          wheel_path="$(ls -1 dist/unified_model_index-*.whl | head -1)"
+          package_version="$(uv run python -c 'import umi; print(umi.__version__)')"
+          wheel_path="dist/unified_model_index-${package_version}-py3-none-any.whl"
           isolated_dir="$(mktemp -d)"
           uv venv --python "${{ matrix.python-version }}" "$isolated_dir/.venv"
           uv pip install --python "$isolated_dir/.venv/bin/python" "$wheel_path"

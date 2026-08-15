@@ -1,8 +1,8 @@
-# UMI methodology v0.3.8
+# UMI methodology v0.3.9
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3.8 retains the manually reviewed,
-multi-source evidence pilot. It does not publish a headline UMI ranking.
+current policy values; code must not contradict this document. UMI v0.3.9 retains the manually reviewed,
+multi-source evidence pilot and adds the exact AA-LCR cohort. It does not publish a headline UMI ranking.
 All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
 produce identical serialized results and certificate fingerprints across supported Python versions;
 this is numerical canonicalization, not a change to weights or score semantics.
@@ -100,7 +100,22 @@ Capability. Source-published token, calculated-cost, and decode-time summaries a
 diagnostic evaluation settings. Operational coverage is incomplete across the accepted rows; cost
 uses live price and cache assumptions rather than a billed-run ledger; and the public page describes
 the same decode-time field as minutes in its structured chart metadata but seconds in an auxiliary
-explanation. These fields therefore contribute neither Efficiency nor Economics in v0.3.8.
+explanation. These fields therefore contribute neither Efficiency nor Economics in v0.3.9.
+
+The Artificial Analysis AA-LCR access-date cohort is admitted as an independent context/reliability
+task signal for exact named-release and Max-effort rows. It contains 100 open-answer questions over
+roughly 230 documents in seven categories, with about 100,000 `cl100k_base` input tokens per question
+and a minimum 128K context window. Artificial Analysis runs three repeats and reports pass@1 across
+300 attempts, graded by GPT-5.6 Luna medium as an equality checker. UMI preserves the source rate,
+converts it to percentage points, and binds the task count, repeats, document categories, input scale,
+grader, and access date into one compatibility cohort.
+
+Claude Fable 5's public AA-LCR row explicitly includes fallback and is rejected from the plain Fable
+Max pilot configuration. Exact Max rows for Opus, Sol, Kimi, and GLM may contribute Capability.
+Published answer/reasoning token, decode-time, and calculated-cost fields are retained diagnostically.
+They are incomplete across accepted rows, provider token counts are not standardized across models,
+and calculated cost is not a deployment- and billing-record-bound attempt ledger. They therefore
+contribute neither Efficiency nor Economics in v0.3.9.
 
 DeepSWE's public runner documentation and Pier implementation were also reviewed for Economics
 readiness. Provider-prefixed model examples establish an API family, while Pier/mini-SWE-agent
@@ -493,7 +508,7 @@ that limitation.
 
 ## Efficiency
 
-The v0.3.8 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
+The v0.3.9 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
 10% effective reasoning tokens, 10% effective cached tokens, 10% effective turns, 15% effective
 agent steps, 15% effective wall time, and 10% effective tool calls. These are policy weights, not
 empirically learned parameters. Token subtypes are kept distinct: a total-token field is not scored

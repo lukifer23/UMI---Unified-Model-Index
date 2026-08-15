@@ -125,6 +125,11 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
     scores = cast(list[dict[str, object]], comparison["scores"])
     assert series == [
         {
+            "benchmark_id": "aa-lcr",
+            "canonical_representation_group": "aa-lcr",
+            "cohort_key": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+        },
+        {
             "benchmark_id": "critpt",
             "canonical_representation_group": "critpt",
             "cohort_key": "aa-v4.1.1-critpt-70-test-challenges-pass1",
@@ -165,7 +170,7 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
             "cohort_key": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
         },
     ]
-    assert {item["coverage"] for item in scores} == {0.6937500000000001}
+    assert {item["coverage"] for item in scores} == {0.74375}
 
     five_model = common_capability_comparison(
         real_pilot_dataset,
@@ -244,7 +249,10 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
     }
     assert all(item["scenario_count"] == 512 and item["exhaustive"] for item in robustness.values())
     assert robustness["glm-5.2-max"]["possible_ranks"] == [3.0]
-    assert robustness["claude-opus-5-max"]["possible_ranks"] == [1.0]
+    assert robustness["claude-opus-5-max"]["possible_ranks"] == [1.0, 2.0]
+    assert robustness["kimi-k3-max"]["possible_ranks"] == [1.0, 2.0]
+    assert robustness["claude-opus-5-max"]["robustly_dominated_by"] == []
+    assert robustness["kimi-k3-max"]["robustly_dominated_by"] == []
     assert "glm-5.2-max" in robustness["kimi-k3-max"]["robustly_dominates"]
     assert "probability" not in str(comparison).lower()
 

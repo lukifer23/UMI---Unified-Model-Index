@@ -25,6 +25,7 @@ from analysis.value_sensitivity import analyze_value_sensitivity
 from umi.adapters import (
     adapt_aa_facts,
     adapt_aa_gdpval_facts,
+    adapt_aa_lcr_facts,
     adapt_aa_tau3_facts,
     adapt_arena_json,
     adapt_cursorbench_facts,
@@ -160,6 +161,7 @@ def build_parser() -> argparse.ArgumentParser:
             "aa",
             "aa-hle",
             "aa-gdpval",
+            "aa-lcr",
             "aa-tau3",
             "cursorbench",
             "epoch",
@@ -203,6 +205,7 @@ def _adapt_source(args: argparse.Namespace) -> Any:
         "aa": root / "aa-reviewed-facts-2026-08-14.yaml",
         "aa-hle": root / "aa-hle-reviewed-facts-2026-08-14.yaml",
         "aa-gdpval": root / "aa-gdpval-reviewed-facts-2026-08-15.yaml",
+        "aa-lcr": root / "aa-lcr-reviewed-facts-2026-08-15.yaml",
         "aa-tau3": root / "aa-tau3-reviewed-facts-2026-08-15.yaml",
         "cursorbench": root / "cursorbench-reviewed-facts-2026-08-14.yaml",
         "epoch": root / "epoch-eci-benchmarks-2026-08-14.csv",
@@ -220,6 +223,8 @@ def _adapt_source(args: argparse.Namespace) -> Any:
         return adapt_aa_facts(artifact, crosswalk)
     if args.source == "aa-gdpval":
         return adapt_aa_gdpval_facts(artifact, crosswalk)
+    if args.source == "aa-lcr":
+        return adapt_aa_lcr_facts(artifact, crosswalk)
     if args.source == "aa-tau3":
         return adapt_aa_tau3_facts(artifact, crosswalk)
     if args.source == "cursorbench":

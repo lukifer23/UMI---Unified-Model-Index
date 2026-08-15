@@ -57,6 +57,7 @@ def build_pilot_dashboard(
     benchmark_short_names = {
         "hle": "HLE",
         "arc-agi-2": "ARC-2",
+        "aa-lcr": "AA-LCR",
         "critpt": "CritPt",
         "cursorbench-3.2": "CursorBench",
         "deepswe-v1.1": "DeepSWE",
@@ -139,7 +140,8 @@ def build_pilot_dashboard(
     benchmark_rows = [
         row
         for row in all_benchmark_rows
-        if row["benchmark"] not in {"cursorbench-3.2", "gdpval-aa-v2", "tau3-banking"}
+        if row["benchmark"]
+        not in {"aa-lcr", "cursorbench-3.2", "gdpval-aa-v2", "tau3-banking"}
     ]
     cursorbench_rows = [
         row for row in all_benchmark_rows if row["benchmark"] == "cursorbench-3.2"
@@ -150,6 +152,7 @@ def build_pilot_dashboard(
     tau3_rows = [
         row for row in all_benchmark_rows if row["benchmark"] == "tau3-banking"
     ]
+    lcr_rows = [row for row in all_benchmark_rows if row["benchmark"] == "aa-lcr"]
     resource_rows = []
     for record in dataset.efficiency:
         if record.scoring_disposition != ScoringDisposition.SCORED:
@@ -226,7 +229,7 @@ def build_pilot_dashboard(
         "manifest": {
             "version": 1,
             "surface": "dashboard",
-            "title": "UMI v0.3.8 — five-model pilot evidence report",
+            "title": "UMI v0.3.9 — five-model pilot evidence report",
             "description": (
                 "A reproducible view of current accepted evidence, partial component estimates, "
                 "coverage, and the gates that prevent a headline UMI ranking."
@@ -480,6 +483,28 @@ def build_pilot_dashboard(
                     "layout": "full",
                 },
                 {
+                    "id": "lcr_scores",
+                    "title": "AA-LCR long-context reasoning pass@1",
+                    "subtitle": (
+                        "100 questions repeated three times over approximately 100K input "
+                        "tokens per question; Fable is absent because its row uses fallback."
+                    ),
+                    "type": "bar",
+                    "dataset": "lcr",
+                    "sourceId": "accepted_benchmarks",
+                    "encodings": {
+                        "x": {
+                            "field": "model_short",
+                            "type": "nominal",
+                            "label": "Model",
+                        },
+                        "y": {"field": "score", "type": "quantitative", "label": "Pass@1"},
+                    },
+                    "yAxisTitle": "AA-LCR pass@1 (%)",
+                    "valueFormat": "number",
+                    "layout": "full",
+                },
+                {
                     "id": "gap_counts",
                     "title": "Why the index is not yet headline-ready",
                     "subtitle": (
@@ -533,6 +558,7 @@ def build_pilot_dashboard(
                 {"id": "cursorbench", "type": "chart", "chartId": "cursorbench_scores"},
                 {"id": "gdpval", "type": "chart", "chartId": "gdpval_scores"},
                 {"id": "tau3", "type": "chart", "chartId": "tau3_scores"},
+                {"id": "lcr", "type": "chart", "chartId": "lcr_scores"},
                 {
                     "id": "resources",
                     "type": "chart",
@@ -568,6 +594,7 @@ def build_pilot_dashboard(
                     "cursorbench": cursorbench_rows,
                     "gdpval": gdpval_rows,
                     "tau3": tau3_rows,
+                    "lcr": lcr_rows,
                     "resources": resource_rows,
                     "gap_counts": gap_rows,
                 }

@@ -763,6 +763,265 @@ measurements:
   number_of_trials: 485
   sample_count: 485
   pass_at_k: 1
+- record_id: aa-lcr-claude-opus-5-max-2026-08-15
+  source:
+    organization: Artificial Analysis
+    url: https://artificialanalysis.ai/evaluations/artificial-analysis-long-context-reasoning
+    accessed: '2026-08-15'
+  measurement_as_of_date: '2026-08-15'
+  result_type: independent
+  benchmark_version: aa-lcr-intelligence-v4.1.1
+  harness_version: aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium
+  metric_definition: Pass@1 rate averaged across three repeats of 100 long-context
+    questions and graded by an equality-checker LLM
+  tools_enabled: false
+  notes: Capability pass rate only. Incomplete operational summaries are retained
+    diagnostically and do not enter Efficiency or Economics.
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: aa-lcr-facts-2026-08-15
+  source_registry_snapshot_id: aa-lcr-facts-2026-08-15
+  crosswalk_entry_id: aa-lcr-opus-max
+  signal_id: aa-lcr
+  source_model_id: Claude Opus 5 (max)
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: aa-lcr
+  model_id: claude-opus-5-max
+  value: 75.6666666666667
+  cohort_key: aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15
+  evaluation_settings:
+    document_categories: 7
+    document_category_names: Company Reports; Industry Reports; Government Consultations;
+      Academia; Legal; Marketing Materials; Survey Reports
+    approximate_input_tokens_per_question_cl100k_base: 100000
+    approximate_unique_input_tokens: 3000000
+    approximate_document_count: 230
+    minimum_context_window_tokens: 128000
+    response_type: open answer
+    grader: GPT-5.6 Luna medium equality checker
+    source_unit: rate
+    output_unit: percent
+    operational_metrics_disposition: diagnostic only because provider-token counts
+      are not standardized across models and token, time, and calculated-cost coverage
+      is incomplete
+    repeats_per_task: 3
+    source_value_rate: 0.756666666666667
+    output_answer_tokens_per_task: 594.52
+    output_reasoning_tokens_per_task: 1143.18
+    weighted_decode_time_per_task: 0.29797785632977586
+  number_of_tasks: 100
+  number_of_trials: 300
+  sample_count: 300
+  pass_at_k: 1
+- record_id: aa-lcr-gpt-5.6-sol-max-2026-08-15
+  source:
+    organization: Artificial Analysis
+    url: https://artificialanalysis.ai/evaluations/artificial-analysis-long-context-reasoning
+    accessed: '2026-08-15'
+  measurement_as_of_date: '2026-08-15'
+  result_type: independent
+  benchmark_version: aa-lcr-intelligence-v4.1.1
+  harness_version: aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium
+  metric_definition: Pass@1 rate averaged across three repeats of 100 long-context
+    questions and graded by an equality-checker LLM
+  tools_enabled: false
+  notes: Capability pass rate only. Incomplete operational summaries are retained
+    diagnostically and do not enter Efficiency or Economics.
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: aa-lcr-facts-2026-08-15
+  source_registry_snapshot_id: aa-lcr-facts-2026-08-15
+  crosswalk_entry_id: aa-lcr-sol-max
+  signal_id: aa-lcr
+  source_model_id: GPT-5.6 Sol (max)
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: aa-lcr
+  model_id: gpt-5.6-sol-max
+  value: 77.6666666666667
+  cohort_key: aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15
+  evaluation_settings:
+    document_categories: 7
+    document_category_names: Company Reports; Industry Reports; Government Consultations;
+      Academia; Legal; Marketing Materials; Survey Reports
+    approximate_input_tokens_per_question_cl100k_base: 100000
+    approximate_unique_input_tokens: 3000000
+    approximate_document_count: 230
+    minimum_context_window_tokens: 128000
+    response_type: open answer
+    grader: GPT-5.6 Luna medium equality checker
+    source_unit: rate
+    output_unit: percent
+    operational_metrics_disposition: diagnostic only because provider-token counts
+      are not standardized across models and token, time, and calculated-cost coverage
+      is incomplete
+    repeats_per_task: 3
+    source_value_rate: 0.776666666666667
+    output_answer_tokens_per_task: 74.87
+    output_reasoning_tokens_per_task: 1139.21
+    weighted_decode_time_per_task: 0.2795073413229993
+  number_of_tasks: 100
+  number_of_trials: 300
+  sample_count: 300
+  pass_at_k: 1
+- record_id: aa-lcr-kimi-k3-max-2026-08-15
+  source:
+    organization: Artificial Analysis
+    url: https://artificialanalysis.ai/evaluations/artificial-analysis-long-context-reasoning
+    accessed: '2026-08-15'
+  measurement_as_of_date: '2026-08-15'
+  result_type: independent
+  benchmark_version: aa-lcr-intelligence-v4.1.1
+  harness_version: aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium
+  metric_definition: Pass@1 rate averaged across three repeats of 100 long-context
+    questions and graded by an equality-checker LLM
+  tools_enabled: false
+  notes: Capability pass rate only. Incomplete operational summaries are retained
+    diagnostically and do not enter Efficiency or Economics.
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: aa-lcr-facts-2026-08-15
+  source_registry_snapshot_id: aa-lcr-facts-2026-08-15
+  crosswalk_entry_id: aa-lcr-kimi-max
+  signal_id: aa-lcr
+  source_model_id: Kimi K3 (max)
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: aa-lcr
+  model_id: kimi-k3-max
+  value: 82.6666666666667
+  cohort_key: aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15
+  evaluation_settings:
+    document_categories: 7
+    document_category_names: Company Reports; Industry Reports; Government Consultations;
+      Academia; Legal; Marketing Materials; Survey Reports
+    approximate_input_tokens_per_question_cl100k_base: 100000
+    approximate_unique_input_tokens: 3000000
+    approximate_document_count: 230
+    minimum_context_window_tokens: 128000
+    response_type: open answer
+    grader: GPT-5.6 Luna medium equality checker
+    source_unit: rate
+    output_unit: percent
+    operational_metrics_disposition: diagnostic only because provider-token counts
+      are not standardized across models and token, time, and calculated-cost coverage
+      is incomplete
+    repeats_per_task: 3
+    source_value_rate: 0.826666666666667
+    output_answer_tokens_per_task: 110.24
+    output_reasoning_tokens_per_task: 1418.45
+  number_of_tasks: 100
+  number_of_trials: 300
+  sample_count: 300
+  pass_at_k: 1
+- record_id: aa-lcr-glm-5.2-max-2026-08-15
+  source:
+    organization: Artificial Analysis
+    url: https://artificialanalysis.ai/evaluations/artificial-analysis-long-context-reasoning
+    accessed: '2026-08-15'
+  measurement_as_of_date: '2026-08-15'
+  result_type: independent
+  benchmark_version: aa-lcr-intelligence-v4.1.1
+  harness_version: aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium
+  metric_definition: Pass@1 rate averaged across three repeats of 100 long-context
+    questions and graded by an equality-checker LLM
+  tools_enabled: false
+  notes: Capability pass rate only. Incomplete operational summaries are retained
+    diagnostically and do not enter Efficiency or Economics.
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: aa-lcr-facts-2026-08-15
+  source_registry_snapshot_id: aa-lcr-facts-2026-08-15
+  crosswalk_entry_id: aa-lcr-glm-max
+  signal_id: aa-lcr
+  source_model_id: GLM-5.2 (max)
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: aa-lcr
+  model_id: glm-5.2-max
+  value: 76.6666666666667
+  cohort_key: aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15
+  evaluation_settings:
+    document_categories: 7
+    document_category_names: Company Reports; Industry Reports; Government Consultations;
+      Academia; Legal; Marketing Materials; Survey Reports
+    approximate_input_tokens_per_question_cl100k_base: 100000
+    approximate_unique_input_tokens: 3000000
+    approximate_document_count: 230
+    minimum_context_window_tokens: 128000
+    response_type: open answer
+    grader: GPT-5.6 Luna medium equality checker
+    source_unit: rate
+    output_unit: percent
+    operational_metrics_disposition: diagnostic only because provider-token counts
+      are not standardized across models and token, time, and calculated-cost coverage
+      is incomplete
+    repeats_per_task: 3
+    source_value_rate: 0.766666666666667
+    weighted_decode_time_per_task: 0.48488558255724945
+    calculated_cost_components_usd:
+      answer: 0.000423984
+      reasoning: 0.017446484
+      cache_write: 0.0
+      cache_hit: 0.0
+      input: 0.13624535399999999
+  number_of_tasks: 100
+  number_of_trials: 300
+  sample_count: 300
+  pass_at_k: 1
 - record_id: cursorbench-3.2-claude-opus-5-max-2026-08-14
   source:
     organization: Cursor

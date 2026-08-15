@@ -55,7 +55,7 @@
       ],
       "provisional": true,
       "score": 50.0,
-      "score_scale_id": "4a80a83db52f2179effb21142506b2788c97b4762d816c704f1422f2d088dbe8",
+      "score_scale_id": "edeefbee0d4233e9fc623cd09b70bce3b2be84b6b5569441cf16909967197057",
       "score_semantics": "stable-panel percentile position",
       "source_record_ids": [
         "deepswe-score-claude-fable-5-max-2026-08-13"
@@ -64,7 +64,7 @@
     "capability_domains": [
       "software_engineering"
     ],
-    "cohort_id": "ce1c168a1aae8fc1",
+    "cohort_id": "6b3739d374c0d13b",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -113,7 +113,7 @@
       "source_organization_count": 1
     },
     "data_as_of": "2026-08-15",
-    "dataset_fingerprint": "f094663de0a42ca17e55a19c132f51a9b799f3c16621dbe59c9fd584f1e173f0",
+    "dataset_fingerprint": "7b0bdda0d02c8ecc9f8b4f72d3d9247d9caab39333394088dd2cbbf29f9546f1",
     "diagnostics": [
       "model release date is outside the configured eligibility window",
       "not eligible for headline Overall ranking",
@@ -217,15 +217,15 @@
       ],
       "provisional": true,
       "score": 50.00000000000001,
-      "score_scale_id": "13535e025a464b28b67b58289da16da29d01cbf4a64b902caa220ea67697edfc",
+      "score_scale_id": "255bdd66aa829d64a023b41a77d0c4e8c6b521b7551a28992c40179b1a25733c",
       "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-claude-fable-5-max-2026-08-13"
       ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.8",
-    "formula_version": "umi-methodology-v0.3.8",
+    "engine_version": "umi-engine-v0.3.9",
+    "formula_version": "umi-methodology-v0.3.9",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "claude-fable-5-max",
@@ -237,7 +237,7 @@
     "release_date": "2026-06-09",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "ce1c168a1aae8fc1c8a1ec8aa64c249ef8c42b5f331732cbaba890fb5e4c1828",
+    "scored_data_fingerprint": "6b3739d374c0d13b0bfd694d0ba2b0b5171a2bf60856e9f7b4464a69ddee5aaf",
     "scoring_ready": true,
     "source_record_ids": [
       "deepswe-harness-resources-claude-fable-5-max-2026-08-13",
@@ -256,16 +256,16 @@
         "same evidence profile, score scale, formula, normalization, and configuration"
       ],
       "comparability_status": "directly_comparable",
-      "coverage": 0.83125,
+      "coverage": 0.8812500000000001,
       "coverage_details": {
-        "capability_families_represented": 9,
+        "capability_families_represented": 10,
         "capability_families_total": 15,
-        "capability_representations_represented": 9,
+        "capability_representations_represented": 10,
         "capability_representations_total": 15,
-        "capability_total_weighted": 0.83125
+        "capability_total_weighted": 0.8812500000000001
       },
       "diagnostics": [
-        "provisional normalization cohorts: arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15"
+        "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15"
       ],
       "directly_comparable_model_ids": [
         "gpt-5.6-sol-max",
@@ -273,6 +273,15 @@
       ],
       "evidence_profile": {
         "benchmark_series": [
+          {
+            "benchmark_id": "aa-lcr",
+            "budget_group": "aa-lcr",
+            "cohort_key": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+            "domain": "context_reliability",
+            "family": "aa-lcr",
+            "representation_group": "aa-lcr",
+            "signal_id": "aa-lcr"
+          },
           {
             "benchmark_id": "arc-agi-2",
             "budget_group": "arc-agi-2",
@@ -358,6 +367,7 @@
         "contributing_record_ids": [
           "aa-gdpval-v2-claude-opus-5-max-2026-08-15",
           "aa-hle-claude-opus-5-max-2026-08-14",
+          "aa-lcr-claude-opus-5-max-2026-08-15",
           "aa-tau3-banking-claude-opus-5-max-2026-08-15",
           "cursorbench-3.2-claude-opus-5-max-2026-08-14",
           "deepswe-score-claude-opus-5-max-2026-08-13",
@@ -368,13 +378,15 @@
         ],
         "domain_ids": [
           "agentic_work",
+          "context_reliability",
           "general_reasoning",
           "math_science",
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "a0c851aaa38e29268e5f110ecd88c9984d48f9394c5ef15bea8146804a1815a9",
+        "evidence_record_fingerprint": "c602ce0bcc2ac0de99f225086a392e7c7d59935aaf98a84992dcaf9106859af2",
         "family_ids": [
+          "aa-lcr",
           "arc-agi-2",
           "critpt",
           "cursorbench-3.2",
@@ -385,8 +397,8 @@
           "scicode",
           "tau3-banking"
         ],
-        "id": "63a9f239ce448180a08ff046cd20c7148f191fb877b5bd88ce301543a2c3c25a",
-        "methodology_fingerprint": "63a9f239ce448180a08ff046cd20c7148f191fb877b5bd88ce301543a2c3c25a",
+        "id": "bb68c782e87832169f34d7ef2ee6c8577ffb1180c8ba0ebc2b093d00ae7b8c70",
+        "methodology_fingerprint": "bb68c782e87832169f34d7ef2ee6c8577ffb1180c8ba0ebc2b093d00ae7b8c70",
         "source_organizations": [
           "Artificial Analysis",
           "Cursor",
@@ -397,9 +409,10 @@
         "workload_family_ids": [],
         "workload_series": []
       },
-      "evidence_profile_id": "63a9f239ce448180a08ff046cd20c7148f191fb877b5bd88ce301543a2c3c25a",
+      "evidence_profile_id": "bb68c782e87832169f34d7ef2ee6c8577ffb1180c8ba0ebc2b093d00ae7b8c70",
       "normalization_panel_ids": [
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
+        "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
         "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
         "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
         "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
@@ -410,12 +423,13 @@
         "faec053b96cff8a3df6322451a88517371cf3db0ed93ce9c502dbdf4300693a1"
       ],
       "provisional": true,
-      "score": 79.89974937343358,
-      "score_scale_id": "656e9dc17d2935616f6101c436fc867d27772b711797e614317fa206f0aedfae",
+      "score": 75.36643026004728,
+      "score_scale_id": "38e7ac496c00340c8ace663ec036d1fa858af3ebb206106a399ac53e0356c581",
       "score_semantics": "weighted stable-panel percentile composite",
       "source_record_ids": [
         "aa-gdpval-v2-claude-opus-5-max-2026-08-15",
         "aa-hle-claude-opus-5-max-2026-08-14",
+        "aa-lcr-claude-opus-5-max-2026-08-15",
         "aa-tau3-banking-claude-opus-5-max-2026-08-15",
         "cursorbench-3.2-claude-opus-5-max-2026-08-14",
         "deepswe-score-claude-opus-5-max-2026-08-13",
@@ -427,11 +441,12 @@
     },
     "capability_domains": [
       "agentic_work",
+      "context_reliability",
       "general_reasoning",
       "math_science",
       "software_engineering"
     ],
-    "cohort_id": "ce1c168a1aae8fc1",
+    "cohort_id": "6b3739d374c0d13b",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -441,8 +456,8 @@
     ],
     "confidence": "low",
     "confidence_reasons": [
-      "47% hierarchical weighted coverage",
-      "4/5 capability domains represented",
+      "50% hierarchical weighted coverage",
+      "5/5 capability domains represented",
       "1/6 efficiency workload classes",
       "4 source organizations",
       "100% independent/community evidence",
@@ -451,12 +466,12 @@
     ],
     "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
     "coverage": {
-      "capability_absolute_weighted": 0.83125,
-      "capability_domains_represented": 4,
+      "capability_absolute_weighted": 0.8812500000000001,
+      "capability_domains_represented": 5,
       "capability_domains_total": 5,
-      "capability_families_represented": 9,
+      "capability_families_represented": 10,
       "capability_families_total": 15,
-      "capability_representations_represented": 9,
+      "capability_representations_represented": 10,
       "capability_representations_total": 15,
       "economics_workload_weighted": 0.0,
       "economics_workloads_represented": 0,
@@ -474,14 +489,14 @@
       "efficiency_workloads_represented": 1,
       "efficiency_workloads_total": 6,
       "independent_or_community_evidence_share": 1.0,
-      "overall_weighted": 0.46843750000000006,
+      "overall_weighted": 0.4959375000000001,
       "source_organization_count": 4
     },
     "data_as_of": "2026-08-15",
-    "dataset_fingerprint": "f094663de0a42ca17e55a19c132f51a9b799f3c16621dbe59c9fd584f1e173f0",
+    "dataset_fingerprint": "7b0bdda0d02c8ecc9f8b4f72d3d9247d9caab39333394088dd2cbbf29f9546f1",
     "diagnostics": [
       "not eligible for headline Overall ranking",
-      "provisional normalization cohorts: arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+      "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
     ],
     "economics": {
@@ -581,31 +596,32 @@
       ],
       "provisional": true,
       "score": 41.66666666666667,
-      "score_scale_id": "13535e025a464b28b67b58289da16da29d01cbf4a64b902caa220ea67697edfc",
+      "score_scale_id": "255bdd66aa829d64a023b41a77d0c4e8c6b521b7551a28992c40179b1a25733c",
       "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-claude-opus-5-max-2026-08-13"
       ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.8",
-    "formula_version": "umi-methodology-v0.3.8",
+    "engine_version": "umi-engine-v0.3.9",
+    "formula_version": "umi-methodology-v0.3.9",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "claude-opus-5-max",
     "normalization_version": "umi-normalization-v0.3.4",
-    "overall_coverage": 0.46843750000000006,
-    "partial_overall_estimate": 67.95191102756891,
+    "overall_coverage": 0.4959375000000001,
+    "partial_overall_estimate": 64.83525413711584,
     "provisional": true,
     "publication_label": "real evidence \u2014 model-specific partial estimate",
     "release_date": "2026-07-24",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "ce1c168a1aae8fc1c8a1ec8aa64c249ef8c42b5f331732cbaba890fb5e4c1828",
+    "scored_data_fingerprint": "6b3739d374c0d13b0bfd694d0ba2b0b5171a2bf60856e9f7b4464a69ddee5aaf",
     "scoring_ready": true,
     "source_record_ids": [
       "aa-gdpval-v2-claude-opus-5-max-2026-08-15",
       "aa-hle-claude-opus-5-max-2026-08-14",
+      "aa-lcr-claude-opus-5-max-2026-08-15",
       "aa-tau3-banking-claude-opus-5-max-2026-08-15",
       "cursorbench-3.2-claude-opus-5-max-2026-08-14",
       "deepswe-harness-resources-claude-opus-5-max-2026-08-13",
@@ -628,20 +644,29 @@
         "no other model shares both evidence profile and score scale"
       ],
       "comparability_status": "different_score_scale",
-      "coverage": 0.6937500000000001,
+      "coverage": 0.74375,
       "coverage_details": {
-        "capability_families_represented": 8,
+        "capability_families_represented": 9,
         "capability_families_total": 15,
-        "capability_representations_represented": 8,
+        "capability_representations_represented": 9,
         "capability_representations_total": 15,
-        "capability_total_weighted": 0.6937500000000001
+        "capability_total_weighted": 0.74375
       },
       "diagnostics": [
-        "provisional normalization cohorts: critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15"
+        "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15"
       ],
       "directly_comparable_model_ids": [],
       "evidence_profile": {
         "benchmark_series": [
+          {
+            "benchmark_id": "aa-lcr",
+            "budget_group": "aa-lcr",
+            "cohort_key": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+            "domain": "context_reliability",
+            "family": "aa-lcr",
+            "representation_group": "aa-lcr",
+            "signal_id": "aa-lcr"
+          },
           {
             "benchmark_id": "critpt",
             "budget_group": "critpt",
@@ -718,6 +743,7 @@
         "contributing_record_ids": [
           "aa-gdpval-v2-glm-5.2-max-2026-08-15",
           "aa-hle-glm-5.2-max-2026-08-14",
+          "aa-lcr-glm-5.2-max-2026-08-15",
           "aa-tau3-banking-glm-5.2-max-2026-08-15",
           "cursorbench-3.2-glm-5.2-max-2026-08-14",
           "deepswe-score-glm-5.2-max-2026-08-13",
@@ -727,13 +753,15 @@
         ],
         "domain_ids": [
           "agentic_work",
+          "context_reliability",
           "general_reasoning",
           "math_science",
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "e4fe9bcdef16a773cd1ace31ea939dddadd940ac81c4dcaec4195f5ac1fbd941",
+        "evidence_record_fingerprint": "31ad5f63add7e2f43fdd4819e701d893335ef6234e5c4106887f2935034fad3e",
         "family_ids": [
+          "aa-lcr",
           "critpt",
           "cursorbench-3.2",
           "deepswe-v1.1",
@@ -743,8 +771,8 @@
           "scicode",
           "tau3-banking"
         ],
-        "id": "434aa06fe6ae1a4388f7a4d2e156b91c217089aa5bd58be84f5457148f7d3189",
-        "methodology_fingerprint": "434aa06fe6ae1a4388f7a4d2e156b91c217089aa5bd58be84f5457148f7d3189",
+        "id": "a59513e25b7f36d6a18ee020702bba7860f5eed7beae11dbf8e8995358b0a1ba",
+        "methodology_fingerprint": "a59513e25b7f36d6a18ee020702bba7860f5eed7beae11dbf8e8995358b0a1ba",
         "source_organizations": [
           "Artificial Analysis",
           "Cursor",
@@ -755,9 +783,10 @@
         "workload_family_ids": [],
         "workload_series": []
       },
-      "evidence_profile_id": "434aa06fe6ae1a4388f7a4d2e156b91c217089aa5bd58be84f5457148f7d3189",
+      "evidence_profile_id": "a59513e25b7f36d6a18ee020702bba7860f5eed7beae11dbf8e8995358b0a1ba",
       "normalization_panel_ids": [
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
+        "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
         "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
         "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
         "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
@@ -767,12 +796,13 @@
         "e437be94bc145514ec2514c890ac752bec3abcd786747eda0b250f0f3df2d139"
       ],
       "provisional": true,
-      "score": 0.0,
-      "score_scale_id": "63b2e100f07888fab6dd9a664ff52cba78e11e0120388b6aef7c73e179b4d72f",
+      "score": 2.240896358543418,
+      "score_scale_id": "6cd2ed337f70c62d6eb822de47cbbeaa1c1a84584f6a0516ba71cbe4dfaa1779",
       "score_semantics": "weighted stable-panel percentile composite",
       "source_record_ids": [
         "aa-gdpval-v2-glm-5.2-max-2026-08-15",
         "aa-hle-glm-5.2-max-2026-08-14",
+        "aa-lcr-glm-5.2-max-2026-08-15",
         "aa-tau3-banking-glm-5.2-max-2026-08-15",
         "cursorbench-3.2-glm-5.2-max-2026-08-14",
         "deepswe-score-glm-5.2-max-2026-08-13",
@@ -783,11 +813,12 @@
     },
     "capability_domains": [
       "agentic_work",
+      "context_reliability",
       "general_reasoning",
       "math_science",
       "software_engineering"
     ],
-    "cohort_id": "ce1c168a1aae8fc1",
+    "cohort_id": "6b3739d374c0d13b",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -797,8 +828,8 @@
     ],
     "confidence": "low",
     "confidence_reasons": [
-      "39% hierarchical weighted coverage",
-      "4/5 capability domains represented",
+      "42% hierarchical weighted coverage",
+      "5/5 capability domains represented",
       "1/6 efficiency workload classes",
       "4 source organizations",
       "100% independent/community evidence",
@@ -807,12 +838,12 @@
     ],
     "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
     "coverage": {
-      "capability_absolute_weighted": 0.6937500000000001,
-      "capability_domains_represented": 4,
+      "capability_absolute_weighted": 0.74375,
+      "capability_domains_represented": 5,
       "capability_domains_total": 5,
-      "capability_families_represented": 8,
+      "capability_families_represented": 9,
       "capability_families_total": 15,
-      "capability_representations_represented": 8,
+      "capability_representations_represented": 9,
       "capability_representations_total": 15,
       "economics_workload_weighted": 0.0,
       "economics_workloads_represented": 0,
@@ -830,14 +861,14 @@
       "efficiency_workloads_represented": 1,
       "efficiency_workloads_total": 6,
       "independent_or_community_evidence_share": 1.0,
-      "overall_weighted": 0.39281250000000006,
+      "overall_weighted": 0.42031250000000003,
       "source_organization_count": 4
     },
     "data_as_of": "2026-08-15",
-    "dataset_fingerprint": "f094663de0a42ca17e55a19c132f51a9b799f3c16621dbe59c9fd584f1e173f0",
+    "dataset_fingerprint": "7b0bdda0d02c8ecc9f8b4f72d3d9247d9caab39333394088dd2cbbf29f9546f1",
     "diagnostics": [
       "not eligible for headline Overall ranking",
-      "provisional normalization cohorts: critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+      "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
     ],
     "economics": {
@@ -937,31 +968,32 @@
       ],
       "provisional": true,
       "score": 0.0,
-      "score_scale_id": "13535e025a464b28b67b58289da16da29d01cbf4a64b902caa220ea67697edfc",
+      "score_scale_id": "255bdd66aa829d64a023b41a77d0c4e8c6b521b7551a28992c40179b1a25733c",
       "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-glm-5.2-max-2026-08-13"
       ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.8",
-    "formula_version": "umi-methodology-v0.3.8",
+    "engine_version": "umi-engine-v0.3.9",
+    "formula_version": "umi-methodology-v0.3.9",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "glm-5.2-max",
     "normalization_version": "umi-normalization-v0.3.4",
-    "overall_coverage": 0.39281250000000006,
-    "partial_overall_estimate": 0.0,
+    "overall_coverage": 0.42031250000000003,
+    "partial_overall_estimate": 1.5406162464985997,
     "provisional": true,
     "publication_label": "real evidence \u2014 model-specific partial estimate",
     "release_date": "2026-06-16",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "ce1c168a1aae8fc1c8a1ec8aa64c249ef8c42b5f331732cbaba890fb5e4c1828",
+    "scored_data_fingerprint": "6b3739d374c0d13b0bfd694d0ba2b0b5171a2bf60856e9f7b4464a69ddee5aaf",
     "scoring_ready": true,
     "source_record_ids": [
       "aa-gdpval-v2-glm-5.2-max-2026-08-15",
       "aa-hle-glm-5.2-max-2026-08-14",
+      "aa-lcr-glm-5.2-max-2026-08-15",
       "aa-tau3-banking-glm-5.2-max-2026-08-15",
       "cursorbench-3.2-glm-5.2-max-2026-08-14",
       "deepswe-harness-resources-glm-5.2-max-2026-08-13",
@@ -983,16 +1015,16 @@
         "same evidence profile, score scale, formula, normalization, and configuration"
       ],
       "comparability_status": "directly_comparable",
-      "coverage": 0.83125,
+      "coverage": 0.8812500000000001,
       "coverage_details": {
-        "capability_families_represented": 9,
+        "capability_families_represented": 10,
         "capability_families_total": 15,
-        "capability_representations_represented": 9,
+        "capability_representations_represented": 10,
         "capability_representations_total": 15,
-        "capability_total_weighted": 0.83125
+        "capability_total_weighted": 0.8812500000000001
       },
       "diagnostics": [
-        "provisional normalization cohorts: arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15"
+        "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15"
       ],
       "directly_comparable_model_ids": [
         "claude-opus-5-max",
@@ -1000,6 +1032,15 @@
       ],
       "evidence_profile": {
         "benchmark_series": [
+          {
+            "benchmark_id": "aa-lcr",
+            "budget_group": "aa-lcr",
+            "cohort_key": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+            "domain": "context_reliability",
+            "family": "aa-lcr",
+            "representation_group": "aa-lcr",
+            "signal_id": "aa-lcr"
+          },
           {
             "benchmark_id": "arc-agi-2",
             "budget_group": "arc-agi-2",
@@ -1085,6 +1126,7 @@
         "contributing_record_ids": [
           "aa-gdpval-v2-gpt-5.6-sol-max-2026-08-15",
           "aa-hle-gpt-5.6-sol-max-2026-08-14",
+          "aa-lcr-gpt-5.6-sol-max-2026-08-15",
           "aa-tau3-banking-gpt-5.6-sol-max-2026-08-15",
           "cursorbench-3.2-gpt-5.6-sol-max-2026-08-14",
           "deepswe-score-gpt-5.6-sol-max-2026-08-13",
@@ -1095,13 +1137,15 @@
         ],
         "domain_ids": [
           "agentic_work",
+          "context_reliability",
           "general_reasoning",
           "math_science",
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "90e1d912d1dc8f55ccc60b21681e5e3d012c44c01f4518b9552dbeacba5c0e42",
+        "evidence_record_fingerprint": "28178e3f7837b0771767e38eeffa195d0860cab9b29201d8a40ecf7b8b2f4f77",
         "family_ids": [
+          "aa-lcr",
           "arc-agi-2",
           "critpt",
           "cursorbench-3.2",
@@ -1112,8 +1156,8 @@
           "scicode",
           "tau3-banking"
         ],
-        "id": "63a9f239ce448180a08ff046cd20c7148f191fb877b5bd88ce301543a2c3c25a",
-        "methodology_fingerprint": "63a9f239ce448180a08ff046cd20c7148f191fb877b5bd88ce301543a2c3c25a",
+        "id": "bb68c782e87832169f34d7ef2ee6c8577ffb1180c8ba0ebc2b093d00ae7b8c70",
+        "methodology_fingerprint": "bb68c782e87832169f34d7ef2ee6c8577ffb1180c8ba0ebc2b093d00ae7b8c70",
         "source_organizations": [
           "Artificial Analysis",
           "Cursor",
@@ -1124,9 +1168,10 @@
         "workload_family_ids": [],
         "workload_series": []
       },
-      "evidence_profile_id": "63a9f239ce448180a08ff046cd20c7148f191fb877b5bd88ce301543a2c3c25a",
+      "evidence_profile_id": "bb68c782e87832169f34d7ef2ee6c8577ffb1180c8ba0ebc2b093d00ae7b8c70",
       "normalization_panel_ids": [
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
+        "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
         "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
         "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
         "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
@@ -1137,12 +1182,13 @@
         "faec053b96cff8a3df6322451a88517371cf3db0ed93ce9c502dbdf4300693a1"
       ],
       "provisional": true,
-      "score": 75.11278195488723,
-      "score_scale_id": "656e9dc17d2935616f6101c436fc867d27772b711797e614317fa206f0aedfae",
+      "score": 74.63356973995272,
+      "score_scale_id": "38e7ac496c00340c8ace663ec036d1fa858af3ebb206106a399ac53e0356c581",
       "score_semantics": "weighted stable-panel percentile composite",
       "source_record_ids": [
         "aa-gdpval-v2-gpt-5.6-sol-max-2026-08-15",
         "aa-hle-gpt-5.6-sol-max-2026-08-14",
+        "aa-lcr-gpt-5.6-sol-max-2026-08-15",
         "aa-tau3-banking-gpt-5.6-sol-max-2026-08-15",
         "cursorbench-3.2-gpt-5.6-sol-max-2026-08-14",
         "deepswe-score-gpt-5.6-sol-max-2026-08-13",
@@ -1154,11 +1200,12 @@
     },
     "capability_domains": [
       "agentic_work",
+      "context_reliability",
       "general_reasoning",
       "math_science",
       "software_engineering"
     ],
-    "cohort_id": "ce1c168a1aae8fc1",
+    "cohort_id": "6b3739d374c0d13b",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -1168,8 +1215,8 @@
     ],
     "confidence": "low",
     "confidence_reasons": [
-      "47% hierarchical weighted coverage",
-      "4/5 capability domains represented",
+      "50% hierarchical weighted coverage",
+      "5/5 capability domains represented",
       "1/6 efficiency workload classes",
       "4 source organizations",
       "100% independent/community evidence",
@@ -1178,12 +1225,12 @@
     ],
     "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
     "coverage": {
-      "capability_absolute_weighted": 0.83125,
-      "capability_domains_represented": 4,
+      "capability_absolute_weighted": 0.8812500000000001,
+      "capability_domains_represented": 5,
       "capability_domains_total": 5,
-      "capability_families_represented": 9,
+      "capability_families_represented": 10,
       "capability_families_total": 15,
-      "capability_representations_represented": 9,
+      "capability_representations_represented": 10,
       "capability_representations_total": 15,
       "economics_workload_weighted": 0.0,
       "economics_workloads_represented": 0,
@@ -1201,14 +1248,14 @@
       "efficiency_workloads_represented": 1,
       "efficiency_workloads_total": 6,
       "independent_or_community_evidence_share": 1.0,
-      "overall_weighted": 0.46843750000000006,
+      "overall_weighted": 0.4959375000000001,
       "source_organization_count": 4
     },
     "data_as_of": "2026-08-15",
-    "dataset_fingerprint": "f094663de0a42ca17e55a19c132f51a9b799f3c16621dbe59c9fd584f1e173f0",
+    "dataset_fingerprint": "7b0bdda0d02c8ecc9f8b4f72d3d9247d9caab39333394088dd2cbbf29f9546f1",
     "diagnostics": [
       "not eligible for headline Overall ranking",
-      "provisional normalization cohorts: arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+      "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
     ],
     "economics": {
@@ -1308,31 +1355,32 @@
       ],
       "provisional": true,
       "score": 100.00000000000001,
-      "score_scale_id": "13535e025a464b28b67b58289da16da29d01cbf4a64b902caa220ea67697edfc",
+      "score_scale_id": "255bdd66aa829d64a023b41a77d0c4e8c6b521b7551a28992c40179b1a25733c",
       "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-gpt-5.6-sol-max-2026-08-13"
       ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.8",
-    "formula_version": "umi-methodology-v0.3.8",
+    "engine_version": "umi-engine-v0.3.9",
+    "formula_version": "umi-methodology-v0.3.9",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "gpt-5.6-sol-max",
     "normalization_version": "umi-normalization-v0.3.4",
-    "overall_coverage": 0.46843750000000006,
-    "partial_overall_estimate": 82.89003759398497,
+    "overall_coverage": 0.4959375000000001,
+    "partial_overall_estimate": 82.56057919621749,
     "provisional": true,
     "publication_label": "real evidence \u2014 model-specific partial estimate",
     "release_date": "2026-07-09",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "ce1c168a1aae8fc1c8a1ec8aa64c249ef8c42b5f331732cbaba890fb5e4c1828",
+    "scored_data_fingerprint": "6b3739d374c0d13b0bfd694d0ba2b0b5171a2bf60856e9f7b4464a69ddee5aaf",
     "scoring_ready": true,
     "source_record_ids": [
       "aa-gdpval-v2-gpt-5.6-sol-max-2026-08-15",
       "aa-hle-gpt-5.6-sol-max-2026-08-14",
+      "aa-lcr-gpt-5.6-sol-max-2026-08-15",
       "aa-tau3-banking-gpt-5.6-sol-max-2026-08-15",
       "cursorbench-3.2-gpt-5.6-sol-max-2026-08-14",
       "deepswe-harness-resources-gpt-5.6-sol-max-2026-08-13",
@@ -1355,16 +1403,16 @@
         "same evidence profile, score scale, formula, normalization, and configuration"
       ],
       "comparability_status": "directly_comparable",
-      "coverage": 0.83125,
+      "coverage": 0.8812500000000001,
       "coverage_details": {
-        "capability_families_represented": 9,
+        "capability_families_represented": 10,
         "capability_families_total": 15,
-        "capability_representations_represented": 9,
+        "capability_representations_represented": 10,
         "capability_representations_total": 15,
-        "capability_total_weighted": 0.83125
+        "capability_total_weighted": 0.8812500000000001
       },
       "diagnostics": [
-        "provisional normalization cohorts: arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15"
+        "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15"
       ],
       "directly_comparable_model_ids": [
         "claude-opus-5-max",
@@ -1372,6 +1420,15 @@
       ],
       "evidence_profile": {
         "benchmark_series": [
+          {
+            "benchmark_id": "aa-lcr",
+            "budget_group": "aa-lcr",
+            "cohort_key": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+            "domain": "context_reliability",
+            "family": "aa-lcr",
+            "representation_group": "aa-lcr",
+            "signal_id": "aa-lcr"
+          },
           {
             "benchmark_id": "arc-agi-2",
             "budget_group": "arc-agi-2",
@@ -1457,6 +1514,7 @@
         "contributing_record_ids": [
           "aa-gdpval-v2-kimi-k3-max-2026-08-15",
           "aa-hle-kimi-k3-max-2026-08-14",
+          "aa-lcr-kimi-k3-max-2026-08-15",
           "aa-tau3-banking-kimi-k3-max-2026-08-15",
           "cursorbench-3.2-kimi-k3-max-2026-08-14",
           "deepswe-score-kimi-k3-max-2026-08-13",
@@ -1467,13 +1525,15 @@
         ],
         "domain_ids": [
           "agentic_work",
+          "context_reliability",
           "general_reasoning",
           "math_science",
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "07a3c6dc0c6578fdcce6f0093a49b5a477560ba9650447446d0cb1ec87c6f70e",
+        "evidence_record_fingerprint": "c12fd6f8571236f5f0ae455fd1d6131a58641d17c750a362ecf0e9c118b29aa3",
         "family_ids": [
+          "aa-lcr",
           "arc-agi-2",
           "critpt",
           "cursorbench-3.2",
@@ -1484,8 +1544,8 @@
           "scicode",
           "tau3-banking"
         ],
-        "id": "63a9f239ce448180a08ff046cd20c7148f191fb877b5bd88ce301543a2c3c25a",
-        "methodology_fingerprint": "63a9f239ce448180a08ff046cd20c7148f191fb877b5bd88ce301543a2c3c25a",
+        "id": "bb68c782e87832169f34d7ef2ee6c8577ffb1180c8ba0ebc2b093d00ae7b8c70",
+        "methodology_fingerprint": "bb68c782e87832169f34d7ef2ee6c8577ffb1180c8ba0ebc2b093d00ae7b8c70",
         "source_organizations": [
           "Artificial Analysis",
           "Cursor",
@@ -1496,9 +1556,10 @@
         "workload_family_ids": [],
         "workload_series": []
       },
-      "evidence_profile_id": "63a9f239ce448180a08ff046cd20c7148f191fb877b5bd88ce301543a2c3c25a",
+      "evidence_profile_id": "bb68c782e87832169f34d7ef2ee6c8577ffb1180c8ba0ebc2b093d00ae7b8c70",
       "normalization_panel_ids": [
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
+        "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
         "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
         "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
         "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
@@ -1509,12 +1570,13 @@
         "faec053b96cff8a3df6322451a88517371cf3db0ed93ce9c502dbdf4300693a1"
       ],
       "provisional": true,
-      "score": 36.716791979949875,
-      "score_scale_id": "656e9dc17d2935616f6101c436fc867d27772b711797e614317fa206f0aedfae",
+      "score": 40.307328605200944,
+      "score_scale_id": "38e7ac496c00340c8ace663ec036d1fa858af3ebb206106a399ac53e0356c581",
       "score_semantics": "weighted stable-panel percentile composite",
       "source_record_ids": [
         "aa-gdpval-v2-kimi-k3-max-2026-08-15",
         "aa-hle-kimi-k3-max-2026-08-14",
+        "aa-lcr-kimi-k3-max-2026-08-15",
         "aa-tau3-banking-kimi-k3-max-2026-08-15",
         "cursorbench-3.2-kimi-k3-max-2026-08-14",
         "deepswe-score-kimi-k3-max-2026-08-13",
@@ -1526,11 +1588,12 @@
     },
     "capability_domains": [
       "agentic_work",
+      "context_reliability",
       "general_reasoning",
       "math_science",
       "software_engineering"
     ],
-    "cohort_id": "ce1c168a1aae8fc1",
+    "cohort_id": "6b3739d374c0d13b",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -1540,8 +1603,8 @@
     ],
     "confidence": "low",
     "confidence_reasons": [
-      "47% hierarchical weighted coverage",
-      "4/5 capability domains represented",
+      "50% hierarchical weighted coverage",
+      "5/5 capability domains represented",
       "1/6 efficiency workload classes",
       "4 source organizations",
       "100% independent/community evidence",
@@ -1550,12 +1613,12 @@
     ],
     "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
     "coverage": {
-      "capability_absolute_weighted": 0.83125,
-      "capability_domains_represented": 4,
+      "capability_absolute_weighted": 0.8812500000000001,
+      "capability_domains_represented": 5,
       "capability_domains_total": 5,
-      "capability_families_represented": 9,
+      "capability_families_represented": 10,
       "capability_families_total": 15,
-      "capability_representations_represented": 9,
+      "capability_representations_represented": 10,
       "capability_representations_total": 15,
       "economics_workload_weighted": 0.0,
       "economics_workloads_represented": 0,
@@ -1573,14 +1636,14 @@
       "efficiency_workloads_represented": 1,
       "efficiency_workloads_total": 6,
       "independent_or_community_evidence_share": 1.0,
-      "overall_weighted": 0.46843750000000006,
+      "overall_weighted": 0.4959375000000001,
       "source_organization_count": 4
     },
     "data_as_of": "2026-08-15",
-    "dataset_fingerprint": "f094663de0a42ca17e55a19c132f51a9b799f3c16621dbe59c9fd584f1e173f0",
+    "dataset_fingerprint": "7b0bdda0d02c8ecc9f8b4f72d3d9247d9caab39333394088dd2cbbf29f9546f1",
     "diagnostics": [
       "not eligible for headline Overall ranking",
-      "provisional normalization cohorts: arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+      "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
       "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
     ],
     "economics": {
@@ -1680,31 +1743,32 @@
       ],
       "provisional": true,
       "score": 58.333333333333336,
-      "score_scale_id": "13535e025a464b28b67b58289da16da29d01cbf4a64b902caa220ea67697edfc",
+      "score_scale_id": "255bdd66aa829d64a023b41a77d0c4e8c6b521b7551a28992c40179b1a25733c",
       "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-kimi-k3-max-2026-08-13"
       ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.8",
-    "formula_version": "umi-methodology-v0.3.8",
+    "engine_version": "umi-engine-v0.3.9",
+    "formula_version": "umi-methodology-v0.3.9",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "kimi-k3-max",
     "normalization_version": "umi-normalization-v0.3.4",
-    "overall_coverage": 0.46843750000000006,
-    "partial_overall_estimate": 43.47196115288221,
+    "overall_coverage": 0.4959375000000001,
+    "partial_overall_estimate": 45.94045508274232,
     "provisional": true,
     "publication_label": "real evidence \u2014 model-specific partial estimate",
     "release_date": "2026-07-16",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "ce1c168a1aae8fc1c8a1ec8aa64c249ef8c42b5f331732cbaba890fb5e4c1828",
+    "scored_data_fingerprint": "6b3739d374c0d13b0bfd694d0ba2b0b5171a2bf60856e9f7b4464a69ddee5aaf",
     "scoring_ready": true,
     "source_record_ids": [
       "aa-gdpval-v2-kimi-k3-max-2026-08-15",
       "aa-hle-kimi-k3-max-2026-08-14",
+      "aa-lcr-kimi-k3-max-2026-08-15",
       "aa-tau3-banking-kimi-k3-max-2026-08-15",
       "cursorbench-3.2-kimi-k3-max-2026-08-14",
       "deepswe-harness-resources-kimi-k3-max-2026-08-13",

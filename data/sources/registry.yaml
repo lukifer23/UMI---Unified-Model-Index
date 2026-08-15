@@ -137,6 +137,23 @@ snapshots:
     attribution: tau3-Banking score and operational facts sourced from Artificial Analysis; benchmark and task suite by Sierra Research
     redistribution_scope: facts_only
     notes: Public factual transcription only; no page payload, policy corpus, task content, trajectories, or chart artwork is redistributed.
+  - id: aa-lcr-facts-2026-08-15
+    title: Artificial Analysis AA-LCR reviewed public facts
+    source:
+      organization: Artificial Analysis
+      url: https://artificialanalysis.ai/evaluations/artificial-analysis-long-context-reasoning
+      accessed: 2026-08-15
+    as_of: 2026-08-15
+    artifact_path: v0.3/aa-lcr-reviewed-facts-2026-08-15.yaml
+    artifact_sha256: 7d736d8a6dbbfcf1ea8815ab95847284fc7fdb0ec3e90887ab5cbf198e53d221
+    content_type: application/yaml
+    upstream_revision: public-page-and-methodology-v4.1.1-2026-08-15
+    adapter_id: aa-lcr-reviewed-facts-v1
+    license_id: terms-governed-no-redistribution-assumed
+    license_url: https://artificialanalysis.ai/docs/legal/Terms-of-Use.pdf
+    attribution: AA-LCR score and operational facts sourced from Artificial Analysis
+    redistribution_scope: facts_only
+    notes: Public factual transcription only; no page payload, document corpus, question content, responses, or chart artwork is redistributed.
   - id: cursorbench-3.2-facts-2026-08-14
     title: CursorBench 3.2 reviewed public facts
     source:

@@ -21,6 +21,7 @@ from scripts.freeze_v03_open_sources import _zip_content_sha256
 from umi.adapters import (
     adapt_aa_facts,
     adapt_aa_gdpval_facts,
+    adapt_aa_lcr_facts,
     adapt_aa_tau3_facts,
     adapt_arena_json,
     adapt_cursorbench_facts,
@@ -84,7 +85,7 @@ def test_frozen_registry_checksums_and_license_contract(pilot_dataset) -> None:
     )
     assert report.errors == ()
     pilot_snapshots = [item for item in registry.snapshots if "v0.3/" in item.artifact_path]
-    assert len(pilot_snapshots) == 14
+    assert len(pilot_snapshots) == 15
     assert all(item.license_id and item.attribution and item.adapter_id for item in pilot_snapshots)
 
 
@@ -327,6 +328,7 @@ def test_crosswalk_exactness_and_rejected_aliases(pilot_dataset, crosswalk) -> N
     }
     assert "fallback" in rejected["aa-fable-fallback-rejected"].lower()
     assert "fallback" in rejected["aa-tau3-fable-fallback-rejected"].lower()
+    assert "fallback" in rejected["aa-lcr-fable-fallback-rejected"].lower()
     assert "effort" in rejected["arena-agent-sol-xhigh-rejected"].lower()
     assert "missing effort" in rejected["arena-text-fable-omitted-rejected"].lower()
 
@@ -468,6 +470,37 @@ def test_adapters_are_offline_deterministic_and_role_safe(monkeypatch, crosswalk
     assert sol_tau3.evaluation_settings["weighted_decode_time_per_task"] == pytest.approx(
         1.974275313283147
     )
+    aa_lcr = adapt_aa_lcr_facts(
+        SOURCES / "aa-lcr-reviewed-facts-2026-08-15.yaml", crosswalk
+    )
+    assert len(aa_lcr.benchmarks) == 4
+    assert len(aa_lcr.rejections) == 1
+    assert aa_lcr.rejections[0].source_row_id == "Claude Fable 5 (with fallback)"
+    assert {item.model_id: item.value for item in aa_lcr.benchmarks} == pytest.approx(
+        {
+            "claude-opus-5-max": 75.6666666666667,
+            "gpt-5.6-sol-max": 77.6666666666667,
+            "kimi-k3-max": 82.6666666666667,
+            "glm-5.2-max": 76.6666666666667,
+        }
+    )
+    assert all(
+        item.benchmark_id == "aa-lcr"
+        and item.measurement_as_of_date == date(2026, 8, 15)
+        and item.evaluation_date is None
+        and item.number_of_tasks == 100
+        and item.number_of_trials == 300
+        and item.sample_count == 300
+        and item.pass_at_k == 1
+        and item.scoring_disposition == ScoringDisposition.SCORED
+        and item.record_status == RecordStatus.READY
+        and item.evaluation_settings["grader"] == "GPT-5.6 Luna medium equality checker"
+        for item in aa_lcr.benchmarks
+    )
+    opus_lcr = next(
+        item for item in aa_lcr.benchmarks if item.model_id == "claude-opus-5-max"
+    )
+    assert opus_lcr.evaluation_settings["output_answer_tokens_per_task"] == 594.52
     cursorbench = adapt_cursorbench_facts(
         SOURCES / "cursorbench-reviewed-facts-2026-08-14.yaml", crosswalk
     )
@@ -547,7 +580,7 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
     assert dashboard["snapshot"]["status"] == "partial"
     overview = dashboard["snapshot"]["datasets"]["overview"]
     assert len(overview) == 1
-    assert overview[0]["max_capability_coverage"] == pytest.approx(0.83125)
+    assert overview[0]["max_capability_coverage"] == pytest.approx(0.88125)
     assert {
         key: value
         for key, value in overview[0].items()
@@ -557,7 +590,7 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
         "efficiency_coverage": 0.045,
         "headline_ready": 0,
         "pilot_models": 5,
-        "scored_capability_cells": 36,
+        "scored_capability_cells": 40,
         "total_capability_cells": 75,
     }
     assert all(
@@ -569,11 +602,12 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
         for item in dashboard["snapshot"]["datasets"]["model_summary"]
         if item["model_id"] == "kimi-k3-max"
     )
-    assert kimi_summary["capability"] == 36.71679197995
-    assert kimi_summary["capability_coverage"] == 0.83125
+    assert kimi_summary["capability"] == 40.307328605201
+    assert kimi_summary["capability_coverage"] == 0.88125
     assert len(dashboard["snapshot"]["datasets"]["benchmarks"]) == 24
     assert len(dashboard["snapshot"]["datasets"]["gdpval"]) == 4
     assert len(dashboard["snapshot"]["datasets"]["tau3"]) == 4
+    assert len(dashboard["snapshot"]["datasets"]["lcr"]) == 4
     assert len(dashboard["snapshot"]["datasets"]["resources"]) == 5
     source_ids = {item["id"] for item in dashboard["sources"]}
     assert all(
@@ -814,6 +848,16 @@ def test_tau3_adapter_rejects_non_finite_operational_fact(monkeypatch, crosswalk
         adapt_aa_tau3_facts("offline-non-finite-tau3.yaml", crosswalk)
 
 
+def test_lcr_adapter_rejects_out_of_range_source_rate(monkeypatch, crosswalk) -> None:
+    raw = yaml.safe_load(
+        (SOURCES / "aa-lcr-reviewed-facts-2026-08-15.yaml").read_text(encoding="utf-8")
+    )
+    raw["rows"][0]["source_value_rate"] = 1.01
+    monkeypatch.setattr("umi.adapters.reviewed.load_yaml", lambda path: raw)
+    with pytest.raises(ValueError, match="must not exceed 1"):
+        adapt_aa_lcr_facts("offline-out-of-range-lcr.yaml", crosswalk)
+
+
 def test_overlap_cycles_and_unrestricted_double_count_are_rejected(pilot_config) -> None:
     reverse = OverlapEdge(
         source="hle",
@@ -931,26 +975,29 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
     )
     assert all(item.headline_overall is None and not item.eligible for item in results.values())
     # Exact equality is a supported-Python reproducibility gate; math.fsum prevents the same
-    # configured weights from serializing as 0.8312500000000002 on Python 3.11.
-    assert results["claude-opus-5-max"].coverage.capability_absolute_weighted == 0.83125
+    # configured weights from serializing differently across supported Python versions.
+    assert (
+        results["claude-opus-5-max"].coverage.capability_absolute_weighted
+        == 0.8812500000000001
+    )
     assert {
         item.model_id: item.coverage.capability_absolute_weighted for item in results.values()
     } == pytest.approx(
         {
         "claude-fable-5-max": 0.0825,
-        "claude-opus-5-max": 0.83125,
-        "glm-5.2-max": 0.69375,
-        "gpt-5.6-sol-max": 0.83125,
-        "kimi-k3-max": 0.83125,
+        "claude-opus-5-max": 0.88125,
+        "glm-5.2-max": 0.74375,
+        "gpt-5.6-sol-max": 0.88125,
+        "kimi-k3-max": 0.88125,
         }
     )
     assert {item.model_id: item.capability.score for item in results.values()} == pytest.approx(
         {
             "claude-fable-5-max": 50.0,
-            "claude-opus-5-max": 79.89974937343358,
-            "glm-5.2-max": 0.0,
-            "gpt-5.6-sol-max": 75.11278195488723,
-            "kimi-k3-max": 36.716791979949875,
+            "claude-opus-5-max": 75.36643026004728,
+            "glm-5.2-max": 2.240896358543418,
+            "gpt-5.6-sol-max": 74.63356973995272,
+            "kimi-k3-max": 40.307328605200944,
         }
     )
     assert {item.model_id: item.efficiency.score for item in results.values()} == pytest.approx(

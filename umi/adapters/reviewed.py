@@ -368,8 +368,15 @@ def adapt_aa_gdpval_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adapta
     )
 
 
-def adapt_aa_tau3_facts(path: str | Path, crosswalk: ModelCrosswalk) -> AdaptationResult:
-    """Adapt a frozen τ³-Banking public fact extract into task evidence."""
+def _adapt_aa_pass_rate_facts(
+    path: str | Path,
+    crosswalk: ModelCrosswalk,
+    *,
+    record_prefix: str,
+    adapter_id: str,
+    diagnostic: str,
+) -> AdaptationResult:
+    """Adapt one reviewed AA pass-rate cohort without promoting operational summaries."""
     raw = load_yaml(path)
     source_id = str(raw["source_id"])
     artifact_id = str(raw["artifact_id"])
@@ -382,7 +389,7 @@ def adapt_aa_tau3_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
     def finite_nonnegative(row: dict[str, object], key: str) -> float:
         value = float(cast(float, row[key]))
         if not math.isfinite(value) or value < 0:
-            raise ValueError(f"τ³-Banking {key} must be finite and nonnegative")
+            raise ValueError(f"{benchmark['benchmark_id']} {key} must be finite and nonnegative")
         return value
 
     for row_value in cast(list[object], raw["rows"]):
@@ -390,7 +397,7 @@ def adapt_aa_tau3_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
         source_model_id = str(row["source_model_id"])
         source_rate = finite_nonnegative(row, "source_value_rate")
         if source_rate > 1:
-            raise ValueError("τ³-Banking source_value_rate must not exceed 1")
+            raise ValueError(f"{benchmark['benchmark_id']} source_value_rate must not exceed 1")
 
         operational: dict[str, object] = {}
         for key in (
@@ -415,7 +422,7 @@ def adapt_aa_tau3_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
             continue
         benchmarks.append(
             BenchmarkMeasurement(
-                record_id=identifier(f"aa-tau3-banking-{match.canonical_model_id}-{as_of}"),
+                record_id=identifier(f"{record_prefix}-{match.canonical_model_id}-{as_of}"),
                 benchmark_id=identifier(str(benchmark["benchmark_id"])),
                 model_id=match.canonical_model_id,
                 source_model_id=source_model_id,
@@ -436,7 +443,7 @@ def adapt_aa_tau3_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
                 source_artifact_id=artifact_id,
                 source_registry_snapshot_id=artifact_id,
                 crosswalk_entry_id=match.id,
-                signal_id="tau3-banking",
+                signal_id=identifier(str(benchmark["benchmark_id"])),
                 configuration_verification=ConfigurationVerification(
                     model_label_exact=True,
                     release_label_exact=True,
@@ -464,12 +471,37 @@ def adapt_aa_tau3_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
         )
     return AdaptationResult(
         source_id=source_id,
-        adapter_id="aa-tau3-reviewed-facts-v1",
+        adapter_id=adapter_id,
         benchmarks=tuple(benchmarks),
         rejections=tuple(rejected),
-        diagnostics=(
+        diagnostics=(diagnostic,),
+    )
+
+
+def adapt_aa_tau3_facts(path: str | Path, crosswalk: ModelCrosswalk) -> AdaptationResult:
+    """Adapt a frozen τ³-Banking public fact extract into task evidence."""
+    return _adapt_aa_pass_rate_facts(
+        path,
+        crosswalk,
+        record_prefix="aa-tau3-banking",
+        adapter_id="aa-tau3-reviewed-facts-v1",
+        diagnostic=(
             "τ³-Banking operational summaries remain diagnostic because coverage, billing, "
-            "and decode-time unit semantics are incomplete",
+            "and decode-time unit semantics are incomplete"
+        ),
+    )
+
+
+def adapt_aa_lcr_facts(path: str | Path, crosswalk: ModelCrosswalk) -> AdaptationResult:
+    """Adapt a frozen AA-LCR public fact extract into long-context task evidence."""
+    return _adapt_aa_pass_rate_facts(
+        path,
+        crosswalk,
+        record_prefix="aa-lcr",
+        adapter_id="aa-lcr-reviewed-facts-v1",
+        diagnostic=(
+            "AA-LCR operational summaries remain diagnostic because token accounting is "
+            "provider-specific and operational coverage is incomplete"
         ),
     )
 

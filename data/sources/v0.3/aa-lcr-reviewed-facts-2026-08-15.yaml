@@ -1,0 +1,65 @@
+source_id: artificial-analysis-lcr
+artifact_id: aa-lcr-facts-2026-08-15
+as_of: 2026-08-15
+source:
+  organization: Artificial Analysis
+  url: https://artificialanalysis.ai/evaluations/artificial-analysis-long-context-reasoning
+  accessed: 2026-08-15
+methodology:
+  url: https://artificialanalysis.ai/methodology/intelligence-benchmarking
+  accessed: 2026-08-15
+benchmark:
+  benchmark_id: aa-lcr
+  benchmark_version: aa-lcr-intelligence-v4.1.1
+  harness_version: aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium
+  cohort_key: aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15
+  number_of_tasks: 100
+  repeats_per_task: 3
+  number_of_trials: 300
+  pass_at_k: 1
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  tools_enabled: false
+  reproducible: false
+  metric_definition: Pass@1 rate averaged across three repeats of 100 long-context questions and graded by an equality-checker LLM
+  evaluation_settings:
+    document_categories: 7
+    document_category_names: Company Reports; Industry Reports; Government Consultations; Academia; Legal; Marketing Materials; Survey Reports
+    approximate_input_tokens_per_question_cl100k_base: 100000
+    approximate_unique_input_tokens: 3000000
+    approximate_document_count: 230
+    minimum_context_window_tokens: 128000
+    response_type: open answer
+    grader: GPT-5.6 Luna medium equality checker
+    source_unit: rate
+    output_unit: percent
+    operational_metrics_disposition: diagnostic only because provider-token counts are not standardized across models and token, time, and calculated-cost coverage is incomplete
+rows:
+  - source_model_id: Claude Opus 5 (max)
+    source_value_rate: 0.756666666666667
+    output_answer_tokens_per_task: 594.52
+    output_reasoning_tokens_per_task: 1143.18
+    weighted_decode_time_per_task: 0.29797785632977586
+  - source_model_id: Claude Fable 5 (with fallback)
+    source_value_rate: 0.766666666666667
+    output_answer_tokens_per_task: 527.94
+    output_reasoning_tokens_per_task: 2783.32
+  - source_model_id: GPT-5.6 Sol (max)
+    source_value_rate: 0.776666666666667
+    output_answer_tokens_per_task: 74.87
+    output_reasoning_tokens_per_task: 1139.21
+    weighted_decode_time_per_task: 0.2795073413229993
+  - source_model_id: Kimi K3 (max)
+    source_value_rate: 0.826666666666667
+    output_answer_tokens_per_task: 110.24
+    output_reasoning_tokens_per_task: 1418.45
+  - source_model_id: GLM-5.2 (max)
+    source_value_rate: 0.766666666666667
+    weighted_decode_time_per_task: 0.48488558255724945
+    calculated_cost_components_usd:
+      answer: 0.000423984
+      reasoning: 0.017446484
+      cache_write: 0
+      cache_hit: 0
+      input: 0.13624535399999999

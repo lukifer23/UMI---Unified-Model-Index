@@ -1,7 +1,8 @@
-scored_audit_fingerprint: 3d1e3e26c52bbc0e916b9f6d8f06ba7165fbb91bc3d30f67374d3acea77ef50d
-complete_audit_fingerprint: 927a43965ed497ffa85f667ce3a2da14ae7af496be50b749089d9f19b26bbac1
+scored_audit_fingerprint: 70f93b67643af82ab76c2f705d4e22dc9d617adf8f0bde6fb447645aa6b42f05
+complete_audit_fingerprint: 4286d908ff508072a0994cec0110dea97ea80631bfa447f0908b3c05cb0f8e7d
 adapter_versions:
 - aa-gdpval-reviewed-facts-v1
+- aa-lcr-reviewed-facts-v1
 - aa-reviewed-facts-v2
 - aa-tau3-reviewed-facts-v1
 - cursorbench-reviewed-facts-v1

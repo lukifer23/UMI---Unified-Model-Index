@@ -106,6 +106,14 @@ rates. Token and calculated-cost fields are incomplete across the cohort, and th
 conflicting units for weighted decode time. Those operational fields therefore remain diagnostic
 and cannot enter Efficiency or Economics.
 
+The Artificial Analysis AA-LCR adapter consumes a facts-only access-date snapshot of the v4.1.1
+100-question, three-repeat public cohort. Exact Opus, Sol, Kimi, and GLM Max rows are ready for
+Capability; the fallback-qualified Fable row is rejected. The adapter preserves the published
+pass@1 rates, task/trial counts, context scale, category count, document scale, grader, and equality
+checker. Answer/reasoning tokens and operational timing/cost fields remain diagnostic because
+provider accounting is nonstandard, coverage is incomplete, and calculated cost is not a verified
+deployment- and billing-revision-bound task ledger.
+
 The CursorBench 3.2 adapter consumes a facts-only reviewed extract from the official leaderboard.
 Exact Opus, Sol, Kimi, and GLM Max labels are ready for Capability. The Fable row is rejected because
 the public run does not rule out Cursor's documented invisible Fable-to-Opus routing. Cost/task,

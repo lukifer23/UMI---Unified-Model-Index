@@ -2,8 +2,8 @@
   "capability_cell_counts": {
     "diagnostic_measurement": 3,
     "diagnostic_reference": 1,
-    "missing": 34,
-    "ready_scored": 36,
+    "missing": 30,
+    "ready_scored": 40,
     "vendor_claim_only": 1
   },
   "capability_cells": [
@@ -622,32 +622,40 @@
       "domain": "context_reliability",
       "family": "aa-lcr",
       "model_id": "claude-opus-5-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "aa-lcr-claude-opus-5-max-2026-08-15"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "aa-lcr",
       "domain": "context_reliability",
       "family": "aa-lcr",
       "model_id": "glm-5.2-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "aa-lcr-glm-5.2-max-2026-08-15"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "aa-lcr",
       "domain": "context_reliability",
       "family": "aa-lcr",
       "model_id": "gpt-5.6-sol-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "aa-lcr-gpt-5.6-sol-max-2026-08-15"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "aa-lcr",
       "domain": "context_reliability",
       "family": "aa-lcr",
       "model_id": "kimi-k3-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "aa-lcr-kimi-k3-max-2026-08-15"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "aa-omniscience",

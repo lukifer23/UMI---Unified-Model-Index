@@ -38,6 +38,41 @@
     },
     {
       "applied_strategy": "percentile",
+      "benchmark_id": "aa-lcr",
+      "canonical_representation_group": "aa-lcr",
+      "cohort_key": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+      "cohort_roles": {
+        "claude-opus-5-max": "normalization_member",
+        "glm-5.2-max": "normalization_member",
+        "gpt-5.6-sol-max": "normalization_member",
+        "kimi-k3-max": "normalization_member"
+      },
+      "cohort_size": 4,
+      "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
+      "id": "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
+      "model_ids": [
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max"
+      ],
+      "normalization_trace": {
+        "applied_strategy": "percentile",
+        "cohort_size": 4,
+        "direction_inverted": false,
+        "fallback_reason": "below_minimum_robust_cohort",
+        "log_transform": false,
+        "minimum_rank_cohort": 2,
+        "minimum_robust_cohort": 8,
+        "provisional": true,
+        "requested_strategy": "robust_z"
+      },
+      "requested_strategy": "robust_z",
+      "scored_input_fingerprint": "dfa7abdf24fb6344eb41fd57893bf17178b51c2e6e4f316c48df04260372894d",
+      "transformation": "identity"
+    },
+    {
+      "applied_strategy": "percentile",
       "benchmark_id": "tau3-banking",
       "canonical_representation_group": "tau3-banking",
       "cohort_key": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
@@ -284,7 +319,7 @@
       "transformation": "identity"
     }
   ],
-  "bundle_fingerprint": "865b6961a1f203c0e1847aa4526b7e987fcd74aff68d5183f785d5b863ff48d2",
+  "bundle_fingerprint": "b84b33f4bc02d6c8d6614a142f0289f423a9547c7a4c6e84929bd125402a5ccd",
   "central_estimate_ranks": {
     "claude-opus-5-max": 1.0,
     "glm-5.2-max": 3.0,
@@ -292,6 +327,11 @@
   },
   "certificate_version": "umi-certificate-v0.1",
   "common_benchmark_series": [
+    {
+      "benchmark_id": "aa-lcr",
+      "canonical_representation_group": "aa-lcr",
+      "cohort_key": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15"
+    },
     {
       "benchmark_id": "critpt",
       "canonical_representation_group": "critpt",
@@ -340,23 +380,23 @@
     "same score-scale, formula, normalization, and configuration identity",
     "exact model, release, effort, and source crosswalks validated by bundle"
   ],
-  "comparison_group_id": "324dd145adc09461110790b3ec4b76be231ced402a941be0b19c4de291d1975a",
+  "comparison_group_id": "eadb3a1d492ffdb5bd317f35ccb7ea5497170f245f24c701a7dcf7aa963ea151",
   "comparison_model_ids": [
     "claude-opus-5-max",
     "glm-5.2-max",
     "kimi-k3-max"
   ],
   "component_scores": {
-    "claude-opus-5-max": 85.82582582582582,
-    "glm-5.2-max": 0.0,
-    "kimi-k3-max": 43.99399399399399
+    "claude-opus-5-max": 80.05602240896359,
+    "glm-5.2-max": 2.240896358543418,
+    "kimi-k3-max": 47.75910364145658
   },
   "coverage": {
-    "claude-opus-5-max": 0.6937500000000001,
-    "glm-5.2-max": 0.6937500000000001,
-    "kimi-k3-max": 0.6937500000000001
+    "claude-opus-5-max": 0.74375,
+    "glm-5.2-max": 0.74375,
+    "kimi-k3-max": 0.74375
   },
-  "evidence_profile_id": "434aa06fe6ae1a4388f7a4d2e156b91c217089aa5bd58be84f5457148f7d3189",
+  "evidence_profile_id": "a59513e25b7f36d6a18ee020702bba7860f5eed7beae11dbf8e8995358b0a1ba",
   "identity_assurance": {
     "claude-opus-5-max": "label_exact",
     "glm-5.2-max": "label_exact",
@@ -365,6 +405,7 @@
   "missing_evidence": {},
   "normalization_panel_ids": [
     "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
+    "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
     "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
     "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
     "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
@@ -635,6 +676,34 @@
         ],
         "source_uncertainty": null,
         "weighted_contribution": 3.5
+      },
+      {
+        "applied_normalization": "percentile",
+        "benchmark_id": "aa-lcr",
+        "cohort_key": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+        "configured_absolute_weight": 0.05,
+        "direction": "higher",
+        "normalization_panel_id": "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
+        "normalization_trace": {
+          "applied_strategy": "percentile",
+          "cohort_size": 4,
+          "direction_inverted": false,
+          "fallback_reason": "below_minimum_robust_cohort",
+          "log_transform": false,
+          "minimum_rank_cohort": 2,
+          "minimum_robust_cohort": 8,
+          "provisional": true,
+          "requested_strategy": "robust_z"
+        },
+        "normalized_value": 0.0,
+        "raw_unit": "percent",
+        "raw_value": 75.6666666666667,
+        "requested_normalization": "robust_z",
+        "source_record_ids": [
+          "aa-lcr-claude-opus-5-max-2026-08-15"
+        ],
+        "source_uncertainty": null,
+        "weighted_contribution": 0.0
       }
     ],
     "glm-5.2-max": [
@@ -898,6 +967,34 @@
         ],
         "source_uncertainty": null,
         "weighted_contribution": 0.0
+      },
+      {
+        "applied_normalization": "percentile",
+        "benchmark_id": "aa-lcr",
+        "cohort_key": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+        "configured_absolute_weight": 0.05,
+        "direction": "higher",
+        "normalization_panel_id": "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
+        "normalization_trace": {
+          "applied_strategy": "percentile",
+          "cohort_size": 4,
+          "direction_inverted": false,
+          "fallback_reason": "below_minimum_robust_cohort",
+          "log_transform": false,
+          "minimum_rank_cohort": 2,
+          "minimum_robust_cohort": 8,
+          "provisional": true,
+          "requested_strategy": "robust_z"
+        },
+        "normalized_value": 33.333333333333336,
+        "raw_unit": "percent",
+        "raw_value": 76.6666666666667,
+        "requested_normalization": "robust_z",
+        "source_record_ids": [
+          "aa-lcr-glm-5.2-max-2026-08-15"
+        ],
+        "source_uncertainty": null,
+        "weighted_contribution": 1.666666666666667
       }
     ],
     "kimi-k3-max": [
@@ -1161,6 +1258,34 @@
         ],
         "source_uncertainty": null,
         "weighted_contribution": 1.75
+      },
+      {
+        "applied_normalization": "percentile",
+        "benchmark_id": "aa-lcr",
+        "cohort_key": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+        "configured_absolute_weight": 0.05,
+        "direction": "higher",
+        "normalization_panel_id": "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
+        "normalization_trace": {
+          "applied_strategy": "percentile",
+          "cohort_size": 4,
+          "direction_inverted": false,
+          "fallback_reason": "below_minimum_robust_cohort",
+          "log_transform": false,
+          "minimum_rank_cohort": 2,
+          "minimum_robust_cohort": 8,
+          "provisional": true,
+          "requested_strategy": "robust_z"
+        },
+        "normalized_value": 100.0,
+        "raw_unit": "percent",
+        "raw_value": 82.6666666666667,
+        "requested_normalization": "robust_z",
+        "source_record_ids": [
+          "aa-lcr-kimi-k3-max-2026-08-15"
+        ],
+        "source_uncertainty": null,
+        "weighted_contribution": 5.0
       }
     ]
   },
@@ -1173,20 +1298,20 @@
         "stable normalization panel membership held fixed",
         "standard-error intervals use a normal approximation with z=1.96"
       ],
-      "central_composite_score": 85.82582582582582,
+      "central_composite_score": 80.05602240896359,
       "central_estimate_rank": 1.0,
-      "composite_score_max": 85.82582582582582,
-      "composite_score_min": 65.82582582582583,
+      "composite_score_max": 80.05602240896359,
+      "composite_score_min": 61.40056022408964,
       "exhaustive": true,
-      "possible_rank_max": 1.0,
+      "possible_rank_max": 2.0,
       "possible_rank_min": 1.0,
       "possible_ranks": [
-        1.0
+        1.0,
+        2.0
       ],
       "robustly_dominated_by": [],
       "robustly_dominates": [
-        "glm-5.2-max",
-        "kimi-k3-max"
+        "glm-5.2-max"
       ],
       "scenario_count": 512,
       "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
@@ -1198,10 +1323,10 @@
         "stable normalization panel membership held fixed",
         "standard-error intervals use a normal approximation with z=1.96"
       ],
-      "central_composite_score": 0.0,
+      "central_composite_score": 2.240896358543418,
       "central_estimate_rank": 3.0,
-      "composite_score_max": 14.054054054054053,
-      "composite_score_min": 0.0,
+      "composite_score_max": 15.35014005602241,
+      "composite_score_min": 2.240896358543418,
       "exhaustive": true,
       "possible_rank_max": 3.0,
       "possible_rank_min": 3.0,
@@ -1223,19 +1348,18 @@
         "stable normalization panel membership held fixed",
         "standard-error intervals use a normal approximation with z=1.96"
       ],
-      "central_composite_score": 43.99399399399399,
+      "central_composite_score": 47.75910364145658,
       "central_estimate_rank": 2.0,
-      "composite_score_max": 62.282282282282274,
-      "composite_score_min": 39.309309309309306,
+      "composite_score_max": 64.81792717086834,
+      "composite_score_min": 43.38935574229692,
       "exhaustive": true,
       "possible_rank_max": 2.0,
-      "possible_rank_min": 2.0,
+      "possible_rank_min": 1.0,
       "possible_ranks": [
+        1.0,
         2.0
       ],
-      "robustly_dominated_by": [
-        "claude-opus-5-max"
-      ],
+      "robustly_dominated_by": [],
       "robustly_dominates": [
         "glm-5.2-max"
       ],
@@ -1345,6 +1469,14 @@
         "raw_unit": "percent",
         "raw_value": 29.142857100000004,
         "source_uncertainty": null
+      },
+      {
+        "benchmark_id": "aa-lcr",
+        "cohort_key": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+        "direction": "higher",
+        "raw_unit": "percent",
+        "raw_value": 75.6666666666667,
+        "source_uncertainty": null
       }
     ],
     "glm-5.2-max": [
@@ -1447,6 +1579,14 @@
         "direction": "higher",
         "raw_unit": "percent",
         "raw_value": 20.8571428571429,
+        "source_uncertainty": null
+      },
+      {
+        "benchmark_id": "aa-lcr",
+        "cohort_key": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+        "direction": "higher",
+        "raw_unit": "percent",
+        "raw_value": 76.6666666666667,
         "source_uncertainty": null
       }
     ],
@@ -1551,15 +1691,24 @@
         "raw_unit": "percent",
         "raw_value": 23.400000000000002,
         "source_uncertainty": null
+      },
+      {
+        "benchmark_id": "aa-lcr",
+        "cohort_key": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+        "direction": "higher",
+        "raw_unit": "percent",
+        "raw_value": 82.6666666666667,
+        "source_uncertainty": null
       }
     ]
   },
-  "result_fingerprint": "388f8aecf60529f9389f14c5a0f9a883b8e608074693cceb62b2a141c5132af8",
-  "score_scale_id": "63b2e100f07888fab6dd9a664ff52cba78e11e0120388b6aef7c73e179b4d72f",
-  "scored_input_fingerprint": "ce1c168a1aae8fc1c8a1ec8aa64c249ef8c42b5f331732cbaba890fb5e4c1828",
+  "result_fingerprint": "64e9d337bf43220ca4aaf1b95802630ec981fb22c70ff2118ead60b412f96a51",
+  "score_scale_id": "6cd2ed337f70c62d6eb822de47cbbeaa1c1a84584f6a0516ba71cbe4dfaa1779",
+  "scored_input_fingerprint": "6b3739d374c0d13b0bfd694d0ba2b0b5171a2bf60856e9f7b4464a69ddee5aaf",
   "source_artifact_checksums": {
     "aa-gdpval-v2-facts-2026-08-15": "7c18c5ba6483bd4db4826bb45a25d8393b92e5cc4b788cf482f7d9f21808f9cb",
     "aa-hle-facts-2026-08-14": "a19161096f61de769e86534513844ac5adfb2dd3cca6df74444e13c4eb70225d",
+    "aa-lcr-facts-2026-08-15": "7d736d8a6dbbfcf1ea8815ab95847284fc7fdb0ec3e90887ab5cbf198e53d221",
     "aa-tau3-banking-facts-2026-08-15": "838c0c02ec932059b10a4172123e6ecd6b916c10eba2da105c7751b27614bad9",
     "cursorbench-3.2-facts-2026-08-14": "19556c9ff6db835757a5668a65177e8e151759eda751ca6e627a7491e77e54bc",
     "deepswe-v1.1-2026-08-13": "cd8aa2f1c143a11b657ac86507e631bfc33fc5531a36feebd152d09bf2bf496a",
@@ -1568,6 +1717,7 @@
   "source_artifact_ids": [
     "aa-gdpval-v2-facts-2026-08-15",
     "aa-hle-facts-2026-08-14",
+    "aa-lcr-facts-2026-08-15",
     "aa-tau3-banking-facts-2026-08-15",
     "cursorbench-3.2-facts-2026-08-14",
     "deepswe-v1.1-2026-08-13",
@@ -1580,6 +1730,9 @@
     "aa-hle-claude-opus-5-max-2026-08-14",
     "aa-hle-glm-5.2-max-2026-08-14",
     "aa-hle-kimi-k3-max-2026-08-14",
+    "aa-lcr-claude-opus-5-max-2026-08-15",
+    "aa-lcr-glm-5.2-max-2026-08-15",
+    "aa-lcr-kimi-k3-max-2026-08-15",
     "aa-tau3-banking-claude-opus-5-max-2026-08-15",
     "aa-tau3-banking-glm-5.2-max-2026-08-15",
     "aa-tau3-banking-kimi-k3-max-2026-08-15",

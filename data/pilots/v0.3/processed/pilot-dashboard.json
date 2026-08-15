@@ -48,6 +48,11 @@
         "type": "chart"
       },
       {
+        "chartId": "lcr_scores",
+        "id": "lcr",
+        "type": "chart"
+      },
+      {
         "chartId": "effective_input_tokens",
         "id": "resources",
         "type": "chart"
@@ -309,6 +314,29 @@
         "yAxisTitle": "\u03c4\u00b3-Banking pass@1 (%)"
       },
       {
+        "dataset": "lcr",
+        "encodings": {
+          "x": {
+            "field": "model_short",
+            "label": "Model",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "score",
+            "label": "Pass@1",
+            "type": "quantitative"
+          }
+        },
+        "id": "lcr_scores",
+        "layout": "full",
+        "sourceId": "accepted_benchmarks",
+        "subtitle": "100 questions repeated three times over approximately 100K input tokens per question; Fable is absent because its row uses fallback.",
+        "title": "AA-LCR long-context reasoning pass@1",
+        "type": "bar",
+        "valueFormat": "number",
+        "yAxisTitle": "AA-LCR pass@1 (%)"
+      },
+      {
         "dataset": "gap_counts",
         "encodings": {
           "x": {
@@ -393,7 +421,7 @@
     ],
     "surface": "dashboard",
     "tables": [],
-    "title": "UMI v0.3.8 \u2014 five-model pilot evidence report",
+    "title": "UMI v0.3.9 \u2014 five-model pilot evidence report",
     "version": 1
   },
   "package_info": {
@@ -692,7 +720,7 @@
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "score": 79.899749373434
+          "score": 75.366430260047
         },
         {
           "component": "Eff.",
@@ -720,7 +748,7 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "score": 75.112781954887
+          "score": 74.633569739953
         },
         {
           "component": "Eff.",
@@ -734,7 +762,7 @@
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "score": 36.71679197995
+          "score": 40.307328605201
         },
         {
           "component": "Eff.",
@@ -748,7 +776,7 @@
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2",
-          "score": 0.0
+          "score": 2.240896358543
         },
         {
           "component": "Eff.",
@@ -761,7 +789,7 @@
       "coverage": [
         {
           "component": "Cap.",
-          "coverage": 0.83125,
+          "coverage": 0.88125,
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5"
@@ -803,7 +831,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.83125,
+          "coverage": 0.88125,
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol"
@@ -824,7 +852,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.83125,
+          "coverage": 0.88125,
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3"
@@ -845,7 +873,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.69375,
+          "coverage": 0.74375,
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2"
@@ -921,11 +949,11 @@
           "status": "Reference"
         },
         {
-          "cells": 34,
+          "cells": 30,
           "status": "Missing"
         },
         {
-          "cells": 36,
+          "cells": 40,
           "status": "Ready"
         },
         {
@@ -979,12 +1007,58 @@
           "source": "Artificial Analysis"
         }
       ],
+      "lcr": [
+        {
+          "benchmark": "aa-lcr",
+          "benchmark_short": "AA-LCR",
+          "cohort": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "record_id": "aa-lcr-claude-opus-5-max-2026-08-15",
+          "score": 75.666666666667,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "aa-lcr",
+          "benchmark_short": "AA-LCR",
+          "cohort": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "record_id": "aa-lcr-gpt-5.6-sol-max-2026-08-15",
+          "score": 77.666666666667,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "aa-lcr",
+          "benchmark_short": "AA-LCR",
+          "cohort": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "record_id": "aa-lcr-kimi-k3-max-2026-08-15",
+          "score": 82.666666666667,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "aa-lcr",
+          "benchmark_short": "AA-LCR",
+          "cohort": "aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15",
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "record_id": "aa-lcr-glm-5.2-max-2026-08-15",
+          "score": 76.666666666667,
+          "source": "Artificial Analysis"
+        }
+      ],
       "model_summary": [
         {
-          "capability": 79.899749373434,
-          "capability_coverage": 0.83125,
-          "capability_domains": 4,
-          "capability_profile": "63a9f239ce44",
+          "capability": 75.366430260047,
+          "capability_coverage": 0.88125,
+          "capability_domains": 5,
+          "capability_profile": "bb68c782e878",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -995,7 +1069,7 @@
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "partial_overall": 67.951911027569
+          "partial_overall": 64.835254137116
         },
         {
           "capability": 50.0,
@@ -1015,10 +1089,10 @@
           "partial_overall": 50.0
         },
         {
-          "capability": 75.112781954887,
-          "capability_coverage": 0.83125,
-          "capability_domains": 4,
-          "capability_profile": "63a9f239ce44",
+          "capability": 74.633569739953,
+          "capability_coverage": 0.88125,
+          "capability_domains": 5,
+          "capability_profile": "bb68c782e878",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -1029,13 +1103,13 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "partial_overall": 82.890037593985
+          "partial_overall": 82.560579196217
         },
         {
-          "capability": 36.71679197995,
-          "capability_coverage": 0.83125,
-          "capability_domains": 4,
-          "capability_profile": "63a9f239ce44",
+          "capability": 40.307328605201,
+          "capability_coverage": 0.88125,
+          "capability_domains": 5,
+          "capability_profile": "bb68c782e878",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -1046,13 +1120,13 @@
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "partial_overall": 43.471961152882
+          "partial_overall": 45.940455082742
         },
         {
-          "capability": 0.0,
-          "capability_coverage": 0.69375,
-          "capability_domains": 4,
-          "capability_profile": "434aa06fe6ae",
+          "capability": 2.240896358543,
+          "capability_coverage": 0.74375,
+          "capability_domains": 5,
+          "capability_profile": "a59513e25b7f",
           "comparability": "different_score_scale",
           "confidence": "Low",
           "economics": null,
@@ -1063,7 +1137,7 @@
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2",
-          "partial_overall": 0.0
+          "partial_overall": 1.540616246499
         }
       ],
       "overview": [
@@ -1071,9 +1145,9 @@
           "economics_coverage": 0.0,
           "efficiency_coverage": 0.045,
           "headline_ready": 0,
-          "max_capability_coverage": 0.83125,
+          "max_capability_coverage": 0.88125,
           "pilot_models": 5,
-          "scored_capability_cells": 36,
+          "scored_capability_cells": 40,
           "total_capability_cells": 75
         }
       ],
