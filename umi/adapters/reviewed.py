@@ -302,9 +302,7 @@ def adapt_aa_gdpval_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adapta
 
         benchmarks.append(
             BenchmarkMeasurement(
-                record_id=identifier(
-                    f"aa-gdpval-v2-{match.canonical_model_id}-{as_of}"
-                ),
+                record_id=identifier(f"aa-gdpval-v2-{match.canonical_model_id}-{as_of}"),
                 benchmark_id=identifier(str(benchmark["benchmark_id"])),
                 model_id=match.canonical_model_id,
                 source_model_id=source_model_id,
@@ -506,6 +504,162 @@ def adapt_aa_lcr_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptatio
     )
 
 
+def adapt_aa_omniscience_facts(path: str | Path, crosswalk: ModelCrosswalk) -> AdaptationResult:
+    """Adapt one frozen AA-Omniscience cohort and verify its published decomposition."""
+    raw = load_yaml(path)
+    source_id = str(raw["source_id"])
+    artifact_id = str(raw["artifact_id"])
+    source = Source.model_validate(raw["source"])
+    as_of = date.fromisoformat(str(raw["as_of"]))
+    benchmark = cast(dict[str, object], raw["benchmark"])
+    task_count = int(cast(int, benchmark["number_of_tasks"]))
+    benchmarks: list[BenchmarkMeasurement] = []
+    rejected: list[AdapterRejection] = []
+
+    def finite(value: object, field: str) -> float:
+        parsed = float(cast(float, value))
+        if not math.isfinite(parsed):
+            raise ValueError(f"AA-Omniscience {field} must be finite")
+        return parsed
+
+    def rate(value: object, field: str) -> float:
+        parsed = finite(value, field)
+        if not 0 <= parsed <= 1:
+            raise ValueError(f"AA-Omniscience {field} must be between 0 and 1")
+        return parsed
+
+    for row_value in cast(list[object], raw["rows"]):
+        row = cast(dict[str, object], row_value)
+        source_model_id = str(row["source_model_id"])
+        counts = {
+            key: int(cast(int, row[key]))
+            for key in (
+                "num_correct",
+                "num_incorrect",
+                "num_partial_answer",
+                "num_not_attempted",
+            )
+        }
+        if any(value < 0 for value in counts.values()) or sum(counts.values()) != task_count:
+            raise ValueError("AA-Omniscience answer counts must be nonnegative and sum to tasks")
+
+        index_value = finite(row["omniscience_index"], "omniscience_index")
+        if not -100 <= index_value <= 100:
+            raise ValueError("AA-Omniscience omniscience_index must be between -100 and 100")
+        expected_index = 100.0 * (counts["num_correct"] - counts["num_incorrect"]) / task_count
+        if not math.isclose(index_value, expected_index, rel_tol=0.0, abs_tol=1e-12):
+            raise ValueError("AA-Omniscience index does not match answer counts")
+
+        accuracy = rate(row["accuracy_rate"], "accuracy_rate")
+        attempt = rate(row["attempt_rate"], "attempt_rate")
+        hallucination = rate(row["hallucination_rate"], "hallucination_rate")
+        expected_accuracy = counts["num_correct"] / task_count
+        expected_attempt = 1.0 - (counts["num_not_attempted"] / task_count)
+        noncorrect = task_count - counts["num_correct"]
+        expected_hallucination = counts["num_incorrect"] / noncorrect
+        for observed, expected, field in (
+            (accuracy, expected_accuracy, "accuracy_rate"),
+            (attempt, expected_attempt, "attempt_rate"),
+            (hallucination, expected_hallucination, "hallucination_rate"),
+        ):
+            if not math.isclose(observed, expected, rel_tol=0.0, abs_tol=1e-12):
+                raise ValueError(f"AA-Omniscience {field} does not match answer counts")
+
+        token_counts = {
+            str(key): int(cast(int, value))
+            for key, value in cast(dict[str, object], row["token_counts"]).items()
+        }
+        if any(value < 0 for value in token_counts.values()) or token_counts["output"] != (
+            token_counts["answer"] + token_counts["reasoning"]
+        ):
+            raise ValueError("AA-Omniscience token counts must be nonnegative and reconcile")
+        costs = {
+            str(key): finite(value, f"calculated_cost_usd.{key}")
+            for key, value in cast(dict[str, object], row["calculated_cost_usd"]).items()
+        }
+        if (
+            any(value < 0 for value in costs.values())
+            or not math.isclose(
+                costs["output"], costs["answer"] + costs["reasoning"], abs_tol=1e-12
+            )
+            or not math.isclose(costs["total"], costs["input"] + costs["output"], abs_tol=1e-12)
+        ):
+            raise ValueError("AA-Omniscience calculated costs must be nonnegative and reconcile")
+        upstream_time = finite(row["upstream_eval_time_per_task"], "eval_time_per_task")
+        if upstream_time < 0:
+            raise ValueError("AA-Omniscience eval_time_per_task must be nonnegative")
+
+        match = exact_entry(crosswalk, source_id, artifact_id, source_model_id)
+        if match is None or match.canonical_model_id is None:
+            rejected.append(
+                AdapterRejection(source_row_id=source_model_id, reason="no exact crosswalk")
+            )
+            continue
+        benchmarks.append(
+            BenchmarkMeasurement(
+                record_id=identifier(f"aa-omniscience-{match.canonical_model_id}-{as_of}"),
+                benchmark_id="aa-omniscience",
+                model_id=match.canonical_model_id,
+                source_model_id=source_model_id,
+                value=index_value,
+                cohort_key=identifier(str(benchmark["cohort_key"])),
+                measurement_as_of_date=as_of,
+                source=source,
+                result_type=ResultType.INDEPENDENT,
+                benchmark_version=str(benchmark["benchmark_version"]),
+                harness_version=str(benchmark["harness_version"]),
+                metric_definition=str(benchmark["metric_definition"]),
+                evaluator=str(benchmark["evaluator"]),
+                harness_owner=str(benchmark["harness_owner"]),
+                run_executor=str(benchmark["run_executor"]),
+                tools_enabled=bool(benchmark["tools_enabled"]),
+                capture_type=ArtifactCaptureType.REVIEWED_FACT_EXTRACT,
+                reproducible=bool(benchmark["reproducible"]),
+                source_artifact_id=artifact_id,
+                source_registry_snapshot_id=artifact_id,
+                crosswalk_entry_id=match.id,
+                signal_id="aa-omniscience",
+                configuration_verification=ConfigurationVerification(
+                    model_label_exact=True,
+                    release_label_exact=True,
+                    effort_label_exact=True,
+                    fallback_absent=True,
+                ),
+                record_status=RecordStatus.READY,
+                signal_role=SignalRole.TASK,
+                scoring_disposition=ScoringDisposition.SCORED,
+                evaluation_settings={
+                    **cast(dict[str, object], benchmark["evaluation_settings"]),
+                    "answer_counts": counts,
+                    "accuracy_rate": accuracy,
+                    "attempt_rate": attempt,
+                    "hallucination_rate": hallucination,
+                    "token_counts": token_counts,
+                    "calculated_cost_usd": costs,
+                    "upstream_eval_time_per_task": upstream_time,
+                    "performance_data_source": str(row["performance_data_source"]),
+                },
+                number_of_tasks=task_count,
+                number_of_trials=int(cast(int, benchmark["number_of_trials"])),
+                sample_count=task_count,
+                notes=(
+                    "The published Omniscience Index is the sole scored signal. Accuracy, "
+                    "hallucination, tokens, calculated cost, and time remain diagnostic."
+                ),
+            )
+        )
+    return AdaptationResult(
+        source_id=source_id,
+        adapter_id="aa-omniscience-reviewed-facts-v1",
+        benchmarks=tuple(benchmarks),
+        rejections=tuple(rejected),
+        diagnostics=(
+            "AA-Omniscience component and operational facts are retained diagnostically; "
+            "only the source-defined reliability Index scores",
+        ),
+    )
+
+
 def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> AdaptationResult:
     raw = load_yaml(path)
     source_id = str(raw["source_id"])
@@ -581,7 +735,9 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
         )
         efficiency.append(
             EfficiencyMeasurement(
-                record_id=identifier(f"deepswe-harness-resources-{match.canonical_model_id}-{as_of}"),
+                record_id=identifier(
+                    f"deepswe-harness-resources-{match.canonical_model_id}-{as_of}"
+                ),
                 model_id=match.canonical_model_id,
                 source_model_id=source_model_id,
                 workload="deepswe-v1.1",

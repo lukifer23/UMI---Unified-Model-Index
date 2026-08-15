@@ -1,8 +1,8 @@
-# UMI methodology v0.3.9
+# UMI methodology v0.3.10
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3.9 retains the manually reviewed,
-multi-source evidence pilot and adds the exact AA-LCR cohort. It does not publish a headline UMI ranking.
+current policy values; code must not contradict this document. UMI v0.3.10 retains the manually reviewed,
+multi-source evidence pilot and adds the exact AA-Omniscience cohort. It does not publish a headline UMI ranking.
 All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
 produce identical serialized results and certificate fingerprints across supported Python versions;
 this is numerical canonicalization, not a change to weights or score semantics.
@@ -100,7 +100,7 @@ Capability. Source-published token, calculated-cost, and decode-time summaries a
 diagnostic evaluation settings. Operational coverage is incomplete across the accepted rows; cost
 uses live price and cache assumptions rather than a billed-run ledger; and the public page describes
 the same decode-time field as minutes in its structured chart metadata but seconds in an auxiliary
-explanation. These fields therefore contribute neither Efficiency nor Economics in v0.3.9.
+explanation. These fields therefore contribute neither Efficiency nor Economics in v0.3.10.
 
 The Artificial Analysis AA-LCR access-date cohort is admitted as an independent context/reliability
 task signal for exact named-release and Max-effort rows. It contains 100 open-answer questions over
@@ -115,7 +115,28 @@ Max pilot configuration. Exact Max rows for Opus, Sol, Kimi, and GLM may contrib
 Published answer/reasoning token, decode-time, and calculated-cost fields are retained diagnostically.
 They are incomplete across accepted rows, provider token counts are not standardized across models,
 and calculated cost is not a deployment- and billing-record-bound attempt ledger. They therefore
-contribute neither Efficiency nor Economics in v0.3.9.
+contribute neither Efficiency nor Economics in v0.3.10.
+
+The Artificial Analysis AA-Omniscience access-date cohort is admitted as an independent factual
+knowledge-reliability task signal for exact named-release and Max-effort rows. It contains 6,000
+open-answer questions over 42 topics and six domains, run once without tools and graded into correct,
+incorrect, partially correct, or not attempted by GPT-5.6 Luna medium. UMI scores the source-defined
+Omniscience Index exactly once: `100 × (correct - incorrect) / 6,000`. Partially correct and abstained
+responses are neutral. The adapter verifies that all four answer counts sum to 6,000 and that the
+published Index, accuracy, attempt rate, and hallucination rate reconcile to those counts.
+
+Accuracy and hallucination rate remain diagnostic decompositions, not additional UMI votes. Artificial
+Analysis's own Intelligence Index instead uses Accuracy and Non-Hallucination as separate 8% and 4%
+components; UMI preserves that methodological fact for comparison but does not import the composite's
+internal weighting. This avoids counting one AA-Omniscience run three times. Claude Fable 5's public
+row explicitly uses Opus 4.8 fallback and is rejected from the plain Fable Max pilot configuration.
+
+Aggregate input, answer, reasoning, and output token counts, source-calculated cost components, the
+upstream time-per-task field, and performance-data-source labels are retained diagnostically. They do
+not enter Efficiency or Economics: the facts do not bind a complete endpoint, service tier, price
+revision, and observed billing ledger, the upstream time field's unit is not established in the retained
+public contract, and aggregate totals are not attempt-level workload telemetry. These fields therefore
+contribute neither Efficiency nor Economics in v0.3.10.
 
 DeepSWE's public runner documentation and Pier implementation were also reviewed for Economics
 readiness. Provider-prefixed model examples establish an API family, while Pier/mini-SWE-agent
@@ -508,7 +529,7 @@ that limitation.
 
 ## Efficiency
 
-The v0.3.9 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
+The v0.3.10 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
 10% effective reasoning tokens, 10% effective cached tokens, 10% effective turns, 15% effective
 agent steps, 15% effective wall time, and 10% effective tool calls. These are policy weights, not
 empirically learned parameters. Token subtypes are kept distinct: a total-token field is not scored

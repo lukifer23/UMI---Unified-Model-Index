@@ -8,7 +8,7 @@ models:
   identity_assurance: label_exact
   named_release: Claude Opus 5
   model_developer: Anthropic
-  evidence_artifact_ids: [aa-public-facts-2026-08-14, aa-hle-facts-2026-08-14, aa-gdpval-v2-facts-2026-08-15, aa-tau3-banking-facts-2026-08-15, aa-lcr-facts-2026-08-15, epoch-eci-matrix-2026-08-14,
+  evidence_artifact_ids: [aa-public-facts-2026-08-14, aa-hle-facts-2026-08-14, aa-gdpval-v2-facts-2026-08-15, aa-tau3-banking-facts-2026-08-15, aa-lcr-facts-2026-08-15, aa-omniscience-facts-2026-08-15, epoch-eci-matrix-2026-08-14,
     epoch-benchmark-data-2026-08-14, arena-agent-2026-08-14, arena-text-2026-08-14, deepswe-v1.1-2026-08-13,
     anthropic-release-facts-2026-08-14]
   open_weights: false
@@ -22,7 +22,7 @@ models:
   identity_assurance: label_exact
   named_release: Claude Fable 5
   model_developer: Anthropic
-  evidence_artifact_ids: [aa-gdpval-v2-facts-2026-08-15, aa-tau3-banking-facts-2026-08-15, aa-lcr-facts-2026-08-15, epoch-eci-matrix-2026-08-14, epoch-benchmark-data-2026-08-14, deepswe-v1.1-2026-08-13,
+  evidence_artifact_ids: [aa-gdpval-v2-facts-2026-08-15, aa-tau3-banking-facts-2026-08-15, aa-lcr-facts-2026-08-15, aa-omniscience-facts-2026-08-15, epoch-eci-matrix-2026-08-14, epoch-benchmark-data-2026-08-14, deepswe-v1.1-2026-08-13,
     anthropic-release-facts-2026-08-14]
   open_weights: false
   notes: Outside the unchanged v0.2.1 release window; AA fallback composite is rejected.
@@ -36,7 +36,7 @@ models:
   identity_assurance: label_exact
   named_release: GPT-5.6 Sol
   model_developer: OpenAI
-  evidence_artifact_ids: [aa-public-facts-2026-08-14, aa-hle-facts-2026-08-14, aa-gdpval-v2-facts-2026-08-15, aa-tau3-banking-facts-2026-08-15, aa-lcr-facts-2026-08-15, epoch-eci-matrix-2026-08-14,
+  evidence_artifact_ids: [aa-public-facts-2026-08-14, aa-hle-facts-2026-08-14, aa-gdpval-v2-facts-2026-08-15, aa-tau3-banking-facts-2026-08-15, aa-lcr-facts-2026-08-15, aa-omniscience-facts-2026-08-15, epoch-eci-matrix-2026-08-14,
     epoch-benchmark-data-2026-08-14, deepswe-v1.1-2026-08-13, openai-release-facts-2026-08-14]
   open_weights: false
   synthetic: false
@@ -49,7 +49,7 @@ models:
   identity_assurance: label_exact
   named_release: Kimi K3
   model_developer: Moonshot AI
-  evidence_artifact_ids: [aa-public-facts-2026-08-14, aa-hle-facts-2026-08-14, aa-gdpval-v2-facts-2026-08-15, aa-tau3-banking-facts-2026-08-15, aa-lcr-facts-2026-08-15, epoch-eci-matrix-2026-08-14,
+  evidence_artifact_ids: [aa-public-facts-2026-08-14, aa-hle-facts-2026-08-14, aa-gdpval-v2-facts-2026-08-15, aa-tau3-banking-facts-2026-08-15, aa-lcr-facts-2026-08-15, aa-omniscience-facts-2026-08-15, epoch-eci-matrix-2026-08-14,
     epoch-benchmark-data-2026-08-14, arena-agent-2026-08-14, arena-text-2026-08-14, deepswe-v1.1-2026-08-13,
     kimi-release-facts-2026-08-14]
   open_weights: true
@@ -63,7 +63,7 @@ models:
   identity_assurance: label_exact
   named_release: GLM-5.2
   model_developer: Z.ai
-  evidence_artifact_ids: [aa-public-facts-2026-08-14, aa-hle-facts-2026-08-14, aa-gdpval-v2-facts-2026-08-15, aa-tau3-banking-facts-2026-08-15, aa-lcr-facts-2026-08-15, epoch-eci-matrix-2026-08-14,
+  evidence_artifact_ids: [aa-public-facts-2026-08-14, aa-hle-facts-2026-08-14, aa-gdpval-v2-facts-2026-08-15, aa-tau3-banking-facts-2026-08-15, aa-lcr-facts-2026-08-15, aa-omniscience-facts-2026-08-15, epoch-eci-matrix-2026-08-14,
     epoch-benchmark-data-2026-08-14, arena-agent-2026-08-14, arena-text-2026-08-14, deepswe-v1.1-2026-08-13,
     zai-release-facts-2026-08-14]
   open_weights: true

@@ -5,7 +5,7 @@ human-readable form. UMI's MIT license does not override upstream terms.
 
 | Source | Frozen material | Upstream revision | License / use basis | Redistribution |
 |---|---|---|---|---|
-| Artificial Analysis | Manually reviewed public index, atomic HLE v4.1, GDPval-AA v2, τ³-Banking, and AA-LCR facts | `manual-public-facts-2026-08-14`; `reviewed-hle-v4.1-2026-08-14`; `public-page-2026-08-15`; `tau3-banking-public-page-2026-08-15`; `public-page-and-methodology-v4.1.1-2026-08-15` | Terms-governed; API documentation and terms require attribution and govern reuse | Facts and citations only; no API payload, task content, work products, or page copy |
+| Artificial Analysis | Manually reviewed public index, atomic HLE v4.1, GDPval-AA v2, τ³-Banking, AA-LCR, and AA-Omniscience facts | `manual-public-facts-2026-08-14`; `reviewed-hle-v4.1-2026-08-14`; `public-page-2026-08-15`; `tau3-banking-public-page-2026-08-15`; `public-page-and-methodology-v4.1.1-2026-08-15` | Terms-governed; API documentation and terms require attribution and govern reuse | Facts and citations only; no API payload, task content, work products, or page copy |
 | Cursor | Manually reviewed CursorBench 3.2 score, cost/task, tokens/task, and steps/task facts | `cursorbench-3.2-public-page-2026-08-14` | Terms-governed; no redistribution right assumed | Facts and citations only; no page payload, task content, or chart artwork |
 | Epoch ECI | Official `eci_benchmarks.csv` | `dab4f8ac0d14ec7022da01684fa2c707f73749eb` | Epoch attribution recorded; `eci-public` implementation is MIT licensed | Official public CSV frozen with citation |
 | Epoch Benchmarking Hub | Complete official `benchmark_data.zip`; GPQA Diamond, SciCode, and CritPt adapted | semantic member-content SHA-256 `2b818e5b…7f009`; frozen container SHA-256 `35a7c21b…a18b` | CC BY 4.0 with Epoch attribution; individual benchmark questions remain subject to creator rights | Full official data archive retained; benchmark questions are not separately republished |
@@ -14,11 +14,12 @@ human-readable form. UMI's MIT license does not override upstream terms.
 
 Attribution:
 
-- Artificial Analysis public model, HLE, GDPval-AA v2, τ³-Banking, AA-LCR, methodology, and API documentation:
+- Artificial Analysis public model, HLE, GDPval-AA v2, τ³-Banking, AA-LCR, AA-Omniscience, methodology, and API documentation:
   https://artificialanalysis.ai/evaluations/humanitys-last-exam and
   https://artificialanalysis.ai/evaluations/gdpval-aa and
   https://artificialanalysis.ai/evaluations/tau3-banking and
   https://artificialanalysis.ai/evaluations/artificial-analysis-long-context-reasoning and
+  https://artificialanalysis.ai/evaluations/omniscience and
   https://artificialanalysis.ai/methodology/intelligence-benchmarking and
   https://artificialanalysis.ai/data-api/docs
 - CursorBench 3.2 leaderboard and methodology:

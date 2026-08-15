@@ -22,6 +22,7 @@ from umi.adapters import (
     adapt_aa_facts,
     adapt_aa_gdpval_facts,
     adapt_aa_lcr_facts,
+    adapt_aa_omniscience_facts,
     adapt_aa_tau3_facts,
     adapt_arena_json,
     adapt_cursorbench_facts,
@@ -73,6 +74,9 @@ def main() -> None:
         ),
         adapt_aa_lcr_facts(
             SOURCE_ROOT / "aa-lcr-reviewed-facts-2026-08-15.yaml", crosswalk
+        ),
+        adapt_aa_omniscience_facts(
+            SOURCE_ROOT / "aa-omniscience-reviewed-facts-2026-08-15.yaml", crosswalk
         ),
         adapt_cursorbench_facts(
             SOURCE_ROOT / "cursorbench-reviewed-facts-2026-08-14.yaml", crosswalk

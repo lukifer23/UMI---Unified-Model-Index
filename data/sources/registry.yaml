@@ -154,6 +154,23 @@ snapshots:
     attribution: AA-LCR score and operational facts sourced from Artificial Analysis
     redistribution_scope: facts_only
     notes: Public factual transcription only; no page payload, document corpus, question content, responses, or chart artwork is redistributed.
+  - id: aa-omniscience-facts-2026-08-15
+    title: Artificial Analysis AA-Omniscience reviewed public facts
+    source:
+      organization: Artificial Analysis
+      url: https://artificialanalysis.ai/evaluations/omniscience
+      accessed: 2026-08-15
+    as_of: 2026-08-15
+    artifact_path: v0.3/aa-omniscience-reviewed-facts-2026-08-15.yaml
+    artifact_sha256: f5fbaa93bc0db372b28ffedc402f1a432c5d7ea0a320d0b75e511e3494e9679d
+    content_type: application/yaml
+    upstream_revision: public-page-and-methodology-v4.1.1-2026-08-15
+    adapter_id: aa-omniscience-reviewed-facts-v1
+    license_id: terms-governed-no-redistribution-assumed
+    license_url: https://artificialanalysis.ai/docs/legal/Terms-of-Use.pdf
+    attribution: AA-Omniscience score, answer-count, and operational facts sourced from Artificial Analysis
+    redistribution_scope: facts_only
+    notes: Public factual transcription only; no page payload, private question content, responses, or chart artwork is redistributed.
   - id: cursorbench-3.2-facts-2026-08-14
     title: CursorBench 3.2 reviewed public facts
     source:

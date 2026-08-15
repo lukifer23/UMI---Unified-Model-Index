@@ -1,0 +1,146 @@
+source_id: artificial-analysis-omniscience
+artifact_id: aa-omniscience-facts-2026-08-15
+as_of: 2026-08-15
+source:
+  organization: Artificial Analysis
+  url: https://artificialanalysis.ai/evaluations/omniscience
+  accessed: 2026-08-15
+methodology:
+  url: https://artificialanalysis.ai/methodology/intelligence-benchmarking#aa-omniscience
+  accessed: 2026-08-15
+paper:
+  url: https://arxiv.org/abs/2511.13029v1
+  revision: v1
+benchmark:
+  benchmark_id: aa-omniscience
+  benchmark_version: aa-omniscience-intelligence-v4.1.1
+  harness_version: aa-omniscience-6000-single-pass-gpt-5.6-luna-medium
+  cohort_key: aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15
+  number_of_tasks: 6000
+  number_of_trials: 6000
+  evaluator: Artificial Analysis
+  harness_owner: Artificial Analysis
+  run_executor: Artificial Analysis
+  tools_enabled: false
+  reproducible: false
+  metric_definition: 100 times (correct minus incorrect) divided by all 6000 questions; partially correct and not attempted responses are neutral
+  evaluation_settings:
+    domains: 6
+    topics: 42
+    response_type: open answer
+    repeats: 1
+    grader: GPT-5.6 Luna medium
+    answer_classes: CORRECT; INCORRECT; PARTIALLY_CORRECT; NOT_ATTEMPTED
+    source_unit: score from -100 to 100
+    operational_metrics_disposition: diagnostic only because the source reports aggregate provider telemetry and calculated cost without a complete endpoint, service-tier, pricing-revision, and billing-ledger identity
+rows:
+  - source_model_id: Claude Opus 5 (Adaptive Reasoning, Max Effort)
+    omniscience_index: 37.0666666666667
+    num_correct: 3652
+    num_incorrect: 1428
+    num_partial_answer: 185
+    num_not_attempted: 735
+    accuracy_rate: 0.6086666666666667
+    attempt_rate: 0.8775
+    hallucination_rate: 0.6081771720613288
+    token_counts:
+      input: 1025626
+      answer: 578047
+      reasoning: 5428126
+      output: 6006173
+    calculated_cost_usd:
+      input: 5.12813
+      answer: 14.451175
+      reasoning: 135.70315
+      output: 150.154325
+      total: 155.282455
+    upstream_eval_time_per_task: 10.299283853863031
+    performance_data_source: firstParty Anthropic
+  - source_model_id: Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback)
+    omniscience_index: 43.3
+    num_correct: 3921
+    num_incorrect: 1323
+    num_partial_answer: 154
+    num_not_attempted: 602
+    accuracy_rate: 0.6535
+    attempt_rate: 0.8996666666666666
+    hallucination_rate: 0.6363636363636364
+    token_counts:
+      input: 1021375
+      answer: 304098
+      reasoning: 8051276
+      output: 8355374
+    calculated_cost_usd:
+      input: 9.7439175
+      answer: 14.885597099999998
+      reasoning: 394.31124209999996
+      output: 409.19683919999994
+      total: 418.94075669999995
+    upstream_eval_time_per_task: 12.608418294747315
+    performance_data_source: firstParty Anthropic
+  - source_model_id: GPT-5.6 Sol (max)
+    omniscience_index: 21.9666666666667
+    num_correct: 3564
+    num_incorrect: 2246
+    num_partial_answer: 100
+    num_not_attempted: 90
+    accuracy_rate: 0.594
+    attempt_rate: 0.985
+    hallucination_rate: 0.9220032840722496
+    token_counts:
+      input: 880008
+      answer: 80661
+      reasoning: 25366110
+      output: 25446771
+    calculated_cost_usd:
+      input: 4.40004
+      answer: 2.4198299999999997
+      reasoning: 760.9833
+      output: 763.40313
+      total: 767.80317
+    upstream_eval_time_per_task: 58.583942635289276
+    performance_data_source: firstParty OpenAI
+  - source_model_id: Kimi K3 (max)
+    omniscience_index: 19.7
+    num_correct: 2855
+    num_incorrect: 1673
+    num_partial_answer: 95
+    num_not_attempted: 1377
+    accuracy_rate: 0.47583333333333333
+    attempt_rate: 0.7705
+    hallucination_rate: 0.5319554848966613
+    token_counts:
+      input: 1257940
+      answer: 164674
+      reasoning: 52714050
+      output: 52878724
+    calculated_cost_usd:
+      input: 3.77382
+      answer: 2.47011
+      reasoning: 790.71075
+      output: 793.1808599999999
+      total: 796.9546799999999
+    upstream_eval_time_per_task: 212.12808451964693
+    performance_data_source: firstParty Kimi
+  - source_model_id: GLM-5.2 (max)
+    omniscience_index: 4.43333333333333
+    num_correct: 1460
+    num_incorrect: 1194
+    num_partial_answer: 76
+    num_not_attempted: 3270
+    accuracy_rate: 0.24333333333333335
+    attempt_rate: 0.455
+    hallucination_rate: 0.2629955947136564
+    token_counts:
+      input: 761402
+      answer: 474002
+      reasoning: 10997256
+      output: 11471258
+    calculated_cost_usd:
+      input: 1.0659627999999999
+      answer: 2.0856088
+      reasoning: 48.387926400000005
+      output: 50.47353520000001
+      total: 51.53949800000001
+    upstream_eval_time_per_task: 13.695158693759915
+    performance_data_source: median

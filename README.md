@@ -1,8 +1,8 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.9 extends the real,
-five-configuration, multi-source pilot with exact AA-LCR, τ³-Banking, GDPval-AA v2, HLE, CursorBench 3.2, DeepSWE,
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.10 extends the real,
+five-configuration, multi-source pilot with exact AA-Omniscience, AA-LCR, τ³-Banking, GDPval-AA v2, HLE, CursorBench 3.2, DeepSWE,
 GPQA Diamond, SciCode, CritPt, and ARC-AGI-2 results plus DeepSWE confidence intervals and
 harness-resource means. It does **not**
 publish a headline UMI score: the evidence supports only provisional, model-specific partial
@@ -10,7 +10,7 @@ Capability and Efficiency estimates.
 
 The pilot cohort is Claude Opus 5 Max, Claude Fable 5 Max, GPT-5.6 Sol Max, Kimi K3 Max, and
 GLM-5.2 Max. Its frozen sources are Artificial Analysis public facts, Epoch ECI and Benchmarking Hub
-data, AA-LCR, τ³-Banking, GDPval-AA v2, and CursorBench 3.2 facts, LM Arena Agent and text/style-control rows, and
+data, AA-Omniscience, AA-LCR, τ³-Banking, GDPval-AA v2, and CursorBench 3.2 facts, LM Arena Agent and text/style-control rows, and
 DeepSWE v1.1 facts. Every source row is accepted only through an exact model-and-effort crosswalk.
 
 ## Install and verify
@@ -52,6 +52,7 @@ PYTHONPATH=. uv run --no-sync umi ingest --source aa
 PYTHONPATH=. uv run --no-sync umi ingest --source aa-hle
 PYTHONPATH=. uv run --no-sync umi ingest --source aa-gdpval
 PYTHONPATH=. uv run --no-sync umi ingest --source aa-lcr
+PYTHONPATH=. uv run --no-sync umi ingest --source aa-omniscience
 PYTHONPATH=. uv run --no-sync umi ingest --source aa-tau3
 PYTHONPATH=. uv run --no-sync umi ingest --source cursorbench
 PYTHONPATH=. uv run --no-sync umi ingest --source epoch
@@ -176,6 +177,13 @@ fallback deployment is rejected. The facts retain answer/reasoning token and tim
 but these remain diagnostic because provider token accounting is nonstandard, coverage is incomplete,
 and calculated cost is not a deployment- and billing-revision-bound task ledger.
 
+AA-Omniscience contributes the source-defined reliability Index for exact Max-effort Opus, Sol,
+Kimi, and GLM rows from the 6,000-question, 42-topic, single-pass v4.1.1 cohort. UMI scores the
+published `100 × (correct - incorrect) / 6,000` Index once. Accuracy, attempt rate, hallucination
+rate, answer counts, tokens, calculated cost, and upstream time remain reconciled diagnostics; UMI
+does not import the AA Intelligence Index's separate 8% accuracy and 4% non-hallucination weights.
+Fable's fallback-qualified deployment is rejected.
+
 CursorBench 3.2 solution-correctness scores contribute for Opus, Sol, Kimi, and GLM. Its Fable row
 is rejected because Cursor documents invisible Fable-to-Opus routing and the leaderboard does not
 prove fallback absence. Published cost/task, tokens/task, and steps/task are retained as diagnostic
@@ -184,8 +192,8 @@ success denominator and verified endpoint plus service-tier identity.
 
 ## Current limitations
 
-- Opus, Sol, and Kimi have 88.125% Capability coverage across five domains and clear the
-  Capability-only coverage/breadth gates. GLM has 74.375% across five domains and also clears those
+- Opus, Sol, and Kimi have 93.125% Capability coverage across five domains and clear the
+  Capability-only coverage/breadth gates. GLM has 79.375% across five domains and also clears those
   two gates; Fable has 8.25% across one. Model-specific partials remain different evidence profiles,
   not one shared ranking.
 - Efficiency has only 4.5% absolute coverage; Economics has no ready evidence.
@@ -200,8 +208,6 @@ See [PILOT_REPORT.md](PILOT_REPORT.md), [SOURCE_READINESS.md](SOURCE_READINESS.m
 
 ## Recommended next ingestion task
 
-Close Fable's HLE, τ³-Banking, and AA-LCR cells only with evidence that explicitly rules out fallback,
-then review AA-Omniscience as a distinct two-component accuracy/non-hallucination construct rather
-than treating it as another interchangeable pass rate. In parallel,
-obtain exact attempt-level telemetry for the missing coding families and at least two additional
+Close Fable's HLE, τ³-Banking, AA-LCR, and AA-Omniscience cells only with evidence that explicitly
+rules out fallback. Then obtain exact attempt-level telemetry for the missing coding families and at least two additional
 configured workload categories. Do not broaden the cohort or relax a gate to manufacture a headline.

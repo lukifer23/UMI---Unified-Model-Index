@@ -4,6 +4,7 @@
       "aa-gdpval-v2-facts-2026-08-15",
       "aa-hle-facts-2026-08-14",
       "aa-lcr-facts-2026-08-15",
+      "aa-omniscience-facts-2026-08-15",
       "aa-tau3-banking-facts-2026-08-15",
       "cursorbench-3.2-facts-2026-08-14",
       "deepswe-v1.1-2026-08-13",
@@ -22,6 +23,10 @@
       "aa-lcr-kimi-max",
       "aa-lcr-opus-max",
       "aa-lcr-sol-max",
+      "aa-omniscience-glm-max",
+      "aa-omniscience-kimi-max",
+      "aa-omniscience-opus-max",
+      "aa-omniscience-sol-max",
       "aa-tau3-glm-max",
       "aa-tau3-kimi-max",
       "aa-tau3-opus-max",
@@ -53,6 +58,10 @@
       "aa-lcr-glm-5.2-max-2026-08-15",
       "aa-lcr-gpt-5.6-sol-max-2026-08-15",
       "aa-lcr-kimi-k3-max-2026-08-15",
+      "aa-omniscience-claude-opus-5-max-2026-08-15",
+      "aa-omniscience-glm-5.2-max-2026-08-15",
+      "aa-omniscience-gpt-5.6-sol-max-2026-08-15",
+      "aa-omniscience-kimi-k3-max-2026-08-15",
       "aa-tau3-banking-claude-opus-5-max-2026-08-15",
       "aa-tau3-banking-glm-5.2-max-2026-08-15",
       "aa-tau3-banking-gpt-5.6-sol-max-2026-08-15",
@@ -89,6 +98,7 @@
     ],
     "accepted_signal_ids": [
       "aa-lcr",
+      "aa-omniscience",
       "arc-agi-2",
       "critpt",
       "cursorbench-3.2",
@@ -111,10 +121,11 @@
       "deepswe-endpoint-resources-kimi-k3-max-2026-08-13"
     ],
     "excluded_unready_record_ids": [],
-    "fingerprint": "b84b33f4bc02d6c8d6614a142f0289f423a9547c7a4c6e84929bd125402a5ccd",
+    "fingerprint": "271193e7530db13e51b7622ed4285d255e74c34d458b597ac263966d0d8b4dea",
     "scoring_relevant_adapter_versions": [
       "aa-gdpval-reviewed-facts-v1",
       "aa-lcr-reviewed-facts-v1",
+      "aa-omniscience-reviewed-facts-v1",
       "aa-reviewed-facts-v2",
       "aa-tau3-reviewed-facts-v1",
       "cursorbench-reviewed-facts-v1",
@@ -264,6 +275,38 @@
       "record_id": "aa-lcr-kimi-k3-max-2026-08-15",
       "scoring_ready": true,
       "source_artifact_id": "aa-lcr-facts-2026-08-15"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "claude-opus-5-max",
+      "record_id": "aa-omniscience-claude-opus-5-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-omniscience-facts-2026-08-15"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "glm-5.2-max",
+      "record_id": "aa-omniscience-glm-5.2-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-omniscience-facts-2026-08-15"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "aa-omniscience-gpt-5.6-sol-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-omniscience-facts-2026-08-15"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "kimi-k3-max",
+      "record_id": "aa-omniscience-kimi-k3-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-omniscience-facts-2026-08-15"
     },
     {
       "disposition": "scored",

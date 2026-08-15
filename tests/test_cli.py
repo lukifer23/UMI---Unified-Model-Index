@@ -70,9 +70,7 @@ def test_estimates_are_not_serialized_as_a_ranking(capsys: pytest.CaptureFixture
 
 
 def test_fixture_config_is_auto_discovered(capsys: pytest.CaptureFixture[str]) -> None:
-    args = build_parser().parse_args(
-        ["validate", "--data-dir", str(ROOT / "tests" / "fixtures")]
-    )
+    args = build_parser().parse_args(["validate", "--data-dir", str(ROOT / "tests" / "fixtures")])
     assert run(args) == 0
     report = json.loads(capsys.readouterr().out)
     assert report["schema_valid"] is True
@@ -88,6 +86,7 @@ def test_fixture_config_is_auto_discovered(capsys: pytest.CaptureFixture[str]) -
         "aa-hle",
         "aa-gdpval",
         "aa-lcr",
+        "aa-omniscience",
         "aa-tau3",
         "cursorbench",
         "epoch",
@@ -156,9 +155,7 @@ def test_v03_policy_and_publication_commands(capsys: pytest.CaptureFixture[str])
         assert run(build_parser().parse_args(arguments)) == 0
         assert json.loads(capsys.readouterr().out)["valid"] is True
 
-    rank_args = build_parser().parse_args(
-        ["rank", "--data-dir", pilot, "--config-dir", config]
-    )
+    rank_args = build_parser().parse_args(["rank", "--data-dir", pilot, "--config-dir", config])
     assert run(rank_args) == 0
     ranked = json.loads(capsys.readouterr().out)
     assert ranked == []

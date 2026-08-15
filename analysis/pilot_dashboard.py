@@ -58,6 +58,7 @@ def build_pilot_dashboard(
         "hle": "HLE",
         "arc-agi-2": "ARC-2",
         "aa-lcr": "AA-LCR",
+        "aa-omniscience": "AA-Omni",
         "critpt": "CritPt",
         "cursorbench-3.2": "CursorBench",
         "deepswe-v1.1": "DeepSWE",
@@ -141,18 +142,19 @@ def build_pilot_dashboard(
         row
         for row in all_benchmark_rows
         if row["benchmark"]
-        not in {"aa-lcr", "cursorbench-3.2", "gdpval-aa-v2", "tau3-banking"}
+        not in {
+            "aa-lcr",
+            "aa-omniscience",
+            "cursorbench-3.2",
+            "gdpval-aa-v2",
+            "tau3-banking",
+        }
     ]
-    cursorbench_rows = [
-        row for row in all_benchmark_rows if row["benchmark"] == "cursorbench-3.2"
-    ]
-    gdpval_rows = [
-        row for row in all_benchmark_rows if row["benchmark"] == "gdpval-aa-v2"
-    ]
-    tau3_rows = [
-        row for row in all_benchmark_rows if row["benchmark"] == "tau3-banking"
-    ]
+    cursorbench_rows = [row for row in all_benchmark_rows if row["benchmark"] == "cursorbench-3.2"]
+    gdpval_rows = [row for row in all_benchmark_rows if row["benchmark"] == "gdpval-aa-v2"]
+    tau3_rows = [row for row in all_benchmark_rows if row["benchmark"] == "tau3-banking"]
     lcr_rows = [row for row in all_benchmark_rows if row["benchmark"] == "aa-lcr"]
+    omniscience_rows = [row for row in all_benchmark_rows if row["benchmark"] == "aa-omniscience"]
     resource_rows = []
     for record in dataset.efficiency:
         if record.scoring_disposition != ScoringDisposition.SCORED:
@@ -229,7 +231,7 @@ def build_pilot_dashboard(
         "manifest": {
             "version": 1,
             "surface": "dashboard",
-            "title": "UMI v0.3.9 — five-model pilot evidence report",
+            "title": "UMI v0.3.10 — five-model pilot evidence report",
             "description": (
                 "A reproducible view of current accepted evidence, partial component estimates, "
                 "coverage, and the gates that prevent a headline UMI ranking."
@@ -248,6 +250,9 @@ def build_pilot_dashboard(
                         {"dataset": "benchmarks", "field": "model"},
                         {"dataset": "cursorbench", "field": "model"},
                         {"dataset": "gdpval", "field": "model"},
+                        {"dataset": "tau3", "field": "model"},
+                        {"dataset": "lcr", "field": "model"},
+                        {"dataset": "omniscience", "field": "model"},
                         {"dataset": "resources", "field": "model"},
                     ],
                 }
@@ -505,6 +510,28 @@ def build_pilot_dashboard(
                     "layout": "full",
                 },
                 {
+                    "id": "omniscience_scores",
+                    "title": "AA-Omniscience factual reliability Index",
+                    "subtitle": (
+                        "6,000 questions scored +1 correct, -1 incorrect, and 0 partial or "
+                        "abstained; Fable is absent because its row uses Opus fallback."
+                    ),
+                    "type": "bar",
+                    "dataset": "omniscience",
+                    "sourceId": "accepted_benchmarks",
+                    "encodings": {
+                        "x": {
+                            "field": "model_short",
+                            "type": "nominal",
+                            "label": "Model",
+                        },
+                        "y": {"field": "score", "type": "quantitative", "label": "Index"},
+                    },
+                    "yAxisTitle": "AA-Omniscience Index (-100 to 100)",
+                    "valueFormat": "number",
+                    "layout": "full",
+                },
+                {
                     "id": "gap_counts",
                     "title": "Why the index is not yet headline-ready",
                     "subtitle": (
@@ -560,6 +587,11 @@ def build_pilot_dashboard(
                 {"id": "tau3", "type": "chart", "chartId": "tau3_scores"},
                 {"id": "lcr", "type": "chart", "chartId": "lcr_scores"},
                 {
+                    "id": "omniscience",
+                    "type": "chart",
+                    "chartId": "omniscience_scores",
+                },
+                {
                     "id": "resources",
                     "type": "chart",
                     "chartId": "effective_input_tokens",
@@ -595,6 +627,7 @@ def build_pilot_dashboard(
                     "gdpval": gdpval_rows,
                     "tau3": tau3_rows,
                     "lcr": lcr_rows,
+                    "omniscience": omniscience_rows,
                     "resources": resource_rows,
                     "gap_counts": gap_rows,
                 }

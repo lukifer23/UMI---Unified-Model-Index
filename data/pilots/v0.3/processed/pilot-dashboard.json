@@ -53,6 +53,11 @@
         "type": "chart"
       },
       {
+        "chartId": "omniscience_scores",
+        "id": "omniscience",
+        "type": "chart"
+      },
+      {
         "chartId": "effective_input_tokens",
         "id": "resources",
         "type": "chart"
@@ -337,6 +342,29 @@
         "yAxisTitle": "AA-LCR pass@1 (%)"
       },
       {
+        "dataset": "omniscience",
+        "encodings": {
+          "x": {
+            "field": "model_short",
+            "label": "Model",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "score",
+            "label": "Index",
+            "type": "quantitative"
+          }
+        },
+        "id": "omniscience_scores",
+        "layout": "full",
+        "sourceId": "accepted_benchmarks",
+        "subtitle": "6,000 questions scored +1 correct, -1 incorrect, and 0 partial or abstained; Fable is absent because its row uses Opus fallback.",
+        "title": "AA-Omniscience factual reliability Index",
+        "type": "bar",
+        "valueFormat": "number",
+        "yAxisTitle": "AA-Omniscience Index (-100 to 100)"
+      },
+      {
         "dataset": "gap_counts",
         "encodings": {
           "x": {
@@ -390,6 +418,18 @@
             "field": "model"
           },
           {
+            "dataset": "tau3",
+            "field": "model"
+          },
+          {
+            "dataset": "lcr",
+            "field": "model"
+          },
+          {
+            "dataset": "omniscience",
+            "field": "model"
+          },
+          {
             "dataset": "resources",
             "field": "model"
           }
@@ -421,7 +461,7 @@
     ],
     "surface": "dashboard",
     "tables": [],
-    "title": "UMI v0.3.9 \u2014 five-model pilot evidence report",
+    "title": "UMI v0.3.10 \u2014 five-model pilot evidence report",
     "version": 1
   },
   "package_info": {
@@ -720,7 +760,7 @@
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "score": 75.366430260047
+          "score": 76.68903803132
         },
         {
           "component": "Eff.",
@@ -748,7 +788,7 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "score": 74.633569739953
+          "score": 74.20581655481
         },
         {
           "component": "Eff.",
@@ -762,7 +802,7 @@
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "score": 40.307328605201
+          "score": 39.93288590604
         },
         {
           "component": "Eff.",
@@ -776,7 +816,7 @@
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2",
-          "score": 2.240896358543
+          "score": 2.099737532808
         },
         {
           "component": "Eff.",
@@ -789,7 +829,7 @@
       "coverage": [
         {
           "component": "Cap.",
-          "coverage": 0.88125,
+          "coverage": 0.93125,
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5"
@@ -831,7 +871,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.88125,
+          "coverage": 0.93125,
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol"
@@ -852,7 +892,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.88125,
+          "coverage": 0.93125,
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3"
@@ -873,7 +913,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.74375,
+          "coverage": 0.79375,
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2"
@@ -949,11 +989,11 @@
           "status": "Reference"
         },
         {
-          "cells": 30,
+          "cells": 26,
           "status": "Missing"
         },
         {
-          "cells": 40,
+          "cells": 44,
           "status": "Ready"
         },
         {
@@ -1055,10 +1095,10 @@
       ],
       "model_summary": [
         {
-          "capability": 75.366430260047,
-          "capability_coverage": 0.88125,
+          "capability": 76.68903803132,
+          "capability_coverage": 0.93125,
           "capability_domains": 5,
-          "capability_profile": "bb68c782e878",
+          "capability_profile": "95ec4b50bf3c",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -1069,7 +1109,7 @@
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "partial_overall": 64.835254137116
+          "partial_overall": 65.744546979866
         },
         {
           "capability": 50.0,
@@ -1089,10 +1129,10 @@
           "partial_overall": 50.0
         },
         {
-          "capability": 74.633569739953,
-          "capability_coverage": 0.88125,
+          "capability": 74.20581655481,
+          "capability_coverage": 0.93125,
           "capability_domains": 5,
-          "capability_profile": "bb68c782e878",
+          "capability_profile": "95ec4b50bf3c",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -1103,13 +1143,13 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "partial_overall": 82.560579196217
+          "partial_overall": 82.266498881432
         },
         {
-          "capability": 40.307328605201,
-          "capability_coverage": 0.88125,
+          "capability": 39.93288590604,
+          "capability_coverage": 0.93125,
           "capability_domains": 5,
-          "capability_profile": "bb68c782e878",
+          "capability_profile": "95ec4b50bf3c",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -1120,13 +1160,13 @@
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "partial_overall": 45.940455082742
+          "partial_overall": 45.683025727069
         },
         {
-          "capability": 2.240896358543,
-          "capability_coverage": 0.74375,
+          "capability": 2.099737532808,
+          "capability_coverage": 0.79375,
           "capability_domains": 5,
-          "capability_profile": "a59513e25b7f",
+          "capability_profile": "48250e8228b6",
           "comparability": "different_score_scale",
           "confidence": "Low",
           "economics": null,
@@ -1137,7 +1177,53 @@
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2",
-          "partial_overall": 1.540616246499
+          "partial_overall": 1.443569553806
+        }
+      ],
+      "omniscience": [
+        {
+          "benchmark": "aa-omniscience",
+          "benchmark_short": "AA-Omni",
+          "cohort": "aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "record_id": "aa-omniscience-claude-opus-5-max-2026-08-15",
+          "score": 37.066666666667,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "aa-omniscience",
+          "benchmark_short": "AA-Omni",
+          "cohort": "aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "record_id": "aa-omniscience-gpt-5.6-sol-max-2026-08-15",
+          "score": 21.966666666667,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "aa-omniscience",
+          "benchmark_short": "AA-Omni",
+          "cohort": "aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "record_id": "aa-omniscience-kimi-k3-max-2026-08-15",
+          "score": 19.7,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "aa-omniscience",
+          "benchmark_short": "AA-Omni",
+          "cohort": "aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15",
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "record_id": "aa-omniscience-glm-5.2-max-2026-08-15",
+          "score": 4.433333333333,
+          "source": "Artificial Analysis"
         }
       ],
       "overview": [
@@ -1145,9 +1231,9 @@
           "economics_coverage": 0.0,
           "efficiency_coverage": 0.045,
           "headline_ready": 0,
-          "max_capability_coverage": 0.88125,
+          "max_capability_coverage": 0.93125,
           "pilot_models": 5,
-          "scored_capability_cells": 40,
+          "scored_capability_cells": 44,
           "total_capability_cells": 75
         }
       ],

@@ -3,7 +3,7 @@
 ## Overall assessment
 
 **Ready for a narrow, manually reviewed real-evidence pilot; not ready for a headline
-ranking or bulk ingestion.** Exact AA-LCR, τ³-Banking, GDPval-AA v2, HLE, CursorBench, DeepSWE, GPQA,
+ranking or bulk ingestion.** Exact AA-Omniscience, AA-LCR, τ³-Banking, GDPval-AA v2, HLE, CursorBench, DeepSWE, GPQA,
 SciCode, CritPt, and ARC-AGI-2 records now exercise the real scoring path, but weights,
 Value hypotheses, confidence rules, and relative normalization remain uncalibrated.
 
@@ -96,11 +96,10 @@ determinism.
 
 ## Exact next task
 
-Review AA-Omniscience next as a distinct two-component accuracy/non-hallucination construct; do not
-collapse it into the AA-LCR pass-rate cohort or invent a weighting rule. AA-LCR and τ³-Banking are
-now admitted for four exact Max configurations while their fallback-qualified Fable rows are
-rejected. Continue to admit only exact release-and-effort rows, reject fallback composites, and
-keep operational cost/token fields diagnostic unless a compatible success rate and deployment
-identity make success adjustment valid. In parallel, seek a licensed attempt ledger
-that can raise Efficiency and Economics coverage; advertised tariffs and LiteLLM-derived dollars
-must not masquerade as observed task economics.
+AA-Omniscience is now admitted as one source-defined reliability Index for four exact Max
+configurations; its component rates are diagnostic, not extra votes, and its fallback-qualified
+Fable row is rejected. The next blocking task is licensed attempt-level telemetry across additional
+workload categories, with exact deployment, endpoint, tier, pricing revision, cache/tool accounting,
+turns, retries, success, and observed bill. Continue to reject operational summaries that cannot be
+success-adjusted within the same record; advertised tariffs and calculated dollars must not
+masquerade as observed task economics.

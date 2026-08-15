@@ -63,8 +63,8 @@
   "score_scale": {
     "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
     "evidence_profile_id": "1583908ecd3ee39ce899769056721e1ffb42ea8bd9010502a2652cce19129488",
-    "formula_version": "umi-methodology-v0.3.9",
-    "id": "edeefbee0d4233e9fc623cd09b70bce3b2be84b6b5569441cf16909967197057",
+    "formula_version": "umi-methodology-v0.3.10",
+    "id": "a66eb02ce0901d7181209ea9255f607756e8aa5c7f7282e145383d7b3f0a6900",
     "normalization_panel_ids": [
       "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b"
     ],
@@ -175,7 +175,7 @@
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
       "score": 50.0,
-      "score_scale_id": "edeefbee0d4233e9fc623cd09b70bce3b2be84b6b5569441cf16909967197057",
+      "score_scale_id": "a66eb02ce0901d7181209ea9255f607756e8aa5c7f7282e145383d7b3f0a6900",
       "score_semantics": "stable-panel percentile position"
     },
     {
@@ -281,7 +281,7 @@
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
       "score": 100.0,
-      "score_scale_id": "edeefbee0d4233e9fc623cd09b70bce3b2be84b6b5569441cf16909967197057",
+      "score_scale_id": "a66eb02ce0901d7181209ea9255f607756e8aa5c7f7282e145383d7b3f0a6900",
       "score_semantics": "stable-panel percentile position"
     },
     {
@@ -387,7 +387,7 @@
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
       "score": 0.0,
-      "score_scale_id": "edeefbee0d4233e9fc623cd09b70bce3b2be84b6b5569441cf16909967197057",
+      "score_scale_id": "a66eb02ce0901d7181209ea9255f607756e8aa5c7f7282e145383d7b3f0a6900",
       "score_semantics": "stable-panel percentile position"
     },
     {
@@ -493,7 +493,7 @@
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
       "score": 75.0,
-      "score_scale_id": "edeefbee0d4233e9fc623cd09b70bce3b2be84b6b5569441cf16909967197057",
+      "score_scale_id": "a66eb02ce0901d7181209ea9255f607756e8aa5c7f7282e145383d7b3f0a6900",
       "score_semantics": "stable-panel percentile position"
     },
     {
@@ -599,7 +599,7 @@
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
       "score": 25.0,
-      "score_scale_id": "edeefbee0d4233e9fc623cd09b70bce3b2be84b6b5569441cf16909967197057",
+      "score_scale_id": "a66eb02ce0901d7181209ea9255f607756e8aa5c7f7282e145383d7b3f0a6900",
       "score_semantics": "stable-panel percentile position"
     }
   ],
