@@ -401,7 +401,7 @@
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
           "record_id": "aa-hle-claude-opus-5-max-2026-08-14",
-          "score": 54.8656163113994,
+          "score": 54.865616311399,
           "source": "Artificial Analysis"
         },
         {
@@ -412,7 +412,7 @@
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
           "record_id": "aa-hle-gpt-5.6-sol-max-2026-08-14",
-          "score": 49.4902687673772,
+          "score": 49.490268767377,
           "source": "Artificial Analysis"
         },
         {
@@ -423,7 +423,7 @@
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
           "record_id": "aa-hle-kimi-k3-max-2026-08-14",
-          "score": 46.8952734012975,
+          "score": 46.895273401298,
           "source": "Artificial Analysis"
         },
         {
@@ -434,7 +434,7 @@
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2",
           "record_id": "aa-hle-glm-5.2-max-2026-08-14",
-          "score": 41.1492122335496,
+          "score": 41.14921223355,
           "source": "Artificial Analysis"
         },
         {
@@ -445,7 +445,7 @@
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
           "record_id": "epoch-gpqa-claude-opus-5-max-d3mtastumfvjr4fjmnhwry",
-          "score": 93.87626262626263,
+          "score": 93.876262626263,
           "source": "Epoch AI"
         },
         {
@@ -456,7 +456,7 @@
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
           "record_id": "epoch-gpqa-kimi-k3-max-b8mapue3eywuzassnqe7c9",
-          "score": 93.11868686868688,
+          "score": 93.118686868687,
           "source": "Epoch AI"
         },
         {
@@ -467,7 +467,7 @@
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
           "record_id": "epoch-gpqa-gpt-5.6-sol-max-nukcgzrecbsxkcknj9bk37",
-          "score": 93.49747474747475,
+          "score": 93.497474747475,
           "source": "Epoch AI"
         },
         {
@@ -478,7 +478,7 @@
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2",
           "record_id": "epoch-gpqa-glm-5.2-max-c5kpb4axzmygrywwqbkfmv",
-          "score": 91.85606060606061,
+          "score": 91.856060606061,
           "source": "Epoch AI"
         },
         {
@@ -500,7 +500,7 @@
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
           "record_id": "epoch-scicode-gpt-5.6-sol-max-gpt-5.6-sol_max",
-          "score": 56.1342592592593,
+          "score": 56.134259259259,
           "source": "Epoch AI"
         },
         {
@@ -511,7 +511,7 @@
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
           "record_id": "epoch-scicode-claude-opus-5-max-claude-opus-5_max",
-          "score": 55.671296296296305,
+          "score": 55.671296296296,
           "source": "Epoch AI"
         },
         {
@@ -522,7 +522,7 @@
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
           "record_id": "epoch-scicode-kimi-k3-max-kimi-k3_max",
-          "score": 58.6805555555556,
+          "score": 58.680555555556,
           "source": "Epoch AI"
         },
         {
@@ -533,7 +533,7 @@
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
           "record_id": "epoch-critpt-gpt-5.6-sol-max-recok7wfznqiaai15",
-          "score": 32.300000000000004,
+          "score": 32.3,
           "source": "Epoch AI"
         },
         {
@@ -544,7 +544,7 @@
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
           "record_id": "epoch-critpt-claude-opus-5-max-rec5c4zdqpzverrgc",
-          "score": 29.142857100000004,
+          "score": 29.1428571,
           "source": "Epoch AI"
         },
         {
@@ -555,7 +555,7 @@
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
           "record_id": "epoch-critpt-kimi-k3-max-recqkvzvlqfvkoht4",
-          "score": 23.400000000000002,
+          "score": 23.4,
           "source": "Epoch AI"
         },
         {
@@ -566,7 +566,7 @@
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2",
           "record_id": "epoch-critpt-glm-5.2-max-reccz0gyjqlgpm3ch",
-          "score": 20.8571428571429,
+          "score": 20.857142857143,
           "source": "Epoch AI"
         },
         {
@@ -599,7 +599,7 @@
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
           "record_id": "epoch-arc-agi-2-kimi-k3-max-rec4whjt7mjgylj9q",
-          "score": 60.416666666666664,
+          "score": 60.416666666667,
           "source": "Epoch AI"
         },
         {
@@ -610,7 +610,7 @@
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
           "record_id": "deepswe-score-claude-opus-5-max-2026-08-13",
-          "score": 73.64864864864865,
+          "score": 73.648648648649,
           "source": "Datacurve"
         },
         {
@@ -621,7 +621,7 @@
           "model_id": "claude-fable-5-max",
           "model_short": "Fable 5",
           "record_id": "deepswe-score-claude-fable-5-max-2026-08-13",
-          "score": 69.72477064220183,
+          "score": 69.724770642202,
           "source": "Datacurve"
         },
         {
@@ -632,7 +632,7 @@
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
           "record_id": "deepswe-score-gpt-5.6-sol-max-2026-08-13",
-          "score": 72.66666666666667,
+          "score": 72.666666666667,
           "source": "Datacurve"
         },
         {
@@ -643,7 +643,7 @@
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
           "record_id": "deepswe-score-kimi-k3-max-2026-08-13",
-          "score": 68.51441241685144,
+          "score": 68.514412416851,
           "source": "Datacurve"
         },
         {
@@ -654,7 +654,7 @@
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2",
           "record_id": "deepswe-score-glm-5.2-max-2026-08-13",
-          "score": 43.77777777777778,
+          "score": 43.777777777778,
           "source": "Datacurve"
         }
       ],
@@ -664,14 +664,14 @@
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "score": 84.8585690515807
+          "score": 84.858569051581
         },
         {
           "component": "Eff.",
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "score": 41.66666666666667
+          "score": 41.666666666667
         },
         {
           "component": "Cap.",
@@ -685,7 +685,7 @@
           "model": "Claude Fable 5 (max)",
           "model_id": "claude-fable-5-max",
           "model_short": "Fable 5",
-          "score": 50.00000000000001
+          "score": 50.0
         },
         {
           "component": "Cap.",
@@ -699,21 +699,21 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "score": 100.00000000000001
+          "score": 100.0
         },
         {
           "component": "Cap.",
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "score": 29.977814753189133
+          "score": 29.977814753189
         },
         {
           "component": "Eff.",
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "score": 58.333333333333336
+          "score": 58.333333333333
         },
         {
           "component": "Cap.",
@@ -953,7 +953,7 @@
       ],
       "model_summary": [
         {
-          "capability": 84.8585690515807,
+          "capability": 84.858569051581,
           "capability_coverage": 0.75125,
           "capability_domains": 4,
           "capability_profile": "f558fccccd64",
@@ -961,13 +961,13 @@
           "confidence": "Low",
           "economics": null,
           "economics_coverage": 0.0,
-          "efficiency": 41.66666666666667,
+          "efficiency": 41.666666666667,
           "efficiency_coverage": 0.045,
           "headline": "Not eligible",
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "partial_overall": 71.36109955629507
+          "partial_overall": 71.361099556295
         },
         {
           "capability": 50.0,
@@ -978,13 +978,13 @@
           "confidence": "Low",
           "economics": null,
           "economics_coverage": 0.0,
-          "efficiency": 50.00000000000001,
+          "efficiency": 50.0,
           "efficiency_coverage": 0.045,
           "headline": "Not eligible",
           "model": "Claude Fable 5 (max)",
           "model_id": "claude-fable-5-max",
           "model_short": "Fable 5",
-          "partial_overall": 50.00000000000001
+          "partial_overall": 50.0
         },
         {
           "capability": 76.012201885746,
@@ -995,16 +995,16 @@
           "confidence": "Low",
           "economics": null,
           "economics_coverage": 0.0,
-          "efficiency": 100.00000000000001,
+          "efficiency": 100.0,
           "efficiency_coverage": 0.045,
           "headline": "Not eligible",
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "partial_overall": 83.50838879645036
+          "partial_overall": 83.50838879645
         },
         {
-          "capability": 29.977814753189133,
+          "capability": 29.977814753189,
           "capability_coverage": 0.75125,
           "capability_domains": 4,
           "capability_profile": "f558fccccd64",
@@ -1012,13 +1012,13 @@
           "confidence": "Low",
           "economics": null,
           "economics_coverage": 0.0,
-          "efficiency": 58.333333333333336,
+          "efficiency": 58.333333333333,
           "efficiency_coverage": 0.045,
           "headline": "Not eligible",
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "partial_overall": 38.83891430948419
+          "partial_overall": 38.838914309484
         },
         {
           "capability": 0.0,
@@ -1052,58 +1052,58 @@
       "resources": [
         {
           "attempts": 444,
-          "effective_agent_steps": 134.48012232415903,
+          "effective_agent_steps": 134.480122324159,
           "effective_input_tokens": 20402050.37614679,
           "effective_output_tokens": 159630.48318042813,
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
           "record_id": "deepswe-harness-resources-claude-opus-5-max-2026-08-13",
-          "success_rate": 0.7364864864864865
+          "success_rate": 0.736486486486
         },
         {
           "attempts": 436,
-          "effective_agent_steps": 126.82565789473684,
+          "effective_agent_steps": 126.825657894737,
           "effective_input_tokens": 18126746.075657893,
           "effective_output_tokens": 170087.00328947368,
           "model": "Claude Fable 5 (max)",
           "model_id": "claude-fable-5-max",
           "model_short": "Fable 5",
           "record_id": "deepswe-harness-resources-claude-fable-5-max-2026-08-13",
-          "success_rate": 0.6972477064220184
+          "success_rate": 0.697247706422
         },
         {
           "attempts": 450,
-          "effective_agent_steps": 84.29357798165137,
+          "effective_agent_steps": 84.293577981651,
           "effective_input_tokens": 10882090.382262997,
           "effective_output_tokens": 82587.58409785932,
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
           "record_id": "deepswe-harness-resources-gpt-5.6-sol-max-2026-08-13",
-          "success_rate": 0.7266666666666667
+          "success_rate": 0.726666666667
         },
         {
           "attempts": 451,
-          "effective_agent_steps": 142.4336569579288,
+          "effective_agent_steps": 142.433656957929,
           "effective_input_tokens": 14150944.165048543,
           "effective_output_tokens": 118952.84466019417,
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
           "record_id": "deepswe-harness-resources-kimi-k3-max-2026-08-13",
-          "success_rate": 0.6851441241685144
+          "success_rate": 0.685144124169
         },
         {
           "attempts": 450,
-          "effective_agent_steps": 294.9593908629442,
+          "effective_agent_steps": 294.959390862944,
           "effective_input_tokens": 28796711.152284265,
           "effective_output_tokens": 178573.03553299495,
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2",
           "record_id": "deepswe-harness-resources-glm-5.2-max-2026-08-13",
-          "success_rate": 0.43777777777777777
+          "success_rate": 0.437777777778
         }
       ]
     },

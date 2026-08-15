@@ -526,6 +526,13 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
         item["headline"] == "Not eligible"
         for item in dashboard["snapshot"]["datasets"]["model_summary"]
     )
+    kimi_summary = next(
+        item
+        for item in dashboard["snapshot"]["datasets"]["model_summary"]
+        if item["model_id"] == "kimi-k3-max"
+    )
+    assert kimi_summary["capability"] == 29.977814753189
+    assert kimi_summary["capability_coverage"] == 0.75125
     assert len(dashboard["snapshot"]["datasets"]["benchmarks"]) == 24
     assert len(dashboard["snapshot"]["datasets"]["gdpval"]) == 4
     assert len(dashboard["snapshot"]["datasets"]["resources"]) == 5

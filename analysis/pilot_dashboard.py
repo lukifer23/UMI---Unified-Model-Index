@@ -24,6 +24,17 @@ def _source(
     }
 
 
+def _portable_numbers(value: Any) -> Any:
+    """Bound presentation precision so dashboard bytes are Python-version stable."""
+    if isinstance(value, float):
+        return round(value, 12)
+    if isinstance(value, list):
+        return [_portable_numbers(item) for item in value]
+    if isinstance(value, dict):
+        return {key: _portable_numbers(item) for key, item in value.items()}
+    return value
+
+
 def build_pilot_dashboard(
     dataset: Dataset,
     estimates: Iterable[dict[str, Any]],
@@ -520,17 +531,19 @@ def build_pilot_dashboard(
             "version": 1,
             "generatedAt": "2026-08-15T00:00:00Z",
             "status": "partial",
-            "datasets": {
-                "overview": overview,
-                "model_summary": summary_rows,
-                "component_scores": component_rows,
-                "coverage": coverage_rows,
-                "benchmarks": benchmark_rows,
-                "cursorbench": cursorbench_rows,
-                "gdpval": gdpval_rows,
-                "resources": resource_rows,
-                "gap_counts": gap_rows,
-            },
+            "datasets": _portable_numbers(
+                {
+                    "overview": overview,
+                    "model_summary": summary_rows,
+                    "component_scores": component_rows,
+                    "coverage": coverage_rows,
+                    "benchmarks": benchmark_rows,
+                    "cursorbench": cursorbench_rows,
+                    "gdpval": gdpval_rows,
+                    "resources": resource_rows,
+                    "gap_counts": gap_rows,
+                }
+            ),
             "accessIssues": [
                 {
                     "id": "headline-blocked",
