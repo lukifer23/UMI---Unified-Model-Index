@@ -77,6 +77,9 @@ embedded manifest, snapshot, and sources are tested against the canonical JSON a
 Every model-specific output is labeled `real evidence — model-specific partial estimate`; it is
 not a ranking. All `headline_overall` fields are null. `umi compare` produces a separately labeled,
 provisional rank only after explicitly restricting the requested models to their common evidence.
+It leads with raw benchmark values and uses bundle-wide stable normalization panels: hiding a model
+from the display never refits another model's percentile. Every normalized contribution includes
+its applied fallback trace, absolute configured weight, panel ID, and score-scale ID.
 
 The synthetic engine demonstration remains available under `tests/fixtures` and is always labeled
 as synthetic.
@@ -105,12 +108,14 @@ frozen artifacts -> offline adapters -> governed scoring bundle -> readiness fil
 - `data/pilots/v0.3/raw/` contains generated typed inputs; `processed/` contains deterministic reports.
 - `umi/adapters/` contains source-specific, no-network transformations.
 - `schemas/` contains generated JSON Schemas for data, config, source, crosswalk, overlap,
-  acceptance manifest, and output.
+  acceptance manifest, normalization panels, score scales, benchmark contributions, and output.
 
 Complete and scored-data fingerprints are deliberately different. Rejected and diagnostic evidence,
 crosswalk decisions, and artifact checksums affect the complete fingerprint. The scored fingerprint
 contains only accepted scoring records plus the scored-artifact audit manifest, adapter versions, and
 governed scoring configuration. The overlap policy is included through the configuration fingerprint.
+Each benchmark representation group has one explicit priority-zero canonical definition; aliases
+use larger configured priorities and cannot displace canonical evidence through lexical ordering.
 
 ## Scoring summary
 

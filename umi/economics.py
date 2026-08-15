@@ -7,7 +7,7 @@ from umi.config import ProjectConfig
 from umi.derived_metrics import consolidate_cost_per_success
 from umi.evidence_profiles import workload_profile
 from umi.loading import Dataset
-from umi.normalize import normalize_cohort
+from umi.normalize import build_score_scale, normalize_cohort, normalized_series_panel_id
 from umi.schemas import (
     AggregationStatistic,
     ComponentScore,
@@ -15,6 +15,7 @@ from umi.schemas import (
     Direction,
     EfficiencyMeasurement,
     Provenance,
+    ScoreScale,
     TaskEconomicsMeasurement,
 )
 from umi.workloads import aggregate_workloads
@@ -55,6 +56,7 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
     )
     provisional_by_model: dict[str, set[str]] = defaultdict(set)
     profile_series: dict[str, set[str]] = defaultdict(set)
+    panel_ids_by_model: dict[str, set[str]] = defaultdict(set)
     workload_definitions = {item.id: item for item in config.workloads}
     workload_families = {item.id: item for item in config.workload_families}
     series = sorted(
@@ -101,10 +103,22 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
             minimum_robust_cohort=config.normalization.minimum_robust_cohort,
             minimum_rank_cohort=config.normalization.minimum_rank_cohort,
         )
+        panel_id = normalized_series_panel_id(
+            {
+                "component": "economics",
+                "workload": workload,
+                "cohort_key": cohort_key,
+                "metric": "cost_per_success",
+            },
+            costs,
+            normalized.trace,
+            config.fingerprint,
+        )
         for model_id, score in normalized.scores.items():
             if score is None:
                 continue
             normalized_scores[workload][model_id].append(score)
+            panel_ids_by_model[model_id].add(panel_id)
             profile_series[model_id].add(
                 f"{family.category.value}/{family.id}/{workload}/{cohort_key}/cost_per_success"
             )
@@ -112,6 +126,7 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                 provisional_by_model[model_id].add(f"{workload}/{cohort_key}/cost_per_success")
 
     output: dict[str, ComponentScore] = {}
+    scales: dict[str, ScoreScale] = {}
     for model in dataset.models:
         aggregation = aggregate_workloads(model.id, normalized_scores, config)
         category_values = aggregation.category_scores
@@ -131,6 +146,17 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                 "provisional normalization cohorts: " + ", ".join(sorted(provisional_ids))
             )
         records_by_id = {item.record_id: item for item in evidence[model.id]}
+        profile = workload_profile(
+            "economics", profile_series[model.id], records_by_id.values(), config
+        )
+        panel_ids = tuple(sorted(panel_ids_by_model[model.id]))
+        scale = (
+            build_score_scale(profile.id, panel_ids, config.fingerprint)
+            if score is not None
+            else None
+        )
+        if scale is not None:
+            scales[model.id] = scale
         output[model.id] = ComponentScore(
             score=score,
             coverage=coverage,
@@ -151,8 +177,12 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                     for family, value in aggregation.family_coverage.items()
                 },
             },
-            evidence_profile=workload_profile(
-                "economics", profile_series[model.id], records_by_id.values(), config
+            evidence_profile=profile,
+            evidence_profile_id=profile.id,
+            normalization_panel_ids=panel_ids,
+            score_scale_id=scale.id if scale is not None else None,
+            score_semantics=(
+                "cohort-relative normalized workload composite" if score is not None else "unscored"
             ),
         )
     for model_id, component in output.items():
@@ -165,9 +195,10 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                 other_id
                 for other_id, other in output.items()
                 if has_support
+                and component.score_scale_id is not None
                 and other_id != model_id
-                and other.evidence_profile
-                and other.evidence_profile.id == profile_id
+                and other.evidence_profile_id == profile_id
+                and other.score_scale_id == component.score_scale_id
             )
         )
         output[model_id] = component.model_copy(
@@ -176,17 +207,22 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                 "comparability_status": (
                     "directly_comparable"
                     if peers
-                    else "different_evidence_profile"
+                    else "missing_score_scale_identity"
                     if has_support
                     else "insufficient_common_support"
                 ),
                 "comparability_reasons": (
                     ("same economics workload support and configuration",)
                     if peers
-                    else ("no other model has the same economics evidence profile",)
+                    else ("economics score-scale identity is not yet emitted",)
                     if has_support
                     else ("no ready economics workload support",)
                 ),
             }
         )
-    return ComponentComputation(output, {key: tuple(value) for key, value in evidence.items()}, {})
+    return ComponentComputation(
+        output,
+        {key: tuple(value) for key, value in evidence.items()},
+        {},
+        score_scales=scales,
+    )

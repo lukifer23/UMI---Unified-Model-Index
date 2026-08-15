@@ -2,9 +2,9 @@
   {
     "capability": {
       "comparability_reasons": [
-        "no other model has the same capability evidence profile"
+        "no other model shares both evidence profile and score scale"
       ],
-      "comparability_status": "different_evidence_profile",
+      "comparability_status": "different_score_scale",
       "coverage": 0.165,
       "coverage_details": {
         "capability_families_represented": 1,
@@ -49,8 +49,14 @@
         "workload_family_ids": [],
         "workload_series": []
       },
+      "evidence_profile_id": "6c44eb1c4619794fa431fab8b2549f8057098386a8d85d0bd6c8ca6274a41334",
+      "normalization_panel_ids": [
+        "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d"
+      ],
       "provisional": true,
       "score": 50.0,
+      "score_scale_id": "66a27b0fbb05dffb5b4e003b5e23f2cc6c62ce54b7d395496030b24bd69bb587",
+      "score_semantics": "stable-panel percentile position",
       "source_record_ids": [
         "deepswe-score-claude-fable-5-max-2026-08-13"
       ]
@@ -151,8 +157,12 @@
         "workload_family_ids": [],
         "workload_series": []
       },
+      "evidence_profile_id": "dd7898afe130d0349fc5daa001eb4e9559ed91b77ab43b86fc2de5a75900f33a",
+      "normalization_panel_ids": [],
       "provisional": false,
       "score": null,
+      "score_scale_id": null,
+      "score_semantics": "unscored",
       "source_record_ids": []
     },
     "efficiency": {
@@ -212,8 +222,16 @@
           "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
         ]
       },
+      "evidence_profile_id": "1814f56d789caacf4a99f17a1a227477b5ba591f5970115bf1859d64790d088c",
+      "normalization_panel_ids": [
+        "1870c0771f066fc44ec616530e8feb646337101c041300f3a90426173e320f4d",
+        "91bcbe15d2cb800ee10a7bfff4f8cde3c2275373ae317adb72122a6fc59710d2",
+        "f1dbaac15e675456fc966f83531d4c310428d5656f886fbf1e2210f200be1b97"
+      ],
       "provisional": true,
       "score": 50.00000000000001,
+      "score_scale_id": "a03925dd35ba3bfed4de8d4b7cc2437da8036ab26b3db5d353bfe141e90d93a6",
+      "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-claude-fable-5-max-2026-08-13"
       ]
@@ -248,7 +266,7 @@
   {
     "capability": {
       "comparability_reasons": [
-        "same capability support series and configuration"
+        "same evidence profile, score scale, formula, normalization, and configuration"
       ],
       "comparability_status": "directly_comparable",
       "coverage": 0.49375,
@@ -345,8 +363,18 @@
         "workload_family_ids": [],
         "workload_series": []
       },
+      "evidence_profile_id": "d8d5b262b8f0afe57835a6c051407fa6cb1649ff5195a72d57ba31583d423dbc",
+      "normalization_panel_ids": [
+        "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d",
+        "5cbb8d1643c3fe0d19ec3e394fc5182ecf43cdc5f9c467c8af35d9233a7bc67b",
+        "c7eae86de732dfacf44c9da22c4af892e9965356212aacf4b3aa3b8c666af85f",
+        "d374743aaa1d1e77d662d4f7fe01fc18b38cbe419f471fe0a083c6c82a57b923",
+        "e5af3ee7ed66c0082c6b34fa1b82315c182dbe92af71e089aaf7feea05191b98"
+      ],
       "provisional": true,
       "score": 76.9620253164557,
+      "score_scale_id": "0b6909e07be62da65f36b58ab39ed86e286bd2a147feea1915669e38c817e5e9",
+      "score_semantics": "weighted stable-panel percentile composite",
       "source_record_ids": [
         "deepswe-score-claude-opus-5-max-2026-08-13",
         "epoch-arc-agi-2-claude-opus-5-max-recryrmlezuut9acr",
@@ -450,8 +478,12 @@
         "workload_family_ids": [],
         "workload_series": []
       },
+      "evidence_profile_id": "dd7898afe130d0349fc5daa001eb4e9559ed91b77ab43b86fc2de5a75900f33a",
+      "normalization_panel_ids": [],
       "provisional": false,
       "score": null,
+      "score_scale_id": null,
+      "score_semantics": "unscored",
       "source_record_ids": []
     },
     "efficiency": {
@@ -511,8 +543,16 @@
           "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
         ]
       },
+      "evidence_profile_id": "1814f56d789caacf4a99f17a1a227477b5ba591f5970115bf1859d64790d088c",
+      "normalization_panel_ids": [
+        "1870c0771f066fc44ec616530e8feb646337101c041300f3a90426173e320f4d",
+        "91bcbe15d2cb800ee10a7bfff4f8cde3c2275373ae317adb72122a6fc59710d2",
+        "f1dbaac15e675456fc966f83531d4c310428d5656f886fbf1e2210f200be1b97"
+      ],
       "provisional": true,
       "score": 41.66666666666667,
+      "score_scale_id": "a03925dd35ba3bfed4de8d4b7cc2437da8036ab26b3db5d353bfe141e90d93a6",
+      "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-claude-opus-5-max-2026-08-13"
       ]
@@ -551,9 +591,9 @@
   {
     "capability": {
       "comparability_reasons": [
-        "no other model has the same capability evidence profile"
+        "no other model shares both evidence profile and score scale"
       ],
-      "comparability_status": "different_evidence_profile",
+      "comparability_status": "different_score_scale",
       "coverage": 0.35625,
       "coverage_details": {
         "capability_families_represented": 4,
@@ -633,8 +673,17 @@
         "workload_family_ids": [],
         "workload_series": []
       },
+      "evidence_profile_id": "c031559360980050d9da79a4f0f6317845c443343275bbb1f84f17b133f69cb6",
+      "normalization_panel_ids": [
+        "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d",
+        "5cbb8d1643c3fe0d19ec3e394fc5182ecf43cdc5f9c467c8af35d9233a7bc67b",
+        "c7eae86de732dfacf44c9da22c4af892e9965356212aacf4b3aa3b8c666af85f",
+        "e5af3ee7ed66c0082c6b34fa1b82315c182dbe92af71e089aaf7feea05191b98"
+      ],
       "provisional": true,
       "score": 0.0,
+      "score_scale_id": "77fae38857cb2e0ec43364e1a6456254f324911820c0aa6764049a04057f82bc",
+      "score_semantics": "weighted stable-panel percentile composite",
       "source_record_ids": [
         "deepswe-score-glm-5.2-max-2026-08-13",
         "epoch-critpt-glm-5.2-max-reccz0gyjqlgpm3ch",
@@ -737,8 +786,12 @@
         "workload_family_ids": [],
         "workload_series": []
       },
+      "evidence_profile_id": "dd7898afe130d0349fc5daa001eb4e9559ed91b77ab43b86fc2de5a75900f33a",
+      "normalization_panel_ids": [],
       "provisional": false,
       "score": null,
+      "score_scale_id": null,
+      "score_semantics": "unscored",
       "source_record_ids": []
     },
     "efficiency": {
@@ -798,8 +851,16 @@
           "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
         ]
       },
+      "evidence_profile_id": "1814f56d789caacf4a99f17a1a227477b5ba591f5970115bf1859d64790d088c",
+      "normalization_panel_ids": [
+        "1870c0771f066fc44ec616530e8feb646337101c041300f3a90426173e320f4d",
+        "91bcbe15d2cb800ee10a7bfff4f8cde3c2275373ae317adb72122a6fc59710d2",
+        "f1dbaac15e675456fc966f83531d4c310428d5656f886fbf1e2210f200be1b97"
+      ],
       "provisional": true,
       "score": 0.0,
+      "score_scale_id": "a03925dd35ba3bfed4de8d4b7cc2437da8036ab26b3db5d353bfe141e90d93a6",
+      "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-glm-5.2-max-2026-08-13"
       ]
@@ -837,7 +898,7 @@
   {
     "capability": {
       "comparability_reasons": [
-        "same capability support series and configuration"
+        "same evidence profile, score scale, formula, normalization, and configuration"
       ],
       "comparability_status": "directly_comparable",
       "coverage": 0.49375,
@@ -934,8 +995,18 @@
         "workload_family_ids": [],
         "workload_series": []
       },
+      "evidence_profile_id": "d8d5b262b8f0afe57835a6c051407fa6cb1649ff5195a72d57ba31583d423dbc",
+      "normalization_panel_ids": [
+        "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d",
+        "5cbb8d1643c3fe0d19ec3e394fc5182ecf43cdc5f9c467c8af35d9233a7bc67b",
+        "c7eae86de732dfacf44c9da22c4af892e9965356212aacf4b3aa3b8c666af85f",
+        "d374743aaa1d1e77d662d4f7fe01fc18b38cbe419f471fe0a083c6c82a57b923",
+        "e5af3ee7ed66c0082c6b34fa1b82315c182dbe92af71e089aaf7feea05191b98"
+      ],
       "provisional": true,
       "score": 82.27848101265822,
+      "score_scale_id": "0b6909e07be62da65f36b58ab39ed86e286bd2a147feea1915669e38c817e5e9",
+      "score_semantics": "weighted stable-panel percentile composite",
       "source_record_ids": [
         "deepswe-score-gpt-5.6-sol-max-2026-08-13",
         "epoch-arc-agi-2-gpt-5.6-sol-max-reciqjzyogw8gyglw",
@@ -1039,8 +1110,12 @@
         "workload_family_ids": [],
         "workload_series": []
       },
+      "evidence_profile_id": "dd7898afe130d0349fc5daa001eb4e9559ed91b77ab43b86fc2de5a75900f33a",
+      "normalization_panel_ids": [],
       "provisional": false,
       "score": null,
+      "score_scale_id": null,
+      "score_semantics": "unscored",
       "source_record_ids": []
     },
     "efficiency": {
@@ -1100,8 +1175,16 @@
           "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
         ]
       },
+      "evidence_profile_id": "1814f56d789caacf4a99f17a1a227477b5ba591f5970115bf1859d64790d088c",
+      "normalization_panel_ids": [
+        "1870c0771f066fc44ec616530e8feb646337101c041300f3a90426173e320f4d",
+        "91bcbe15d2cb800ee10a7bfff4f8cde3c2275373ae317adb72122a6fc59710d2",
+        "f1dbaac15e675456fc966f83531d4c310428d5656f886fbf1e2210f200be1b97"
+      ],
       "provisional": true,
       "score": 100.00000000000001,
+      "score_scale_id": "a03925dd35ba3bfed4de8d4b7cc2437da8036ab26b3db5d353bfe141e90d93a6",
+      "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-gpt-5.6-sol-max-2026-08-13"
       ]
@@ -1140,7 +1223,7 @@
   {
     "capability": {
       "comparability_reasons": [
-        "same capability support series and configuration"
+        "same evidence profile, score scale, formula, normalization, and configuration"
       ],
       "comparability_status": "directly_comparable",
       "coverage": 0.49375,
@@ -1237,8 +1320,18 @@
         "workload_family_ids": [],
         "workload_series": []
       },
+      "evidence_profile_id": "d8d5b262b8f0afe57835a6c051407fa6cb1649ff5195a72d57ba31583d423dbc",
+      "normalization_panel_ids": [
+        "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d",
+        "5cbb8d1643c3fe0d19ec3e394fc5182ecf43cdc5f9c467c8af35d9233a7bc67b",
+        "c7eae86de732dfacf44c9da22c4af892e9965356212aacf4b3aa3b8c666af85f",
+        "d374743aaa1d1e77d662d4f7fe01fc18b38cbe419f471fe0a083c6c82a57b923",
+        "e5af3ee7ed66c0082c6b34fa1b82315c182dbe92af71e089aaf7feea05191b98"
+      ],
       "provisional": true,
       "score": 26.83544303797468,
+      "score_scale_id": "0b6909e07be62da65f36b58ab39ed86e286bd2a147feea1915669e38c817e5e9",
+      "score_semantics": "weighted stable-panel percentile composite",
       "source_record_ids": [
         "deepswe-score-kimi-k3-max-2026-08-13",
         "epoch-arc-agi-2-kimi-k3-max-rec4whjt7mjgylj9q",
@@ -1342,8 +1435,12 @@
         "workload_family_ids": [],
         "workload_series": []
       },
+      "evidence_profile_id": "dd7898afe130d0349fc5daa001eb4e9559ed91b77ab43b86fc2de5a75900f33a",
+      "normalization_panel_ids": [],
       "provisional": false,
       "score": null,
+      "score_scale_id": null,
+      "score_semantics": "unscored",
       "source_record_ids": []
     },
     "efficiency": {
@@ -1403,8 +1500,16 @@
           "coding_agents/software-repository-agents/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
         ]
       },
+      "evidence_profile_id": "1814f56d789caacf4a99f17a1a227477b5ba591f5970115bf1859d64790d088c",
+      "normalization_panel_ids": [
+        "1870c0771f066fc44ec616530e8feb646337101c041300f3a90426173e320f4d",
+        "91bcbe15d2cb800ee10a7bfff4f8cde3c2275373ae317adb72122a6fc59710d2",
+        "f1dbaac15e675456fc966f83531d4c310428d5656f886fbf1e2210f200be1b97"
+      ],
       "provisional": true,
       "score": 58.333333333333336,
+      "score_scale_id": "a03925dd35ba3bfed4de8d4b7cc2437da8036ab26b3db5d353bfe141e90d93a6",
+      "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-kimi-k3-max-2026-08-13"
       ]

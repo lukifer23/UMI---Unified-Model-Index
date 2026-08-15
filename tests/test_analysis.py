@@ -73,7 +73,11 @@ def test_common_evidence_comparison_excludes_model_specific_support(
         ),
     )
     assert comparison["common_benchmark_series"] == [
-        {"benchmark_id": "deepswe-v1.1", "cohort_key": "deepswe-v1.1-2026-08-13"}
+        {
+            "benchmark_id": "deepswe-v1.1",
+            "canonical_representation_group": "deepswe-v1.1",
+            "cohort_key": "deepswe-v1.1-2026-08-13",
+        }
     ]
     scores = cast(list[dict[str, object]], comparison["scores"])
     assert {item["coverage"] for item in scores} == {0.165}
@@ -92,19 +96,84 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
     assert series == [
         {
             "benchmark_id": "critpt",
+            "canonical_representation_group": "critpt",
             "cohort_key": "aa-v4.1.1-critpt-70-test-challenges-pass1",
         },
-        {"benchmark_id": "deepswe-v1.1", "cohort_key": "deepswe-v1.1-2026-08-13"},
+        {
+            "benchmark_id": "deepswe-v1.1",
+            "canonical_representation_group": "deepswe-v1.1",
+            "cohort_key": "deepswe-v1.1-2026-08-13",
+        },
         {
             "benchmark_id": "gpqa-diamond",
+            "canonical_representation_group": "gpqa-diamond",
             "cohort_key": "epoch-gpqa-diamond-1.0.6-simple-evals",
         },
         {
             "benchmark_id": "scicode",
+            "canonical_representation_group": "scicode",
             "cohort_key": "aa-v4.1.1-scicode-test-288-background-pass1",
         },
     ]
     assert {item["coverage"] for item in scores} == {0.35625}
+
+    five_model = common_capability_comparison(
+        real_pilot_dataset,
+        real_pilot_config,
+        (
+            "claude-opus-5-max",
+            "claude-fable-5-max",
+            "gpt-5.6-sol-max",
+            "kimi-k3-max",
+            "glm-5.2-max",
+        ),
+    )
+    five_kimi = next(
+        item for item in cast(list[dict[str, object]], five_model["scores"])
+        if item["model_id"] == "kimi-k3-max"
+    )
+    three_kimi = next(item for item in scores if item["model_id"] == "kimi-k3-max")
+    five_deepswe = next(
+        item
+        for item in cast(list[dict[str, object]], five_kimi["contributions"])
+        if item["benchmark_id"] == "deepswe-v1.1"
+    )
+    three_deepswe = next(
+        item
+        for item in cast(list[dict[str, object]], three_kimi["contributions"])
+        if item["benchmark_id"] == "deepswe-v1.1"
+    )
+    assert five_deepswe["normalized_value"] == three_deepswe["normalized_value"] == 25.0
+    assert five_deepswe["normalization_panel_id"] == three_deepswe["normalization_panel_id"]
+    deep_panel = next(
+        item
+        for item in cast(list[dict[str, object]], comparison["normalization_panels"])
+        if item["benchmark_id"] == "deepswe-v1.1"
+    )
+    gpqa_panel = next(
+        item
+        for item in cast(list[dict[str, object]], comparison["normalization_panels"])
+        if item["benchmark_id"] == "gpqa-diamond"
+    )
+    assert len(cast(list[str], deep_panel["model_ids"])) == 5
+    assert len(cast(list[str], gpqa_panel["model_ids"])) == 4
+    assert deep_panel["requested_strategy"] == "robust_z"
+    assert deep_panel["applied_strategy"] == "percentile"
+    assert cast(dict[str, object], deep_panel["normalization_trace"])[
+        "fallback_reason"
+    ] == "below_minimum_robust_cohort"
+    reordered = real_pilot_dataset.model_copy(
+        update={"benchmarks": tuple(reversed(real_pilot_dataset.benchmarks))}
+    )
+    reordered_comparison = common_capability_comparison(
+        reordered,
+        real_pilot_config,
+        ("claude-opus-5-max", "kimi-k3-max", "glm-5.2-max"),
+    )
+    assert reordered_comparison["score_scale"] == comparison["score_scale"]
+    assert reordered_comparison["normalization_panels"] == comparison[
+        "normalization_panels"
+    ]
 
 
 def test_source_bound_sensitivity_preserves_declared_margin_without_probability_model(

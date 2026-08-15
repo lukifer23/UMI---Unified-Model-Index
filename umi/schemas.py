@@ -50,6 +50,14 @@ class NormalizationStrategy(StrEnum):
     PERCENTILE = "percentile"
 
 
+class ScaleKind(StrEnum):
+    RAW_METRIC = "raw_metric"
+    STABLE_PANEL_PERCENTILE = "stable_panel_percentile"
+    WEIGHTED_STABLE_PANEL_COMPOSITE = "weighted_stable_panel_composite"
+    ANCHORED_SCORE = "anchored_score"
+    LATENT_ESTIMATE = "latent_estimate"
+
+
 class Confidence(StrEnum):
     HIGH = "high"
     MEDIUM = "medium"
@@ -266,6 +274,7 @@ class BenchmarkDefinition(StrictModel):
     unit: Unit
     representation_weight: float = Field(default=1.0, gt=0)
     representation_group: Identifier | None = None
+    selection_priority: int = Field(default=0, ge=0)
     normalization: NormalizationStrategy
     parent_aggregates: tuple[Identifier, ...] = ()
     constituents: tuple[Identifier, ...] = ()
@@ -528,6 +537,65 @@ class ComponentScore(StrictModel):
     directly_comparable_model_ids: tuple[Identifier, ...] = ()
     comparability_status: str = "insufficient_common_support"
     comparability_reasons: tuple[str, ...] = ()
+    evidence_profile_id: str | None = None
+    normalization_panel_ids: tuple[str, ...] = ()
+    score_scale_id: str | None = None
+    score_semantics: str = "unscored"
+
+
+class NormalizationTrace(StrictModel):
+    requested_strategy: NormalizationStrategy
+    applied_strategy: str = Field(min_length=1)
+    cohort_size: int = Field(ge=0)
+    minimum_robust_cohort: int = Field(gt=0)
+    minimum_rank_cohort: int = Field(gt=0)
+    fallback_reason: str | None = None
+    log_transform: bool
+    direction_inverted: bool
+    provisional: bool
+
+
+class NormalizationPanel(StrictModel):
+    id: str = Field(pattern=r"^[a-f0-9]{64}$")
+    benchmark_id: Identifier
+    cohort_key: Identifier
+    canonical_representation_group: Identifier
+    model_ids: tuple[Identifier, ...]
+    cohort_roles: dict[Identifier, str]
+    requested_strategy: NormalizationStrategy
+    applied_strategy: str
+    cohort_size: int = Field(ge=0)
+    transformation: str
+    config_fingerprint: str = Field(pattern=r"^[a-f0-9]{64}$")
+    scored_input_fingerprint: str = Field(pattern=r"^[a-f0-9]{64}$")
+    normalization_trace: NormalizationTrace
+
+
+class ScoreScale(StrictModel):
+    id: str = Field(pattern=r"^[a-f0-9]{64}$")
+    scale_kind: ScaleKind
+    evidence_profile_id: str = Field(pattern=r"^[a-f0-9]{64}$")
+    normalization_panel_ids: tuple[str, ...]
+    formula_version: str
+    normalization_version: str
+    config_fingerprint: str = Field(pattern=r"^[a-f0-9]{64}$")
+
+
+class BenchmarkContribution(StrictModel):
+    benchmark_id: Identifier
+    cohort_key: Identifier
+    raw_value: float
+    raw_unit: Unit
+    direction: Direction
+    source_uncertainty: MeasurementUncertainty | None = None
+    configured_absolute_weight: float = Field(ge=0, le=1)
+    requested_normalization: NormalizationStrategy
+    applied_normalization: str
+    normalization_panel_id: str = Field(pattern=r"^[a-f0-9]{64}$")
+    normalized_value: float
+    weighted_contribution: float
+    normalization_trace: NormalizationTrace
+    source_record_ids: tuple[Identifier, ...]
 
 
 class EvidenceBenchmarkSeries(StrictModel):

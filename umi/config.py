@@ -189,6 +189,23 @@ class ProjectConfig(ConfigModel):
                 raise ValueError(f"benchmark {benchmark.id} references unknown family")
             if family.domain != benchmark.domain:
                 raise ValueError(f"benchmark {benchmark.id} domain differs from its family")
+        representation_groups: dict[tuple[str, str], list[BenchmarkDefinition]] = {}
+        for benchmark in self.benchmarks:
+            key = (benchmark.family, benchmark.representation_group or benchmark.id)
+            representation_groups.setdefault(key, []).append(benchmark)
+        for (family_id, group_id), definitions in representation_groups.items():
+            canonical = [item for item in definitions if item.selection_priority == 0]
+            if len(canonical) != 1:
+                raise ValueError(
+                    f"representation group {family_id}/{group_id} must have exactly one "
+                    "priority-zero canonical representation"
+                )
+            priorities = [item.selection_priority for item in definitions]
+            if len(priorities) != len(set(priorities)):
+                raise ValueError(
+                    f"representation group {family_id}/{group_id} selection priorities "
+                    "must be unique"
+                )
         for domain in self.weights.capability_domains:
             domain_families = [item for item in self.families if item.domain == domain]
             weights = [item.weight for item in domain_families]

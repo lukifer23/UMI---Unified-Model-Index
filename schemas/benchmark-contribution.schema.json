@@ -1,0 +1,293 @@
+{
+  "$defs": {
+    "Direction": {
+      "enum": [
+        "higher",
+        "lower"
+      ],
+      "title": "Direction",
+      "type": "string"
+    },
+    "MeasurementUncertainty": {
+      "additionalProperties": false,
+      "description": "Literal uncertainty metadata supplied by one source record.",
+      "properties": {
+        "confidence_level": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence Level"
+        },
+        "kind": {
+          "$ref": "#/$defs/UncertaintyKind"
+        },
+        "lower": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lower"
+        },
+        "margin": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Margin"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "source_fields": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Source Fields",
+          "type": "array"
+        },
+        "standard_error": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Standard Error"
+        },
+        "upper": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Upper"
+        }
+      },
+      "required": [
+        "kind",
+        "source_fields"
+      ],
+      "title": "MeasurementUncertainty",
+      "type": "object"
+    },
+    "NormalizationStrategy": {
+      "enum": [
+        "robust_z",
+        "percentile"
+      ],
+      "title": "NormalizationStrategy",
+      "type": "string"
+    },
+    "NormalizationTrace": {
+      "additionalProperties": false,
+      "properties": {
+        "applied_strategy": {
+          "minLength": 1,
+          "title": "Applied Strategy",
+          "type": "string"
+        },
+        "cohort_size": {
+          "minimum": 0,
+          "title": "Cohort Size",
+          "type": "integer"
+        },
+        "direction_inverted": {
+          "title": "Direction Inverted",
+          "type": "boolean"
+        },
+        "fallback_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fallback Reason"
+        },
+        "log_transform": {
+          "title": "Log Transform",
+          "type": "boolean"
+        },
+        "minimum_rank_cohort": {
+          "exclusiveMinimum": 0,
+          "title": "Minimum Rank Cohort",
+          "type": "integer"
+        },
+        "minimum_robust_cohort": {
+          "exclusiveMinimum": 0,
+          "title": "Minimum Robust Cohort",
+          "type": "integer"
+        },
+        "provisional": {
+          "title": "Provisional",
+          "type": "boolean"
+        },
+        "requested_strategy": {
+          "$ref": "#/$defs/NormalizationStrategy"
+        }
+      },
+      "required": [
+        "requested_strategy",
+        "applied_strategy",
+        "cohort_size",
+        "minimum_robust_cohort",
+        "minimum_rank_cohort",
+        "log_transform",
+        "direction_inverted",
+        "provisional"
+      ],
+      "title": "NormalizationTrace",
+      "type": "object"
+    },
+    "UncertaintyKind": {
+      "enum": [
+        "confidence_interval",
+        "published_margin",
+        "standard_error"
+      ],
+      "title": "UncertaintyKind",
+      "type": "string"
+    },
+    "Unit": {
+      "enum": [
+        "percent",
+        "score",
+        "tokens",
+        "seconds",
+        "turns",
+        "calls",
+        "usd"
+      ],
+      "title": "Unit",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "applied_normalization": {
+      "title": "Applied Normalization",
+      "type": "string"
+    },
+    "benchmark_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Benchmark Id",
+      "type": "string"
+    },
+    "cohort_key": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Cohort Key",
+      "type": "string"
+    },
+    "configured_absolute_weight": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Configured Absolute Weight",
+      "type": "number"
+    },
+    "direction": {
+      "$ref": "#/$defs/Direction"
+    },
+    "normalization_panel_id": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Normalization Panel Id",
+      "type": "string"
+    },
+    "normalization_trace": {
+      "$ref": "#/$defs/NormalizationTrace"
+    },
+    "normalized_value": {
+      "title": "Normalized Value",
+      "type": "number"
+    },
+    "raw_unit": {
+      "$ref": "#/$defs/Unit"
+    },
+    "raw_value": {
+      "title": "Raw Value",
+      "type": "number"
+    },
+    "requested_normalization": {
+      "$ref": "#/$defs/NormalizationStrategy"
+    },
+    "source_record_ids": {
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "title": "Source Record Ids",
+      "type": "array"
+    },
+    "source_uncertainty": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MeasurementUncertainty"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "weighted_contribution": {
+      "title": "Weighted Contribution",
+      "type": "number"
+    }
+  },
+  "required": [
+    "benchmark_id",
+    "cohort_key",
+    "raw_value",
+    "raw_unit",
+    "direction",
+    "configured_absolute_weight",
+    "requested_normalization",
+    "applied_normalization",
+    "normalization_panel_id",
+    "normalized_value",
+    "weighted_contribution",
+    "normalization_trace",
+    "source_record_ids"
+  ],
+  "title": "BenchmarkContribution",
+  "type": "object"
+}

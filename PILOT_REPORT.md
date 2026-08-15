@@ -7,7 +7,7 @@
 The five configurations remain visible, but none passes the inherited v0.2.1 coverage, component,
 workload, and Capability-domain gates. This is the expected outcome, not a failed run.
 
-## Accepted scored evidence
+## Scored raw evidence
 
 | Configuration | ARC-AGI-2 | DeepSWE v1.1 (95% CI) | GPQA | SciCode | CritPt | Partial Capability | Partial Efficiency | Headline |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -22,6 +22,19 @@ four earlier task families and three domains. GLM covers 35.625% across four fam
 Fable covers only DeepSWE at 16.5%. Those model-specific partials are not directly rankable across
 evidence profiles and are not Overall scores. Fable is also release-window-ineligible because its
 2026-06-09 release predates the 2026-06-15 start.
+
+## Stable-panel normalized contributions
+
+The five-model common comparison uses DeepSWE as its single common raw metric. Its secondary
+percentile scale is fitted once to Fable, Opus, GLM, Sol, and Kimi, then reused for every display
+subset. The three-model Opus/Kimi/GLM comparison uses DeepSWE, GPQA, SciCode, and CritPt; DeepSWE
+still uses the five-model panel and GPQA still uses its four accepted models. For example, Kimi's
+DeepSWE stable-panel percentile remains 25 whether Sol is displayed or omitted.
+
+Every processed comparison exposes the panel members and IDs, requested `robust_z` strategy,
+applied small-cohort percentile fallback, raw contributions, absolute configured weights, composite
+score, evidence-profile ID, and score-scale ID. These percentile positions are relative ranks on a
+declared panel, not capability-distance measurements.
 
 ## Diagnostic evidence
 
@@ -64,7 +77,8 @@ have no model-specific rank and null `headline_overall` for every model. The fiv
 uses DeepSWE only because Fable's other benchmark identities are not cleared; the exact three-model
 [common-evidence comparison](data/pilots/v0.3/processed/common-evidence-three-model-comparison.json)
 uses all four scored series under the current strict identity policy. Both are provisional and separately
-labeled. The [source-bound uncertainty report](data/pilots/v0.3/processed/source-bound-uncertainty.json)
+labeled, lead with raw values, and carry stable-panel and score-scale identity. The
+[source-bound uncertainty report](data/pilots/v0.3/processed/source-bound-uncertainty.json)
 re-scores one published bound at a time; it is not probabilistic propagation. The
 [source readiness report](data/pilots/v0.3/processed/source-readiness.json),
 [overlap report](data/pilots/v0.3/processed/overlap.json), and

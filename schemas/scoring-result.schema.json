@@ -67,6 +67,26 @@
           ],
           "default": null
         },
+        "evidence_profile_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence Profile Id"
+        },
+        "normalization_panel_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Normalization Panel Ids",
+          "type": "array"
+        },
         "provisional": {
           "default": false,
           "title": "Provisional",
@@ -82,6 +102,23 @@
             }
           ],
           "title": "Score"
+        },
+        "score_scale_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Score Scale Id"
+        },
+        "score_semantics": {
+          "default": "unscored",
+          "title": "Score Semantics",
+          "type": "string"
         },
         "source_record_ids": {
           "default": [],

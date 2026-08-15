@@ -1,11 +1,18 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from statistics import median
 from typing import TypeVar
 
 from umi.provenance import select_best_tier
-from umi.schemas import ComponentScore, Domain, Provenance
+from umi.schemas import (
+    BenchmarkContribution,
+    ComponentScore,
+    Domain,
+    NormalizationPanel,
+    Provenance,
+    ScoreScale,
+)
 
 P = TypeVar("P", bound=Provenance)
 
@@ -15,6 +22,9 @@ class ComponentComputation:
     components: dict[str, ComponentScore]
     evidence: dict[str, tuple[Provenance, ...]]
     domains: dict[str, tuple[Domain, ...]]
+    normalization_panels: dict[str, NormalizationPanel] = field(default_factory=dict)
+    contributions: dict[str, tuple[BenchmarkContribution, ...]] = field(default_factory=dict)
+    score_scales: dict[str, ScoreScale] = field(default_factory=dict)
 
 
 def weighted_available(

@@ -1,0 +1,162 @@
+{
+  "$defs": {
+    "NormalizationStrategy": {
+      "enum": [
+        "robust_z",
+        "percentile"
+      ],
+      "title": "NormalizationStrategy",
+      "type": "string"
+    },
+    "NormalizationTrace": {
+      "additionalProperties": false,
+      "properties": {
+        "applied_strategy": {
+          "minLength": 1,
+          "title": "Applied Strategy",
+          "type": "string"
+        },
+        "cohort_size": {
+          "minimum": 0,
+          "title": "Cohort Size",
+          "type": "integer"
+        },
+        "direction_inverted": {
+          "title": "Direction Inverted",
+          "type": "boolean"
+        },
+        "fallback_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fallback Reason"
+        },
+        "log_transform": {
+          "title": "Log Transform",
+          "type": "boolean"
+        },
+        "minimum_rank_cohort": {
+          "exclusiveMinimum": 0,
+          "title": "Minimum Rank Cohort",
+          "type": "integer"
+        },
+        "minimum_robust_cohort": {
+          "exclusiveMinimum": 0,
+          "title": "Minimum Robust Cohort",
+          "type": "integer"
+        },
+        "provisional": {
+          "title": "Provisional",
+          "type": "boolean"
+        },
+        "requested_strategy": {
+          "$ref": "#/$defs/NormalizationStrategy"
+        }
+      },
+      "required": [
+        "requested_strategy",
+        "applied_strategy",
+        "cohort_size",
+        "minimum_robust_cohort",
+        "minimum_rank_cohort",
+        "log_transform",
+        "direction_inverted",
+        "provisional"
+      ],
+      "title": "NormalizationTrace",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "applied_strategy": {
+      "title": "Applied Strategy",
+      "type": "string"
+    },
+    "benchmark_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Benchmark Id",
+      "type": "string"
+    },
+    "canonical_representation_group": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Canonical Representation Group",
+      "type": "string"
+    },
+    "cohort_key": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Cohort Key",
+      "type": "string"
+    },
+    "cohort_roles": {
+      "patternProperties": {
+        "^[a-z0-9][a-z0-9._-]*$": {
+          "type": "string"
+        }
+      },
+      "title": "Cohort Roles",
+      "type": "object"
+    },
+    "cohort_size": {
+      "minimum": 0,
+      "title": "Cohort Size",
+      "type": "integer"
+    },
+    "config_fingerprint": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Config Fingerprint",
+      "type": "string"
+    },
+    "id": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "model_ids": {
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "title": "Model Ids",
+      "type": "array"
+    },
+    "normalization_trace": {
+      "$ref": "#/$defs/NormalizationTrace"
+    },
+    "requested_strategy": {
+      "$ref": "#/$defs/NormalizationStrategy"
+    },
+    "scored_input_fingerprint": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Scored Input Fingerprint",
+      "type": "string"
+    },
+    "transformation": {
+      "title": "Transformation",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "benchmark_id",
+    "cohort_key",
+    "canonical_representation_group",
+    "model_ids",
+    "cohort_roles",
+    "requested_strategy",
+    "applied_strategy",
+    "cohort_size",
+    "transformation",
+    "config_fingerprint",
+    "scored_input_fingerprint",
+    "normalization_trace"
+  ],
+  "title": "NormalizationPanel",
+  "type": "object"
+}

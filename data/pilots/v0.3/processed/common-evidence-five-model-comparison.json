@@ -2,11 +2,12 @@
   "common_benchmark_series": [
     {
       "benchmark_id": "deepswe-v1.1",
+      "canonical_representation_group": "deepswe-v1.1",
       "cohort_key": "deepswe-v1.1-2026-08-13"
     }
   ],
   "common_evidence_profile_id": "6c44eb1c4619794fa431fab8b2549f8057098386a8d85d0bd6c8ca6274a41334",
-  "comparison_group_id": "5202f402b39d13cfd54b2c820d4e85ffd01d63fb15025c723a3487f7a38ca1a9",
+  "comparison_group_id": "11fcb31255c1c401994521c2f2646de8abcfac78592995d3c72db065a58f78e6",
   "comparison_model_ids": [
     "claude-fable-5-max",
     "claude-opus-5-max",
@@ -15,43 +16,459 @@
     "kimi-k3-max"
   ],
   "component": "capability",
-  "normalization_method": "configured per benchmark series",
+  "normalization_method": "bundle-wide stable panel per canonical benchmark series",
+  "normalization_panels": [
+    {
+      "applied_strategy": "percentile",
+      "benchmark_id": "deepswe-v1.1",
+      "canonical_representation_group": "deepswe-v1.1",
+      "cohort_key": "deepswe-v1.1-2026-08-13",
+      "cohort_roles": {
+        "claude-fable-5-max": "normalization_member",
+        "claude-opus-5-max": "normalization_member",
+        "glm-5.2-max": "normalization_member",
+        "gpt-5.6-sol-max": "normalization_member",
+        "kimi-k3-max": "normalization_member"
+      },
+      "cohort_size": 5,
+      "config_fingerprint": "97ee08d361e603252286b0137d80e778130e19b3bbf5af36ec3dfd64358278c7",
+      "id": "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d",
+      "model_ids": [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max"
+      ],
+      "normalization_trace": {
+        "applied_strategy": "percentile",
+        "cohort_size": 5,
+        "direction_inverted": false,
+        "fallback_reason": "below_minimum_robust_cohort",
+        "log_transform": false,
+        "minimum_rank_cohort": 2,
+        "minimum_robust_cohort": 8,
+        "provisional": true,
+        "requested_strategy": "robust_z"
+      },
+      "requested_strategy": "robust_z",
+      "scored_input_fingerprint": "29d91b81e2992f34366a3468a87f8bb455f0ff85b9583861407efd223bbacb1e",
+      "transformation": "identity"
+    }
+  ],
+  "primary_result_semantics": "raw benchmark metrics",
   "publication_label": "real evidence, provisional common-evidence comparison",
+  "score_scale": {
+    "config_fingerprint": "97ee08d361e603252286b0137d80e778130e19b3bbf5af36ec3dfd64358278c7",
+    "evidence_profile_id": "6c44eb1c4619794fa431fab8b2549f8057098386a8d85d0bd6c8ca6274a41334",
+    "formula_version": "umi-methodology-v0.3.4",
+    "id": "66a27b0fbb05dffb5b4e003b5e23f2cc6c62ce54b7d395496030b24bd69bb587",
+    "normalization_panel_ids": [
+      "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d"
+    ],
+    "normalization_version": "umi-normalization-v0.3.4",
+    "scale_kind": "stable_panel_percentile"
+  },
   "scores": [
     {
+      "contributions": [
+        {
+          "applied_normalization": "percentile",
+          "benchmark_id": "deepswe-v1.1",
+          "cohort_key": "deepswe-v1.1-2026-08-13",
+          "configured_absolute_weight": 0.165,
+          "direction": "higher",
+          "normalization_panel_id": "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d",
+          "normalization_trace": {
+            "applied_strategy": "percentile",
+            "cohort_size": 5,
+            "direction_inverted": false,
+            "fallback_reason": "below_minimum_robust_cohort",
+            "log_transform": false,
+            "minimum_rank_cohort": 2,
+            "minimum_robust_cohort": 8,
+            "provisional": true,
+            "requested_strategy": "robust_z"
+          },
+          "normalized_value": 50.0,
+          "raw_unit": "percent",
+          "raw_value": 69.72477064220183,
+          "requested_normalization": "robust_z",
+          "source_record_ids": [
+            "deepswe-score-claude-fable-5-max-2026-08-13"
+          ],
+          "source_uncertainty": {
+            "confidence_level": 0.95,
+            "kind": "confidence_interval",
+            "lower": 65.6912963913939,
+            "margin": null,
+            "notes": "95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))",
+            "source_fields": [
+              "ci_lower",
+              "ci_upper",
+              "ci_method"
+            ],
+            "standard_error": null,
+            "upper": 73.75824489300977
+          },
+          "weighted_contribution": 8.25
+        }
+      ],
       "coverage": 0.165,
+      "evidence_profile_id": "6c44eb1c4619794fa431fab8b2549f8057098386a8d85d0bd6c8ca6274a41334",
       "model_id": "claude-fable-5-max",
+      "normalization_panel_ids": [
+        "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d"
+      ],
+      "normalized_composite_score": 50.0,
+      "primary_raw_results": [
+        {
+          "benchmark_id": "deepswe-v1.1",
+          "cohort_key": "deepswe-v1.1-2026-08-13",
+          "direction": "higher",
+          "raw_unit": "percent",
+          "raw_value": 69.72477064220183,
+          "source_uncertainty": {
+            "confidence_level": 0.95,
+            "kind": "confidence_interval",
+            "lower": 65.6912963913939,
+            "margin": null,
+            "notes": "95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))",
+            "source_fields": [
+              "ci_lower",
+              "ci_upper",
+              "ci_method"
+            ],
+            "standard_error": null,
+            "upper": 73.75824489300977
+          }
+        }
+      ],
       "provisional": true,
       "rank": 3.0,
-      "score": 50.0
+      "score": 50.0,
+      "score_scale_id": "66a27b0fbb05dffb5b4e003b5e23f2cc6c62ce54b7d395496030b24bd69bb587",
+      "score_semantics": "stable-panel percentile position"
     },
     {
+      "contributions": [
+        {
+          "applied_normalization": "percentile",
+          "benchmark_id": "deepswe-v1.1",
+          "cohort_key": "deepswe-v1.1-2026-08-13",
+          "configured_absolute_weight": 0.165,
+          "direction": "higher",
+          "normalization_panel_id": "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d",
+          "normalization_trace": {
+            "applied_strategy": "percentile",
+            "cohort_size": 5,
+            "direction_inverted": false,
+            "fallback_reason": "below_minimum_robust_cohort",
+            "log_transform": false,
+            "minimum_rank_cohort": 2,
+            "minimum_robust_cohort": 8,
+            "provisional": true,
+            "requested_strategy": "robust_z"
+          },
+          "normalized_value": 100.0,
+          "raw_unit": "percent",
+          "raw_value": 73.64864864864865,
+          "requested_normalization": "robust_z",
+          "source_record_ids": [
+            "deepswe-score-claude-opus-5-max-2026-08-13"
+          ],
+          "source_uncertainty": {
+            "confidence_level": 0.95,
+            "kind": "confidence_interval",
+            "lower": 69.77633822227692,
+            "margin": null,
+            "notes": "95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))",
+            "source_fields": [
+              "ci_lower",
+              "ci_upper",
+              "ci_method"
+            ],
+            "standard_error": null,
+            "upper": 77.52095907502039
+          },
+          "weighted_contribution": 16.5
+        }
+      ],
       "coverage": 0.165,
+      "evidence_profile_id": "6c44eb1c4619794fa431fab8b2549f8057098386a8d85d0bd6c8ca6274a41334",
       "model_id": "claude-opus-5-max",
+      "normalization_panel_ids": [
+        "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d"
+      ],
+      "normalized_composite_score": 100.0,
+      "primary_raw_results": [
+        {
+          "benchmark_id": "deepswe-v1.1",
+          "cohort_key": "deepswe-v1.1-2026-08-13",
+          "direction": "higher",
+          "raw_unit": "percent",
+          "raw_value": 73.64864864864865,
+          "source_uncertainty": {
+            "confidence_level": 0.95,
+            "kind": "confidence_interval",
+            "lower": 69.77633822227692,
+            "margin": null,
+            "notes": "95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))",
+            "source_fields": [
+              "ci_lower",
+              "ci_upper",
+              "ci_method"
+            ],
+            "standard_error": null,
+            "upper": 77.52095907502039
+          }
+        }
+      ],
       "provisional": true,
       "rank": 1.0,
-      "score": 100.0
+      "score": 100.0,
+      "score_scale_id": "66a27b0fbb05dffb5b4e003b5e23f2cc6c62ce54b7d395496030b24bd69bb587",
+      "score_semantics": "stable-panel percentile position"
     },
     {
+      "contributions": [
+        {
+          "applied_normalization": "percentile",
+          "benchmark_id": "deepswe-v1.1",
+          "cohort_key": "deepswe-v1.1-2026-08-13",
+          "configured_absolute_weight": 0.165,
+          "direction": "higher",
+          "normalization_panel_id": "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d",
+          "normalization_trace": {
+            "applied_strategy": "percentile",
+            "cohort_size": 5,
+            "direction_inverted": false,
+            "fallback_reason": "below_minimum_robust_cohort",
+            "log_transform": false,
+            "minimum_rank_cohort": 2,
+            "minimum_robust_cohort": 8,
+            "provisional": true,
+            "requested_strategy": "robust_z"
+          },
+          "normalized_value": 0.0,
+          "raw_unit": "percent",
+          "raw_value": 43.77777777777778,
+          "requested_normalization": "robust_z",
+          "source_record_ids": [
+            "deepswe-score-glm-5.2-max-2026-08-13"
+          ],
+          "source_uncertainty": {
+            "confidence_level": 0.95,
+            "kind": "confidence_interval",
+            "lower": 42.05214815719697,
+            "margin": null,
+            "notes": "95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))",
+            "source_fields": [
+              "ci_lower",
+              "ci_upper",
+              "ci_method"
+            ],
+            "standard_error": null,
+            "upper": 45.50340739835859
+          },
+          "weighted_contribution": 0.0
+        }
+      ],
       "coverage": 0.165,
+      "evidence_profile_id": "6c44eb1c4619794fa431fab8b2549f8057098386a8d85d0bd6c8ca6274a41334",
       "model_id": "glm-5.2-max",
+      "normalization_panel_ids": [
+        "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d"
+      ],
+      "normalized_composite_score": 0.0,
+      "primary_raw_results": [
+        {
+          "benchmark_id": "deepswe-v1.1",
+          "cohort_key": "deepswe-v1.1-2026-08-13",
+          "direction": "higher",
+          "raw_unit": "percent",
+          "raw_value": 43.77777777777778,
+          "source_uncertainty": {
+            "confidence_level": 0.95,
+            "kind": "confidence_interval",
+            "lower": 42.05214815719697,
+            "margin": null,
+            "notes": "95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))",
+            "source_fields": [
+              "ci_lower",
+              "ci_upper",
+              "ci_method"
+            ],
+            "standard_error": null,
+            "upper": 45.50340739835859
+          }
+        }
+      ],
       "provisional": true,
       "rank": 5.0,
-      "score": 0.0
+      "score": 0.0,
+      "score_scale_id": "66a27b0fbb05dffb5b4e003b5e23f2cc6c62ce54b7d395496030b24bd69bb587",
+      "score_semantics": "stable-panel percentile position"
     },
     {
+      "contributions": [
+        {
+          "applied_normalization": "percentile",
+          "benchmark_id": "deepswe-v1.1",
+          "cohort_key": "deepswe-v1.1-2026-08-13",
+          "configured_absolute_weight": 0.165,
+          "direction": "higher",
+          "normalization_panel_id": "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d",
+          "normalization_trace": {
+            "applied_strategy": "percentile",
+            "cohort_size": 5,
+            "direction_inverted": false,
+            "fallback_reason": "below_minimum_robust_cohort",
+            "log_transform": false,
+            "minimum_rank_cohort": 2,
+            "minimum_robust_cohort": 8,
+            "provisional": true,
+            "requested_strategy": "robust_z"
+          },
+          "normalized_value": 75.0,
+          "raw_unit": "percent",
+          "raw_value": 72.66666666666667,
+          "requested_normalization": "robust_z",
+          "source_record_ids": [
+            "deepswe-score-gpt-5.6-sol-max-2026-08-13"
+          ],
+          "source_uncertainty": {
+            "confidence_level": 0.95,
+            "kind": "confidence_interval",
+            "lower": 69.83684441682949,
+            "margin": null,
+            "notes": "95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))",
+            "source_fields": [
+              "ci_lower",
+              "ci_upper",
+              "ci_method"
+            ],
+            "standard_error": null,
+            "upper": 75.49648891650385
+          },
+          "weighted_contribution": 12.375
+        }
+      ],
       "coverage": 0.165,
+      "evidence_profile_id": "6c44eb1c4619794fa431fab8b2549f8057098386a8d85d0bd6c8ca6274a41334",
       "model_id": "gpt-5.6-sol-max",
+      "normalization_panel_ids": [
+        "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d"
+      ],
+      "normalized_composite_score": 75.0,
+      "primary_raw_results": [
+        {
+          "benchmark_id": "deepswe-v1.1",
+          "cohort_key": "deepswe-v1.1-2026-08-13",
+          "direction": "higher",
+          "raw_unit": "percent",
+          "raw_value": 72.66666666666667,
+          "source_uncertainty": {
+            "confidence_level": 0.95,
+            "kind": "confidence_interval",
+            "lower": 69.83684441682949,
+            "margin": null,
+            "notes": "95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))",
+            "source_fields": [
+              "ci_lower",
+              "ci_upper",
+              "ci_method"
+            ],
+            "standard_error": null,
+            "upper": 75.49648891650385
+          }
+        }
+      ],
       "provisional": true,
       "rank": 2.0,
-      "score": 75.0
+      "score": 75.0,
+      "score_scale_id": "66a27b0fbb05dffb5b4e003b5e23f2cc6c62ce54b7d395496030b24bd69bb587",
+      "score_semantics": "stable-panel percentile position"
     },
     {
+      "contributions": [
+        {
+          "applied_normalization": "percentile",
+          "benchmark_id": "deepswe-v1.1",
+          "cohort_key": "deepswe-v1.1-2026-08-13",
+          "configured_absolute_weight": 0.165,
+          "direction": "higher",
+          "normalization_panel_id": "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d",
+          "normalization_trace": {
+            "applied_strategy": "percentile",
+            "cohort_size": 5,
+            "direction_inverted": false,
+            "fallback_reason": "below_minimum_robust_cohort",
+            "log_transform": false,
+            "minimum_rank_cohort": 2,
+            "minimum_robust_cohort": 8,
+            "provisional": true,
+            "requested_strategy": "robust_z"
+          },
+          "normalized_value": 25.0,
+          "raw_unit": "percent",
+          "raw_value": 68.51441241685144,
+          "requested_normalization": "robust_z",
+          "source_record_ids": [
+            "deepswe-score-kimi-k3-max-2026-08-13"
+          ],
+          "source_uncertainty": {
+            "confidence_level": 0.95,
+            "kind": "confidence_interval",
+            "lower": 63.97739833756913,
+            "margin": null,
+            "notes": "95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))",
+            "source_fields": [
+              "ci_lower",
+              "ci_upper",
+              "ci_method"
+            ],
+            "standard_error": null,
+            "upper": 73.05142649613376
+          },
+          "weighted_contribution": 4.125
+        }
+      ],
       "coverage": 0.165,
+      "evidence_profile_id": "6c44eb1c4619794fa431fab8b2549f8057098386a8d85d0bd6c8ca6274a41334",
       "model_id": "kimi-k3-max",
+      "normalization_panel_ids": [
+        "56e3f550ea6597d31c4822444f3bac017c76514cc21b7c8c01d3a61d16d6177d"
+      ],
+      "normalized_composite_score": 25.0,
+      "primary_raw_results": [
+        {
+          "benchmark_id": "deepswe-v1.1",
+          "cohort_key": "deepswe-v1.1-2026-08-13",
+          "direction": "higher",
+          "raw_unit": "percent",
+          "raw_value": 68.51441241685144,
+          "source_uncertainty": {
+            "confidence_level": 0.95,
+            "kind": "confidence_interval",
+            "lower": 63.97739833756913,
+            "margin": null,
+            "notes": "95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))",
+            "source_fields": [
+              "ci_lower",
+              "ci_upper",
+              "ci_method"
+            ],
+            "standard_error": null,
+            "upper": 73.05142649613376
+          }
+        }
+      ],
       "provisional": true,
       "rank": 4.0,
-      "score": 25.0
+      "score": 25.0,
+      "score_scale_id": "66a27b0fbb05dffb5b4e003b5e23f2cc6c62ce54b7d395496030b24bd69bb587",
+      "score_semantics": "stable-panel percentile position"
     }
   ]
 }

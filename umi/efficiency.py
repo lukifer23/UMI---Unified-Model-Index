@@ -7,8 +7,8 @@ from umi.config import ProjectConfig
 from umi.derived_metrics import EFFICIENCY_ATTRIBUTES, consolidate_derived
 from umi.evidence_profiles import workload_profile
 from umi.loading import Dataset
-from umi.normalize import normalize_cohort
-from umi.schemas import ComponentScore, Direction, EfficiencyMeasurement, Provenance
+from umi.normalize import build_score_scale, normalize_cohort, normalized_series_panel_id
+from umi.schemas import ComponentScore, Direction, EfficiencyMeasurement, Provenance, ScoreScale
 from umi.workloads import aggregate_workloads
 
 
@@ -24,6 +24,7 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
     provisional_by_model: dict[str, set[str]] = defaultdict(set)
     diagnostics: dict[str, list[str]] = defaultdict(list)
     profile_series: dict[str, set[str]] = defaultdict(set)
+    panel_ids_by_model: dict[str, set[str]] = defaultdict(set)
     workload_definitions = {item.id: item for item in config.workloads}
     workload_families = {item.id: item for item in config.workload_families}
 
@@ -56,10 +57,22 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                 minimum_robust_cohort=config.normalization.minimum_robust_cohort,
                 minimum_rank_cohort=config.normalization.minimum_rank_cohort,
             )
+            panel_id = normalized_series_panel_id(
+                {
+                    "component": "efficiency",
+                    "workload": workload,
+                    "cohort_key": cohort_key,
+                    "metric": metric,
+                },
+                raw_values,
+                normalized.trace,
+                config.fingerprint,
+            )
             for model_id, score in normalized.scores.items():
                 if score is None:
                     continue
                 normalized_scores[metric][workload][model_id].append(score)
+                panel_ids_by_model[model_id].add(panel_id)
                 profile_series[model_id].add(
                     f"{family.category.value}/{family.id}/{workload}/{cohort_key}/{metric}"
                 )
@@ -67,6 +80,7 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                     provisional_by_model[model_id].add(f"{workload}/{cohort_key}/{metric}")
 
     output: dict[str, ComponentScore] = {}
+    scales: dict[str, ScoreScale] = {}
     for model in dataset.models:
         category_values: dict[str, float | None] = {}
         category_coverages: dict[str, float] = {}
@@ -111,6 +125,17 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                 "provisional normalization cohorts: " + ", ".join(sorted(provisional_ids))
             )
         records_by_id = {item.record_id: item for item in selected_by_model[model.id]}
+        profile = workload_profile(
+            "efficiency", profile_series[model.id], records_by_id.values(), config
+        )
+        panel_ids = tuple(sorted(panel_ids_by_model[model.id]))
+        scale = (
+            build_score_scale(profile.id, panel_ids, config.fingerprint)
+            if score is not None
+            else None
+        )
+        if scale is not None:
+            scales[model.id] = scale
         output[model.id] = ComponentScore(
             score=score,
             coverage=coverage,
@@ -132,8 +157,12 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                     for family, value in family_coverages.items()
                 },
             },
-            evidence_profile=workload_profile(
-                "efficiency", profile_series[model.id], records_by_id.values(), config
+            evidence_profile=profile,
+            evidence_profile_id=profile.id,
+            normalization_panel_ids=panel_ids,
+            score_scale_id=scale.id if scale is not None else None,
+            score_semantics=(
+                "cohort-relative normalized workload composite" if score is not None else "unscored"
             ),
         )
     for model_id, component in output.items():
@@ -146,9 +175,10 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                 other_id
                 for other_id, other in output.items()
                 if has_support
+                and component.score_scale_id is not None
                 and other_id != model_id
-                and other.evidence_profile
-                and other.evidence_profile.id == profile_id
+                and other.evidence_profile_id == profile_id
+                and other.score_scale_id == component.score_scale_id
             )
         )
         output[model_id] = component.model_copy(
@@ -157,19 +187,22 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                 "comparability_status": (
                     "directly_comparable"
                     if peers
-                    else "different_evidence_profile"
+                    else "missing_score_scale_identity"
                     if has_support
                     else "insufficient_common_support"
                 ),
                 "comparability_reasons": (
                     ("same efficiency workload support and configuration",)
                     if peers
-                    else ("no other model has the same efficiency evidence profile",)
+                    else ("efficiency score-scale identity is not yet emitted",)
                     if has_support
                     else ("no ready efficiency workload support",)
                 ),
             }
         )
     return ComponentComputation(
-        output, {key: tuple(value) for key, value in selected_by_model.items()}, {}
+        output,
+        {key: tuple(value) for key, value in selected_by_model.items()},
+        {},
+        score_scales=scales,
     )

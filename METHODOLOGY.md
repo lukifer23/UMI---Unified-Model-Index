@@ -219,7 +219,16 @@ records are never paired.
 
 ## Normalization
 
-Normalization is cohort-relative and deterministic.
+Normalization is cohort-relative and deterministic. Production comparisons use a stable panel for
+each `(benchmark_id, cohort_key, canonical_representation_group)` series. That panel contains every
+ready, compatible normalization member in the accepted scored bundle; filtering the displayed
+models never refits it. A local-subset percentile is not a production mode.
+
+Each representation group has exactly one configured priority-zero canonical representation.
+Aliases use a larger explicit `selection_priority`. For one model and cohort, UMI uses the available
+representation with the lowest configured priority, so adding a later-sorting or earlier-sorting
+alias cannot displace canonical evidence. Common support and panel identity use the canonical group,
+while selected alias record IDs remain visible in provenance.
 
 - At least eight observations: apply the configured transform, then robust z-scores using
   `z = (x - median(x)) / (1.4826 * MAD)`, followed by the standard normal CDF mapped to 0–100.
@@ -230,6 +239,14 @@ Normalization is cohort-relative and deterministic.
   `normalization.yaml`.
 - Lower-is-better metrics are inverted after transformation so that every normalized score has
   “higher is better” semantics.
+
+Every applied normalization exposes its requested strategy, actual strategy, panel size, thresholds,
+fallback reason, transform, direction inversion, and provisional flag. A stable-panel score is a
+relative position, not a raw capability distance. Comparisons therefore lead with raw benchmark
+values and expose normalized values, configured absolute weights, weighted contributions, panel
+IDs, evidence-profile IDs, and one score-scale ID. Normalized composite scores are directly
+comparable only when evidence profile, score scale, formula version, normalization version, and
+configuration fingerprint all match.
 
 The baseline robust-z threshold is eight observations. Five-model pilot series therefore use
 average-rank percentiles, are explicitly marked small-cohort, and cannot be presented as precise

@@ -8,7 +8,15 @@ from pydantic import BaseModel
 from umi.adapters.models import AdaptationResult
 from umi.config import ProjectConfig
 from umi.loading import Dataset, SourceRegistry
-from umi.schemas import AcceptanceManifest, ModelCrosswalk, OverlapPolicy, ScoringResult
+from umi.schemas import (
+    AcceptanceManifest,
+    BenchmarkContribution,
+    ModelCrosswalk,
+    NormalizationPanel,
+    OverlapPolicy,
+    ScoreScale,
+    ScoringResult,
+)
 
 SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "dataset.schema.json": Dataset,
@@ -19,6 +27,9 @@ SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "overlap-policy.schema.json": OverlapPolicy,
     "adaptation-result.schema.json": AdaptationResult,
     "acceptance-manifest.schema.json": AcceptanceManifest,
+    "normalization-panel.schema.json": NormalizationPanel,
+    "score-scale.schema.json": ScoreScale,
+    "benchmark-contribution.schema.json": BenchmarkContribution,
 }
 
 

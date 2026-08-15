@@ -77,6 +77,12 @@
           "title": "Representation Weight",
           "type": "number"
         },
+        "selection_priority": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Selection Priority",
+          "type": "integer"
+        },
         "signal_id": {
           "anyOf": [
             {

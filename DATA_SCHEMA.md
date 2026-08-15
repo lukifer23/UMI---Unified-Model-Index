@@ -105,7 +105,8 @@ without endpoint identity when the remaining identity and provenance gates pass.
 ## Benchmark configuration
 
 Benchmark definitions specify `id`, `name`, `domain`, `family`, `direction`, `unit`, positive
-`representation_weight`, normalization, optional `representation_group`, and aggregate/constituent
+`representation_weight`, normalization, optional `representation_group`, explicit
+`selection_priority`, and aggregate/constituent
 links. Aliases use the same representation group. Families specify `id`, domain, weight, and cap.
 
 Family weights in each represented domain sum to one, every weight is at most its cap, and caps sum
@@ -239,6 +240,17 @@ therefore fail `strict_audit_valid` without invalidating a governed score that d
 `headline_eligible` remains a per-model scoring-result property, not a dataset-validation shortcut.
 
 See `schemas/acceptance-manifest.schema.json` for the machine-readable manifest contract.
+
+Capability components expose `evidence_profile_id`, `normalization_panel_ids`, `score_scale_id`,
+and `score_semantics`. Each stable normalization panel binds one canonical benchmark representation,
+cohort, complete accepted model panel, cohort roles, requested and applied strategies, transform,
+configuration fingerprint, scored-input fingerprint, and full fallback trace. A score scale binds
+the evidence profile and all contributing panels to the formula, normalization, and configuration
+versions. Equality of evidence profile alone is not enough for direct normalized-score comparison.
+
+Common comparisons carry raw benchmark values and source uncertainty as the primary results. Their
+contributions also include raw unit and direction, absolute configured weight, requested versus
+applied normalization, panel ID, normalized value, weighted contribution, and source record IDs.
 
 ## Scoring result
 

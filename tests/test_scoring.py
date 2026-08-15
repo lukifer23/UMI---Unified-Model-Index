@@ -1,5 +1,6 @@
 import pytest
 
+from analysis.compare import common_capability_comparison
 from umi import __version__
 from umi.capability import score_capability
 from umi.config import ProjectConfig
@@ -91,6 +92,83 @@ def test_family_budget_prevents_duplicate_representation_from_adding_coverage(
     for model_id in baseline:
         assert expanded[model_id].coverage == baseline[model_id].coverage
         assert expanded[model_id].score == pytest.approx(baseline[model_id].score)
+
+
+def test_explicit_representation_priority_is_alias_order_invariant(
+    synthetic_dataset: Dataset, config: ProjectConfig
+) -> None:
+    source = next(item for item in config.benchmarks if item.id == "synthetic-general")
+    canonical = source.model_copy(
+        update={"representation_group": "synthetic-general", "selection_priority": 0}
+    )
+    alias = source.model_copy(
+        update={
+            "id": "a-synthetic-general-alias",
+            "name": "Lexically earlier alias",
+            "representation_group": "synthetic-general",
+            "selection_priority": 1,
+        }
+    )
+    expanded_config = ProjectConfig.model_validate(
+        {
+            **config.model_dump(mode="json"),
+            "benchmarks": [
+                canonical if item.id == source.id else item for item in config.benchmarks
+            ]
+            + [alias],
+        }
+    )
+    alias_measurements = tuple(
+        item.model_copy(
+            update={
+                "record_id": f"alias-{item.model_id}",
+                "benchmark_id": alias.id,
+                "value": 0.0,
+            }
+        )
+        for item in synthetic_dataset.benchmarks
+        if item.benchmark_id == source.id and item.result_type.value == "independent"
+    )
+    expanded_dataset = synthetic_dataset.model_copy(
+        update={"benchmarks": (*synthetic_dataset.benchmarks, *alias_measurements)}
+    )
+    baseline = score_capability(synthetic_dataset, config).components
+    expanded = score_capability(expanded_dataset, expanded_config).components
+    for model_id in baseline:
+        assert expanded[model_id].coverage == baseline[model_id].coverage
+        assert expanded[model_id].score == pytest.approx(baseline[model_id].score)
+
+    alias_only_epsilon = expanded_dataset.model_copy(
+        update={
+            "benchmarks": tuple(
+                item
+                for item in expanded_dataset.benchmarks
+                if not (
+                    item.model_id == "synthetic-epsilon"
+                    and item.benchmark_id == source.id
+                )
+            )
+        }
+    )
+    comparison = common_capability_comparison(
+        alias_only_epsilon,
+        expanded_config,
+        ("synthetic-alpha", "synthetic-epsilon"),
+    )
+    assert any(
+        item["benchmark_id"] == "synthetic-general"
+        and item["canonical_representation_group"] == "synthetic-general"
+        for item in comparison["common_benchmark_series"]
+    )
+    epsilon = next(
+        item for item in comparison["scores"] if item["model_id"] == "synthetic-epsilon"
+    )
+    general = next(
+        item
+        for item in epsilon["contributions"]
+        if item["benchmark_id"] == "synthetic-general"
+    )
+    assert general["source_record_ids"] == ["alias-synthetic-epsilon"]
 
 
 def test_small_cohort_scores_are_provisional(

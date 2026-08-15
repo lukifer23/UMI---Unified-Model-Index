@@ -1,0 +1,62 @@
+{
+  "$defs": {
+    "ScaleKind": {
+      "enum": [
+        "raw_metric",
+        "stable_panel_percentile",
+        "weighted_stable_panel_composite",
+        "anchored_score",
+        "latent_estimate"
+      ],
+      "title": "ScaleKind",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "config_fingerprint": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Config Fingerprint",
+      "type": "string"
+    },
+    "evidence_profile_id": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Evidence Profile Id",
+      "type": "string"
+    },
+    "formula_version": {
+      "title": "Formula Version",
+      "type": "string"
+    },
+    "id": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "normalization_panel_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Normalization Panel Ids",
+      "type": "array"
+    },
+    "normalization_version": {
+      "title": "Normalization Version",
+      "type": "string"
+    },
+    "scale_kind": {
+      "$ref": "#/$defs/ScaleKind"
+    }
+  },
+  "required": [
+    "id",
+    "scale_kind",
+    "evidence_profile_id",
+    "normalization_panel_ids",
+    "formula_version",
+    "normalization_version",
+    "config_fingerprint"
+  ],
+  "title": "ScoreScale",
+  "type": "object"
+}
