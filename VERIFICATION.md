@@ -1,4 +1,4 @@
-# UMI v0.3.10 verification record
+# UMI v0.3.11 verification record
 
 Verified on 2026-08-15 from `main` on macOS with Python 3.14.3 against the Python 3.11+
 project contract.
@@ -7,34 +7,34 @@ project contract.
 
 | Check | Outcome |
 |---|---|
-| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.10 as a wheel from the committed lock |
+| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.11 as a wheel from the committed lock |
 | `uv run --no-sync python -m scripts.build_v03_pilot` | passed; rebuilt all raw and processed pilot artifacts offline |
 | schema equality test against `umi.schema_export.rendered_schemas()` | passed; committed machine-readable schemas remain current |
-| `uv run pytest` | 121 passed |
-| `uv run pytest --cov=umi --cov=analysis --cov=scripts --cov-report=term-missing --cov-fail-under=90` | 121 passed; 93.36% combined coverage |
+| `uv run pytest` | 126 passed |
+| `uv run pytest --cov=umi --cov=analysis --cov=scripts --cov-report=term-missing --cov-fail-under=90` | 126 passed; 92.36% combined coverage |
 | `PYTHONPATH=. uv run --no-sync ruff check .` | passed |
 | `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 50 source files |
 | `umi sources validate --strict` | passed; complete registry, crosswalk, licensing, attribution, diagnostic, pricing, and release-claim audit is valid |
 | `umi crosswalk` and `umi overlap` | passed |
-| `umi bundle validate --data-dir data/pilots/v0.3/raw` | passed; acceptance manifest admits 49 records and excludes 8 diagnostic records with 0 unready scored records |
-| all sixteen offline `umi ingest --source ...` commands | passed: AA composite facts, AA HLE, AA GDPval, AA-LCR, AA Omniscience, AA τ³-Banking, CursorBench, Epoch ECI, Epoch benchmarks, both Arena cohorts, DeepSWE, and four lab-release sources |
+| `umi bundle validate --data-dir data/pilots/v0.3/raw` | passed; acceptance manifest admits 53 records and excludes 8 diagnostic records with 0 unready scored records |
+| all seventeen offline `umi ingest --source ...` commands | passed: AA composite facts, AA HLE, AA GDPval, AA-LCR, AA Omniscience, AA τ³-Banking, AA Terminal-Bench v2.1, CursorBench, Epoch ECI, Epoch benchmarks, both Arena cohorts, DeepSWE, and four lab-release sources |
 | documented validation, ingestion, scoring, comparison, analysis, and certificate CLI flows | passed with valid JSON output |
 | five-model and three-model common-evidence comparisons | passed; Kimi DeepSWE remains 25.0 on the identical five-model panel, and every raw/normalized contribution carries panel and scale identity |
-| joint comparison sensitivity | passed; 32 exhaustive five-model scenarios and 512 exhaustive three-model scenarios, with possible-rank and robust-dominance envelopes and no probability claims; the added Omniscience evidence makes the retained Opus/Kimi/GLM ranks robust at 1/2/3 |
-| `umi certificate` for Opus/Kimi/GLM | passed; ten common stable panels, 30 selected records, eight exact artifact checksums, 512 joint scenarios, deterministic result fingerprint `99731f1d…974b722` |
-| portable dashboard packaging | passed at 1440 px and 390 px; 16 blocks, ten charts, and four metrics rendered; source dialog passed; no overflow, external-request, or browser-error failure |
+| joint comparison sensitivity | passed; 32 exhaustive five-model scenarios and 512 exhaustive three-model scenarios, with possible-rank and robust-dominance envelopes and no probability claims; the retained Opus/Kimi/GLM ranks remain robust at 1/2/3 after adding Terminal-Bench |
+| `umi certificate` for Opus/Kimi/GLM | passed; eleven common stable panels, 33 selected records, nine exact artifact checksums, 512 joint scenarios, deterministic result fingerprint `237bb573…a8c5e9` |
+| portable dashboard packaging | passed at 1440 px and 390 px; 17 delivered blocks, eleven charts, and four metrics rendered; source dialog passed; no overflow, external-request, or browser-error failure |
 | isolated Python 3.11 and Python 3.14 full pilot rebuilds | passed byte-for-byte; governed floating-point aggregation now uses `math.fsum`, and canonical JSON plus embedded HTML payloads are identical across interpreter versions |
-| `uv build` plus fresh temporary-environment wheel installs outside the checkout | passed on Python 3.11.15 and 3.14.3; the wheels were byte-identical at SHA-256 `8ead7fec5c6e5adf1ddc32fe4f7850ac448410cb49a5ad5fe74f3ad6ac6ac148`, and `import umi`, `umi --help`, and certificate output passed and were byte-identical |
+| `uv build` plus fresh temporary-environment wheel installs outside the checkout | passed on Python 3.11.15 and 3.14.3; the wheels were byte-identical at SHA-256 `f8600fe5f5d5fcde6110d3285fecf31d85e1fc5dc745b722c5433ee16e4aaa1d`, and `import umi`, `umi --help`, and certificate output passed and were byte-identical |
 | `umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config` | passed without a source registry; schema and selected scored inputs are valid |
-| previously verified explicit Epoch/Arena network acquisition evidence | retained unchanged with its checksum manifest; acquisition was not rerun for the reviewed-fact-only AA Omniscience milestone |
+| previously verified explicit Epoch/Arena network acquisition evidence | retained unchanged with its checksum manifest; acquisition was not rerun for the reviewed-fact-only AA Terminal-Bench milestone |
 
 The normal `uv run` auto-sync path creates an editable installation. Python 3.14 ignores the
 underscore-prefixed editable `.pth` emitted in this environment, so the verified workflow installs a
 wheel with `--no-editable` and uses `--no-sync` for subsequent commands. This is documented in the
 README rather than hidden as a local workaround.
 
-GitHub Actions [run 31884693052](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31884693052)
-for UMI v0.3.10 commit `262acee` completed successfully. Linux 3.12 passed the full quality, schema,
+GitHub Actions [run 31885653051](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31885653051)
+for UMI v0.3.11 commit `317c6b6` completed successfully. Linux 3.12 passed the full quality, schema,
 governed validation, deterministic rebuild, CLI, and isolated-wheel gates. Linux 3.11 and 3.14 each
 passed the test suite plus isolated-wheel import/help/comparison smokes. Windows 3.12 passed tests,
 generic validation, governed bundle validation, strict source/checksum audit, deterministic rebuild
@@ -92,16 +92,23 @@ annotations for `actions/checkout@v4` and `astral-sh/setup-uv@v6`; no UMI job fa
   source-defined Index rows score Capability across the 6,000-question cohort. Accuracy, attempt,
   hallucination, answer counts, tokens, calculated cost, and time remain diagnostic. The Fable
   fallback deployment is rejected.
+- AA Terminal-Bench v2.1 is retained as a facts-only artifact at SHA-256
+  `cd785e4364a3119a7c1c0dd05346395cb61b2b57155228b5ab9032a957cabf97`. Four exact Max-effort
+  pass@1 rows score Capability across the 89-task, three-repeat, 267-attempt Terminus 2 and E2B
+  cohort. The Fable fallback deployment is rejected. Source-provided aggregate input, answer,
+  reasoning, and cacheable-input token counts remain diagnostic because they are not a task-level
+  attempt ledger, provider token accounting differs, and cacheable input is neither observed cache
+  hits nor billed cache usage.
 
 ## Publication assertions
 
 - Five exact canonical named-release configurations are visible, each with label-exact identity and
   first-party nominal pricing record.
-- The configured capability matrix contains 75 model/benchmark cells: 44 ready scored, 3 diagnostic
-  measurements, 1 diagnostic reference, 1 vendor-claim-only, and 26 missing.
+- The configured capability matrix contains 75 model/benchmark cells: 48 ready scored, 3 diagnostic
+  measurements, 1 diagnostic reference, and 23 missing.
 - Every model-specific score is labeled `real evidence — model-specific partial estimate`; it is not
-  a UMI rank. Opus, Sol, and Kimi use 11 of 15 Capability families across five domains with 93.125%
-  coverage; GLM uses ten families across five domains at 79.375%; Fable remains on one family at
+  a UMI rank. Opus, Sol, and Kimi use 12 of 15 Capability families across five domains with 100%
+  coverage; GLM uses 11 families across five domains at 86.25%; Fable remains on one family at
   8.25%. Opus, Sol, Kimi, and GLM clear the Capability-only coverage and breadth gates,
   but not the complete headline gates.
 - Every publishable rank and every `headline_overall` remains null.
@@ -139,8 +146,8 @@ umi/                              validation, readiness, scoring, fingerprinting
 
 ## Remaining evidence required for a real headline UMI
 
-- exact-configuration, common-cohort capability results for the 26 missing cells, beginning with
-  Fable HLE, τ³-Banking, and AA-LCR without fallback, Terminal-Bench, and additional
+- exact-configuration, common-cohort capability results for the 23 missing cells, beginning with
+  Fable HLE, τ³-Banking, AA-LCR, and Terminal-Bench without fallback, plus additional
   context/reliability evidence;
 - arithmetic-mean attempt-level cost, input/output/cache-token use, wall time, turn count, and task
   success for the five models across at least three configured workload categories;
@@ -150,8 +157,9 @@ umi/                              validation, readiness, scoring, fingerprinting
 - empirical calibration or decorrelation of within-domain family budgets, a longitudinal reference
   cohort, and formal uncertainty propagation.
 
-The next ingestion milestone reviews AA Terminal-Bench v2.1 as a distinct terminal-agent task
-execution construct, while the highest-value missing artifact remains one complete five-model task-level
-workload cohort. The
-current gates must remain closed until those artifacts exist; missing evidence must not be inferred,
-imputed, or reweighted away.
+The highest-value missing artifact remains one complete five-model task-level workload cohort with
+deployment-bound success, cost, tokens, cache use, wall time, and turns. Additional capability
+sources are useful only when they close a configured cell or materially strengthen source diversity;
+they do not substitute for the operational evidence blocking Efficiency and Economics. The current
+gates must remain closed until those artifacts exist; missing evidence must not be inferred, imputed,
+or reweighted away.
