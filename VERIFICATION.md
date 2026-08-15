@@ -1,4 +1,4 @@
-# UMI v0.3.7 verification record
+# UMI v0.3.8 verification record
 
 Verified on 2026-08-15 from `main` on macOS with Python 3.14.3 against the Python 3.11+
 project contract.
@@ -7,41 +7,42 @@ project contract.
 
 | Check | Outcome |
 |---|---|
-| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.7 as a wheel from the committed lock |
+| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.8 as a wheel from the committed lock |
 | `uv run --no-sync python -m scripts.build_v03_pilot` | passed; rebuilt all raw and processed pilot artifacts offline |
 | schema equality test against `umi.schema_export.rendered_schemas()` | passed; committed machine-readable schemas remain current |
-| `uv run pytest` | 112 passed |
-| `uv run pytest --cov=umi --cov=analysis --cov=scripts --cov-report=term-missing --cov-fail-under=90` | 112 passed; 92.32% combined coverage |
+| `uv run pytest` | 114 passed |
+| `uv run pytest --cov=umi --cov=analysis --cov=scripts --cov-report=term-missing --cov-fail-under=90` | 114 passed; 92.40% combined coverage |
 | `PYTHONPATH=. uv run --no-sync ruff check .` | passed |
-| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 50 source files |
+| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 47 source files |
 | `umi sources validate --strict` | passed; complete registry, crosswalk, licensing, attribution, diagnostic, pricing, and release-claim audit is valid |
 | `umi crosswalk` and `umi overlap` | passed |
-| `umi bundle validate --data-dir data/pilots/v0.3/raw` | passed; acceptance manifest admits 37 records and excludes 8 diagnostic records with 0 unready scored records |
-| all thirteen offline `umi ingest --source ...` commands | passed: AA composite facts, AA HLE, AA GDPval, CursorBench, Epoch ECI, Epoch benchmarks, both Arena cohorts, DeepSWE, and four lab-release sources |
+| `umi bundle validate --data-dir data/pilots/v0.3/raw` | passed; acceptance manifest admits 41 records and excludes 8 diagnostic records with 0 unready scored records |
+| all fourteen offline `umi ingest --source ...` commands | passed: AA composite facts, AA HLE, AA GDPval, AA τ³-Banking, CursorBench, Epoch ECI, Epoch benchmarks, both Arena cohorts, DeepSWE, and four lab-release sources |
 | documented validation, ingestion, scoring, comparison, analysis, and certificate CLI flows | passed with valid JSON output |
 | five-model and three-model common-evidence comparisons | passed; Kimi DeepSWE remains 25.0 on the identical five-model panel, and every raw/normalized contribution carries panel and scale identity |
 | joint comparison sensitivity | passed; 32 exhaustive five-model scenarios and 512 exhaustive three-model scenarios, with possible-rank and robust-dominance envelopes and no probability claims |
-| `umi certificate` for Opus/Kimi/GLM | passed; seven common stable panels, 21 selected records, five exact artifact checksums, 512 joint scenarios, deterministic certificate fingerprint `40780e19…cbda4` |
-| portable dashboard packaging | passed at 1440 px and 390 px; seven charts rendered, source dialog passed, no overflow, external-request, or browser-error failure |
-| isolated Python 3.11 and Python 3.14 dashboard rebuild tests | passed; bounded presentation precision keeps canonical JSON and embedded HTML payloads compatible across interpreter versions |
-| `uv build` plus fresh temporary-environment wheel install outside the checkout | passed on Python 3.14.3; `import umi`, `umi --help`, and the certificate smoke all passed with the same result fingerprint |
+| `umi certificate` for Opus/Kimi/GLM | passed; eight common stable panels, 24 selected records, six exact artifact checksums, 512 joint scenarios, deterministic result fingerprint `388f8aec…5132af8` |
+| portable dashboard packaging | passed at 1440 px and 390 px; 14 blocks, eight charts, and four metrics rendered; source dialog passed; no overflow, external-request, or browser-error failure |
+| isolated Python 3.11 and Python 3.14 full pilot rebuilds | passed byte-for-byte; governed floating-point aggregation now uses `math.fsum`, and canonical JSON plus embedded HTML payloads are identical across interpreter versions |
+| `uv build` plus fresh temporary-environment wheel installs outside the checkout | passed on Python 3.11.15 and 3.14.3; `import umi`, `umi --help`, and certificate output passed and were byte-identical |
 | `umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config` | passed without a source registry; schema and selected scored inputs are valid |
-| explicit Epoch/Arena network acquisition into a fresh temporary snapshot | passed with a checksum manifest; destination reuse remains fail-closed |
+| previously verified explicit Epoch/Arena network acquisition evidence | retained unchanged with its checksum manifest; acquisition was not rerun for the reviewed-fact-only τ³ milestone |
 
 The normal `uv run` auto-sync path creates an editable installation. Python 3.14 ignores the
 underscore-prefixed editable `.pth` emitted in this environment, so the verified workflow installs a
 wheel with `--no-editable` and uses `--no-sync` for subsequent commands. This is documented in the
 README rather than hidden as a local workaround.
 
-GitHub Actions [run 31879575407](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31879575407)
-for UMI v0.3.7 commit `48af724` completed successfully. Linux 3.12 passed the full quality, schema,
+GitHub Actions [run 31880453993](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31880453993)
+for UMI v0.3.8 commit `d8be0b8` completed successfully. Linux 3.12 passed the full quality, schema,
 governed validation, deterministic rebuild, CLI, and isolated-wheel gates. Linux 3.11 and 3.14 each
 passed the test suite plus isolated-wheel import/help/comparison smokes. Windows 3.12 passed tests,
 generic validation, governed bundle validation, strict source/checksum audit, deterministic rebuild
 diff, and the three-model comparison smoke. These hosted results—not the local macOS run—establish
-the recorded Linux and Windows compatibility claim. Two preceding runs exposed Python 3.11
-float-representation drift in the portable dashboard; the final run proves the
-presentation-boundary canonicalization fix across all four hosted jobs. GitHub emitted only Node 20
+the recorded Linux and Windows compatibility claim. Local cross-version rebuilding exposed a second
+governed-float drift beyond the earlier dashboard boundary; v0.3.8 replaces ordinary floating-point
+aggregation with `math.fsum`, and the hosted Python 3.11/3.14 jobs prove the exact regression gate.
+GitHub emitted only Node 20
 deprecation
 annotations for `actions/checkout@v4` and `astral-sh/setup-uv@v6`; no UMI job failed.
 
@@ -76,16 +77,21 @@ annotations for `actions/checkout@v4` and `astral-sh/setup-uv@v6`; no UMI job fa
   rejected. Average turns, output-token summaries, and calculated cost components remain
   diagnostic because Elo is not a binary success denominator and the source cost uses live typical
   cache-hit measurements rather than a deployment- and billing-record-bound task ledger.
+- τ³-Banking is retained as a facts-only artifact at SHA-256
+  `838c0c02ec932059b10a4172123e6ecd6b916c10eba2da105c7751b27614bad9`. Four exact Max-effort
+  pass@1 rows score Capability across the 97-task, five-repeat cohort. The Fable fallback composite
+  is rejected. Incomplete operational fields, calculated rather than billed costs, and conflicting
+  public decode-time units remain diagnostic.
 
 ## Publication assertions
 
 - Five exact canonical named-release configurations are visible, each with label-exact identity and
   first-party nominal pricing record.
-- The configured capability matrix contains 75 model/benchmark cells: 32 ready scored, 3 diagnostic
-  measurements, 1 diagnostic reference, 1 vendor-claim-only, and 38 missing.
+- The configured capability matrix contains 75 model/benchmark cells: 36 ready scored, 3 diagnostic
+  measurements, 1 diagnostic reference, 1 vendor-claim-only, and 34 missing.
 - Every model-specific score is labeled `real evidence — model-specific partial estimate`; it is not
-  a UMI rank. Opus, Sol, and Kimi use eight of 15 Capability families across four domains with
-  75.125% coverage; GLM uses seven families across four domains at 61.375%; Fable remains on one
+  a UMI rank. Opus, Sol, and Kimi use nine of 15 Capability families across four domains with
+  83.125% coverage; GLM uses eight families across four domains at 69.375%; Fable remains on one
   family at 8.25%. Opus, Sol, Kimi, and GLM clear the Capability-only coverage and breadth gates,
   but not the complete headline gates.
 - Every publishable rank and every `headline_overall` remains null.
@@ -123,8 +129,8 @@ umi/                              validation, readiness, scoring, fingerprinting
 
 ## Remaining evidence required for a real headline UMI
 
-- exact-configuration, common-cohort capability results for the 38 missing cells, beginning with
-  Fable HLE without fallback, Terminal-Bench, agentic work, and long-context/reliability evidence;
+- exact-configuration, common-cohort capability results for the 34 missing cells, beginning with
+  Fable HLE and τ³-Banking without fallback, Terminal-Bench, and long-context/reliability evidence;
 - arithmetic-mean attempt-level cost, input/output/cache-token use, wall time, turn count, and task
   success for the five models across at least three configured workload categories;
 - independent replication or auditable raw result artifacts for vendor-only claims;
@@ -133,6 +139,7 @@ umi/                              validation, readiness, scoring, fingerprinting
 - empirical calibration or decorrelation of within-domain family budgets, a longitudinal reference
   cohort, and formal uncertainty propagation.
 
-The next ingestion milestone targets the exact τ³-Banking public cohort, followed by one complete
-five-model task-level workload cohort. The current gates must remain closed until those artifacts
-exist; missing evidence must not be inferred, imputed, or reweighted away.
+The next ingestion milestone reviews AA-LCR and AA-Omniscience one exact cohort at a time, while the
+highest-value missing artifact remains one complete five-model task-level workload cohort. The
+current gates must remain closed until those artifacts exist; missing evidence must not be inferred,
+imputed, or reweighted away.
