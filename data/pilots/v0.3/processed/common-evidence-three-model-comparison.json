@@ -34,10 +34,15 @@
       "benchmark_id": "scicode",
       "canonical_representation_group": "scicode",
       "cohort_key": "aa-v4.1.1-scicode-test-288-background-pass1"
+    },
+    {
+      "benchmark_id": "tau3-banking",
+      "canonical_representation_group": "tau3-banking",
+      "cohort_key": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15"
     }
   ],
-  "common_evidence_profile_id": "2a20ac6b9cdbfa25049b38f62e56c3f93471e4296ac07996288893a6e1c71f0f",
-  "comparison_group_id": "3f457dd96b262dea7af5cb424ad16dcabef3a8fc1a97af9a49dffc45e15a465a",
+  "common_evidence_profile_id": "434aa06fe6ae1a4388f7a4d2e156b91c217089aa5bd58be84f5457148f7d3189",
+  "comparison_group_id": "324dd145adc09461110790b3ec4b76be231ced402a941be0b19c4de291d1975a",
   "comparison_model_ids": [
     "claude-opus-5-max",
     "glm-5.2-max",
@@ -80,6 +85,41 @@
       },
       "requested_strategy": "robust_z",
       "scored_input_fingerprint": "5f8464b5943ba7e4acb383b104d65fd985bb5fe77f14f4bf48928abd42bd44d1",
+      "transformation": "identity"
+    },
+    {
+      "applied_strategy": "percentile",
+      "benchmark_id": "tau3-banking",
+      "canonical_representation_group": "tau3-banking",
+      "cohort_key": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+      "cohort_roles": {
+        "claude-opus-5-max": "normalization_member",
+        "glm-5.2-max": "normalization_member",
+        "gpt-5.6-sol-max": "normalization_member",
+        "kimi-k3-max": "normalization_member"
+      },
+      "cohort_size": 4,
+      "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
+      "id": "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
+      "model_ids": [
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max"
+      ],
+      "normalization_trace": {
+        "applied_strategy": "percentile",
+        "cohort_size": 4,
+        "direction_inverted": false,
+        "fallback_reason": "below_minimum_robust_cohort",
+        "log_transform": false,
+        "minimum_rank_cohort": 2,
+        "minimum_robust_cohort": 8,
+        "provisional": true,
+        "requested_strategy": "robust_z"
+      },
+      "requested_strategy": "robust_z",
+      "scored_input_fingerprint": "a32b8f85e1fa5b4ad25073dee28f285cb552bb5411a437daad2abf923f47c3a3",
       "transformation": "identity"
     },
     {
@@ -300,11 +340,12 @@
   "recommended_missing_evidence": [],
   "score_scale": {
     "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
-    "evidence_profile_id": "2a20ac6b9cdbfa25049b38f62e56c3f93471e4296ac07996288893a6e1c71f0f",
-    "formula_version": "umi-methodology-v0.3.7",
-    "id": "3257c208b038bdbedda9d3ba0dba5ce3d9a5bc5834da825beababd79cbbf08f8",
+    "evidence_profile_id": "434aa06fe6ae1a4388f7a4d2e156b91c217089aa5bd58be84f5457148f7d3189",
+    "formula_version": "umi-methodology-v0.3.8",
+    "id": "63b2e100f07888fab6dd9a664ff52cba78e11e0120388b6aef7c73e179b4d72f",
     "normalization_panel_ids": [
       "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
+      "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
       "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
       "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
       "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
@@ -486,6 +527,34 @@
         },
         {
           "applied_normalization": "percentile",
+          "benchmark_id": "tau3-banking",
+          "cohort_key": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+          "configured_absolute_weight": 0.08000000000000002,
+          "direction": "higher",
+          "normalization_panel_id": "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
+          "normalization_trace": {
+            "applied_strategy": "percentile",
+            "cohort_size": 4,
+            "direction_inverted": false,
+            "fallback_reason": "below_minimum_robust_cohort",
+            "log_transform": false,
+            "minimum_rank_cohort": 2,
+            "minimum_robust_cohort": 8,
+            "provisional": true,
+            "requested_strategy": "robust_z"
+          },
+          "normalized_value": 33.333333333333336,
+          "raw_unit": "percent",
+          "raw_value": 42.0618556701031,
+          "requested_normalization": "robust_z",
+          "source_record_ids": [
+            "aa-tau3-banking-claude-opus-5-max-2026-08-15"
+          ],
+          "source_uncertainty": null,
+          "weighted_contribution": 2.6666666666666674
+        },
+        {
+          "applied_normalization": "percentile",
           "benchmark_id": "gpqa-diamond",
           "cohort_key": "epoch-gpqa-diamond-1.0.6-simple-evals",
           "configured_absolute_weight": 0.0975,
@@ -552,11 +621,12 @@
           "weighted_contribution": 3.5
         }
       ],
-      "coverage": 0.61375,
-      "evidence_profile_id": "2a20ac6b9cdbfa25049b38f62e56c3f93471e4296ac07996288893a6e1c71f0f",
+      "coverage": 0.6937500000000001,
+      "evidence_profile_id": "434aa06fe6ae1a4388f7a4d2e156b91c217089aa5bd58be84f5457148f7d3189",
       "model_id": "claude-opus-5-max",
       "normalization_panel_ids": [
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
+        "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
         "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
         "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
         "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
@@ -564,7 +634,7 @@
         "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
         "e437be94bc145514ec2514c890ac752bec3abcd786747eda0b250f0f3df2d139"
       ],
-      "normalized_composite_score": 92.66802443991853,
+      "normalized_composite_score": 85.82582582582582,
       "primary_raw_results": [
         {
           "benchmark_id": "hle",
@@ -633,6 +703,14 @@
           }
         },
         {
+          "benchmark_id": "tau3-banking",
+          "cohort_key": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+          "direction": "higher",
+          "raw_unit": "percent",
+          "raw_value": 42.0618556701031,
+          "source_uncertainty": null
+        },
+        {
           "benchmark_id": "gpqa-diamond",
           "cohort_key": "epoch-gpqa-diamond-1.0.6-simple-evals",
           "direction": "higher",
@@ -669,10 +747,10 @@
           "stable normalization panel membership held fixed",
           "standard-error intervals use a normal approximation with z=1.96"
         ],
-        "central_composite_score": 92.66802443991853,
+        "central_composite_score": 85.82582582582582,
         "central_estimate_rank": 1.0,
-        "composite_score_max": 92.66802443991853,
-        "composite_score_min": 70.061099796334,
+        "composite_score_max": 85.82582582582582,
+        "composite_score_min": 65.82582582582583,
         "exhaustive": true,
         "possible_rank_max": 1.0,
         "possible_rank_min": 1.0,
@@ -687,8 +765,8 @@
         "scenario_count": 512,
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
-      "score": 92.66802443991853,
-      "score_scale_id": "3257c208b038bdbedda9d3ba0dba5ce3d9a5bc5834da825beababd79cbbf08f8",
+      "score": 85.82582582582582,
+      "score_scale_id": "63b2e100f07888fab6dd9a664ff52cba78e11e0120388b6aef7c73e179b4d72f",
       "score_semantics": "weighted stable-panel percentile composite"
     },
     {
@@ -861,6 +939,34 @@
         },
         {
           "applied_normalization": "percentile",
+          "benchmark_id": "tau3-banking",
+          "cohort_key": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+          "configured_absolute_weight": 0.08000000000000002,
+          "direction": "higher",
+          "normalization_panel_id": "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
+          "normalization_trace": {
+            "applied_strategy": "percentile",
+            "cohort_size": 4,
+            "direction_inverted": false,
+            "fallback_reason": "below_minimum_robust_cohort",
+            "log_transform": false,
+            "minimum_rank_cohort": 2,
+            "minimum_robust_cohort": 8,
+            "provisional": true,
+            "requested_strategy": "robust_z"
+          },
+          "normalized_value": 0.0,
+          "raw_unit": "percent",
+          "raw_value": 34.639175257732,
+          "requested_normalization": "robust_z",
+          "source_record_ids": [
+            "aa-tau3-banking-glm-5.2-max-2026-08-15"
+          ],
+          "source_uncertainty": null,
+          "weighted_contribution": 0.0
+        },
+        {
+          "applied_normalization": "percentile",
           "benchmark_id": "gpqa-diamond",
           "cohort_key": "epoch-gpqa-diamond-1.0.6-simple-evals",
           "configured_absolute_weight": 0.0975,
@@ -927,11 +1033,12 @@
           "weighted_contribution": 0.0
         }
       ],
-      "coverage": 0.61375,
-      "evidence_profile_id": "2a20ac6b9cdbfa25049b38f62e56c3f93471e4296ac07996288893a6e1c71f0f",
+      "coverage": 0.6937500000000001,
+      "evidence_profile_id": "434aa06fe6ae1a4388f7a4d2e156b91c217089aa5bd58be84f5457148f7d3189",
       "model_id": "glm-5.2-max",
       "normalization_panel_ids": [
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
+        "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
         "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
         "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
         "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
@@ -1008,6 +1115,14 @@
           }
         },
         {
+          "benchmark_id": "tau3-banking",
+          "cohort_key": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+          "direction": "higher",
+          "raw_unit": "percent",
+          "raw_value": 34.639175257732,
+          "source_uncertainty": null
+        },
+        {
           "benchmark_id": "gpqa-diamond",
           "cohort_key": "epoch-gpqa-diamond-1.0.6-simple-evals",
           "direction": "higher",
@@ -1046,7 +1161,7 @@
         ],
         "central_composite_score": 0.0,
         "central_estimate_rank": 3.0,
-        "composite_score_max": 15.885947046843176,
+        "composite_score_max": 14.054054054054053,
         "composite_score_min": 0.0,
         "exhaustive": true,
         "possible_rank_max": 3.0,
@@ -1063,7 +1178,7 @@
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
       "score": 0.0,
-      "score_scale_id": "3257c208b038bdbedda9d3ba0dba5ce3d9a5bc5834da825beababd79cbbf08f8",
+      "score_scale_id": "63b2e100f07888fab6dd9a664ff52cba78e11e0120388b6aef7c73e179b4d72f",
       "score_semantics": "weighted stable-panel percentile composite"
     },
     {
@@ -1236,6 +1351,34 @@
         },
         {
           "applied_normalization": "percentile",
+          "benchmark_id": "tau3-banking",
+          "cohort_key": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+          "configured_absolute_weight": 0.08000000000000002,
+          "direction": "higher",
+          "normalization_panel_id": "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
+          "normalization_trace": {
+            "applied_strategy": "percentile",
+            "cohort_size": 4,
+            "direction_inverted": false,
+            "fallback_reason": "below_minimum_robust_cohort",
+            "log_transform": false,
+            "minimum_rank_cohort": 2,
+            "minimum_robust_cohort": 8,
+            "provisional": true,
+            "requested_strategy": "robust_z"
+          },
+          "normalized_value": 100.0,
+          "raw_unit": "percent",
+          "raw_value": 45.979381443299,
+          "requested_normalization": "robust_z",
+          "source_record_ids": [
+            "aa-tau3-banking-kimi-k3-max-2026-08-15"
+          ],
+          "source_uncertainty": null,
+          "weighted_contribution": 8.000000000000002
+        },
+        {
+          "applied_normalization": "percentile",
           "benchmark_id": "gpqa-diamond",
           "cohort_key": "epoch-gpqa-diamond-1.0.6-simple-evals",
           "configured_absolute_weight": 0.0975,
@@ -1302,11 +1445,12 @@
           "weighted_contribution": 1.75
         }
       ],
-      "coverage": 0.61375,
-      "evidence_profile_id": "2a20ac6b9cdbfa25049b38f62e56c3f93471e4296ac07996288893a6e1c71f0f",
+      "coverage": 0.6937500000000001,
+      "evidence_profile_id": "434aa06fe6ae1a4388f7a4d2e156b91c217089aa5bd58be84f5457148f7d3189",
       "model_id": "kimi-k3-max",
       "normalization_panel_ids": [
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
+        "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
         "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
         "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
         "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
@@ -1314,7 +1458,7 @@
         "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
         "e437be94bc145514ec2514c890ac752bec3abcd786747eda0b250f0f3df2d139"
       ],
-      "normalized_composite_score": 36.69382213170401,
+      "normalized_composite_score": 43.99399399399399,
       "primary_raw_results": [
         {
           "benchmark_id": "hle",
@@ -1383,6 +1527,14 @@
           }
         },
         {
+          "benchmark_id": "tau3-banking",
+          "cohort_key": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+          "direction": "higher",
+          "raw_unit": "percent",
+          "raw_value": 45.979381443299,
+          "source_uncertainty": null
+        },
+        {
           "benchmark_id": "gpqa-diamond",
           "cohort_key": "epoch-gpqa-diamond-1.0.6-simple-evals",
           "direction": "higher",
@@ -1419,10 +1571,10 @@
           "stable normalization panel membership held fixed",
           "standard-error intervals use a normal approximation with z=1.96"
         ],
-        "central_composite_score": 36.69382213170401,
+        "central_composite_score": 43.99399399399399,
         "central_estimate_rank": 2.0,
-        "composite_score_max": 57.36591989137814,
-        "composite_score_min": 31.39850644942295,
+        "composite_score_max": 62.282282282282274,
+        "composite_score_min": 39.309309309309306,
         "exhaustive": true,
         "possible_rank_max": 2.0,
         "possible_rank_min": 2.0,
@@ -1438,8 +1590,8 @@
         "scenario_count": 512,
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
-      "score": 36.69382213170401,
-      "score_scale_id": "3257c208b038bdbedda9d3ba0dba5ce3d9a5bc5834da825beababd79cbbf08f8",
+      "score": 43.99399399399399,
+      "score_scale_id": "63b2e100f07888fab6dd9a664ff52cba78e11e0120388b6aef7c73e179b4d72f",
       "score_semantics": "weighted stable-panel percentile composite"
     }
   ],

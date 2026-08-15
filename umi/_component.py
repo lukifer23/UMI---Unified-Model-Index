@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from math import fsum
 from statistics import median
 from typing import TypeVar
 
@@ -42,11 +43,11 @@ def weighted_available(
     values: dict[str, float | None], weights: dict[str, float]
 ) -> tuple[float | None, float]:
     present = {key: value for key, value in values.items() if value is not None and key in weights}
-    available_weight = sum(weights[key] for key in present)
-    total_weight = sum(weights.values())
+    available_weight = fsum(weights[key] for key in present)
+    total_weight = fsum(weights.values())
     if not present or available_weight == 0 or total_weight == 0:
         return None, 0.0
-    score = sum(float(value) * weights[key] for key, value in present.items()) / available_weight
+    score = fsum(float(value) * weights[key] for key, value in present.items()) / available_weight
     return score, available_weight / total_weight
 
 

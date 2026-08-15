@@ -368,6 +368,112 @@ def adapt_aa_gdpval_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adapta
     )
 
 
+def adapt_aa_tau3_facts(path: str | Path, crosswalk: ModelCrosswalk) -> AdaptationResult:
+    """Adapt a frozen τ³-Banking public fact extract into task evidence."""
+    raw = load_yaml(path)
+    source_id = str(raw["source_id"])
+    artifact_id = str(raw["artifact_id"])
+    source = Source.model_validate(raw["source"])
+    as_of = date.fromisoformat(str(raw["as_of"]))
+    benchmark = cast(dict[str, object], raw["benchmark"])
+    benchmarks: list[BenchmarkMeasurement] = []
+    rejected: list[AdapterRejection] = []
+
+    def finite_nonnegative(row: dict[str, object], key: str) -> float:
+        value = float(cast(float, row[key]))
+        if not math.isfinite(value) or value < 0:
+            raise ValueError(f"τ³-Banking {key} must be finite and nonnegative")
+        return value
+
+    for row_value in cast(list[object], raw["rows"]):
+        row = cast(dict[str, object], row_value)
+        source_model_id = str(row["source_model_id"])
+        source_rate = finite_nonnegative(row, "source_value_rate")
+        if source_rate > 1:
+            raise ValueError("τ³-Banking source_value_rate must not exceed 1")
+
+        operational: dict[str, object] = {}
+        for key in (
+            "output_answer_tokens_per_task",
+            "output_reasoning_tokens_per_task",
+            "weighted_decode_time_per_task",
+        ):
+            if key in row:
+                operational[key] = finite_nonnegative(row, key)
+        if "calculated_cost_components_usd" in row:
+            components = cast(dict[str, object], row["calculated_cost_components_usd"])
+            operational["calculated_cost_components_usd"] = {
+                str(key): finite_nonnegative({str(key): value}, str(key))
+                for key, value in components.items()
+            }
+
+        match = exact_entry(crosswalk, source_id, artifact_id, source_model_id)
+        if match is None or match.canonical_model_id is None:
+            rejected.append(
+                AdapterRejection(source_row_id=source_model_id, reason="no exact crosswalk")
+            )
+            continue
+        benchmarks.append(
+            BenchmarkMeasurement(
+                record_id=identifier(f"aa-tau3-banking-{match.canonical_model_id}-{as_of}"),
+                benchmark_id=identifier(str(benchmark["benchmark_id"])),
+                model_id=match.canonical_model_id,
+                source_model_id=source_model_id,
+                value=source_rate * 100.0,
+                cohort_key=identifier(str(benchmark["cohort_key"])),
+                measurement_as_of_date=as_of,
+                source=source,
+                result_type=ResultType.INDEPENDENT,
+                benchmark_version=str(benchmark["benchmark_version"]),
+                harness_version=str(benchmark["harness_version"]),
+                metric_definition=str(benchmark["metric_definition"]),
+                evaluator=str(benchmark["evaluator"]),
+                harness_owner=str(benchmark["harness_owner"]),
+                run_executor=str(benchmark["run_executor"]),
+                tools_enabled=bool(benchmark["tools_enabled"]),
+                capture_type=ArtifactCaptureType.REVIEWED_FACT_EXTRACT,
+                reproducible=bool(benchmark["reproducible"]),
+                source_artifact_id=artifact_id,
+                source_registry_snapshot_id=artifact_id,
+                crosswalk_entry_id=match.id,
+                signal_id="tau3-banking",
+                configuration_verification=ConfigurationVerification(
+                    model_label_exact=True,
+                    release_label_exact=True,
+                    effort_label_exact=True,
+                    fallback_absent=True,
+                ),
+                record_status=RecordStatus.READY,
+                signal_role=SignalRole.TASK,
+                scoring_disposition=ScoringDisposition.SCORED,
+                evaluation_settings={
+                    **cast(dict[str, object], benchmark["evaluation_settings"]),
+                    "repeats_per_task": int(cast(int, benchmark["repeats_per_task"])),
+                    "source_value_rate": source_rate,
+                    **operational,
+                },
+                number_of_tasks=int(cast(int, benchmark["number_of_tasks"])),
+                number_of_trials=int(cast(int, benchmark["number_of_trials"])),
+                sample_count=int(cast(int, benchmark["number_of_trials"])),
+                pass_at_k=int(cast(int, benchmark["pass_at_k"])),
+                notes=(
+                    "Capability pass rate only. Incomplete operational summaries are retained "
+                    "diagnostically and do not enter Efficiency or Economics."
+                ),
+            )
+        )
+    return AdaptationResult(
+        source_id=source_id,
+        adapter_id="aa-tau3-reviewed-facts-v1",
+        benchmarks=tuple(benchmarks),
+        rejections=tuple(rejected),
+        diagnostics=(
+            "τ³-Banking operational summaries remain diagnostic because coverage, billing, "
+            "and decode-time unit semantics are incomplete",
+        ),
+    )
+
+
 def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> AdaptationResult:
     raw = load_yaml(path)
     source_id = str(raw["source_id"])

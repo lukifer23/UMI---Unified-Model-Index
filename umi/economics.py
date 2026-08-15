@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from math import fsum
 
 from umi._component import ComponentComputation, consolidate_numeric, weighted_available
 from umi.config import ProjectConfig
@@ -139,7 +140,7 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
             category_values,
             {key.value: value for key, value in config.weights.workload_weights.items()},
         )
-        coverage = sum(
+        coverage = fsum(
             weight * category_coverages[category.value]
             for category, weight in config.weights.workload_weights.items()
         )

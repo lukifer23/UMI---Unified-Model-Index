@@ -9,16 +9,16 @@ workload, and Capability-domain gates. This is the expected outcome, not a faile
 
 ## Scored raw evidence
 
-| Configuration | HLE | ARC-AGI-2 | DeepSWE v1.1 (95% CI) | CursorBench 3.2 | GDPval-AA v2 Elo (95% CI) | GPQA | SciCode | CritPt | Partial Capability | Partial Efficiency | Headline |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Claude Opus 5 Max | 54.87% | 90.42% | 73.65% (69.78–77.52) | 70.0% | 1848.77 (1826.40–1871.14) | 93.88% | 55.67% | 29.14% | 84.86 | 41.67 | null |
-| Claude Fable 5 Max | rejected: fallback | missing | 69.72% (65.69–73.76) | rejected: fallback unverified | rejected: fallback | rejected | rejected | rejected | 50.00 | 50.00 | null |
-| GPT-5.6 Sol Max | 49.49% | 92.50% | 72.67% (69.84–75.50) | 67.2% | 1725.18 (1708.82–1741.53) | 93.50% | 56.13% | 32.30% | 76.01 | 100.00 | null |
-| Kimi K3 Max | 46.90% | 60.42% | 68.51% (63.98–73.05) | 60.8% | 1682.29 (1662.55–1702.04) | 93.12% | 58.68% | 23.40% | 29.98 | 58.33 | null |
-| GLM-5.2 Max | 41.15% | rejected: unknown effort | 43.78% (42.05–45.50) | 55.0% | 1506.11 (1491.09–1521.12) | 91.86% | 50.46% | 20.86% | 0.00 | 0.00 | null |
+| Configuration | HLE | ARC-AGI-2 | DeepSWE v1.1 (95% CI) | CursorBench 3.2 | GDPval-AA v2 Elo (95% CI) | τ³-Banking | GPQA | SciCode | CritPt | Partial Capability | Partial Efficiency | Headline |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Claude Opus 5 Max | 54.87% | 90.42% | 73.65% (69.78–77.52) | 70.0% | 1848.77 (1826.40–1871.14) | 42.06% | 93.88% | 55.67% | 29.14% | 79.90 | 41.67 | null |
+| Claude Fable 5 Max | rejected: fallback | missing | 69.72% (65.69–73.76) | rejected: fallback unverified | rejected: fallback | rejected: fallback | rejected | rejected | rejected | 50.00 | 50.00 | null |
+| GPT-5.6 Sol Max | 49.49% | 92.50% | 72.67% (69.84–75.50) | 67.2% | 1725.18 (1708.82–1741.53) | 44.33% | 93.50% | 56.13% | 32.30% | 75.11 | 100.00 | null |
+| Kimi K3 Max | 46.90% | 60.42% | 68.51% (63.98–73.05) | 60.8% | 1682.29 (1662.55–1702.04) | 45.98% | 93.12% | 58.68% | 23.40% | 36.72 | 58.33 | null |
+| GLM-5.2 Max | 41.15% | rejected: unknown effort | 43.78% (42.05–45.50) | 55.0% | 1506.11 (1491.09–1521.12) | 34.64% | 91.86% | 50.46% | 20.86% | 0.00 | 0.00 | null |
 
-Partial Capability is cohort-relative. Opus, Sol, and Kimi cover 75.125% across eight families and
-four domains. GLM covers 61.375% across seven families and four domains; Fable covers only DeepSWE
+Partial Capability is cohort-relative. Opus, Sol, and Kimi cover 83.125% across nine families and
+four domains. GLM covers 69.375% across eight families and four domains; Fable covers only DeepSWE
 at 8.25%. Those model-specific partials are not directly rankable across
 evidence profiles and are not Overall scores. Fable is also release-window-ineligible because its
 2026-06-09 release predates the 2026-06-15 start.
@@ -28,7 +28,7 @@ evidence profiles and are not Overall scores. Fable is also release-window-ineli
 The five-model common comparison uses DeepSWE as its single common raw metric. Its secondary
 percentile scale is fitted once to Fable, Opus, GLM, Sol, and Kimi, then reused for every display
 subset. The three-model Opus/Kimi/GLM comparison uses HLE, DeepSWE, CursorBench, GDPval-AA v2,
-GPQA, SciCode, and CritPt; DeepSWE
+τ³-Banking, GPQA, SciCode, and CritPt; DeepSWE
 still uses the five-model panel and GPQA still uses its four accepted models. For example, Kimi's
 DeepSWE stable-panel percentile remains 25 whether Sol is displayed or omitted.
 
@@ -57,9 +57,9 @@ cohorts remain visible; malformed inputs and unknown model IDs still fail.
 ## Comparison validity and certificate
 
 The retained Opus/Kimi/GLM certificate is `provisional_comparison`, not a headline ranking. All
-three configurations share the same seven canonical benchmark series, evidence-profile ID, seven
+three configurations share the same eight canonical benchmark series, evidence-profile ID, eight
 bundle-wide stable normalization panels, and weighted-composite score-scale ID. The certificate
-also binds twenty-one selected benchmark records to five frozen source-artifact checksums and retains
+also binds twenty-four selected benchmark records to six frozen source-artifact checksums and retains
 the 512-scenario rank envelopes. Those bindings—not similar labels—are why its values are directly
 comparable. Provisional small-panel normalization and incomplete Capability breadth remain explicit
 warnings and prevent the certificate from becoming a universal UMI score.
@@ -77,6 +77,11 @@ warnings and prevent the certificate from becoming a universal UMI score.
   rejected because its row explicitly uses Opus 4.8 fallback. Average turns, token summaries, and
   calculated cost components remain diagnostic because Elo is not a binary success denominator and
   the published cost combines provider token counts with live typical cache-hit measurements.
+- Artificial Analysis τ³-Banking scores are independent pass@1 measurements for Opus, Sol, Kimi,
+  and GLM across 97 tasks repeated five times. Fable is rejected because its row explicitly uses
+  Opus fallback. Incomplete operational summaries, calculated rather than billed cost, and
+  conflicting public decode-time units remain diagnostic and contribute neither Efficiency nor
+  Economics.
 - CursorBench 3.2 solution-correctness scores are independent atomic measurements for Opus, Sol,
   Kimi, and GLM on the current ambiguous multi-file task cohort. Fable is rejected because Cursor
   documents invisible Fable-to-Opus routing and the run does not prove fallback absence. The table's
@@ -119,7 +124,7 @@ have no model-specific rank and null `headline_overall` for every model. The fiv
 [common-evidence comparison](data/pilots/v0.3/processed/common-evidence-five-model-comparison.json)
 uses DeepSWE only because Fable's other benchmark identities are not cleared; the exact three-model
 [common-evidence comparison](data/pilots/v0.3/processed/common-evidence-three-model-comparison.json)
-uses all seven scored series under the current strict identity policy. Both are provisional and separately
+uses all eight scored series under the current strict identity policy. Both are provisional and separately
 labeled, lead with raw values, and carry stable-panel and score-scale identity. The
 [three-model comparison certificate](data/pilots/v0.3/processed/comparison-certificate-three-model.json)
 adds the governed bundle, source-record, artifact-checksum, identity, and deterministic result
@@ -137,7 +142,7 @@ benchmark/model cell and every workload-category gate.
 Equal-family and source-ablation scenarios are computed without relaxing publication gates. Removing
 a source does not redistribute or enlarge its domain budget. Every scenario continues to have a null
 headline. These scenarios expose how dependent the scored benchmark families are on the pilot's
-five frozen scored source artifacts.
+six frozen scored source artifacts.
 
 ## Reproducibility
 

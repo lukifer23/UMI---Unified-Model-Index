@@ -10,6 +10,7 @@ from umi.adapters.models import AdaptationResult, AdapterRejection, assemble_pil
 from umi.adapters.reviewed import (
     adapt_aa_facts,
     adapt_aa_gdpval_facts,
+    adapt_aa_tau3_facts,
     adapt_cursorbench_facts,
     adapt_deepswe_facts,
     adapt_lab_release_facts,
@@ -20,6 +21,7 @@ __all__ = [
     "AdapterRejection",
     "adapt_aa_facts",
     "adapt_aa_gdpval_facts",
+    "adapt_aa_tau3_facts",
     "adapt_arena_json",
     "adapt_cursorbench_facts",
     "adapt_deepswe_facts",

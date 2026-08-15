@@ -3,6 +3,7 @@
     "accepted_artifact_ids": [
       "aa-gdpval-v2-facts-2026-08-15",
       "aa-hle-facts-2026-08-14",
+      "aa-tau3-banking-facts-2026-08-15",
       "cursorbench-3.2-facts-2026-08-14",
       "deepswe-v1.1-2026-08-13",
       "epoch-benchmark-data-2026-08-14"
@@ -16,6 +17,10 @@
       "aa-hle-kimi-max",
       "aa-hle-opus-max",
       "aa-hle-sol-max",
+      "aa-tau3-glm-max",
+      "aa-tau3-kimi-max",
+      "aa-tau3-opus-max",
+      "aa-tau3-sol-max",
       "cursorbench-glm-max",
       "cursorbench-kimi-max",
       "cursorbench-opus-max",
@@ -39,6 +44,10 @@
       "aa-hle-glm-5.2-max-2026-08-14",
       "aa-hle-gpt-5.6-sol-max-2026-08-14",
       "aa-hle-kimi-k3-max-2026-08-14",
+      "aa-tau3-banking-claude-opus-5-max-2026-08-15",
+      "aa-tau3-banking-glm-5.2-max-2026-08-15",
+      "aa-tau3-banking-gpt-5.6-sol-max-2026-08-15",
+      "aa-tau3-banking-kimi-k3-max-2026-08-15",
       "cursorbench-3.2-claude-opus-5-max-2026-08-14",
       "cursorbench-3.2-glm-5.2-max-2026-08-14",
       "cursorbench-3.2-gpt-5.6-sol-max-2026-08-14",
@@ -78,7 +87,8 @@
       "gdpval-aa-v2",
       "gpqa-diamond",
       "hle",
-      "scicode"
+      "scicode",
+      "tau3-banking"
     ],
     "excluded_diagnostic_record_ids": [
       "arena-agent-claude-opus-5-max-2026-08-12",
@@ -91,10 +101,11 @@
       "deepswe-endpoint-resources-kimi-k3-max-2026-08-13"
     ],
     "excluded_unready_record_ids": [],
-    "fingerprint": "65fc390faf29a812ed1951064fa57ebd15823b2d52f81b34936152985fcff336",
+    "fingerprint": "865b6961a1f203c0e1847aa4526b7e987fcd74aff68d5183f785d5b863ff48d2",
     "scoring_relevant_adapter_versions": [
       "aa-gdpval-reviewed-facts-v1",
       "aa-reviewed-facts-v2",
+      "aa-tau3-reviewed-facts-v1",
       "cursorbench-reviewed-facts-v1",
       "deepswe-reviewed-facts-v1",
       "epoch-benchmark-zip-v2"
@@ -210,6 +221,38 @@
       "record_id": "aa-hle-kimi-k3-max-2026-08-14",
       "scoring_ready": true,
       "source_artifact_id": "aa-hle-facts-2026-08-14"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "claude-opus-5-max",
+      "record_id": "aa-tau3-banking-claude-opus-5-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-tau3-banking-facts-2026-08-15"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "glm-5.2-max",
+      "record_id": "aa-tau3-banking-glm-5.2-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-tau3-banking-facts-2026-08-15"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "aa-tau3-banking-gpt-5.6-sol-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-tau3-banking-facts-2026-08-15"
+    },
+    {
+      "disposition": "scored",
+      "failures": [],
+      "model_id": "kimi-k3-max",
+      "record_id": "aa-tau3-banking-kimi-k3-max-2026-08-15",
+      "scoring_ready": true,
+      "source_artifact_id": "aa-tau3-banking-facts-2026-08-15"
     },
     {
       "disposition": "diagnostic_only",

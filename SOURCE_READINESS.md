@@ -98,6 +98,14 @@ cost components remain diagnostic settings: Elo is not a binary success denomina
 published cost combines provider token counts with live typical cache-hit measurements rather than
 an endpoint- and billing-revision-bound task ledger.
 
+The Artificial Analysis τ³-Banking adapter consumes a facts-only access-date snapshot of the
+97-task, five-repeat public cohort. Exact Opus, Sol, Kimi, and GLM Max rows are ready for Capability;
+the fallback-qualified Fable row is rejected. The adapter preserves the tau2-bench v1.0.1 harness,
+BM25-plus-grep retrieval, backend-state grading, 200-step ceiling, task/trial counts, and source
+rates. Token and calculated-cost fields are incomplete across the cohort, and the public page gives
+conflicting units for weighted decode time. Those operational fields therefore remain diagnostic
+and cannot enter Efficiency or Economics.
+
 The CursorBench 3.2 adapter consumes a facts-only reviewed extract from the official leaderboard.
 Exact Opus, Sol, Kimi, and GLM Max labels are ready for Capability. The Fable row is rejected because
 the public run does not rule out Cursor's documented invisible Fable-to-Opus routing. Cost/task,

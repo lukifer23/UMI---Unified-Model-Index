@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from math import fsum
 
 from umi._component import weighted_available
 from umi.config import ProjectConfig
@@ -32,7 +33,7 @@ def aggregate_workloads(
             workload_scores: dict[str, float | None] = {}
             for workload in workloads:
                 values = scores.get(workload.id, {}).get(model_id, [])
-                workload_scores[workload.id] = sum(values) / len(values) if values else None
+                workload_scores[workload.id] = fsum(values) / len(values) if values else None
                 present_cells += int(bool(values))
             family_scores[family.id], family_coverage[family.id] = weighted_available(
                 workload_scores, {item.id: item.weight for item in workloads}

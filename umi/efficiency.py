@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from math import fsum
 
 from umi._component import ComponentComputation, weighted_available
 from umi.config import ProjectConfig
@@ -98,7 +99,7 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
             category_values[category.value], _ = weighted_available(
                 metric_values, config.weights.efficiency
             )
-            category_coverages[category.value] = sum(
+            category_coverages[category.value] = fsum(
                 config.weights.efficiency[metric]
                 * metric_aggregations[metric].category_coverage[category.value]
                 for metric in metric_aggregations
@@ -114,7 +115,7 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
             category_values,
             {key.value: value for key, value in config.weights.workload_weights.items()},
         )
-        coverage = sum(
+        coverage = fsum(
             weight * category_coverages[category.value]
             for category, weight in config.weights.workload_weights.items()
         )

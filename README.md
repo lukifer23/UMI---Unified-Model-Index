@@ -1,8 +1,8 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.7 extends the real,
-five-configuration, multi-source pilot with exact GDPval-AA v2, HLE, CursorBench 3.2, DeepSWE,
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.8 extends the real,
+five-configuration, multi-source pilot with exact τ³-Banking, GDPval-AA v2, HLE, CursorBench 3.2, DeepSWE,
 GPQA Diamond, SciCode, CritPt, and ARC-AGI-2 results plus DeepSWE confidence intervals and
 harness-resource means. It does **not**
 publish a headline UMI score: the evidence supports only provisional, model-specific partial
@@ -10,7 +10,7 @@ Capability and Efficiency estimates.
 
 The pilot cohort is Claude Opus 5 Max, Claude Fable 5 Max, GPT-5.6 Sol Max, Kimi K3 Max, and
 GLM-5.2 Max. Its frozen sources are Artificial Analysis public facts, Epoch ECI and Benchmarking Hub
-data, GDPval-AA v2 and CursorBench 3.2 facts, LM Arena Agent and text/style-control rows, and
+data, τ³-Banking, GDPval-AA v2, and CursorBench 3.2 facts, LM Arena Agent and text/style-control rows, and
 DeepSWE v1.1 facts. Every source row is accepted only through an exact model-and-effort crosswalk.
 
 ## Install and verify
@@ -51,6 +51,7 @@ PYTHONPATH=. uv run --no-sync umi overlap
 PYTHONPATH=. uv run --no-sync umi ingest --source aa
 PYTHONPATH=. uv run --no-sync umi ingest --source aa-hle
 PYTHONPATH=. uv run --no-sync umi ingest --source aa-gdpval
+PYTHONPATH=. uv run --no-sync umi ingest --source aa-tau3
 PYTHONPATH=. uv run --no-sync umi ingest --source cursorbench
 PYTHONPATH=. uv run --no-sync umi ingest --source epoch
 PYTHONPATH=. uv run --no-sync umi ingest --source epoch-benchmarks
@@ -162,6 +163,12 @@ intervals propagate through comparison sensitivity. Fable's published fallback c
 rejected. Average turns, output tokens, and calculated cost components remain diagnostic because
 they are operational summaries or live-price estimates rather than verified billed task records.
 
+τ³-Banking contributes exact Max-effort pass@1 results for Opus, Sol, Kimi, and GLM from
+97 banking-policy tasks repeated five times (485 attempts), with BM25-plus-grep retrieval and
+backend-state grading. Fable's fallback-qualified row is rejected. Incomplete token/cost summaries
+and the public page's conflicting decode-time units are preserved as diagnostics only; they do not
+enter Efficiency or Economics.
+
 CursorBench 3.2 solution-correctness scores contribute for Opus, Sol, Kimi, and GLM. Its Fable row
 is rejected because Cursor documents invisible Fable-to-Opus routing and the leaderboard does not
 prove fallback absence. Published cost/task, tokens/task, and steps/task are retained as diagnostic
@@ -170,8 +177,8 @@ success denominator and verified endpoint plus service-tier identity.
 
 ## Current limitations
 
-- Opus, Sol, and Kimi have 75.125% Capability coverage across four domains and clear the
-  Capability-only coverage/breadth gates. GLM has 61.375% across four domains and also clears those
+- Opus, Sol, and Kimi have 83.125% Capability coverage across four domains and clear the
+  Capability-only coverage/breadth gates. GLM has 69.375% across four domains and also clears those
   two gates; Fable has 8.25% across one. Model-specific partials remain different evidence profiles,
   not one shared ranking.
 - Efficiency has only 4.5% absolute coverage; Economics has no ready evidence.
@@ -186,7 +193,8 @@ See [PILOT_REPORT.md](PILOT_REPORT.md), [SOURCE_READINESS.md](SOURCE_READINESS.m
 
 ## Recommended next ingestion task
 
-Close Fable's HLE cell only with evidence that explicitly rules out fallback, then freeze one
-context/reliability and one agentic task family for the same five configurations. In parallel,
+Close Fable's HLE and τ³-Banking cells only with evidence that explicitly rules out fallback,
+then freeze one context/reliability family for the same five configurations and review AA-LCR and
+AA-Omniscience one exact cohort at a time. In parallel,
 obtain exact attempt-level telemetry for the missing coding families and at least two additional
 configured workload categories. Do not broaden the cohort or relax a gate to manufacture a headline.

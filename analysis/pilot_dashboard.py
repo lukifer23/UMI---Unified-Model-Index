@@ -63,6 +63,7 @@ def build_pilot_dashboard(
         "gpqa-diamond": "GPQA",
         "gdpval-aa-v2": "GDPval-AA v2",
         "scicode": "SciCode",
+        "tau3-banking": "τ³-Banking",
     }
     ordered_models = [model.id for model in dataset.models]
     estimates_by_model = {item["model_id"]: item for item in estimates}
@@ -138,13 +139,16 @@ def build_pilot_dashboard(
     benchmark_rows = [
         row
         for row in all_benchmark_rows
-        if row["benchmark"] not in {"cursorbench-3.2", "gdpval-aa-v2"}
+        if row["benchmark"] not in {"cursorbench-3.2", "gdpval-aa-v2", "tau3-banking"}
     ]
     cursorbench_rows = [
         row for row in all_benchmark_rows if row["benchmark"] == "cursorbench-3.2"
     ]
     gdpval_rows = [
         row for row in all_benchmark_rows if row["benchmark"] == "gdpval-aa-v2"
+    ]
+    tau3_rows = [
+        row for row in all_benchmark_rows if row["benchmark"] == "tau3-banking"
     ]
     resource_rows = []
     for record in dataset.efficiency:
@@ -222,7 +226,7 @@ def build_pilot_dashboard(
         "manifest": {
             "version": 1,
             "surface": "dashboard",
-            "title": "UMI v0.3.7 — five-model pilot evidence report",
+            "title": "UMI v0.3.8 — five-model pilot evidence report",
             "description": (
                 "A reproducible view of current accepted evidence, partial component estimates, "
                 "coverage, and the gates that prevent a headline UMI ranking."
@@ -454,6 +458,28 @@ def build_pilot_dashboard(
                     "layout": "full",
                 },
                 {
+                    "id": "tau3_scores",
+                    "title": "τ³-Banking policy-agent pass@1",
+                    "subtitle": (
+                        "97 tasks repeated five times with backend-state grading; Fable is "
+                        "absent because its source row uses Opus fallback."
+                    ),
+                    "type": "bar",
+                    "dataset": "tau3",
+                    "sourceId": "accepted_benchmarks",
+                    "encodings": {
+                        "x": {
+                            "field": "model_short",
+                            "type": "nominal",
+                            "label": "Model",
+                        },
+                        "y": {"field": "score", "type": "quantitative", "label": "Pass@1"},
+                    },
+                    "yAxisTitle": "τ³-Banking pass@1 (%)",
+                    "valueFormat": "number",
+                    "layout": "full",
+                },
+                {
                     "id": "gap_counts",
                     "title": "Why the index is not yet headline-ready",
                     "subtitle": (
@@ -506,6 +532,7 @@ def build_pilot_dashboard(
                 {"id": "benchmarks", "type": "chart", "chartId": "benchmark_scores"},
                 {"id": "cursorbench", "type": "chart", "chartId": "cursorbench_scores"},
                 {"id": "gdpval", "type": "chart", "chartId": "gdpval_scores"},
+                {"id": "tau3", "type": "chart", "chartId": "tau3_scores"},
                 {
                     "id": "resources",
                     "type": "chart",
@@ -540,6 +567,7 @@ def build_pilot_dashboard(
                     "benchmarks": benchmark_rows,
                     "cursorbench": cursorbench_rows,
                     "gdpval": gdpval_rows,
+                    "tau3": tau3_rows,
                     "resources": resource_rows,
                     "gap_counts": gap_rows,
                 }

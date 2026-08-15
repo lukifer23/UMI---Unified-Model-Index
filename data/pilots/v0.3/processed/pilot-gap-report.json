@@ -2,8 +2,8 @@
   "capability_cell_counts": {
     "diagnostic_measurement": 3,
     "diagnostic_reference": 1,
-    "missing": 38,
-    "ready_scored": 32,
+    "missing": 34,
+    "ready_scored": 36,
     "vendor_claim_only": 1
   },
   "capability_cells": [
@@ -390,32 +390,40 @@
       "domain": "agentic_work",
       "family": "tau3-banking",
       "model_id": "claude-opus-5-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "aa-tau3-banking-claude-opus-5-max-2026-08-15"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "tau3-banking",
       "domain": "agentic_work",
       "family": "tau3-banking",
       "model_id": "glm-5.2-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "aa-tau3-banking-glm-5.2-max-2026-08-15"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "tau3-banking",
       "domain": "agentic_work",
       "family": "tau3-banking",
       "model_id": "gpt-5.6-sol-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "aa-tau3-banking-gpt-5.6-sol-max-2026-08-15"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "tau3-banking",
       "domain": "agentic_work",
       "family": "tau3-banking",
       "model_id": "kimi-k3-max",
-      "record_ids": [],
-      "status": "missing"
+      "record_ids": [
+        "aa-tau3-banking-kimi-k3-max-2026-08-15"
+      ],
+      "status": "ready_scored"
     },
     {
       "benchmark_id": "arena-agent",

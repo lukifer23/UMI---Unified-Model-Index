@@ -3,7 +3,7 @@
 ## Overall assessment
 
 **Ready for a narrow, manually reviewed real-evidence pilot; not ready for a headline
-ranking or bulk ingestion.** Exact GDPval-AA v2, HLE, CursorBench, DeepSWE, GPQA,
+ranking or bulk ingestion.** Exact τ³-Banking, GDPval-AA v2, HLE, CursorBench, DeepSWE, GPQA,
 SciCode, CritPt, and ARC-AGI-2 records now exercise the real scoring path, but weights,
 Value hypotheses, confidence rules, and relative normalization remain uncalibrated.
 
@@ -96,8 +96,10 @@ determinism.
 
 ## Exact next task
 
-Finish the remaining Artificial Analysis atomic-suite review one cohort at a time: tau3-Banking,
-AA-LCR, and AA-Omniscience. Admit only exact release-and-effort rows, reject fallback composites,
+Finish the remaining Artificial Analysis atomic-suite review one cohort at a time: AA-LCR and
+AA-Omniscience. The τ³-Banking cohort is now admitted for four exact Max configurations while
+the fallback-qualified Fable row is rejected. Continue to admit only exact release-and-effort rows,
+reject fallback composites,
 and keep their operational cost/token fields diagnostic unless a compatible binary success rate
 and deployment identity make success adjustment valid. In parallel, seek a licensed attempt ledger
 that can raise Efficiency and Economics coverage; advertised tariffs and LiteLLM-derived dollars

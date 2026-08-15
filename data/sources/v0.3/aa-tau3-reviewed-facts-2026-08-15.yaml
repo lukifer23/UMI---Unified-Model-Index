@@ -1,0 +1,67 @@
+source_id: artificial-analysis-tau3
+artifact_id: aa-tau3-banking-facts-2026-08-15
+as_of: 2026-08-15
+source:
+  organization: Artificial Analysis
+  url: https://artificialanalysis.ai/evaluations/tau3-banking
+  accessed: 2026-08-15
+methodology:
+  url: https://artificialanalysis.ai/methodology/intelligence-benchmarking
+  accessed: 2026-08-15
+benchmark:
+  benchmark_id: tau3-banking
+  benchmark_version: tau3-banking-aa-intelligence-v4.1.1
+  harness_version: aa-tau3-banking-tau2-bench-v1.0.1-bm25-grep
+  cohort_key: aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15
+  number_of_tasks: 97
+  repeats_per_task: 5
+  number_of_trials: 485
+  pass_at_k: 1
+  evaluator: Artificial Analysis
+  harness_owner: Sierra Research and Artificial Analysis
+  run_executor: Artificial Analysis
+  tools_enabled: true
+  reproducible: false
+  metric_definition: Pass@1 rate averaged across five repeats of 97 banking tasks, graded against backend database state
+  evaluation_settings:
+    task_source: Sierra Research tau-Knowledge tau3-Banking suite
+    policy_documents: approximately 700 interconnected documents
+    policy_tokens: approximately 195000
+    product_categories: 21
+    retrieval_mode: BM25 lexical search and grep (bm25_grep)
+    grading: backend database state
+    user_simulator_and_assertion_judge: GPT-5.4 Mini medium
+    maximum_harness_steps_per_repeat: 200
+    source_unit: rate
+    output_unit: percent
+    operational_metrics_disposition: diagnostic only because coverage is incomplete, cost is calculated rather than billed, and decode-time units conflict on the public page
+rows:
+  - source_model_id: Claude Opus 5 (max)
+    source_value_rate: 0.420618556701031
+    weighted_decode_time_per_task: 2.442040266650728
+  - source_model_id: Claude Fable 5 (with fallback)
+    source_value_rate: 0.381443298969072
+    weighted_decode_time_per_task: 2.4780332520321933
+  - source_model_id: GPT-5.6 Sol (max)
+    source_value_rate: 0.443298969072165
+    output_answer_tokens_per_task: 2405.1546391752577
+    output_reasoning_tokens_per_task: 6170.3917525773195
+    weighted_decode_time_per_task: 1.974275313283147
+  - source_model_id: Kimi K3 (max)
+    source_value_rate: 0.45979381443299
+    output_answer_tokens_per_task: 3497.041237113402
+    output_reasoning_tokens_per_task: 6320.938144329897
+    calculated_cost_components_usd:
+      answer: 0.05245561855670103
+      reasoning: 0.09481407216494846
+      cache_write: 0.453710410943008
+      cache_hit: 0.5304491970500291
+      input: 0
+  - source_model_id: GLM-5.2 (max)
+    source_value_rate: 0.34639175257732
+    calculated_cost_components_usd:
+      answer: 0.011114672164948455
+      reasoning: 0.08357677525773197
+      cache_write: 0
+      cache_hit: 0.18195280091877417
+      input: 0

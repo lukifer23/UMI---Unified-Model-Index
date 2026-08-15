@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 from collections import defaultdict
+from math import fsum
 
 from umi._component import ComponentComputation, consolidate_numeric
 from umi.config import ProjectConfig
@@ -167,7 +168,7 @@ def score_capability(
             group_id: max(item.representation_weight for item in members)
             for group_id, members in family_groups.items()
         }
-        total = sum(group_weights.values())
+        total = fsum(group_weights.values())
         if total == 0:
             continue
         for group_id, members in family_groups.items():
@@ -245,8 +246,8 @@ def score_capability(
             )
             if panel.normalization_trace.provisional:
                 small_series.append(f"{definition.id}/{cohort}")
-        coverage = sum(item[1] for item in available)
-        score = sum(item[1] * item[2] for item in available) / coverage if coverage else None
+        coverage = fsum(item[1] for item in available)
+        score = fsum(item[1] * item[2] for item in available) / coverage if coverage else None
         evidence_records = tuple(
             {
                 record.record_id: record

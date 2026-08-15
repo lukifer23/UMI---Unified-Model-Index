@@ -159,8 +159,13 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
             "canonical_representation_group": "scicode",
             "cohort_key": "aa-v4.1.1-scicode-test-288-background-pass1",
         },
+        {
+            "benchmark_id": "tau3-banking",
+            "canonical_representation_group": "tau3-banking",
+            "cohort_key": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+        },
     ]
-    assert {item["coverage"] for item in scores} == {0.61375}
+    assert {item["coverage"] for item in scores} == {0.6937500000000001}
 
     five_model = common_capability_comparison(
         real_pilot_dataset,

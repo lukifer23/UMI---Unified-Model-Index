@@ -43,6 +43,11 @@
         "type": "chart"
       },
       {
+        "chartId": "tau3_scores",
+        "id": "tau3",
+        "type": "chart"
+      },
+      {
         "chartId": "effective_input_tokens",
         "id": "resources",
         "type": "chart"
@@ -281,6 +286,29 @@
         "yAxisTitle": "GDPval-AA v2 Elo"
       },
       {
+        "dataset": "tau3",
+        "encodings": {
+          "x": {
+            "field": "model_short",
+            "label": "Model",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "score",
+            "label": "Pass@1",
+            "type": "quantitative"
+          }
+        },
+        "id": "tau3_scores",
+        "layout": "full",
+        "sourceId": "accepted_benchmarks",
+        "subtitle": "97 tasks repeated five times with backend-state grading; Fable is absent because its source row uses Opus fallback.",
+        "title": "\u03c4\u00b3-Banking policy-agent pass@1",
+        "type": "bar",
+        "valueFormat": "number",
+        "yAxisTitle": "\u03c4\u00b3-Banking pass@1 (%)"
+      },
+      {
         "dataset": "gap_counts",
         "encodings": {
           "x": {
@@ -365,7 +393,7 @@
     ],
     "surface": "dashboard",
     "tables": [],
-    "title": "UMI v0.3.7 \u2014 five-model pilot evidence report",
+    "title": "UMI v0.3.8 \u2014 five-model pilot evidence report",
     "version": 1
   },
   "package_info": {
@@ -664,7 +692,7 @@
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "score": 84.858569051581
+          "score": 79.899749373434
         },
         {
           "component": "Eff.",
@@ -692,7 +720,7 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "score": 76.012201885746
+          "score": 75.112781954887
         },
         {
           "component": "Eff.",
@@ -706,7 +734,7 @@
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "score": 29.977814753189
+          "score": 36.71679197995
         },
         {
           "component": "Eff.",
@@ -733,7 +761,7 @@
       "coverage": [
         {
           "component": "Cap.",
-          "coverage": 0.75125,
+          "coverage": 0.83125,
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5"
@@ -775,7 +803,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.75125,
+          "coverage": 0.83125,
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol"
@@ -796,7 +824,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.75125,
+          "coverage": 0.83125,
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3"
@@ -817,7 +845,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.61375,
+          "coverage": 0.69375,
           "model": "GLM-5.2 (max)",
           "model_id": "glm-5.2-max",
           "model_short": "GLM-5.2"
@@ -893,11 +921,11 @@
           "status": "Reference"
         },
         {
-          "cells": 38,
+          "cells": 34,
           "status": "Missing"
         },
         {
-          "cells": 32,
+          "cells": 36,
           "status": "Ready"
         },
         {
@@ -953,10 +981,10 @@
       ],
       "model_summary": [
         {
-          "capability": 84.858569051581,
-          "capability_coverage": 0.75125,
+          "capability": 79.899749373434,
+          "capability_coverage": 0.83125,
           "capability_domains": 4,
-          "capability_profile": "f558fccccd64",
+          "capability_profile": "63a9f239ce44",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -967,7 +995,7 @@
           "model": "Claude Opus 5 (max)",
           "model_id": "claude-opus-5-max",
           "model_short": "Opus 5",
-          "partial_overall": 71.361099556295
+          "partial_overall": 67.951911027569
         },
         {
           "capability": 50.0,
@@ -987,10 +1015,10 @@
           "partial_overall": 50.0
         },
         {
-          "capability": 76.012201885746,
-          "capability_coverage": 0.75125,
+          "capability": 75.112781954887,
+          "capability_coverage": 0.83125,
           "capability_domains": 4,
-          "capability_profile": "f558fccccd64",
+          "capability_profile": "63a9f239ce44",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -1001,13 +1029,13 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "partial_overall": 83.50838879645
+          "partial_overall": 82.890037593985
         },
         {
-          "capability": 29.977814753189,
-          "capability_coverage": 0.75125,
+          "capability": 36.71679197995,
+          "capability_coverage": 0.83125,
           "capability_domains": 4,
-          "capability_profile": "f558fccccd64",
+          "capability_profile": "63a9f239ce44",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -1018,13 +1046,13 @@
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "partial_overall": 38.838914309484
+          "partial_overall": 43.471961152882
         },
         {
           "capability": 0.0,
-          "capability_coverage": 0.61375,
+          "capability_coverage": 0.69375,
           "capability_domains": 4,
-          "capability_profile": "2a20ac6b9cdb",
+          "capability_profile": "434aa06fe6ae",
           "comparability": "different_score_scale",
           "confidence": "Low",
           "economics": null,
@@ -1043,9 +1071,9 @@
           "economics_coverage": 0.0,
           "efficiency_coverage": 0.045,
           "headline_ready": 0,
-          "max_capability_coverage": 0.75125,
+          "max_capability_coverage": 0.83125,
           "pilot_models": 5,
-          "scored_capability_cells": 32,
+          "scored_capability_cells": 36,
           "total_capability_cells": 75
         }
       ],
@@ -1104,6 +1132,52 @@
           "model_short": "GLM-5.2",
           "record_id": "deepswe-harness-resources-glm-5.2-max-2026-08-13",
           "success_rate": 0.437777777778
+        }
+      ],
+      "tau3": [
+        {
+          "benchmark": "tau3-banking",
+          "benchmark_short": "\u03c4\u00b3-Banking",
+          "cohort": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "record_id": "aa-tau3-banking-claude-opus-5-max-2026-08-15",
+          "score": 42.061855670103,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "tau3-banking",
+          "benchmark_short": "\u03c4\u00b3-Banking",
+          "cohort": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "record_id": "aa-tau3-banking-gpt-5.6-sol-max-2026-08-15",
+          "score": 44.329896907217,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "tau3-banking",
+          "benchmark_short": "\u03c4\u00b3-Banking",
+          "cohort": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "record_id": "aa-tau3-banking-kimi-k3-max-2026-08-15",
+          "score": 45.979381443299,
+          "source": "Artificial Analysis"
+        },
+        {
+          "benchmark": "tau3-banking",
+          "benchmark_short": "\u03c4\u00b3-Banking",
+          "cohort": "aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15",
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "record_id": "aa-tau3-banking-glm-5.2-max-2026-08-15",
+          "score": 34.639175257732,
+          "source": "Artificial Analysis"
         }
       ]
     },
