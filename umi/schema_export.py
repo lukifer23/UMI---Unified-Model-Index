@@ -11,6 +11,7 @@ from umi.loading import Dataset, SourceRegistry
 from umi.schemas import (
     AcceptanceManifest,
     BenchmarkContribution,
+    CapabilityComparisonResult,
     ModelCrosswalk,
     NormalizationPanel,
     OverlapPolicy,
@@ -30,6 +31,7 @@ SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "normalization-panel.schema.json": NormalizationPanel,
     "score-scale.schema.json": ScoreScale,
     "benchmark-contribution.schema.json": BenchmarkContribution,
+    "capability-comparison.schema.json": CapabilityComparisonResult,
 }
 
 

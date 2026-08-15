@@ -79,10 +79,64 @@ def test_harness_mismatch_creates_singleton_cohorts_not_false_comparison(
     dataset = synthetic_dataset.model_copy(
         update={"models": models, "benchmarks": tuple(records), "efficiency": (), "pricing": ()}
     )
-    from umi.validation import DataValidationError
+    from analysis.compare import common_capability_comparison
 
-    with pytest.raises(DataValidationError, match="multiple scoring cohorts"):
-        score_dataset(dataset, config)
+    comparison = common_capability_comparison(
+        dataset, config, tuple(model.id for model in models)
+    )
+    assert comparison["status"] == "insufficient_common_support"
+    assert comparison["scores"] == []
+    assert comparison["incompatible_series"] == ["synthetic-general/synthetic-general"]
+    assert comparison["publication_label"] == "abstained — insufficient common evidence"
+
+
+def test_comparison_abstains_for_missing_or_diagnostic_only_common_support(
+    synthetic_dataset: Dataset, config: ProjectConfig
+) -> None:
+    from analysis.compare import common_capability_comparison
+
+    models = synthetic_dataset.models[:2]
+    alpha, beta = (item.id for item in models)
+    alpha_record = next(
+        item
+        for item in synthetic_dataset.benchmarks
+        if item.model_id == alpha and item.benchmark_id == "synthetic-general"
+    )
+    beta_record = next(
+        item
+        for item in synthetic_dataset.benchmarks
+        if item.model_id == beta and item.benchmark_id == "synthetic-code"
+    )
+    missing = synthetic_dataset.model_copy(
+        update={
+            "models": models,
+            "benchmarks": (alpha_record, beta_record),
+            "efficiency": (),
+            "pricing": (),
+        }
+    )
+    missing_result = common_capability_comparison(missing, config, (alpha, beta))
+    assert missing_result["status"] == "insufficient_common_support"
+    assert missing_result["missing_support_by_model"][alpha]
+    assert missing_result["missing_support_by_model"][beta]
+
+    diagnostic = missing.model_copy(
+        update={
+            "benchmarks": (
+                alpha_record.model_copy(update={"scoring_disposition": "diagnostic_only"}),
+                alpha_record.model_copy(
+                    update={
+                        "record_id": "diagnostic-beta",
+                        "model_id": beta,
+                        "scoring_disposition": "diagnostic_only",
+                    }
+                ),
+            )
+        }
+    )
+    diagnostic_result = common_capability_comparison(diagnostic, config, (alpha, beta))
+    assert diagnostic_result["status"] == "insufficient_common_support"
+    assert diagnostic_result["common_benchmark_series"] == []
 
 
 def test_one_percent_and_zero_success_are_stable_and_explicit(

@@ -174,6 +174,23 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
     assert reordered_comparison["normalization_panels"] == comparison[
         "normalization_panels"
     ]
+    intervals = cast(list[dict[str, object]], comparison["sensitivity_intervals"])
+    assert len(intervals) == 6
+    assert sum(item["interval_origin"] == "derived_from_standard_error" for item in intervals) == 3
+    assert all(
+        item["assumption"] == "normal_approximation" and item["z_value"] == 1.96
+        for item in intervals
+        if item["interval_origin"] == "derived_from_standard_error"
+    )
+    robustness = {
+        item["model_id"]: cast(dict[str, object], item["rank_robustness"])
+        for item in scores
+    }
+    assert all(item["scenario_count"] == 64 and item["exhaustive"] for item in robustness.values())
+    assert robustness["glm-5.2-max"]["possible_ranks"] == [3.0]
+    assert robustness["claude-opus-5-max"]["possible_ranks"] == [1.0, 2.0]
+    assert "glm-5.2-max" in robustness["kimi-k3-max"]["robustly_dominates"]
+    assert "probability" not in str(comparison).lower()
 
 
 def test_source_bound_sensitivity_preserves_declared_margin_without_probability_model(

@@ -79,7 +79,9 @@ not a ranking. All `headline_overall` fields are null. `umi compare` produces a 
 provisional rank only after explicitly restricting the requested models to their common evidence.
 It leads with raw benchmark values and uses bundle-wide stable normalization panels: hiding a model
 from the display never refits another model's percentile. Every normalized contribution includes
-its applied fallback trace, absolute configured weight, panel ID, and score-scale ID.
+its applied fallback trace, absolute configured weight, panel ID, and score-scale ID. Joint
+lower/upper sensitivity reports possible-rank and robust-dominance envelopes, never probabilities.
+Requests with no compatible common evidence return a structured abstention and exit successfully.
 
 The synthetic engine demonstration remains available under `tests/fixtures` and is always labeled
 as synthetic.
@@ -108,7 +110,8 @@ frozen artifacts -> offline adapters -> governed scoring bundle -> readiness fil
 - `data/pilots/v0.3/raw/` contains generated typed inputs; `processed/` contains deterministic reports.
 - `umi/adapters/` contains source-specific, no-network transformations.
 - `schemas/` contains generated JSON Schemas for data, config, source, crosswalk, overlap,
-  acceptance manifest, normalization panels, score scales, benchmark contributions, and output.
+  acceptance manifest, normalization panels, score scales, benchmark contributions, typed common
+  comparisons, and output.
 
 Complete and scored-data fingerprints are deliberately different. Rejected and diagnostic evidence,
 crosswalk decisions, and artifact checksums affect the complete fingerprint. The scored fingerprint

@@ -58,6 +58,11 @@ class ScaleKind(StrEnum):
     LATENT_ESTIMATE = "latent_estimate"
 
 
+class ComparisonStatus(StrEnum):
+    OK = "ok"
+    INSUFFICIENT_COMMON_SUPPORT = "insufficient_common_support"
+
+
 class Confidence(StrEnum):
     HIGH = "high"
     MEDIUM = "medium"
@@ -596,6 +601,76 @@ class BenchmarkContribution(StrictModel):
     weighted_contribution: float
     normalization_trace: NormalizationTrace
     source_record_ids: tuple[Identifier, ...]
+
+
+class RawBenchmarkResult(StrictModel):
+    benchmark_id: Identifier
+    cohort_key: Identifier
+    raw_value: float
+    raw_unit: Unit
+    direction: Direction
+    source_uncertainty: MeasurementUncertainty | None = None
+
+
+class SensitivityInterval(StrictModel):
+    record_id: Identifier
+    model_id: Identifier
+    benchmark_id: Identifier
+    lower: float
+    upper: float
+    interval_origin: str
+    assumption: str | None = None
+    z_value: float | None = None
+
+
+class RankRobustness(StrictModel):
+    central_estimate_rank: float
+    possible_rank_min: float
+    possible_rank_max: float
+    possible_ranks: tuple[float, ...]
+    central_composite_score: float
+    composite_score_min: float
+    composite_score_max: float
+    robustly_dominates: tuple[Identifier, ...]
+    robustly_dominated_by: tuple[Identifier, ...]
+    scenario_count: int = Field(gt=0)
+    exhaustive: bool
+    uncertainty_mode: str
+    assumptions: tuple[str, ...]
+
+
+class ComparisonModelScore(StrictModel):
+    model_id: Identifier
+    score: float
+    normalized_composite_score: float
+    coverage: float = Field(ge=0, le=1)
+    provisional: bool
+    rank: float
+    evidence_profile_id: str = Field(pattern=r"^[a-f0-9]{64}$")
+    normalization_panel_ids: tuple[str, ...]
+    score_scale_id: str = Field(pattern=r"^[a-f0-9]{64}$")
+    score_semantics: str
+    primary_raw_results: tuple[RawBenchmarkResult, ...]
+    contributions: tuple[BenchmarkContribution, ...]
+    rank_robustness: RankRobustness | None = None
+
+
+class CapabilityComparisonResult(StrictModel):
+    status: ComparisonStatus
+    comparison_group_id: str = Field(pattern=r"^[a-f0-9]{64}$")
+    comparison_model_ids: tuple[Identifier, ...]
+    common_evidence_profile_id: str | None = None
+    common_benchmark_series: tuple[dict[str, str], ...] = ()
+    scores: tuple[ComparisonModelScore, ...] = ()
+    missing_support_by_model: dict[Identifier, tuple[str, ...]] = Field(default_factory=dict)
+    incompatible_series: tuple[str, ...] = ()
+    recommended_missing_evidence: tuple[str, ...] = ()
+    normalization_panels: tuple[NormalizationPanel, ...] = ()
+    score_scale: ScoreScale | None = None
+    normalization_method: str
+    primary_result_semantics: str
+    sensitivity_intervals: tuple[SensitivityInterval, ...] = ()
+    publication_label: str
 
 
 class EvidenceBenchmarkSeries(StrictModel):

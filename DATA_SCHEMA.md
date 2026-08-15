@@ -251,6 +251,14 @@ versions. Equality of evidence profile alone is not enough for direct normalized
 Common comparisons carry raw benchmark values and source uncertainty as the primary results. Their
 contributions also include raw unit and direction, absolute configured weight, requested versus
 applied normalization, panel ID, normalized value, weighted contribution, and source record IDs.
+The typed comparison result has either `status: ok` with scores, stable panels, a score scale,
+deterministic sensitivity intervals, and per-model rank robustness, or
+`status: insufficient_common_support` with empty scores, missing support by model, incompatible
+series, recommended evidence, and an abstention publication label. Standard-error sensitivity is
+explicitly labeled `derived_from_standard_error`, `normal_approximation`, and `z_value: 1.96`.
+Scenario counts are endpoint combinations, not probabilities.
+
+See `schemas/capability-comparison.schema.json` for the complete comparison contract.
 
 ## Scoring result
 

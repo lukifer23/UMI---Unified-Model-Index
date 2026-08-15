@@ -15,7 +15,8 @@
     "gpt-5.6-sol-max",
     "kimi-k3-max"
   ],
-  "component": "capability",
+  "incompatible_series": [],
+  "missing_support_by_model": {},
   "normalization_method": "bundle-wide stable panel per canonical benchmark series",
   "normalization_panels": [
     {
@@ -58,6 +59,7 @@
   ],
   "primary_result_semantics": "raw benchmark metrics",
   "publication_label": "real evidence, provisional common-evidence comparison",
+  "recommended_missing_evidence": [],
   "score_scale": {
     "config_fingerprint": "97ee08d361e603252286b0137d80e778130e19b3bbf5af36ec3dfd64358278c7",
     "evidence_profile_id": "6c44eb1c4619794fa431fab8b2549f8057098386a8d85d0bd6c8ca6274a41334",
@@ -146,6 +148,32 @@
       ],
       "provisional": true,
       "rank": 3.0,
+      "rank_robustness": {
+        "assumptions": [
+          "joint lower/upper corner enumeration",
+          "scenario counts are not probabilities",
+          "stable normalization panel membership held fixed"
+        ],
+        "central_composite_score": 50.0,
+        "central_estimate_rank": 3.0,
+        "composite_score_max": 100.0,
+        "composite_score_min": 25.0,
+        "exhaustive": true,
+        "possible_rank_max": 4.0,
+        "possible_rank_min": 1.0,
+        "possible_ranks": [
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "robustly_dominated_by": [],
+        "robustly_dominates": [
+          "glm-5.2-max"
+        ],
+        "scenario_count": 32,
+        "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
+      },
       "score": 50.0,
       "score_scale_id": "66a27b0fbb05dffb5b4e003b5e23f2cc6c62ce54b7d395496030b24bd69bb587",
       "score_semantics": "stable-panel percentile position"
@@ -226,6 +254,32 @@
       ],
       "provisional": true,
       "rank": 1.0,
+      "rank_robustness": {
+        "assumptions": [
+          "joint lower/upper corner enumeration",
+          "scenario counts are not probabilities",
+          "stable normalization panel membership held fixed"
+        ],
+        "central_composite_score": 100.0,
+        "central_estimate_rank": 1.0,
+        "composite_score_max": 100.0,
+        "composite_score_min": 25.0,
+        "exhaustive": true,
+        "possible_rank_max": 4.0,
+        "possible_rank_min": 1.0,
+        "possible_ranks": [
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "robustly_dominated_by": [],
+        "robustly_dominates": [
+          "glm-5.2-max"
+        ],
+        "scenario_count": 32,
+        "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
+      },
       "score": 100.0,
       "score_scale_id": "66a27b0fbb05dffb5b4e003b5e23f2cc6c62ce54b7d395496030b24bd69bb587",
       "score_semantics": "stable-panel percentile position"
@@ -306,6 +360,32 @@
       ],
       "provisional": true,
       "rank": 5.0,
+      "rank_robustness": {
+        "assumptions": [
+          "joint lower/upper corner enumeration",
+          "scenario counts are not probabilities",
+          "stable normalization panel membership held fixed"
+        ],
+        "central_composite_score": 0.0,
+        "central_estimate_rank": 5.0,
+        "composite_score_max": 0.0,
+        "composite_score_min": 0.0,
+        "exhaustive": true,
+        "possible_rank_max": 5.0,
+        "possible_rank_min": 5.0,
+        "possible_ranks": [
+          5.0
+        ],
+        "robustly_dominated_by": [
+          "claude-fable-5-max",
+          "claude-opus-5-max",
+          "gpt-5.6-sol-max",
+          "kimi-k3-max"
+        ],
+        "robustly_dominates": [],
+        "scenario_count": 32,
+        "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
+      },
       "score": 0.0,
       "score_scale_id": "66a27b0fbb05dffb5b4e003b5e23f2cc6c62ce54b7d395496030b24bd69bb587",
       "score_semantics": "stable-panel percentile position"
@@ -386,6 +466,32 @@
       ],
       "provisional": true,
       "rank": 2.0,
+      "rank_robustness": {
+        "assumptions": [
+          "joint lower/upper corner enumeration",
+          "scenario counts are not probabilities",
+          "stable normalization panel membership held fixed"
+        ],
+        "central_composite_score": 75.0,
+        "central_estimate_rank": 2.0,
+        "composite_score_max": 100.0,
+        "composite_score_min": 25.0,
+        "exhaustive": true,
+        "possible_rank_max": 4.0,
+        "possible_rank_min": 1.0,
+        "possible_ranks": [
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "robustly_dominated_by": [],
+        "robustly_dominates": [
+          "glm-5.2-max"
+        ],
+        "scenario_count": 32,
+        "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
+      },
       "score": 75.0,
       "score_scale_id": "66a27b0fbb05dffb5b4e003b5e23f2cc6c62ce54b7d395496030b24bd69bb587",
       "score_semantics": "stable-panel percentile position"
@@ -466,9 +572,88 @@
       ],
       "provisional": true,
       "rank": 4.0,
+      "rank_robustness": {
+        "assumptions": [
+          "joint lower/upper corner enumeration",
+          "scenario counts are not probabilities",
+          "stable normalization panel membership held fixed"
+        ],
+        "central_composite_score": 25.0,
+        "central_estimate_rank": 4.0,
+        "composite_score_max": 100.0,
+        "composite_score_min": 25.0,
+        "exhaustive": true,
+        "possible_rank_max": 4.0,
+        "possible_rank_min": 1.0,
+        "possible_ranks": [
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "robustly_dominated_by": [],
+        "robustly_dominates": [
+          "glm-5.2-max"
+        ],
+        "scenario_count": 32,
+        "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
+      },
       "score": 25.0,
       "score_scale_id": "66a27b0fbb05dffb5b4e003b5e23f2cc6c62ce54b7d395496030b24bd69bb587",
       "score_semantics": "stable-panel percentile position"
     }
-  ]
+  ],
+  "sensitivity_intervals": [
+    {
+      "assumption": null,
+      "benchmark_id": "deepswe-v1.1",
+      "interval_origin": "source_bounds",
+      "lower": 65.6912963913939,
+      "model_id": "claude-fable-5-max",
+      "record_id": "deepswe-score-claude-fable-5-max-2026-08-13",
+      "upper": 73.75824489300977,
+      "z_value": null
+    },
+    {
+      "assumption": null,
+      "benchmark_id": "deepswe-v1.1",
+      "interval_origin": "source_bounds",
+      "lower": 69.77633822227692,
+      "model_id": "claude-opus-5-max",
+      "record_id": "deepswe-score-claude-opus-5-max-2026-08-13",
+      "upper": 77.52095907502039,
+      "z_value": null
+    },
+    {
+      "assumption": null,
+      "benchmark_id": "deepswe-v1.1",
+      "interval_origin": "source_bounds",
+      "lower": 42.05214815719697,
+      "model_id": "glm-5.2-max",
+      "record_id": "deepswe-score-glm-5.2-max-2026-08-13",
+      "upper": 45.50340739835859,
+      "z_value": null
+    },
+    {
+      "assumption": null,
+      "benchmark_id": "deepswe-v1.1",
+      "interval_origin": "source_bounds",
+      "lower": 69.83684441682949,
+      "model_id": "gpt-5.6-sol-max",
+      "record_id": "deepswe-score-gpt-5.6-sol-max-2026-08-13",
+      "upper": 75.49648891650385,
+      "z_value": null
+    },
+    {
+      "assumption": null,
+      "benchmark_id": "deepswe-v1.1",
+      "interval_origin": "source_bounds",
+      "lower": 63.97739833756913,
+      "model_id": "kimi-k3-max",
+      "record_id": "deepswe-score-kimi-k3-max-2026-08-13",
+      "upper": 73.05142649613376,
+      "z_value": null
+    }
+  ],
+  "status": "ok"
 }

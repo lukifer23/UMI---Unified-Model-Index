@@ -28,7 +28,7 @@ def _digest(value: object) -> str:
     ).hexdigest()
 
 
-def _representation_groups(
+def representation_groups(
     config: ProjectConfig,
 ) -> dict[tuple[str, str], tuple[BenchmarkDefinition, ...]]:
     grouped: dict[tuple[str, str], list[BenchmarkDefinition]] = defaultdict(list)
@@ -42,6 +42,17 @@ def _representation_groups(
     }
 
 
+def canonical_representation_map(
+    config: ProjectConfig,
+) -> dict[str, tuple[BenchmarkDefinition, str]]:
+    output: dict[str, tuple[BenchmarkDefinition, str]] = {}
+    for (_, group_id), members in representation_groups(config).items():
+        canonical = next(item for item in members if item.selection_priority == 0)
+        for member in members:
+            output[member.id] = (canonical, group_id)
+    return output
+
+
 def score_capability(
     dataset: Dataset,
     config: ProjectConfig,
@@ -51,12 +62,8 @@ def score_capability(
     """Score Capability on stable bundle-wide normalization panels."""
     panel_dataset = normalization_dataset or dataset
     definitions = {item.id: item for item in config.benchmarks}
-    representation_groups = _representation_groups(config)
-    canonical_by_benchmark: dict[str, tuple[BenchmarkDefinition, str]] = {}
-    for (_, group_id), members in representation_groups.items():
-        canonical = next(item for item in members if item.selection_priority == 0)
-        for member in members:
-            canonical_by_benchmark[member.id] = (canonical, group_id)
+    grouped_definitions = representation_groups(config)
+    canonical_by_benchmark = canonical_representation_map(config)
 
     grouped: dict[
         tuple[str, str, str, str], dict[int, list[BenchmarkMeasurement]]
@@ -153,7 +160,7 @@ def score_capability(
     for family in config.families:
         family_groups = {
             group_id: members
-            for (family_id, group_id), members in representation_groups.items()
+            for (family_id, group_id), members in grouped_definitions.items()
             if family_id == family.id
         }
         group_weights = {

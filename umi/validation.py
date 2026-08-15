@@ -201,18 +201,20 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
         if model.synthetic and not (model.notes and "SYNTHETIC" in model.notes.upper()):
             warnings.append(f"synthetic model {model.id} should be conspicuously labeled in notes")
 
-    ready_benchmark_cohorts: dict[str, set[str]] = {}
+    ready_benchmark_cohorts: dict[tuple[str, str], set[str]] = {}
     for item in dataset.benchmarks:
         candidate_model = models.get(item.model_id)
         if candidate_model and is_scoring_ready(item, candidate_model):
-            ready_benchmark_cohorts.setdefault(item.benchmark_id, set()).add(item.cohort_key)
-    for benchmark_id, cohorts in sorted(ready_benchmark_cohorts.items()):
+            ready_benchmark_cohorts.setdefault(
+                (item.benchmark_id, item.model_id), set()
+            ).add(item.cohort_key)
+    for (benchmark_id, model_id), cohorts in sorted(ready_benchmark_cohorts.items()):
         if len(cohorts) > 1:
             errors.append(
-                f"benchmark {benchmark_id} has multiple scoring cohorts without a merge policy: "
-                f"{', '.join(sorted(cohorts))}"
+                f"benchmark {benchmark_id} has multiple scoring cohorts for model {model_id} "
+                f"without a selection policy: {', '.join(sorted(cohorts))}"
             )
-    ready_workload_cohorts: dict[tuple[str, str], set[str]] = {}
+    ready_workload_cohorts: dict[tuple[str, str, str], set[str]] = {}
     workload_inputs: tuple[EfficiencyMeasurement | TaskEconomicsMeasurement, ...] = (
         *dataset.efficiency,
         *dataset.task_economics,
@@ -220,13 +222,13 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
     for item in workload_inputs:
         candidate_model = models.get(item.model_id)
         if candidate_model and is_scoring_ready(item, candidate_model):
-            key = (item.workload_category.value, item.workload)
-            ready_workload_cohorts.setdefault(key, set()).add(item.cohort_key)
-    for (category, workload_id), cohorts in sorted(ready_workload_cohorts.items()):
+            workload_key = (item.workload_category.value, item.workload, item.model_id)
+            ready_workload_cohorts.setdefault(workload_key, set()).add(item.cohort_key)
+    for (category, workload_id, model_id), cohorts in sorted(ready_workload_cohorts.items()):
         if len(cohorts) > 1:
             errors.append(
-                f"workload {category}/{workload_id} has multiple scoring cohorts without a merge "
-                f"policy: {', '.join(sorted(cohorts))}"
+                f"workload {category}/{workload_id} has multiple scoring cohorts for model "
+                f"{model_id} without a selection policy: {', '.join(sorted(cohorts))}"
             )
 
     conflicts: dict[tuple[str, str], int] = {}

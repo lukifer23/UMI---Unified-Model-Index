@@ -134,9 +134,11 @@ A benchmark comparison series is `(benchmark_id, cohort_key)`. A workload compar
 benchmark, prompt, tool, retry, pass@k, effort, and endpoint settings. Labels alone never establish
 equivalence.
 
-At most one ready scoring cohort may exist for a benchmark representation or workload identity
-without an explicit future merge policy. Additional cohorts must be diagnostic. UMI does not
-average local percentiles from disconnected cohorts and does not infer cohort equivalence.
+One model may not have multiple ready scoring cohorts for the same benchmark representation or
+workload identity without an explicit future selection policy. Different models may retain ready
+evidence from different cohorts, but those records form separate series: UMI does not merge them,
+infer cohort equivalence, or compare them as common support. A comparison spanning only such
+incompatible cohorts abstains and identifies the conflict.
 
 ## Governed scoring bundle
 
@@ -269,6 +271,20 @@ sample count, and uncertainty alone cannot change readiness, coverage, weights, 
 Source NaN and infinity are invalid. Internally derived positive infinity is reserved for measured
 zero-success outcomes and normalizes to the explicit worst result. Scores are relative to their
 dataset fingerprint and are not timeless absolute measurements.
+
+For an explicit comparison group, UMI performs deterministic joint rank sensitivity when at most
+12 contributing records have usable uncertainty. Source bounds are used literally; published
+margins become `value ± margin`; a published standard error becomes a clearly labeled
+`value ± 1.96 × SE` normal-approximation interval. Percent metrics are clamped to 0–100. UMI
+enumerates every lower/upper corner, recomputes the whole common-evidence comparison on the same
+stable panel membership, and reports score and possible-rank envelopes plus strict robust dominance.
+Scenario counts are not probabilities, and UMI does not report probability-best or pairwise win
+probability.
+
+When requested models have no ready compatible common series, comparison is a successful structured
+abstention rather than an exception. It reports missing support by model, incompatible series, and
+recommended missing evidence. Unknown model IDs, malformed bundles, and invalid policy remain
+errors.
 
 ## Capability
 

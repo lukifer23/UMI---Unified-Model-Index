@@ -28,7 +28,8 @@
     "glm-5.2-max",
     "kimi-k3-max"
   ],
-  "component": "capability",
+  "incompatible_series": [],
+  "missing_support_by_model": {},
   "normalization_method": "bundle-wide stable panel per canonical benchmark series",
   "normalization_panels": [
     {
@@ -176,6 +177,7 @@
   ],
   "primary_result_semantics": "raw benchmark metrics",
   "publication_label": "real evidence, provisional common-evidence comparison",
+  "recommended_missing_evidence": [],
   "score_scale": {
     "config_fingerprint": "97ee08d361e603252286b0137d80e778130e19b3bbf5af36ec3dfd64358278c7",
     "evidence_profile_id": "c031559360980050d9da79a4f0f6317845c443343275bbb1f84f17b133f69cb6",
@@ -400,6 +402,31 @@
       ],
       "provisional": true,
       "rank": 1.0,
+      "rank_robustness": {
+        "assumptions": [
+          "joint lower/upper corner enumeration",
+          "scenario counts are not probabilities",
+          "stable normalization panel membership held fixed",
+          "standard-error intervals use a normal approximation with z=1.96"
+        ],
+        "central_composite_score": 87.36842105263158,
+        "central_estimate_rank": 1.0,
+        "composite_score_max": 87.36842105263158,
+        "composite_score_min": 36.84210526315789,
+        "exhaustive": true,
+        "possible_rank_max": 2.0,
+        "possible_rank_min": 1.0,
+        "possible_ranks": [
+          1.0,
+          2.0
+        ],
+        "robustly_dominated_by": [],
+        "robustly_dominates": [
+          "glm-5.2-max"
+        ],
+        "scenario_count": 64,
+        "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
+      },
       "score": 87.36842105263158,
       "score_scale_id": "77fae38857cb2e0ec43364e1a6456254f324911820c0aa6764049a04057f82bc",
       "score_semantics": "weighted stable-panel percentile composite"
@@ -613,6 +640,31 @@
       ],
       "provisional": true,
       "rank": 3.0,
+      "rank_robustness": {
+        "assumptions": [
+          "joint lower/upper corner enumeration",
+          "scenario counts are not probabilities",
+          "stable normalization panel membership held fixed",
+          "standard-error intervals use a normal approximation with z=1.96"
+        ],
+        "central_composite_score": 0.0,
+        "central_estimate_rank": 3.0,
+        "composite_score_max": 27.36842105263158,
+        "composite_score_min": 0.0,
+        "exhaustive": true,
+        "possible_rank_max": 3.0,
+        "possible_rank_min": 3.0,
+        "possible_ranks": [
+          3.0
+        ],
+        "robustly_dominated_by": [
+          "claude-opus-5-max",
+          "kimi-k3-max"
+        ],
+        "robustly_dominates": [],
+        "scenario_count": 64,
+        "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
+      },
       "score": 0.0,
       "score_scale_id": "77fae38857cb2e0ec43364e1a6456254f324911820c0aa6764049a04057f82bc",
       "score_semantics": "weighted stable-panel percentile composite"
@@ -826,9 +878,97 @@
       ],
       "provisional": true,
       "rank": 2.0,
+      "rank_robustness": {
+        "assumptions": [
+          "joint lower/upper corner enumeration",
+          "scenario counts are not probabilities",
+          "stable normalization panel membership held fixed",
+          "standard-error intervals use a normal approximation with z=1.96"
+        ],
+        "central_composite_score": 37.19298245614035,
+        "central_estimate_rank": 2.0,
+        "composite_score_max": 90.17543859649122,
+        "composite_score_min": 28.07017543859649,
+        "exhaustive": true,
+        "possible_rank_max": 2.0,
+        "possible_rank_min": 1.0,
+        "possible_ranks": [
+          1.0,
+          2.0
+        ],
+        "robustly_dominated_by": [],
+        "robustly_dominates": [
+          "glm-5.2-max"
+        ],
+        "scenario_count": 64,
+        "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
+      },
       "score": 37.19298245614035,
       "score_scale_id": "77fae38857cb2e0ec43364e1a6456254f324911820c0aa6764049a04057f82bc",
       "score_semantics": "weighted stable-panel percentile composite"
     }
-  ]
+  ],
+  "sensitivity_intervals": [
+    {
+      "assumption": null,
+      "benchmark_id": "deepswe-v1.1",
+      "interval_origin": "source_bounds",
+      "lower": 69.77633822227692,
+      "model_id": "claude-opus-5-max",
+      "record_id": "deepswe-score-claude-opus-5-max-2026-08-13",
+      "upper": 77.52095907502039,
+      "z_value": null
+    },
+    {
+      "assumption": null,
+      "benchmark_id": "deepswe-v1.1",
+      "interval_origin": "source_bounds",
+      "lower": 42.05214815719697,
+      "model_id": "glm-5.2-max",
+      "record_id": "deepswe-score-glm-5.2-max-2026-08-13",
+      "upper": 45.50340739835859,
+      "z_value": null
+    },
+    {
+      "assumption": null,
+      "benchmark_id": "deepswe-v1.1",
+      "interval_origin": "source_bounds",
+      "lower": 63.97739833756913,
+      "model_id": "kimi-k3-max",
+      "record_id": "deepswe-score-kimi-k3-max-2026-08-13",
+      "upper": 73.05142649613376,
+      "z_value": null
+    },
+    {
+      "assumption": "normal_approximation",
+      "benchmark_id": "gpqa-diamond",
+      "interval_origin": "derived_from_standard_error",
+      "lower": 90.97898767526912,
+      "model_id": "claude-opus-5-max",
+      "record_id": "epoch-gpqa-claude-opus-5-max-d3mtastumfvjr4fjmnhwry",
+      "upper": 96.77353757725614,
+      "z_value": 1.96
+    },
+    {
+      "assumption": "normal_approximation",
+      "benchmark_id": "gpqa-diamond",
+      "interval_origin": "derived_from_standard_error",
+      "lower": 88.69591192945781,
+      "model_id": "glm-5.2-max",
+      "record_id": "epoch-gpqa-glm-5.2-max-c5kpb4axzmygrywwqbkfmv",
+      "upper": 95.01620928266341,
+      "z_value": 1.96
+    },
+    {
+      "assumption": "normal_approximation",
+      "benchmark_id": "gpqa-diamond",
+      "interval_origin": "derived_from_standard_error",
+      "lower": 90.19099069730468,
+      "model_id": "kimi-k3-max",
+      "record_id": "epoch-gpqa-kimi-k3-max-b8mapue3eywuzassnqe7c9",
+      "upper": 96.04638304006907,
+      "z_value": 1.96
+    }
+  ],
+  "status": "ok"
 }

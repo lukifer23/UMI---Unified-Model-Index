@@ -36,6 +36,22 @@ applied small-cohort percentile fallback, raw contributions, absolute configured
 score, evidence-profile ID, and score-scale ID. These percentile positions are relative ranks on a
 declared panel, not capability-distance measurements.
 
+## Rank sensitivity
+
+The five-model DeepSWE comparison exhaustively evaluates 32 joint endpoint scenarios from five
+source-declared intervals. Its central order is Opus, Sol, Fable, Kimi, GLM. The first four can each
+occupy ranks 1–4 under the endpoint scenarios, while GLM remains rank 5; each of the first four
+robustly dominates GLM. The result does not claim probabilities.
+
+The three-model comparison exhaustively evaluates 64 scenarios from three DeepSWE source intervals
+and three GPQA standard-error approximations. Opus and Kimi can each occupy rank 1 or 2. GLM remains
+rank 3, while Opus and Kimi each robustly dominate it. GPQA intervals are explicitly labeled as
+normal approximations using `1.96 × SE`, not source-published confidence intervals.
+
+When a requested group has no ready compatible common series, `umi compare` returns a structured
+`insufficient_common_support` abstention with no scores or ranks. Missing support and incompatible
+cohorts remain visible; malformed inputs and unknown model IDs still fail.
+
 ## Diagnostic evidence
 
 - Artificial Analysis Intelligence values are composite references. The Fable value is rejected
