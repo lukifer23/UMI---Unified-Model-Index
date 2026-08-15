@@ -47,6 +47,7 @@ def build_pilot_dashboard(
         "hle": "HLE",
         "arc-agi-2": "ARC-2",
         "critpt": "CritPt",
+        "cursorbench-3.2": "CursorBench",
         "deepswe-v1.1": "DeepSWE",
         "gpqa-diamond": "GPQA",
         "scicode": "SciCode",
@@ -107,7 +108,7 @@ def build_pilot_dashboard(
                 }
             )
 
-    benchmark_rows = [
+    all_benchmark_rows = [
         {
             "model": _display_name(record.model_id, model_names),
             "model_id": record.model_id,
@@ -121,6 +122,12 @@ def build_pilot_dashboard(
         }
         for record in dataset.benchmarks
         if record.scoring_disposition == ScoringDisposition.SCORED
+    ]
+    benchmark_rows = [
+        row for row in all_benchmark_rows if row["benchmark"] != "cursorbench-3.2"
+    ]
+    cursorbench_rows = [
+        row for row in all_benchmark_rows if row["benchmark"] == "cursorbench-3.2"
     ]
     resource_rows = []
     for record in dataset.efficiency:
@@ -198,7 +205,7 @@ def build_pilot_dashboard(
         "manifest": {
             "version": 1,
             "surface": "dashboard",
-            "title": "UMI v0.3.5 — five-model pilot evidence report",
+            "title": "UMI v0.3.6 — five-model pilot evidence report",
             "description": (
                 "A reproducible view of current accepted evidence, partial component estimates, "
                 "coverage, and the gates that prevent a headline UMI ranking."
@@ -215,6 +222,7 @@ def build_pilot_dashboard(
                         {"dataset": "component_scores", "field": "model"},
                         {"dataset": "coverage", "field": "model"},
                         {"dataset": "benchmarks", "field": "model"},
+                        {"dataset": "cursorbench", "field": "model"},
                         {"dataset": "resources", "field": "model"},
                     ],
                 }
@@ -384,10 +392,32 @@ def build_pilot_dashboard(
                     "layout": "full",
                 },
                 {
+                    "id": "cursorbench_scores",
+                    "title": "CursorBench 3.2 solution correctness",
+                    "subtitle": (
+                        "Raw score on ambiguous multi-file tasks; Fable is absent because "
+                        "fallback absence is unverified."
+                    ),
+                    "type": "bar",
+                    "dataset": "cursorbench",
+                    "sourceId": "accepted_benchmarks",
+                    "encodings": {
+                        "x": {
+                            "field": "model_short",
+                            "type": "nominal",
+                            "label": "Model",
+                        },
+                        "y": {"field": "score", "type": "quantitative", "label": "Raw score"},
+                    },
+                    "yAxisTitle": "CursorBench score (%)",
+                    "valueFormat": "number",
+                    "layout": "full",
+                },
+                {
                     "id": "gap_counts",
                     "title": "Why the index is not yet headline-ready",
                     "subtitle": (
-                        "All 70 configured model-by-capability cells, including absence and "
+                        "All 75 configured model-by-capability cells, including absence and "
                         "rejected evidence."
                     ),
                     "type": "bar",
@@ -434,6 +464,7 @@ def build_pilot_dashboard(
                 {"id": "coverage", "type": "chart", "chartId": "component_coverage"},
                 {"id": "components", "type": "chart", "chartId": "component_scores"},
                 {"id": "benchmarks", "type": "chart", "chartId": "benchmark_scores"},
+                {"id": "cursorbench", "type": "chart", "chartId": "cursorbench_scores"},
                 {
                     "id": "resources",
                     "type": "chart",
@@ -465,6 +496,7 @@ def build_pilot_dashboard(
                 "component_scores": component_rows,
                 "coverage": coverage_rows,
                 "benchmarks": benchmark_rows,
+                "cursorbench": cursorbench_rows,
                 "resources": resource_rows,
                 "gap_counts": gap_rows,
             },

@@ -110,7 +110,7 @@ def test_common_evidence_comparison_excludes_model_specific_support(
         }
     ]
     scores = cast(list[dict[str, object]], comparison["scores"])
-    assert {item["coverage"] for item in scores} == {0.165}
+    assert {item["coverage"] for item in scores} == {0.0825}
 
 
 def test_three_model_common_evidence_excludes_unready_arena_support(
@@ -128,6 +128,11 @@ def test_three_model_common_evidence_excludes_unready_arena_support(
             "benchmark_id": "critpt",
             "canonical_representation_group": "critpt",
             "cohort_key": "aa-v4.1.1-critpt-70-test-challenges-pass1",
+        },
+        {
+            "benchmark_id": "cursorbench-3.2",
+            "canonical_representation_group": "cursorbench-3.2",
+            "cohort_key": "cursorbench-3.2-public-leaderboard-2026-08-14",
         },
         {
             "benchmark_id": "deepswe-v1.1",

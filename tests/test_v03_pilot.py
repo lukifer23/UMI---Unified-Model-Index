@@ -21,6 +21,7 @@ from scripts.freeze_v03_open_sources import _zip_content_sha256
 from umi.adapters import (
     adapt_aa_facts,
     adapt_arena_json,
+    adapt_cursorbench_facts,
     adapt_deepswe_facts,
     adapt_epoch_arc_agi_2_zip,
     adapt_epoch_csv,
@@ -81,7 +82,7 @@ def test_frozen_registry_checksums_and_license_contract(pilot_dataset) -> None:
     )
     assert report.errors == ()
     pilot_snapshots = [item for item in registry.snapshots if "v0.3/" in item.artifact_path]
-    assert len(pilot_snapshots) == 11
+    assert len(pilot_snapshots) == 12
     assert all(item.license_id and item.attribution and item.adapter_id for item in pilot_snapshots)
 
 
@@ -403,6 +404,30 @@ def test_adapters_are_offline_deterministic_and_role_safe(monkeypatch, crosswalk
         and item.evaluation_settings["source_value_rate"] * 100 == item.value
         for item in aa_hle.benchmarks
     )
+    cursorbench = adapt_cursorbench_facts(
+        SOURCES / "cursorbench-reviewed-facts-2026-08-14.yaml", crosswalk
+    )
+    assert len(cursorbench.benchmarks) == 4
+    assert len(cursorbench.rejections) == 1
+    assert cursorbench.rejections[0].source_row_id == "Fable 5 Max"
+    assert {item.model_id for item in cursorbench.benchmarks} == {
+        "claude-opus-5-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "glm-5.2-max",
+    }
+    assert all(
+        item.benchmark_id == "cursorbench-3.2"
+        and item.measurement_as_of_date == date(2026, 8, 14)
+        and item.evaluation_date is None
+        and item.scoring_disposition == ScoringDisposition.SCORED
+        and item.record_status == RecordStatus.READY
+        and item.evaluation_settings["operational_values_scoreable"] is False
+        and item.evaluation_settings["avg_cost_per_task_usd"] > 0
+        and item.evaluation_settings["tokens_per_task"] > 0
+        and item.evaluation_settings["steps_per_task"] > 0
+        for item in cursorbench.benchmarks
+    )
     deep = adapt_deepswe_facts(SOURCES / "deepswe-reviewed-facts-2026-08-13.yaml", crosswalk)
     assert len(deep.benchmarks) == 5
     assert all(item.uncertainty is not None for item in deep.benchmarks)
@@ -463,8 +488,8 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
             "headline_ready": 0,
             "max_capability_coverage": 0.6312500000000001,
             "pilot_models": 5,
-            "scored_capability_cells": 24,
-            "total_capability_cells": 70,
+                "scored_capability_cells": 28,
+                "total_capability_cells": 75,
         }
     ]
     assert all(
@@ -642,7 +667,7 @@ def test_gap_report_counts_every_configured_model_benchmark_cell(
     assert len(report["capability_cells"]) == len(pilot_dataset.models) * len(
         pilot_config.benchmarks
     )
-    assert sum(report["capability_cell_counts"].values()) == 70
+    assert sum(report["capability_cell_counts"].values()) == 75
     assert all(report["pricing_record_ids"].values())
     assert any(
         str(pilot_config.eligibility.minimum_capability_domains) in blocker
@@ -672,6 +697,20 @@ def test_aa_hle_adapter_rejects_non_finite_source_rate(monkeypatch, crosswalk) -
     monkeypatch.setattr("umi.adapters.reviewed.load_yaml", lambda path: raw)
     with pytest.raises(ValidationError, match="finite number"):
         adapt_aa_facts("offline-non-finite-aa-hle.yaml", crosswalk)
+
+
+def test_cursorbench_adapter_rejects_non_finite_operational_fact(
+    monkeypatch, crosswalk
+) -> None:
+    raw = yaml.safe_load(
+        (SOURCES / "cursorbench-reviewed-facts-2026-08-14.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    raw["rows"][0]["tokens_per_task"] = float("inf")
+    monkeypatch.setattr("umi.adapters.reviewed.load_yaml", lambda path: raw)
+    with pytest.raises(ValueError, match="finite and nonnegative"):
+        adapt_cursorbench_facts("offline-non-finite-cursorbench.yaml", crosswalk)
 
 
 def test_overlap_cycles_and_unrestricted_double_count_are_rejected(pilot_config) -> None:
@@ -732,7 +771,8 @@ def test_fixed_family_budgets_and_source_ablation(pilot_dataset, pilot_config) -
     assert budgets[
         next(domain for domain in budgets if domain.value == "software_engineering")
     ] == {
-        "deepswe-v1.1": 0.60,
+        "deepswe-v1.1": 0.30,
+        "cursorbench-3.2": 0.30,
         "terminalbench-2.1": 0.25,
         "scicode": 0.15,
         "legacy-aa-coding-index": 0.0,
@@ -792,7 +832,7 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
     assert {
         item.model_id: item.coverage.capability_absolute_weighted for item in results.values()
     } == {
-        "claude-fable-5-max": 0.165,
+        "claude-fable-5-max": 0.0825,
         "claude-opus-5-max": 0.6312500000000001,
         "glm-5.2-max": 0.49375,
         "gpt-5.6-sol-max": 0.6312500000000001,
@@ -803,8 +843,8 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
             "claude-fable-5-max": 50.0,
             "claude-opus-5-max": 81.98019801980197,
             "glm-5.2-max": 0.0,
-            "gpt-5.6-sol-max": 78.87788778877888,
-            "kimi-k3-max": 28.25082508250825,
+            "gpt-5.6-sol-max": 77.78877887788778,
+            "kimi-k3-max": 29.339933993399338,
         }
     )
     assert {item.model_id: item.efficiency.score for item in results.values()} == pytest.approx(

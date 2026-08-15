@@ -1,15 +1,15 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.5 extends the real,
-five-configuration, multi-source pilot with exact HLE, DeepSWE, GPQA Diamond, SciCode, CritPt, and
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.6 extends the real,
+five-configuration, multi-source pilot with exact HLE, CursorBench 3.2, DeepSWE, GPQA Diamond, SciCode, CritPt, and
 ARC-AGI-2 results plus DeepSWE confidence intervals and harness-resource means. It does **not**
 publish a headline UMI score: the evidence supports only provisional, model-specific partial
 Capability and Efficiency estimates.
 
 The pilot cohort is Claude Opus 5 Max, Claude Fable 5 Max, GPT-5.6 Sol Max, Kimi K3 Max, and
 GLM-5.2 Max. Its frozen sources are Artificial Analysis public facts, Epoch ECI and Benchmarking Hub
-data, LM Arena Agent and text/style-control rows, and DeepSWE v1.1 facts. Every source row is
+data, CursorBench 3.2 facts, LM Arena Agent and text/style-control rows, and DeepSWE v1.1 facts. Every source row is
 accepted only through an exact model-and-effort crosswalk.
 
 ## Install and verify
@@ -38,7 +38,7 @@ non-overwriting acquisition path for Epoch ECI, the complete Benchmarking Hub ar
 It writes a checksum manifest to a fresh
 snapshot directory and is never called by ingestion or scoring. Arena acquisition freezes the
 revision-addressed raw Parquet files; promotion into adapter input is a separate reviewed step.
-AA, DeepSWE, and lab releases remain reviewed-fact inputs.
+AA, CursorBench, DeepSWE, and lab releases remain reviewed-fact inputs.
 
 ```bash
 uv run --no-sync python -m scripts.build_v03_pilot
@@ -49,6 +49,7 @@ PYTHONPATH=. uv run --no-sync umi crosswalk
 PYTHONPATH=. uv run --no-sync umi overlap
 PYTHONPATH=. uv run --no-sync umi ingest --source aa
 PYTHONPATH=. uv run --no-sync umi ingest --source aa-hle
+PYTHONPATH=. uv run --no-sync umi ingest --source cursorbench
 PYTHONPATH=. uv run --no-sync umi ingest --source epoch
 PYTHONPATH=. uv run --no-sync umi ingest --source epoch-benchmarks
 PYTHONPATH=. uv run --no-sync umi ingest --source arena-agent
@@ -137,7 +138,7 @@ The default Overall formula remains:
 ```
 
 Capability retains the five domain weights and fixed within-domain benchmark-family budgets.
-HLE and ARC-AGI-2 contribute to general reasoning; DeepSWE and SciCode contribute to software engineering;
+HLE and ARC-AGI-2 contribute to general reasoning; CursorBench, DeepSWE, and SciCode contribute to software engineering;
 GPQA Diamond and CritPt contribute to math/science. The frozen Epoch archive supplies exact Max rows
 for Opus, Sol, Kimi, and GLM on the AA benchmarks, and exact ARC rows for Opus, Sol, and Kimi. Fable's
 archive rows remain rejected because SciCode and CritPt identify an Opus 4.8 fallback composite and
@@ -153,10 +154,16 @@ observed dollar cost remain diagnostic until deployment identity is verified. Th
 hierarchy gives this evidence 4.5% absolute Efficiency coverage; it cannot represent coding as a
 whole or unlock Economics.
 
+CursorBench 3.2 solution-correctness scores contribute for Opus, Sol, Kimi, and GLM. Its Fable row
+is rejected because Cursor documents invisible Fable-to-Opus routing and the leaderboard does not
+prove fallback absence. Published cost/task, tokens/task, and steps/task are retained as diagnostic
+benchmark settings, but they do not enter Efficiency or Economics without a compatible binary
+success denominator and verified endpoint plus service-tier identity.
+
 ## Current limitations
 
-- Opus, Sol, and Kimi have 63.125% Capability coverage across three domains and now clear the
-  Capability-only coverage/breadth gates. GLM has 49.375% across three domains and Fable has 16.5%
+- Opus, Sol, and Kimi have 63.125% Capability coverage across three domains and clear the
+  Capability-only coverage/breadth gates. GLM has 49.375% across three domains and Fable has 8.25%
   across one. Model-specific partials remain different evidence profiles, not one shared ranking.
 - Efficiency has only 4.5% absolute coverage; Economics has no ready evidence.
 - Fable 5 Max predates the unchanged 2026-06-15 release-window start.

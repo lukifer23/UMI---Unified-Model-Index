@@ -9,6 +9,7 @@ signals:
   - {id: deepswe-v1.1, role: task, disposition: scored, budget_group: deepswe-v1.1}
   - {id: deepswe-v1.1-resources, role: efficiency, disposition: scored, budget_group: deepswe-v1.1-resources}
   - {id: deepswe-v1.1-endpoint-resources, role: efficiency, disposition: diagnostic_only}
+  - {id: cursorbench-3.2, role: task, disposition: scored, budget_group: cursorbench-3.2}
   - {id: hle, role: task, disposition: scored, budget_group: hle}
   - {id: arc-agi-2, role: task, disposition: scored, budget_group: arc-agi-2}
   - {id: terminalbench-2.1, role: task, disposition: scored, budget_group: terminalbench-2.1}

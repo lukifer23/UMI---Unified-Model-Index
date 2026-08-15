@@ -9,17 +9,17 @@ workload, and Capability-domain gates. This is the expected outcome, not a faile
 
 ## Scored raw evidence
 
-| Configuration | HLE | ARC-AGI-2 | DeepSWE v1.1 (95% CI) | GPQA | SciCode | CritPt | Partial Capability | Partial Efficiency | Headline |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Claude Opus 5 Max | 54.87% | 90.42% | 73.65% (69.78–77.52) | 93.88% | 55.67% | 29.14% | 81.98 | 41.67 | null |
-| Claude Fable 5 Max | rejected: fallback | missing | 69.72% (65.69–73.76) | rejected | rejected | rejected | 50.00 | 50.00 | null |
-| GPT-5.6 Sol Max | 49.49% | 92.50% | 72.67% (69.84–75.50) | 93.50% | 56.13% | 32.30% | 78.88 | 100.00 | null |
-| Kimi K3 Max | 46.90% | 60.42% | 68.51% (63.98–73.05) | 93.12% | 58.68% | 23.40% | 28.25 | 58.33 | null |
-| GLM-5.2 Max | 41.15% | rejected: unknown effort | 43.78% (42.05–45.50) | 91.86% | 50.46% | 20.86% | 0.00 | 0.00 | null |
+| Configuration | HLE | ARC-AGI-2 | DeepSWE v1.1 (95% CI) | CursorBench 3.2 | GPQA | SciCode | CritPt | Partial Capability | Partial Efficiency | Headline |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Claude Opus 5 Max | 54.87% | 90.42% | 73.65% (69.78–77.52) | 70.0% | 93.88% | 55.67% | 29.14% | 81.98 | 41.67 | null |
+| Claude Fable 5 Max | rejected: fallback | missing | 69.72% (65.69–73.76) | rejected: fallback unverified | rejected | rejected | rejected | 50.00 | 50.00 | null |
+| GPT-5.6 Sol Max | 49.49% | 92.50% | 72.67% (69.84–75.50) | 67.2% | 93.50% | 56.13% | 32.30% | 77.79 | 100.00 | null |
+| Kimi K3 Max | 46.90% | 60.42% | 68.51% (63.98–73.05) | 60.8% | 93.12% | 58.68% | 23.40% | 29.34 | 58.33 | null |
+| GLM-5.2 Max | 41.15% | rejected: unknown effort | 43.78% (42.05–45.50) | 55.0% | 91.86% | 50.46% | 20.86% | 0.00 | 0.00 | null |
 
-Partial Capability is cohort-relative. Opus, Sol, and Kimi cover 63.125% across six families and
-three domains. GLM covers 49.375% across five families and three domains; Fable covers only DeepSWE
-at 16.5%. Those model-specific partials are not directly rankable across
+Partial Capability is cohort-relative. Opus, Sol, and Kimi cover 63.125% across seven families and
+three domains. GLM covers 49.375% across six families and three domains; Fable covers only DeepSWE
+at 8.25%. Those model-specific partials are not directly rankable across
 evidence profiles and are not Overall scores. Fable is also release-window-ineligible because its
 2026-06-09 release predates the 2026-06-15 start.
 
@@ -27,7 +27,7 @@ evidence profiles and are not Overall scores. Fable is also release-window-ineli
 
 The five-model common comparison uses DeepSWE as its single common raw metric. Its secondary
 percentile scale is fitted once to Fable, Opus, GLM, Sol, and Kimi, then reused for every display
-subset. The three-model Opus/Kimi/GLM comparison uses HLE, DeepSWE, GPQA, SciCode, and CritPt; DeepSWE
+subset. The three-model Opus/Kimi/GLM comparison uses HLE, DeepSWE, CursorBench, GPQA, SciCode, and CritPt; DeepSWE
 still uses the five-model panel and GPQA still uses its four accepted models. For example, Kimi's
 DeepSWE stable-panel percentile remains 25 whether Sol is displayed or omitted.
 
@@ -55,9 +55,9 @@ cohorts remain visible; malformed inputs and unknown model IDs still fail.
 ## Comparison validity and certificate
 
 The retained Opus/Kimi/GLM certificate is `provisional_comparison`, not a headline ranking. All
-three configurations share the same five canonical benchmark series, evidence-profile ID, five
+three configurations share the same six canonical benchmark series, evidence-profile ID, six
 bundle-wide stable normalization panels, and weighted-composite score-scale ID. The certificate
-also binds fifteen selected benchmark records to three frozen source-artifact checksums and retains
+also binds eighteen selected benchmark records to four frozen source-artifact checksums and retains
 the 64-scenario rank envelopes. Those bindings—not similar labels—are why its values are directly
 comparable. Provisional small-panel normalization and incomplete Capability breadth remain explicit
 warnings and prevent the certificate from becoming a universal UMI score.
@@ -70,6 +70,11 @@ warnings and prevent the certificate from becoming a universal UMI score.
   GLM on the documented 2,158-question text-only, pass@1 cohort. The facts-only extract retains the
   exact published rates and access date without inventing a run date. Fable is rejected because its
   public HLE label explicitly routes through Opus 4.8 fallback.
+- CursorBench 3.2 solution-correctness scores are independent atomic measurements for Opus, Sol,
+  Kimi, and GLM on the current ambiguous multi-file task cohort. Fable is rejected because Cursor
+  documents invisible Fable-to-Opus routing and the run does not prove fallback absence. The table's
+  cost/task, tokens/task, and steps/task values are retained but excluded from Efficiency and
+  Economics without a compatible success denominator and verified deployment identity.
 - Epoch ECI input rows are retained as diagnostic references because their source matrix combines
   heterogeneous harnesses/settings and ECI selects highest results across settings.
 - Epoch's raw GPQA archive supplies four scoring-ready exact Max rows. Fable is rejected because the
@@ -106,7 +111,7 @@ have no model-specific rank and null `headline_overall` for every model. The fiv
 [common-evidence comparison](data/pilots/v0.3/processed/common-evidence-five-model-comparison.json)
 uses DeepSWE only because Fable's other benchmark identities are not cleared; the exact three-model
 [common-evidence comparison](data/pilots/v0.3/processed/common-evidence-three-model-comparison.json)
-uses all five scored series under the current strict identity policy. Both are provisional and separately
+uses all six scored series under the current strict identity policy. Both are provisional and separately
 labeled, lead with raw values, and carry stable-panel and score-scale identity. The
 [three-model comparison certificate](data/pilots/v0.3/processed/comparison-certificate-three-model.json)
 adds the governed bundle, source-record, artifact-checksum, identity, and deterministic result
@@ -124,7 +129,7 @@ benchmark/model cell and every workload-category gate.
 Equal-family and source-ablation scenarios are computed without relaxing publication gates. Removing
 a source does not redistribute or enlarge its domain budget. Every scenario continues to have a null
 headline. These scenarios expose how dependent the scored benchmark families are on the pilot's
-three frozen scored source artifacts.
+four frozen scored source artifacts.
 
 ## Reproducibility
 

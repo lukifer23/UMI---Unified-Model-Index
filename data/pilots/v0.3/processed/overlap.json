@@ -1,5 +1,5 @@
 {
-  "config_fingerprint": "851e2697077086204f83c8c588c215485baa4dc9f0bd7e5571c538acb1b55478",
+  "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
   "edges": [
     {
       "evidence": "AA Intelligence v4.1 methodology",
@@ -152,6 +152,12 @@
       "disposition": "diagnostic_only",
       "id": "deepswe-v1.1-endpoint-resources",
       "role": "efficiency"
+    },
+    {
+      "budget_group": "cursorbench-3.2",
+      "disposition": "scored",
+      "id": "cursorbench-3.2",
+      "role": "task"
     },
     {
       "budget_group": "hle",

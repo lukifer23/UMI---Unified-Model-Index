@@ -25,6 +25,7 @@ from analysis.value_sensitivity import analyze_value_sensitivity
 from umi.adapters import (
     adapt_aa_facts,
     adapt_arena_json,
+    adapt_cursorbench_facts,
     adapt_deepswe_facts,
     adapt_epoch_benchmarks_zip,
     adapt_epoch_csv,
@@ -156,6 +157,7 @@ def build_parser() -> argparse.ArgumentParser:
         choices=(
             "aa",
             "aa-hle",
+            "cursorbench",
             "epoch",
             "epoch-benchmarks",
             "arena-agent",
@@ -196,6 +198,7 @@ def _adapt_source(args: argparse.Namespace) -> Any:
     defaults = {
         "aa": root / "aa-reviewed-facts-2026-08-14.yaml",
         "aa-hle": root / "aa-hle-reviewed-facts-2026-08-14.yaml",
+        "cursorbench": root / "cursorbench-reviewed-facts-2026-08-14.yaml",
         "epoch": root / "epoch-eci-benchmarks-2026-08-14.csv",
         "epoch-benchmarks": root / "epoch-benchmark-data-2026-08-14.zip",
         "arena-agent": root / "arena-agent-2026-08-14.json",
@@ -209,6 +212,8 @@ def _adapt_source(args: argparse.Namespace) -> Any:
     artifact = Path(args.artifact) if args.artifact else defaults[args.source]
     if args.source in {"aa", "aa-hle"}:
         return adapt_aa_facts(artifact, crosswalk)
+    if args.source == "cursorbench":
+        return adapt_cursorbench_facts(artifact, crosswalk)
     if args.source == "epoch":
         return adapt_epoch_csv(
             artifact,

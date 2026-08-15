@@ -6,6 +6,7 @@ human-readable form. UMI's MIT license does not override upstream terms.
 | Source | Frozen material | Upstream revision | License / use basis | Redistribution |
 |---|---|---|---|---|
 | Artificial Analysis | Manually reviewed public index facts and atomic HLE v4.1 facts | `manual-public-facts-2026-08-14`; `reviewed-hle-v4.1-2026-08-14` | Terms-governed; API documentation and terms require attribution and govern reuse | Facts and citations only; no API payload or page copy |
+| Cursor | Manually reviewed CursorBench 3.2 score, cost/task, tokens/task, and steps/task facts | `cursorbench-3.2-public-page-2026-08-14` | Terms-governed; no redistribution right assumed | Facts and citations only; no page payload, task content, or chart artwork |
 | Epoch ECI | Official `eci_benchmarks.csv` | `dab4f8ac0d14ec7022da01684fa2c707f73749eb` | Epoch attribution recorded; `eci-public` implementation is MIT licensed | Official public CSV frozen with citation |
 | Epoch Benchmarking Hub | Complete official `benchmark_data.zip`; GPQA Diamond, SciCode, and CritPt adapted | semantic member-content SHA-256 `2b818e5b…7f009`; frozen container SHA-256 `35a7c21b…a18b` | CC BY 4.0 with Epoch attribution; individual benchmark questions remain subject to creator rights | Full official data archive retained; benchmark questions are not separately republished |
 | LM Arena | Dataset Viewer JSON for `agent` and a bounded `text_style_control` page | `08dd89df7a8aa9df2ead3799f6422af4ad2e97a7` | CC BY 4.0 | Artifact retained with attribution |
@@ -17,6 +18,8 @@ Attribution:
   https://artificialanalysis.ai/evaluations/humanitys-last-exam and
   https://artificialanalysis.ai/methodology/intelligence-benchmarking and
   https://artificialanalysis.ai/data-api/docs
+- CursorBench 3.2 leaderboard and methodology:
+  https://cursor.com/cursorbench and https://cursor.com/blog/cursorbench
 - Epoch AI ECI data and documentation: https://github.com/epoch-research/eci-public
 - Epoch AI Benchmarking Hub and methodology: https://epoch.ai/benchmarks/about
 - LM Arena historical leaderboard dataset:

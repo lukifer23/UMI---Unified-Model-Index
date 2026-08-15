@@ -1,7 +1,8 @@
 families:
   - {id: hle, domain: general_reasoning, weight: 0.50, cap: 0.50}
   - {id: arc-agi-2, domain: general_reasoning, weight: 0.50, cap: 0.50}
-  - {id: deepswe-v1.1, domain: software_engineering, weight: 0.60, cap: 0.60}
+  - {id: deepswe-v1.1, domain: software_engineering, weight: 0.30, cap: 0.30}
+  - {id: cursorbench-3.2, domain: software_engineering, weight: 0.30, cap: 0.30}
   - {id: terminalbench-2.1, domain: software_engineering, weight: 0.25, cap: 0.25}
   - {id: scicode, domain: software_engineering, weight: 0.15, cap: 0.15}
   - {id: legacy-aa-coding-index, domain: software_engineering, weight: 0.0, cap: 0.01}
@@ -17,6 +18,7 @@ benchmarks:
   - {id: hle, name: Humanity's Last Exam, domain: general_reasoning, family: hle, signal_id: hle, budget_group: hle, direction: higher, unit: percent, normalization: robust_z}
   - {id: arc-agi-2, name: ARC-AGI-2, domain: general_reasoning, family: arc-agi-2, signal_id: arc-agi-2, budget_group: arc-agi-2, direction: higher, unit: percent, normalization: robust_z}
   - {id: deepswe-v1.1, name: DeepSWE v1.1, domain: software_engineering, family: deepswe-v1.1, signal_id: deepswe-v1.1, budget_group: deepswe-v1.1, direction: higher, unit: percent, normalization: robust_z}
+  - {id: cursorbench-3.2, name: CursorBench 3.2, domain: software_engineering, family: cursorbench-3.2, signal_id: cursorbench-3.2, budget_group: cursorbench-3.2, direction: higher, unit: percent, normalization: robust_z}
   - {id: terminalbench-2.1, name: Terminal-Bench 2.1, domain: software_engineering, family: terminalbench-2.1, signal_id: terminalbench-2.1, budget_group: terminalbench-2.1, direction: higher, unit: percent, normalization: robust_z}
   - {id: scicode, name: SciCode, domain: software_engineering, family: scicode, signal_id: scicode, budget_group: scicode, direction: higher, unit: percent, normalization: robust_z}
   - {id: aa-coding-agent-index, name: Legacy AA Coding Agent Index, domain: software_engineering, family: legacy-aa-coding-index, signal_id: aa-coding-index, budget_group: null, direction: higher, unit: score, normalization: robust_z}

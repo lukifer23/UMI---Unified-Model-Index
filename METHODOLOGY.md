@@ -1,7 +1,7 @@
-# UMI methodology v0.3.5
+# UMI methodology v0.3.6
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3.5 retains the manually reviewed,
+current policy values; code must not contradict this document. UMI v0.3.6 retains the manually reviewed,
 multi-source evidence pilot. It does not publish a headline UMI ranking.
 
 ## v0.3 source roles and exact identity
@@ -31,7 +31,7 @@ Pilot family budgets are hypotheses:
 | Domain | Families |
 |---|---|
 | General reasoning | HLE 0.50; ARC-AGI-2 0.50 |
-| Software engineering | DeepSWE 0.60; Terminal-Bench 2.1 0.25; SciCode 0.15 |
+| Software engineering | DeepSWE 0.30; CursorBench 3.2 0.30; Terminal-Bench 2.1 0.25; SciCode 0.15 |
 | Agentic work | GDPval-AA v2 0.60; tau3-Banking 0.40; Arena Agent diagnostic 0.00 |
 | Math/science | GPQA Diamond 0.65; CritPt 0.35 |
 | Context/reliability | AA-LCR 0.50; AA-Omniscience 0.50 |
@@ -47,6 +47,23 @@ for UMI's configured HLE unit. Its access date is a measurement-as-of date, not 
 date. Claude Fable 5's public HLE row explicitly routes through an Opus 4.8 fallback and is rejected
 from the plain Fable Max pilot configuration. The other four exact Max rows may score; their absence
 for Fable remains missing common support and is never imputed.
+
+CursorBench 3.2 is admitted as an independent software-engineering task signal for exact named
+release and Max-effort rows. It measures solution correctness on ambiguous, multi-file agent tasks
+from real Cursor sessions and is not treated as interchangeable with public-repository repair,
+terminal, or scientific-code suites. The new family receives half of DeepSWE's former 0.60 family
+budget: DeepSWE and CursorBench each receive 0.30, while Terminal-Bench and SciCode retain 0.25 and
+0.15. This split preserves the complete software-engineering domain budget and avoids taking budget
+from still-missing families merely because a new source became available.
+
+The CursorBench public table also reports average cost per task, tokens per task, and steps per task.
+Those columns are retained in each benchmark record's evaluation settings but are diagnostic only.
+Cursor does not publish a compatible binary task-success rate for success adjustment, and the table
+does not establish endpoint or service-tier identity. They therefore contribute neither Efficiency
+nor Economics. The Fable 5 Max row is rejected entirely: Cursor documents that a displayed Fable
+request may route to Opus without an in-product indicator, and the leaderboard does not prove that
+such fallback was absent from the evaluated run. The other four exact Max rows may contribute
+Capability; no CursorBench value is imputed for Fable.
 
 `BenchmarkFamilyDefinition.cap` is retained only for schema compatibility in v0.3 and is
 deprecated. UMI does not dynamically redistribute family weights through caps; removal is deferred
@@ -402,8 +419,9 @@ CapabilityCoverage = sum(AbsoluteWeight_r)
 ```
 
 It does not renormalize an available family to a full domain budget before combining domains.
-DeepSWE retains its configured absolute budget of `0.275 × 0.60 = 0.165`; missing Terminal-Bench or
-SciCode lowers coverage and does not make DeepSWE a full software-engineering vote. Arena Agent had
+DeepSWE and CursorBench each retain a configured absolute budget of
+`0.275 × 0.30 = 0.0825`; missing either signal, Terminal-Bench, or SciCode lowers coverage and does
+not make one available family a full software-engineering vote. Arena Agent had
 a `0.20 × 0.25 = 0.05` budget in the earlier experimental policy, but the v0.3.1 construct decision
 makes that aggregate diagnostic with zero weight. It therefore cannot enter this formula.
 
@@ -431,7 +449,7 @@ that limitation.
 
 ## Efficiency
 
-The v0.3.5 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
+The v0.3.6 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
 10% effective reasoning tokens, 10% effective cached tokens, 10% effective turns, 15% effective
 agent steps, 15% effective wall time, and 10% effective tool calls. These are policy weights, not
 empirically learned parameters. Token subtypes are kept distinct: a total-token field is not scored

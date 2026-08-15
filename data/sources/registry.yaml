@@ -103,6 +103,23 @@ snapshots:
     attribution: HLE score data and methodology sourced from Artificial Analysis; artificialanalysis.ai
     redistribution_scope: facts_only
     notes: Public factual transcription only; exact source rates retained, no API payload or page copy committed.
+  - id: cursorbench-3.2-facts-2026-08-14
+    title: CursorBench 3.2 reviewed public facts
+    source:
+      organization: Cursor
+      url: https://cursor.com/cursorbench
+      accessed: 2026-08-14
+    as_of: 2026-08-14
+    artifact_path: v0.3/cursorbench-reviewed-facts-2026-08-14.yaml
+    artifact_sha256: 19556c9ff6db835757a5668a65177e8e151759eda751ca6e627a7491e77e54bc
+    content_type: application/yaml
+    upstream_revision: cursorbench-3.2-public-page-2026-08-14
+    adapter_id: cursorbench-reviewed-facts-v1
+    license_id: terms-governed-no-redistribution-assumed
+    license_url: https://cursor.com/terms-of-service
+    attribution: CursorBench score and task-resource facts sourced from Cursor; cursor.com
+    redistribution_scope: facts_only
+    notes: Public factual transcription only; no page payload, task content, or chart artwork is redistributed.
   - id: epoch-eci-matrix-2026-08-14
     title: Epoch ECI benchmark input matrix
     source:

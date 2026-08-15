@@ -33,6 +33,11 @@
         "type": "chart"
       },
       {
+        "chartId": "cursorbench_scores",
+        "id": "cursorbench",
+        "type": "chart"
+      },
+      {
         "chartId": "effective_input_tokens",
         "id": "resources",
         "type": "chart"
@@ -225,6 +230,29 @@
         "yAxisTitle": "Success-adjusted input tokens"
       },
       {
+        "dataset": "cursorbench",
+        "encodings": {
+          "x": {
+            "field": "model_short",
+            "label": "Model",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "score",
+            "label": "Raw score",
+            "type": "quantitative"
+          }
+        },
+        "id": "cursorbench_scores",
+        "layout": "full",
+        "sourceId": "accepted_benchmarks",
+        "subtitle": "Raw score on ambiguous multi-file tasks; Fable is absent because fallback absence is unverified.",
+        "title": "CursorBench 3.2 solution correctness",
+        "type": "bar",
+        "valueFormat": "number",
+        "yAxisTitle": "CursorBench score (%)"
+      },
+      {
         "dataset": "gap_counts",
         "encodings": {
           "x": {
@@ -241,7 +269,7 @@
         "id": "gap_counts",
         "layout": "full",
         "sourceId": "pilot_gaps",
-        "subtitle": "All 70 configured model-by-capability cells, including absence and rejected evidence.",
+        "subtitle": "All 75 configured model-by-capability cells, including absence and rejected evidence.",
         "title": "Why the index is not yet headline-ready",
         "type": "bar",
         "valueFormat": "number",
@@ -267,6 +295,10 @@
           },
           {
             "dataset": "benchmarks",
+            "field": "model"
+          },
+          {
+            "dataset": "cursorbench",
             "field": "model"
           },
           {
@@ -301,7 +333,7 @@
     ],
     "surface": "dashboard",
     "tables": [],
-    "title": "UMI v0.3.5 \u2014 five-model pilot evidence report",
+    "title": "UMI v0.3.6 \u2014 five-model pilot evidence report",
     "version": 1
   },
   "package_info": {
@@ -628,7 +660,7 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "score": 78.87788778877888
+          "score": 77.78877887788778
         },
         {
           "component": "Eff.",
@@ -642,7 +674,7 @@
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "score": 28.25082508250825
+          "score": 29.339933993399338
         },
         {
           "component": "Eff.",
@@ -690,7 +722,7 @@
         },
         {
           "component": "Cap.",
-          "coverage": 0.165,
+          "coverage": 0.0825,
           "model": "Claude Fable 5 (max)",
           "model_id": "claude-fable-5-max",
           "model_short": "Fable 5"
@@ -773,6 +805,52 @@
           "model_short": "GLM-5.2"
         }
       ],
+      "cursorbench": [
+        {
+          "benchmark": "cursorbench-3.2",
+          "benchmark_short": "CursorBench",
+          "cohort": "cursorbench-3.2-public-leaderboard-2026-08-14",
+          "model": "Claude Opus 5 (max)",
+          "model_id": "claude-opus-5-max",
+          "model_short": "Opus 5",
+          "record_id": "cursorbench-3.2-claude-opus-5-max-2026-08-14",
+          "score": 70.0,
+          "source": "Cursor"
+        },
+        {
+          "benchmark": "cursorbench-3.2",
+          "benchmark_short": "CursorBench",
+          "cohort": "cursorbench-3.2-public-leaderboard-2026-08-14",
+          "model": "GPT-5.6 Sol (max)",
+          "model_id": "gpt-5.6-sol-max",
+          "model_short": "GPT-5.6 Sol",
+          "record_id": "cursorbench-3.2-gpt-5.6-sol-max-2026-08-14",
+          "score": 67.2,
+          "source": "Cursor"
+        },
+        {
+          "benchmark": "cursorbench-3.2",
+          "benchmark_short": "CursorBench",
+          "cohort": "cursorbench-3.2-public-leaderboard-2026-08-14",
+          "model": "Kimi K3 (max)",
+          "model_id": "kimi-k3-max",
+          "model_short": "Kimi K3",
+          "record_id": "cursorbench-3.2-kimi-k3-max-2026-08-14",
+          "score": 60.8,
+          "source": "Cursor"
+        },
+        {
+          "benchmark": "cursorbench-3.2",
+          "benchmark_short": "CursorBench",
+          "cohort": "cursorbench-3.2-public-leaderboard-2026-08-14",
+          "model": "GLM-5.2 (max)",
+          "model_id": "glm-5.2-max",
+          "model_short": "GLM-5.2",
+          "record_id": "cursorbench-3.2-glm-5.2-max-2026-08-14",
+          "score": 55.0,
+          "source": "Cursor"
+        }
+      ],
       "gap_counts": [
         {
           "cells": 3,
@@ -783,11 +861,11 @@
           "status": "Reference"
         },
         {
-          "cells": 40,
+          "cells": 41,
           "status": "Missing"
         },
         {
-          "cells": 24,
+          "cells": 28,
           "status": "Ready"
         },
         {
@@ -800,7 +878,7 @@
           "capability": 81.98019801980197,
           "capability_coverage": 0.6312500000000001,
           "capability_domains": 3,
-          "capability_profile": "dcf77b57e6b3",
+          "capability_profile": "fb0485d88875",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -815,9 +893,9 @@
         },
         {
           "capability": 50.0,
-          "capability_coverage": 0.165,
+          "capability_coverage": 0.0825,
           "capability_domains": 1,
-          "capability_profile": "99d24d1ea2ff",
+          "capability_profile": "1583908ecd3e",
           "comparability": "different_score_scale",
           "confidence": "Low",
           "economics": null,
@@ -831,10 +909,10 @@
           "partial_overall": 50.00000000000001
         },
         {
-          "capability": 78.87788778877888,
+          "capability": 77.78877887788778,
           "capability_coverage": 0.6312500000000001,
           "capability_domains": 3,
-          "capability_profile": "dcf77b57e6b3",
+          "capability_profile": "fb0485d88875",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -845,13 +923,13 @@
           "model": "GPT-5.6 Sol (max)",
           "model_id": "gpt-5.6-sol-max",
           "model_short": "GPT-5.6 Sol",
-          "partial_overall": 85.47854785478549
+          "partial_overall": 84.72978547854784
         },
         {
-          "capability": 28.25082508250825,
+          "capability": 29.339933993399338,
           "capability_coverage": 0.6312500000000001,
           "capability_domains": 3,
-          "capability_profile": "dcf77b57e6b3",
+          "capability_profile": "fb0485d88875",
           "comparability": "directly_comparable",
           "confidence": "Low",
           "economics": null,
@@ -862,13 +940,13 @@
           "model": "Kimi K3 (max)",
           "model_id": "kimi-k3-max",
           "model_short": "Kimi K3",
-          "partial_overall": 37.651608910891085
+          "partial_overall": 38.400371287128706
         },
         {
           "capability": 0.0,
           "capability_coverage": 0.49375,
           "capability_domains": 3,
-          "capability_profile": "c51eaf54c7b6",
+          "capability_profile": "3d142b157bdc",
           "comparability": "different_score_scale",
           "confidence": "Low",
           "economics": null,
@@ -889,8 +967,8 @@
           "headline_ready": 0,
           "max_capability_coverage": 0.6312500000000001,
           "pilot_models": 5,
-          "scored_capability_cells": 24,
-          "total_capability_cells": 70
+          "scored_capability_cells": 28,
+          "total_capability_cells": 75
         }
       ],
       "resources": [

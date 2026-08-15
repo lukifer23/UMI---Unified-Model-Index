@@ -203,6 +203,226 @@ measurements:
   number_of_trials: 1
   sample_count: 2158
   pass_at_k: 1
+- record_id: cursorbench-3.2-claude-opus-5-max-2026-08-14
+  source:
+    organization: Cursor
+    url: https://cursor.com/cursorbench
+    accessed: '2026-08-14'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: cursorbench-3.2
+  harness_version: cursorbench-3.2-public-leaderboard
+  metric_definition: CursorBench 3.2 solution-correctness score in percent on ambiguous
+    multi-file tasks from real Cursor sessions
+  tools_enabled: true
+  notes: Capability score only. Published task cost, token, and step summaries are
+    retained in evaluation_settings but excluded from Efficiency and Economics.
+  evaluator: Cursor
+  harness_owner: Cursor
+  run_executor: Cursor
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: cursorbench-3.2-facts-2026-08-14
+  source_registry_snapshot_id: cursorbench-3.2-facts-2026-08-14
+  crosswalk_entry_id: cursorbench-opus-max
+  signal_id: cursorbench-3.2
+  source_model_id: Opus 5 Max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: cursorbench-3.2
+  model_id: claude-opus-5-max
+  value: 70.0
+  cohort_key: cursorbench-3.2-public-leaderboard-2026-08-14
+  evaluation_settings:
+    task_origin: real Cursor sessions
+    task_scope: ambiguous multi-file agent tasks
+    grading: agentic graders
+    score_direction: higher is better
+    exact_task_count_disclosed: false
+    exact_score_aggregation_disclosed: false
+    source_variance_notice: Results are subject to variance and small score differences
+      may not be statistically meaningful
+    operational_values_scoreable: false
+    operational_exclusion_reason: no compatible binary success rate or verified endpoint
+      and service-tier identity
+    avg_cost_per_task_usd: 8.23
+    tokens_per_task: 61838
+    steps_per_task: 78
+- record_id: cursorbench-3.2-gpt-5.6-sol-max-2026-08-14
+  source:
+    organization: Cursor
+    url: https://cursor.com/cursorbench
+    accessed: '2026-08-14'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: cursorbench-3.2
+  harness_version: cursorbench-3.2-public-leaderboard
+  metric_definition: CursorBench 3.2 solution-correctness score in percent on ambiguous
+    multi-file tasks from real Cursor sessions
+  tools_enabled: true
+  notes: Capability score only. Published task cost, token, and step summaries are
+    retained in evaluation_settings but excluded from Efficiency and Economics.
+  evaluator: Cursor
+  harness_owner: Cursor
+  run_executor: Cursor
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: cursorbench-3.2-facts-2026-08-14
+  source_registry_snapshot_id: cursorbench-3.2-facts-2026-08-14
+  crosswalk_entry_id: cursorbench-sol-max
+  signal_id: cursorbench-3.2
+  source_model_id: GPT-5.6 Sol Max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: cursorbench-3.2
+  model_id: gpt-5.6-sol-max
+  value: 67.2
+  cohort_key: cursorbench-3.2-public-leaderboard-2026-08-14
+  evaluation_settings:
+    task_origin: real Cursor sessions
+    task_scope: ambiguous multi-file agent tasks
+    grading: agentic graders
+    score_direction: higher is better
+    exact_task_count_disclosed: false
+    exact_score_aggregation_disclosed: false
+    source_variance_notice: Results are subject to variance and small score differences
+      may not be statistically meaningful
+    operational_values_scoreable: false
+    operational_exclusion_reason: no compatible binary success rate or verified endpoint
+      and service-tier identity
+    avg_cost_per_task_usd: 5.69
+    tokens_per_task: 28320
+    steps_per_task: 48
+- record_id: cursorbench-3.2-kimi-k3-max-2026-08-14
+  source:
+    organization: Cursor
+    url: https://cursor.com/cursorbench
+    accessed: '2026-08-14'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: cursorbench-3.2
+  harness_version: cursorbench-3.2-public-leaderboard
+  metric_definition: CursorBench 3.2 solution-correctness score in percent on ambiguous
+    multi-file tasks from real Cursor sessions
+  tools_enabled: true
+  notes: Capability score only. Published task cost, token, and step summaries are
+    retained in evaluation_settings but excluded from Efficiency and Economics.
+  evaluator: Cursor
+  harness_owner: Cursor
+  run_executor: Cursor
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: cursorbench-3.2-facts-2026-08-14
+  source_registry_snapshot_id: cursorbench-3.2-facts-2026-08-14
+  crosswalk_entry_id: cursorbench-kimi-max
+  signal_id: cursorbench-3.2
+  source_model_id: Kimi K3 Max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: cursorbench-3.2
+  model_id: kimi-k3-max
+  value: 60.8
+  cohort_key: cursorbench-3.2-public-leaderboard-2026-08-14
+  evaluation_settings:
+    task_origin: real Cursor sessions
+    task_scope: ambiguous multi-file agent tasks
+    grading: agentic graders
+    score_direction: higher is better
+    exact_task_count_disclosed: false
+    exact_score_aggregation_disclosed: false
+    source_variance_notice: Results are subject to variance and small score differences
+      may not be statistically meaningful
+    operational_values_scoreable: false
+    operational_exclusion_reason: no compatible binary success rate or verified endpoint
+      and service-tier identity
+    avg_cost_per_task_usd: 2.7
+    tokens_per_task: 38428
+    steps_per_task: 57
+- record_id: cursorbench-3.2-glm-5.2-max-2026-08-14
+  source:
+    organization: Cursor
+    url: https://cursor.com/cursorbench
+    accessed: '2026-08-14'
+  measurement_as_of_date: '2026-08-14'
+  result_type: independent
+  benchmark_version: cursorbench-3.2
+  harness_version: cursorbench-3.2-public-leaderboard
+  metric_definition: CursorBench 3.2 solution-correctness score in percent on ambiguous
+    multi-file tasks from real Cursor sessions
+  tools_enabled: true
+  notes: Capability score only. Published task cost, token, and step summaries are
+    retained in evaluation_settings but excluded from Efficiency and Economics.
+  evaluator: Cursor
+  harness_owner: Cursor
+  run_executor: Cursor
+  capture_type: reviewed_fact_extract
+  reproducible: false
+  configuration_verification:
+    model_label_exact: true
+    release_label_exact: true
+    effort_label_exact: true
+    fallback_absent: true
+    provider_snapshot_verified: false
+    endpoint_verified: false
+    service_tier_verified: false
+    deployment_identity_verified: false
+  record_status: ready
+  source_artifact_id: cursorbench-3.2-facts-2026-08-14
+  source_registry_snapshot_id: cursorbench-3.2-facts-2026-08-14
+  crosswalk_entry_id: cursorbench-glm-max
+  signal_id: cursorbench-3.2
+  source_model_id: GLM 5.2 Max
+  signal_role: task
+  scoring_disposition: scored
+  benchmark_id: cursorbench-3.2
+  model_id: glm-5.2-max
+  value: 55.0
+  cohort_key: cursorbench-3.2-public-leaderboard-2026-08-14
+  evaluation_settings:
+    task_origin: real Cursor sessions
+    task_scope: ambiguous multi-file agent tasks
+    grading: agentic graders
+    score_direction: higher is better
+    exact_task_count_disclosed: false
+    exact_score_aggregation_disclosed: false
+    source_variance_notice: Results are subject to variance and small score differences
+      may not be statistically meaningful
+    operational_values_scoreable: false
+    operational_exclusion_reason: no compatible binary success rate or verified endpoint
+      and service-tier identity
+    avg_cost_per_task_usd: 1.76
+    tokens_per_task: 35946
+    steps_per_task: 58
 - record_id: epoch-gpqa-claude-opus-5-max-d3mtastumfvjr4fjmnhwry
   source:
     organization: Epoch AI

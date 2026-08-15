@@ -21,6 +21,7 @@ from analysis.uncertainty import source_bound_capability_sensitivity
 from umi.adapters import (
     adapt_aa_facts,
     adapt_arena_json,
+    adapt_cursorbench_facts,
     adapt_deepswe_facts,
     adapt_epoch_benchmarks_zip,
     adapt_epoch_csv,
@@ -61,6 +62,9 @@ def main() -> None:
     results = (
         adapt_aa_facts(SOURCE_ROOT / "aa-reviewed-facts-2026-08-14.yaml", crosswalk),
         adapt_aa_facts(SOURCE_ROOT / "aa-hle-reviewed-facts-2026-08-14.yaml", crosswalk),
+        adapt_cursorbench_facts(
+            SOURCE_ROOT / "cursorbench-reviewed-facts-2026-08-14.yaml", crosswalk
+        ),
         adapt_epoch_csv(
             SOURCE_ROOT / "epoch-eci-benchmarks-2026-08-14.csv",
             crosswalk,

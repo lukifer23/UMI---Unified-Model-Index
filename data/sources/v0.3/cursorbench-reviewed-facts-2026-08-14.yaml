@@ -1,0 +1,60 @@
+source_id: cursorbench
+artifact_id: cursorbench-3.2-facts-2026-08-14
+as_of: 2026-08-14
+source:
+  organization: Cursor
+  url: https://cursor.com/cursorbench
+  accessed: 2026-08-14
+benchmark:
+  benchmark_id: cursorbench-3.2
+  benchmark_version: cursorbench-3.2
+  harness_version: cursorbench-3.2-public-leaderboard
+  cohort_key: cursorbench-3.2-public-leaderboard-2026-08-14
+  evaluator: Cursor
+  harness_owner: Cursor
+  run_executor: Cursor
+  tools_enabled: true
+  reproducible: false
+  metric_definition: CursorBench 3.2 solution-correctness score in percent on ambiguous multi-file tasks from real Cursor sessions
+  evaluation_settings:
+    task_origin: real Cursor sessions
+    task_scope: ambiguous multi-file agent tasks
+    grading: agentic graders
+    score_direction: higher is better
+    exact_task_count_disclosed: false
+    exact_score_aggregation_disclosed: false
+    source_variance_notice: Results are subject to variance and small score differences may not be statistically meaningful
+    operational_values_scoreable: false
+    operational_exclusion_reason: no compatible binary success rate or verified endpoint and service-tier identity
+identity_review:
+  fable_fallback:
+    source_organization: Cursor support forum
+    source_url: https://forum.cursor.com/t/how-do-we-know-when-fable-5-falls-back-to-opus/164594/5
+    accessed: 2026-08-14
+    finding: Cursor states that a Fable request may route to Opus while the editor continues to display Fable 5; the leaderboard does not expose run-level routing evidence
+rows:
+  - source_model_id: Fable 5 Max
+    score_percent: 70.5
+    avg_cost_per_task_usd: 17.32
+    tokens_per_task: 103525
+    steps_per_task: 72
+  - source_model_id: Opus 5 Max
+    score_percent: 70.0
+    avg_cost_per_task_usd: 8.23
+    tokens_per_task: 61838
+    steps_per_task: 78
+  - source_model_id: GPT-5.6 Sol Max
+    score_percent: 67.2
+    avg_cost_per_task_usd: 5.69
+    tokens_per_task: 28320
+    steps_per_task: 48
+  - source_model_id: Kimi K3 Max
+    score_percent: 60.8
+    avg_cost_per_task_usd: 2.70
+    tokens_per_task: 38428
+    steps_per_task: 57
+  - source_model_id: GLM 5.2 Max
+    score_percent: 55.0
+    avg_cost_per_task_usd: 1.76
+    tokens_per_task: 35946
+    steps_per_task: 58

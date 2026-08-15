@@ -89,3 +89,10 @@ The Artificial Analysis HLE v4.1 adapter consumes a facts-only reviewed extract.
 published source rate in `evaluation_settings`, converts that rate to configured percentage points,
 and uses the access date only as `measurement_as_of_date`. The exact fallback-qualified Fable row
 is rejected by crosswalk before measurement construction.
+
+The CursorBench 3.2 adapter consumes a facts-only reviewed extract from the official leaderboard.
+Exact Opus, Sol, Kimi, and GLM Max labels are ready for Capability. The Fable row is rejected because
+the public run does not rule out Cursor's documented invisible Fable-to-Opus routing. Cost/task,
+tokens/task, and steps/task remain retained diagnostic settings, not Efficiency or Economics inputs:
+the score is not documented as a binary success rate suitable for success adjustment, and endpoint
+plus service-tier identity is not verified.
