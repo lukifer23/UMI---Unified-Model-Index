@@ -507,17 +507,21 @@ def test_full_pilot_build_is_offline(monkeypatch) -> None:
     dashboard = json.loads((processed / "pilot-dashboard.json").read_text(encoding="utf-8"))
     assert dashboard["surface"] == "dashboard"
     assert dashboard["snapshot"]["status"] == "partial"
-    assert dashboard["snapshot"]["datasets"]["overview"] == [
-        {
-            "economics_coverage": 0.0,
-            "efficiency_coverage": 0.045,
-            "headline_ready": 0,
-            "max_capability_coverage": 0.75125,
-            "pilot_models": 5,
-            "scored_capability_cells": 32,
-            "total_capability_cells": 75,
-        }
-    ]
+    overview = dashboard["snapshot"]["datasets"]["overview"]
+    assert len(overview) == 1
+    assert overview[0]["max_capability_coverage"] == pytest.approx(0.75125)
+    assert {
+        key: value
+        for key, value in overview[0].items()
+        if key != "max_capability_coverage"
+    } == {
+        "economics_coverage": 0.0,
+        "efficiency_coverage": 0.045,
+        "headline_ready": 0,
+        "pilot_models": 5,
+        "scored_capability_cells": 32,
+        "total_capability_cells": 75,
+    }
     assert all(
         item["headline"] == "Not eligible"
         for item in dashboard["snapshot"]["datasets"]["model_summary"]
@@ -870,13 +874,15 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
     assert all(item.headline_overall is None and not item.eligible for item in results.values())
     assert {
         item.model_id: item.coverage.capability_absolute_weighted for item in results.values()
-    } == {
+    } == pytest.approx(
+        {
         "claude-fable-5-max": 0.0825,
         "claude-opus-5-max": 0.75125,
         "glm-5.2-max": 0.61375,
         "gpt-5.6-sol-max": 0.75125,
         "kimi-k3-max": 0.75125,
-    }
+        }
+    )
     assert {item.model_id: item.capability.score for item in results.values()} == pytest.approx(
         {
             "claude-fable-5-max": 50.0,
