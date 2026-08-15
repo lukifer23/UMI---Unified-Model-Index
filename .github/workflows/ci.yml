@@ -11,16 +11,12 @@ permissions:
 jobs:
   linux-quality:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
         with:
           version: "0.9.4"
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.12"
           enable-cache: true
       - run: uv sync --frozen --extra dev
       - run: uv run pytest --cov=umi --cov=analysis --cov-report=term-missing --cov-fail-under=90
@@ -39,12 +35,63 @@ jobs:
         run: |
           uv run umi estimates --data-dir data/pilots/v0.3/raw >/dev/null
           uv run umi compare --data-dir data/pilots/v0.3/raw --models claude-fable-5-max claude-opus-5-max glm-5.2-max gpt-5.6-sol-max kimi-k3-max >/dev/null
+          uv run umi certificate --data-dir data/pilots/v0.3/raw --models claude-opus-5-max kimi-k3-max glm-5.2-max >/dev/null
           uv run umi uncertainty --data-dir data/pilots/v0.3/raw >/dev/null
           uv run umi pilot-sensitivity --data-dir data/pilots/v0.3/raw >/dev/null
           uv run umi correlations --data-dir data/pilots/v0.3/raw >/dev/null
           uv run umi pareto --data-dir data/pilots/v0.3/raw >/dev/null
           uv run umi claims --data-dir data/pilots/v0.3/raw >/dev/null
           uv run umi gaps --data-dir data/pilots/v0.3/raw >/dev/null
+      - name: Build and smoke isolated wheel
+        shell: bash
+        run: |
+          uv build
+          wheel_path="$(ls -1 dist/unified_model_index-*.whl | head -1)"
+          isolated_dir="$(mktemp -d)"
+          uv venv --python 3.12 "$isolated_dir/.venv"
+          uv pip install --python "$isolated_dir/.venv/bin/python" "$wheel_path"
+          cd "$isolated_dir"
+          "$isolated_dir/.venv/bin/python" -c "import umi"
+          "$isolated_dir/.venv/bin/umi" --help >/dev/null
+          "$isolated_dir/.venv/bin/umi" compare \
+            --data-dir "$GITHUB_WORKSPACE/data/pilots/v0.3/raw" \
+            --config-dir "$GITHUB_WORKSPACE/config" \
+            --source-registry "$GITHUB_WORKSPACE/data/sources/registry.yaml" \
+            --crosswalk "$GITHUB_WORKSPACE/data/sources/v0.3/crosswalk.yaml" \
+            --models claude-opus-5-max kimi-k3-max glm-5.2-max >/dev/null
+
+  linux-compatibility:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.9.4"
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+      - run: uv sync --frozen --extra dev
+      - run: uv run pytest
+      - name: Build and smoke isolated wheel
+        shell: bash
+        run: |
+          uv build
+          wheel_path="$(ls -1 dist/unified_model_index-*.whl | head -1)"
+          isolated_dir="$(mktemp -d)"
+          uv venv --python "${{ matrix.python-version }}" "$isolated_dir/.venv"
+          uv pip install --python "$isolated_dir/.venv/bin/python" "$wheel_path"
+          cd "$isolated_dir"
+          "$isolated_dir/.venv/bin/python" -c "import umi"
+          "$isolated_dir/.venv/bin/umi" --help >/dev/null
+          "$isolated_dir/.venv/bin/umi" compare \
+            --data-dir "$GITHUB_WORKSPACE/data/pilots/v0.3/raw" \
+            --config-dir "$GITHUB_WORKSPACE/config" \
+            --source-registry "$GITHUB_WORKSPACE/data/sources/registry.yaml" \
+            --crosswalk "$GITHUB_WORKSPACE/data/sources/v0.3/crosswalk.yaml" \
+            --models claude-opus-5-max kimi-k3-max glm-5.2-max >/dev/null
 
   windows-smoke:
     runs-on: windows-latest
@@ -56,7 +103,7 @@ jobs:
           python-version: "3.12"
           enable-cache: true
       - run: uv sync --frozen --extra dev
-      - run: uv run pytest --cov=umi --cov=analysis --cov-fail-under=90
+      - run: uv run pytest
       - run: uv run umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config
       - run: uv run umi bundle validate --data-dir data/pilots/v0.3/raw
       - run: uv run umi sources validate --strict --data-dir data/pilots/v0.3/raw
