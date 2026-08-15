@@ -5,6 +5,7 @@ from datetime import date
 
 from umi.loading import Dataset
 from umi.schemas import (
+    AggregationStatistic,
     BenchmarkMeasurement,
     EfficiencyMeasurement,
     ExternalIndexMeasurement,
@@ -60,6 +61,36 @@ def readiness_failures(record: ScoredRecord, model: ModelConfiguration) -> tuple
     failures: list[str] = []
     if record.record_status != RecordStatus.READY:
         failures.append("record status is not ready")
+    if (
+        isinstance(record, EfficiencyMeasurement)
+        and record.aggregation_statistic == AggregationStatistic.ARITHMETIC_MEAN
+    ):
+        if record.successful_attempts is None:
+            failures.append("successful attempt count is missing")
+        count_pairs = (
+            ("mean_input_tokens", "input_tokens"),
+            ("mean_output_tokens", "output_tokens"),
+            ("mean_reasoning_tokens", "reasoning_tokens"),
+            ("mean_cached_tokens", "cached_tokens"),
+            ("mean_total_tokens", "total_tokens"),
+            ("mean_turns", "turns"),
+            ("mean_agent_steps", "agent_steps"),
+            ("mean_wall_seconds", "wall_seconds"),
+            ("mean_tool_calls", "tool_calls"),
+            ("mean_cost_per_attempt", "cost_per_attempt"),
+        )
+        for mean_field, count_field in count_pairs:
+            if getattr(record, mean_field) is None:
+                continue
+            count = (
+                getattr(record.observation_counts, count_field)
+                if record.observation_counts is not None
+                else None
+            )
+            if count is None:
+                failures.append(f"observation count is missing for {mean_field}")
+            elif count != record.attempts:
+                failures.append(f"observation count does not match attempts for {mean_field}")
     if record.source.organization.strip().lower() in {"", "unknown", "unspecified"}:
         failures.append("source organization is unknown")
     if not record.evaluator:

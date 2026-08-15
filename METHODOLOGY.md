@@ -1,9 +1,9 @@
-# UMI methodology v0.3.11
+# UMI methodology v0.3.12
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3.11 retains the manually
-reviewed, multi-source evidence pilot and adds the exact Artificial Analysis Terminal-Bench v2.1
-cohort. It does not publish a headline UMI ranking.
+current policy values; code must not contradict this document. UMI v0.3.12 retains the manually
+reviewed, multi-source evidence pilot and hardens arithmetic-mean resource denominators against the
+official DeepSWE v1.1 trial ledger. It does not publish a headline UMI ranking.
 All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
 produce identical serialized results and certificate fingerprints across supported Python versions;
 this is numerical canonicalization, not a change to weights or score semantics.
@@ -85,7 +85,7 @@ each published rate reconciles to an integer number of passes across 267 attempt
 reasoning, and cacheable-input counters remain diagnostic. Artificial Analysis uses provider API
 token counts for Intelligence evaluations, so token units differ by model; cacheable input is not
 an observed per-attempt cache-hit or billing ledger; and no attempt-level rows are retained. The
-counters therefore contribute neither Efficiency nor Economics in v0.3.11.
+counters therefore contribute neither Efficiency nor Economics in v0.3.12.
 
 For reviewed pass-rate extracts with an explicit total trial count, the offline adapter requires
 `source_rate × number_of_trials` to be within `1e-9` of an integer pass count. This applies to the
@@ -125,7 +125,7 @@ Capability. Source-published token, calculated-cost, and decode-time summaries a
 diagnostic evaluation settings. Operational coverage is incomplete across the accepted rows; cost
 uses live price and cache assumptions rather than a billed-run ledger; and the public page describes
 the same decode-time field as minutes in its structured chart metadata but seconds in an auxiliary
-explanation. These fields therefore contribute neither Efficiency nor Economics in v0.3.11.
+explanation. These fields therefore contribute neither Efficiency nor Economics in v0.3.12.
 
 The Artificial Analysis AA-LCR access-date cohort is admitted as an independent context/reliability
 task signal for exact named-release and Max-effort rows. It contains 100 open-answer questions over
@@ -140,7 +140,7 @@ Max pilot configuration. Exact Max rows for Opus, Sol, Kimi, and GLM may contrib
 Published answer/reasoning token, decode-time, and calculated-cost fields are retained diagnostically.
 They are incomplete across accepted rows, provider token counts are not standardized across models,
 and calculated cost is not a deployment- and billing-record-bound attempt ledger. They therefore
-contribute neither Efficiency nor Economics in v0.3.11.
+contribute neither Efficiency nor Economics in v0.3.12.
 
 The Artificial Analysis AA-Omniscience access-date cohort is admitted as an independent factual
 knowledge-reliability task signal for exact named-release and Max-effort rows. It contains 6,000
@@ -161,14 +161,18 @@ upstream time-per-task field, and performance-data-source labels are retained di
 not enter Efficiency or Economics: the facts do not bind a complete endpoint, service tier, price
 revision, and observed billing ledger, the upstream time field's unit is not established in the retained
 public contract, and aggregate totals are not attempt-level workload telemetry. These fields therefore
-contribute neither Efficiency nor Economics in v0.3.11.
+contribute neither Efficiency nor Economics in v0.3.12.
 
 DeepSWE's public runner documentation and Pier implementation were also reviewed for Economics
 readiness. Provider-prefixed model examples establish an API family, while Pier/mini-SWE-agent
 derives per-call dollars from LiteLLM's price table. The leaderboard rows do not identify the
 evaluated endpoint, service tier, pricing-table revision, or billing record. DeepSWE mean task cost
 and wall time therefore remain endpoint-sensitive diagnostic evidence; this review does not relax
-their existing readiness disposition.
+their existing readiness disposition. The official 27,558-row trial ledger independently reconciles
+all 2,231 scored attempts selected for the five Max configurations, including success, input/output
+tokens, cache tokens, agent steps, agent duration, and the resource means already retained. Cost is
+present for only 432 of Fable's 436 scored attempts. UMI preserves that denominator explicitly and
+does not describe or derive it as a complete mean cost per scored attempt.
 
 `BenchmarkFamilyDefinition.cap` is retained only for schema compatibility in v0.3 and is
 deprecated. UMI does not dynamically redistribute family weights through caps; removal is deferred
@@ -554,7 +558,7 @@ that limitation.
 
 ## Efficiency
 
-The v0.3.11 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
+The v0.3.12 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
 10% effective reasoning tokens, 10% effective cached tokens, 10% effective turns, 15% effective
 agent steps, 15% effective wall time, and 10% effective tool calls. These are policy weights, not
 empirically learned parameters. Token subtypes are kept distinct: a total-token field is not scored
@@ -578,6 +582,13 @@ For every individual source record `i` and attempt-level resource `x`:
 ```text
 EffectiveResource_i = MeanResourcePerAttempt_i / SuccessRate_i
 ```
+
+Every real arithmetic-mean Efficiency record must bind `successful_attempts` to the same `attempts`
+denominator and reconcile `success_rate = successful_attempts / attempts` within `1e-12`. It must
+also carry a per-metric observation count equal to `attempts` for every scored mean. A mean computed
+from fewer attempts may remain diagnostic, but it cannot borrow the full-cohort success rate or
+score after a status flip. Metrics with different observation denominators stay explicit in the
+same diagnostic record or are split into separate records; missing rows are never silently dropped.
 
 This rule applies independently to input, output, reasoning, and cached tokens, turns, agent steps,
 wall time, and tool calls. At zero success every effective

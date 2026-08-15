@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from datetime import date
 from enum import StrEnum
 from typing import Annotated, Any
@@ -367,6 +368,21 @@ class PricingRecord(Provenance):
         return self
 
 
+class EfficiencyObservationCounts(StrictModel):
+    """Attempt counts contributing to each arithmetic-mean resource field."""
+
+    input_tokens: int | None = Field(default=None, gt=0)
+    output_tokens: int | None = Field(default=None, gt=0)
+    reasoning_tokens: int | None = Field(default=None, gt=0)
+    cached_tokens: int | None = Field(default=None, gt=0)
+    total_tokens: int | None = Field(default=None, gt=0)
+    turns: int | None = Field(default=None, gt=0)
+    agent_steps: int | None = Field(default=None, gt=0)
+    wall_seconds: int | None = Field(default=None, gt=0)
+    tool_calls: int | None = Field(default=None, gt=0)
+    cost_per_attempt: int | None = Field(default=None, gt=0)
+
+
 class EfficiencyMeasurement(Provenance):
     model_id: Identifier
     workload: Identifier
@@ -374,6 +390,7 @@ class EfficiencyMeasurement(Provenance):
     cohort_key: Identifier = "unspecified"
     evaluation_date: date | None = None
     attempts: int = Field(gt=0)
+    successful_attempts: int | None = Field(default=None, ge=0)
     success_rate: Rate
     mean_input_tokens: NonNegative | None = None
     mean_output_tokens: NonNegative | None = None
@@ -389,6 +406,7 @@ class EfficiencyMeasurement(Provenance):
     observed_agent_steps_summary: NonNegative | None = None
     observed_cost_summary_usd: NonNegative | None = None
     aggregation_statistic: AggregationStatistic = AggregationStatistic.ARITHMETIC_MEAN
+    observation_counts: EfficiencyObservationCounts | None = None
 
     @field_validator("workload_category", mode="before")
     @classmethod
@@ -421,6 +439,34 @@ class EfficiencyMeasurement(Provenance):
         )
         if not any(value is not None for value in observed):
             raise ValueError("efficiency record must contain at least one observation")
+        if self.successful_attempts is not None:
+            if self.successful_attempts > self.attempts:
+                raise ValueError("successful_attempts cannot exceed attempts")
+            reconciled_rate = self.successful_attempts / self.attempts
+            if not math.isclose(self.success_rate, reconciled_rate, rel_tol=0.0, abs_tol=1e-12):
+                raise ValueError(
+                    "success_rate does not reconcile with successful_attempts/attempts"
+                )
+        if self.observation_counts is not None:
+            field_pairs = (
+                ("mean_input_tokens", "input_tokens"),
+                ("mean_output_tokens", "output_tokens"),
+                ("mean_reasoning_tokens", "reasoning_tokens"),
+                ("mean_cached_tokens", "cached_tokens"),
+                ("mean_total_tokens", "total_tokens"),
+                ("mean_turns", "turns"),
+                ("mean_agent_steps", "agent_steps"),
+                ("mean_wall_seconds", "wall_seconds"),
+                ("mean_tool_calls", "tool_calls"),
+                ("mean_cost_per_attempt", "cost_per_attempt"),
+            )
+            for mean_field, count_field in field_pairs:
+                count = getattr(self.observation_counts, count_field)
+                value = getattr(self, mean_field)
+                if count is not None and value is None:
+                    raise ValueError(f"{count_field} count has no corresponding {mean_field}")
+                if count is not None and count > self.attempts:
+                    raise ValueError(f"{count_field} count cannot exceed attempts")
         return self
 
 

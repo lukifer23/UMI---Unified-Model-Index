@@ -154,6 +154,7 @@ workload_category: coding_agents
 cohort_key: workload-harness-v2
 evaluation_date: 2026-08-10
 attempts: 100
+successful_attempts: 72
 success_rate: 0.72
 mean_input_tokens: 10000
 mean_output_tokens: 2000
@@ -162,13 +163,24 @@ mean_agent_steps: 9
 mean_wall_seconds: 91
 mean_tool_calls: 14
 mean_cost_per_attempt: 1.35
+observation_counts:
+  input_tokens: 100
+  output_tokens: 100
+  turns: 100
+  agent_steps: 100
+  wall_seconds: 100
+  tool_calls: 100
+  cost_per_attempt: 100
 ```
 
 Supported workload categories are `coding_agents`, `research_analysis`, `tool_use_agents`,
 `browser_computer_use`, `general_interaction`, and `long_horizon`. Legacy short aliases migrate on
 load. Success-adjusted derived values are not stored back into YAML. `mean_total_tokens` remains a
 literal backward-compatible diagnostic field but is never added to separately weighted input and
-output tokens.
+output tokens. Every real, ready arithmetic-mean record requires an exact successful-attempt count
+and a matching observation count for every populated mean. Counts may be lower on diagnostic
+records so incomplete source summaries remain visible, but such a metric cannot score against the
+full-cohort success denominator.
 
 Task Economics records use `cost_basis: attempted_task|successful_task`, nonnegative
 `mean_cost_usd`, and `aggregation_statistic: arithmetic_mean|median|total|unspecified`. Only

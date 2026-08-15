@@ -36,7 +36,7 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "face012fc174179d42d3741df3463daded6458205a2899728310839b0a0de1af",
+        "evidence_record_fingerprint": "40e7e931a4c47aeca53a8af465c0bd35f99963b230208970d60f0b7e689a755a",
         "family_ids": [
           "deepswe-v1.1"
         ],
@@ -51,11 +51,11 @@
       },
       "evidence_profile_id": "1583908ecd3ee39ce899769056721e1ffb42ea8bd9010502a2652cce19129488",
       "normalization_panel_ids": [
-        "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b"
+        "4359e41970ced8bafed4bfcbdebc18ec1397f6c6398d5840d91f26c0ef4ebf1c"
       ],
       "provisional": true,
       "score": 50.0,
-      "score_scale_id": "15c0c1f92e02f0f67ad93a65ea84e4e869f1642ef2aba966e7056dfb55380500",
+      "score_scale_id": "237e7fe715f557d9f6d8ceddcf8bf46dcb660de4b1b734a1d61fc0ac74094bc8",
       "score_semantics": "stable-panel percentile position",
       "source_record_ids": [
         "deepswe-score-claude-fable-5-max-2026-08-13"
@@ -64,7 +64,7 @@
     "capability_domains": [
       "software_engineering"
     ],
-    "cohort_id": "a446a14fe461326f",
+    "cohort_id": "bffc0aa83bd21950",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -113,7 +113,7 @@
       "source_organization_count": 1
     },
     "data_as_of": "2026-08-15",
-    "dataset_fingerprint": "348a98a8a44fdb89ae9d80be2cba61681996ea00b9a9d64cf284280e0ee47932",
+    "dataset_fingerprint": "f32bec9d18b0ad08f889a03956feb5396f165192d83e8f2f5cd29233415c4040",
     "diagnostics": [
       "model release date is outside the configured eligibility window",
       "not eligible for headline Overall ranking",
@@ -190,7 +190,7 @@
         ],
         "domain_ids": [],
         "estimate_scope": "efficiency",
-        "evidence_record_fingerprint": "c373a780f7135889811d69befd1d1b1a47e9bd6259caec59fc40c4fd1f2bfe62",
+        "evidence_record_fingerprint": "bf808d2a7af0887a51295ffc786435d1df06c777a2ea4bb4f27f1864a56f78b1",
         "family_ids": [],
         "id": "d3dcb0c6255325f4ac5b5900b4a9048e213aaa05a72c3f0600d23c842418d9f2",
         "methodology_fingerprint": "d3dcb0c6255325f4ac5b5900b4a9048e213aaa05a72c3f0600d23c842418d9f2",
@@ -217,15 +217,15 @@
       ],
       "provisional": true,
       "score": 50.00000000000001,
-      "score_scale_id": "bd0289db017adb7e72f57206a0c43e7b9ff548166631a73a7430a6cf82a6bc3e",
+      "score_scale_id": "6b82e0b72c6ad39b2e0d43b9f294c8450d0444af97d78fa2afb432351e1b1ec5",
       "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-claude-fable-5-max-2026-08-13"
       ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.11",
-    "formula_version": "umi-methodology-v0.3.11",
+    "engine_version": "umi-engine-v0.3.12",
+    "formula_version": "umi-methodology-v0.3.12",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "claude-fable-5-max",
@@ -237,7 +237,7 @@
     "release_date": "2026-06-09",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "a446a14fe461326fe9a5d4ed5e3de6abd138eec251c8fb1ed18a816267957483",
+    "scored_data_fingerprint": "bffc0aa83bd219506c9d050b945d7436410c7931c57731408b2e9802e4eea8c1",
     "scoring_ready": true,
     "source_record_ids": [
       "deepswe-harness-resources-claude-fable-5-max-2026-08-13",
@@ -404,7 +404,7 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "d23cf19a594a2cb715bf44ad31fa21387cd99fcae704db8b5257da2ae7eef07f",
+        "evidence_record_fingerprint": "4f7d50dd9603db5251cb5387e736d86db02c9b425dc05f795eec8324766d1e9d",
         "family_ids": [
           "aa-lcr",
           "aa-omniscience",
@@ -436,9 +436,9 @@
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
         "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
         "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
+        "4359e41970ced8bafed4bfcbdebc18ec1397f6c6398d5840d91f26c0ef4ebf1c",
         "46184e1944ec1654f85f821c284455474a9a3aeb07e8bfed7ab1a50d6aa81c6d",
         "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
-        "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
         "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
         "dbe25767808e7eb7173ba9e601c0c1b08d428a0dd899853548d2c53fa2adbfff",
         "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
@@ -448,7 +448,7 @@
       ],
       "provisional": true,
       "score": 78.29166666666667,
-      "score_scale_id": "1104713415ab148e9541a79c708be4ba9f6784d5e28d9004374b953dfb1c4593",
+      "score_scale_id": "14a67e5f760b76209c5ec41dc98d14a5bcec16c7e910fa73bc5741abdb0fbf64",
       "score_semantics": "weighted stable-panel percentile composite",
       "source_record_ids": [
         "aa-gdpval-v2-claude-opus-5-max-2026-08-15",
@@ -472,7 +472,7 @@
       "math_science",
       "software_engineering"
     ],
-    "cohort_id": "a446a14fe461326f",
+    "cohort_id": "bffc0aa83bd21950",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -519,7 +519,7 @@
       "source_organization_count": 4
     },
     "data_as_of": "2026-08-15",
-    "dataset_fingerprint": "348a98a8a44fdb89ae9d80be2cba61681996ea00b9a9d64cf284280e0ee47932",
+    "dataset_fingerprint": "f32bec9d18b0ad08f889a03956feb5396f165192d83e8f2f5cd29233415c4040",
     "diagnostics": [
       "not eligible for headline Overall ranking",
       "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, aa-omniscience/aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15, arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15, terminalbench-2.1/aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
@@ -595,7 +595,7 @@
         ],
         "domain_ids": [],
         "estimate_scope": "efficiency",
-        "evidence_record_fingerprint": "ae478a8080a1c6a582b99644796fc441145321a47b4640cb2d25698e6dadd0bc",
+        "evidence_record_fingerprint": "c26a4eec36b3d00d4ab2c16f0ccfb7adf5b39e4ab8f4a85fc05feaefa93ad4d7",
         "family_ids": [],
         "id": "d3dcb0c6255325f4ac5b5900b4a9048e213aaa05a72c3f0600d23c842418d9f2",
         "methodology_fingerprint": "d3dcb0c6255325f4ac5b5900b4a9048e213aaa05a72c3f0600d23c842418d9f2",
@@ -622,15 +622,15 @@
       ],
       "provisional": true,
       "score": 41.66666666666667,
-      "score_scale_id": "bd0289db017adb7e72f57206a0c43e7b9ff548166631a73a7430a6cf82a6bc3e",
+      "score_scale_id": "6b82e0b72c6ad39b2e0d43b9f294c8450d0444af97d78fa2afb432351e1b1ec5",
       "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-claude-opus-5-max-2026-08-13"
       ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.11",
-    "formula_version": "umi-methodology-v0.3.11",
+    "engine_version": "umi-engine-v0.3.12",
+    "formula_version": "umi-methodology-v0.3.12",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "claude-opus-5-max",
@@ -642,7 +642,7 @@
     "release_date": "2026-07-24",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "a446a14fe461326fe9a5d4ed5e3de6abd138eec251c8fb1ed18a816267957483",
+    "scored_data_fingerprint": "bffc0aa83bd219506c9d050b945d7436410c7931c57731408b2e9802e4eea8c1",
     "scoring_ready": true,
     "source_record_ids": [
       "aa-gdpval-v2-claude-opus-5-max-2026-08-15",
@@ -807,7 +807,7 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "79fde63c9426aa2710d04fb83d4fda62a76e10f7f7a427031ce0fa2a18651b29",
+        "evidence_record_fingerprint": "8d02d3a156e6ff2fb9067a921519e591973937e6c93daea07f12d6a892d6dc5c",
         "family_ids": [
           "aa-lcr",
           "aa-omniscience",
@@ -838,9 +838,9 @@
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
         "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
         "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
+        "4359e41970ced8bafed4bfcbdebc18ec1397f6c6398d5840d91f26c0ef4ebf1c",
         "46184e1944ec1654f85f821c284455474a9a3aeb07e8bfed7ab1a50d6aa81c6d",
         "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
-        "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
         "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
         "dbe25767808e7eb7173ba9e601c0c1b08d428a0dd899853548d2c53fa2adbfff",
         "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
@@ -849,7 +849,7 @@
       ],
       "provisional": true,
       "score": 1.9323671497584543,
-      "score_scale_id": "f70ec13f00a8c49666b54434571f7da24b9e7f384154c29189be1e05db52b2c5",
+      "score_scale_id": "e1689b005201e813a52ad7ef6ce5cb259e2112be40a32b379dbe5e1a97a4cefd",
       "score_semantics": "weighted stable-panel percentile composite",
       "source_record_ids": [
         "aa-gdpval-v2-glm-5.2-max-2026-08-15",
@@ -872,7 +872,7 @@
       "math_science",
       "software_engineering"
     ],
-    "cohort_id": "a446a14fe461326f",
+    "cohort_id": "bffc0aa83bd21950",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -919,7 +919,7 @@
       "source_organization_count": 4
     },
     "data_as_of": "2026-08-15",
-    "dataset_fingerprint": "348a98a8a44fdb89ae9d80be2cba61681996ea00b9a9d64cf284280e0ee47932",
+    "dataset_fingerprint": "f32bec9d18b0ad08f889a03956feb5396f165192d83e8f2f5cd29233415c4040",
     "diagnostics": [
       "not eligible for headline Overall ranking",
       "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, aa-omniscience/aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15, terminalbench-2.1/aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
@@ -995,7 +995,7 @@
         ],
         "domain_ids": [],
         "estimate_scope": "efficiency",
-        "evidence_record_fingerprint": "17756307deeb6fafab90e7a94a5ce6da7bb154c5495a7610296f1bb14b203271",
+        "evidence_record_fingerprint": "82cd7432c5c52f536f4b463d8b5604b67a40c6cfbf0cb4306d137c643f9c69cc",
         "family_ids": [],
         "id": "d3dcb0c6255325f4ac5b5900b4a9048e213aaa05a72c3f0600d23c842418d9f2",
         "methodology_fingerprint": "d3dcb0c6255325f4ac5b5900b4a9048e213aaa05a72c3f0600d23c842418d9f2",
@@ -1022,15 +1022,15 @@
       ],
       "provisional": true,
       "score": 0.0,
-      "score_scale_id": "bd0289db017adb7e72f57206a0c43e7b9ff548166631a73a7430a6cf82a6bc3e",
+      "score_scale_id": "6b82e0b72c6ad39b2e0d43b9f294c8450d0444af97d78fa2afb432351e1b1ec5",
       "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-glm-5.2-max-2026-08-13"
       ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.11",
-    "formula_version": "umi-methodology-v0.3.11",
+    "engine_version": "umi-engine-v0.3.12",
+    "formula_version": "umi-methodology-v0.3.12",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "glm-5.2-max",
@@ -1042,7 +1042,7 @@
     "release_date": "2026-06-16",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "a446a14fe461326fe9a5d4ed5e3de6abd138eec251c8fb1ed18a816267957483",
+    "scored_data_fingerprint": "bffc0aa83bd219506c9d050b945d7436410c7931c57731408b2e9802e4eea8c1",
     "scoring_ready": true,
     "source_record_ids": [
       "aa-gdpval-v2-glm-5.2-max-2026-08-15",
@@ -1219,7 +1219,7 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "8b8f01121b182904f78b5c3722fbb361c328ec29b18c12c9ff263e26a598af75",
+        "evidence_record_fingerprint": "513ee45799eb14e6f4c57191066dfa309d456637b5a5c18785ac3f5686600ed1",
         "family_ids": [
           "aa-lcr",
           "aa-omniscience",
@@ -1251,9 +1251,9 @@
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
         "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
         "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
+        "4359e41970ced8bafed4bfcbdebc18ec1397f6c6398d5840d91f26c0ef4ebf1c",
         "46184e1944ec1654f85f821c284455474a9a3aeb07e8bfed7ab1a50d6aa81c6d",
         "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
-        "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
         "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
         "dbe25767808e7eb7173ba9e601c0c1b08d428a0dd899853548d2c53fa2adbfff",
         "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
@@ -1263,7 +1263,7 @@
       ],
       "provisional": true,
       "score": 73.68750000000001,
-      "score_scale_id": "1104713415ab148e9541a79c708be4ba9f6784d5e28d9004374b953dfb1c4593",
+      "score_scale_id": "14a67e5f760b76209c5ec41dc98d14a5bcec16c7e910fa73bc5741abdb0fbf64",
       "score_semantics": "weighted stable-panel percentile composite",
       "source_record_ids": [
         "aa-gdpval-v2-gpt-5.6-sol-max-2026-08-15",
@@ -1287,7 +1287,7 @@
       "math_science",
       "software_engineering"
     ],
-    "cohort_id": "a446a14fe461326f",
+    "cohort_id": "bffc0aa83bd21950",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -1334,7 +1334,7 @@
       "source_organization_count": 4
     },
     "data_as_of": "2026-08-15",
-    "dataset_fingerprint": "348a98a8a44fdb89ae9d80be2cba61681996ea00b9a9d64cf284280e0ee47932",
+    "dataset_fingerprint": "f32bec9d18b0ad08f889a03956feb5396f165192d83e8f2f5cd29233415c4040",
     "diagnostics": [
       "not eligible for headline Overall ranking",
       "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, aa-omniscience/aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15, arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15, terminalbench-2.1/aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
@@ -1410,7 +1410,7 @@
         ],
         "domain_ids": [],
         "estimate_scope": "efficiency",
-        "evidence_record_fingerprint": "d522ab26410222db312198c9239d7f0e5990aff8cca97553691c386f2e5e70c2",
+        "evidence_record_fingerprint": "681173de0df52374a3f89999ba8c5c63baa931038a282f5bd27238d06b879b75",
         "family_ids": [],
         "id": "d3dcb0c6255325f4ac5b5900b4a9048e213aaa05a72c3f0600d23c842418d9f2",
         "methodology_fingerprint": "d3dcb0c6255325f4ac5b5900b4a9048e213aaa05a72c3f0600d23c842418d9f2",
@@ -1437,15 +1437,15 @@
       ],
       "provisional": true,
       "score": 100.00000000000001,
-      "score_scale_id": "bd0289db017adb7e72f57206a0c43e7b9ff548166631a73a7430a6cf82a6bc3e",
+      "score_scale_id": "6b82e0b72c6ad39b2e0d43b9f294c8450d0444af97d78fa2afb432351e1b1ec5",
       "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-gpt-5.6-sol-max-2026-08-13"
       ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.11",
-    "formula_version": "umi-methodology-v0.3.11",
+    "engine_version": "umi-engine-v0.3.12",
+    "formula_version": "umi-methodology-v0.3.12",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "gpt-5.6-sol-max",
@@ -1457,7 +1457,7 @@
     "release_date": "2026-07-09",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "a446a14fe461326fe9a5d4ed5e3de6abd138eec251c8fb1ed18a816267957483",
+    "scored_data_fingerprint": "bffc0aa83bd219506c9d050b945d7436410c7931c57731408b2e9802e4eea8c1",
     "scoring_ready": true,
     "source_record_ids": [
       "aa-gdpval-v2-gpt-5.6-sol-max-2026-08-15",
@@ -1635,7 +1635,7 @@
           "software_engineering"
         ],
         "estimate_scope": "capability",
-        "evidence_record_fingerprint": "b69b5a3fe0541cbc60d9d157a878e3c72d27eb5e0a69f1ac41b2bfa86457e0c7",
+        "evidence_record_fingerprint": "efaa7b108fea9cfb4099095510fec5de235a3249e04059a4c96de1148c1003c4",
         "family_ids": [
           "aa-lcr",
           "aa-omniscience",
@@ -1667,9 +1667,9 @@
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
         "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
         "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
+        "4359e41970ced8bafed4bfcbdebc18ec1397f6c6398d5840d91f26c0ef4ebf1c",
         "46184e1944ec1654f85f821c284455474a9a3aeb07e8bfed7ab1a50d6aa81c6d",
         "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
-        "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
         "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
         "dbe25767808e7eb7173ba9e601c0c1b08d428a0dd899853548d2c53fa2adbfff",
         "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
@@ -1679,7 +1679,7 @@
       ],
       "provisional": true,
       "score": 39.47916666666667,
-      "score_scale_id": "1104713415ab148e9541a79c708be4ba9f6784d5e28d9004374b953dfb1c4593",
+      "score_scale_id": "14a67e5f760b76209c5ec41dc98d14a5bcec16c7e910fa73bc5741abdb0fbf64",
       "score_semantics": "weighted stable-panel percentile composite",
       "source_record_ids": [
         "aa-gdpval-v2-kimi-k3-max-2026-08-15",
@@ -1703,7 +1703,7 @@
       "math_science",
       "software_engineering"
     ],
-    "cohort_id": "a446a14fe461326f",
+    "cohort_id": "bffc0aa83bd21950",
     "cohort_model_ids": [
       "claude-fable-5-max",
       "claude-opus-5-max",
@@ -1750,7 +1750,7 @@
       "source_organization_count": 4
     },
     "data_as_of": "2026-08-15",
-    "dataset_fingerprint": "348a98a8a44fdb89ae9d80be2cba61681996ea00b9a9d64cf284280e0ee47932",
+    "dataset_fingerprint": "f32bec9d18b0ad08f889a03956feb5396f165192d83e8f2f5cd29233415c4040",
     "diagnostics": [
       "not eligible for headline Overall ranking",
       "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, aa-omniscience/aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15, arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15, terminalbench-2.1/aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
@@ -1826,7 +1826,7 @@
         ],
         "domain_ids": [],
         "estimate_scope": "efficiency",
-        "evidence_record_fingerprint": "5a7063ee4dfbdc314b89eca456345b1ceef950e0a46ce6baaab7c305811483fd",
+        "evidence_record_fingerprint": "ed60961e43d93190256195c6a921939987469da50b628916c9ad07041f5c52ff",
         "family_ids": [],
         "id": "d3dcb0c6255325f4ac5b5900b4a9048e213aaa05a72c3f0600d23c842418d9f2",
         "methodology_fingerprint": "d3dcb0c6255325f4ac5b5900b4a9048e213aaa05a72c3f0600d23c842418d9f2",
@@ -1853,15 +1853,15 @@
       ],
       "provisional": true,
       "score": 58.333333333333336,
-      "score_scale_id": "bd0289db017adb7e72f57206a0c43e7b9ff548166631a73a7430a6cf82a6bc3e",
+      "score_scale_id": "6b82e0b72c6ad39b2e0d43b9f294c8450d0444af97d78fa2afb432351e1b1ec5",
       "score_semantics": "cohort-relative normalized workload composite",
       "source_record_ids": [
         "deepswe-harness-resources-kimi-k3-max-2026-08-13"
       ]
     },
     "eligible": false,
-    "engine_version": "umi-engine-v0.3.11",
-    "formula_version": "umi-methodology-v0.3.11",
+    "engine_version": "umi-engine-v0.3.12",
+    "formula_version": "umi-methodology-v0.3.12",
     "headline_overall": null,
     "independent_or_community_evidence_share": 1.0,
     "model_id": "kimi-k3-max",
@@ -1873,7 +1873,7 @@
     "release_date": "2026-07-16",
     "release_window_end": "2026-08-14",
     "release_window_start": "2026-06-15",
-    "scored_data_fingerprint": "a446a14fe461326fe9a5d4ed5e3de6abd138eec251c8fb1ed18a816267957483",
+    "scored_data_fingerprint": "bffc0aa83bd219506c9d050b945d7436410c7931c57731408b2e9802e4eea8c1",
     "scoring_ready": true,
     "source_record_ids": [
       "aa-gdpval-v2-kimi-k3-max-2026-08-15",

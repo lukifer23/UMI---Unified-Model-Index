@@ -3,7 +3,7 @@ measurements:
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
-    accessed: '2026-08-14'
+    accessed: '2026-08-15'
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
@@ -36,22 +36,27 @@ measurements:
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 444
+  successful_attempts: 327
   success_rate: 0.7364864864864865
   mean_input_tokens: 15025834.39864865
   mean_output_tokens: 117565.6936936937
   mean_agent_steps: 99.0427927927928
   aggregation_statistic: arithmetic_mean
+  observation_counts:
+    input_tokens: 444
+    output_tokens: 444
+    agent_steps: 444
 - record_id: deepswe-endpoint-resources-claude-opus-5-max-2026-08-13
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
-    accessed: '2026-08-14'
+    accessed: '2026-08-15'
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
-  metric_definition: Arithmetic mean wall duration and dollar cost per attempt from
-    the published DeepSWE leaderboard; retained diagnostically until deployment identity
-    is verified
+  metric_definition: Arithmetic mean cached tokens, agent wall duration, and observed
+    dollar cost per attempt from the published DeepSWE trial ledger; retained diagnostically
+    until deployment identity and complete per-metric denominators are verified
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
@@ -71,6 +76,7 @@ measurements:
   crosswalk_entry_id: deepswe-opus-max
   signal_id: deepswe-v1.1-endpoint-resources
   source_model_id: Claude Opus 5 max
+  serving_provider: vertex_ai
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: claude-opus-5-max
@@ -79,15 +85,21 @@ measurements:
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 444
+  successful_attempts: 327
   success_rate: 0.7364864864864865
+  mean_cached_tokens: 14784785.963963963
   mean_wall_seconds: 1911.819866231982
   mean_cost_per_attempt: 11.837583271396396
   aggregation_statistic: arithmetic_mean
+  observation_counts:
+    cached_tokens: 444
+    wall_seconds: 444
+    cost_per_attempt: 444
 - record_id: deepswe-harness-resources-claude-fable-5-max-2026-08-13
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
-    accessed: '2026-08-14'
+    accessed: '2026-08-15'
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
@@ -120,22 +132,27 @@ measurements:
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 436
+  successful_attempts: 304
   success_rate: 0.6972477064220184
   mean_input_tokens: 12638832.12614679
   mean_output_tokens: 118592.77293577982
   mean_agent_steps: 88.4288990825688
   aggregation_statistic: arithmetic_mean
+  observation_counts:
+    input_tokens: 436
+    output_tokens: 436
+    agent_steps: 436
 - record_id: deepswe-endpoint-resources-claude-fable-5-max-2026-08-13
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
-    accessed: '2026-08-14'
+    accessed: '2026-08-15'
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
-  metric_definition: Arithmetic mean wall duration and dollar cost per attempt from
-    the published DeepSWE leaderboard; retained diagnostically until deployment identity
-    is verified
+  metric_definition: Arithmetic mean cached tokens, agent wall duration, and observed
+    dollar cost per attempt from the published DeepSWE trial ledger; retained diagnostically
+    until deployment identity and complete per-metric denominators are verified
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
@@ -155,6 +172,7 @@ measurements:
   crosswalk_entry_id: deepswe-fable-max
   signal_id: deepswe-v1.1-endpoint-resources
   source_model_id: Claude Fable 5 max
+  serving_provider: vertex_ai
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: claude-fable-5-max
@@ -163,15 +181,21 @@ measurements:
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 436
+  successful_attempts: 304
   success_rate: 0.6972477064220184
+  mean_cached_tokens: 12388674.334862385
   mean_wall_seconds: 2092.0106240022938
   mean_cost_per_attempt: 21.634702092592594
   aggregation_statistic: arithmetic_mean
+  observation_counts:
+    cached_tokens: 436
+    wall_seconds: 436
+    cost_per_attempt: 432
 - record_id: deepswe-harness-resources-gpt-5.6-sol-max-2026-08-13
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
-    accessed: '2026-08-14'
+    accessed: '2026-08-15'
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
@@ -204,22 +228,27 @@ measurements:
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 450
+  successful_attempts: 327
   success_rate: 0.7266666666666667
   mean_input_tokens: 7907652.344444444
   mean_output_tokens: 60013.64444444444
   mean_agent_steps: 61.25333333333333
   aggregation_statistic: arithmetic_mean
+  observation_counts:
+    input_tokens: 450
+    output_tokens: 450
+    agent_steps: 450
 - record_id: deepswe-endpoint-resources-gpt-5.6-sol-max-2026-08-13
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
-    accessed: '2026-08-14'
+    accessed: '2026-08-15'
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
-  metric_definition: Arithmetic mean wall duration and dollar cost per attempt from
-    the published DeepSWE leaderboard; retained diagnostically until deployment identity
-    is verified
+  metric_definition: Arithmetic mean cached tokens, agent wall duration, and observed
+    dollar cost per attempt from the published DeepSWE trial ledger; retained diagnostically
+    until deployment identity and complete per-metric denominators are verified
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
@@ -239,6 +268,7 @@ measurements:
   crosswalk_entry_id: deepswe-sol-max
   signal_id: deepswe-v1.1-endpoint-resources
   source_model_id: GPT-5.6 Sol max
+  serving_provider: openai
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: gpt-5.6-sol-max
@@ -247,15 +277,21 @@ measurements:
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 450
+  successful_attempts: 327
   success_rate: 0.7266666666666667
+  mean_cached_tokens: 7419435.235555556
   mean_wall_seconds: 1128.624910331111
   mean_cost_per_attempt: 8.386436346666667
   aggregation_statistic: arithmetic_mean
+  observation_counts:
+    cached_tokens: 450
+    wall_seconds: 450
+    cost_per_attempt: 450
 - record_id: deepswe-harness-resources-kimi-k3-max-2026-08-13
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
-    accessed: '2026-08-14'
+    accessed: '2026-08-15'
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
@@ -288,22 +324,27 @@ measurements:
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 451
+  successful_attempts: 309
   success_rate: 0.6851441241685144
   mean_input_tokens: 9695436.246119734
   mean_output_tokens: 81499.84257206209
   mean_agent_steps: 97.58758314855876
   aggregation_statistic: arithmetic_mean
+  observation_counts:
+    input_tokens: 451
+    output_tokens: 451
+    agent_steps: 451
 - record_id: deepswe-endpoint-resources-kimi-k3-max-2026-08-13
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
-    accessed: '2026-08-14'
+    accessed: '2026-08-15'
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
-  metric_definition: Arithmetic mean wall duration and dollar cost per attempt from
-    the published DeepSWE leaderboard; retained diagnostically until deployment identity
-    is verified
+  metric_definition: Arithmetic mean cached tokens, agent wall duration, and observed
+    dollar cost per attempt from the published DeepSWE trial ledger; retained diagnostically
+    until deployment identity and complete per-metric denominators are verified
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
@@ -323,6 +364,7 @@ measurements:
   crosswalk_entry_id: deepswe-kimi-max
   signal_id: deepswe-v1.1-endpoint-resources
   source_model_id: Kimi K3 max
+  serving_provider: moonshot
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: kimi-k3-max
@@ -331,15 +373,21 @@ measurements:
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 451
+  successful_attempts: 309
   success_rate: 0.6851441241685144
+  mean_cached_tokens: 9501527.498891352
   mean_wall_seconds: 4541.447376412417
   mean_cost_per_attempt: 4.654682129933482
   aggregation_statistic: arithmetic_mean
+  observation_counts:
+    cached_tokens: 451
+    wall_seconds: 451
+    cost_per_attempt: 451
 - record_id: deepswe-harness-resources-glm-5.2-max-2026-08-13
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
-    accessed: '2026-08-14'
+    accessed: '2026-08-15'
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
@@ -372,22 +420,27 @@ measurements:
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 450
+  successful_attempts: 197
   success_rate: 0.43777777777777777
   mean_input_tokens: 12606560.215555556
   mean_output_tokens: 78175.30666666667
   mean_agent_steps: 129.12666666666667
   aggregation_statistic: arithmetic_mean
+  observation_counts:
+    input_tokens: 450
+    output_tokens: 450
+    agent_steps: 450
 - record_id: deepswe-endpoint-resources-glm-5.2-max-2026-08-13
   source:
     organization: Datacurve
     url: https://deepswe.datacurve.ai/
-    accessed: '2026-08-14'
+    accessed: '2026-08-15'
   result_type: independent
   benchmark_version: v1.1
   harness_version: pier-mini-swe-agent-deepswe-v1.1
-  metric_definition: Arithmetic mean wall duration and dollar cost per attempt from
-    the published DeepSWE leaderboard; retained diagnostically until deployment identity
-    is verified
+  metric_definition: Arithmetic mean cached tokens, agent wall duration, and observed
+    dollar cost per attempt from the published DeepSWE trial ledger; retained diagnostically
+    until deployment identity and complete per-metric denominators are verified
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
@@ -407,6 +460,7 @@ measurements:
   crosswalk_entry_id: deepswe-glm-max
   signal_id: deepswe-v1.1-endpoint-resources
   source_model_id: GLM-5.2 max
+  serving_provider: zai
   signal_role: efficiency
   scoring_disposition: diagnostic_only
   model_id: glm-5.2-max
@@ -415,7 +469,13 @@ measurements:
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 450
+  successful_attempts: 197
   success_rate: 0.43777777777777777
+  mean_cached_tokens: 12344954.453333333
   mean_wall_seconds: 2629.2083211311115
   mean_cost_per_attempt: 3.9199075743111114
   aggregation_statistic: arithmetic_mean
+  observation_counts:
+    cached_tokens: 450
+    wall_seconds: 450
+    cost_per_attempt: 450

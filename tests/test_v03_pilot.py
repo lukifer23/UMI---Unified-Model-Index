@@ -213,6 +213,23 @@ def test_real_pilot_requires_a_valid_governance_bundle(
             next(item for item in pilot_dataset.models if item.id == scored.model_id),
         )
     )
+    fable_endpoint = next(
+        item
+        for item in pilot_dataset.efficiency
+        if item.model_id == "claude-fable-5-max"
+        and item.signal_id == "deepswe-v1.1-endpoint-resources"
+    )
+    assert "observation count does not match attempts for mean_cost_per_attempt" in (
+        readiness_failures(
+            fable_endpoint.model_copy(
+                update={
+                    "record_status": RecordStatus.READY,
+                    "scoring_disposition": ScoringDisposition.SCORED,
+                }
+            ),
+            next(item for item in pilot_dataset.models if item.id == "claude-fable-5-max"),
+        )
+    )
 
 
 def test_diagnostic_artifact_failure_blocks_strict_audit_but_not_scoring(
@@ -621,6 +638,11 @@ def test_adapters_are_offline_deterministic_and_role_safe(monkeypatch, crosswalk
     assert all(
         item.aggregation_statistic == AggregationStatistic.ARITHMETIC_MEAN
         and item.scoring_disposition == ScoringDisposition.SCORED
+        and item.successful_attempts is not None
+        and item.observation_counts is not None
+        and item.observation_counts.input_tokens == item.attempts
+        and item.observation_counts.output_tokens == item.attempts
+        and item.observation_counts.agent_steps == item.attempts
         and derive_efficiency_metric(item, "effective_input_tokens") is not None
         and derive_efficiency_metric(item, "effective_output_tokens") is not None
         and derive_efficiency_metric(item, "effective_agent_steps") is not None
@@ -628,10 +650,20 @@ def test_adapters_are_offline_deterministic_and_role_safe(monkeypatch, crosswalk
     )
     assert all(
         item.record_status == RecordStatus.DIAGNOSTIC_ONLY
+        and item.successful_attempts is not None
+        and item.observation_counts is not None
+        and item.observation_counts.cached_tokens == item.attempts
+        and item.observation_counts.wall_seconds == item.attempts
         and item.mean_wall_seconds is not None
         and item.mean_cost_per_attempt is not None
         for item in endpoint_records
     )
+    fable_endpoint = next(
+        item for item in endpoint_records if item.model_id == "claude-fable-5-max"
+    )
+    assert fable_endpoint.observation_counts is not None
+    assert fable_endpoint.observation_counts.cost_per_attempt == 432
+    assert fable_endpoint.attempts == 436
 
 
 def test_full_pilot_build_is_offline(monkeypatch) -> None:
@@ -874,6 +906,24 @@ def test_reviewed_adapter_rejects_schema_drift(monkeypatch, crosswalk) -> None:
     monkeypatch.setattr("umi.adapters.reviewed.load_yaml", lambda path: raw)
     with pytest.raises(KeyError, match="pass_rate"):
         adapt_deepswe_facts("offline-malformed-artifact.yaml", crosswalk)
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "message"),
+    (
+        ("resource_observation_count", 443, "resource observation count differs"),
+        ("cost_observation_count", 445, "cost observation count is outside"),
+        ("passed_attempts", 326, "pass rate does not reconcile"),
+    ),
+)
+def test_deepswe_adapter_rejects_denominator_drift(
+    monkeypatch, crosswalk, field, value, message
+) -> None:
+    raw = yaml.safe_load((SOURCES / "deepswe-reviewed-facts-2026-08-13.yaml").read_text())
+    raw["rows"][0][field] = value
+    monkeypatch.setattr("umi.adapters.reviewed.load_yaml", lambda path: raw)
+    with pytest.raises(ValueError, match=message):
+        adapt_deepswe_facts("offline-denominator-drift.yaml", crosswalk)
 
 
 def test_aa_hle_adapter_rejects_non_finite_source_rate(monkeypatch, crosswalk) -> None:

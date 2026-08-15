@@ -174,6 +174,43 @@
     },
     {
       "applied_strategy": "percentile",
+      "benchmark_id": "deepswe-v1.1",
+      "canonical_representation_group": "deepswe-v1.1",
+      "cohort_key": "deepswe-v1.1-2026-08-13",
+      "cohort_roles": {
+        "claude-fable-5-max": "normalization_member",
+        "claude-opus-5-max": "normalization_member",
+        "glm-5.2-max": "normalization_member",
+        "gpt-5.6-sol-max": "normalization_member",
+        "kimi-k3-max": "normalization_member"
+      },
+      "cohort_size": 5,
+      "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
+      "id": "4359e41970ced8bafed4bfcbdebc18ec1397f6c6398d5840d91f26c0ef4ebf1c",
+      "model_ids": [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max"
+      ],
+      "normalization_trace": {
+        "applied_strategy": "percentile",
+        "cohort_size": 5,
+        "direction_inverted": false,
+        "fallback_reason": "below_minimum_robust_cohort",
+        "log_transform": false,
+        "minimum_rank_cohort": 2,
+        "minimum_robust_cohort": 8,
+        "provisional": true,
+        "requested_strategy": "robust_z"
+      },
+      "requested_strategy": "robust_z",
+      "scored_input_fingerprint": "13a9b3f66db2806395076d82f76d1ff4482809953fe20b1fabef869b6fd957a0",
+      "transformation": "identity"
+    },
+    {
+      "applied_strategy": "percentile",
       "benchmark_id": "aa-omniscience",
       "canonical_representation_group": "aa-omniscience",
       "cohort_key": "aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15",
@@ -240,43 +277,6 @@
       },
       "requested_strategy": "robust_z",
       "scored_input_fingerprint": "0b835404e2bd123057da8bdb5e8af2d25b12262c4f322b78d475c29ac6ec4aa5",
-      "transformation": "identity"
-    },
-    {
-      "applied_strategy": "percentile",
-      "benchmark_id": "deepswe-v1.1",
-      "canonical_representation_group": "deepswe-v1.1",
-      "cohort_key": "deepswe-v1.1-2026-08-13",
-      "cohort_roles": {
-        "claude-fable-5-max": "normalization_member",
-        "claude-opus-5-max": "normalization_member",
-        "glm-5.2-max": "normalization_member",
-        "gpt-5.6-sol-max": "normalization_member",
-        "kimi-k3-max": "normalization_member"
-      },
-      "cohort_size": 5,
-      "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
-      "id": "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
-      "model_ids": [
-        "claude-fable-5-max",
-        "claude-opus-5-max",
-        "glm-5.2-max",
-        "gpt-5.6-sol-max",
-        "kimi-k3-max"
-      ],
-      "normalization_trace": {
-        "applied_strategy": "percentile",
-        "cohort_size": 5,
-        "direction_inverted": false,
-        "fallback_reason": "below_minimum_robust_cohort",
-        "log_transform": false,
-        "minimum_rank_cohort": 2,
-        "minimum_robust_cohort": 8,
-        "provisional": true,
-        "requested_strategy": "robust_z"
-      },
-      "requested_strategy": "robust_z",
-      "scored_input_fingerprint": "72faba608734058e50156a23403695ab26b5dfb600ab266cd0f760596db47ac9",
       "transformation": "identity"
     },
     {
@@ -461,15 +461,15 @@
   "score_scale": {
     "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
     "evidence_profile_id": "46e332fe3b8ed1ee273d7e92f21e47e13cf8f94959a45a100b71d5a8a5229422",
-    "formula_version": "umi-methodology-v0.3.11",
-    "id": "f70ec13f00a8c49666b54434571f7da24b9e7f384154c29189be1e05db52b2c5",
+    "formula_version": "umi-methodology-v0.3.12",
+    "id": "e1689b005201e813a52ad7ef6ce5cb259e2112be40a32b379dbe5e1a97a4cefd",
     "normalization_panel_ids": [
       "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
       "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
       "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
+      "4359e41970ced8bafed4bfcbdebc18ec1397f6c6398d5840d91f26c0ef4ebf1c",
       "46184e1944ec1654f85f821c284455474a9a3aeb07e8bfed7ab1a50d6aa81c6d",
       "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
-      "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
       "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
       "dbe25767808e7eb7173ba9e601c0c1b08d428a0dd899853548d2c53fa2adbfff",
       "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
@@ -516,7 +516,7 @@
           "cohort_key": "deepswe-v1.1-2026-08-13",
           "configured_absolute_weight": 0.0825,
           "direction": "higher",
-          "normalization_panel_id": "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
+          "normalization_panel_id": "4359e41970ced8bafed4bfcbdebc18ec1397f6c6398d5840d91f26c0ef4ebf1c",
           "normalization_trace": {
             "applied_strategy": "percentile",
             "cohort_size": 5,
@@ -835,9 +835,9 @@
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
         "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
         "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
+        "4359e41970ced8bafed4bfcbdebc18ec1397f6c6398d5840d91f26c0ef4ebf1c",
         "46184e1944ec1654f85f821c284455474a9a3aeb07e8bfed7ab1a50d6aa81c6d",
         "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
-        "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
         "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
         "dbe25767808e7eb7173ba9e601c0c1b08d428a0dd899853548d2c53fa2adbfff",
         "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
@@ -1000,7 +1000,7 @@
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
       "score": 82.80193236714976,
-      "score_scale_id": "f70ec13f00a8c49666b54434571f7da24b9e7f384154c29189be1e05db52b2c5",
+      "score_scale_id": "e1689b005201e813a52ad7ef6ce5cb259e2112be40a32b379dbe5e1a97a4cefd",
       "score_semantics": "weighted stable-panel percentile composite"
     },
     {
@@ -1039,7 +1039,7 @@
           "cohort_key": "deepswe-v1.1-2026-08-13",
           "configured_absolute_weight": 0.0825,
           "direction": "higher",
-          "normalization_panel_id": "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
+          "normalization_panel_id": "4359e41970ced8bafed4bfcbdebc18ec1397f6c6398d5840d91f26c0ef4ebf1c",
           "normalization_trace": {
             "applied_strategy": "percentile",
             "cohort_size": 5,
@@ -1358,9 +1358,9 @@
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
         "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
         "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
+        "4359e41970ced8bafed4bfcbdebc18ec1397f6c6398d5840d91f26c0ef4ebf1c",
         "46184e1944ec1654f85f821c284455474a9a3aeb07e8bfed7ab1a50d6aa81c6d",
         "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
-        "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
         "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
         "dbe25767808e7eb7173ba9e601c0c1b08d428a0dd899853548d2c53fa2adbfff",
         "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
@@ -1523,7 +1523,7 @@
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
       "score": 1.9323671497584543,
-      "score_scale_id": "f70ec13f00a8c49666b54434571f7da24b9e7f384154c29189be1e05db52b2c5",
+      "score_scale_id": "e1689b005201e813a52ad7ef6ce5cb259e2112be40a32b379dbe5e1a97a4cefd",
       "score_semantics": "weighted stable-panel percentile composite"
     },
     {
@@ -1562,7 +1562,7 @@
           "cohort_key": "deepswe-v1.1-2026-08-13",
           "configured_absolute_weight": 0.0825,
           "direction": "higher",
-          "normalization_panel_id": "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
+          "normalization_panel_id": "4359e41970ced8bafed4bfcbdebc18ec1397f6c6398d5840d91f26c0ef4ebf1c",
           "normalization_trace": {
             "applied_strategy": "percentile",
             "cohort_size": 5,
@@ -1881,9 +1881,9 @@
         "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
         "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
         "32b8a52ffd07e669fef320f31f77e79ea55f5f375faeee9d89485f46b2dabc7f",
+        "4359e41970ced8bafed4bfcbdebc18ec1397f6c6398d5840d91f26c0ef4ebf1c",
         "46184e1944ec1654f85f821c284455474a9a3aeb07e8bfed7ab1a50d6aa81c6d",
         "51b7c0f66fbf50453d4fc285dbead5b737258b94e2d73c89db9f809e164d262b",
-        "9d55102df4ab1205e658497df7e1f72a284c2a19d43371d53d0dee5faae7c37b",
         "b088a6aea3657d147abd6d4511d3d1bcfaff38b7d81d2a8655f8aef3f398d1af",
         "dbe25767808e7eb7173ba9e601c0c1b08d428a0dd899853548d2c53fa2adbfff",
         "dc238394fee69705e8eb41fc3b4044f7731b6d69d910b075a54874dc29010a6c",
@@ -2047,7 +2047,7 @@
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
       "score": 45.772946859903385,
-      "score_scale_id": "f70ec13f00a8c49666b54434571f7da24b9e7f384154c29189be1e05db52b2c5",
+      "score_scale_id": "e1689b005201e813a52ad7ef6ce5cb259e2112be40a32b379dbe5e1a97a4cefd",
       "score_semantics": "weighted stable-panel percentile composite"
     }
   ],

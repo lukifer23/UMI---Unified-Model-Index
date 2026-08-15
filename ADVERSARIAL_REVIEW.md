@@ -48,6 +48,11 @@ trial counts, pass@k, standard error, and confidence intervals. Provenance can
 identify evaluator, harness owner, run executor, raw artifact availability,
 reproducibility, and configuration verification.
 
+Real arithmetic-mean Efficiency records now bind an integer success count to the attempt denominator
+and preserve a separate observation count for every populated mean. Readiness rejects missing or
+partial denominators, preventing incomplete cost or resource rows from borrowing a broader success
+rate. The official DeepSWE trial ledger is independently rechecked by a network-separated verifier.
+
 Validation rejects family/domain/reference errors and snapshot collisions. It
 warns when a record lacks a cohort key, benchmark/harness version, snapshot/date,
 raw artifact, evaluator, or verified configuration. `SOURCE_READINESS.md` is the

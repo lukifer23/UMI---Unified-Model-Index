@@ -93,6 +93,97 @@ def test_efficiency_rejects_bad_rates_counts_and_empty_observations() -> None:
         EfficiencyMeasurement.model_validate({**data, "success_rate": 1.1, "mean_turns": 1})
     with pytest.raises(ValidationError):
         EfficiencyMeasurement.model_validate({**data, "mean_total_tokens": -1})
+    with pytest.raises(ValidationError, match="cannot exceed attempts"):
+        EfficiencyMeasurement.model_validate(
+            {
+                **data,
+                "successful_attempts": 11,
+                "mean_turns": 1,
+            }
+        )
+    with pytest.raises(ValidationError, match="does not reconcile"):
+        EfficiencyMeasurement.model_validate(
+            {
+                **data,
+                "successful_attempts": 4,
+                "mean_turns": 1,
+            }
+        )
+    with pytest.raises(ValidationError, match="cannot exceed attempts"):
+        EfficiencyMeasurement.model_validate(
+            {
+                **data,
+                "mean_turns": 1,
+                "observation_counts": {"turns": 11},
+            }
+        )
+    with pytest.raises(ValidationError, match="no corresponding"):
+        EfficiencyMeasurement.model_validate(
+            {
+                **data,
+                "mean_turns": 1,
+                "observation_counts": {"tool_calls": 10},
+            }
+        )
+
+
+def test_real_efficiency_requires_bound_success_and_full_mean_denominators() -> None:
+    model = ModelConfiguration.model_validate(
+        {
+            "id": "resource-model",
+            "family": "Resource Model",
+            "provider": "UMI Test",
+            "release_date": "2026-08-01",
+            "configuration": "max",
+            "identity_kind": "named_release",
+            "identity_assurance": IdentityAssurance.LABEL_EXACT,
+            "named_release": "Resource Model",
+            "open_weights": False,
+        }
+    )
+    record = EfficiencyMeasurement.model_validate(
+        {
+            **provenance(),
+            "record_id": "resource-record",
+            "model_id": model.id,
+            "source_model_id": "Resource Model Max",
+            "workload": "resource-workload",
+            "workload_category": "coding_agents",
+            "cohort_key": "resource-cohort",
+            "evaluation_date": "2026-08-14",
+            "attempts": 10,
+            "successful_attempts": 5,
+            "success_rate": 0.5,
+            "mean_input_tokens": 100,
+            "observation_counts": {"input_tokens": 10},
+            "benchmark_version": "resource-v1",
+            "harness_version": "resource-harness-v1",
+            "evaluator": "UMI Test",
+            "capture_type": ArtifactCaptureType.REVIEWED_FACT_EXTRACT,
+            "source_artifact_id": "resource-artifact",
+            "configuration_verification": ConfigurationVerification(
+                model_label_exact=True,
+                release_label_exact=True,
+                effort_label_exact=True,
+                fallback_absent=True,
+            ),
+            "result_type": ResultType.INDEPENDENT,
+        }
+    )
+    assert readiness_failures(record, model) == ()
+    assert "successful attempt count is missing" in readiness_failures(
+        record.model_copy(update={"successful_attempts": None}), model
+    )
+    assert "observation count does not match attempts for mean_input_tokens" in (
+        readiness_failures(
+            record.model_copy(
+                update={"observation_counts": record.observation_counts.model_copy(
+                    update={"input_tokens": 9}
+                )}
+            ),
+            model,
+        )
+    )
 
 
 def test_capability_source_as_of_date_is_not_relabelled_as_evaluation_date() -> None:

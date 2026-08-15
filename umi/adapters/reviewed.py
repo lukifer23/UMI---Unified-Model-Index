@@ -14,6 +14,7 @@ from umi.schemas import (
     ConfigurationVerification,
     Direction,
     EfficiencyMeasurement,
+    EfficiencyObservationCounts,
     ExternalIndexMeasurement,
     MeasurementUncertainty,
     ModelCrosswalk,
@@ -710,11 +711,43 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
     source = Source.model_validate(raw["source"])
     as_of = date.fromisoformat(str(raw["as_of"]))
     benchmark_version = str(raw["benchmark_version"])
+    ledger = cast(dict[str, object], raw["upstream_trial_ledger"])
+    ledger_sha256 = str(ledger["sha256"])
+    if len(ledger_sha256) != 64 or any(char not in "0123456789abcdef" for char in ledger_sha256):
+        raise ValueError("DeepSWE trial-ledger SHA-256 is invalid")
+    declared_trial_count = int(str(ledger["declared_trial_count"]))
+    selected_configuration_rows = int(str(ledger["selected_configuration_rows"]))
+    included_scored_rows = int(str(ledger["included_scored_rows"]))
+    if not declared_trial_count >= selected_configuration_rows >= included_scored_rows > 0:
+        raise ValueError("DeepSWE trial-ledger counts are inconsistent")
     benchmarks: list[BenchmarkMeasurement] = []
     efficiency: list[EfficiencyMeasurement] = []
     rejected: list[AdapterRejection] = []
-    for row_value in cast(list[object], raw["rows"]):
+    rows = cast(list[object], raw["rows"])
+    if sum(int(str(cast(dict[str, object], item)["attempted_tasks"])) for item in rows) != (
+        included_scored_rows
+    ):
+        raise ValueError("DeepSWE selected row attempts do not reconcile with the trial ledger")
+    for row_value in rows:
         row = cast(dict[str, object], row_value)
+        attempts = int(str(row["attempted_tasks"]))
+        successful_attempts = int(str(row["passed_attempts"]))
+        resource_observation_count = int(str(row["resource_observation_count"]))
+        cost_observation_count = int(str(row["cost_observation_count"]))
+        success_rate = float(cast(float, row["pass_rate"]))
+        if successful_attempts > attempts:
+            raise ValueError("DeepSWE successful attempts exceed attempted tasks")
+        if resource_observation_count != attempts:
+            raise ValueError("DeepSWE resource observation count differs from attempted tasks")
+        if not 0 < cost_observation_count <= attempts:
+            raise ValueError("DeepSWE cost observation count is outside the attempted-task range")
+        if not math.isclose(
+            success_rate,
+            successful_attempts / attempts,
+            rel_tol=0.0,
+            abs_tol=1e-12,
+        ):
+            raise ValueError("DeepSWE pass rate does not reconcile with attempt counts")
         source_model_id = str(row["source_model_id"])
         match = exact_entry(crosswalk, source_id, artifact_id, source_model_id)
         if match is None or match.canonical_model_id is None:
@@ -736,14 +769,15 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
                     "source_config_id": row["source_config_id"],
                     "run_count": raw["run_count"],
                     "pass_at_4": row["pass_at_4"],
-                    "passed_attempts": row["passed_attempts"],
-                    "attempted_tasks": row["attempted_tasks"],
+                    "passed_attempts": successful_attempts,
+                    "attempted_tasks": attempts,
+                    "trial_ledger_sha256": ledger_sha256,
                     "ci_method": raw["ci_method"],
                     "leaderboard_generated_at": raw["generated_at"],
                 },
                 number_of_tasks=int(str(raw["task_count"])),
-                number_of_trials=int(str(row["attempted_tasks"])),
-                sample_count=int(str(row["attempted_tasks"])),
+                number_of_trials=attempts,
+                sample_count=attempts,
                 pass_at_k=1,
                 uncertainty=MeasurementUncertainty(
                     kind=UncertaintyKind.CONFIDENCE_INTERVAL,
@@ -787,12 +821,18 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
                 workload_category=WorkloadCategory.CODING,
                 cohort_key=identifier(f"deepswe-v1.1-{as_of}"),
                 evaluation_date=as_of,
-                attempts=int(str(row["attempted_tasks"])),
-                success_rate=float(cast(float, row["pass_rate"])),
+                attempts=attempts,
+                successful_attempts=successful_attempts,
+                success_rate=success_rate,
                 mean_input_tokens=float(cast(float, row["mean_input_tokens"])),
                 mean_output_tokens=float(cast(float, row["mean_output_tokens"])),
                 mean_agent_steps=float(cast(float, row["mean_agent_steps"])),
                 aggregation_statistic=AggregationStatistic.ARITHMETIC_MEAN,
+                observation_counts=EfficiencyObservationCounts(
+                    input_tokens=resource_observation_count,
+                    output_tokens=resource_observation_count,
+                    agent_steps=resource_observation_count,
+                ),
                 metric_definition=(
                     "Arithmetic mean input tokens, output tokens, and mini-swe-agent steps per "
                     "attempt across the published DeepSWE leaderboard run set"
@@ -830,15 +870,22 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
                 workload_category=WorkloadCategory.CODING,
                 cohort_key=identifier(f"deepswe-v1.1-{as_of}"),
                 evaluation_date=as_of,
-                attempts=int(str(row["attempted_tasks"])),
-                success_rate=float(cast(float, row["pass_rate"])),
+                attempts=attempts,
+                successful_attempts=successful_attempts,
+                success_rate=success_rate,
+                mean_cached_tokens=float(cast(float, row["mean_cached_tokens"])),
                 mean_wall_seconds=float(cast(float, row["mean_duration_seconds"])),
                 mean_cost_per_attempt=float(cast(float, row["mean_cost_usd"])),
                 aggregation_statistic=AggregationStatistic.ARITHMETIC_MEAN,
+                observation_counts=EfficiencyObservationCounts(
+                    cached_tokens=resource_observation_count,
+                    wall_seconds=resource_observation_count,
+                    cost_per_attempt=cost_observation_count,
+                ),
                 metric_definition=(
-                    "Arithmetic mean wall duration and dollar cost per attempt from the published "
-                    "DeepSWE leaderboard; retained diagnostically until deployment identity is "
-                    "verified"
+                    "Arithmetic mean cached tokens, agent wall duration, and observed dollar cost "
+                    "per attempt from the published DeepSWE trial ledger; retained diagnostically "
+                    "until deployment identity and complete per-metric denominators are verified"
                 ),
                 record_status=RecordStatus.DIAGNOSTIC_ONLY,
                 signal_role=SignalRole.EFFICIENCY,
@@ -855,6 +902,7 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
                 source_registry_snapshot_id=artifact_id,
                 crosswalk_entry_id=match.id,
                 signal_id="deepswe-v1.1-endpoint-resources",
+                serving_provider=str(row["serving_provider"]),
                 configuration_verification=ConfigurationVerification(
                     model_label_exact=True,
                     release_label_exact=True,
@@ -870,7 +918,8 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
         efficiency=tuple(efficiency),
         rejections=tuple(rejected),
         diagnostics=(
-            "DeepSWE wall time and dollar cost remain diagnostic pending deployment identity",
+            "DeepSWE cached tokens, wall time, and dollar cost remain diagnostic pending complete "
+            "deployment identity; Fable cost covers 432 of 436 scored attempts",
         ),
     )
 

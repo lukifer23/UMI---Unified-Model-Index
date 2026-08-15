@@ -116,9 +116,12 @@ warnings and prevent the certificate from becoming a universal UMI score.
   has exact labels and efforts but no immutable snapshot/deployment identity; missing or non-Max
   effort labels are rejected.
 - DeepSWE arithmetic-mean input/output tokens and agent steps enter provisional Efficiency after
-  per-record success adjustment. Wall duration and dollar cost remain diagnostic because exact
-  deployment identity is not verified; the runner derives dollars from LiteLLM pricing rather than
-  a disclosed endpoint-, tier-, pricing-revision-, and billing-record-bound task ledger.
+  per-record success adjustment. The official 27,558-row ledger reconciles 2,231 scored attempts for
+  the five Max configurations and binds every retained mean to its actual observation count. Cached
+  tokens, wall duration, and dollar cost remain diagnostic because exact deployment identity is not
+  verified; Fable cost is additionally incomplete at 432 observations for 436 scored attempts, and
+  the runner derives dollars from LiteLLM pricing rather than a disclosed endpoint-, tier-,
+  pricing-revision-, and billing-record-bound task ledger.
 - Official token tariffs are now retained for all five configurations, including cached-input rates
   and published cache-write, long-context, and tool-fee terms. They cannot establish cost per task
   until compatible task-level token, tool, and success observations exist.

@@ -277,9 +277,10 @@ def test_headline_requires_efficiency_even_with_direct_economics(
     economics = tuple(
         TaskEconomicsMeasurement.model_validate(
             {
-                **source.model_dump(mode="python", exclude={
-                    "attempts",
-                    "success_rate",
+                    **source.model_dump(mode="python", exclude={
+                        "attempts",
+                        "successful_attempts",
+                        "success_rate",
                     "mean_input_tokens",
                     "mean_output_tokens",
                     "mean_reasoning_tokens",
@@ -293,7 +294,8 @@ def test_headline_requires_efficiency_even_with_direct_economics(
                         "observed_output_tokens_summary",
                         "observed_agent_steps_summary",
                         "observed_cost_summary_usd",
-                }),
+                        "observation_counts",
+                    }),
                 "record_id": f"direct-economics-{model.id}",
                 "model_id": model.id,
                 "cost_basis": CostBasis.SUCCESSFUL_TASK,

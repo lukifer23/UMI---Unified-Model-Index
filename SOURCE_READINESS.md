@@ -30,6 +30,8 @@ Diagnostic-only records do not make selected scored inputs appear unready.
   those fields define the scored deployment; exact harness-level input/output/reasoning tokens,
   turns, agent steps, and tool calls may score provisionally under the remaining identity gates;
 - benchmark/workload identity, direction, unit, and category supplied by typed/configured fields;
+- exact successful-attempt count and full-attempt observation counts for every real arithmetic-mean
+  Efficiency metric; incomplete means remain diagnostic and cannot share a broader success rate;
 - no conflicting second ready cohort for the same benchmark representation or workload identity.
 
 Published evaluator, harness owner, run executor, tools, scaffold, retry, context, pass@k, task/trial
@@ -84,6 +86,12 @@ reject the row. A valid diagnostic row remains auditable but cannot score.
 
 Acquisition is separate from ingestion. Adapters consume frozen local artifacts only; runtime HTTP,
 scraping, and credentials are prohibited in the scoring path.
+
+The DeepSWE public trial ledger independently reconciles all 2,231 selected scored attempts for the
+five Max configurations. It also proves that Fable cost is observed for only 432 of 436 scored
+attempts. UMI retains the per-metric counts, but cached tokens, wall time, and cost remain diagnostic
+without complete deployment identity; the incomplete Fable cost mean cannot score under any status
+flip.
 
 The Artificial Analysis HLE v4.1 adapter consumes a facts-only reviewed extract. It preserves the
 published source rate in `evaluation_settings`, converts that rate to configured percentage points,

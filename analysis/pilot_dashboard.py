@@ -6,6 +6,7 @@ from typing import Any
 from umi.derived_metrics import derive_efficiency_metric
 from umi.loading import Dataset
 from umi.schemas import ScoringDisposition
+from umi.version import PACKAGE_VERSION
 
 
 def _display_name(model_id: str, model_names: dict[str, str]) -> str:
@@ -236,7 +237,7 @@ def build_pilot_dashboard(
         "manifest": {
             "version": 1,
             "surface": "dashboard",
-            "title": "UMI v0.3.11 — five-model pilot evidence report",
+            "title": f"UMI v{PACKAGE_VERSION} — five-model pilot evidence report",
             "description": (
                 "A reproducible view of current accepted evidence, partial component estimates, "
                 "coverage, and the gates that prevent a headline UMI ranking."

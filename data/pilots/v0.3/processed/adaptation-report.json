@@ -1,7 +1,7 @@
 {
-  "complete_audit_fingerprint": "826486a05282f80cc96b9c4e53920740b8b3362f98c88c8115d598463300562e",
+  "complete_audit_fingerprint": "4629129892796917b75ba2eba81ec9932a6cf132c3e53d89c3f1710296bf8585",
   "label": "real evidence \u2014 model-specific partial estimate",
-  "scored_audit_fingerprint": "500b6237cf9e9c9b560a92645a0408459ac06579d0710ba89f44934142144e6f",
+  "scored_audit_fingerprint": "031ccb053a80175375e590260fb4752675141b5b676104d10923797fceb1fa4d",
   "sources": [
     {
       "adapter_id": "aa-reviewed-facts-v1",
@@ -7692,7 +7692,8 @@
             "pass_at_4": 0.8849557522123894,
             "passed_attempts": 327,
             "run_count": 4,
-            "source_config_id": "mini_swe_agent_claude_opus_5_max"
+            "source_config_id": "mini_swe_agent_claude_opus_5_max",
+            "trial_ledger_sha256": "13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971"
           },
           "evaluator": "Datacurve",
           "harness_owner": "Datacurve",
@@ -7719,7 +7720,7 @@
           "signal_id": "deepswe-v1.1",
           "signal_role": "task",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -7771,7 +7772,8 @@
             "pass_at_4": 0.8407079646017699,
             "passed_attempts": 304,
             "run_count": 4,
-            "source_config_id": "mini_swe_agent_claude_fable_5_max"
+            "source_config_id": "mini_swe_agent_claude_fable_5_max",
+            "trial_ledger_sha256": "13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971"
           },
           "evaluator": "Datacurve",
           "harness_owner": "Datacurve",
@@ -7798,7 +7800,7 @@
           "signal_id": "deepswe-v1.1",
           "signal_role": "task",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -7850,7 +7852,8 @@
             "pass_at_4": 0.8584070796460177,
             "passed_attempts": 327,
             "run_count": 4,
-            "source_config_id": "mini_swe_agent_gpt_5_6_sol_max"
+            "source_config_id": "mini_swe_agent_gpt_5_6_sol_max",
+            "trial_ledger_sha256": "13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971"
           },
           "evaluator": "Datacurve",
           "harness_owner": "Datacurve",
@@ -7877,7 +7880,7 @@
           "signal_id": "deepswe-v1.1",
           "signal_role": "task",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -7929,7 +7932,8 @@
             "pass_at_4": 0.8938053097345132,
             "passed_attempts": 309,
             "run_count": 4,
-            "source_config_id": "mini_swe_agent_kimi_k3_max"
+            "source_config_id": "mini_swe_agent_kimi_k3_max",
+            "trial_ledger_sha256": "13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971"
           },
           "evaluator": "Datacurve",
           "harness_owner": "Datacurve",
@@ -7956,7 +7960,7 @@
           "signal_id": "deepswe-v1.1",
           "signal_role": "task",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -8008,7 +8012,8 @@
             "pass_at_4": 0.7699115044247787,
             "passed_attempts": 197,
             "run_count": 4,
-            "source_config_id": "mini_swe_agent_glm_5_2_max"
+            "source_config_id": "mini_swe_agent_glm_5_2_max",
+            "trial_ledger_sha256": "13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971"
           },
           "evaluator": "Datacurve",
           "harness_owner": "Datacurve",
@@ -8035,7 +8040,7 @@
           "signal_id": "deepswe-v1.1",
           "signal_role": "task",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -8063,7 +8068,7 @@
         }
       ],
       "diagnostics": [
-        "DeepSWE wall time and dollar cost remain diagnostic pending deployment identity"
+        "DeepSWE cached tokens, wall time, and dollar cost remain diagnostic pending complete deployment identity; Fable cost covers 432 of 436 scored attempts"
       ],
       "efficiency": [
         {
@@ -8104,6 +8109,18 @@
           "model_id": "claude-opus-5-max",
           "model_release_date": null,
           "notes": null,
+          "observation_counts": {
+            "agent_steps": 444,
+            "cached_tokens": null,
+            "cost_per_attempt": null,
+            "input_tokens": 444,
+            "output_tokens": 444,
+            "reasoning_tokens": null,
+            "tool_calls": null,
+            "total_tokens": null,
+            "turns": null,
+            "wall_seconds": null
+          },
           "observed_agent_steps_summary": null,
           "observed_cost_summary_usd": null,
           "observed_output_tokens_summary": null,
@@ -8119,7 +8136,7 @@
           "signal_id": "deepswe-v1.1-resources",
           "signal_role": "efficiency",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -8128,6 +8145,7 @@
           "source_published_date": null,
           "source_registry_snapshot_id": "deepswe-v1.1-2026-08-13",
           "success_rate": 0.7364864864864865,
+          "successful_attempts": 327,
           "tools_enabled": null,
           "workload": "deepswe-v1.1",
           "workload_category": "coding_agents"
@@ -8156,7 +8174,7 @@
           "harness_version": "pier-mini-swe-agent-deepswe-v1.1",
           "leaderboard_publish_date": null,
           "mean_agent_steps": null,
-          "mean_cached_tokens": null,
+          "mean_cached_tokens": 14784785.963963963,
           "mean_cost_per_attempt": 11.837583271396396,
           "mean_input_tokens": null,
           "mean_output_tokens": null,
@@ -8166,10 +8184,22 @@
           "mean_turns": null,
           "mean_wall_seconds": 1911.819866231982,
           "measurement_as_of_date": null,
-          "metric_definition": "Arithmetic mean wall duration and dollar cost per attempt from the published DeepSWE leaderboard; retained diagnostically until deployment identity is verified",
+          "metric_definition": "Arithmetic mean cached tokens, agent wall duration, and observed dollar cost per attempt from the published DeepSWE trial ledger; retained diagnostically until deployment identity and complete per-metric denominators are verified",
           "model_id": "claude-opus-5-max",
           "model_release_date": null,
           "notes": null,
+          "observation_counts": {
+            "agent_steps": null,
+            "cached_tokens": 444,
+            "cost_per_attempt": 444,
+            "input_tokens": null,
+            "output_tokens": null,
+            "reasoning_tokens": null,
+            "tool_calls": null,
+            "total_tokens": null,
+            "turns": null,
+            "wall_seconds": 444
+          },
           "observed_agent_steps_summary": null,
           "observed_cost_summary_usd": null,
           "observed_output_tokens_summary": null,
@@ -8181,11 +8211,11 @@
           "run_executor": "Datacurve",
           "scoring_disposition": "diagnostic_only",
           "service_tier": null,
-          "serving_provider": null,
+          "serving_provider": "vertex_ai",
           "signal_id": "deepswe-v1.1-endpoint-resources",
           "signal_role": "efficiency",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -8194,6 +8224,7 @@
           "source_published_date": null,
           "source_registry_snapshot_id": "deepswe-v1.1-2026-08-13",
           "success_rate": 0.7364864864864865,
+          "successful_attempts": 327,
           "tools_enabled": null,
           "workload": "deepswe-v1.1",
           "workload_category": "coding_agents"
@@ -8236,6 +8267,18 @@
           "model_id": "claude-fable-5-max",
           "model_release_date": null,
           "notes": null,
+          "observation_counts": {
+            "agent_steps": 436,
+            "cached_tokens": null,
+            "cost_per_attempt": null,
+            "input_tokens": 436,
+            "output_tokens": 436,
+            "reasoning_tokens": null,
+            "tool_calls": null,
+            "total_tokens": null,
+            "turns": null,
+            "wall_seconds": null
+          },
           "observed_agent_steps_summary": null,
           "observed_cost_summary_usd": null,
           "observed_output_tokens_summary": null,
@@ -8251,7 +8294,7 @@
           "signal_id": "deepswe-v1.1-resources",
           "signal_role": "efficiency",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -8260,6 +8303,7 @@
           "source_published_date": null,
           "source_registry_snapshot_id": "deepswe-v1.1-2026-08-13",
           "success_rate": 0.6972477064220184,
+          "successful_attempts": 304,
           "tools_enabled": null,
           "workload": "deepswe-v1.1",
           "workload_category": "coding_agents"
@@ -8288,7 +8332,7 @@
           "harness_version": "pier-mini-swe-agent-deepswe-v1.1",
           "leaderboard_publish_date": null,
           "mean_agent_steps": null,
-          "mean_cached_tokens": null,
+          "mean_cached_tokens": 12388674.334862385,
           "mean_cost_per_attempt": 21.634702092592594,
           "mean_input_tokens": null,
           "mean_output_tokens": null,
@@ -8298,10 +8342,22 @@
           "mean_turns": null,
           "mean_wall_seconds": 2092.0106240022938,
           "measurement_as_of_date": null,
-          "metric_definition": "Arithmetic mean wall duration and dollar cost per attempt from the published DeepSWE leaderboard; retained diagnostically until deployment identity is verified",
+          "metric_definition": "Arithmetic mean cached tokens, agent wall duration, and observed dollar cost per attempt from the published DeepSWE trial ledger; retained diagnostically until deployment identity and complete per-metric denominators are verified",
           "model_id": "claude-fable-5-max",
           "model_release_date": null,
           "notes": null,
+          "observation_counts": {
+            "agent_steps": null,
+            "cached_tokens": 436,
+            "cost_per_attempt": 432,
+            "input_tokens": null,
+            "output_tokens": null,
+            "reasoning_tokens": null,
+            "tool_calls": null,
+            "total_tokens": null,
+            "turns": null,
+            "wall_seconds": 436
+          },
           "observed_agent_steps_summary": null,
           "observed_cost_summary_usd": null,
           "observed_output_tokens_summary": null,
@@ -8313,11 +8369,11 @@
           "run_executor": "Datacurve",
           "scoring_disposition": "diagnostic_only",
           "service_tier": null,
-          "serving_provider": null,
+          "serving_provider": "vertex_ai",
           "signal_id": "deepswe-v1.1-endpoint-resources",
           "signal_role": "efficiency",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -8326,6 +8382,7 @@
           "source_published_date": null,
           "source_registry_snapshot_id": "deepswe-v1.1-2026-08-13",
           "success_rate": 0.6972477064220184,
+          "successful_attempts": 304,
           "tools_enabled": null,
           "workload": "deepswe-v1.1",
           "workload_category": "coding_agents"
@@ -8368,6 +8425,18 @@
           "model_id": "gpt-5.6-sol-max",
           "model_release_date": null,
           "notes": null,
+          "observation_counts": {
+            "agent_steps": 450,
+            "cached_tokens": null,
+            "cost_per_attempt": null,
+            "input_tokens": 450,
+            "output_tokens": 450,
+            "reasoning_tokens": null,
+            "tool_calls": null,
+            "total_tokens": null,
+            "turns": null,
+            "wall_seconds": null
+          },
           "observed_agent_steps_summary": null,
           "observed_cost_summary_usd": null,
           "observed_output_tokens_summary": null,
@@ -8383,7 +8452,7 @@
           "signal_id": "deepswe-v1.1-resources",
           "signal_role": "efficiency",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -8392,6 +8461,7 @@
           "source_published_date": null,
           "source_registry_snapshot_id": "deepswe-v1.1-2026-08-13",
           "success_rate": 0.7266666666666667,
+          "successful_attempts": 327,
           "tools_enabled": null,
           "workload": "deepswe-v1.1",
           "workload_category": "coding_agents"
@@ -8420,7 +8490,7 @@
           "harness_version": "pier-mini-swe-agent-deepswe-v1.1",
           "leaderboard_publish_date": null,
           "mean_agent_steps": null,
-          "mean_cached_tokens": null,
+          "mean_cached_tokens": 7419435.235555556,
           "mean_cost_per_attempt": 8.386436346666667,
           "mean_input_tokens": null,
           "mean_output_tokens": null,
@@ -8430,10 +8500,22 @@
           "mean_turns": null,
           "mean_wall_seconds": 1128.624910331111,
           "measurement_as_of_date": null,
-          "metric_definition": "Arithmetic mean wall duration and dollar cost per attempt from the published DeepSWE leaderboard; retained diagnostically until deployment identity is verified",
+          "metric_definition": "Arithmetic mean cached tokens, agent wall duration, and observed dollar cost per attempt from the published DeepSWE trial ledger; retained diagnostically until deployment identity and complete per-metric denominators are verified",
           "model_id": "gpt-5.6-sol-max",
           "model_release_date": null,
           "notes": null,
+          "observation_counts": {
+            "agent_steps": null,
+            "cached_tokens": 450,
+            "cost_per_attempt": 450,
+            "input_tokens": null,
+            "output_tokens": null,
+            "reasoning_tokens": null,
+            "tool_calls": null,
+            "total_tokens": null,
+            "turns": null,
+            "wall_seconds": 450
+          },
           "observed_agent_steps_summary": null,
           "observed_cost_summary_usd": null,
           "observed_output_tokens_summary": null,
@@ -8445,11 +8527,11 @@
           "run_executor": "Datacurve",
           "scoring_disposition": "diagnostic_only",
           "service_tier": null,
-          "serving_provider": null,
+          "serving_provider": "openai",
           "signal_id": "deepswe-v1.1-endpoint-resources",
           "signal_role": "efficiency",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -8458,6 +8540,7 @@
           "source_published_date": null,
           "source_registry_snapshot_id": "deepswe-v1.1-2026-08-13",
           "success_rate": 0.7266666666666667,
+          "successful_attempts": 327,
           "tools_enabled": null,
           "workload": "deepswe-v1.1",
           "workload_category": "coding_agents"
@@ -8500,6 +8583,18 @@
           "model_id": "kimi-k3-max",
           "model_release_date": null,
           "notes": null,
+          "observation_counts": {
+            "agent_steps": 451,
+            "cached_tokens": null,
+            "cost_per_attempt": null,
+            "input_tokens": 451,
+            "output_tokens": 451,
+            "reasoning_tokens": null,
+            "tool_calls": null,
+            "total_tokens": null,
+            "turns": null,
+            "wall_seconds": null
+          },
           "observed_agent_steps_summary": null,
           "observed_cost_summary_usd": null,
           "observed_output_tokens_summary": null,
@@ -8515,7 +8610,7 @@
           "signal_id": "deepswe-v1.1-resources",
           "signal_role": "efficiency",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -8524,6 +8619,7 @@
           "source_published_date": null,
           "source_registry_snapshot_id": "deepswe-v1.1-2026-08-13",
           "success_rate": 0.6851441241685144,
+          "successful_attempts": 309,
           "tools_enabled": null,
           "workload": "deepswe-v1.1",
           "workload_category": "coding_agents"
@@ -8552,7 +8648,7 @@
           "harness_version": "pier-mini-swe-agent-deepswe-v1.1",
           "leaderboard_publish_date": null,
           "mean_agent_steps": null,
-          "mean_cached_tokens": null,
+          "mean_cached_tokens": 9501527.498891352,
           "mean_cost_per_attempt": 4.654682129933482,
           "mean_input_tokens": null,
           "mean_output_tokens": null,
@@ -8562,10 +8658,22 @@
           "mean_turns": null,
           "mean_wall_seconds": 4541.447376412417,
           "measurement_as_of_date": null,
-          "metric_definition": "Arithmetic mean wall duration and dollar cost per attempt from the published DeepSWE leaderboard; retained diagnostically until deployment identity is verified",
+          "metric_definition": "Arithmetic mean cached tokens, agent wall duration, and observed dollar cost per attempt from the published DeepSWE trial ledger; retained diagnostically until deployment identity and complete per-metric denominators are verified",
           "model_id": "kimi-k3-max",
           "model_release_date": null,
           "notes": null,
+          "observation_counts": {
+            "agent_steps": null,
+            "cached_tokens": 451,
+            "cost_per_attempt": 451,
+            "input_tokens": null,
+            "output_tokens": null,
+            "reasoning_tokens": null,
+            "tool_calls": null,
+            "total_tokens": null,
+            "turns": null,
+            "wall_seconds": 451
+          },
           "observed_agent_steps_summary": null,
           "observed_cost_summary_usd": null,
           "observed_output_tokens_summary": null,
@@ -8577,11 +8685,11 @@
           "run_executor": "Datacurve",
           "scoring_disposition": "diagnostic_only",
           "service_tier": null,
-          "serving_provider": null,
+          "serving_provider": "moonshot",
           "signal_id": "deepswe-v1.1-endpoint-resources",
           "signal_role": "efficiency",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -8590,6 +8698,7 @@
           "source_published_date": null,
           "source_registry_snapshot_id": "deepswe-v1.1-2026-08-13",
           "success_rate": 0.6851441241685144,
+          "successful_attempts": 309,
           "tools_enabled": null,
           "workload": "deepswe-v1.1",
           "workload_category": "coding_agents"
@@ -8632,6 +8741,18 @@
           "model_id": "glm-5.2-max",
           "model_release_date": null,
           "notes": null,
+          "observation_counts": {
+            "agent_steps": 450,
+            "cached_tokens": null,
+            "cost_per_attempt": null,
+            "input_tokens": 450,
+            "output_tokens": 450,
+            "reasoning_tokens": null,
+            "tool_calls": null,
+            "total_tokens": null,
+            "turns": null,
+            "wall_seconds": null
+          },
           "observed_agent_steps_summary": null,
           "observed_cost_summary_usd": null,
           "observed_output_tokens_summary": null,
@@ -8647,7 +8768,7 @@
           "signal_id": "deepswe-v1.1-resources",
           "signal_role": "efficiency",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -8656,6 +8777,7 @@
           "source_published_date": null,
           "source_registry_snapshot_id": "deepswe-v1.1-2026-08-13",
           "success_rate": 0.43777777777777777,
+          "successful_attempts": 197,
           "tools_enabled": null,
           "workload": "deepswe-v1.1",
           "workload_category": "coding_agents"
@@ -8684,7 +8806,7 @@
           "harness_version": "pier-mini-swe-agent-deepswe-v1.1",
           "leaderboard_publish_date": null,
           "mean_agent_steps": null,
-          "mean_cached_tokens": null,
+          "mean_cached_tokens": 12344954.453333333,
           "mean_cost_per_attempt": 3.9199075743111114,
           "mean_input_tokens": null,
           "mean_output_tokens": null,
@@ -8694,10 +8816,22 @@
           "mean_turns": null,
           "mean_wall_seconds": 2629.2083211311115,
           "measurement_as_of_date": null,
-          "metric_definition": "Arithmetic mean wall duration and dollar cost per attempt from the published DeepSWE leaderboard; retained diagnostically until deployment identity is verified",
+          "metric_definition": "Arithmetic mean cached tokens, agent wall duration, and observed dollar cost per attempt from the published DeepSWE trial ledger; retained diagnostically until deployment identity and complete per-metric denominators are verified",
           "model_id": "glm-5.2-max",
           "model_release_date": null,
           "notes": null,
+          "observation_counts": {
+            "agent_steps": null,
+            "cached_tokens": 450,
+            "cost_per_attempt": 450,
+            "input_tokens": null,
+            "output_tokens": null,
+            "reasoning_tokens": null,
+            "tool_calls": null,
+            "total_tokens": null,
+            "turns": null,
+            "wall_seconds": 450
+          },
           "observed_agent_steps_summary": null,
           "observed_cost_summary_usd": null,
           "observed_output_tokens_summary": null,
@@ -8709,11 +8843,11 @@
           "run_executor": "Datacurve",
           "scoring_disposition": "diagnostic_only",
           "service_tier": null,
-          "serving_provider": null,
+          "serving_provider": "zai",
           "signal_id": "deepswe-v1.1-endpoint-resources",
           "signal_role": "efficiency",
           "source": {
-            "accessed": "2026-08-14",
+            "accessed": "2026-08-15",
             "organization": "Datacurve",
             "url": "https://deepswe.datacurve.ai/"
           },
@@ -8722,6 +8856,7 @@
           "source_published_date": null,
           "source_registry_snapshot_id": "deepswe-v1.1-2026-08-13",
           "success_rate": 0.43777777777777777,
+          "successful_attempts": 197,
           "tools_enabled": null,
           "workload": "deepswe-v1.1",
           "workload_category": "coding_agents"

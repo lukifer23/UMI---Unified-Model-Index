@@ -1,8 +1,9 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.11 extends the real,
-five-configuration, multi-source pilot with exact AA Terminal-Bench v2.1, AA-Omniscience, AA-LCR,
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.12 hardens the real,
+five-configuration, multi-source pilot with exact DeepSWE trial-ledger denominators plus AA
+Terminal-Bench v2.1, AA-Omniscience, AA-LCR,
 τ³-Banking, GDPval-AA v2, HLE, CursorBench 3.2, DeepSWE,
 GPQA Diamond, SciCode, CritPt, and ARC-AGI-2 results plus DeepSWE confidence intervals and
 harness-resource means. It does **not**
@@ -41,7 +42,17 @@ non-overwriting acquisition path for Epoch ECI, the complete Benchmarking Hub ar
 It writes a checksum manifest to a fresh
 snapshot directory and is never called by ingestion or scoring. Arena acquisition freezes the
 revision-addressed raw Parquet files; promotion into adapter input is a separate reviewed step.
-AA, CursorBench, DeepSWE, and lab releases remain reviewed-fact inputs.
+AA, CursorBench, DeepSWE, and lab releases remain reviewed-fact inputs. DeepSWE is independently
+reconciled against the public 27,558-row trial ledger without redistributing that rights-unclear raw
+artifact:
+
+```bash
+uv run --no-sync python -m scripts.verify_deepswe_trial_ledger --accept-network
+```
+
+The verifier checks the pinned ledger checksum, all five selected configurations, 2,231 scored
+attempts, success counts, serving-provider labels, every retained arithmetic mean, and each metric's
+actual observation denominator.
 
 ```bash
 uv run --no-sync python -m scripts.build_v03_pilot

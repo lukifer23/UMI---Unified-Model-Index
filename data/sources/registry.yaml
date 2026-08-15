@@ -274,22 +274,22 @@ snapshots:
     redistribution_scope: full_artifact
     notes: Bounded diagnostic capture; row count and pagination metadata are retained in the artifact.
   - id: deepswe-v1.1-2026-08-13
-    title: DeepSWE v1.1 manually reviewed leaderboard facts
+    title: DeepSWE v1.1 trial-ledger-reconciled facts
     source:
       organization: Datacurve
       url: https://deepswe.datacurve.ai/
-      accessed: 2026-08-14
+      accessed: 2026-08-15
     published: 2026-08-13
     as_of: 2026-08-13
     artifact_path: v0.3/deepswe-reviewed-facts-2026-08-13.yaml
-    artifact_sha256: cd8aa2f1c143a11b657ac86507e631bfc33fc5531a36feebd152d09bf2bf496a
+    artifact_sha256: 8c0b16c3944ceda114a08aa69b14d6219d84e4fbd4247d313d0d4cd6e3e6c545
     content_type: application/yaml
     upstream_revision: leaderboard-generated-2026-08-13t16.11.55z
     adapter_id: deepswe-reviewed-facts-v1
     license_id: leaderboard-data-license-not-established
     attribution: DeepSWE v1.1 leaderboard facts by Datacurve
     redistribution_scope: facts_only
-    notes: Facts and citations only; no gated tasks, trajectories, or full page content.
+    notes: Facts and citations only; aggregates and per-metric denominators reconcile to the official 27,558-row trial ledger at SHA-256 13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971. No gated tasks, trajectories, or full ledger content are redistributed.
   - id: aa-frontier-2026-07-17
     title: "Four frontier launches in eight days: six labs now field a model above 50"
     source:

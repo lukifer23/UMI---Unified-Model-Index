@@ -15,7 +15,9 @@ silently folded into this score.
 
 v0.3 is a good fail-closed pilot. It has immutable records, frozen artifacts, exact
 crosswalks, source/license registry, offline adapters, overlap controls, hierarchical
-coverage, per-record success adjustment, fingerprints, diagnostics, and headline gates.
+coverage, per-record success adjustment, per-metric arithmetic-mean denominators, fingerprints,
+diagnostics, and headline gates. The DeepSWE facts now reconcile exactly to its public 27,558-row
+trial ledger without redistributing rights-unclear raw records.
 
 It does not yet support a public UMI. The current five-model pilot has 48 of 75 configured
 Capability cells ready. Opus, Sol, Kimi, and GLM now span five domains and clear the Capability-only
