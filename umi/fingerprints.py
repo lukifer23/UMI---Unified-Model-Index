@@ -8,7 +8,12 @@ from pydantic import BaseModel
 
 from umi.config import ProjectConfig
 from umi.loading import Dataset
-from umi.schemas import Provenance
+from umi.schemas import (
+    BenchmarkMeasurement,
+    EfficiencyMeasurement,
+    Provenance,
+    TaskEconomicsMeasurement,
+)
 from umi.version import ENGINE_VERSION, FORMULA_VERSION, NORMALIZATION_VERSION
 
 
@@ -52,15 +57,19 @@ def scoring_context_payload(dataset: Dataset, config: ProjectConfig) -> dict[str
     Call this only with the dataset returned by ``scoring_dataset``. Complete-audit-only records,
     pricing, external references, and complete-audit metadata are intentionally absent.
     """
-    records: tuple[Provenance, ...] = (
+    records: tuple[
+        BenchmarkMeasurement | EfficiencyMeasurement | TaskEconomicsMeasurement, ...
+    ] = (
         *dataset.benchmarks,
         *dataset.efficiency,
         *dataset.task_economics,
     )
+    scored_model_ids = {item.model_id for item in records}
     return {
         "models": [
             item.model_dump(mode="json", exclude={"evidence_artifact_ids", "notes"})
             for item in sorted(dataset.models, key=lambda model: model.id)
+            if item.id in scored_model_ids
         ],
         "scored_records": _ordered(records, "record_id"),
         "scoring_config_fingerprint": config.fingerprint,

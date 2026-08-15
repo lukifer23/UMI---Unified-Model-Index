@@ -1,0 +1,778 @@
+{
+  "$defs": {
+    "BenchmarkContribution": {
+      "additionalProperties": false,
+      "properties": {
+        "applied_normalization": {
+          "title": "Applied Normalization",
+          "type": "string"
+        },
+        "benchmark_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Benchmark Id",
+          "type": "string"
+        },
+        "cohort_key": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Cohort Key",
+          "type": "string"
+        },
+        "configured_absolute_weight": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Configured Absolute Weight",
+          "type": "number"
+        },
+        "direction": {
+          "$ref": "#/$defs/Direction"
+        },
+        "normalization_panel_id": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Normalization Panel Id",
+          "type": "string"
+        },
+        "normalization_trace": {
+          "$ref": "#/$defs/NormalizationTrace"
+        },
+        "normalized_value": {
+          "title": "Normalized Value",
+          "type": "number"
+        },
+        "raw_unit": {
+          "$ref": "#/$defs/Unit"
+        },
+        "raw_value": {
+          "title": "Raw Value",
+          "type": "number"
+        },
+        "requested_normalization": {
+          "$ref": "#/$defs/NormalizationStrategy"
+        },
+        "source_record_ids": {
+          "items": {
+            "pattern": "^[a-z0-9][a-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Source Record Ids",
+          "type": "array"
+        },
+        "source_uncertainty": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MeasurementUncertainty"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "weighted_contribution": {
+          "title": "Weighted Contribution",
+          "type": "number"
+        }
+      },
+      "required": [
+        "benchmark_id",
+        "cohort_key",
+        "raw_value",
+        "raw_unit",
+        "direction",
+        "configured_absolute_weight",
+        "requested_normalization",
+        "applied_normalization",
+        "normalization_panel_id",
+        "normalized_value",
+        "weighted_contribution",
+        "normalization_trace",
+        "source_record_ids"
+      ],
+      "title": "BenchmarkContribution",
+      "type": "object"
+    },
+    "CertificateStatus": {
+      "enum": [
+        "valid_comparison",
+        "provisional_comparison",
+        "insufficient_common_support",
+        "invalid_bundle"
+      ],
+      "title": "CertificateStatus",
+      "type": "string"
+    },
+    "Direction": {
+      "enum": [
+        "higher",
+        "lower"
+      ],
+      "title": "Direction",
+      "type": "string"
+    },
+    "IdentityAssurance": {
+      "enum": [
+        "verified",
+        "strongly_supported",
+        "label_exact",
+        "inferred",
+        "unknown"
+      ],
+      "title": "IdentityAssurance",
+      "type": "string"
+    },
+    "MeasurementUncertainty": {
+      "additionalProperties": false,
+      "description": "Literal uncertainty metadata supplied by one source record.",
+      "properties": {
+        "confidence_level": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence Level"
+        },
+        "kind": {
+          "$ref": "#/$defs/UncertaintyKind"
+        },
+        "lower": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lower"
+        },
+        "margin": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Margin"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "source_fields": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Source Fields",
+          "type": "array"
+        },
+        "standard_error": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Standard Error"
+        },
+        "upper": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Upper"
+        }
+      },
+      "required": [
+        "kind",
+        "source_fields"
+      ],
+      "title": "MeasurementUncertainty",
+      "type": "object"
+    },
+    "NormalizationPanel": {
+      "additionalProperties": false,
+      "properties": {
+        "applied_strategy": {
+          "title": "Applied Strategy",
+          "type": "string"
+        },
+        "benchmark_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Benchmark Id",
+          "type": "string"
+        },
+        "canonical_representation_group": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Canonical Representation Group",
+          "type": "string"
+        },
+        "cohort_key": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Cohort Key",
+          "type": "string"
+        },
+        "cohort_roles": {
+          "patternProperties": {
+            "^[a-z0-9][a-z0-9._-]*$": {
+              "type": "string"
+            }
+          },
+          "title": "Cohort Roles",
+          "type": "object"
+        },
+        "cohort_size": {
+          "minimum": 0,
+          "title": "Cohort Size",
+          "type": "integer"
+        },
+        "config_fingerprint": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Config Fingerprint",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "model_ids": {
+          "items": {
+            "pattern": "^[a-z0-9][a-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Model Ids",
+          "type": "array"
+        },
+        "normalization_trace": {
+          "$ref": "#/$defs/NormalizationTrace"
+        },
+        "requested_strategy": {
+          "$ref": "#/$defs/NormalizationStrategy"
+        },
+        "scored_input_fingerprint": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Scored Input Fingerprint",
+          "type": "string"
+        },
+        "transformation": {
+          "title": "Transformation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "benchmark_id",
+        "cohort_key",
+        "canonical_representation_group",
+        "model_ids",
+        "cohort_roles",
+        "requested_strategy",
+        "applied_strategy",
+        "cohort_size",
+        "transformation",
+        "config_fingerprint",
+        "scored_input_fingerprint",
+        "normalization_trace"
+      ],
+      "title": "NormalizationPanel",
+      "type": "object"
+    },
+    "NormalizationStrategy": {
+      "enum": [
+        "robust_z",
+        "percentile"
+      ],
+      "title": "NormalizationStrategy",
+      "type": "string"
+    },
+    "NormalizationTrace": {
+      "additionalProperties": false,
+      "properties": {
+        "applied_strategy": {
+          "minLength": 1,
+          "title": "Applied Strategy",
+          "type": "string"
+        },
+        "cohort_size": {
+          "minimum": 0,
+          "title": "Cohort Size",
+          "type": "integer"
+        },
+        "direction_inverted": {
+          "title": "Direction Inverted",
+          "type": "boolean"
+        },
+        "fallback_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fallback Reason"
+        },
+        "log_transform": {
+          "title": "Log Transform",
+          "type": "boolean"
+        },
+        "minimum_rank_cohort": {
+          "exclusiveMinimum": 0,
+          "title": "Minimum Rank Cohort",
+          "type": "integer"
+        },
+        "minimum_robust_cohort": {
+          "exclusiveMinimum": 0,
+          "title": "Minimum Robust Cohort",
+          "type": "integer"
+        },
+        "provisional": {
+          "title": "Provisional",
+          "type": "boolean"
+        },
+        "requested_strategy": {
+          "$ref": "#/$defs/NormalizationStrategy"
+        }
+      },
+      "required": [
+        "requested_strategy",
+        "applied_strategy",
+        "cohort_size",
+        "minimum_robust_cohort",
+        "minimum_rank_cohort",
+        "log_transform",
+        "direction_inverted",
+        "provisional"
+      ],
+      "title": "NormalizationTrace",
+      "type": "object"
+    },
+    "RankRobustness": {
+      "additionalProperties": false,
+      "properties": {
+        "assumptions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Assumptions",
+          "type": "array"
+        },
+        "central_composite_score": {
+          "title": "Central Composite Score",
+          "type": "number"
+        },
+        "central_estimate_rank": {
+          "title": "Central Estimate Rank",
+          "type": "number"
+        },
+        "composite_score_max": {
+          "title": "Composite Score Max",
+          "type": "number"
+        },
+        "composite_score_min": {
+          "title": "Composite Score Min",
+          "type": "number"
+        },
+        "exhaustive": {
+          "title": "Exhaustive",
+          "type": "boolean"
+        },
+        "possible_rank_max": {
+          "title": "Possible Rank Max",
+          "type": "number"
+        },
+        "possible_rank_min": {
+          "title": "Possible Rank Min",
+          "type": "number"
+        },
+        "possible_ranks": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Possible Ranks",
+          "type": "array"
+        },
+        "robustly_dominated_by": {
+          "items": {
+            "pattern": "^[a-z0-9][a-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Robustly Dominated By",
+          "type": "array"
+        },
+        "robustly_dominates": {
+          "items": {
+            "pattern": "^[a-z0-9][a-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Robustly Dominates",
+          "type": "array"
+        },
+        "scenario_count": {
+          "exclusiveMinimum": 0,
+          "title": "Scenario Count",
+          "type": "integer"
+        },
+        "uncertainty_mode": {
+          "title": "Uncertainty Mode",
+          "type": "string"
+        }
+      },
+      "required": [
+        "central_estimate_rank",
+        "possible_rank_min",
+        "possible_rank_max",
+        "possible_ranks",
+        "central_composite_score",
+        "composite_score_min",
+        "composite_score_max",
+        "robustly_dominates",
+        "robustly_dominated_by",
+        "scenario_count",
+        "exhaustive",
+        "uncertainty_mode",
+        "assumptions"
+      ],
+      "title": "RankRobustness",
+      "type": "object"
+    },
+    "RawBenchmarkResult": {
+      "additionalProperties": false,
+      "properties": {
+        "benchmark_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Benchmark Id",
+          "type": "string"
+        },
+        "cohort_key": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Cohort Key",
+          "type": "string"
+        },
+        "direction": {
+          "$ref": "#/$defs/Direction"
+        },
+        "raw_unit": {
+          "$ref": "#/$defs/Unit"
+        },
+        "raw_value": {
+          "title": "Raw Value",
+          "type": "number"
+        },
+        "source_uncertainty": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MeasurementUncertainty"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "benchmark_id",
+        "cohort_key",
+        "raw_value",
+        "raw_unit",
+        "direction"
+      ],
+      "title": "RawBenchmarkResult",
+      "type": "object"
+    },
+    "UncertaintyKind": {
+      "enum": [
+        "confidence_interval",
+        "published_margin",
+        "standard_error"
+      ],
+      "title": "UncertaintyKind",
+      "type": "string"
+    },
+    "Unit": {
+      "enum": [
+        "percent",
+        "score",
+        "tokens",
+        "seconds",
+        "turns",
+        "calls",
+        "usd"
+      ],
+      "title": "Unit",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "abstention_reasons": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Abstention Reasons",
+      "type": "array"
+    },
+    "applied_normalization": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/NormalizationPanel"
+      },
+      "title": "Applied Normalization",
+      "type": "array"
+    },
+    "bundle_fingerprint": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Bundle Fingerprint",
+      "type": "string"
+    },
+    "central_estimate_ranks": {
+      "patternProperties": {
+        "^[a-z0-9][a-z0-9._-]*$": {
+          "type": "number"
+        }
+      },
+      "title": "Central Estimate Ranks",
+      "type": "object"
+    },
+    "certificate_version": {
+      "title": "Certificate Version",
+      "type": "string"
+    },
+    "common_benchmark_series": {
+      "default": [],
+      "items": {
+        "additionalProperties": {
+          "type": "string"
+        },
+        "type": "object"
+      },
+      "title": "Common Benchmark Series",
+      "type": "array"
+    },
+    "comparability_basis": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Comparability Basis",
+      "type": "array"
+    },
+    "comparison_group_id": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Comparison Group Id",
+      "type": "string"
+    },
+    "comparison_model_ids": {
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "title": "Comparison Model Ids",
+      "type": "array"
+    },
+    "component_scores": {
+      "patternProperties": {
+        "^[a-z0-9][a-z0-9._-]*$": {
+          "type": "number"
+        }
+      },
+      "title": "Component Scores",
+      "type": "object"
+    },
+    "coverage": {
+      "patternProperties": {
+        "^[a-z0-9][a-z0-9._-]*$": {
+          "type": "number"
+        }
+      },
+      "title": "Coverage",
+      "type": "object"
+    },
+    "evidence_profile_id": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Evidence Profile Id"
+    },
+    "identity_assurance": {
+      "patternProperties": {
+        "^[a-z0-9][a-z0-9._-]*$": {
+          "$ref": "#/$defs/IdentityAssurance"
+        }
+      },
+      "title": "Identity Assurance",
+      "type": "object"
+    },
+    "missing_evidence": {
+      "patternProperties": {
+        "^[a-z0-9][a-z0-9._-]*$": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "title": "Missing Evidence",
+      "type": "object"
+    },
+    "normalization_panel_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Normalization Panel Ids",
+      "type": "array"
+    },
+    "normalized_contributions": {
+      "patternProperties": {
+        "^[a-z0-9][a-z0-9._-]*$": {
+          "items": {
+            "$ref": "#/$defs/BenchmarkContribution"
+          },
+          "type": "array"
+        }
+      },
+      "title": "Normalized Contributions",
+      "type": "object"
+    },
+    "publication_label": {
+      "title": "Publication Label",
+      "type": "string"
+    },
+    "rank_robustness": {
+      "patternProperties": {
+        "^[a-z0-9][a-z0-9._-]*$": {
+          "$ref": "#/$defs/RankRobustness"
+        }
+      },
+      "title": "Rank Robustness",
+      "type": "object"
+    },
+    "raw_contributions": {
+      "patternProperties": {
+        "^[a-z0-9][a-z0-9._-]*$": {
+          "items": {
+            "$ref": "#/$defs/RawBenchmarkResult"
+          },
+          "type": "array"
+        }
+      },
+      "title": "Raw Contributions",
+      "type": "object"
+    },
+    "result_fingerprint": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Result Fingerprint",
+      "type": "string"
+    },
+    "score_scale_id": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Score Scale Id"
+    },
+    "scored_input_fingerprint": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Scored Input Fingerprint",
+      "type": "string"
+    },
+    "source_artifact_checksums": {
+      "patternProperties": {
+        "^[a-z0-9][a-z0-9._-]*$": {
+          "type": "string"
+        }
+      },
+      "title": "Source Artifact Checksums",
+      "type": "object"
+    },
+    "source_artifact_ids": {
+      "default": [],
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "title": "Source Artifact Ids",
+      "type": "array"
+    },
+    "source_record_ids": {
+      "default": [],
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "title": "Source Record Ids",
+      "type": "array"
+    },
+    "status": {
+      "$ref": "#/$defs/CertificateStatus"
+    },
+    "warnings": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "certificate_version",
+    "status",
+    "publication_label",
+    "comparison_group_id",
+    "bundle_fingerprint",
+    "scored_input_fingerprint",
+    "comparison_model_ids",
+    "identity_assurance",
+    "result_fingerprint"
+  ],
+  "title": "ComparisonCertificate",
+  "type": "object"
+}

@@ -154,3 +154,27 @@ def test_v03_policy_and_publication_commands(capsys: pytest.CaptureFixture[str])
 def test_model_specific_rank_flag_is_removed() -> None:
     with pytest.raises(SystemExit):
         build_parser().parse_args(["rank", "--include-provisional"])
+
+
+def test_certificate_cli_emits_the_governed_certificate(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    args = build_parser().parse_args(
+        [
+            "certificate",
+            "--data-dir",
+            str(ROOT / "data" / "pilots" / "v0.3" / "raw"),
+            "--config-dir",
+            str(ROOT / "config"),
+            "--models",
+            "claude-opus-5-max",
+            "kimi-k3-max",
+            "glm-5.2-max",
+        ]
+    )
+    assert run(args) == 0
+    certificate = json.loads(capsys.readouterr().out)
+    assert certificate["status"] == "provisional_comparison"
+    assert certificate["certificate_version"] == "umi-certificate-v0.1"
+    assert certificate["source_artifact_checksums"]
+    assert certificate["result_fingerprint"]

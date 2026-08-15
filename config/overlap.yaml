@@ -31,6 +31,7 @@ edges:
   - {source: aa-intelligence-v4.1, target: aa-omniscience, relation: contains, evidence: "AA Intelligence v4.1 methodology"}
   - {source: epoch-eci, target: deepswe-v1.1, relation: contains, evidence: "Epoch included-benchmarks documentation"}
   - {source: epoch-eci, target: arc-agi-2, relation: contains, evidence: "Epoch included-benchmarks documentation"}
+  - {source: epoch-eci, target: gpqa-diamond, relation: contains, evidence: "Epoch included-benchmarks documentation"}
   - {source: deepswe-v1.1, target: deepswe-v1.1-resources, relation: shared_tasks, evidence: "Datacurve DeepSWE leaderboard payload"}
   - {source: deepswe-v1.1-resources, target: deepswe-v1.1-endpoint-resources, relation: shared_tasks, evidence: "Datacurve DeepSWE leaderboard payload"}
   - {source: arena-agent, target: arena-agent-signals, relation: contains, evidence: "Arena leaderboard dataset card"}

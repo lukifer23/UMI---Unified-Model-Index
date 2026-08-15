@@ -214,6 +214,12 @@ def test_scored_fingerprint_excludes_diagnostics_but_tracks_scoring_context(
     )
     assert scored_data_fingerprint(changed_model_metadata, config) == fingerprint
 
+    evidence_free_model = baseline.models[0].model_copy(update={"id": "evidence-free-model"})
+    assert scored_data_fingerprint(
+        baseline.model_copy(update={"models": (*baseline.models, evidence_free_model)}),
+        config,
+    ) == fingerprint
+
     changed_record = baseline.benchmarks[0].model_copy(
         update={"value": baseline.benchmarks[0].value + 1}
     )

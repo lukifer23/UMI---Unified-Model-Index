@@ -10,16 +10,20 @@ project contract.
 | `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.4 as a wheel from the committed lock |
 | `uv run --no-sync python -m scripts.build_v03_pilot` | passed; rebuilt all raw and processed pilot artifacts offline |
 | schema equality test against `umi.schema_export.rendered_schemas()` | passed; committed machine-readable schemas remain current |
-| `PYTHONPATH=. uv run --no-sync pytest --cov=umi --cov=analysis --cov-report=term-missing --cov-fail-under=90` | 100 passed; 93% combined `umi`/`analysis` coverage |
+| `uv run pytest` | 106 passed |
+| `uv run pytest --cov=umi --cov=analysis --cov=scripts --cov-report=term-missing --cov-fail-under=90` | 106 passed; 92.26% combined coverage |
 | `PYTHONPATH=. uv run --no-sync ruff check .` | passed |
-| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 49 source files |
+| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 50 source files |
 | `umi sources validate --strict` | passed; complete registry, crosswalk, licensing, attribution, diagnostic, pricing, and release-claim audit is valid |
 | `umi crosswalk` and `umi overlap` | passed |
 | `umi bundle validate --data-dir data/pilots/v0.3/raw` | passed; acceptance manifest admits 25 records and excludes 8 diagnostic records with 0 unready scored records |
 | all ten offline `umi ingest --source ...` commands | passed: AA, Epoch ECI, Epoch benchmarks, both Arena cohorts, DeepSWE, and four lab-release sources |
-| all 27 scoring/reporting CLI flows | passed |
+| documented validation, ingestion, scoring, comparison, analysis, and certificate CLI flows | passed with valid JSON output |
 | five-model and three-model common-evidence comparisons | passed; Kimi DeepSWE remains 25.0 on the identical five-model panel, and every raw/normalized contribution carries panel and scale identity |
 | joint comparison sensitivity | passed; 32 exhaustive five-model scenarios and 64 exhaustive three-model scenarios, with possible-rank and robust-dominance envelopes and no probability claims |
+| `umi certificate` for Opus/Kimi/GLM | passed; four common stable panels, 12 selected records, exact artifact checksums, 64 joint scenarios, deterministic result fingerprint `e627223a…809ad` |
+| portable dashboard packaging | passed at 1440 px and 390 px; five charts rendered, source dialog passed, no external-request or browser-error failure |
+| `uv build` plus fresh temporary-environment wheel install outside the checkout | passed on Python 3.14.3; `import umi`, `umi --help`, and the certificate smoke all passed with the same result fingerprint |
 | `umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config` | passed without a source registry; schema and selected scored inputs are valid |
 | explicit Epoch/Arena network acquisition into a fresh temporary snapshot | passed with a checksum manifest; destination reuse remains fail-closed |
 
@@ -27,6 +31,9 @@ The normal `uv run` auto-sync path creates an editable installation. Python 3.14
 underscore-prefixed editable `.pth` emitted in this environment, so the verified workflow installs a
 wheel with `--no-editable` and uses `--no-sync` for subsequent commands. This is documented in the
 README rather than hidden as a local workaround.
+
+The current GitHub Actions result is recorded only after the pushed commit completes; local checks
+are not treated as proof of Linux or Windows CI.
 
 ## Acquisition reconciliation
 
@@ -60,6 +67,8 @@ README rather than hidden as a local workaround.
   49.375% coverage; GLM uses four families across two domains at 35.625%; Fable remains on one
   family at 16.5%.
 - Every publishable rank and every `headline_overall` remains null.
+- The retained Opus/Kimi/GLM comparison certificate is provisional and source-bound; it is not a
+  headline UMI score or public universal rank.
 - No workload category has ready all-model Efficiency evidence or successful-task Economics
   evidence. Nominal token tariffs are not converted into task costs without observed task usage and
   success records.

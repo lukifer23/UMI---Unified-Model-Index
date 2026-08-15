@@ -317,6 +317,27 @@ Sensitivity deltas expose baseline and scenario support, scale, coverage, and ra
 change is comparable only when both evidence profile and score scale remain unchanged. No-op
 equal-family cases are explicitly non-informative.
 
+## Comparison certificate
+
+The UMI Comparison Certificate is a deterministic rendering of one governed common-evidence
+comparison, not a second scoring implementation. It binds the requested configuration IDs to the
+validated acceptance manifest, scored-input fingerprint, common evidence profile, stable
+normalization panels, score scale, raw and normalized contributions, identity assurance, selected
+record IDs, source artifacts and checksums, and joint rank-sensitivity envelope. Its result
+fingerprint is SHA-256 over the canonical JSON contents excluding `result_fingerprint` itself.
+
+A certificate is `provisional_comparison` while any contributing comparison score is provisional.
+If no common ready series exists, it is `insufficient_common_support` and retains the comparison
+engine's missing-support and incompatibility diagnostics; it never manufactures a profile, scale,
+score, or rank. `valid_comparison` is reserved for a future comparison that clears all provisional
+conditions. Bundle validation errors remain command errors rather than signed-looking certificates.
+
+Fingerprint roles are deliberately distinct: `complete_audit_fingerprint` covers all retained
+scored and diagnostic context; `scored_input_fingerprint` covers the exact readiness-filtered
+scoring context and governed scoring configuration; and certificate `result_fingerprint` covers
+the exact comparison group and emitted result. The acceptance-manifest fingerprint is exposed as
+`bundle_fingerprint`; it is not a synonym for any of these three content scopes.
+
 ## Capability
 
 Default domain weights are:
@@ -552,6 +573,7 @@ hashes a separate, explicit scoring context: the exact readiness-filtered benchm
 task-economics records; scored model configurations; the governed scoring-configuration fingerprint;
 scored-artifact audit manifest; adapter versions; and engine/formula/normalization versions. Pricing,
 external references, complete-audit metadata, and diagnostic-only records are excluded in v0.3.
+Model configurations with no readiness-filtered scoring record are excluded as evidence-free.
 Records are sorted before SHA-256 hashing and no current timestamp is used.
 
 `cohort_id` is the first 16 hexadecimal characters of `scored_data_fingerprint`. `data_as_of` is the

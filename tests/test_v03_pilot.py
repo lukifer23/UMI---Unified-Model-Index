@@ -13,6 +13,7 @@ import pytest
 import yaml
 from pydantic import ValidationError
 
+from analysis.claims import calibrate_release_claims
 from analysis.gaps import pilot_gap_report
 from analysis.pilot_sensitivity import analyze_pilot_sensitivity, family_budget_snapshot
 from scripts.build_v03_pilot import main as build_v03_pilot
@@ -28,6 +29,7 @@ from umi.adapters import (
     adapt_lab_release_facts,
 )
 from umi.bundle import build_acceptance_manifest, load_scoring_bundle, validate_scoring_bundle
+from umi.certificate import build_comparison_certificate
 from umi.config import ProjectConfig, load_project_config
 from umi.derived_metrics import derive_efficiency_metric
 from umi.fingerprints import dataset_fingerprint
@@ -242,6 +244,76 @@ def test_score_bundle_rejects_a_forged_acceptance_manifest() -> None:
     )
     with pytest.raises(DataValidationError, match="acceptance manifest"):
         score_bundle(bundle.__class__(**{**bundle.__dict__, "acceptance_manifest": forged}))
+
+
+def test_comparison_certificate_is_deterministic_and_source_bound() -> None:
+    registry_path = ROOT / "data" / "sources" / "registry.yaml"
+    bundle = load_scoring_bundle(
+        PILOT, ROOT / "config", registry_path, SOURCES / "crosswalk.yaml"
+    )
+    models = ("claude-opus-5-max", "kimi-k3-max", "glm-5.2-max")
+    first = build_comparison_certificate(bundle, models)
+    second = build_comparison_certificate(bundle, tuple(reversed(models)))
+
+    assert first == second
+    assert first.status == "provisional_comparison"
+    assert first.certificate_version == "umi-certificate-v0.1"
+    assert len(first.result_fingerprint) == 64
+    assert first.evidence_profile_id
+    assert first.score_scale_id
+    assert len(first.normalization_panel_ids) >= 2
+    assert len(first.normalization_panel_ids) == len(first.applied_normalization)
+    assert set(first.raw_contributions) == set(models)
+    assert set(first.rank_robustness) == set(models)
+    assert first.source_record_ids
+    assert first.source_artifact_ids
+    assert set(first.source_artifact_checksums) == set(first.source_artifact_ids)
+    assert all(len(value) == 64 for value in first.source_artifact_checksums.values())
+    assert any("same evidence-profile ID" == item for item in first.comparability_basis)
+
+    forged = bundle.acceptance_manifest.model_copy(update={"fingerprint": "0" * 64})
+    with pytest.raises(DataValidationError, match="acceptance manifest"):
+        build_comparison_certificate(
+            bundle.__class__(**{**bundle.__dict__, "acceptance_manifest": forged}), models
+        )
+
+    evidence_free = bundle.dataset.models[0].model_copy(
+        update={"id": "evidence-free-model"}
+    )
+    abstaining_dataset = bundle.dataset.model_copy(
+        update={"models": (*bundle.dataset.models, evidence_free)}
+    )
+    abstaining_bundle = bundle.__class__(
+        **{
+            **bundle.__dict__,
+            "dataset": abstaining_dataset,
+            "acceptance_manifest": build_acceptance_manifest(
+                abstaining_dataset, bundle.source_registry
+            ),
+        }
+    )
+    abstention = build_comparison_certificate(
+        abstaining_bundle, (bundle.dataset.models[0].id, evidence_free.id)
+    )
+    assert abstention.status == "insufficient_common_support"
+    assert abstention.evidence_profile_id is None
+    assert abstention.score_scale_id is None
+    assert not abstention.component_scores
+    assert abstention.abstention_reasons
+    assert evidence_free.id in abstention.missing_evidence
+
+
+def test_release_claim_non_comparisons_name_the_exact_failed_gate(pilot_dataset) -> None:
+    reasons = {
+        item["claim_record_id"]: item["reason"]
+        for item in calibrate_release_claims(pilot_dataset)
+    }
+    assert reasons == {
+        "openai-release-claim-deepswe-v1.1-gpt-5.6-sol-max-2026-07-09": "cohort_mismatch",
+        "openai-release-claim-gdpval-aa-v2-gpt-5.6-sol-max-2026-07-09": "benchmark_mismatch",
+        "openai-release-claim-gpqa-diamond-gpt-5.6-sol-max-2026-07-09": "cohort_mismatch",
+        "openai-release-claim-terminalbench-2.1-gpt-5.6-sol-max-2026-07-09": "benchmark_mismatch",
+    }
 
 
 def test_crosswalk_exactness_and_rejected_aliases(pilot_dataset, crosswalk) -> None:

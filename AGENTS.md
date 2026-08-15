@@ -45,3 +45,6 @@
     redistribution rights mean facts-and-citations only.
 24. Keep structural dataset validation, accepted scored-bundle validation, and strict complete-audit
     validation separate. Diagnostic evidence must not block a score it does not feed.
+25. Build comparison certificates only from a revalidated `ScoringBundle` and the common-evidence
+    engine. Fingerprint canonical contents without timestamps; abstain rather than omit failed
+    comparability bindings.

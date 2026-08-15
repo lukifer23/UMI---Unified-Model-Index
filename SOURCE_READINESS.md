@@ -61,6 +61,10 @@ listed in the deterministic acceptance manifest for admitted scoring records. `u
 --strict` checks the complete registry and audit context. A failure in unused diagnostic evidence
 blocks strict archival validity, not governed scoring.
 
+`umi certificate` revalidates that governed bundle and its typed acceptance manifest before
+deriving a comparison certificate. A forged or stale manifest fails closed; unrelated diagnostic
+artifacts remain outside the certificate's selected-record and checksum bindings.
+
 ## Adapter acceptance checklist
 
 Before an adapter is allowed to emit `ready`:

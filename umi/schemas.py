@@ -63,6 +63,13 @@ class ComparisonStatus(StrEnum):
     INSUFFICIENT_COMMON_SUPPORT = "insufficient_common_support"
 
 
+class CertificateStatus(StrEnum):
+    VALID_COMPARISON = "valid_comparison"
+    PROVISIONAL_COMPARISON = "provisional_comparison"
+    INSUFFICIENT_COMMON_SUPPORT = "insufficient_common_support"
+    INVALID_BUNDLE = "invalid_bundle"
+
+
 class Confidence(StrEnum):
     HIGH = "high"
     MEDIUM = "medium"
@@ -670,6 +677,40 @@ class CapabilityComparisonResult(StrictModel):
     primary_result_semantics: str
     sensitivity_intervals: tuple[SensitivityInterval, ...] = ()
     publication_label: str
+
+
+class ComparisonCertificate(StrictModel):
+    certificate_version: str
+    status: CertificateStatus
+    publication_label: str
+    comparison_group_id: str = Field(pattern=r"^[a-f0-9]{64}$")
+    bundle_fingerprint: str = Field(pattern=r"^[a-f0-9]{64}$")
+    scored_input_fingerprint: str = Field(pattern=r"^[a-f0-9]{64}$")
+    evidence_profile_id: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
+    normalization_panel_ids: tuple[str, ...] = ()
+    score_scale_id: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
+    comparison_model_ids: tuple[Identifier, ...]
+    common_benchmark_series: tuple[dict[str, str], ...] = ()
+    raw_contributions: dict[Identifier, tuple[RawBenchmarkResult, ...]] = Field(
+        default_factory=dict
+    )
+    normalized_contributions: dict[Identifier, tuple[BenchmarkContribution, ...]] = Field(
+        default_factory=dict
+    )
+    component_scores: dict[Identifier, float] = Field(default_factory=dict)
+    central_estimate_ranks: dict[Identifier, float] = Field(default_factory=dict)
+    rank_robustness: dict[Identifier, RankRobustness] = Field(default_factory=dict)
+    coverage: dict[Identifier, float] = Field(default_factory=dict)
+    identity_assurance: dict[Identifier, IdentityAssurance]
+    source_record_ids: tuple[Identifier, ...] = ()
+    source_artifact_ids: tuple[Identifier, ...] = ()
+    source_artifact_checksums: dict[Identifier, str] = Field(default_factory=dict)
+    applied_normalization: tuple[NormalizationPanel, ...] = ()
+    comparability_basis: tuple[str, ...] = ()
+    warnings: tuple[str, ...] = ()
+    abstention_reasons: tuple[str, ...] = ()
+    missing_evidence: dict[Identifier, tuple[str, ...]] = Field(default_factory=dict)
+    result_fingerprint: str = Field(pattern=r"^[a-f0-9]{64}$")
 
 
 class EvidenceBenchmarkSeries(StrictModel):

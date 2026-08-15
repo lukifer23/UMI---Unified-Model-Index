@@ -52,6 +52,16 @@ When a requested group has no ready compatible common series, `umi compare` retu
 `insufficient_common_support` abstention with no scores or ranks. Missing support and incompatible
 cohorts remain visible; malformed inputs and unknown model IDs still fail.
 
+## Comparison validity and certificate
+
+The retained Opus/Kimi/GLM certificate is `provisional_comparison`, not a headline ranking. All
+three configurations share the same four canonical benchmark series, evidence-profile ID, four
+bundle-wide stable normalization panels, and weighted-composite score-scale ID. The certificate
+also binds twelve selected benchmark records to their frozen source-artifact checksums and retains
+the 64-scenario rank envelopes. Those bindings—not similar labels—are why its values are directly
+comparable. Provisional small-panel normalization and incomplete Capability breadth remain explicit
+warnings and prevent the certificate from becoming a universal UMI score.
+
 ## Diagnostic evidence
 
 - Artificial Analysis Intelligence values are composite references. The Fable value is rejected
@@ -94,6 +104,9 @@ uses DeepSWE only because Fable's other benchmark identities are not cleared; th
 [common-evidence comparison](data/pilots/v0.3/processed/common-evidence-three-model-comparison.json)
 uses all four scored series under the current strict identity policy. Both are provisional and separately
 labeled, lead with raw values, and carry stable-panel and score-scale identity. The
+[three-model comparison certificate](data/pilots/v0.3/processed/comparison-certificate-three-model.json)
+adds the governed bundle, source-record, artifact-checksum, identity, and deterministic result
+fingerprint proof. The
 [source-bound uncertainty report](data/pilots/v0.3/processed/source-bound-uncertainty.json)
 re-scores one published bound at a time; it is not probabilistic propagation. The
 [source readiness report](data/pilots/v0.3/processed/source-readiness.json),

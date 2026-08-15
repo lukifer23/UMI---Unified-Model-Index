@@ -35,6 +35,7 @@ from umi.bundle import (
     load_scoring_bundle,
     validate_scoring_bundle,
 )
+from umi.certificate import build_comparison_certificate
 from umi.config import load_project_config
 from umi.loading import load_dataset, load_model_crosswalk, load_source_registry
 from umi.scoring import score_bundle, score_dataset
@@ -128,6 +129,7 @@ def build_parser() -> argparse.ArgumentParser:
         "pareto",
         "pilot-sensitivity",
         "compare",
+        "certificate",
         "uncertainty",
         "claims",
         "gaps",
@@ -136,6 +138,7 @@ def build_parser() -> argparse.ArgumentParser:
         _add_common(child)
     subparsers.choices["validate"].set_defaults(source_registry=None, crosswalk=None)
     subparsers.choices["compare"].add_argument("--models", nargs="+", required=True)
+    subparsers.choices["certificate"].add_argument("--models", nargs="+", required=True)
     sources = subparsers.add_parser("sources")
     source_commands = sources.add_subparsers(dest="sources_command", required=True)
     source_validate = source_commands.add_parser("validate")
@@ -358,7 +361,8 @@ def run(args: argparse.Namespace) -> int:
             args.output,
         )
         return 0 if report.schema_valid else 1
-    if any(not model.synthetic for model in dataset.models):
+    real_dataset = any(not model.synthetic for model in dataset.models)
+    if real_dataset:
         bundle = load_scoring_bundle(
             args.data_dir,
             config_dir,
@@ -373,6 +377,10 @@ def run(args: argparse.Namespace) -> int:
     payload: Any
     if args.command == "references":
         payload = reference_observations(dataset)
+    elif args.command == "certificate":
+        if not real_dataset:
+            raise ValueError("comparison certificates require a governed real-data bundle")
+        payload = build_comparison_certificate(bundle, tuple(args.models))
     elif args.command == "compare":
         payload = common_capability_comparison(dataset, config, tuple(args.models))
     elif args.command == "uncertainty":

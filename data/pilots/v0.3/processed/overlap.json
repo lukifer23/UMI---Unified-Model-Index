@@ -1,5 +1,5 @@
 {
-  "config_fingerprint": "97ee08d361e603252286b0137d80e778130e19b3bbf5af36ec3dfd64358278c7",
+  "config_fingerprint": "851e2697077086204f83c8c588c215485baa4dc9f0bd7e5571c538acb1b55478",
   "edges": [
     {
       "evidence": "AA Intelligence v4.1 methodology",
@@ -66,6 +66,12 @@
       "relation": "contains",
       "source": "epoch-eci",
       "target": "arc-agi-2"
+    },
+    {
+      "evidence": "Epoch included-benchmarks documentation",
+      "relation": "contains",
+      "source": "epoch-eci",
+      "target": "gpqa-diamond"
     },
     {
       "evidence": "Datacurve DeepSWE leaderboard payload",

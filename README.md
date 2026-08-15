@@ -60,6 +60,7 @@ PYTHONPATH=. uv run --no-sync umi ingest --source lab-zai
 PYTHONPATH=. uv run --no-sync umi estimates --data-dir data/pilots/v0.3/raw
 PYTHONPATH=. uv run --no-sync umi compare --data-dir data/pilots/v0.3/raw --models claude-fable-5-max claude-opus-5-max glm-5.2-max gpt-5.6-sol-max kimi-k3-max
 PYTHONPATH=. uv run --no-sync umi compare --data-dir data/pilots/v0.3/raw --models claude-opus-5-max kimi-k3-max glm-5.2-max
+PYTHONPATH=. uv run --no-sync umi certificate --data-dir data/pilots/v0.3/raw --models claude-opus-5-max kimi-k3-max glm-5.2-max
 PYTHONPATH=. uv run --no-sync umi uncertainty --data-dir data/pilots/v0.3/raw
 PYTHONPATH=. uv run --no-sync umi pilot-sensitivity --data-dir data/pilots/v0.3/raw
 PYTHONPATH=. uv run --no-sync umi correlations --data-dir data/pilots/v0.3/raw
@@ -82,6 +83,12 @@ from the display never refits another model's percentile. Every normalized contr
 its applied fallback trace, absolute configured weight, panel ID, and score-scale ID. Joint
 lower/upper sensitivity reports possible-rank and robust-dominance envelopes, never probabilities.
 Requests with no compatible common evidence return a structured abstention and exit successfully.
+
+`umi certificate` converts that governed comparison into one deterministic, source-bound JSON
+proof. It answers why the values are comparable by binding the requested configurations to the
+acceptance manifest, scored-input fingerprint, common evidence profile, stable panels, score scale,
+raw and normalized contributions, rank envelope, exact selected records, artifacts, and checksums.
+It emits the same structured abstention when the comparison has no common ready support.
 
 The synthetic engine demonstration remains available under `tests/fixtures` and is always labeled
 as synthetic.

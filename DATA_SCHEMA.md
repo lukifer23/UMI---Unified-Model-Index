@@ -259,6 +259,15 @@ Scenario counts are endpoint combinations, not probabilities.
 
 See `schemas/capability-comparison.schema.json` for the complete comparison contract.
 
+## Comparison certificate
+
+`schemas/comparison-certificate.schema.json` is the authoritative contract. A certificate is a
+deterministic projection of a validated scoring bundle and `CapabilityComparisonResult`; it does
+not recalculate scores independently. `result_fingerprint` is SHA-256 over canonical certificate
+JSON excluding that field. A supported result carries `evidence_profile_id`, panel and scale IDs,
+raw and normalized contributions, rank robustness, identity assurance, selected record/artifact
+IDs, and artifact checksums. An abstention has null profile/scale IDs and empty score/rank maps.
+
 Components with no supported evidence serialize `score: null`, zero coverage,
 `comparability_status: insufficient_common_support`, and `evidence_profile: null`; UMI does not emit
 meaningless hashes of empty support. Correlation results suppress coefficients whenever

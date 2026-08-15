@@ -28,6 +28,7 @@ from umi.adapters import (
     assemble_pilot_dataset,
 )
 from umi.bundle import ScoringBundle, build_acceptance_manifest, validate_scoring_bundle
+from umi.certificate import build_comparison_certificate
 from umi.config import load_project_config
 from umi.loading import load_model_crosswalk, load_source_registry
 from umi.schemas import ModelConfiguration, ScoringDisposition
@@ -291,6 +292,11 @@ def main() -> None:
         (PROCESSED_ROOT / name).write_text(
             json.dumps(comparison, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
+    certificate = build_comparison_certificate(bundle, three_models)
+    (PROCESSED_ROOT / "comparison-certificate-three-model.json").write_text(
+        json.dumps(certificate.model_dump(mode="json"), indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
 
 
 if __name__ == "__main__":
