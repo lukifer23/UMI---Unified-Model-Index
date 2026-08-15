@@ -32,8 +32,13 @@ underscore-prefixed editable `.pth` emitted in this environment, so the verified
 wheel with `--no-editable` and uses `--no-sync` for subsequent commands. This is documented in the
 README rather than hidden as a local workaround.
 
-The current GitHub Actions result is recorded only after the pushed commit completes; local checks
-are not treated as proof of Linux or Windows CI.
+GitHub Actions [run 31860580399](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31860580399)
+for commit `afeaa99` completed successfully. Linux 3.12 passed the full quality, schema, governed
+validation, deterministic rebuild, CLI, and isolated-wheel gates. Linux 3.11 and 3.14 each passed
+the test suite plus isolated-wheel import/help/comparison smokes. Windows 3.12 passed tests, generic
+validation, governed bundle validation, strict source/checksum audit, deterministic rebuild diff,
+and the three-model comparison smoke. These hosted results—not the local macOS run—establish the
+recorded Linux and Windows compatibility claim.
 
 ## Acquisition reconciliation
 
