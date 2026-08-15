@@ -1,4 +1,4 @@
-# UMI v0.3.11 verification record
+# UMI v0.3.12 verification record
 
 Verified on 2026-08-15 from `main` on macOS with Python 3.14.3 against the Python 3.11+
 project contract.
@@ -7,13 +7,13 @@ project contract.
 
 | Check | Outcome |
 |---|---|
-| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.11 as a wheel from the committed lock |
+| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.12 as a wheel from the committed lock |
 | `uv run --no-sync python -m scripts.build_v03_pilot` | passed; rebuilt all raw and processed pilot artifacts offline |
 | schema equality test against `umi.schema_export.rendered_schemas()` | passed; committed machine-readable schemas remain current |
-| `uv run pytest` | 126 passed |
-| `uv run pytest --cov=umi --cov=analysis --cov=scripts --cov-report=term-missing --cov-fail-under=90` | 126 passed; 92.36% combined coverage |
+| `uv run pytest` | 133 passed |
+| `uv run pytest --cov=umi --cov=analysis --cov=scripts --cov-report=term-missing --cov-fail-under=90` | 133 passed; 91.91% combined coverage |
 | `PYTHONPATH=. uv run --no-sync ruff check .` | passed |
-| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 50 source files |
+| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 51 source files |
 | `umi sources validate --strict` | passed; complete registry, crosswalk, licensing, attribution, diagnostic, pricing, and release-claim audit is valid |
 | `umi crosswalk` and `umi overlap` | passed |
 | `umi bundle validate --data-dir data/pilots/v0.3/raw` | passed; acceptance manifest admits 53 records and excludes 8 diagnostic records with 0 unready scored records |
@@ -21,27 +21,28 @@ project contract.
 | documented validation, ingestion, scoring, comparison, analysis, and certificate CLI flows | passed with valid JSON output |
 | five-model and three-model common-evidence comparisons | passed; Kimi DeepSWE remains 25.0 on the identical five-model panel, and every raw/normalized contribution carries panel and scale identity |
 | joint comparison sensitivity | passed; 32 exhaustive five-model scenarios and 512 exhaustive three-model scenarios, with possible-rank and robust-dominance envelopes and no probability claims; the retained Opus/Kimi/GLM ranks remain robust at 1/2/3 after adding Terminal-Bench |
-| `umi certificate` for Opus/Kimi/GLM | passed; eleven common stable panels, 33 selected records, nine exact artifact checksums, 512 joint scenarios, deterministic result fingerprint `237bb573…a8c5e9` |
+| `umi certificate` for Opus/Kimi/GLM | passed; eleven common stable panels, 33 selected records, nine exact artifact checksums, 512 joint scenarios, deterministic result fingerprint `5e719699…92eea12` and scored-input fingerprint `bffc0aa8…eea8c1` |
 | portable dashboard packaging | passed at 1440 px and 390 px; 17 delivered blocks, eleven charts, and four metrics rendered; source dialog passed; no overflow, external-request, or browser-error failure |
-| isolated Python 3.11 and Python 3.14 full pilot rebuilds | passed byte-for-byte; governed floating-point aggregation now uses `math.fsum`, and canonical JSON plus embedded HTML payloads are identical across interpreter versions |
-| `uv build` plus fresh temporary-environment wheel installs outside the checkout | passed on Python 3.11.15 and 3.14.3; the wheels were byte-identical at SHA-256 `f8600fe5f5d5fcde6110d3285fecf31d85e1fc5dc745b722c5433ee16e4aaa1d`, and `import umi`, `umi --help`, and certificate output passed and were byte-identical |
+| consecutive complete pilot rebuilds plus schema regeneration | passed byte-for-byte with no artifact or schema drift |
+| `uv build` plus fresh temporary-environment wheel installs outside the checkout | passed on Python 3.11.15 and 3.14.3 with wheel SHA-256 `f01129c636687651eddf737d9c8fa19b0eee4ec3e38e17b189c66d8aa0f04ec8`; `import umi`, `umi --help`, and certificate output passed, and both interpreters emitted byte-identical certificates matching the governed artifact |
+| `scripts/verify_deepswe_trial_ledger.py --accept-network` | passed against official ledger SHA-256 `13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971`; reconciled 27,558 total rows, 2,257 selected rows, 2,231 scored attempts, 26 excluded error rows, all five success/resource means, and Fable cost coverage of 432/436 attempts |
 | `umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config` | passed without a source registry; schema and selected scored inputs are valid |
-| previously verified explicit Epoch/Arena network acquisition evidence | retained unchanged with its checksum manifest; acquisition was not rerun for the reviewed-fact-only AA Terminal-Bench milestone |
+| previously verified explicit Epoch/Arena network acquisition evidence | retained unchanged with its checksum manifest; the only network operation for this milestone was the explicit, checksum-pinned DeepSWE verification above |
 
 The normal `uv run` auto-sync path creates an editable installation. Python 3.14 ignores the
 underscore-prefixed editable `.pth` emitted in this environment, so the verified workflow installs a
 wheel with `--no-editable` and uses `--no-sync` for subsequent commands. This is documented in the
 README rather than hidden as a local workaround.
 
-GitHub Actions [run 31885653051](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31885653051)
-for UMI v0.3.11 commit `317c6b6` completed successfully. Linux 3.12 passed the full quality, schema,
+GitHub Actions [run 31891087375](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31891087375)
+for UMI v0.3.12 commit `b358d30` completed successfully. Linux passed the full quality, schema,
 governed validation, deterministic rebuild, CLI, and isolated-wheel gates. Linux 3.11 and 3.14 each
 passed the test suite plus isolated-wheel import/help/comparison smokes. Windows 3.12 passed tests,
 generic validation, governed bundle validation, strict source/checksum audit, deterministic rebuild
 diff, and the three-model comparison smoke. These hosted results—not the local macOS run—establish
 the recorded Linux and Windows compatibility claim. The Python 3.11/3.14 jobs preserve the governed
-`math.fsum` cross-version regression gate. CI now selects the wheel matching the package version
-instead of the lexically first wheel, preventing stale local artifacts from testing an older release.
+`math.fsum` cross-version regression gate. CI selects the wheel matching the package version instead
+of the lexically first wheel, preventing stale local artifacts from testing an older release.
 GitHub emitted only Node 20
 deprecation
 annotations for `actions/checkout@v4` and `astral-sh/setup-uv@v6`; no UMI job failed.
@@ -99,6 +100,12 @@ annotations for `actions/checkout@v4` and `astral-sh/setup-uv@v6`; no UMI job fa
   reasoning, and cacheable-input token counts remain diagnostic because they are not a task-level
   attempt ledger, provider token accounting differs, and cacheable input is neither observed cache
   hits nor billed cache usage.
+- DeepSWE's official 27,558-row trial ledger is checksum-pinned at SHA-256
+  `13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971`. The explicit verifier
+  reconciles all 2,231 scored attempts for the five Max configurations, their provider labels,
+  pass counts, input/output/cache tokens, wall duration, agent steps, and means. Fable has cost on
+  only 432 of 436 scored attempts; UMI now preserves that per-metric denominator, and the endpoint
+  resource record remains diagnostic rather than borrowing the full-cohort success denominator.
 
 ## Publication assertions
 
@@ -139,6 +146,7 @@ data/sources/v0.3/                frozen artifacts, reviewed facts, exact crossw
 schemas/                          generated JSON Schemas
 scripts/build_v03_pilot.py        deterministic offline assembly
 scripts/freeze_v03_open_sources.py explicit, immutable network acquisition
+scripts/verify_deepswe_trial_ledger.py explicit checksum-pinned facts verification
 tests/test_v03_pilot.py           adversarial source/scoring/publication tests
 umi/adapters/                     pure offline source adapters
 umi/                              validation, readiness, scoring, fingerprinting, CLI
