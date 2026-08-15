@@ -279,18 +279,6 @@
           "default": null,
           "title": "Provider Snapshot Id"
         },
-        "raw_artifact_available": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Raw Artifact Available"
-        },
         "record_id": {
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
           "title": "Record Id",
@@ -923,18 +911,6 @@
           "default": null,
           "title": "Provider Snapshot Id"
         },
-        "raw_artifact_available": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Raw Artifact Available"
-        },
         "record_id": {
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
           "title": "Record Id",
@@ -1307,18 +1283,6 @@
           ],
           "default": null,
           "title": "Provider Snapshot Id"
-        },
-        "raw_artifact_available": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Raw Artifact Available"
         },
         "record_id": {
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
@@ -1844,18 +1808,6 @@
           "default": null,
           "title": "Provider Snapshot Id"
         },
-        "raw_artifact_available": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Raw Artifact Available"
-        },
         "reasoning_token_pricing": {
           "anyOf": [
             {
@@ -2240,18 +2192,6 @@
           ],
           "default": null,
           "title": "Provider Snapshot Id"
-        },
-        "raw_artifact_available": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Raw Artifact Available"
         },
         "record_id": {
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
@@ -2689,18 +2629,6 @@
           ],
           "default": null,
           "title": "Provider Snapshot Id"
-        },
-        "raw_artifact_available": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Raw Artifact Available"
         },
         "record_id": {
           "pattern": "^[a-z0-9][a-z0-9._-]*$",

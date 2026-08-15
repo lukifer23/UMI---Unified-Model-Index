@@ -25,6 +25,17 @@ class ComponentComputation:
     normalization_panels: dict[str, NormalizationPanel] = field(default_factory=dict)
     contributions: dict[str, tuple[BenchmarkContribution, ...]] = field(default_factory=dict)
     score_scales: dict[str, ScoreScale] = field(default_factory=dict)
+    excluded_candidate_evidence: dict[str, tuple[Provenance, ...]] = field(
+        default_factory=dict
+    )
+    diagnostic_evidence: dict[str, tuple[Provenance, ...]] = field(default_factory=dict)
+    conflicting_selected_evidence: dict[str, tuple[Provenance, ...]] = field(
+        default_factory=dict
+    )
+
+    @property
+    def selected_scoring_evidence(self) -> dict[str, tuple[Provenance, ...]]:
+        return self.evidence
 
 
 def weighted_available(

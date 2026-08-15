@@ -86,7 +86,6 @@ def adapt_arena_json(
                         "Arena Agent overall inverse-propensity-scored preference aggregate"
                     ),
                     evaluator="Arena",
-                    raw_artifact_available=True,
                     capture_type=ArtifactCaptureType.ARCHIVED_SOURCE_SNAPSHOT,
                     source_artifact_id=artifact_id,
                     source_registry_snapshot_id=artifact_id,
@@ -134,7 +133,6 @@ def adapt_arena_json(
                     harness_version=f"arena-bradley-terry-{published}",
                     metric_definition="Arena text style-controlled Bradley-Terry rating",
                     evaluator="Arena",
-                    raw_artifact_available=True,
                     capture_type=ArtifactCaptureType.ARCHIVED_SOURCE_SNAPSHOT,
                     source_artifact_id=artifact_id,
                     source_registry_snapshot_id=artifact_id,

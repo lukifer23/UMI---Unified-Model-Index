@@ -173,7 +173,6 @@ def adapt_epoch_arc_agi_2_zip(
                 harness_owner="ARC Prize Foundation",
                 run_executor="ARC Prize Foundation",
                 tools_enabled=False,
-                raw_artifact_available=True,
                 capture_type=ArtifactCaptureType.RAW_UPSTREAM_PAYLOAD,
                 reproducible=False,
                 configuration_verification=ConfigurationVerification(
@@ -268,7 +267,6 @@ def adapt_epoch_gpqa_zip(
                 evaluator="Epoch AI",
                 harness_owner="Epoch AI",
                 run_executor="Epoch AI",
-                raw_artifact_available=True,
                 capture_type=ArtifactCaptureType.RAW_UPSTREAM_PAYLOAD,
                 reproducible=False,
                 configuration_verification=ConfigurationVerification(
@@ -373,7 +371,6 @@ def adapt_epoch_external_benchmarks_zip(
                             else "CritPt benchmark authors"
                         ),
                         run_executor="Artificial Analysis",
-                        raw_artifact_available=True,
                         capture_type=ArtifactCaptureType.RAW_UPSTREAM_PAYLOAD,
                         reproducible=False,
                         configuration_verification=ConfigurationVerification(

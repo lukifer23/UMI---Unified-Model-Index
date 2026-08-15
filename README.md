@@ -42,30 +42,30 @@ AA, DeepSWE, and lab releases remain reviewed-fact inputs.
 
 ```bash
 uv run --no-sync python -m scripts.build_v03_pilot
-uv run --no-sync umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config
-uv run --no-sync umi bundle validate --data-dir data/pilots/v0.3/raw
-uv run --no-sync umi sources validate --strict --data-dir data/pilots/v0.3/raw
-uv run --no-sync umi crosswalk
-uv run --no-sync umi overlap
-uv run --no-sync umi ingest --source aa
-uv run --no-sync umi ingest --source epoch
-uv run --no-sync umi ingest --source epoch-benchmarks
-uv run --no-sync umi ingest --source arena-agent
-uv run --no-sync umi ingest --source arena-text
-uv run --no-sync umi ingest --source deepswe
-uv run --no-sync umi ingest --source lab-anthropic
-uv run --no-sync umi ingest --source lab-openai
-uv run --no-sync umi ingest --source lab-kimi
-uv run --no-sync umi ingest --source lab-zai
-uv run --no-sync umi estimates --data-dir data/pilots/v0.3/raw
-uv run --no-sync umi compare --data-dir data/pilots/v0.3/raw --models claude-fable-5-max claude-opus-5-max glm-5.2-max gpt-5.6-sol-max kimi-k3-max
-uv run --no-sync umi compare --data-dir data/pilots/v0.3/raw --models claude-opus-5-max kimi-k3-max glm-5.2-max
-uv run --no-sync umi uncertainty --data-dir data/pilots/v0.3/raw
-uv run --no-sync umi pilot-sensitivity --data-dir data/pilots/v0.3/raw
-uv run --no-sync umi correlations --data-dir data/pilots/v0.3/raw
-uv run --no-sync umi pareto --data-dir data/pilots/v0.3/raw
-uv run --no-sync umi claims --data-dir data/pilots/v0.3/raw
-uv run --no-sync umi gaps --data-dir data/pilots/v0.3/raw
+PYTHONPATH=. uv run --no-sync umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config
+PYTHONPATH=. uv run --no-sync umi bundle validate --data-dir data/pilots/v0.3/raw
+PYTHONPATH=. uv run --no-sync umi sources validate --strict --data-dir data/pilots/v0.3/raw
+PYTHONPATH=. uv run --no-sync umi crosswalk
+PYTHONPATH=. uv run --no-sync umi overlap
+PYTHONPATH=. uv run --no-sync umi ingest --source aa
+PYTHONPATH=. uv run --no-sync umi ingest --source epoch
+PYTHONPATH=. uv run --no-sync umi ingest --source epoch-benchmarks
+PYTHONPATH=. uv run --no-sync umi ingest --source arena-agent
+PYTHONPATH=. uv run --no-sync umi ingest --source arena-text
+PYTHONPATH=. uv run --no-sync umi ingest --source deepswe
+PYTHONPATH=. uv run --no-sync umi ingest --source lab-anthropic
+PYTHONPATH=. uv run --no-sync umi ingest --source lab-openai
+PYTHONPATH=. uv run --no-sync umi ingest --source lab-kimi
+PYTHONPATH=. uv run --no-sync umi ingest --source lab-zai
+PYTHONPATH=. uv run --no-sync umi estimates --data-dir data/pilots/v0.3/raw
+PYTHONPATH=. uv run --no-sync umi compare --data-dir data/pilots/v0.3/raw --models claude-fable-5-max claude-opus-5-max glm-5.2-max gpt-5.6-sol-max kimi-k3-max
+PYTHONPATH=. uv run --no-sync umi compare --data-dir data/pilots/v0.3/raw --models claude-opus-5-max kimi-k3-max glm-5.2-max
+PYTHONPATH=. uv run --no-sync umi uncertainty --data-dir data/pilots/v0.3/raw
+PYTHONPATH=. uv run --no-sync umi pilot-sensitivity --data-dir data/pilots/v0.3/raw
+PYTHONPATH=. uv run --no-sync umi correlations --data-dir data/pilots/v0.3/raw
+PYTHONPATH=. uv run --no-sync umi pareto --data-dir data/pilots/v0.3/raw
+PYTHONPATH=. uv run --no-sync umi claims --data-dir data/pilots/v0.3/raw
+PYTHONPATH=. uv run --no-sync umi gaps --data-dir data/pilots/v0.3/raw
 ```
 
 The build also regenerates `data/pilots/v0.3/processed/pilot-dashboard.json`, the canonical

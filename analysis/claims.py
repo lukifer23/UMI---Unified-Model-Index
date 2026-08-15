@@ -21,7 +21,13 @@ def calibrate_release_claims(dataset: Dataset) -> list[dict[str, object]]:
             and is_scoring_ready(record, models[record.model_id])
         ]
         if not matches:
-            output.append({"claim_record_id": claim.record_id, "status": "not_comparable"})
+            output.append(
+                {
+                    "claim_record_id": claim.record_id,
+                    "status": "not_comparable",
+                    "reason": "no_exact_ready_independent_or_community_match",
+                }
+            )
             continue
         record = min(matches, key=lambda item: item.record_id)
         output.append(

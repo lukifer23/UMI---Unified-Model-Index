@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 from analysis.pareto import ParetoPoint, pareto_frontier
 from umi._component import consolidate_numeric
@@ -28,8 +28,27 @@ class ScopedParetoResult:
 
 def pareto_dimensions(
     dataset: Dataset, results: list[ScoringResult]
-) -> list[ScopedParetoResult]:
+) -> dict[str, object]:
     dataset, _ = scoring_dataset(dataset)
+    supported = [item for item in results if item.capability.score is not None]
+    profile_ids = {item.capability.evidence_profile_id for item in supported}
+    scale_ids = {item.capability.score_scale_id for item in supported}
+    if (
+        not supported
+        or len(profile_ids) != 1
+        or len(scale_ids) != 1
+        or None in profile_ids
+        or None in scale_ids
+    ):
+        return {
+            "status": "insufficient_common_support",
+            "reason": "participating models do not share one Capability evidence profile and scale",
+            "evidence_profile_id": None,
+            "score_scale_id": None,
+            "results": [],
+        }
+    evidence_profile_id = next(iter(profile_ids))
+    score_scale_id = next(iter(scale_ids))
     capability = {item.model_id: item.capability.score for item in results}
     efficiency: dict[tuple[str, str, str], list[EfficiencyMeasurement]] = defaultdict(list)
     for record in dataset.efficiency:
@@ -81,4 +100,17 @@ def pareto_dimensions(
                     dominator_ids=result.dominator_ids,
                 )
             )
-    return output
+    return {
+        "status": "ok",
+        "reason": None,
+        "evidence_profile_id": evidence_profile_id,
+        "score_scale_id": score_scale_id,
+        "results": [
+            {
+                **asdict(item),
+                "evidence_profile_id": evidence_profile_id,
+                "score_scale_id": score_scale_id,
+            }
+            for item in output
+        ],
+    }

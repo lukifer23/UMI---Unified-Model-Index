@@ -144,19 +144,13 @@ def test_v03_policy_and_publication_commands(capsys: pytest.CaptureFixture[str])
         assert json.loads(capsys.readouterr().out)["valid"] is True
 
     rank_args = build_parser().parse_args(
-        [
-            "rank",
-            "--data-dir",
-            pilot,
-            "--config-dir",
-            config,
-            "--include-provisional",
-        ]
+        ["rank", "--data-dir", pilot, "--config-dir", config]
     )
     assert run(rank_args) == 0
     ranked = json.loads(capsys.readouterr().out)
-    assert len(ranked) == 5
-    assert all(item["rank"] is None and item["headline_overall"] is None for item in ranked)
-    assert {item["publication_label"] for item in ranked} == {
-        "real evidence — model-specific partial estimate"
-    }
+    assert ranked == []
+
+
+def test_model_specific_rank_flag_is_removed() -> None:
+    with pytest.raises(SystemExit):
+        build_parser().parse_args(["rank", "--include-provisional"])

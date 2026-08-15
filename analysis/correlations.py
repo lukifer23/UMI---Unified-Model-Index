@@ -29,6 +29,7 @@ class CorrelationResult:
     known_overlap: bool = False
     direction_a: str | None = None
     direction_b: str | None = None
+    interpretability_reason: str | None = None
 
 
 def benchmark_correlations(
@@ -57,10 +58,12 @@ def benchmark_correlations(
         models = sorted(set(matrix[key_a]) & set(matrix[key_b]))
         overlap = len(models)
         pearson = spearman = None
-        if overlap >= 2:
+        constant_series = False
+        if overlap >= minimum_overlap:
             values_a = np.asarray([matrix[key_a][model] for model in models])
             values_b = np.asarray([matrix[key_b][model] for model in models])
-            if np.ptp(values_a) > 0 and np.ptp(values_b) > 0:
+            constant_series = np.ptp(values_a) == 0 or np.ptp(values_b) == 0
+            if not constant_series:
                 pearson = float(pearsonr(values_a, values_b).statistic)
                 spearman = float(spearmanr(values_a, values_b).statistic)
         definition_a = definitions.get(benchmark_a)
@@ -74,6 +77,21 @@ def benchmark_correlations(
                 or benchmark_a in definition_b.constituents
             )
         )
+        incompatible_cohort = benchmark_a == benchmark_b and cohort_a != cohort_b
+        reason = (
+            "insufficient_overlap"
+            if overlap < minimum_overlap
+            else "constant_series"
+            if constant_series
+            else "incompatible_cohort"
+            if incompatible_cohort
+            else "known_overlap"
+            if known_overlap
+            else None
+        )
+        interpretable = reason is None and pearson is not None and spearman is not None
+        if not interpretable:
+            pearson = spearman = None
         output.append(
             CorrelationResult(
                 benchmark_a,
@@ -83,12 +101,13 @@ def benchmark_correlations(
                 pearson,
                 spearman,
                 overlap,
-                overlap >= minimum_overlap and pearson is not None,
+                interpretable,
                 definition_a.family if definition_a else None,
                 definition_b.family if definition_b else None,
                 known_overlap,
                 definition_a.direction.value if definition_a else None,
                 definition_b.direction.value if definition_b else None,
+                reason,
             )
         )
     return output

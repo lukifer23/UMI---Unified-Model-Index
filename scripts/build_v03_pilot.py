@@ -251,7 +251,7 @@ def main() -> None:
     )
     (PROCESSED_ROOT / "pareto.json").write_text(
         json.dumps(
-            [asdict(item) for item in pareto_dimensions(dataset, scoring_results)],
+            pareto_dimensions(dataset, scoring_results),
             indent=2,
             sort_keys=True,
         )

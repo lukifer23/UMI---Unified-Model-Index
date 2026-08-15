@@ -254,12 +254,14 @@ def test_pareto_results_are_workload_and_cohort_scoped(
     synthetic_dataset: Dataset, config: ProjectConfig
 ) -> None:
     output = pareto_dimensions(synthetic_dataset, score_dataset(synthetic_dataset, config))
-    assert output
-    assert all(item.metric and item.workload and item.cohort_key for item in output)
-    assert {item.workload_category for item in output} >= {
+    assert output["status"] == "ok"
+    rows = output["results"]
+    assert all(item["metric"] and item["workload"] and item["cohort_key"] for item in rows)
+    assert {item["workload_category"] for item in rows} >= {
         "coding_agents",
         "research_analysis",
     }
+    assert all(item["evidence_profile_id"] and item["score_scale_id"] for item in rows)
 
 
 def test_headline_requires_efficiency_even_with_direct_economics(

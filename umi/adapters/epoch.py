@@ -84,7 +84,6 @@ def adapt_epoch_csv(
                         "evaluation date and harness compatibility are not established by the CSV"
                     ),
                     evaluator="Epoch AI",
-                    raw_artifact_available=True,
                     capture_type=ArtifactCaptureType.RAW_UPSTREAM_PAYLOAD,
                     source_artifact_id=artifact_id,
                     source_registry_snapshot_id=artifact_id,

@@ -213,7 +213,6 @@ class Provenance(StrictModel):
     evaluator: str | None = None
     harness_owner: str | None = None
     run_executor: str | None = None
-    raw_artifact_available: bool | None = None
     capture_type: ArtifactCaptureType | None = None
     reproducible: bool | None = None
     configuration_verification: ConfigurationVerification | None = None

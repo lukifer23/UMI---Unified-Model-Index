@@ -125,13 +125,17 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                 "provisional normalization cohorts: " + ", ".join(sorted(provisional_ids))
             )
         records_by_id = {item.record_id: item for item in selected_by_model[model.id]}
-        profile = workload_profile(
-            "efficiency", profile_series[model.id], records_by_id.values(), config
+        profile = (
+            workload_profile(
+                "efficiency", profile_series[model.id], records_by_id.values(), config
+            )
+            if profile_series[model.id]
+            else None
         )
         panel_ids = tuple(sorted(panel_ids_by_model[model.id]))
         scale = (
             build_score_scale(profile.id, panel_ids, config.fingerprint)
-            if score is not None
+            if score is not None and profile is not None
             else None
         )
         if scale is not None:
@@ -158,7 +162,7 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                 },
             },
             evidence_profile=profile,
-            evidence_profile_id=profile.id,
+            evidence_profile_id=profile.id if profile is not None else None,
             normalization_panel_ids=panel_ids,
             score_scale_id=scale.id if scale is not None else None,
             score_semantics=(

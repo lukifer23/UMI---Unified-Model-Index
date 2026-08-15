@@ -60,8 +60,25 @@ def test_source_registry_detects_capture_tampering() -> None:
 def test_successful_task_cost_can_score_but_attempted_cost_cannot() -> None:
     dataset = load_dataset(ROOT / "data" / "raw")
     config = load_project_config(ROOT / "config")
-    attempted = score_economics(dataset, config).components
+    attempted_computation = score_economics(dataset, config)
+    attempted = attempted_computation.components
     assert all(item.score is None for item in attempted.values())
+    for item in dataset.task_economics:
+        selected_ids = {
+            record.record_id
+            for record in attempted_computation.selected_scoring_evidence.get(
+                item.model_id, ()
+            )
+        }
+        excluded_ids = {
+            record.record_id
+            for record in attempted_computation.excluded_candidate_evidence.get(
+                item.model_id, ()
+            )
+        }
+        assert item.record_id not in selected_ids
+        assert item.record_id not in attempted[item.model_id].source_record_ids
+        assert item.record_id in excluded_ids
 
     successful = dataset.model_copy(
         update={
@@ -92,6 +109,16 @@ def test_successful_task_cost_can_score_but_attempted_cost_cannot() -> None:
     scored = score_economics(successful, governed_config).components
     assert all(item.score is not None for item in scored.values())
     assert scored["muse-spark-1.1-xhigh"].score > scored["claude-fable-5-max-fallback"].score
+
+
+def test_retired_raw_artifact_flag_is_migrated_without_rewriting_sources() -> None:
+    source_text = (ROOT / "data" / "raw" / "benchmarks.yaml").read_text()
+    assert "raw_artifact_available:" in source_text
+    dataset = load_dataset(ROOT / "data" / "raw")
+    assert all(
+        "raw_artifact_available" not in record.model_dump()
+        for record in dataset.benchmarks
+    )
 
 
 def test_real_pilot_cli_validates_registry_and_exports_stable_csv(

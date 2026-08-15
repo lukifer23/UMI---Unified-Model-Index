@@ -36,7 +36,37 @@ def test_correlations_report_overlap_and_gate_interpretation(
     assert len(sufficient) == 3
     assert all(item.overlap == 5 and item.interpretable for item in sufficient)
     assert all(not item.interpretable for item in insufficient)
+    assert all(
+        item.pearson is None
+        and item.spearman is None
+        and item.interpretability_reason == "insufficient_overlap"
+        for item in insufficient
+    )
     assert sufficient[0].spearman == pytest.approx(1.0)
+
+    constant = synthetic_dataset.model_copy(
+        update={
+            "benchmarks": tuple(
+                item.model_copy(update={"value": 1.0})
+                if item.benchmark_id == "synthetic-general"
+                else item
+                for item in synthetic_dataset.benchmarks
+            )
+        }
+    )
+    constant_results = benchmark_correlations(constant, minimum_overlap=5)
+    affected = [
+        item
+        for item in constant_results
+        if "synthetic-general" in {item.benchmark_a, item.benchmark_b}
+    ]
+    assert affected
+    assert all(
+        item.pearson is None
+        and item.spearman is None
+        and item.interpretability_reason == "constant_series"
+        for item in affected
+    )
 
 
 def test_pareto_dominance_and_equal_points() -> None:

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import cast
+from typing import TypeVar, cast
 
 import yaml
 from pydantic import BaseModel, ConfigDict
@@ -18,6 +18,8 @@ from umi.schemas import (
     SourceSnapshot,
     TaskEconomicsMeasurement,
 )
+
+T = TypeVar("T", bound=BaseModel)
 
 
 class Dataset(BaseModel):
@@ -47,8 +49,41 @@ def _records(path: Path, key: str) -> list[object]:
     return list(data[key])
 
 
-def _optional_records(path: Path, key: str) -> list[object]:
-    return _records(path, key) if path.is_file() else []
+def _without_legacy_raw_artifact_flag(item: object) -> object:
+    """Drop the retired provenance flag without mutating frozen source artifacts."""
+    if not isinstance(item, dict):
+        return item
+    migrated = {
+        key: value for key, value in item.items() if key != "raw_artifact_available"
+    }
+    provenance = migrated.get("provenance")
+    if isinstance(provenance, dict) and "raw_artifact_available" in provenance:
+        migrated["provenance"] = {
+            key: value
+            for key, value in provenance.items()
+            if key != "raw_artifact_available"
+        }
+    return migrated
+
+
+def _validated_records(path: Path, key: str, model: type[T]) -> tuple[T, ...]:
+    return tuple(
+        model.model_validate(_without_legacy_raw_artifact_flag(item))
+        for item in _records(path, key)
+    )
+
+
+def _validated_optional_records(
+    path: Path, key: str, model: type[T]
+) -> tuple[T, ...]:
+    return (
+        tuple(
+            model.model_validate(_without_legacy_raw_artifact_flag(item))
+            for item in _records(path, key)
+        )
+        if path.is_file()
+        else ()
+    )
 
 
 def load_dataset(data_dir: str | Path) -> Dataset:
@@ -66,29 +101,21 @@ def load_dataset(data_dir: str | Path) -> Dataset:
             ModelConfiguration.model_validate(item)
             for item in _records(root / "models.yaml", "models")
         ),
-        benchmarks=tuple(
-            BenchmarkMeasurement.model_validate(item)
-            for item in _records(root / "benchmarks.yaml", "measurements")
+        benchmarks=_validated_records(
+            root / "benchmarks.yaml", "measurements", BenchmarkMeasurement
         ),
-        pricing=tuple(
-            PricingRecord.model_validate(item)
-            for item in _records(root / "pricing.yaml", "pricing")
+        pricing=_validated_records(root / "pricing.yaml", "pricing", PricingRecord),
+        efficiency=_validated_records(
+            root / "task_efficiency.yaml", "measurements", EfficiencyMeasurement
         ),
-        efficiency=tuple(
-            EfficiencyMeasurement.model_validate(item)
-            for item in _records(root / "task_efficiency.yaml", "measurements")
+        task_economics=_validated_records(
+            root / "task_economics.yaml", "measurements", TaskEconomicsMeasurement
         ),
-        task_economics=tuple(
-            TaskEconomicsMeasurement.model_validate(item)
-            for item in _records(root / "task_economics.yaml", "measurements")
+        external_indexes=_validated_records(
+            root / "external_indexes.yaml", "measurements", ExternalIndexMeasurement
         ),
-        external_indexes=tuple(
-            ExternalIndexMeasurement.model_validate(item)
-            for item in _records(root / "external_indexes.yaml", "measurements")
-        ),
-        release_claims=tuple(
-            ReleaseClaim.model_validate(item)
-            for item in _optional_records(root / "release_claims.yaml", "claims")
+        release_claims=_validated_optional_records(
+            root / "release_claims.yaml", "claims", ReleaseClaim
         ),
         scored_audit_fingerprint=(
             str(audit["scored_audit_fingerprint"])

@@ -647,6 +647,34 @@ def test_fixed_family_budgets_and_source_ablation(pilot_dataset, pilot_config) -
     }
     assert all(item.headline_overall is None for item in scenarios)
     assert family_budget_snapshot(pilot_config) == budgets
+    fable_equal = next(
+        item
+        for item in scenarios
+        if item.scenario == "equal_family" and item.model_id == "claude-fable-5-max"
+    )
+    assert not fable_equal.scenario_informative
+    assert fable_equal.scale_changed
+    assert not fable_equal.score_change_comparable
+    epoch_ablation = next(
+        item
+        for item in scenarios
+        if item.scenario == "ablate_epoch-benchmark-data-2026-08-14"
+        and item.model_id == "claude-opus-5-max"
+    )
+    assert epoch_ablation.support_changed
+    assert epoch_ablation.scale_changed
+    assert not epoch_ablation.score_change_comparable
+    assert epoch_ablation.raw_score_change is not None
+
+
+def test_pilot_pareto_abstains_across_incomparable_capability_scales(
+    pilot_dataset, pilot_config
+) -> None:
+    from analysis.pareto_metrics import pareto_dimensions
+
+    report = pareto_dimensions(pilot_dataset, score_dataset(pilot_dataset, pilot_config))
+    assert report["status"] == "insufficient_common_support"
+    assert report["results"] == []
 
 
 def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) -> None:
@@ -696,6 +724,8 @@ def test_publication_gates_and_real_evidence_label(pilot_dataset, pilot_config) 
     )
     assert all(item.efficiency.coverage == pytest.approx(0.045) for item in results.values())
     assert all(item.economics.score is None for item in results.values())
+    assert all(item.economics.evidence_profile is None for item in results.values())
+    assert all(item.economics.score_scale_id is None for item in results.values())
     assert all(
         item.efficiency.comparability_status == "directly_comparable"
         and item.economics.comparability_status == "insufficient_common_support"

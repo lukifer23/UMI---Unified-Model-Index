@@ -135,11 +135,6 @@ def build_parser() -> argparse.ArgumentParser:
         child = subparsers.add_parser(command)
         _add_common(child)
     subparsers.choices["validate"].set_defaults(source_registry=None, crosswalk=None)
-    subparsers.choices["rank"].add_argument(
-        "--include-provisional",
-        action="store_true",
-        help="Include models not eligible for headlines",
-    )
     subparsers.choices["compare"].add_argument("--models", nargs="+", required=True)
     sources = subparsers.add_parser("sources")
     source_commands = sources.add_subparsers(dest="sources_command", required=True)
@@ -387,7 +382,7 @@ def run(args: argparse.Namespace) -> int:
     elif args.command == "gaps":
         payload = pilot_gap_report(dataset, config)
     elif args.command == "rank":
-        ranked = rank_results(results, eligible_only=not args.include_provisional)
+        ranked = rank_results(results)
         payload = [{"rank": item.rank, **item.result.model_dump(mode="json")} for item in ranked]
     elif args.command == "estimates":
         payload = [item.model_dump(mode="json") for item in results]

@@ -39,6 +39,10 @@ Pilot family budgets are hypotheses:
 Equal-family and source-ablation scenarios test these allocations. They do not relax coverage or
 publication gates.
 
+`BenchmarkFamilyDefinition.cap` is retained only for schema compatibility in v0.3 and is
+deprecated. UMI does not dynamically redistribute family weights through caps; removal is deferred
+to a later schema-breaking release.
+
 ARC-AGI-2 and HLE split the General-reasoning domain equally as a transparent pilot hypothesis:
 ARC-AGI-2 measures few-shot fluid abstraction and exact grid transformation, while HLE measures
 broad expert-level question answering. Neither may stand in for the other. The split is fixed before
@@ -114,6 +118,11 @@ to a lab, normalize claims into benchmark results, or alter UMI weights, confide
 headline eligibility. Any future use of vendor-reported atomic measurements remains subject to the
 ordinary provenance-tier and readiness rules and must be ingested as a separately typed
 measurement with an explicit overlap decision.
+
+The retired `raw_artifact_available` boolean is not canonical provenance: artifact existence and
+quality are represented by `source_artifact_id`, the source registry, checksum validation, and
+`capture_type`. The offline loader discards this legacy key when reading older frozen artifacts;
+it does not rewrite those artifacts or infer a capture type from the boolean.
 
 Official token tariffs are also frozen as descriptive evidence. A pricing record may preserve
 uncached input, cached input, five-minute cache-write, one-hour cache-write, output, long-context
@@ -219,6 +228,12 @@ selected record IDs remain in the result. For success-adjusted metrics, derivati
 record before tier selection and median consolidation; numerators and success rates from separate
 records are never paired.
 
+Component computations distinguish selected scoring evidence, excluded candidates, diagnostic
+evidence, and conflicting selected evidence. Only selected scoring evidence may affect scores,
+profiles, source diversity, confidence, source record IDs, or scored-input fingerprints. In
+particular, attempted-task and non-mean cost records remain visible as excluded Economics evidence
+without entering Economics confidence or provenance.
+
 ## Normalization
 
 Normalization is cohort-relative and deterministic. Production comparisons use a stable panel for
@@ -285,6 +300,22 @@ When requested models have no ready compatible common series, comparison is a su
 abstention rather than an exception. It reports missing support by model, incompatible series, and
 recommended missing evidence. Unknown model IDs, malformed bundles, and invalid policy remain
 errors.
+
+Model-specific partial estimates never receive ordinal ranks. The removed
+`rank --include-provisional` path cannot promote them; only explicit common-evidence comparisons or
+future headline-eligible Overall results may rank models.
+
+Default correlation output is fail-closed. Below the configured overlap threshold, for a constant
+series, for incompatible cohorts, or for known-overlap pairs, Pearson and Spearman values are null
+and `interpretability_reason` explains why.
+
+Pareto analysis requires one shared Capability evidence-profile ID and score-scale ID across all
+participating models. Otherwise it returns a structured abstention. Full common-support Pareto
+recomputation is deferred until real operational expense evidence exists.
+
+Sensitivity deltas expose baseline and scenario support, scale, coverage, and raw scores. A score
+change is comparable only when both evidence profile and score scale remain unchanged. No-op
+equal-family cases are explicitly non-informative.
 
 ## Capability
 

@@ -254,10 +254,19 @@ def score_capability(
                 for record in records_selected
             }.values()
         )
-        profile = capability_profile((item[0] for item in available), evidence_records, config)
+        profile = (
+            capability_profile((item[0] for item in available), evidence_records, config)
+            if available
+            else None
+        )
         model_panel_ids = tuple(sorted({item[5].id for item in available}))
-        scale = build_score_scale(profile.id, model_panel_ids, config.fingerprint)
-        scales[model.id] = scale
+        scale = (
+            build_score_scale(profile.id, model_panel_ids, config.fingerprint)
+            if profile is not None and score is not None
+            else None
+        )
+        if scale is not None:
+            scales[model.id] = scale
         model_contributions = tuple(
             BenchmarkContribution(
                 benchmark_id=series.benchmark_id,
@@ -309,24 +318,32 @@ def score_capability(
                 "capability_representations_total": len(groups),
             },
             evidence_profile=profile,
-            evidence_profile_id=profile.id,
+            evidence_profile_id=profile.id if profile is not None else None,
             normalization_panel_ids=model_panel_ids,
-            score_scale_id=scale.id,
+            score_scale_id=scale.id if scale is not None else None,
             score_semantics=(
                 "stable-panel percentile position"
                 if len(available) == 1
                 else "weighted stable-panel percentile composite"
+                if available
+                else "unscored"
             ),
         )
         evidence[model.id] = evidence_records
         domains[model.id] = represented_domains
 
     for model_id, component in output.items():
+        has_support = (
+            component.score is not None
+            and component.evidence_profile_id is not None
+            and component.score_scale_id is not None
+        )
         peers = tuple(
             sorted(
                 other_id
                 for other_id, other in output.items()
-                if other_id != model_id
+                if has_support
+                and other_id != model_id
                 and other.evidence_profile_id == component.evidence_profile_id
                 and other.score_scale_id == component.score_scale_id
             )
@@ -335,7 +352,11 @@ def score_capability(
             update={
                 "directly_comparable_model_ids": peers,
                 "comparability_status": (
-                    "directly_comparable" if peers else "different_score_scale"
+                    "directly_comparable"
+                    if peers
+                    else "different_score_scale"
+                    if has_support
+                    else "insufficient_common_support"
                 ),
                 "comparability_reasons": (
                     (
@@ -344,6 +365,8 @@ def score_capability(
                     )
                     if peers
                     else ("no other model shares both evidence profile and score scale",)
+                    if has_support
+                    else ("no ready capability benchmark support",)
                 ),
             }
         )

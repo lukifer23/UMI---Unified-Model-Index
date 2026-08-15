@@ -40,7 +40,6 @@ harness_version: published-harness-version
 evaluator: Evaluator name
 harness_owner: Harness owner
 run_executor: Run executor
-raw_artifact_available: true
 capture_type: reviewed_fact_extract
 source_artifact_id: registry-snapshot-id
 source_registry_snapshot_id: registry-snapshot-id
@@ -259,6 +258,12 @@ explicitly labeled `derived_from_standard_error`, `normal_approximation`, and `z
 Scenario counts are endpoint combinations, not probabilities.
 
 See `schemas/capability-comparison.schema.json` for the complete comparison contract.
+
+Components with no supported evidence serialize `score: null`, zero coverage,
+`comparability_status: insufficient_common_support`, and `evidence_profile: null`; UMI does not emit
+meaningless hashes of empty support. Correlation results suppress coefficients whenever
+`interpretable` is false and provide `interpretability_reason`. Pareto output either binds every row
+to one shared Capability profile and scale or returns `insufficient_common_support` with no rows.
 
 ## Scoring result
 

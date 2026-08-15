@@ -9,7 +9,6 @@ claims:
   harness_version: openai-release-deepswe-v1.1-codex-max-2026-07-09
   metric_definition: Literal numeric result published in an official lab release
   evaluator: OpenAI
-  raw_artifact_available: true
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -45,7 +44,6 @@ claims:
   harness_version: openai-release-terminalbench-2.1-codex-max-2026-07-09
   metric_definition: Literal numeric result published in an official lab release
   evaluator: OpenAI
-  raw_artifact_available: true
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -81,7 +79,6 @@ claims:
   harness_version: openai-release-gdpval-aa-v2-max-2026-07-09
   metric_definition: Literal numeric result published in an official lab release
   evaluator: OpenAI
-  raw_artifact_available: true
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -117,7 +114,6 @@ claims:
   harness_version: openai-release-gpqa-diamond-max-2026-07-09
   metric_definition: Literal numeric result published in an official lab release
   evaluator: OpenAI
-  raw_artifact_available: true
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true

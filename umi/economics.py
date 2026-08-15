@@ -27,6 +27,8 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
         efficiency[(record.workload, record.cohort_key, record.model_id)].append(record)
     direct: dict[tuple[str, str, str], list[TaskEconomicsMeasurement]] = defaultdict(list)
     evidence: dict[str, list[Provenance]] = defaultdict(list)
+    excluded: dict[str, list[Provenance]] = defaultdict(list)
+    conflicting_selected: dict[str, list[Provenance]] = defaultdict(list)
     diagnostics: dict[str, list[str]] = defaultdict(list)
     for economics_record in dataset.task_economics:
         if (
@@ -41,7 +43,7 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                 )
             ].append(economics_record)
         else:
-            evidence[economics_record.model_id].append(economics_record)
+            excluded[economics_record.model_id].append(economics_record)
             reason = (
                 "attempted-task cost"
                 if economics_record.cost_basis == CostBasis.ATTEMPTED_TASK
@@ -79,6 +81,7 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                 costs[model_id] = value
                 evidence[model_id].extend(direct_selected)
             if conflict:
+                conflicting_selected[model_id].extend(direct_selected)
                 diagnostics[model_id].append(f"conflict consolidated for economics/{workload}")
         for (candidate, cohort, model_id), efficiency_records in efficiency.items():
             if (candidate, cohort) != (workload, cohort_key) or (
@@ -94,6 +97,7 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                 costs[model_id] = value
                 evidence[model_id].extend(efficiency_selected)
             if conflict:
+                conflicting_selected[model_id].extend(efficiency_selected)
                 diagnostics[model_id].append(f"conflict consolidated for economics/{workload}")
         normalized = normalize_cohort(
             costs,
@@ -146,13 +150,17 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                 "provisional normalization cohorts: " + ", ".join(sorted(provisional_ids))
             )
         records_by_id = {item.record_id: item for item in evidence[model.id]}
-        profile = workload_profile(
-            "economics", profile_series[model.id], records_by_id.values(), config
+        profile = (
+            workload_profile(
+                "economics", profile_series[model.id], records_by_id.values(), config
+            )
+            if profile_series[model.id]
+            else None
         )
         panel_ids = tuple(sorted(panel_ids_by_model[model.id]))
         scale = (
             build_score_scale(profile.id, panel_ids, config.fingerprint)
-            if score is not None
+            if score is not None and profile is not None
             else None
         )
         if scale is not None:
@@ -178,7 +186,7 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
                 },
             },
             evidence_profile=profile,
-            evidence_profile_id=profile.id,
+            evidence_profile_id=profile.id if profile is not None else None,
             normalization_panel_ids=panel_ids,
             score_scale_id=scale.id if scale is not None else None,
             score_semantics=(
@@ -225,4 +233,10 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
         {key: tuple(value) for key, value in evidence.items()},
         {},
         score_scales=scales,
+        excluded_candidate_evidence={
+            key: tuple(value) for key, value in excluded.items()
+        },
+        conflicting_selected_evidence={
+            key: tuple(value) for key, value in conflicting_selected.items()
+        },
     )

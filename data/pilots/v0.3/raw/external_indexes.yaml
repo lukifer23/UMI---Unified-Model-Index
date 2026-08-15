@@ -10,7 +10,6 @@ measurements:
   metric_definition: Artificial Analysis Intelligence Index public-page value
   notes: Public-page fact capture; composite excluded from UMI scoring.
   evaluator: Artificial Analysis
-  raw_artifact_available: true
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -47,7 +46,6 @@ measurements:
   metric_definition: Artificial Analysis Intelligence Index public-page value
   notes: Public-page fact capture; composite excluded from UMI scoring.
   evaluator: Artificial Analysis
-  raw_artifact_available: true
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -84,7 +82,6 @@ measurements:
   metric_definition: Artificial Analysis Intelligence Index public-page value
   notes: Public-page fact capture; composite excluded from UMI scoring.
   evaluator: Artificial Analysis
-  raw_artifact_available: true
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -121,7 +118,6 @@ measurements:
   metric_definition: Artificial Analysis Intelligence Index public-page value
   notes: Public-page fact capture; composite excluded from UMI scoring.
   evaluator: Artificial Analysis
-  raw_artifact_available: true
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -161,7 +157,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -200,7 +195,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -239,7 +233,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://htihle.github.io/weirdml.html'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -278,7 +271,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -317,7 +309,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -356,7 +347,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -395,7 +385,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://arcprize.org/leaderboard'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -434,7 +423,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -473,7 +461,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -512,7 +499,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -551,7 +537,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -590,7 +575,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://yhenon.github.io/surface-evolver-llm-eval/'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -629,7 +613,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://deepswe.datacurve.ai/'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -668,7 +651,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -707,7 +689,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://htihle.github.io/weirdml.html'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -746,7 +727,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -785,7 +765,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: SimpleBench Leaderboard'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -824,7 +803,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -863,7 +841,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -902,7 +879,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -941,7 +917,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -980,7 +955,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1019,7 +993,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1058,7 +1031,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://cursor.com/cursorbench'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1097,7 +1069,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://www.vals.ai/benchmarks/proof_bench'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1136,7 +1107,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1175,7 +1145,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1214,7 +1183,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://htihle.github.io/weirdml.html'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1253,7 +1221,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1292,7 +1259,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1331,7 +1297,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1370,7 +1335,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://arcprize.org/leaderboard'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1409,7 +1373,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1448,7 +1411,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1487,7 +1449,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1526,7 +1487,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1565,7 +1525,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1604,7 +1563,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://cognition.com/frontiercode'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1643,7 +1601,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1682,7 +1639,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://cursor.com/cursorbench'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1721,7 +1677,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://deepswe.datacurve.ai/'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1760,7 +1715,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://www.vals.ai/benchmarks/proof_bench'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1799,7 +1753,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1838,7 +1791,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1877,7 +1829,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://htihle.github.io/weirdml.html'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1916,7 +1867,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1955,7 +1905,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -1994,7 +1943,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2033,7 +1981,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2072,7 +2019,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2111,7 +2057,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2150,7 +2095,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2189,7 +2133,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2228,7 +2171,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://cursor.com/cursorbench'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2267,7 +2209,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://deepswe.datacurve.ai/'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2306,7 +2247,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://www.vals.ai/benchmarks/proof_bench'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2345,7 +2285,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2384,7 +2323,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2423,7 +2361,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2462,7 +2399,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2501,7 +2437,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2540,7 +2475,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2579,7 +2513,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2618,7 +2551,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: Epoch evaluations'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2657,7 +2589,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: not supplied'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2696,7 +2627,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://cursor.com/cursorbench'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2735,7 +2665,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://deepswe.datacurve.ai/'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2774,7 +2703,6 @@ measurements:
     evaluation date and harness compatibility are not established by the CSV
   notes: 'Original source column: https://www.vals.ai/benchmarks/proof_bench'
   evaluator: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   configuration_verification:
     model_label_exact: true
@@ -2811,7 +2739,6 @@ measurements:
   harness_version: arena-bradley-terry-2026-08-12
   metric_definition: Arena text style-controlled Bradley-Terry rating
   evaluator: Arena
-  raw_artifact_available: true
   capture_type: archived_source_snapshot
   configuration_verification:
     model_label_exact: true
@@ -2848,7 +2775,6 @@ measurements:
   harness_version: arena-bradley-terry-2026-08-12
   metric_definition: Arena text style-controlled Bradley-Terry rating
   evaluator: Arena
-  raw_artifact_available: true
   capture_type: archived_source_snapshot
   configuration_verification:
     model_label_exact: true
@@ -2885,7 +2811,6 @@ measurements:
   harness_version: arena-bradley-terry-2026-08-12
   metric_definition: Arena text style-controlled Bradley-Terry rating
   evaluator: Arena
-  raw_artifact_available: true
   capture_type: archived_source_snapshot
   configuration_verification:
     model_label_exact: true

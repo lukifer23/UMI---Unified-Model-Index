@@ -10,7 +10,6 @@ pricing:
   notes: Token tariff only; it cannot establish task cost without compatible task-level
     resource measurements.
   evaluator: Anthropic
-  raw_artifact_available: true
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -49,7 +48,6 @@ pricing:
   notes: Token tariff only; it cannot establish task cost without compatible task-level
     resource measurements.
   evaluator: Anthropic
-  raw_artifact_available: true
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -87,7 +85,6 @@ pricing:
   notes: Token tariff only; it cannot establish task cost without compatible task-level
     resource measurements.
   evaluator: OpenAI
-  raw_artifact_available: true
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -127,7 +124,6 @@ pricing:
   notes: Token tariff only; it cannot establish task cost without compatible task-level
     resource measurements.
   evaluator: Moonshot AI
-  raw_artifact_available: true
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -163,7 +159,6 @@ pricing:
   notes: Token tariff only; it cannot establish task cost without compatible task-level
     resource measurements.
   evaluator: Z.ai
-  raw_artifact_available: true
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true

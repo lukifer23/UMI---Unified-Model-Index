@@ -15,7 +15,6 @@ measurements:
   evaluator: Epoch AI
   harness_owner: Epoch AI
   run_executor: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -70,7 +69,6 @@ measurements:
   evaluator: Epoch AI
   harness_owner: Epoch AI
   run_executor: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -125,7 +123,6 @@ measurements:
   evaluator: Epoch AI
   harness_owner: Epoch AI
   run_executor: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -180,7 +177,6 @@ measurements:
   evaluator: Epoch AI
   harness_owner: Epoch AI
   run_executor: Epoch AI
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -237,7 +233,6 @@ measurements:
   evaluator: Artificial Analysis
   harness_owner: SciCode benchmark authors
   run_executor: Artificial Analysis
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -289,7 +284,6 @@ measurements:
   evaluator: Artificial Analysis
   harness_owner: SciCode benchmark authors
   run_executor: Artificial Analysis
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -341,7 +335,6 @@ measurements:
   evaluator: Artificial Analysis
   harness_owner: SciCode benchmark authors
   run_executor: Artificial Analysis
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -393,7 +386,6 @@ measurements:
   evaluator: Artificial Analysis
   harness_owner: SciCode benchmark authors
   run_executor: Artificial Analysis
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -444,7 +436,6 @@ measurements:
   evaluator: Artificial Analysis
   harness_owner: CritPt benchmark authors
   run_executor: Artificial Analysis
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -495,7 +486,6 @@ measurements:
   evaluator: Artificial Analysis
   harness_owner: CritPt benchmark authors
   run_executor: Artificial Analysis
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -546,7 +536,6 @@ measurements:
   evaluator: Artificial Analysis
   harness_owner: CritPt benchmark authors
   run_executor: Artificial Analysis
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -597,7 +586,6 @@ measurements:
   evaluator: Artificial Analysis
   harness_owner: CritPt benchmark authors
   run_executor: Artificial Analysis
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -650,7 +638,6 @@ measurements:
   evaluator: ARC Prize Foundation
   harness_owner: ARC Prize Foundation
   run_executor: ARC Prize Foundation
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -703,7 +690,6 @@ measurements:
   evaluator: ARC Prize Foundation
   harness_owner: ARC Prize Foundation
   run_executor: ARC Prize Foundation
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -756,7 +742,6 @@ measurements:
   evaluator: ARC Prize Foundation
   harness_owner: ARC Prize Foundation
   run_executor: ARC Prize Foundation
-  raw_artifact_available: true
   capture_type: raw_upstream_payload
   reproducible: false
   configuration_verification:
@@ -804,7 +789,6 @@ measurements:
   notes: Exact source model label and effort are crosswalked, but source snapshot
     and deployment identity are absent; retained as diagnostic preference evidence.
   evaluator: Arena
-  raw_artifact_available: true
   capture_type: archived_source_snapshot
   configuration_verification:
     model_label_exact: true
@@ -855,7 +839,6 @@ measurements:
   notes: Exact source model label and effort are crosswalked, but source snapshot
     and deployment identity are absent; retained as diagnostic preference evidence.
   evaluator: Arena
-  raw_artifact_available: true
   capture_type: archived_source_snapshot
   configuration_verification:
     model_label_exact: true
@@ -906,7 +889,6 @@ measurements:
   notes: Exact source model label and effort are crosswalked, but source snapshot
     and deployment identity are absent; retained as diagnostic preference evidence.
   evaluator: Arena
-  raw_artifact_available: true
   capture_type: archived_source_snapshot
   configuration_verification:
     model_label_exact: true
@@ -955,7 +937,6 @@ measurements:
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -1015,7 +996,6 @@ measurements:
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -1075,7 +1055,6 @@ measurements:
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -1135,7 +1114,6 @@ measurements:
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
@@ -1195,7 +1173,6 @@ measurements:
   evaluator: Datacurve
   harness_owner: Datacurve
   run_executor: Datacurve
-  raw_artifact_available: false
   capture_type: reviewed_fact_extract
   configuration_verification:
     model_label_exact: true
