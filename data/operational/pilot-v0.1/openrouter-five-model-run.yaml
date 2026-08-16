@@ -11,7 +11,7 @@ interaction_profile: interactive_round
 operational_profile_id: mmlu-pro-v1-one-turn-json-no-tools
 cohort_key: mmlu-pro-test-balanced-70-v1
 workload_version: MMLU-Pro b189ec765aa7 / UMI balanced-70 v1
-harness_version: umi-openrouter-controlled-harness-v0.1
+harness_version: umi-openrouter-controlled-harness-v0.2
 success_definition_id: exact-multiple-choice-answer-v1
 success_definition: A valid JSON answer whose single uppercase option letter exactly matches the frozen source answer.
 tools_enabled: false
@@ -135,4 +135,4 @@ deployments:
       cache_write_price_per_token_usd: null
       cache_write_1h_price_per_token_usd: null
       max_tokens: 4096
-fingerprint: 7bcef949aca4ec06278bd448c7f91166325758e1200ab5d03b9cd4a4fcb4eb0c
+fingerprint: b01bbc3ddb4cdd1edd30012d9b675062f46444ee1af0289bf7bb0c9eed9575d5

@@ -45,6 +45,8 @@ SAFE_RESPONSE_HEADERS = {
     "x-ratelimit-reset",
     "x-request-id",
 }
+BILLING_RECONCILIATION_ABS_TOLERANCE_USD = 0.00000005
+RUNNER_CONTRACT_VERSION = "umi-openrouter-controlled-harness-v0.2"
 
 
 class RunnerError(ValueError):
@@ -125,7 +127,7 @@ def _headers(api_key: str) -> dict[str, str]:
         "Content-Type": "application/json",
         "HTTP-Referer": "https://github.com/lukifer23/UMI---Unified-Model-Index",
         "X-Title": "UMI controlled operational pilot",
-        "User-Agent": "UMI-controlled-runner/0.3.14",
+        "User-Agent": f"UMI-controlled-runner/0.3.14 ({RUNNER_CONTRACT_VERSION})",
     }
 
 
@@ -687,7 +689,9 @@ def _initialize_run(
         raise RunnerError("run ID must be a lowercase UMI identifier")
     state_path = output_dir / "run-contract.json"
     expected = {
-        "run_state_version": "umi-openrouter-run-state-v0.1",
+        "run_state_version": "umi-openrouter-run-state-v0.2",
+        "runner_contract_version": RUNNER_CONTRACT_VERSION,
+        "runner_source_sha256": _sha256_file(Path(__file__)),
         "run_id": run_id,
         "evaluation_date": evaluation_date.isoformat(),
         "task_pack_id": pack.pack_id,
@@ -723,6 +727,22 @@ def _artifact_manifest(
             f"{len(pack.tasks)} results"
         )
     included: list[dict[str, Any]] = []
+    for name in (
+        "run-contract.json",
+        "live-endpoint-preflight.json",
+        "credits-before.json",
+        "credits-after.json",
+    ):
+        path = output_dir / name
+        if not path.is_file():
+            raise RunnerError(f"complete run is missing {path}")
+        included.append(
+            {
+                "path": name,
+                "sha256": _sha256_file(path),
+                "size_bytes": path.stat().st_size,
+            }
+        )
     for result_path in result_paths:
         attempt_root = result_path.parent
         for name in (
@@ -770,6 +790,8 @@ def _ledger(
     deployment: OperationalDeploymentContract,
     pack: ControlledTaskPack,
     manifest: OperationalRunManifest,
+    *,
+    billing_reconciled: bool,
 ) -> AttemptLedger:
     artifact, artifact_path = _artifact_manifest(
         output_dir, run_id, deployment, pack, manifest
@@ -777,7 +799,10 @@ def _ledger(
     result_paths = sorted(
         (output_dir / "deployments" / deployment.deployment_id).glob("attempts/*/result.json")
     )
-    attempts = [_read_json(path)["attempt"] for path in result_paths]
+    attempts = [dict(_read_json(path)["attempt"]) for path in result_paths]
+    if billing_reconciled:
+        for attempt in attempts:
+            attempt["billing_evidence"] = "provider_billing_record"
     endpoint = deployment.endpoint
     regions = {item.get("data_region") for item in attempts}
     if None in regions or len(regions) != 1:
@@ -788,8 +813,8 @@ def _ledger(
     payload = {
         "ledger_id": f"{run_id}-{deployment.model_id}",
         "source": {
-            "organization": "UMI controlled evaluation via OpenRouter",
-            "url": "https://openrouter.ai/activity",
+            "organization": "OpenRouter",
+            "url": "https://openrouter.ai/api/v1/generation",
             "accessed": evaluation_date.isoformat(),
         },
         "source_artifact_id": artifact["source_artifact_id"],
@@ -852,10 +877,31 @@ def _finalize(
     credits_before: dict[str, Any],
     credits_after: dict[str, Any],
 ) -> dict[str, Any]:
+    all_result_paths = sorted(output_dir.glob("deployments/*/attempts/*/result.json"))
+    expected_results = len(pack.tasks) * len(manifest.deployments)
+    if len(all_result_paths) != expected_results:
+        raise RunnerError(
+            f"run has {len(all_result_paths)} of {expected_results} completed results"
+        )
+    result_costs = [
+        float(_read_json(path)["attempt"]["observed_cost_usd"])
+        for path in all_result_paths
+    ]
+    total_cost, credit_delta, billing_reconciled = _billing_reconciliation(
+        result_costs, credits_before, credits_after
+    )
     summaries = []
-    total_cost = 0.0
+    summarized_cost = 0.0
     for deployment in manifest.deployments:
-        ledger = _ledger(output_dir, run_id, evaluation_date, deployment, pack, manifest)
+        ledger = _ledger(
+            output_dir,
+            run_id,
+            evaluation_date,
+            deployment,
+            pack,
+            manifest,
+            billing_reconciled=billing_reconciled,
+        )
         aggregation = aggregate_attempt_ledger(ledger)
         ledger_path = output_dir / "ledgers" / f"{deployment.deployment_id}.yaml"
         ledger_text = yaml.safe_dump(ledger.model_dump(mode="json"), sort_keys=False)
@@ -875,7 +921,7 @@ def _finalize(
         deployment_cost = math.fsum(
             float(item.observed_cost_usd or 0) for item in ledger.attempts
         )
-        total_cost = math.fsum((total_cost, deployment_cost))
+        summarized_cost = math.fsum((summarized_cost, deployment_cost))
         summaries.append(
             {
                 "deployment_id": deployment.deployment_id,
@@ -890,9 +936,8 @@ def _finalize(
                 "diagnostics": aggregation.diagnostics,
             }
         )
-    credit_delta = float(credits_before["remaining_credits"]) - float(
-        credits_after["remaining_credits"]
-    )
+    if not math.isclose(total_cost, summarized_cost, rel_tol=0, abs_tol=1e-12):
+        raise RunnerError("deployment cost summaries do not reconcile to run results")
     summary: dict[str, Any] = {
         "run_id": run_id,
         "evaluation_date": evaluation_date.isoformat(),
@@ -901,10 +946,16 @@ def _finalize(
         "deployment_summaries": summaries,
         "router_response_cost_total_usd": total_cost,
         "account_credit_delta_usd": credit_delta,
-        "credit_delta_reconciles": math.isclose(total_cost, credit_delta, abs_tol=1e-6),
+        "credit_delta_reconciles": billing_reconciled,
+        "billing_reconciliation_abs_tolerance_usd": (
+            BILLING_RECONCILIATION_ABS_TOLERANCE_USD
+        ),
+        "billing_evidence_promoted": billing_reconciled,
         "economics_admission": (
-            "diagnostic only: generation usage is router-response cost, not a reconciled "
-            "provider billing-record artifact"
+            "provider billing record: response usage and authenticated generation costs "
+            "reconcile to the account credit ledger"
+            if billing_reconciled
+            else "diagnostic only: generation costs do not reconcile to the account credit ledger"
         ),
     }
     summary["fingerprint"] = canonical_fingerprint(summary)
@@ -931,9 +982,32 @@ def _remaining_cost(
     return math.ceil(math.fsum(costs) * 1_000_000) / 1_000_000
 
 
+def _billing_reconciliation(
+    attempt_costs: list[float],
+    credits_before: dict[str, Any],
+    credits_after: dict[str, Any],
+) -> tuple[float, float, bool]:
+    total_cost = math.fsum(attempt_costs)
+    credit_delta = float(credits_before["remaining_credits"]) - float(
+        credits_after["remaining_credits"]
+    )
+    reconciled = math.isclose(
+        total_cost,
+        credit_delta,
+        rel_tol=0,
+        abs_tol=BILLING_RECONCILIATION_ABS_TOLERANCE_USD,
+    )
+    return total_cost, credit_delta, reconciled
+
+
 def _execute(args: argparse.Namespace) -> int:
     pack = load_task_pack(args.task_pack)
     manifest = load_run_manifest(args.run_manifest)
+    if manifest.harness_version != RUNNER_CONTRACT_VERSION:
+        raise RunnerError(
+            f"manifest harness {manifest.harness_version} does not match runner "
+            f"{RUNNER_CONTRACT_VERSION}"
+        )
     api_key = _api_key(manifest)
     report, raw_endpoint_facts = _live_preflight(pack, manifest, api_key)
     if args.preflight:

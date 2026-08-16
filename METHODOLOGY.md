@@ -698,8 +698,17 @@ tokens as `completion_tokens - reasoning_tokens` and records reasoning separatel
 is absent or inconsistent, visible output and reasoning remain missing rather than being guessed.
 Prompt cache reads and writes are taken only from their explicit usage-detail fields; absent fields
 remain null. Router generation cost must reconcile exactly to response usage cost, but it retains
-`router_response_cost` evidence status. It can inform a diagnostic observed-spend summary and cannot
-create ready Economics under the provider-billing-record rule.
+`router_response_cost` evidence status in the immutable per-attempt result. OpenRouter's official
+[usage-accounting documentation](https://openrouter.ai/docs/cookbook/administration/usage-accounting)
+defines response `usage.cost` as the total amount charged to the account, while its authenticated
+[generation record](https://openrouter.ai/docs/api/api-reference/generations/get-generation)
+independently exposes `total_cost` and request/deployment identity. A derived ledger may promote
+those costs to `provider_billing_record` only when every response and generation cost agrees, all
+350 attempts are complete, and their `math.fsum` total matches the before/after account-credit delta
+within `$0.00000005`. The raw result remains unchanged. A mismatch, concurrent account usage,
+missing credit snapshot, or incomplete cohort leaves Economics diagnostic and emits the reason.
+The run contract also records the exact executor source SHA-256 and requires its version to equal the
+manifest's harness version. Resume fails closed across any executor or harness change.
 
 Offline preflight uses each frozen endpoint's reviewed prompt and completion prices. It conservatively
 bounds prompt tokens by UTF-8 byte count, charges every prompt at both its ordinary input tariff and

@@ -243,6 +243,10 @@ and resulting scored bundle must still clear their ordinary validation gates.
 Ready ledgers additionally require every attempt's resolved model, serving provider, service tier,
 and any pinned region to agree with the single deployment identity. These per-attempt fields remain
 in raw and derived output so a fallback or mixed deployment cannot hide behind a ledger-level label.
+Router response cost remains diagnostic in the immutable attempt result. A derived ledger may label
+it `provider_billing_record` only after the official response cost agrees with the authenticated
+generation record for every attempt and the complete run sum reconciles to fingerprinted before/after
+account-credit snapshots under the fixed methodology tolerance.
 
 ### Controlled task pack and run manifest
 

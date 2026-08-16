@@ -124,10 +124,14 @@ and an output directory. It writes the exact request before each call, marks the
 started, and never retries a missing or failed paid response automatically. A resumed run reuses
 retained byte-exact response bodies, polls only their non-billable generation metadata, and rejects
 any changed task, manifest, endpoint, provider, price, model, tier, checksum, or artifact fingerprint.
+The run contract binds the exact executor source SHA-256 and harness version, so code drift also blocks
+resume.
 Completed deployments
 produce raw-artifact manifests, ready attempt ledgers, deterministic aggregations, and a run summary.
-OpenRouter response cost remains `router_response_cost`, so the run can unlock exact Efficiency but
-not scoring-ready Economics without a separately admissible billing-record artifact.
+Raw OpenRouter response cost remains `router_response_cost`. The derived ledgers promote it to
+`provider_billing_record` only when every authenticated generation cost agrees and the complete
+run total reconciles to the before/after account-credit ledger within `$0.00000005`; otherwise the
+run can unlock exact Efficiency but Economics remains diagnostic.
 
 ```bash
 uv run --no-sync python -m scripts.build_v03_pilot

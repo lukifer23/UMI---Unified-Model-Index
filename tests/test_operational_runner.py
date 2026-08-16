@@ -6,7 +6,9 @@ from pathlib import Path
 import pytest
 
 from scripts.run_openrouter_operational_pilot import (
+    RUNNER_CONTRACT_VERSION,
     RunnerError,
+    _billing_reconciliation,
     _decoded_object,
     _fingerprinted,
     _initialize_run,
@@ -26,6 +28,7 @@ MANIFEST_PATH = (
 def test_run_contract_is_immutable_and_resume_bound(tmp_path: Path) -> None:
     pack = load_task_pack(PACK_PATH)
     manifest = load_run_manifest(MANIFEST_PATH)
+    assert manifest.harness_version == RUNNER_CONTRACT_VERSION
     output_dir = tmp_path / "controlled-run"
     _initialize_run(
         output_dir,
@@ -74,3 +77,17 @@ def test_raw_body_writer_never_overwrites_and_decoder_fails_closed(tmp_path: Pat
     assert _decoded_object(path.read_bytes(), "test://response") == {"id": "generation-1"}
     with pytest.raises(RunnerError, match="not valid JSON"):
         _decoded_object(b"not-json", "test://response")
+
+
+def test_billing_promotion_requires_full_account_reconciliation() -> None:
+    costs = [0.1, 0.2, 0.3]
+    before = {"remaining_credits": 40.0}
+    reconciled_after = {"remaining_credits": 39.4}
+    total, delta, reconciled = _billing_reconciliation(costs, before, reconciled_after)
+    assert total == pytest.approx(0.6)
+    assert delta == pytest.approx(0.6)
+    assert reconciled is True
+
+    concurrent_usage_after = {"remaining_credits": 39.39}
+    _, _, reconciled = _billing_reconciliation(costs, before, concurrent_usage_after)
+    assert reconciled is False
