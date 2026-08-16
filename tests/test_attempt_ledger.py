@@ -87,6 +87,12 @@ def _ledger_payload() -> dict[str, object]:
                 "billing_evidence": "provider_billing_record",
                 "cost_evidence_id": "bill-row-a",
                 "provider_request_id": "request-a",
+                "generation_id": "generation-a",
+                "resolved_model_id": "provider/controlled-model-20260701",
+                "serving_provider": "provider",
+                "service_tier": "standard",
+                "data_region": "us",
+                "upstream_id": "upstream-a",
             },
             {
                 "task_id": "task-b",
@@ -106,6 +112,12 @@ def _ledger_payload() -> dict[str, object]:
                 "billing_evidence": "provider_billing_record",
                 "cost_evidence_id": "bill-row-b",
                 "provider_request_id": "request-b",
+                "generation_id": "generation-b",
+                "resolved_model_id": "provider/controlled-model-20260701",
+                "serving_provider": "provider",
+                "service_tier": "standard",
+                "data_region": "us",
+                "upstream_id": "upstream-b",
                 "error_kind": "task_failed",
             },
             {
@@ -126,6 +138,12 @@ def _ledger_payload() -> dict[str, object]:
                 "billing_evidence": "provider_billing_record",
                 "cost_evidence_id": "bill-row-c",
                 "provider_request_id": "request-c",
+                "generation_id": "generation-c",
+                "resolved_model_id": "provider/controlled-model-20260701",
+                "serving_provider": "provider",
+                "service_tier": "standard",
+                "data_region": "us",
+                "upstream_id": "upstream-c",
             },
         ],
     }
@@ -280,6 +298,26 @@ def test_attempt_ledger_rejects_duplicate_ids_and_unverified_ready_deployment() 
     snapshot["deployment"]["configuration_verification"]["provider_snapshot_verified"] = False
     with pytest.raises(ValidationError, match="snapshot is not verified"):
         AttemptLedger.model_validate(snapshot)
+
+    wrong_provider = _ledger_payload()
+    wrong_provider["attempts"][0]["serving_provider"] = "fallback-provider"
+    with pytest.raises(ValidationError, match="provider does not match"):
+        AttemptLedger.model_validate(wrong_provider)
+
+    wrong_tier = _ledger_payload()
+    wrong_tier["attempts"][0]["service_tier"] = "priority"
+    with pytest.raises(ValidationError, match="service tier does not match"):
+        AttemptLedger.model_validate(wrong_tier)
+
+    wrong_model = _ledger_payload()
+    wrong_model["attempts"][0]["resolved_model_id"] = "provider/fallback-model"
+    with pytest.raises(ValidationError, match="identity does not match"):
+        AttemptLedger.model_validate(wrong_model)
+
+    wrong_region = _ledger_payload()
+    wrong_region["attempts"][0]["data_region"] = "eu"
+    with pytest.raises(ValidationError, match="region does not match"):
+        AttemptLedger.model_validate(wrong_region)
 
 
 def test_attempt_cost_requires_evidence_and_preserves_partial_cost_count() -> None:

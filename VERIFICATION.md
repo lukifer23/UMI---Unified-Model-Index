@@ -10,16 +10,18 @@ project contract.
 | `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed the locked UMI environment; isolated UMI 0.3.14 wheel verification is recorded below |
 | `uv run --no-sync python -m scripts.build_v03_pilot` | passed; rebuilt all raw and processed pilot artifacts offline |
 | schema equality test against `umi.schema_export.rendered_schemas()` | passed; committed machine-readable schemas remain current |
-| `uv run pytest` | 150 passed |
-| `uv run pytest --cov=umi --cov=analysis --cov=scripts --cov-report=term-missing --cov-fail-under=90` | 150 passed; 90.39% combined coverage including the new explicit acquisition script |
+| `uv run pytest` | 154 passed |
+| `uv run pytest --cov=umi --cov=analysis --cov-report=term-missing --cov-fail-under=90` | 154 passed; 93.34% core package and analysis coverage; live acquisition/execution behavior is verified separately rather than through mocked HTTP |
 | `PYTHONPATH=. uv run --no-sync ruff check .` | passed |
-| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 54 source files |
+| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 55 source files |
 | `umi sources validate --strict` | passed; complete registry, crosswalk, licensing, attribution, diagnostic, pricing, and release-claim audit is valid |
 | `umi crosswalk` and `umi overlap` | passed |
 | `umi bundle validate --data-dir data/pilots/v0.3/raw` | passed; acceptance manifest admits 53 records and excludes 8 diagnostic records with 0 unready scored records |
 | all seventeen offline `umi ingest --source ...` commands | passed: AA composite facts, AA HLE, AA GDPval, AA-LCR, AA Omniscience, AA τ³-Banking, AA Terminal-Bench v2.1, CursorBench, Epoch ECI, Epoch benchmarks, both Arena cohorts, DeepSWE, and four lab-release sources |
 | `umi attempts aggregate --ledger ...` | passed; deterministic order-independent aggregation preserves per-metric denominators, splits partial diagnostics, rejects duplicate IDs and unverified ready deployments, emits no finite Economics at zero success, and requires complete provider-billing evidence for observed successful-task cost |
-| `umi operational preflight --task-pack ... --run-manifest ...` | passed; exact 70-task/14-category pack, five deployments, 350 requests, fingerprints, provider/snapshot/effort/tier mappings, and conservative `$37.191602` maximum router-price ceiling verified offline |
+| `umi operational preflight --task-pack ... --run-manifest ...` | passed; exact 70-task/14-category pack, five deployments, 350 requests, fingerprints, provider/snapshot/effort/tier mappings, balanced cyclic execution order, and conservative `$39.455197` maximum router-price ceiling including worst-case cache-write tariffs verified offline |
+| live `scripts.run_openrouter_operational_pilot --accept-network --preflight ...` | passed; all five exact snapshots, selected provider endpoints, supported efforts/parameters, service-tier request, context/output limits, and input/output/cache prices matched the frozen run manifest; the account was correctly reported unfunded at `-$0.04646605` remaining |
+| live paid-path credit gate with `--execute --accept-cost --max-cost-usd 39.455197 ...` | exited 2 before any paid request because available credits did not cover the ceiling; only the fingerprinted run contract was created and the temporary run contained zero request, request-started, or response artifacts |
 | deterministic MMLU-Pro task-pack regeneration | passed byte-for-byte from the pinned 12,032-row MIT parquet at SHA-256 `0e24a191921c2f453518a537a8b2117bd137e7714d4ef1565e9ba06c1ecb9ad8` |
 | documented validation, ingestion, scoring, comparison, analysis, and certificate CLI flows | passed with valid JSON output |
 | five-model and three-model common-evidence comparisons | passed; Kimi DeepSWE remains 25.0 on the identical five-model panel, and every raw/normalized contribution carries panel and scale identity |
@@ -27,10 +29,10 @@ project contract.
 | `umi certificate` for Opus/Kimi/GLM | passed; eleven common stable panels, 33 selected records, nine exact artifact checksums, 512 joint scenarios, deterministic result fingerprint `2158ccfd…69310c` and scored-input fingerprint `fdfac327…7bf136` |
 | portable dashboard packaging | passed at 1440 px and 390 px; 17 delivered blocks, eleven charts, and four metrics rendered; source dialog passed; no overflow, external-request, or browser-error failure |
 | consecutive complete pilot rebuilds plus schema regeneration | passed byte-for-byte with no artifact or schema drift |
-| `uv build` plus fresh temporary-environment wheel install outside the checkout | passed locally on Python 3.14.3 with wheel SHA-256 `ff93eb703b360e794929592921ad8846b0df95b67ab46da2ced919ac1aed0193`; `import umi`, `umi --help`, and the operational preflight passed; hosted 3.11/3.14 wheel results are pending this feature push |
+| `uv build` plus fresh temporary-environment wheel install outside the checkout | passed locally on Python 3.14.3 with wheel SHA-256 `ba7e835a01da8f8517039bff2d2510bf07851ca1d759490ac58375c51fe0570a`; `import umi`, `umi --help`, and the governed comparison smoke passed; hosted 3.11/3.14 wheel results are pending this feature push |
 | `scripts/verify_deepswe_trial_ledger.py --accept-network` | passed against official ledger SHA-256 `13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971`; reconciled 27,558 total rows, 2,257 selected rows, 2,231 scored attempts, 26 excluded error rows, all five success/resource means, and Fable cost coverage of 432/436 attempts |
 | `umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config` | passed without a source registry; schema and selected scored inputs are valid |
-| previously verified explicit Epoch/Arena network acquisition evidence | retained unchanged with its checksum manifest; the only network operation for this milestone was the explicit, checksum-pinned DeepSWE verification above |
+| previously verified explicit Epoch/Arena network acquisition evidence | retained unchanged with its checksum manifest; this milestone additionally used the explicitly acknowledged read-only OpenRouter preflight and insufficient-credit execution gate recorded above; no completion request was made |
 
 The normal `uv run` auto-sync path creates an editable installation. Python 3.14 ignores the
 underscore-prefixed editable `.pth` emitted in this environment, so the verified workflow installs a
@@ -38,8 +40,8 @@ wheel with `--no-editable` and uses `--no-sync` for subsequent commands. This is
 README rather than hidden as a local workaround.
 
 The most recent completed GitHub Actions baseline is
-[run 31939193849](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31939193849)
-for UMI v0.3.13 verification commit `24dd92c`. It completed successfully. Linux passed the full quality, schema,
+[run 31941354318](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31941354318)
+for UMI v0.3.14 foundation commit `c8db33b`. It completed successfully. Linux passed the full quality, schema,
 governed validation, deterministic rebuild, CLI, and isolated-wheel gates. Linux 3.11 and 3.14 each
 passed the test suite plus isolated-wheel import/help/comparison smokes. Windows 3.12 passed tests,
 generic validation, governed bundle validation, strict source/checksum audit, deterministic rebuild
@@ -157,11 +159,14 @@ analysis/                         ranking, gaps, correlations, Pareto, sensitivi
 config/                           weights, families, eligibility, overlap policy
 data/pilots/v0.3/raw/             generated typed pilot dataset and audit manifest
 data/pilots/v0.3/processed/       deterministic provisional reports and gap matrix
+data/operational/pilot-v0.1/      frozen 70-task pack and exact five-deployment run contract
 data/sources/v0.3/                frozen artifacts, reviewed facts, exact crosswalk
 schemas/                          generated JSON Schemas
 scripts/build_v03_pilot.py        deterministic offline assembly
 scripts/freeze_v03_open_sources.py explicit, immutable network acquisition
+scripts/run_openrouter_operational_pilot.py explicit cost-gated live executor
 scripts/verify_deepswe_trial_ledger.py explicit checksum-pinned facts verification
+tests/test_operational_runner.py  offline run-contract and artifact-integrity gates
 tests/test_v03_pilot.py           adversarial source/scoring/publication tests
 umi/adapters/                     pure offline source adapters
 umi/                              validation, readiness, scoring, fingerprinting, CLI

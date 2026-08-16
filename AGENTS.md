@@ -48,3 +48,7 @@
 25. Build comparison certificates only from a revalidated `ScoringBundle` and the common-evidence
     engine. Fingerprint canonical contents without timestamps; abstain rather than omit failed
     comparability bindings.
+26. Paid controlled runs require live endpoint and credit preflight, an explicit maximum-cost
+    acknowledgement, immutable request/response artifacts, and no automatic retry after a request
+    may have been billed. Router response cost is diagnostic until an admissible billing record is
+    reconciled.

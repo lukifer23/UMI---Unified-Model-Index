@@ -432,6 +432,12 @@ class AttemptTelemetry(StrictModel):
     billing_evidence: BillingEvidenceKind = BillingEvidenceKind.NONE
     cost_evidence_id: str | None = None
     provider_request_id: str | None = None
+    generation_id: str | None = None
+    resolved_model_id: str | None = None
+    serving_provider: str | None = None
+    service_tier: str | None = None
+    data_region: str | None = None
+    upstream_id: str | None = None
     error_kind: str | None = None
 
     @model_validator(mode="after")
@@ -528,6 +534,23 @@ class AttemptLedger(StrictModel):
                 raise ValueError("ready attempt ledger requires a raw or archived source artifact")
             if self.scoring_disposition != ScoringDisposition.SCORED:
                 raise ValueError("ready attempt ledger must have scored disposition")
+            for attempt in self.attempts:
+                if attempt.resolved_model_id != self.deployment.source_model_id:
+                    raise ValueError("ready attempt identity does not match deployment model")
+                if attempt.serving_provider != self.deployment.serving_provider:
+                    raise ValueError("ready attempt provider does not match deployment provider")
+                expected_tier = (
+                    None
+                    if self.deployment.service_tier == "not_applicable"
+                    else self.deployment.service_tier
+                )
+                if attempt.service_tier != expected_tier:
+                    raise ValueError("ready attempt service tier does not match deployment tier")
+                if (
+                    self.deployment.region is not None
+                    and attempt.data_region != self.deployment.region
+                ):
+                    raise ValueError("ready attempt region does not match deployment region")
         return self
 
 
@@ -608,7 +631,18 @@ class OperationalEndpointContract(StrictModel):
     prompt_price_per_token_usd: NonNegative
     completion_price_per_token_usd: NonNegative
     cache_read_price_per_token_usd: NonNegative | None = None
+    cache_write_price_per_token_usd: NonNegative | None = None
+    cache_write_1h_price_per_token_usd: NonNegative | None = None
     max_tokens: int = Field(gt=0)
+
+    @model_validator(mode="after")
+    def validate_completion_ceiling(self) -> OperationalEndpointContract:
+        if (
+            self.max_completion_tokens_supported is not None
+            and self.max_tokens > self.max_completion_tokens_supported
+        ):
+            raise ValueError("run max_tokens exceeds the endpoint completion limit")
+        return self
 
 
 class OperationalDeploymentContract(StrictModel):
@@ -619,6 +653,7 @@ class OperationalDeploymentContract(StrictModel):
     named_release: str = Field(min_length=1)
     model_release_date: date
     canonical_configuration: ConfigurationEffort
+    crosswalk_entry_id: Identifier
     endpoint: OperationalEndpointContract
 
 
@@ -645,6 +680,7 @@ class OperationalRunManifest(StrictModel):
     prompt_template_version: str = Field(min_length=1)
     response_format: str = Field(min_length=1)
     request_delivery_policy: str = Field(min_length=1)
+    execution_schedule: str = Field(min_length=1)
     deployments: tuple[OperationalDeploymentContract, ...] = Field(min_length=1)
     fingerprint: str = Field(pattern=r"^[a-f0-9]{64}$")
 

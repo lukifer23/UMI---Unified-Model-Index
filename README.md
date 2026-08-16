@@ -101,10 +101,33 @@ PYTHONPATH=. uv run --no-sync umi operational preflight \
   --run-manifest data/operational/pilot-v0.1/openrouter-five-model-run.yaml
 ```
 
-The current contract is 350 requests with a maximum router-price ceiling of `$37.191602`. This is
+The current contract is 350 requests with a maximum router-price ceiling of `$39.455197`. This
+includes ordinary prompt pricing plus the highest declared cache-write tariff for every prompt, so
+provider-side prefix caching cannot invalidate the authorization ceiling. It is
 not a completed evaluation, observed bill, or scoring input. No result enters Capability,
 Efficiency, Economics, or Overall until the actual immutable responses, generation metadata,
 deployment checks, complete cohort, and billing evidence clear their respective gates.
+
+The paid executor is a separate explicit script. A live, read-only preflight validates current
+model and endpoint metadata, all selected prices and request parameters, and account credits:
+
+```bash
+PYTHONPATH=. uv run --no-sync python -m scripts.run_openrouter_operational_pilot \
+  --accept-network --preflight \
+  --task-pack data/operational/pilot-v0.1/mmlu-pro-test-balanced-70-v1.json \
+  --run-manifest data/operational/pilot-v0.1/openrouter-five-model-run.yaml
+```
+
+Execution additionally requires `--execute`, `--accept-cost`, a numeric `--max-cost-usd` at least
+as large as the remaining conservative ceiling, a caller-supplied stable run ID/evaluation date,
+and an output directory. It writes the exact request before each call, marks the paid request as
+started, and never retries a missing or failed paid response automatically. A resumed run reuses
+retained byte-exact response bodies, polls only their non-billable generation metadata, and rejects
+any changed task, manifest, endpoint, provider, price, model, tier, checksum, or artifact fingerprint.
+Completed deployments
+produce raw-artifact manifests, ready attempt ledgers, deterministic aggregations, and a run summary.
+OpenRouter response cost remains `router_response_cost`, so the run can unlock exact Efficiency but
+not scoring-ready Economics without a separately admissible billing-record artifact.
 
 ```bash
 uv run --no-sync python -m scripts.build_v03_pilot

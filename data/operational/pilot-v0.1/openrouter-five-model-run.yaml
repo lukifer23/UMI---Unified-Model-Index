@@ -18,12 +18,14 @@ tools_enabled: false
 prompt_template_version: umi-mcq-json-v1
 response_format: json_object
 request_delivery_policy: One valid provider completion per task; no automatic request retries; transport and provider errors block cohort completion and are not graded as task failures.
+execution_schedule: Task order follows the frozen pack; deployment order rotates cyclically by zero-based task index so each of five deployments occupies each within-task ordinal exactly 14 times.
 deployments:
   - deployment_id: claude-opus-5-max-openrouter-anthropic-default
     model_id: claude-opus-5-max
     named_release: Claude Opus 5
     model_release_date: 2026-07-24
     canonical_configuration: max
+    crosswalk_entry_id: openrouter-mmlu-pro-opus-max-anthropic-v1
     endpoint:
       router_model_id: anthropic/claude-opus-5
       canonical_snapshot_id: anthropic/claude-opus-5-20260723
@@ -38,12 +40,15 @@ deployments:
       prompt_price_per_token_usd: 0.000005
       completion_price_per_token_usd: 0.000025
       cache_read_price_per_token_usd: 0.0000005
+      cache_write_price_per_token_usd: 0.00000625
+      cache_write_1h_price_per_token_usd: 0.00001
       max_tokens: 4096
   - deployment_id: claude-fable-5-max-openrouter-anthropic-default
     model_id: claude-fable-5-max
     named_release: Claude Fable 5
     model_release_date: 2026-06-09
     canonical_configuration: max
+    crosswalk_entry_id: openrouter-mmlu-pro-fable-max-anthropic-v1
     endpoint:
       router_model_id: anthropic/claude-fable-5
       canonical_snapshot_id: anthropic/claude-5-fable-20260609
@@ -58,12 +63,15 @@ deployments:
       prompt_price_per_token_usd: 0.00001
       completion_price_per_token_usd: 0.00005
       cache_read_price_per_token_usd: 0.000001
+      cache_write_price_per_token_usd: 0.0000125
+      cache_write_1h_price_per_token_usd: 0.00002
       max_tokens: 4096
   - deployment_id: gpt-5.6-sol-max-openrouter-openai-default
     model_id: gpt-5.6-sol-max
     named_release: GPT-5.6 Sol
     model_release_date: 2026-07-09
     canonical_configuration: max
+    crosswalk_entry_id: openrouter-mmlu-pro-sol-max-openai-v1
     endpoint:
       router_model_id: openai/gpt-5.6-sol
       canonical_snapshot_id: openai/gpt-5.6-sol-20260709
@@ -78,12 +86,15 @@ deployments:
       prompt_price_per_token_usd: 0.000005
       completion_price_per_token_usd: 0.00003
       cache_read_price_per_token_usd: 0.0000005
+      cache_write_price_per_token_usd: 0.00000625
+      cache_write_1h_price_per_token_usd: null
       max_tokens: 4096
   - deployment_id: kimi-k3-max-openrouter-moonshot-mxfp4
     model_id: kimi-k3-max
     named_release: Kimi K3
     model_release_date: 2026-07-16
     canonical_configuration: max
+    crosswalk_entry_id: openrouter-mmlu-pro-kimi-max-moonshot-v1
     endpoint:
       router_model_id: moonshotai/kimi-k3
       canonical_snapshot_id: moonshotai/kimi-k3-20260715
@@ -98,12 +109,15 @@ deployments:
       prompt_price_per_token_usd: 0.000003
       completion_price_per_token_usd: 0.000015
       cache_read_price_per_token_usd: 0.0000003
+      cache_write_price_per_token_usd: null
+      cache_write_1h_price_per_token_usd: null
       max_tokens: 4096
   - deployment_id: glm-5.2-max-openrouter-zai-fp8
     model_id: glm-5.2-max
     named_release: GLM-5.2
     model_release_date: 2026-06-16
     canonical_configuration: max
+    crosswalk_entry_id: openrouter-mmlu-pro-glm-max-zai-v1
     endpoint:
       router_model_id: z-ai/glm-5.2
       canonical_snapshot_id: z-ai/glm-5.2-20260616
@@ -118,5 +132,7 @@ deployments:
       prompt_price_per_token_usd: 0.0000014
       completion_price_per_token_usd: 0.0000044
       cache_read_price_per_token_usd: 0.00000026
+      cache_write_price_per_token_usd: null
+      cache_write_1h_price_per_token_usd: null
       max_tokens: 4096
-fingerprint: bd7aa45eac6f364d82494e6c8a18f05f3ac4c99a6d408b8d0986237d8f6dd154
+fingerprint: 7bcef949aca4ec06278bd448c7f91166325758e1200ab5d03b9cd4a4fcb4eb0c

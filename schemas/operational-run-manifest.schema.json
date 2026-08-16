@@ -29,6 +29,11 @@
         "canonical_configuration": {
           "$ref": "#/$defs/ConfigurationEffort"
         },
+        "crosswalk_entry_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Crosswalk Entry Id",
+          "type": "string"
+        },
         "deployment_id": {
           "pattern": "^[a-z0-9][a-z0-9._-]*$",
           "title": "Deployment Id",
@@ -59,6 +64,7 @@
         "named_release",
         "model_release_date",
         "canonical_configuration",
+        "crosswalk_entry_id",
         "endpoint"
       ],
       "title": "OperationalDeploymentContract",
@@ -80,6 +86,32 @@
           ],
           "default": null,
           "title": "Cache Read Price Per Token Usd"
+        },
+        "cache_write_1h_price_per_token_usd": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cache Write 1H Price Per Token Usd"
+        },
+        "cache_write_price_per_token_usd": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cache Write Price Per Token Usd"
         },
         "canonical_snapshot_id": {
           "minLength": 1,
@@ -230,6 +262,11 @@
       "title": "Endpoint Facts Source Url",
       "type": "string"
     },
+    "execution_schedule": {
+      "minLength": 1,
+      "title": "Execution Schedule",
+      "type": "string"
+    },
     "fingerprint": {
       "pattern": "^[a-f0-9]{64}$",
       "title": "Fingerprint",
@@ -332,6 +369,7 @@
     "prompt_template_version",
     "response_format",
     "request_delivery_policy",
+    "execution_schedule",
     "deployments",
     "fingerprint"
   ],

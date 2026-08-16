@@ -97,9 +97,26 @@ def maximum_request_cost_usd(
     """Conservative router-price ceiling; UTF-8 bytes bound prompt token count."""
     endpoint = deployment.endpoint
     prompt_bytes = len(SYSTEM_PROMPT.encode()) + len(task_prompt(task).encode())
+    possible_cache_write_price = max(
+        endpoint.cache_write_price_per_token_usd or 0,
+        endpoint.cache_write_1h_price_per_token_usd or 0,
+    )
     return (
-        prompt_bytes * endpoint.prompt_price_per_token_usd
+        prompt_bytes
+        * (endpoint.prompt_price_per_token_usd + possible_cache_write_price)
         + endpoint.max_tokens * endpoint.completion_price_per_token_usd
+    )
+
+
+def execution_schedule(
+    pack: ControlledTaskPack, manifest: OperationalRunManifest
+) -> tuple[tuple[ControlledTask, OperationalDeploymentContract], ...]:
+    """Rotate deployment order per task so each occupies every ordinal equally."""
+    deployments = manifest.deployments
+    return tuple(
+        (task, deployments[(task_index + offset) % len(deployments)])
+        for task_index, task in enumerate(pack.tasks)
+        for offset in range(len(deployments))
     )
 
 

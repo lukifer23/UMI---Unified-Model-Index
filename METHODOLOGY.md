@@ -674,10 +674,38 @@ can become ready. The explicit effort mapping is `max` for Opus 5, Fable 5, GPT-
 GLM-5.2 maps canonical pilot Max to its highest OpenRouter-supported effort, `xhigh`. This mapping is
 deployment-specific evidence, not a general alias rule.
 
+Execution follows a deterministic cyclic deployment rotation within each task. Across 70 tasks and
+five deployments, every deployment occupies each within-task ordinal exactly 14 times. This bounds
+fixed ordering and time-of-run bias without changing the frozen task order. Before each paid run,
+live metadata must exactly match the manifest's canonical snapshot, provider endpoint, supported
+effort and parameters, service-tier request, context/output limits, and all reviewed token/cache
+prices. Available account credits and the caller's explicit cost authorization must each cover the
+remaining worst-case ceiling.
+
+The runner writes an immutable request and paid-request-start marker before sending. It performs no
+automatic completion retries. If a response is missing after a started request, or a request error
+could have ambiguous billing, the run blocks for manual reconciliation. Resume may retrieve
+generation metadata for an already retained response because that lookup is non-billable; it may not
+silently duplicate the generation. The exact response and generation wire bytes are retained beside
+their parsed envelopes and verified by SHA-256 before aggregation. Each result binds the raw response
+to generation ID, router
+request ID, resolved model snapshot, serving provider, service tier, data region, upstream ID, token
+accounting, wall time, and charged router cost. A ready ledger rejects per-attempt model, provider,
+tier, or pinned-region identities that disagree with its deployment.
+
+OpenRouter reports reasoning tokens inside completion tokens. UMI therefore records visible output
+tokens as `completion_tokens - reasoning_tokens` and records reasoning separately. If either field
+is absent or inconsistent, visible output and reasoning remain missing rather than being guessed.
+Prompt cache reads and writes are taken only from their explicit usage-detail fields; absent fields
+remain null. Router generation cost must reconcile exactly to response usage cost, but it retains
+`router_response_cost` evidence status. It can inform a diagnostic observed-spend summary and cannot
+create ready Economics under the provider-billing-record rule.
+
 Offline preflight uses each frozen endpoint's reviewed prompt and completion prices. It conservatively
-bounds prompt tokens by UTF-8 byte count and assumes every response consumes all 4,096 permitted
+bounds prompt tokens by UTF-8 byte count, charges every prompt at both its ordinary input tariff and
+the highest declared cache-write tariff, and assumes every response consumes all 4,096 permitted
 completion tokens. The 350-request contract therefore has a maximum price-table ceiling of
-`$37.191602`. This ceiling is neither observed cost nor billing evidence. Until a completed run
+`$39.455197`. This ceiling is neither observed cost nor billing evidence. Until a completed run
 produces immutable raw responses and generation metadata, exact deployment verification, complete
 per-attempt telemetry, and admissible billing records, the cohort remains non-scoring and changes no
 Capability, Efficiency, Economics, coverage, confidence, or headline gate.

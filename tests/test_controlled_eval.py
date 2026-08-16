@@ -6,14 +6,17 @@ from copy import deepcopy
 from pathlib import Path
 
 import pytest
+from pydantic import ValidationError
 
 from umi.cli import build_parser, run
 from umi.controlled_eval import (
+    execution_schedule,
     load_run_manifest,
     load_task_pack,
     operational_preflight,
     request_payload,
 )
+from umi.schemas import OperationalRunManifest
 
 ROOT = Path(__file__).parents[1]
 PACK_PATH = ROOT / "data" / "operational" / "pilot-v0.1" / "mmlu-pro-test-balanced-70-v1.json"
@@ -48,11 +51,11 @@ def test_operational_manifest_binds_all_five_exact_deployments_and_cost_ceiling(
         "task_count": 70,
         "deployment_count": 5,
         "request_count": 350,
-        "maximum_cost_usd": 37.191602,
+        "maximum_cost_usd": 39.455197,
         "maximum_cost_by_deployment_usd": {
-            "claude-opus-5-max-openrouter-anthropic-default": 7.48022,
-            "claude-fable-5-max-openrouter-anthropic-default": 14.96044,
-            "gpt-5.6-sol-max-openrouter-openai-default": 8.913821,
+            "claude-opus-5-max-openrouter-anthropic-default": 8.104661,
+            "claude-fable-5-max-openrouter-anthropic-default": 16.209321,
+            "gpt-5.6-sol-max-openrouter-openai-default": 9.304095,
             "kimi-k3-max-openrouter-moonshot-mxfp4": 4.488132,
             "glm-5.2-max-openrouter-zai-fp8": 1.34899,
         },
@@ -71,6 +74,32 @@ def test_operational_manifest_binds_all_five_exact_deployments_and_cost_ceiling(
         "xhigh",
     )
     assert {value[2] for key, value in mappings.items() if key != "glm-5.2-max"} == {"max"}
+    schedule = execution_schedule(pack, manifest)
+    assert len(schedule) == 350
+    assert [item[1].model_id for item in schedule[:5]] == [
+        deployment.model_id for deployment in manifest.deployments
+    ]
+    assert [item[1].model_id for item in schedule[5:10]] == [
+        deployment.model_id for deployment in (*manifest.deployments[1:], manifest.deployments[0])
+    ]
+    for ordinal in range(5):
+        counts = {
+            deployment.model_id: sum(
+                scheduled_deployment.model_id == deployment.model_id
+                for index, (_, scheduled_deployment) in enumerate(schedule)
+                if index % 5 == ordinal
+            )
+            for deployment in manifest.deployments
+        }
+        assert set(counts.values()) == {14}
+
+
+def test_operational_manifest_rejects_run_tokens_above_endpoint_limit() -> None:
+    manifest = load_run_manifest(MANIFEST_PATH)
+    payload = deepcopy(manifest.model_dump(mode="json"))
+    payload["deployments"][0]["endpoint"]["max_tokens"] = 128_001
+    with pytest.raises(ValidationError, match="exceeds the endpoint completion limit"):
+        OperationalRunManifest.model_validate(payload)
 
 
 def test_request_is_fail_closed_and_never_sends_gold_answer() -> None:

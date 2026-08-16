@@ -222,6 +222,12 @@ attempts:
     billing_evidence: provider_billing_record
     cost_evidence_id: immutable-billing-row-reference
     provider_request_id: provider-request-reference
+    generation_id: generation-reference
+    resolved_model_id: provider/model-snapshot
+    serving_provider: exact-provider
+    service_tier: standard
+    data_region: us
+    upstream_id: provider-upstream-reference
 ```
 
 Missing observations remain null; zero means observed zero. `observed_cost_usd` requires an explicit
@@ -234,6 +240,9 @@ evidence. It is ready only when provider-billing cost covers every attempt and a
 `schemas/attempt-ledger-aggregation.schema.json` defines this deterministic output.
 Aggregation does not itself authorize scoring: the frozen artifact, registry entry, exact crosswalk,
 and resulting scored bundle must still clear their ordinary validation gates.
+Ready ledgers additionally require every attempt's resolved model, serving provider, service tier,
+and any pinned region to agree with the single deployment identity. These per-attempt fields remain
+in raw and derived output so a fallback or mixed deployment cannot hide behind a ledger-level label.
 
 ### Controlled task pack and run manifest
 
@@ -246,9 +255,12 @@ selected counts must match the tasks and remain balanced.
 `schemas/operational-run-manifest.schema.json` binds that pack fingerprint to one or more exact UMI
 deployments. Each deployment declares the canonical UMI configuration and the router model alias,
 immutable endpoint snapshot, provider slug/name, endpoint name, requested and expected service tier,
-endpoint reasoning effort, context/completion limits, reviewed per-token prices, and run token ceiling.
-The manifest also freezes workload/cohort/harness/prompt/success identities and the no-tool delivery
-policy. These contracts are acquisition/execution inputs, not scored measurements or attempt ledgers.
+endpoint reasoning effort, context/completion limits, reviewed input/output/cache-read/cache-write
+per-token prices, run token ceiling, and intended exact crosswalk identity. The manifest also freezes
+workload/cohort/harness/prompt/success identities, the no-tool delivery policy, and the deterministic
+cyclic execution schedule. These contracts are acquisition/execution inputs, not scored measurements
+or attempt ledgers; their crosswalk identities do not become governed crosswalk entries until a
+completed artifact is admitted through the ordinary registry and bundle gates.
 
 Pricing records preserve advertised input/output/cache/reasoning/tool prices but do not substitute
 for observed successful-task Economics in v0.3. `cache_write_per_million` is the ordinary or
