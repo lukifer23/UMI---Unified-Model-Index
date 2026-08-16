@@ -1,0 +1,340 @@
+{
+  "$defs": {
+    "ConfigurationEffort": {
+      "enum": [
+        "standard",
+        "off",
+        "low",
+        "medium",
+        "high",
+        "max",
+        "xhigh",
+        "custom"
+      ],
+      "title": "ConfigurationEffort",
+      "type": "string"
+    },
+    "InteractionProfile": {
+      "enum": [
+        "interactive_round",
+        "autonomous_task"
+      ],
+      "title": "InteractionProfile",
+      "type": "string"
+    },
+    "OperationalDeploymentContract": {
+      "additionalProperties": false,
+      "description": "Exact UMI configuration to router deployment crosswalk for a controlled run.",
+      "properties": {
+        "canonical_configuration": {
+          "$ref": "#/$defs/ConfigurationEffort"
+        },
+        "deployment_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Deployment Id",
+          "type": "string"
+        },
+        "endpoint": {
+          "$ref": "#/$defs/OperationalEndpointContract"
+        },
+        "model_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "model_release_date": {
+          "format": "date",
+          "title": "Model Release Date",
+          "type": "string"
+        },
+        "named_release": {
+          "minLength": 1,
+          "title": "Named Release",
+          "type": "string"
+        }
+      },
+      "required": [
+        "deployment_id",
+        "model_id",
+        "named_release",
+        "model_release_date",
+        "canonical_configuration",
+        "endpoint"
+      ],
+      "title": "OperationalDeploymentContract",
+      "type": "object"
+    },
+    "OperationalEndpointContract": {
+      "additionalProperties": false,
+      "description": "Reviewed router endpoint and price facts used for request and budget gates.",
+      "properties": {
+        "cache_read_price_per_token_usd": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cache Read Price Per Token Usd"
+        },
+        "canonical_snapshot_id": {
+          "minLength": 1,
+          "title": "Canonical Snapshot Id",
+          "type": "string"
+        },
+        "completion_price_per_token_usd": {
+          "minimum": 0,
+          "title": "Completion Price Per Token Usd",
+          "type": "number"
+        },
+        "context_length": {
+          "exclusiveMinimum": 0,
+          "title": "Context Length",
+          "type": "integer"
+        },
+        "endpoint_name": {
+          "minLength": 1,
+          "title": "Endpoint Name",
+          "type": "string"
+        },
+        "expected_service_tier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expected Service Tier"
+        },
+        "max_completion_tokens_supported": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Completion Tokens Supported"
+        },
+        "max_tokens": {
+          "exclusiveMinimum": 0,
+          "title": "Max Tokens",
+          "type": "integer"
+        },
+        "prompt_price_per_token_usd": {
+          "minimum": 0,
+          "title": "Prompt Price Per Token Usd",
+          "type": "number"
+        },
+        "provider_name": {
+          "minLength": 1,
+          "title": "Provider Name",
+          "type": "string"
+        },
+        "provider_slug": {
+          "minLength": 1,
+          "title": "Provider Slug",
+          "type": "string"
+        },
+        "reasoning_effort": {
+          "$ref": "#/$defs/ConfigurationEffort"
+        },
+        "router_model_id": {
+          "minLength": 1,
+          "title": "Router Model Id",
+          "type": "string"
+        },
+        "service_tier_request": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Service Tier Request"
+        }
+      },
+      "required": [
+        "router_model_id",
+        "canonical_snapshot_id",
+        "provider_slug",
+        "provider_name",
+        "endpoint_name",
+        "reasoning_effort",
+        "context_length",
+        "prompt_price_per_token_usd",
+        "completion_price_per_token_usd",
+        "max_tokens"
+      ],
+      "title": "OperationalEndpointContract",
+      "type": "object"
+    },
+    "WorkloadCategory": {
+      "enum": [
+        "coding_agents",
+        "research_analysis",
+        "tool_use_agents",
+        "browser_computer_use",
+        "general_interaction",
+        "long_horizon"
+      ],
+      "title": "WorkloadCategory",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Versioned, cost-bounded contract for one controlled five-model cohort.",
+  "properties": {
+    "api_base_url": {
+      "format": "uri",
+      "maxLength": 2083,
+      "minLength": 1,
+      "title": "Api Base Url",
+      "type": "string"
+    },
+    "cohort_key": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Cohort Key",
+      "type": "string"
+    },
+    "deployments": {
+      "items": {
+        "$ref": "#/$defs/OperationalDeploymentContract"
+      },
+      "minItems": 1,
+      "title": "Deployments",
+      "type": "array"
+    },
+    "endpoint_facts_accessed": {
+      "format": "date",
+      "title": "Endpoint Facts Accessed",
+      "type": "string"
+    },
+    "endpoint_facts_source_url": {
+      "format": "uri",
+      "maxLength": 2083,
+      "minLength": 1,
+      "title": "Endpoint Facts Source Url",
+      "type": "string"
+    },
+    "fingerprint": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Fingerprint",
+      "type": "string"
+    },
+    "harness_version": {
+      "minLength": 1,
+      "title": "Harness Version",
+      "type": "string"
+    },
+    "interaction_profile": {
+      "$ref": "#/$defs/InteractionProfile"
+    },
+    "manifest_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Manifest Id",
+      "type": "string"
+    },
+    "manifest_version": {
+      "minLength": 1,
+      "title": "Manifest Version",
+      "type": "string"
+    },
+    "operational_profile_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Operational Profile Id",
+      "type": "string"
+    },
+    "prompt_template_version": {
+      "minLength": 1,
+      "title": "Prompt Template Version",
+      "type": "string"
+    },
+    "request_delivery_policy": {
+      "minLength": 1,
+      "title": "Request Delivery Policy",
+      "type": "string"
+    },
+    "response_format": {
+      "minLength": 1,
+      "title": "Response Format",
+      "type": "string"
+    },
+    "success_definition": {
+      "minLength": 1,
+      "title": "Success Definition",
+      "type": "string"
+    },
+    "success_definition_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Success Definition Id",
+      "type": "string"
+    },
+    "task_pack_fingerprint": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Task Pack Fingerprint",
+      "type": "string"
+    },
+    "task_pack_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Task Pack Id",
+      "type": "string"
+    },
+    "tools_enabled": {
+      "title": "Tools Enabled",
+      "type": "boolean"
+    },
+    "workload": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Workload",
+      "type": "string"
+    },
+    "workload_category": {
+      "$ref": "#/$defs/WorkloadCategory"
+    },
+    "workload_version": {
+      "minLength": 1,
+      "title": "Workload Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "manifest_version",
+    "manifest_id",
+    "task_pack_id",
+    "task_pack_fingerprint",
+    "api_base_url",
+    "endpoint_facts_accessed",
+    "endpoint_facts_source_url",
+    "workload",
+    "workload_category",
+    "interaction_profile",
+    "operational_profile_id",
+    "cohort_key",
+    "workload_version",
+    "harness_version",
+    "success_definition_id",
+    "success_definition",
+    "tools_enabled",
+    "prompt_template_version",
+    "response_format",
+    "request_delivery_policy",
+    "deployments",
+    "fingerprint"
+  ],
+  "title": "OperationalRunManifest",
+  "type": "object"
+}

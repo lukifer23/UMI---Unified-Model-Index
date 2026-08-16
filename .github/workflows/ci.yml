@@ -42,6 +42,9 @@ jobs:
           uv run umi pareto --data-dir data/pilots/v0.3/raw >/dev/null
           uv run umi claims --data-dir data/pilots/v0.3/raw >/dev/null
           uv run umi gaps --data-dir data/pilots/v0.3/raw >/dev/null
+          uv run umi operational preflight \
+            --task-pack data/operational/pilot-v0.1/mmlu-pro-test-balanced-70-v1.json \
+            --run-manifest data/operational/pilot-v0.1/openrouter-five-model-run.yaml >/dev/null
       - name: Build and smoke isolated wheel
         shell: bash
         run: |
@@ -112,3 +115,4 @@ jobs:
       - run: uv run python -m scripts.build_v03_pilot
       - run: git diff --exit-code -- data/pilots/v0.3
       - run: uv run umi compare --data-dir data/pilots/v0.3/raw --models claude-opus-5-max kimi-k3-max glm-5.2-max
+      - run: uv run umi operational preflight --task-pack data/operational/pilot-v0.1/mmlu-pro-test-balanced-70-v1.json --run-manifest data/operational/pilot-v0.1/openrouter-five-model-run.yaml

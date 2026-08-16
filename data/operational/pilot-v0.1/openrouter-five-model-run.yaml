@@ -1,0 +1,122 @@
+manifest_version: umi-operational-run-manifest-v0.1
+manifest_id: openrouter-five-model-mmlu-pro-v1
+task_pack_id: mmlu-pro-test-balanced-70-v1
+task_pack_fingerprint: 383b6220311ccb10133d1e681d73249ce81010719392b15c697abab15f96400e
+api_base_url: https://openrouter.ai/api/v1
+endpoint_facts_accessed: 2026-08-16
+endpoint_facts_source_url: https://openrouter.ai/api/v1/models
+workload: mmlu-pro-controlled-general
+workload_category: general_interaction
+interaction_profile: interactive_round
+operational_profile_id: mmlu-pro-v1-one-turn-json-no-tools
+cohort_key: mmlu-pro-test-balanced-70-v1
+workload_version: MMLU-Pro b189ec765aa7 / UMI balanced-70 v1
+harness_version: umi-openrouter-controlled-harness-v0.1
+success_definition_id: exact-multiple-choice-answer-v1
+success_definition: A valid JSON answer whose single uppercase option letter exactly matches the frozen source answer.
+tools_enabled: false
+prompt_template_version: umi-mcq-json-v1
+response_format: json_object
+request_delivery_policy: One valid provider completion per task; no automatic request retries; transport and provider errors block cohort completion and are not graded as task failures.
+deployments:
+  - deployment_id: claude-opus-5-max-openrouter-anthropic-default
+    model_id: claude-opus-5-max
+    named_release: Claude Opus 5
+    model_release_date: 2026-07-24
+    canonical_configuration: max
+    endpoint:
+      router_model_id: anthropic/claude-opus-5
+      canonical_snapshot_id: anthropic/claude-opus-5-20260723
+      provider_slug: anthropic
+      provider_name: Anthropic
+      endpoint_name: Anthropic | anthropic/claude-opus-5-20260723
+      service_tier_request: null
+      expected_service_tier: null
+      reasoning_effort: max
+      context_length: 1000000
+      max_completion_tokens_supported: 128000
+      prompt_price_per_token_usd: 0.000005
+      completion_price_per_token_usd: 0.000025
+      cache_read_price_per_token_usd: 0.0000005
+      max_tokens: 4096
+  - deployment_id: claude-fable-5-max-openrouter-anthropic-default
+    model_id: claude-fable-5-max
+    named_release: Claude Fable 5
+    model_release_date: 2026-06-09
+    canonical_configuration: max
+    endpoint:
+      router_model_id: anthropic/claude-fable-5
+      canonical_snapshot_id: anthropic/claude-5-fable-20260609
+      provider_slug: anthropic
+      provider_name: Anthropic
+      endpoint_name: Anthropic | anthropic/claude-5-fable-20260609
+      service_tier_request: null
+      expected_service_tier: null
+      reasoning_effort: max
+      context_length: 1000000
+      max_completion_tokens_supported: 128000
+      prompt_price_per_token_usd: 0.00001
+      completion_price_per_token_usd: 0.00005
+      cache_read_price_per_token_usd: 0.000001
+      max_tokens: 4096
+  - deployment_id: gpt-5.6-sol-max-openrouter-openai-default
+    model_id: gpt-5.6-sol-max
+    named_release: GPT-5.6 Sol
+    model_release_date: 2026-07-09
+    canonical_configuration: max
+    endpoint:
+      router_model_id: openai/gpt-5.6-sol
+      canonical_snapshot_id: openai/gpt-5.6-sol-20260709
+      provider_slug: openai
+      provider_name: OpenAI
+      endpoint_name: OpenAI | openai/gpt-5.6-sol-20260709
+      service_tier_request: default
+      expected_service_tier: default
+      reasoning_effort: max
+      context_length: 1050000
+      max_completion_tokens_supported: 128000
+      prompt_price_per_token_usd: 0.000005
+      completion_price_per_token_usd: 0.00003
+      cache_read_price_per_token_usd: 0.0000005
+      max_tokens: 4096
+  - deployment_id: kimi-k3-max-openrouter-moonshot-mxfp4
+    model_id: kimi-k3-max
+    named_release: Kimi K3
+    model_release_date: 2026-07-16
+    canonical_configuration: max
+    endpoint:
+      router_model_id: moonshotai/kimi-k3
+      canonical_snapshot_id: moonshotai/kimi-k3-20260715
+      provider_slug: moonshotai/mxfp4
+      provider_name: Moonshot AI
+      endpoint_name: Moonshot AI | moonshotai/kimi-k3-20260715
+      service_tier_request: null
+      expected_service_tier: null
+      reasoning_effort: max
+      context_length: 1048576
+      max_completion_tokens_supported: null
+      prompt_price_per_token_usd: 0.000003
+      completion_price_per_token_usd: 0.000015
+      cache_read_price_per_token_usd: 0.0000003
+      max_tokens: 4096
+  - deployment_id: glm-5.2-max-openrouter-zai-fp8
+    model_id: glm-5.2-max
+    named_release: GLM-5.2
+    model_release_date: 2026-06-16
+    canonical_configuration: max
+    endpoint:
+      router_model_id: z-ai/glm-5.2
+      canonical_snapshot_id: z-ai/glm-5.2-20260616
+      provider_slug: z-ai/fp8
+      provider_name: Z.AI
+      endpoint_name: Z.AI | z-ai/glm-5.2-20260616
+      service_tier_request: null
+      expected_service_tier: null
+      reasoning_effort: xhigh
+      context_length: 1048576
+      max_completion_tokens_supported: 131072
+      prompt_price_per_token_usd: 0.0000014
+      completion_price_per_token_usd: 0.0000044
+      cache_read_price_per_token_usd: 0.00000026
+      max_tokens: 4096
+fingerprint: bd7aa45eac6f364d82494e6c8a18f05f3ac4c99a6d408b8d0986237d8f6dd154

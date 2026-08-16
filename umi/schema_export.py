@@ -15,8 +15,10 @@ from umi.schemas import (
     BenchmarkContribution,
     CapabilityComparisonResult,
     ComparisonCertificate,
+    ControlledTaskPack,
     ModelCrosswalk,
     NormalizationPanel,
+    OperationalRunManifest,
     OverlapPolicy,
     ScoreScale,
     ScoringResult,
@@ -38,6 +40,8 @@ SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "benchmark-contribution.schema.json": BenchmarkContribution,
     "capability-comparison.schema.json": CapabilityComparisonResult,
     "comparison-certificate.schema.json": ComparisonCertificate,
+    "controlled-task-pack.schema.json": ControlledTaskPack,
+    "operational-run-manifest.schema.json": OperationalRunManifest,
 }
 
 

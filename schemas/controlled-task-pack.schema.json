@@ -1,0 +1,184 @@
+{
+  "$defs": {
+    "ControlledTask": {
+      "additionalProperties": false,
+      "description": "One frozen, independently gradable task in a controlled evaluation pack.",
+      "properties": {
+        "category": {
+          "minLength": 1,
+          "title": "Category",
+          "type": "string"
+        },
+        "correct_answer": {
+          "pattern": "^[A-Z]$",
+          "title": "Correct Answer",
+          "type": "string"
+        },
+        "correct_answer_index": {
+          "exclusiveMaximum": 26,
+          "minimum": 0,
+          "title": "Correct Answer Index",
+          "type": "integer"
+        },
+        "options": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 26,
+          "minItems": 2,
+          "title": "Options",
+          "type": "array"
+        },
+        "question": {
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "source_question_id": {
+          "minimum": 0,
+          "title": "Source Question Id",
+          "type": "integer"
+        },
+        "source_row_index": {
+          "minimum": 0,
+          "title": "Source Row Index",
+          "type": "integer"
+        },
+        "source_subset": {
+          "minLength": 1,
+          "title": "Source Subset",
+          "type": "string"
+        },
+        "task_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "source_row_index",
+        "source_question_id",
+        "category",
+        "source_subset",
+        "question",
+        "options",
+        "correct_answer",
+        "correct_answer_index"
+      ],
+      "title": "ControlledTask",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Frozen source-bound cohort used identically for every deployment.",
+  "properties": {
+    "category_selected_counts": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Category Selected Counts",
+      "type": "object"
+    },
+    "category_source_counts": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Category Source Counts",
+      "type": "object"
+    },
+    "config": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Config",
+      "type": "string"
+    },
+    "fingerprint": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Fingerprint",
+      "type": "string"
+    },
+    "license_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "License Id",
+      "type": "string"
+    },
+    "pack_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Pack Id",
+      "type": "string"
+    },
+    "pack_version": {
+      "minLength": 1,
+      "title": "Pack Version",
+      "type": "string"
+    },
+    "selection_algorithm": {
+      "minLength": 1,
+      "title": "Selection Algorithm",
+      "type": "string"
+    },
+    "selection_seed": {
+      "minLength": 1,
+      "title": "Selection Seed",
+      "type": "string"
+    },
+    "source_dataset": {
+      "minLength": 1,
+      "title": "Source Dataset",
+      "type": "string"
+    },
+    "source_file": {
+      "minLength": 1,
+      "title": "Source File",
+      "type": "string"
+    },
+    "source_file_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Source File Sha256",
+      "type": "string"
+    },
+    "source_revision": {
+      "pattern": "^[a-f0-9]{40}$",
+      "title": "Source Revision",
+      "type": "string"
+    },
+    "split": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Split",
+      "type": "string"
+    },
+    "tasks": {
+      "items": {
+        "$ref": "#/$defs/ControlledTask"
+      },
+      "minItems": 1,
+      "title": "Tasks",
+      "type": "array"
+    },
+    "tasks_per_category": {
+      "exclusiveMinimum": 0,
+      "title": "Tasks Per Category",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "pack_version",
+    "pack_id",
+    "source_dataset",
+    "source_revision",
+    "source_file",
+    "source_file_sha256",
+    "license_id",
+    "config",
+    "split",
+    "selection_algorithm",
+    "selection_seed",
+    "tasks_per_category",
+    "category_source_counts",
+    "category_selected_counts",
+    "tasks",
+    "fingerprint"
+  ],
+  "title": "ControlledTaskPack",
+  "type": "object"
+}

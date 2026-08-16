@@ -44,6 +44,7 @@ from umi.bundle import (
 )
 from umi.certificate import build_comparison_certificate
 from umi.config import load_project_config
+from umi.controlled_eval import load_run_manifest, load_task_pack, operational_preflight
 from umi.loading import load_dataset, load_model_crosswalk, load_source_registry
 from umi.scoring import score_bundle, score_dataset
 from umi.source_policy import (
@@ -206,6 +207,17 @@ def build_parser() -> argparse.ArgumentParser:
     attempt_aggregate.add_argument("--ledger", required=True)
     attempt_aggregate.add_argument("--format", choices=("json", "csv"), default="json")
     attempt_aggregate.add_argument("--output")
+    operational = subparsers.add_parser("operational")
+    operational_commands = operational.add_subparsers(
+        dest="operational_command", required=True
+    )
+    operational_preflight_parser = operational_commands.add_parser("preflight")
+    operational_preflight_parser.add_argument("--task-pack", required=True)
+    operational_preflight_parser.add_argument("--run-manifest", required=True)
+    operational_preflight_parser.add_argument(
+        "--format", choices=("json", "csv"), default="json"
+    )
+    operational_preflight_parser.add_argument("--output")
     return parser
 
 
@@ -275,6 +287,12 @@ def _adapt_source(args: argparse.Namespace) -> Any:
 
 
 def run(args: argparse.Namespace) -> int:
+    if args.command == "operational":
+        operational_report = operational_preflight(
+            load_task_pack(args.task_pack), load_run_manifest(args.run_manifest)
+        )
+        _emit(operational_report, args.format, args.output)
+        return 0 if operational_report["valid"] else 1
     if args.command == "attempts":
         _emit(
             aggregate_attempt_ledger(load_attempt_ledger(args.ledger)),

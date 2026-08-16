@@ -531,6 +531,136 @@ class AttemptLedger(StrictModel):
         return self
 
 
+class ControlledTask(StrictModel):
+    """One frozen, independently gradable task in a controlled evaluation pack."""
+
+    task_id: Identifier
+    source_row_index: int = Field(ge=0)
+    source_question_id: int = Field(ge=0)
+    category: str = Field(min_length=1)
+    source_subset: str = Field(min_length=1)
+    question: str = Field(min_length=1)
+    options: tuple[str, ...] = Field(min_length=2, max_length=26)
+    correct_answer: str = Field(pattern=r"^[A-Z]$")
+    correct_answer_index: int = Field(ge=0, lt=26)
+
+    @model_validator(mode="after")
+    def validate_answer_binding(self) -> ControlledTask:
+        if self.correct_answer_index >= len(self.options):
+            raise ValueError("correct_answer_index exceeds the option count")
+        if self.correct_answer != chr(65 + self.correct_answer_index):
+            raise ValueError("correct_answer does not match correct_answer_index")
+        return self
+
+
+class ControlledTaskPack(StrictModel):
+    """Frozen source-bound cohort used identically for every deployment."""
+
+    pack_version: str = Field(min_length=1)
+    pack_id: Identifier
+    source_dataset: str = Field(min_length=1)
+    source_revision: str = Field(pattern=r"^[a-f0-9]{40}$")
+    source_file: str = Field(min_length=1)
+    source_file_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    license_id: Identifier
+    config: Identifier
+    split: Identifier
+    selection_algorithm: str = Field(min_length=1)
+    selection_seed: str = Field(min_length=1)
+    tasks_per_category: int = Field(gt=0)
+    category_source_counts: dict[str, int]
+    category_selected_counts: dict[str, int]
+    tasks: tuple[ControlledTask, ...] = Field(min_length=1)
+    fingerprint: str = Field(pattern=r"^[a-f0-9]{64}$")
+
+    @model_validator(mode="after")
+    def validate_pack_cohort(self) -> ControlledTaskPack:
+        task_ids = [task.task_id for task in self.tasks]
+        if len(task_ids) != len(set(task_ids)):
+            raise ValueError("controlled task pack contains duplicate task IDs")
+        actual: dict[str, int] = {}
+        for task in self.tasks:
+            actual[task.category] = actual.get(task.category, 0) + 1
+        if actual != self.category_selected_counts:
+            raise ValueError("category_selected_counts do not match the task cohort")
+        if any(count != self.tasks_per_category for count in actual.values()):
+            raise ValueError("controlled task pack is not category balanced")
+        if set(actual) != set(self.category_source_counts):
+            raise ValueError("source and selected category sets differ")
+        if any(self.category_source_counts[key] < actual[key] for key in actual):
+            raise ValueError("selected count exceeds source count")
+        return self
+
+
+class OperationalEndpointContract(StrictModel):
+    """Reviewed router endpoint and price facts used for request and budget gates."""
+
+    router_model_id: str = Field(min_length=1)
+    canonical_snapshot_id: str = Field(min_length=1)
+    provider_slug: str = Field(min_length=1)
+    provider_name: str = Field(min_length=1)
+    endpoint_name: str = Field(min_length=1)
+    service_tier_request: str | None = None
+    expected_service_tier: str | None = None
+    reasoning_effort: ConfigurationEffort
+    context_length: int = Field(gt=0)
+    max_completion_tokens_supported: int | None = Field(default=None, gt=0)
+    prompt_price_per_token_usd: NonNegative
+    completion_price_per_token_usd: NonNegative
+    cache_read_price_per_token_usd: NonNegative | None = None
+    max_tokens: int = Field(gt=0)
+
+
+class OperationalDeploymentContract(StrictModel):
+    """Exact UMI configuration to router deployment crosswalk for a controlled run."""
+
+    deployment_id: Identifier
+    model_id: Identifier
+    named_release: str = Field(min_length=1)
+    model_release_date: date
+    canonical_configuration: ConfigurationEffort
+    endpoint: OperationalEndpointContract
+
+
+class OperationalRunManifest(StrictModel):
+    """Versioned, cost-bounded contract for one controlled five-model cohort."""
+
+    manifest_version: str = Field(min_length=1)
+    manifest_id: Identifier
+    task_pack_id: Identifier
+    task_pack_fingerprint: str = Field(pattern=r"^[a-f0-9]{64}$")
+    api_base_url: HttpUrl
+    endpoint_facts_accessed: date
+    endpoint_facts_source_url: HttpUrl
+    workload: Identifier
+    workload_category: WorkloadCategory
+    interaction_profile: InteractionProfile
+    operational_profile_id: Identifier
+    cohort_key: Identifier
+    workload_version: str = Field(min_length=1)
+    harness_version: str = Field(min_length=1)
+    success_definition_id: Identifier
+    success_definition: str = Field(min_length=1)
+    tools_enabled: bool
+    prompt_template_version: str = Field(min_length=1)
+    response_format: str = Field(min_length=1)
+    request_delivery_policy: str = Field(min_length=1)
+    deployments: tuple[OperationalDeploymentContract, ...] = Field(min_length=1)
+    fingerprint: str = Field(pattern=r"^[a-f0-9]{64}$")
+
+    @model_validator(mode="after")
+    def validate_deployment_cohort(self) -> OperationalRunManifest:
+        model_ids = [deployment.model_id for deployment in self.deployments]
+        deployment_ids = [deployment.deployment_id for deployment in self.deployments]
+        if len(model_ids) != len(set(model_ids)):
+            raise ValueError("run manifest contains duplicate model IDs")
+        if len(deployment_ids) != len(set(deployment_ids)):
+            raise ValueError("run manifest contains duplicate deployment IDs")
+        if self.tools_enabled:
+            raise ValueError("the controlled one-turn cohort must not enable tools")
+        return self
+
+
 class AttemptMetricSummary(StrictModel):
     metric: Identifier
     observation_count: int = Field(gt=0)

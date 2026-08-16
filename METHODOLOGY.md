@@ -1,10 +1,13 @@
-# UMI methodology v0.3.13
+# UMI methodology v0.3.14
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3.13 retains the manually
+current policy values; code must not contradict this document. UMI v0.3.14 retains the manually
 reviewed, multi-source evidence pilot, hardens arithmetic-mean resource denominators against the
 official DeepSWE v1.1 trial ledger, and adds the governed attempt-level operational evidence path.
 It does not publish a headline UMI ranking.
+The scoring formula and normalization identities remain `umi-methodology-v0.3.13` and
+`umi-normalization-v0.3.4`: v0.3.14 adds a non-scoring controlled-run contract and therefore does
+not rewrite existing scored inputs or comparison results.
 All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
 produce identical serialized results and certificate fingerprints across supported Python versions;
 this is numerical canonicalization, not a change to weights or score semantics.
@@ -649,6 +652,35 @@ finite observed cost-per-success record is serialized. Acquisition remains netwo
 ledger validation and aggregation are deterministic and offline over a frozen artifact.
 Derived records remain inadmissible until the frozen artifact, source registry, exact crosswalk, and
 scored bundle independently clear their ordinary validation gates.
+
+### First controlled five-model cohort
+
+The first governed operational cohort is a bounded one-turn general-interaction measurement, not a
+replacement for the configured six-category workload basket. It freezes the complete MMLU-Pro test
+parquet at upstream revision `b189ec765aa7ed75c8acfea42df31fdae71f97be` and SHA-256
+`0e24a191921c2f453518a537a8b2117bd137e7714d4ef1565e9ba06c1ecb9ad8`. Within each of the 14
+literal source categories, UMI sorts rows by SHA-256 of
+`selection_seed|category|question_id|zero_based_source_row_index` and takes the first five. The
+result is a fixed 70-task cohort; source category labels and answers are preserved, while only task
+IDs are slugged. The prompt contains the question and options but never the upstream chain-of-thought
+field or frozen correct answer.
+
+Every deployment receives the identical task pack, system prompt, JSON-object response contract,
+4,096-token completion ceiling, one-turn/no-tool policy, deterministic grader, and no automatic
+request retry. A transport or provider error blocks completion and is not silently graded as model
+failure. The endpoint contract pins exact provider routing, disables fallback, requires requested
+parameters, and checks returned model, provider, endpoint snapshot, and service tier before a result
+can become ready. The explicit effort mapping is `max` for Opus 5, Fable 5, GPT-5.6 Sol, and Kimi K3;
+GLM-5.2 maps canonical pilot Max to its highest OpenRouter-supported effort, `xhigh`. This mapping is
+deployment-specific evidence, not a general alias rule.
+
+Offline preflight uses each frozen endpoint's reviewed prompt and completion prices. It conservatively
+bounds prompt tokens by UTF-8 byte count and assumes every response consumes all 4,096 permitted
+completion tokens. The 350-request contract therefore has a maximum price-table ceiling of
+`$37.191602`. This ceiling is neither observed cost nor billing evidence. Until a completed run
+produces immutable raw responses and generation metadata, exact deployment verification, complete
+per-attempt telemetry, and admissible billing records, the cohort remains non-scoring and changes no
+Capability, Efficiency, Economics, coverage, confidence, or headline gate.
 
 ## Economics
 

@@ -235,6 +235,21 @@ evidence. It is ready only when provider-billing cost covers every attempt and a
 Aggregation does not itself authorize scoring: the frozen artifact, registry entry, exact crosswalk,
 and resulting scored bundle must still clear their ordinary validation gates.
 
+### Controlled task pack and run manifest
+
+`schemas/controlled-task-pack.schema.json` defines a frozen task cohort bound to an upstream dataset
+revision and file checksum. It preserves source row/question IDs, literal categories, source subsets,
+questions, options, correct answers for offline grading, category counts, the deterministic selection
+rule, and a canonical fingerprint. Task IDs and answer bindings must be unique and internally valid;
+selected counts must match the tasks and remain balanced.
+
+`schemas/operational-run-manifest.schema.json` binds that pack fingerprint to one or more exact UMI
+deployments. Each deployment declares the canonical UMI configuration and the router model alias,
+immutable endpoint snapshot, provider slug/name, endpoint name, requested and expected service tier,
+endpoint reasoning effort, context/completion limits, reviewed per-token prices, and run token ceiling.
+The manifest also freezes workload/cohort/harness/prompt/success identities and the no-tool delivery
+policy. These contracts are acquisition/execution inputs, not scored measurements or attempt ledgers.
+
 Pricing records preserve advertised input/output/cache/reasoning/tool prices but do not substitute
 for observed successful-task Economics in v0.3. `cache_write_per_million` is the ordinary or
 five-minute write tariff; `cache_write_1h_per_million` retains a separately published one-hour

@@ -1,7 +1,7 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.13 hardens the real,
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.14 hardens the real,
 five-configuration, multi-source pilot with exact DeepSWE trial-ledger denominators and a governed,
 offline attempt-ledger aggregation path, plus AA
 Terminal-Bench v2.1, AA-Omniscience, AA-LCR,
@@ -73,6 +73,38 @@ only when every attempt has provider-billing-record evidence and at least one at
 does not alter the current pilot because no controlled five-model ledger has yet cleared those gates.
 Its derived output is not admitted to scoring until the frozen artifact, registry entry, crosswalk,
 and scored bundle independently clear their normal validation gates.
+
+The first controlled five-model cohort is now frozen separately from scoring. It uses the complete,
+revision-pinned MMLU-Pro test parquet at SHA-256
+`0e24a191921c2f453518a537a8b2117bd137e7714d4ef1565e9ba06c1ecb9ad8` and selects five tasks
+from each of its 14 categories by a published SHA-256 ordering rule. The 70-task pack never sends
+the upstream `cot_content` field. Reacquire or regenerate it only through the explicit acquisition
+extra:
+
+```bash
+uv run --extra acquisition python -m scripts.freeze_mmlu_pro_operational_pack \
+  --accept-network \
+  --source-output PATH_TO_NEW_PARQUET \
+  --pack-output PATH_TO_NEW_TASK_PACK
+```
+
+The checked-in run manifest binds the same task pack to all five exact router deployments. Opus,
+Fable, Sol, and Kimi use endpoint effort `max`; GLM-5.2 uses its highest supported router effort,
+`xhigh`, through an explicit mapping to the pilot's canonical Max configuration. Providers are
+pinned, fallbacks are disabled, required request parameters are enforced, and Sol is pinned to its
+default service tier. Offline preflight verifies both fingerprints and computes a conservative
+UTF-8-byte-bound maximum charge:
+
+```bash
+PYTHONPATH=. uv run --no-sync umi operational preflight \
+  --task-pack data/operational/pilot-v0.1/mmlu-pro-test-balanced-70-v1.json \
+  --run-manifest data/operational/pilot-v0.1/openrouter-five-model-run.yaml
+```
+
+The current contract is 350 requests with a maximum router-price ceiling of `$37.191602`. This is
+not a completed evaluation, observed bill, or scoring input. No result enters Capability,
+Efficiency, Economics, or Overall until the actual immutable responses, generation metadata,
+deployment checks, complete cohort, and billing evidence clear their respective gates.
 
 ```bash
 uv run --no-sync python -m scripts.build_v03_pilot

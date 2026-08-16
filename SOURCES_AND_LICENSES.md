@@ -11,6 +11,7 @@ human-readable form. UMI's MIT license does not override upstream terms.
 | Epoch Benchmarking Hub | Complete official `benchmark_data.zip`; GPQA Diamond, SciCode, and CritPt adapted | semantic member-content SHA-256 `2b818e5b…7f009`; frozen container SHA-256 `35a7c21b…a18b` | CC BY 4.0 with Epoch attribution; individual benchmark questions remain subject to creator rights | Full official data archive retained; benchmark questions are not separately republished |
 | LM Arena | Dataset Viewer JSON for `agent` and a bounded `text_style_control` page | `08dd89df7a8aa9df2ead3799f6422af4ad2e97a7` | CC BY 4.0 | Artifact retained with attribution |
 | DeepSWE | Trial-ledger-reconciled v1.1 facts | leaderboard generated `2026-08-13T16:11:55.708636Z`; public 27,558-row ledger SHA-256 `13d6f756…4971` | No leaderboard-data redistribution license established | Facts, per-metric denominators, checksum, and citations only; no gated tasks, trajectories, or raw ledger |
+| MMLU-Pro | Complete pinned 12,032-row test parquet plus a derived balanced 70-task operational pack | `b189ec765aa7ed75c8acfea42df31fdae71f97be`; parquet SHA-256 `0e24a191…ad8` | MIT | Full pinned parquet and derived task pack retained with attribution; `cot_content` is never sent by the harness |
 
 Attribution:
 
@@ -32,6 +33,8 @@ Attribution:
 - DeepSWE v1.1 leaderboard and public trial ledger by Datacurve:
   https://deepswe.datacurve.ai/ and
   https://deepswe.datacurve.ai/artifacts/v1.1/trials.json
+- MMLU-Pro dataset and license by TIGER-Lab:
+  https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro
 
 Checksums are validated before source readiness passes. A changed artifact, missing license field,
 missing attribution, or upstream-revision mismatch is a hard source-validation failure.
