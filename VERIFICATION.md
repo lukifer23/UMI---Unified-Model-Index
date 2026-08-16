@@ -29,7 +29,7 @@ project contract.
 | `umi certificate` for Opus/Kimi/GLM | passed; eleven common stable panels, 33 selected records, nine exact artifact checksums, 512 joint scenarios, deterministic result fingerprint `2158ccfd…69310c` and scored-input fingerprint `fdfac327…7bf136` |
 | portable dashboard packaging | passed at 1440 px and 390 px; 17 delivered blocks, eleven charts, and four metrics rendered; source dialog passed; no overflow, external-request, or browser-error failure |
 | consecutive complete pilot rebuilds plus schema regeneration | passed byte-for-byte with no artifact or schema drift |
-| `uv build` plus fresh temporary-environment wheel install outside the checkout | passed locally on Python 3.14.3 with wheel SHA-256 `ba7e835a01da8f8517039bff2d2510bf07851ca1d759490ac58375c51fe0570a`; `import umi`, `umi --help`, and the governed comparison smoke passed; hosted 3.11/3.14 wheel results are pending this feature push |
+| `uv build` plus fresh temporary-environment wheel install outside the checkout | passed locally on Python 3.14.3 with wheel SHA-256 `ba7e835a01da8f8517039bff2d2510bf07851ca1d759490ac58375c51fe0570a`; `import umi`, `umi --help`, and the governed comparison smoke passed; hosted Python 3.11 and 3.14 wheel checks also passed in run `31942227582` |
 | `scripts/verify_deepswe_trial_ledger.py --accept-network` | passed against official ledger SHA-256 `13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971`; reconciled 27,558 total rows, 2,257 selected rows, 2,231 scored attempts, 26 excluded error rows, all five success/resource means, and Fable cost coverage of 432/436 attempts |
 | `umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config` | passed without a source registry; schema and selected scored inputs are valid |
 | previously verified explicit Epoch/Arena network acquisition evidence | retained unchanged with its checksum manifest; this milestone additionally used the explicitly acknowledged read-only OpenRouter preflight and insufficient-credit execution gate recorded above; no completion request was made |
@@ -40,8 +40,8 @@ wheel with `--no-editable` and uses `--no-sync` for subsequent commands. This is
 README rather than hidden as a local workaround.
 
 The most recent completed GitHub Actions baseline is
-[run 31941354318](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31941354318)
-for UMI v0.3.14 foundation commit `c8db33b`. It completed successfully. Linux passed the full quality, schema,
+[run 31942227582](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31942227582)
+for UMI v0.3.14 executor commit `dd1dd04`. It completed successfully. Linux passed the full quality, schema,
 governed validation, deterministic rebuild, CLI, and isolated-wheel gates. Linux 3.11 and 3.14 each
 passed the test suite plus isolated-wheel import/help/comparison smokes. Windows 3.12 passed tests,
 generic validation, governed bundle validation, strict source/checksum audit, deterministic rebuild
@@ -49,11 +49,8 @@ diff, and the three-model comparison smoke. These hosted results—not the local
 the recorded Linux and Windows compatibility claim. The Python 3.11/3.14 jobs preserve the governed
 `math.fsum` cross-version regression gate. CI selects the wheel matching the package version instead
 of the lexically first wheel, preventing stale local artifacts from testing an older release.
-GitHub emitted only Node 20
-deprecation
-annotations for `actions/checkout@v4` and `astral-sh/setup-uv@v6`; no UMI job failed.
-The v0.3.14 hosted result is intentionally not claimed until this feature commit is pushed and its
-workflow completes.
+GitHub emitted only Node 20 deprecation annotations for `actions/checkout@v4` and
+`astral-sh/setup-uv@v6`; no UMI job failed.
 
 ## Acquisition reconciliation
 
