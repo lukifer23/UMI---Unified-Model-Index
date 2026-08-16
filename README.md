@@ -1,9 +1,10 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.14 hardens the real,
-five-configuration, multi-source pilot with exact DeepSWE trial-ledger denominators and a governed,
-offline attempt-ledger aggregation path, plus AA
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.15 adds the first
+bounded General Interaction workload authority for the governed MMLU-Pro cohort while retaining the
+real, five-configuration, multi-source pilot with exact DeepSWE trial-ledger denominators and a
+governed, offline attempt-ledger aggregation path, plus AA
 Terminal-Bench v2.1, AA-Omniscience, AA-LCR,
 τ³-Banking, GDPval-AA v2, HLE, CursorBench 3.2, DeepSWE,
 GPQA Diamond, SciCode, CritPt, and ARC-AGI-2 results plus DeepSWE confidence intervals and
@@ -80,6 +81,11 @@ revision-pinned MMLU-Pro test parquet at SHA-256
 from each of its 14 categories by a published SHA-256 ordering rule. The 70-task pack never sends
 the upstream `cot_content` field. Reacquire or regenerate it only through the explicit acquisition
 extra:
+
+If a completed run clears the ordinary artifact, identity, readiness, and bundle gates, it may
+populate only the configured one-turn knowledge/reasoning family inside General Interaction. That
+category carries 10% of the Efficiency basket; the cohort cannot stand in for another workload or
+clear an Efficiency or Economics headline threshold by itself.
 
 ```bash
 uv run --extra acquisition python -m scripts.freeze_mmlu_pro_operational_pack \

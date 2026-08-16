@@ -127,7 +127,7 @@ def _headers(api_key: str) -> dict[str, str]:
         "Content-Type": "application/json",
         "HTTP-Referer": "https://github.com/lukifer23/UMI---Unified-Model-Index",
         "X-Title": "UMI controlled operational pilot",
-        "User-Agent": f"UMI-controlled-runner/0.3.14 ({RUNNER_CONTRACT_VERSION})",
+        "User-Agent": f"UMI-controlled-runner/0.3.15 ({RUNNER_CONTRACT_VERSION})",
     }
 
 

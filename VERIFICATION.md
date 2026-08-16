@@ -1,4 +1,4 @@
-# UMI v0.3.14 verification record
+# UMI v0.3.15 verification record
 
 Verified on 2026-08-16 from `main` on macOS with Python 3.14.3 against the Python 3.11+
 project contract.
@@ -7,11 +7,11 @@ project contract.
 
 | Check | Outcome |
 |---|---|
-| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed the locked UMI environment; isolated UMI 0.3.14 wheel verification is recorded below |
+| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed the locked UMI environment; isolated UMI 0.3.15 wheel verification is recorded below |
 | `uv run --no-sync python -m scripts.build_v03_pilot` | passed; rebuilt all raw and processed pilot artifacts offline |
 | schema equality test against `umi.schema_export.rendered_schemas()` | passed; committed machine-readable schemas remain current |
-| `uv run pytest` | 155 passed |
-| `uv run pytest --cov=umi --cov=analysis --cov-report=term-missing --cov-fail-under=90` | 155 passed; 93.34% core package and analysis coverage; live acquisition/execution behavior is verified separately rather than through mocked HTTP |
+| `uv run pytest` | 156 passed |
+| `uv run pytest --cov=umi --cov=analysis --cov-report=term-missing --cov-fail-under=90` | 156 passed; 93.34% core package and analysis coverage; live acquisition/execution behavior is verified separately rather than through mocked HTTP |
 | `PYTHONPATH=. uv run --no-sync ruff check .` | passed |
 | `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 55 source files |
 | `umi sources validate --strict` | passed; complete registry, crosswalk, licensing, attribution, diagnostic, pricing, and release-claim audit is valid |
@@ -24,13 +24,14 @@ project contract.
 | live paid-path credit gate with `--execute --accept-cost --max-cost-usd 39.455197 ...` | exited 2 before any paid request because available credits did not cover the ceiling; only the fingerprinted, exact-runner-source-bound v0.2 run contract was created and the temporary run contained zero request, request-started, or response artifacts |
 | official OpenRouter billing-semantics review | response `usage.cost` is documented as the total account charge and authenticated generation metadata independently exposes `total_cost`; derived billing promotion now additionally requires a complete run and exact before/after account-credit reconciliation within `$0.00000005` |
 | deterministic MMLU-Pro task-pack regeneration | passed byte-for-byte from the pinned 12,032-row MIT parquet at SHA-256 `0e24a191921c2f453518a537a8b2117bd137e7714d4ef1565e9ba06c1ecb9ad8` |
+| controlled-workload authority and scoring invariance | passed; the exact MMLU-Pro cohort maps only to the new one-turn knowledge/reasoning family under General Interaction's configured 10% category weight; all existing numerical pilot estimates, comparison scores, ranks, and null headlines remain unchanged, while `scored_data_fingerprint` changed from `fdfac327…7bf136` to `ffa7c3bf…f89fe9` |
 | documented validation, ingestion, scoring, comparison, analysis, and certificate CLI flows | passed with valid JSON output |
 | five-model and three-model common-evidence comparisons | passed; Kimi DeepSWE remains 25.0 on the identical five-model panel, and every raw/normalized contribution carries panel and scale identity |
 | joint comparison sensitivity | passed; 32 exhaustive five-model scenarios and 512 exhaustive three-model scenarios, with possible-rank and robust-dominance envelopes and no probability claims; the retained Opus/Kimi/GLM ranks remain robust at 1/2/3 after adding Terminal-Bench |
-| `umi certificate` for Opus/Kimi/GLM | passed; eleven common stable panels, 33 selected records, nine exact artifact checksums, 512 joint scenarios, deterministic result fingerprint `2158ccfd…69310c` and scored-input fingerprint `fdfac327…7bf136` |
+| `umi certificate` for Opus/Kimi/GLM | passed; eleven common stable panels, 33 selected records, nine exact artifact checksums, 512 joint scenarios, deterministic result fingerprint `bf1c8f3a…e91b0e` and scored-input fingerprint `ffa7c3bf…f89fe9` |
 | portable dashboard packaging | passed at 1440 px and 390 px; 17 delivered blocks, eleven charts, and four metrics rendered; source dialog passed; no overflow, external-request, or browser-error failure |
 | consecutive complete pilot rebuilds plus schema regeneration | passed byte-for-byte with no artifact or schema drift |
-| `uv build` plus fresh temporary-environment wheel install outside the checkout | passed locally on Python 3.14.3 with wheel SHA-256 `321c45802d90f5a32178fba63690d32bb9c21ebbab08e3907c542a1d7c2ae8ee`; `import umi` and `umi --help` passed; hosted Python 3.11 and 3.14 wheel checks passed in run `31942672009` |
+| `uv build` plus fresh temporary-environment wheel install outside the checkout | passed locally on Python 3.14.3 with wheel SHA-256 `48a0518bca8b843996a27c141f846a32d42b6ada596369f8a212b1135886fd7a`; `import umi`, `umi --help`, and an isolated three-model comparison passed; the latest hosted Python 3.11 and 3.14 wheel baseline remains run `31942672009` pending this milestone's CI |
 | `scripts/verify_deepswe_trial_ledger.py --accept-network` | passed against official ledger SHA-256 `13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971`; reconciled 27,558 total rows, 2,257 selected rows, 2,231 scored attempts, 26 excluded error rows, all five success/resource means, and Fable cost coverage of 432/436 attempts |
 | `umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config` | passed without a source registry; schema and selected scored inputs are valid |
 | previously verified explicit Epoch/Arena network acquisition evidence | retained unchanged with its checksum manifest; this milestone additionally used the explicitly acknowledged read-only OpenRouter preflight and insufficient-credit execution gate recorded above; no completion request was made |
@@ -68,6 +69,14 @@ GitHub emitted only Node 20 deprecation annotations for `actions/checkout@v4` an
   four exact Max-effort rows each for GPQA Diamond, SciCode, and CritPt are adapted from the raw CSV
   members. Fable is rejected because fallback absence is not established for GPQA and is explicitly
   contradicted by fallback-composite labels for SciCode and CritPt.
+- A read-only 2026-08-16 check of Epoch's current official
+  `https://epoch.ai/data/benchmark_data.zip` returned archive SHA-256
+  `83ec36db3683533c3cda6d6cef1098ae2677a9650cd4cee6e06ea6cf1917d2d9`. Its
+  `arc_agi_2_external.csv` member has SHA-256
+  `e3a717d3e7d2e57deb91fd084e9d1063e9f30fd13dcc7de3a23613a9692fca2b`: it contains one
+  GLM-5.2 row explicitly labeled `glm-5.2_unknown` and no Fable row. The unknown-effort GLM result
+  cannot crosswalk to the pilot's exact Max configuration, so both capability gaps remain missing;
+  the live review is not admitted as a frozen scored artifact.
 - A later same-day acquisition produced a different ZIP-container hash because member timestamps
   changed, while all 77 extracted member names and bytes remained identical at semantic content hash
   `2b818e5b5ad1fcdba9f04616d6f1c7f71714a3d045967dbf09a7e13bf557f009`.

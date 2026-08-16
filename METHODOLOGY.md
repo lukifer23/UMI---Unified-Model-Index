@@ -1,13 +1,14 @@
-# UMI methodology v0.3.14
+# UMI methodology v0.3.15
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3.14 retains the manually
+current policy values; code must not contradict this document. UMI v0.3.15 retains the manually
 reviewed, multi-source evidence pilot, hardens arithmetic-mean resource denominators against the
 official DeepSWE v1.1 trial ledger, and adds the governed attempt-level operational evidence path.
 It does not publish a headline UMI ranking.
-The scoring formula and normalization identities remain `umi-methodology-v0.3.13` and
-`umi-normalization-v0.3.4`: v0.3.14 adds a non-scoring controlled-run contract and therefore does
-not rewrite existing scored inputs or comparison results.
+The scoring formula identity is `umi-methodology-v0.3.15`; normalization remains
+`umi-normalization-v0.3.4`. v0.3.15 adds the first approved General Interaction workload profile so
+a completed governed MMLU-Pro cohort can enter Efficiency and Economics without standing in for
+other workload categories. Existing evidence and headline gates remain unchanged.
 All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
 produce identical serialized results and certificate fingerprints across supported Python versions;
 this is numerical canonicalization, not a change to weights or score semantics.
@@ -579,8 +580,11 @@ Within the pilot coding category, family weights are 40% software-repository age
 terminal-environment agents, and 30% code-repair agents. DeepSWE v1.1 is the sole currently
 configured software-repository workload; Terminal-Bench 2.1 and CursorBench are the initial named
 workloads for the other two families. These are explicit pilot hypotheses and will receive
-sensitivity analysis before a headline release. Categories without an approved family profile have
-zero available coverage and cannot be represented by an arbitrary observed workload.
+sensitivity analysis before a headline release. General Interaction has one initial family,
+one-turn knowledge/reasoning, represented only by the exact governed
+`mmlu-pro-controlled-general` cohort. It can contribute at most the configured 10% category weight.
+Categories without an approved family profile have zero available coverage and cannot be represented
+by an arbitrary observed workload.
 
 For every individual source record `i` and attempt-level resource `x`:
 
@@ -664,6 +668,11 @@ literal source categories, UMI sorts rows by SHA-256 of
 result is a fixed 70-task cohort; source category labels and answers are preserved, while only task
 IDs are slugged. The prompt contains the question and options but never the upstream chain-of-thought
 field or frozen correct answer.
+
+After the completed run clears artifact, crosswalk, registry, readiness, and bundle gates, its exact
+`mmlu-pro-controlled-general` series may populate the one-turn knowledge/reasoning family for both
+Efficiency and observed Economics. It cannot increase any other category, family, or workload's
+coverage and cannot by itself clear either component headline threshold.
 
 Every deployment receives the identical task pack, system prompt, JSON-object response contract,
 4,096-token completion ceiling, one-turn/no-tool policy, deterministic grader, and no automatic

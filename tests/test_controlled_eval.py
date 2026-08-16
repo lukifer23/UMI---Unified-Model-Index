@@ -9,6 +9,7 @@ import pytest
 from pydantic import ValidationError
 
 from umi.cli import build_parser, run
+from umi.config import load_project_config
 from umi.controlled_eval import (
     execution_schedule,
     load_run_manifest,
@@ -92,6 +93,23 @@ def test_operational_manifest_binds_all_five_exact_deployments_and_cost_ceiling(
             for deployment in manifest.deployments
         }
         assert set(counts.values()) == {14}
+
+
+def test_controlled_workload_has_one_bounded_general_interaction_authority() -> None:
+    config = load_project_config(ROOT / "config")
+    manifest = load_run_manifest(MANIFEST_PATH)
+    families = [
+        item
+        for item in config.workload_families
+        if item.category.value == "general_interaction"
+    ]
+    assert [(item.id, item.weight) for item in families] == [
+        ("one-turn-knowledge-reasoning", 1.0)
+    ]
+    workload = next(item for item in config.workloads if item.id == manifest.workload)
+    assert workload.family == families[0].id
+    assert workload.weight == 1.0
+    assert config.weights.workload_weights[manifest.workload_category] == 0.10
 
 
 def test_operational_manifest_rejects_run_tokens_above_endpoint_limit() -> None:

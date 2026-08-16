@@ -30,7 +30,7 @@ def _sha256(path: Path) -> str:
 
 def _download(destination: Path) -> None:
     request = urllib.request.Request(
-        SOURCE_URL, headers={"User-Agent": "UMI-acquisition/0.3.14"}
+        SOURCE_URL, headers={"User-Agent": "UMI-acquisition/0.3.15"}
     )
     with urllib.request.urlopen(  # noqa: S310 - explicit, revision-pinned acquisition
         request, timeout=60
