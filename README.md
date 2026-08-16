@@ -1,8 +1,9 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.12 hardens the real,
-five-configuration, multi-source pilot with exact DeepSWE trial-ledger denominators plus AA
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.13 hardens the real,
+five-configuration, multi-source pilot with exact DeepSWE trial-ledger denominators and a governed,
+offline attempt-ledger aggregation path, plus AA
 Terminal-Bench v2.1, AA-Omniscience, AA-LCR,
 τ³-Banking, GDPval-AA v2, HLE, CursorBench 3.2, DeepSWE,
 GPQA Diamond, SciCode, CritPt, and ARC-AGI-2 results plus DeepSWE confidence intervals and
@@ -53,6 +54,25 @@ uv run --no-sync python -m scripts.verify_deepswe_trial_ledger --accept-network
 The verifier checks the pinned ledger checksum, all five selected configurations, 2,231 scored
 attempts, success counts, serving-provider labels, every retained arithmetic mean, and each metric's
 actual observation denominator.
+
+## Aggregate controlled operational evidence
+
+`schemas/attempt-ledger.schema.json` is the machine-readable intake contract for one frozen,
+single-deployment workload cohort. It binds exact model/release/effort, provider, endpoint, service
+tier, workload/harness versions, an operational-profile ID, an interaction profile, a versioned
+success-definition ID, artifact checksum, and attempt-level physical observations. Acquisition
+remains separate and may be networked; aggregation is deterministic and offline:
+
+```bash
+PYTHONPATH=. uv run --no-sync umi attempts aggregate --ledger PATH_TO_FROZEN_LEDGER
+```
+
+The output preserves per-metric observation counts, splits partial metrics into diagnostic records,
+retains cache-write and retry measurements physically, and emits observed successful-task Economics
+only when every attempt has provider-billing-record evidence and at least one attempt succeeds. It
+does not alter the current pilot because no controlled five-model ledger has yet cleared those gates.
+Its derived output is not admitted to scoring until the frozen artifact, registry entry, crosswalk,
+and scored bundle independently clear their normal validation gates.
 
 ```bash
 uv run --no-sync python -m scripts.build_v03_pilot

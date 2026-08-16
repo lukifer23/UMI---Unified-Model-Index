@@ -53,6 +53,13 @@ and preserve a separate observation count for every populated mean. Readiness re
 partial denominators, preventing incomplete cost or resource rows from borrowing a broader success
 rate. The official DeepSWE trial ledger is independently rechecked by a network-separated verifier.
 
+The controlled-run path now accepts one exact-deployment attempt ledger at a time. Order-invariant
+aggregation splits partial metrics from complete resources, preserves cache writes and retries as
+physical diagnostics, refuses finite Economics at zero success, and admits observed cost per success
+only from complete provider-billing records. Interaction mode, operational profile, versioned success
+definition, and cohort are separate comparison identities. No synthetic attempt ledger enters the
+real pilot.
+
 Validation rejects family/domain/reference errors and snapshot collisions. It
 warns when a record lacks a cohort key, benchmark/harness version, snapshot/date,
 raw artifact, evaluator, or verified configuration. `SOURCE_READINESS.md` is the
@@ -92,8 +99,9 @@ determinism.
 - Very low nonzero success rates can still have large leverage. They are log
   transformed but deliberately not clipped.
 - Exact tied scores share ranks, but no documented near-tie tolerance exists.
-- Economics still requires genuinely comparable observed cost-per-success baskets;
-  advertised prices cannot substitute.
+- Economics still requires genuinely comparable observed cost-per-success baskets; the intake and
+  aggregation path now exists, but no five-model controlled ledger has cleared it, and advertised
+  prices still cannot substitute.
 - Value formulas can agree on synthetic fixtures yet diverge in real cohorts. No
   formula is validated as a user-utility model.
 - Pareto analysis remains dimension-specific and does not compare unlike workload
@@ -101,10 +109,9 @@ determinism.
 
 ## Exact next task
 
-AA Terminal-Bench v2.1 is now admitted for four exact Max configurations on the common 89-task,
-three-repeat Terminus 2/E2B cohort; its provider-specific aggregate token counters are diagnostic,
-and its fallback-qualified Fable row is rejected. The next blocking task is licensed attempt-level telemetry across additional
-workload categories, with exact deployment, endpoint, tier, pricing revision, cache/tool accounting,
-turns, retries, success, and observed bill. Continue to reject operational summaries that cannot be
+The next blocking task is producing the first licensed five-model ledger through the governed
+attempt path across an approved workload cohort, with exact deployment, endpoint, tier, cache/tool
+accounting, turns, retries, success, and observed bill. Then repeat across enough configured workload
+families/categories to clear coverage. Continue to reject operational summaries that cannot be
 success-adjusted within the same record; advertised tariffs and calculated dollars must not
 masquerade as observed task economics.

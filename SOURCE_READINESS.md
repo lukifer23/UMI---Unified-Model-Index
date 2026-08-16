@@ -32,6 +32,13 @@ Diagnostic-only records do not make selected scored inputs appear unready.
 - benchmark/workload identity, direction, unit, and category supplied by typed/configured fields;
 - exact successful-attempt count and full-attempt observation counts for every real arithmetic-mean
   Efficiency metric; incomplete means remain diagnostic and cannot share a broader success rate;
+- for attempt-ledger evidence, one exact deployment/workload/harness, operational-profile ID,
+  interaction profile, versioned success-definition identity, unique attempt IDs, an immutable
+  artifact checksum, and raw or archived capture; each metric is aggregated only over its own
+  observed rows and partial metrics are split into diagnostics;
+- for ready observed Economics, cost on every attempt, at least one successful attempt, exact
+  endpoint and service-tier verification, total-cost reconciliation, and provider-billing-record
+  evidence; router estimates and pricing replays remain diagnostic;
 - no conflicting second ready cohort for the same benchmark representation or workload identity.
 
 Published evaluator, harness owner, run executor, tools, scaffold, retry, context, pass@k, task/trial

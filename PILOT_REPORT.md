@@ -115,7 +115,10 @@ warnings and prevent the certificate from becoming a universal UMI score.
 - Arena Agent and text/style-control ratings are diagnostic preference evidence. The Agent artifact
   has exact labels and efforts but no immutable snapshot/deployment identity; missing or non-Max
   effort labels are rejected.
-- DeepSWE arithmetic-mean input/output tokens and agent steps enter provisional Efficiency after
+- DeepSWE is explicitly classified as autonomous task under operational profile
+  `deepswe-v1.1-mini-swe-agent-autonomous` and success definition
+  `deepswe-v1.1-trial-passed`. Its arithmetic-mean input/output tokens and agent steps enter
+  provisional Efficiency after
   per-record success adjustment. The official 27,558-row ledger reconciles 2,231 scored attempts for
   the five Max configurations and binds every retained mean to its actual observation count. Cached
   tokens, wall duration, and dollar cost remain diagnostic because exact deployment identity is not

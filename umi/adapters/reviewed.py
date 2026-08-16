@@ -16,6 +16,7 @@ from umi.schemas import (
     EfficiencyMeasurement,
     EfficiencyObservationCounts,
     ExternalIndexMeasurement,
+    InteractionProfile,
     MeasurementUncertainty,
     ModelCrosswalk,
     ModelCrosswalkEntry,
@@ -711,6 +712,10 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
     source = Source.model_validate(raw["source"])
     as_of = date.fromisoformat(str(raw["as_of"]))
     benchmark_version = str(raw["benchmark_version"])
+    interaction_profile = InteractionProfile(str(raw["interaction_profile"]))
+    operational_profile_id = str(raw["operational_profile_id"])
+    success_definition_id = str(raw["success_definition_id"])
+    success_definition = str(raw["success_definition"])
     ledger = cast(dict[str, object], raw["upstream_trial_ledger"])
     ledger_sha256 = str(ledger["sha256"])
     if len(ledger_sha256) != 64 or any(char not in "0123456789abcdef" for char in ledger_sha256):
@@ -819,6 +824,10 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
                 source_model_id=source_model_id,
                 workload="deepswe-v1.1",
                 workload_category=WorkloadCategory.CODING,
+                interaction_profile=interaction_profile,
+                operational_profile_id=operational_profile_id,
+                success_definition_id=success_definition_id,
+                success_definition=success_definition,
                 cohort_key=identifier(f"deepswe-v1.1-{as_of}"),
                 evaluation_date=as_of,
                 attempts=attempts,
@@ -868,6 +877,10 @@ def adapt_deepswe_facts(path: str | Path, crosswalk: ModelCrosswalk) -> Adaptati
                 source_model_id=source_model_id,
                 workload="deepswe-v1.1",
                 workload_category=WorkloadCategory.CODING,
+                interaction_profile=interaction_profile,
+                operational_profile_id=operational_profile_id,
+                success_definition_id=success_definition_id,
+                success_definition=success_definition,
                 cohort_key=identifier(f"deepswe-v1.1-{as_of}"),
                 evaluation_date=as_of,
                 attempts=attempts,

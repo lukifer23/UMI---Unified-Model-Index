@@ -14,9 +14,23 @@ from umi.workloads import aggregate_workloads
 
 
 def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComputation:
-    grouped: dict[tuple[str, str, str], list[EfficiencyMeasurement]] = defaultdict(list)
+    grouped: dict[tuple[str, str, str, str, str, str], list[EfficiencyMeasurement]] = defaultdict(
+        list
+    )
     for item in dataset.efficiency:
-        grouped[(item.workload, item.cohort_key, item.model_id)].append(item)
+        interaction = item.interaction_profile.value if item.interaction_profile else "unspecified"
+        operational_profile = item.operational_profile_id or "unspecified"
+        success_definition = item.success_definition_id or "unspecified"
+        grouped[
+            (
+                item.workload,
+                operational_profile,
+                interaction,
+                success_definition,
+                item.cohort_key,
+                item.model_id,
+            )
+        ].append(item)
 
     normalized_scores: dict[str, dict[str, dict[str, list[float]]]] = {
         metric: defaultdict(lambda: defaultdict(list)) for metric in EFFICIENCY_ATTRIBUTES
@@ -29,7 +43,13 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
     workload_definitions = {item.id: item for item in config.workloads}
     workload_families = {item.id: item for item in config.workload_families}
 
-    for workload, cohort_key in sorted({(workload, cohort) for workload, cohort, _ in grouped}):
+    series = sorted(
+        {
+            (workload, operational_profile, interaction, success_definition, cohort)
+            for workload, operational_profile, interaction, success_definition, cohort, _ in grouped
+        }
+    )
+    for workload, operational_profile, interaction, success_definition, cohort_key in series:
         definition = workload_definitions.get(workload)
         if definition is None:
             continue
@@ -37,8 +57,27 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
         raw_by_metric: dict[str, dict[str, float]] = {
             metric: {} for metric in EFFICIENCY_ATTRIBUTES
         }
-        for (candidate_workload, candidate_cohort, model_id), records in grouped.items():
-            if (candidate_workload, candidate_cohort) != (workload, cohort_key):
+        for (
+            candidate_workload,
+            candidate_operational_profile,
+            candidate_interaction,
+            candidate_success_definition,
+            candidate_cohort,
+            model_id,
+        ), records in grouped.items():
+            if (
+                candidate_workload,
+                candidate_operational_profile,
+                candidate_interaction,
+                candidate_success_definition,
+                candidate_cohort,
+            ) != (
+                workload,
+                operational_profile,
+                interaction,
+                success_definition,
+                cohort_key,
+            ):
                 continue
             for metric in EFFICIENCY_ATTRIBUTES:
                 value, selected, conflict = consolidate_derived(records, metric)
@@ -62,6 +101,9 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                 {
                     "component": "efficiency",
                     "workload": workload,
+                    "operational_profile_id": operational_profile,
+                    "interaction_profile": interaction,
+                    "success_definition_id": success_definition,
                     "cohort_key": cohort_key,
                     "metric": metric,
                 },
@@ -75,10 +117,14 @@ def score_efficiency(dataset: Dataset, config: ProjectConfig) -> ComponentComput
                 normalized_scores[metric][workload][model_id].append(score)
                 panel_ids_by_model[model_id].add(panel_id)
                 profile_series[model_id].add(
-                    f"{family.category.value}/{family.id}/{workload}/{cohort_key}/{metric}"
+                    f"{family.category.value}/{family.id}/{interaction}/"
+                    f"{operational_profile}/{success_definition}/{workload}/{cohort_key}/{metric}"
                 )
                 if normalized.provisional:
-                    provisional_by_model[model_id].add(f"{workload}/{cohort_key}/{metric}")
+                    provisional_by_model[model_id].add(
+                        f"{interaction}/{operational_profile}/{success_definition}/"
+                        f"{workload}/{cohort_key}/{metric}"
+                    )
 
     output: dict[str, ComponentScore] = {}
     scales: dict[str, ScoreScale] = {}

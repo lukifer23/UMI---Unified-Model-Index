@@ -33,6 +33,11 @@ measurements:
   model_id: claude-opus-5-max
   workload: deepswe-v1.1
   workload_category: coding_agents
+  interaction_profile: autonomous_task
+  operational_profile_id: deepswe-v1.1-mini-swe-agent-autonomous
+  success_definition_id: deepswe-v1.1-trial-passed
+  success_definition: Official DeepSWE v1.1 trial-ledger passed boolean for the fixed
+    repository task and mini-swe-agent harness.
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 444
@@ -82,6 +87,11 @@ measurements:
   model_id: claude-opus-5-max
   workload: deepswe-v1.1
   workload_category: coding_agents
+  interaction_profile: autonomous_task
+  operational_profile_id: deepswe-v1.1-mini-swe-agent-autonomous
+  success_definition_id: deepswe-v1.1-trial-passed
+  success_definition: Official DeepSWE v1.1 trial-ledger passed boolean for the fixed
+    repository task and mini-swe-agent harness.
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 444
@@ -129,6 +139,11 @@ measurements:
   model_id: claude-fable-5-max
   workload: deepswe-v1.1
   workload_category: coding_agents
+  interaction_profile: autonomous_task
+  operational_profile_id: deepswe-v1.1-mini-swe-agent-autonomous
+  success_definition_id: deepswe-v1.1-trial-passed
+  success_definition: Official DeepSWE v1.1 trial-ledger passed boolean for the fixed
+    repository task and mini-swe-agent harness.
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 436
@@ -178,6 +193,11 @@ measurements:
   model_id: claude-fable-5-max
   workload: deepswe-v1.1
   workload_category: coding_agents
+  interaction_profile: autonomous_task
+  operational_profile_id: deepswe-v1.1-mini-swe-agent-autonomous
+  success_definition_id: deepswe-v1.1-trial-passed
+  success_definition: Official DeepSWE v1.1 trial-ledger passed boolean for the fixed
+    repository task and mini-swe-agent harness.
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 436
@@ -225,6 +245,11 @@ measurements:
   model_id: gpt-5.6-sol-max
   workload: deepswe-v1.1
   workload_category: coding_agents
+  interaction_profile: autonomous_task
+  operational_profile_id: deepswe-v1.1-mini-swe-agent-autonomous
+  success_definition_id: deepswe-v1.1-trial-passed
+  success_definition: Official DeepSWE v1.1 trial-ledger passed boolean for the fixed
+    repository task and mini-swe-agent harness.
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 450
@@ -274,6 +299,11 @@ measurements:
   model_id: gpt-5.6-sol-max
   workload: deepswe-v1.1
   workload_category: coding_agents
+  interaction_profile: autonomous_task
+  operational_profile_id: deepswe-v1.1-mini-swe-agent-autonomous
+  success_definition_id: deepswe-v1.1-trial-passed
+  success_definition: Official DeepSWE v1.1 trial-ledger passed boolean for the fixed
+    repository task and mini-swe-agent harness.
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 450
@@ -321,6 +351,11 @@ measurements:
   model_id: kimi-k3-max
   workload: deepswe-v1.1
   workload_category: coding_agents
+  interaction_profile: autonomous_task
+  operational_profile_id: deepswe-v1.1-mini-swe-agent-autonomous
+  success_definition_id: deepswe-v1.1-trial-passed
+  success_definition: Official DeepSWE v1.1 trial-ledger passed boolean for the fixed
+    repository task and mini-swe-agent harness.
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 451
@@ -370,6 +405,11 @@ measurements:
   model_id: kimi-k3-max
   workload: deepswe-v1.1
   workload_category: coding_agents
+  interaction_profile: autonomous_task
+  operational_profile_id: deepswe-v1.1-mini-swe-agent-autonomous
+  success_definition_id: deepswe-v1.1-trial-passed
+  success_definition: Official DeepSWE v1.1 trial-ledger passed boolean for the fixed
+    repository task and mini-swe-agent harness.
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 451
@@ -417,6 +457,11 @@ measurements:
   model_id: glm-5.2-max
   workload: deepswe-v1.1
   workload_category: coding_agents
+  interaction_profile: autonomous_task
+  operational_profile_id: deepswe-v1.1-mini-swe-agent-autonomous
+  success_definition_id: deepswe-v1.1-trial-passed
+  success_definition: Official DeepSWE v1.1 trial-ledger passed boolean for the fixed
+    repository task and mini-swe-agent harness.
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 450
@@ -466,6 +511,11 @@ measurements:
   model_id: glm-5.2-max
   workload: deepswe-v1.1
   workload_category: coding_agents
+  interaction_profile: autonomous_task
+  operational_profile_id: deepswe-v1.1-mini-swe-agent-autonomous
+  success_definition_id: deepswe-v1.1-trial-passed
+  success_definition: Official DeepSWE v1.1 trial-ledger passed boolean for the fixed
+    repository task and mini-swe-agent harness.
   cohort_key: deepswe-v1.1-2026-08-13
   evaluation_date: '2026-08-13'
   attempts: 450

@@ -132,6 +132,19 @@ class CostBasis(StrEnum):
     SUCCESSFUL_TASK = "successful_task"
 
 
+class BillingEvidenceKind(StrEnum):
+    PROVIDER_BILLING_RECORD = "provider_billing_record"
+    ROUTER_RESPONSE_COST = "router_response_cost"
+    PRICING_REPLAY = "pricing_replay"
+    SOURCE_CALCULATED = "source_calculated"
+    NONE = "none"
+
+
+class InteractionProfile(StrEnum):
+    INTERACTIVE_ROUND = "interactive_round"
+    AUTONOMOUS_TASK = "autonomous_task"
+
+
 class RecordStatus(StrEnum):
     READY = "ready"
     DIAGNOSTIC_ONLY = "diagnostic_only"
@@ -383,10 +396,155 @@ class EfficiencyObservationCounts(StrictModel):
     cost_per_attempt: int | None = Field(default=None, gt=0)
 
 
+class AttemptDeployment(StrictModel):
+    """Exact deployment identity shared by every attempt in one ledger."""
+
+    id: Identifier
+    model_id: Identifier
+    configuration: ConfigurationEffort
+    named_release: str = Field(min_length=1)
+    source_model_id: str = Field(min_length=1)
+    serving_provider: str = Field(min_length=1)
+    endpoint_id: str = Field(min_length=1)
+    service_tier: str = Field(min_length=1)
+    provider_snapshot_id: str | None = None
+    region: str | None = None
+    configuration_verification: ConfigurationVerification
+
+
+class AttemptTelemetry(StrictModel):
+    """One task attempt with independently nullable physical observations."""
+
+    task_id: str = Field(min_length=1)
+    attempt_id: Identifier
+    success: bool
+    input_tokens: int | None = Field(default=None, ge=0)
+    output_tokens: int | None = Field(default=None, ge=0)
+    reasoning_tokens: int | None = Field(default=None, ge=0)
+    cache_read_tokens: int | None = Field(default=None, ge=0)
+    cache_write_tokens: int | None = Field(default=None, ge=0)
+    turns: int | None = Field(default=None, ge=0)
+    agent_steps: int | None = Field(default=None, ge=0)
+    wall_seconds: NonNegative | None = None
+    tool_calls: int | None = Field(default=None, ge=0)
+    retry_count: int | None = Field(default=None, ge=0)
+    observed_cost_usd: NonNegative | None = None
+    billing_evidence: BillingEvidenceKind = BillingEvidenceKind.NONE
+    cost_evidence_id: str | None = None
+    provider_request_id: str | None = None
+    error_kind: str | None = None
+
+    @model_validator(mode="after")
+    def bind_cost_to_evidence(self) -> AttemptTelemetry:
+        if self.observed_cost_usd is None:
+            if (
+                self.billing_evidence != BillingEvidenceKind.NONE
+                or self.cost_evidence_id is not None
+            ):
+                raise ValueError("cost evidence cannot exist without observed_cost_usd")
+        elif self.billing_evidence == BillingEvidenceKind.NONE or not self.cost_evidence_id:
+            raise ValueError("observed_cost_usd requires billing evidence and cost_evidence_id")
+        return self
+
+
+class AttemptLedger(StrictModel):
+    """Frozen, single-deployment operational evidence for one workload cohort."""
+
+    ledger_id: Identifier
+    source: Source
+    source_artifact_id: Identifier
+    source_artifact_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    crosswalk_entry_id: Identifier
+    capture_type: ArtifactCaptureType
+    redistribution_scope: RedistributionScope
+    model_release_date: date
+    measurement_as_of_date: date
+    deployment: AttemptDeployment
+    workload: Identifier
+    workload_category: WorkloadCategory
+    interaction_profile: InteractionProfile
+    operational_profile_id: Identifier
+    cohort_key: Identifier
+    evaluation_date: date
+    workload_version: str = Field(min_length=1)
+    harness_version: str = Field(min_length=1)
+    harness_owner: str = Field(min_length=1)
+    run_executor: str = Field(min_length=1)
+    evaluator: str = Field(min_length=1)
+    success_definition_id: Identifier
+    success_definition: str = Field(min_length=1)
+    tools_enabled: bool
+    signal_id: Identifier
+    record_status: RecordStatus
+    scoring_disposition: ScoringDisposition
+    attempts: tuple[AttemptTelemetry, ...] = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def validate_single_deployment_ledger(self) -> AttemptLedger:
+        attempt_ids = [attempt.attempt_id for attempt in self.attempts]
+        if len(attempt_ids) != len(set(attempt_ids)):
+            raise ValueError("attempt ledger contains duplicate attempt_id values")
+        physical_fields = (
+            "input_tokens",
+            "output_tokens",
+            "reasoning_tokens",
+            "cache_read_tokens",
+            "cache_write_tokens",
+            "turns",
+            "agent_steps",
+            "wall_seconds",
+            "tool_calls",
+            "retry_count",
+            "observed_cost_usd",
+        )
+        if not any(
+            getattr(attempt, field) is not None
+            for attempt in self.attempts
+            for field in physical_fields
+        ):
+            raise ValueError("attempt ledger contains no operational observations")
+        if self.record_status == RecordStatus.READY:
+            verification = self.deployment.configuration_verification
+            exact = (
+                verification.model_label_exact,
+                verification.release_label_exact,
+                verification.effort_label_exact,
+                verification.fallback_absent,
+                verification.endpoint_verified,
+                verification.service_tier_verified,
+                verification.deployment_identity_verified,
+            )
+            if not all(exact):
+                raise ValueError("ready attempt ledger requires exact deployment verification")
+            if (
+                self.deployment.provider_snapshot_id is not None
+                and not verification.provider_snapshot_verified
+            ):
+                raise ValueError("ready attempt ledger snapshot is not verified")
+            if self.capture_type not in {
+                ArtifactCaptureType.RAW_UPSTREAM_PAYLOAD,
+                ArtifactCaptureType.ARCHIVED_SOURCE_SNAPSHOT,
+            }:
+                raise ValueError("ready attempt ledger requires a raw or archived source artifact")
+            if self.scoring_disposition != ScoringDisposition.SCORED:
+                raise ValueError("ready attempt ledger must have scored disposition")
+        return self
+
+
+class AttemptMetricSummary(StrictModel):
+    metric: Identifier
+    observation_count: int = Field(gt=0)
+    mean: NonNegative
+
+
 class EfficiencyMeasurement(Provenance):
     model_id: Identifier
     workload: Identifier
     workload_category: WorkloadCategory
+    interaction_profile: InteractionProfile | None = None
+    operational_profile_id: Identifier | None = None
+    success_definition_id: Identifier | None = None
+    success_definition: str | None = None
     cohort_key: Identifier = "unspecified"
     evaluation_date: date | None = None
     attempts: int = Field(gt=0)
@@ -474,12 +632,71 @@ class TaskEconomicsMeasurement(Provenance):
     model_id: Identifier
     workload: Identifier
     workload_category: WorkloadCategory
+    interaction_profile: InteractionProfile | None = None
+    operational_profile_id: Identifier | None = None
+    success_definition_id: Identifier | None = None
+    success_definition: str | None = None
     cohort_key: Identifier
     evaluation_date: date
     cost_basis: CostBasis
     mean_cost_usd: NonNegative
     number_of_tasks: int | None = Field(default=None, gt=0)
+    attempts: int | None = Field(default=None, gt=0)
+    successful_attempts: int | None = Field(default=None, gt=0)
+    cost_observation_count: int | None = Field(default=None, gt=0)
+    total_observed_cost_usd: NonNegative | None = None
+    billing_evidence: BillingEvidenceKind = BillingEvidenceKind.NONE
     aggregation_statistic: AggregationStatistic = AggregationStatistic.ARITHMETIC_MEAN
+
+    @model_validator(mode="after")
+    def validate_cost_denominators(self) -> TaskEconomicsMeasurement:
+        if self.total_observed_cost_usd is None:
+            if self.billing_evidence != BillingEvidenceKind.NONE:
+                raise ValueError("billing evidence cannot exist without total observed cost")
+        elif self.billing_evidence == BillingEvidenceKind.NONE:
+            raise ValueError("total observed cost requires billing evidence")
+        counts = (self.attempts, self.successful_attempts, self.cost_observation_count)
+        if any(value is not None for value in counts) and not all(
+            value is not None for value in counts
+        ):
+            raise ValueError(
+                "economics attempt, success, and cost counts must be provided together"
+            )
+        if self.attempts is not None:
+            assert self.successful_attempts is not None
+            assert self.cost_observation_count is not None
+            if self.successful_attempts > self.attempts:
+                raise ValueError("successful_attempts cannot exceed attempts")
+            if self.cost_observation_count > self.attempts:
+                raise ValueError("cost_observation_count cannot exceed attempts")
+            denominator = (
+                self.successful_attempts
+                if self.cost_basis == CostBasis.SUCCESSFUL_TASK
+                else self.attempts
+            )
+            if denominator == 0:
+                raise ValueError("economics denominator cannot be zero")
+            if self.total_observed_cost_usd is not None and not math.isclose(
+                self.mean_cost_usd,
+                self.total_observed_cost_usd / denominator,
+                rel_tol=0.0,
+                abs_tol=1e-12,
+            ):
+                raise ValueError("mean_cost_usd does not reconcile with observed total and basis")
+        return self
+
+
+class AttemptLedgerAggregation(StrictModel):
+    ledger_id: Identifier
+    fingerprint: str = Field(pattern=r"^[a-f0-9]{64}$")
+    task_count: int = Field(gt=0)
+    attempt_count: int = Field(gt=0)
+    successful_attempts: int = Field(ge=0)
+    success_rate: Rate
+    metric_summaries: tuple[AttemptMetricSummary, ...]
+    efficiency_records: tuple[EfficiencyMeasurement, ...]
+    economics_records: tuple[TaskEconomicsMeasurement, ...]
+    diagnostics: tuple[str, ...] = ()
 
 
 class ExternalIndexMeasurement(Provenance):

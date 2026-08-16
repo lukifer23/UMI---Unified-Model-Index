@@ -2001,9 +2001,9 @@
       }
     ]
   },
-  "result_fingerprint": "5e719699e02ee678084b97e97358f6ad804b30654142e490f3a39037692eea12",
-  "score_scale_id": "e1689b005201e813a52ad7ef6ce5cb259e2112be40a32b379dbe5e1a97a4cefd",
-  "scored_input_fingerprint": "bffc0aa83bd219506c9d050b945d7436410c7931c57731408b2e9802e4eea8c1",
+  "result_fingerprint": "2158ccfde0d80e96614c42340faf08decb6916f4d3cd188396f779db6269310c",
+  "score_scale_id": "23e5f3816629a19f2185ba45dc551336a89eb1ab2945d86d56b10a218b11d2a7",
+  "scored_input_fingerprint": "fdfac3278014647667435a8c385208c2c79f851424cd3c36f509d10c057bf136",
   "source_artifact_checksums": {
     "aa-gdpval-v2-facts-2026-08-15": "7c18c5ba6483bd4db4826bb45a25d8393b92e5cc4b788cf482f7d9f21808f9cb",
     "aa-hle-facts-2026-08-14": "a19161096f61de769e86534513844ac5adfb2dd3cca6df74444e13c4eb70225d",
@@ -2012,7 +2012,7 @@
     "aa-tau3-banking-facts-2026-08-15": "838c0c02ec932059b10a4172123e6ecd6b916c10eba2da105c7751b27614bad9",
     "aa-terminalbench-v2-1-facts-2026-08-15": "cd785e4364a3119a7c1c0dd05346395cb61b2b57155228b5ab9032a957cabf97",
     "cursorbench-3.2-facts-2026-08-14": "19556c9ff6db835757a5668a65177e8e151759eda751ca6e627a7491e77e54bc",
-    "deepswe-v1.1-2026-08-13": "8c0b16c3944ceda114a08aa69b14d6219d84e4fbd4247d313d0d4cd6e3e6c545",
+    "deepswe-v1.1-2026-08-13": "d31ecf6bbe9f70a1c9a1fca50d2dcac4392180ebdd56efd5b12397998acc1c9b",
     "epoch-benchmark-data-2026-08-14": "35a7c21ba7d535514ebcf9bbe7b8265d2e2da40ef6b1fa63fe49323c3395a18b"
   },
   "source_artifact_ids": [

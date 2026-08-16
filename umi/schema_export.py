@@ -10,6 +10,8 @@ from umi.config import ProjectConfig
 from umi.loading import Dataset, SourceRegistry
 from umi.schemas import (
     AcceptanceManifest,
+    AttemptLedger,
+    AttemptLedgerAggregation,
     BenchmarkContribution,
     CapabilityComparisonResult,
     ComparisonCertificate,
@@ -29,6 +31,8 @@ SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "overlap-policy.schema.json": OverlapPolicy,
     "adaptation-result.schema.json": AdaptationResult,
     "acceptance-manifest.schema.json": AcceptanceManifest,
+    "attempt-ledger.schema.json": AttemptLedger,
+    "attempt-ledger-aggregation.schema.json": AttemptLedgerAggregation,
     "normalization-panel.schema.json": NormalizationPanel,
     "score-scale.schema.json": ScoreScale,
     "benchmark-contribution.schema.json": BenchmarkContribution,

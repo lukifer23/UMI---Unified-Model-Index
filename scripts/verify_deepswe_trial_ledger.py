@@ -15,7 +15,7 @@ DEFAULT_FACTS = ROOT / "data" / "sources" / "v0.3" / "deepswe-reviewed-facts-202
 
 
 def _read_url(url: str) -> bytes:
-    request = urllib.request.Request(url, headers={"User-Agent": "UMI-acquisition/0.3.12"})
+    request = urllib.request.Request(url, headers={"User-Agent": "UMI-acquisition/0.3.13"})
     with urllib.request.urlopen(  # noqa: S310 - explicit acquisition verifier
         request, timeout=120
     ) as response:

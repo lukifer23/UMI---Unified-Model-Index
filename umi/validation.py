@@ -214,7 +214,7 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
                 f"benchmark {benchmark_id} has multiple scoring cohorts for model {model_id} "
                 f"without a selection policy: {', '.join(sorted(cohorts))}"
             )
-    ready_workload_cohorts: dict[tuple[str, str, str], set[str]] = {}
+    ready_workload_cohorts: dict[tuple[str, str, str], set[tuple[str, str, str, str]]] = {}
     workload_inputs: tuple[EfficiencyMeasurement | TaskEconomicsMeasurement, ...] = (
         *dataset.efficiency,
         *dataset.task_economics,
@@ -223,12 +223,26 @@ def validate_dataset(dataset: Dataset, config: ProjectConfig) -> ValidationRepor
         candidate_model = models.get(item.model_id)
         if candidate_model and is_scoring_ready(item, candidate_model):
             workload_key = (item.workload_category.value, item.workload, item.model_id)
-            ready_workload_cohorts.setdefault(workload_key, set()).add(item.cohort_key)
-    for (category, workload_id, model_id), cohorts in sorted(ready_workload_cohorts.items()):
-        if len(cohorts) > 1:
+            interaction = (
+                item.interaction_profile.value if item.interaction_profile else "unspecified"
+            )
+            operational_profile = item.operational_profile_id or "unspecified"
+            success_definition = item.success_definition_id or "unspecified"
+            ready_workload_cohorts.setdefault(workload_key, set()).add(
+                (operational_profile, interaction, success_definition, item.cohort_key)
+            )
+    for (category, workload_id, model_id), identities in sorted(
+        ready_workload_cohorts.items()
+    ):
+        if len(identities) > 1:
+            rendered = ", ".join(
+                f"{profile}/{mode}/{success}/{cohort}"
+                for profile, mode, success, cohort in sorted(identities)
+            )
             errors.append(
-                f"workload {category}/{workload_id} has multiple scoring cohorts for model "
-                f"{model_id} without a selection policy: {', '.join(sorted(cohorts))}"
+                f"workload {category}/{workload_id} has multiple scoring operational/interaction/"
+                "success/cohort "
+                f"identities for model {model_id} without a selection policy: {rendered}"
             )
 
     conflicts: dict[tuple[str, str], int] = {}

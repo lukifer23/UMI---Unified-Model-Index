@@ -1,9 +1,10 @@
-# UMI methodology v0.3.12
+# UMI methodology v0.3.13
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3.12 retains the manually
-reviewed, multi-source evidence pilot and hardens arithmetic-mean resource denominators against the
-official DeepSWE v1.1 trial ledger. It does not publish a headline UMI ranking.
+current policy values; code must not contradict this document. UMI v0.3.13 retains the manually
+reviewed, multi-source evidence pilot, hardens arithmetic-mean resource denominators against the
+official DeepSWE v1.1 trial ledger, and adds the governed attempt-level operational evidence path.
+It does not publish a headline UMI ranking.
 All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
 produce identical serialized results and certificate fingerprints across supported Python versions;
 this is numerical canonicalization, not a change to weights or score semantics.
@@ -85,7 +86,7 @@ each published rate reconciles to an integer number of passes across 267 attempt
 reasoning, and cacheable-input counters remain diagnostic. Artificial Analysis uses provider API
 token counts for Intelligence evaluations, so token units differ by model; cacheable input is not
 an observed per-attempt cache-hit or billing ledger; and no attempt-level rows are retained. The
-counters therefore contribute neither Efficiency nor Economics in v0.3.12.
+counters therefore contribute neither Efficiency nor Economics in v0.3.13.
 
 For reviewed pass-rate extracts with an explicit total trial count, the offline adapter requires
 `source_rate × number_of_trials` to be within `1e-9` of an integer pass count. This applies to the
@@ -125,7 +126,7 @@ Capability. Source-published token, calculated-cost, and decode-time summaries a
 diagnostic evaluation settings. Operational coverage is incomplete across the accepted rows; cost
 uses live price and cache assumptions rather than a billed-run ledger; and the public page describes
 the same decode-time field as minutes in its structured chart metadata but seconds in an auxiliary
-explanation. These fields therefore contribute neither Efficiency nor Economics in v0.3.12.
+explanation. These fields therefore contribute neither Efficiency nor Economics in v0.3.13.
 
 The Artificial Analysis AA-LCR access-date cohort is admitted as an independent context/reliability
 task signal for exact named-release and Max-effort rows. It contains 100 open-answer questions over
@@ -140,7 +141,7 @@ Max pilot configuration. Exact Max rows for Opus, Sol, Kimi, and GLM may contrib
 Published answer/reasoning token, decode-time, and calculated-cost fields are retained diagnostically.
 They are incomplete across accepted rows, provider token counts are not standardized across models,
 and calculated cost is not a deployment- and billing-record-bound attempt ledger. They therefore
-contribute neither Efficiency nor Economics in v0.3.12.
+contribute neither Efficiency nor Economics in v0.3.13.
 
 The Artificial Analysis AA-Omniscience access-date cohort is admitted as an independent factual
 knowledge-reliability task signal for exact named-release and Max-effort rows. It contains 6,000
@@ -161,7 +162,7 @@ upstream time-per-task field, and performance-data-source labels are retained di
 not enter Efficiency or Economics: the facts do not bind a complete endpoint, service tier, price
 revision, and observed billing ledger, the upstream time field's unit is not established in the retained
 public contract, and aggregate totals are not attempt-level workload telemetry. These fields therefore
-contribute neither Efficiency nor Economics in v0.3.12.
+contribute neither Efficiency nor Economics in v0.3.13.
 
 DeepSWE's public runner documentation and Pier implementation were also reviewed for Economics
 readiness. Provider-prefixed model examples establish an API family, while Pier/mini-SWE-agent
@@ -546,9 +547,10 @@ benchmark series `(benchmark_id, cohort_key)` available to every requested confi
 recomputes each score using only that intersection.
 
 Efficiency and Economics use the same rule with workload support rather than benchmark support.
-Their profile records every normalized workload/category/cohort/metric series. They are comparable
-only when those workload-series sets and the scoring configuration match; a cost result cannot be
-ranked beside a different task, cohort, or resource definition.
+Their profile records every normalized workload/category/interaction/operational-profile/
+success-definition/cohort/metric series. They are comparable only when those workload-series sets
+and the scoring configuration match; a cost result cannot be ranked beside a different task,
+interaction mode, operational profile, success definition, cohort, or resource definition.
 
 Family weights in each configured domain sum to one. In v0.3, `family.cap` is a configuration
 guard: `family.weight <= family.cap`, and domain caps sum to at least one. Scoring uses
@@ -558,7 +560,7 @@ that limitation.
 
 ## Efficiency
 
-The v0.3.12 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
+The v0.3.13 pilot metric hypothesis is 15% effective input tokens, 15% effective output tokens,
 10% effective reasoning tokens, 10% effective cached tokens, 10% effective turns, 15% effective
 agent steps, 15% effective wall time, and 10% effective tool calls. These are policy weights, not
 empirically learned parameters. Token subtypes are kept distinct: a total-token field is not scored
@@ -613,6 +615,40 @@ EfficiencyCoverage = sum_c CategoryWeight_c
 Each partial aggregation may reweight only across available children at that exact hierarchy level;
 coverage retains every omitted category, family, workload, and metric weight. One workload cannot
 stand in for an entire category, and one low-weight observation cannot create full workload coverage.
+
+### Attempt-level operational ledgers
+
+A UMI attempt ledger binds exactly one canonical model configuration, inference effort, serving
+provider, endpoint, service tier, workload/cohort, harness version, operational-profile ID,
+interaction profile, and versioned success-definition ID plus its literal definition. A ledger
+cannot mix aliases, deployments, tiers, harnesses, operational profiles, interaction profiles, or
+success definitions. Every attempt has a stable task ID and attempt ID, an explicit success boolean,
+and independently nullable observations for input, output, reasoning, cache-read, cache-write, turns,
+agent steps, wall time, tool calls,
+retries, and observed cost. Missing is distinct from zero.
+
+Offline aggregation sorts by stable attempt identity, rejects duplicates and non-finite values, and
+calculates every arithmetic mean from that metric's own observation set. A metric with observations
+on every attempt may enter a ready Efficiency record when the ledger itself is ready. A metric with
+partial observations is emitted only in a separate diagnostic record with its actual count; it
+cannot make complete sibling metrics diagnostic and cannot borrow the complete success denominator.
+Cache-read tokens map to the current `cached_tokens` Efficiency metric. Cache-write tokens remain an
+explicit diagnostic physical metric until UMI adopts a separate scoring weight for them.
+
+Observed Economics requires cost on every attempt, at least one success, exact deployment binding,
+and provider-billing evidence tied to the run. Then:
+
+```text
+ObservedCostPerSuccessfulTask = sum(AttemptObservedCost) / SuccessfulAttempts
+```
+
+Response-estimated cost, router-calculated cost, price-table replay, incomplete billing rows, and
+unknown billing provenance remain diagnostic and cannot produce a ready successful-task Economics
+record. At zero success the ledger retains resources and the zero-success sentinel behavior, but no
+finite observed cost-per-success record is serialized. Acquisition remains networked and separate;
+ledger validation and aggregation are deterministic and offline over a frozen artifact.
+Derived records remain inadmissible until the frozen artifact, source registry, exact crosswalk, and
+scored bundle independently clear their ordinary validation gates.
 
 ## Economics
 

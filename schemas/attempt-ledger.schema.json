@@ -1,0 +1,619 @@
+{
+  "$defs": {
+    "ArtifactCaptureType": {
+      "enum": [
+        "raw_upstream_payload",
+        "archived_source_snapshot",
+        "reviewed_fact_extract",
+        "citation_only",
+        "derived_artifact"
+      ],
+      "title": "ArtifactCaptureType",
+      "type": "string"
+    },
+    "AttemptDeployment": {
+      "additionalProperties": false,
+      "description": "Exact deployment identity shared by every attempt in one ledger.",
+      "properties": {
+        "configuration": {
+          "$ref": "#/$defs/ConfigurationEffort"
+        },
+        "configuration_verification": {
+          "$ref": "#/$defs/ConfigurationVerification"
+        },
+        "endpoint_id": {
+          "minLength": 1,
+          "title": "Endpoint Id",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "model_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "named_release": {
+          "minLength": 1,
+          "title": "Named Release",
+          "type": "string"
+        },
+        "provider_snapshot_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Snapshot Id"
+        },
+        "region": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Region"
+        },
+        "service_tier": {
+          "minLength": 1,
+          "title": "Service Tier",
+          "type": "string"
+        },
+        "serving_provider": {
+          "minLength": 1,
+          "title": "Serving Provider",
+          "type": "string"
+        },
+        "source_model_id": {
+          "minLength": 1,
+          "title": "Source Model Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "model_id",
+        "configuration",
+        "named_release",
+        "source_model_id",
+        "serving_provider",
+        "endpoint_id",
+        "service_tier",
+        "configuration_verification"
+      ],
+      "title": "AttemptDeployment",
+      "type": "object"
+    },
+    "AttemptTelemetry": {
+      "additionalProperties": false,
+      "description": "One task attempt with independently nullable physical observations.",
+      "properties": {
+        "agent_steps": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Agent Steps"
+        },
+        "attempt_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "billing_evidence": {
+          "$ref": "#/$defs/BillingEvidenceKind",
+          "default": "none"
+        },
+        "cache_read_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cache Read Tokens"
+        },
+        "cache_write_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cache Write Tokens"
+        },
+        "cost_evidence_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cost Evidence Id"
+        },
+        "error_kind": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error Kind"
+        },
+        "input_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Input Tokens"
+        },
+        "observed_cost_usd": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed Cost Usd"
+        },
+        "output_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Output Tokens"
+        },
+        "provider_request_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Request Id"
+        },
+        "reasoning_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reasoning Tokens"
+        },
+        "retry_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retry Count"
+        },
+        "success": {
+          "title": "Success",
+          "type": "boolean"
+        },
+        "task_id": {
+          "minLength": 1,
+          "title": "Task Id",
+          "type": "string"
+        },
+        "tool_calls": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tool Calls"
+        },
+        "turns": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Turns"
+        },
+        "wall_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Wall Seconds"
+        }
+      },
+      "required": [
+        "task_id",
+        "attempt_id",
+        "success"
+      ],
+      "title": "AttemptTelemetry",
+      "type": "object"
+    },
+    "BillingEvidenceKind": {
+      "enum": [
+        "provider_billing_record",
+        "router_response_cost",
+        "pricing_replay",
+        "source_calculated",
+        "none"
+      ],
+      "title": "BillingEvidenceKind",
+      "type": "string"
+    },
+    "ConfigurationEffort": {
+      "enum": [
+        "standard",
+        "off",
+        "low",
+        "medium",
+        "high",
+        "max",
+        "xhigh",
+        "custom"
+      ],
+      "title": "ConfigurationEffort",
+      "type": "string"
+    },
+    "ConfigurationVerification": {
+      "additionalProperties": false,
+      "properties": {
+        "deployment_identity_verified": {
+          "default": false,
+          "title": "Deployment Identity Verified",
+          "type": "boolean"
+        },
+        "effort_label_exact": {
+          "default": false,
+          "title": "Effort Label Exact",
+          "type": "boolean"
+        },
+        "endpoint_verified": {
+          "default": false,
+          "title": "Endpoint Verified",
+          "type": "boolean"
+        },
+        "fallback_absent": {
+          "default": false,
+          "title": "Fallback Absent",
+          "type": "boolean"
+        },
+        "model_label_exact": {
+          "default": false,
+          "title": "Model Label Exact",
+          "type": "boolean"
+        },
+        "provider_snapshot_verified": {
+          "default": false,
+          "title": "Provider Snapshot Verified",
+          "type": "boolean"
+        },
+        "release_label_exact": {
+          "default": false,
+          "title": "Release Label Exact",
+          "type": "boolean"
+        },
+        "service_tier_verified": {
+          "default": false,
+          "title": "Service Tier Verified",
+          "type": "boolean"
+        }
+      },
+      "title": "ConfigurationVerification",
+      "type": "object"
+    },
+    "InteractionProfile": {
+      "enum": [
+        "interactive_round",
+        "autonomous_task"
+      ],
+      "title": "InteractionProfile",
+      "type": "string"
+    },
+    "RecordStatus": {
+      "enum": [
+        "ready",
+        "diagnostic_only",
+        "synthetic",
+        "invalid"
+      ],
+      "title": "RecordStatus",
+      "type": "string"
+    },
+    "RedistributionScope": {
+      "enum": [
+        "full_artifact",
+        "facts_only",
+        "reference_only"
+      ],
+      "title": "RedistributionScope",
+      "type": "string"
+    },
+    "ScoringDisposition": {
+      "enum": [
+        "scored",
+        "diagnostic_only"
+      ],
+      "title": "ScoringDisposition",
+      "type": "string"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "accessed": {
+          "format": "date",
+          "title": "Accessed",
+          "type": "string"
+        },
+        "organization": {
+          "minLength": 1,
+          "title": "Organization",
+          "type": "string"
+        },
+        "url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "organization",
+        "url",
+        "accessed"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "WorkloadCategory": {
+      "enum": [
+        "coding_agents",
+        "research_analysis",
+        "tool_use_agents",
+        "browser_computer_use",
+        "general_interaction",
+        "long_horizon"
+      ],
+      "title": "WorkloadCategory",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Frozen, single-deployment operational evidence for one workload cohort.",
+  "properties": {
+    "attempts": {
+      "items": {
+        "$ref": "#/$defs/AttemptTelemetry"
+      },
+      "minItems": 1,
+      "title": "Attempts",
+      "type": "array"
+    },
+    "capture_type": {
+      "$ref": "#/$defs/ArtifactCaptureType"
+    },
+    "cohort_key": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Cohort Key",
+      "type": "string"
+    },
+    "crosswalk_entry_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Crosswalk Entry Id",
+      "type": "string"
+    },
+    "deployment": {
+      "$ref": "#/$defs/AttemptDeployment"
+    },
+    "evaluation_date": {
+      "format": "date",
+      "title": "Evaluation Date",
+      "type": "string"
+    },
+    "evaluator": {
+      "minLength": 1,
+      "title": "Evaluator",
+      "type": "string"
+    },
+    "harness_owner": {
+      "minLength": 1,
+      "title": "Harness Owner",
+      "type": "string"
+    },
+    "harness_version": {
+      "minLength": 1,
+      "title": "Harness Version",
+      "type": "string"
+    },
+    "interaction_profile": {
+      "$ref": "#/$defs/InteractionProfile"
+    },
+    "ledger_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Ledger Id",
+      "type": "string"
+    },
+    "measurement_as_of_date": {
+      "format": "date",
+      "title": "Measurement As Of Date",
+      "type": "string"
+    },
+    "model_release_date": {
+      "format": "date",
+      "title": "Model Release Date",
+      "type": "string"
+    },
+    "operational_profile_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Operational Profile Id",
+      "type": "string"
+    },
+    "record_status": {
+      "$ref": "#/$defs/RecordStatus"
+    },
+    "redistribution_scope": {
+      "$ref": "#/$defs/RedistributionScope"
+    },
+    "run_executor": {
+      "minLength": 1,
+      "title": "Run Executor",
+      "type": "string"
+    },
+    "scoring_disposition": {
+      "$ref": "#/$defs/ScoringDisposition"
+    },
+    "signal_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Signal Id",
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/Source"
+    },
+    "source_artifact_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Source Artifact Id",
+      "type": "string"
+    },
+    "source_artifact_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Source Artifact Sha256",
+      "type": "string"
+    },
+    "success_definition": {
+      "minLength": 1,
+      "title": "Success Definition",
+      "type": "string"
+    },
+    "success_definition_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Success Definition Id",
+      "type": "string"
+    },
+    "tools_enabled": {
+      "title": "Tools Enabled",
+      "type": "boolean"
+    },
+    "workload": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Workload",
+      "type": "string"
+    },
+    "workload_category": {
+      "$ref": "#/$defs/WorkloadCategory"
+    },
+    "workload_version": {
+      "minLength": 1,
+      "title": "Workload Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "ledger_id",
+    "source",
+    "source_artifact_id",
+    "source_artifact_sha256",
+    "crosswalk_entry_id",
+    "capture_type",
+    "redistribution_scope",
+    "model_release_date",
+    "measurement_as_of_date",
+    "deployment",
+    "workload",
+    "workload_category",
+    "interaction_profile",
+    "operational_profile_id",
+    "cohort_key",
+    "evaluation_date",
+    "workload_version",
+    "harness_version",
+    "harness_owner",
+    "run_executor",
+    "evaluator",
+    "success_definition_id",
+    "success_definition",
+    "tools_enabled",
+    "signal_id",
+    "record_status",
+    "scoring_disposition",
+    "attempts"
+  ],
+  "title": "AttemptLedger",
+  "type": "object"
+}

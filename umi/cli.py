@@ -36,6 +36,7 @@ from umi.adapters import (
     adapt_epoch_csv,
     adapt_lab_release_facts,
 )
+from umi.attempt_ledger import aggregate_attempt_ledger, load_attempt_ledger
 from umi.bundle import (
     build_acceptance_manifest,
     load_scoring_bundle,
@@ -199,6 +200,12 @@ def build_parser() -> argparse.ArgumentParser:
     bundle_commands = bundle.add_subparsers(dest="bundle_command", required=True)
     bundle_validate = bundle_commands.add_parser("validate")
     _add_common(bundle_validate)
+    attempts = subparsers.add_parser("attempts")
+    attempt_commands = attempts.add_subparsers(dest="attempts_command", required=True)
+    attempt_aggregate = attempt_commands.add_parser("aggregate")
+    attempt_aggregate.add_argument("--ledger", required=True)
+    attempt_aggregate.add_argument("--format", choices=("json", "csv"), default="json")
+    attempt_aggregate.add_argument("--output")
     return parser
 
 
@@ -268,6 +275,13 @@ def _adapt_source(args: argparse.Namespace) -> Any:
 
 
 def run(args: argparse.Namespace) -> int:
+    if args.command == "attempts":
+        _emit(
+            aggregate_attempt_ledger(load_attempt_ledger(args.ledger)),
+            args.format,
+            args.output,
+        )
+        return 0
     if args.command == "ingest":
         _emit(_adapt_source(args), args.format, args.output)
         return 0

@@ -461,6 +461,17 @@
       "title": "BenchmarkMeasurement",
       "type": "object"
     },
+    "BillingEvidenceKind": {
+      "enum": [
+        "provider_billing_record",
+        "router_response_cost",
+        "pricing_replay",
+        "source_calculated",
+        "none"
+      ],
+      "title": "BillingEvidenceKind",
+      "type": "string"
+    },
     "ConfigurationEffort": {
       "enum": [
         "standard",
@@ -663,6 +674,17 @@
           ],
           "default": null,
           "title": "Harness Version"
+        },
+        "interaction_profile": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/InteractionProfile"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "leaderboard_publish_date": {
           "anyOf": [
@@ -905,6 +927,19 @@
           "default": null,
           "title": "Observed Output Tokens Summary"
         },
+        "operational_profile_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Operational Profile Id"
+        },
         "provider_snapshot_id": {
           "anyOf": [
             {
@@ -1051,6 +1086,31 @@
           ],
           "default": null,
           "title": "Source Registry Snapshot Id"
+        },
+        "success_definition": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Success Definition"
+        },
+        "success_definition_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Success Definition Id"
         },
         "success_rate": {
           "maximum": 1,
@@ -1633,6 +1693,14 @@
         "unknown"
       ],
       "title": "IdentityKind",
+      "type": "string"
+    },
+    "InteractionProfile": {
+      "enum": [
+        "interactive_round",
+        "autonomous_task"
+      ],
+      "title": "InteractionProfile",
       "type": "string"
     },
     "MeasurementUncertainty": {
@@ -2821,6 +2889,19 @@
           "$ref": "#/$defs/AggregationStatistic",
           "default": "arithmetic_mean"
         },
+        "attempts": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempts"
+        },
         "benchmark_version": {
           "anyOf": [
             {
@@ -2832,6 +2913,10 @@
           ],
           "default": null,
           "title": "Benchmark Version"
+        },
+        "billing_evidence": {
+          "$ref": "#/$defs/BillingEvidenceKind",
+          "default": "none"
         },
         "capture_type": {
           "anyOf": [
@@ -2862,6 +2947,19 @@
         },
         "cost_basis": {
           "$ref": "#/$defs/CostBasis"
+        },
+        "cost_observation_count": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cost Observation Count"
         },
         "crosswalk_entry_id": {
           "anyOf": [
@@ -2928,6 +3026,17 @@
           ],
           "default": null,
           "title": "Harness Version"
+        },
+        "interaction_profile": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/InteractionProfile"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "leaderboard_publish_date": {
           "anyOf": [
@@ -3007,6 +3116,19 @@
           ],
           "default": null,
           "title": "Number Of Tasks"
+        },
+        "operational_profile_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Operational Profile Id"
         },
         "provider_snapshot_id": {
           "anyOf": [
@@ -3155,6 +3277,44 @@
           "default": null,
           "title": "Source Registry Snapshot Id"
         },
+        "success_definition": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Success Definition"
+        },
+        "success_definition_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Success Definition Id"
+        },
+        "successful_attempts": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Successful Attempts"
+        },
         "tools_enabled": {
           "anyOf": [
             {
@@ -3166,6 +3326,19 @@
           ],
           "default": null,
           "title": "Tools Enabled"
+        },
+        "total_observed_cost_usd": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Total Observed Cost Usd"
         },
         "workload": {
           "pattern": "^[a-z0-9][a-z0-9._-]*$",

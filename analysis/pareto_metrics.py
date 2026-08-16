@@ -19,6 +19,9 @@ from umi.schemas import CostBasis, EfficiencyMeasurement, ScoringResult, TaskEco
 class ScopedParetoResult:
     metric: str
     workload_category: str
+    interaction_profile: str
+    operational_profile_id: str
+    success_definition_id: str
     workload: str
     cohort_key: str
     model_id: str
@@ -50,39 +53,128 @@ def pareto_dimensions(
     evidence_profile_id = next(iter(profile_ids))
     score_scale_id = next(iter(scale_ids))
     capability = {item.model_id: item.capability.score for item in results}
-    efficiency: dict[tuple[str, str, str], list[EfficiencyMeasurement]] = defaultdict(list)
+    efficiency: dict[
+        tuple[str, str, str, str, str, str], list[EfficiencyMeasurement]
+    ] = defaultdict(list)
     for record in dataset.efficiency:
-        efficiency[(record.workload, record.cohort_key, record.model_id)].append(record)
-    direct: dict[tuple[str, str, str], list[TaskEconomicsMeasurement]] = defaultdict(list)
+        interaction = (
+            record.interaction_profile.value if record.interaction_profile else "unspecified"
+        )
+        operational_profile = record.operational_profile_id or "unspecified"
+        success_definition = record.success_definition_id or "unspecified"
+        efficiency[
+            (
+                record.workload,
+                operational_profile,
+                interaction,
+                success_definition,
+                record.cohort_key,
+                record.model_id,
+            )
+        ].append(record)
+    direct: dict[
+        tuple[str, str, str, str, str, str], list[TaskEconomicsMeasurement]
+    ] = defaultdict(list)
     for economics_record in dataset.task_economics:
         if economics_record.cost_basis == CostBasis.SUCCESSFUL_TASK:
+            interaction = (
+                economics_record.interaction_profile.value
+                if economics_record.interaction_profile
+                else "unspecified"
+            )
+            operational_profile = economics_record.operational_profile_id or "unspecified"
+            success_definition = economics_record.success_definition_id or "unspecified"
             direct[
                 (
                     economics_record.workload,
+                    operational_profile,
+                    interaction,
+                    success_definition,
                     economics_record.cohort_key,
                     economics_record.model_id,
                 )
             ].append(economics_record)
 
-    series_values: dict[tuple[str, str, str, str], dict[str, float]] = defaultdict(dict)
-    for (workload, cohort, model_id), records in efficiency.items():
+    series_values: dict[tuple[str, str, str, str, str, str, str], dict[str, float]] = defaultdict(
+        dict
+    )
+    for (
+        workload,
+        operational_profile,
+        interaction,
+        success_definition,
+        cohort,
+        model_id,
+    ), records in efficiency.items():
         category = records[0].workload_category.value
         for metric in EFFICIENCY_ATTRIBUTES:
             value, _, _ = consolidate_derived(records, metric)
             if value is not None:
-                series_values[(metric, category, workload, cohort)][model_id] = value
-        if (workload, cohort, model_id) not in direct:
+                series_values[
+                    (
+                        metric,
+                        category,
+                        operational_profile,
+                        interaction,
+                        success_definition,
+                        workload,
+                        cohort,
+                    )
+                ][model_id] = value
+        if (
+            workload,
+            operational_profile,
+            interaction,
+            success_definition,
+            cohort,
+            model_id,
+        ) not in direct:
             value, _, _ = consolidate_cost_per_success(records)
             if value is not None:
-                series_values[("cost_per_success", category, workload, cohort)][model_id] = value
-    for (workload, cohort, model_id), direct_records in direct.items():
+                series_values[
+                    (
+                        "cost_per_success",
+                        category,
+                        operational_profile,
+                        interaction,
+                        success_definition,
+                        workload,
+                        cohort,
+                    )
+                ][model_id] = value
+    for (
+        workload,
+        operational_profile,
+        interaction,
+        success_definition,
+        cohort,
+        model_id,
+    ), direct_records in direct.items():
         category = direct_records[0].workload_category.value
         value, _, _ = consolidate_numeric(direct_records, "mean_cost_usd")
         if value is not None:
-            series_values[("cost_per_success", category, workload, cohort)][model_id] = value
+            series_values[
+                (
+                    "cost_per_success",
+                    category,
+                    operational_profile,
+                    interaction,
+                    success_definition,
+                    workload,
+                    cohort,
+                )
+            ][model_id] = value
 
     output: list[ScopedParetoResult] = []
-    for (metric, category, workload, cohort), values in sorted(series_values.items()):
+    for (
+        metric,
+        category,
+        operational_profile,
+        interaction,
+        success_definition,
+        workload,
+        cohort,
+    ), values in sorted(series_values.items()):
         points = []
         for model_id, expense in values.items():
             capability_value = capability.get(model_id)
@@ -93,6 +185,9 @@ def pareto_dimensions(
                 ScopedParetoResult(
                     metric=metric,
                     workload_category=category,
+                    interaction_profile=interaction,
+                    operational_profile_id=operational_profile,
+                    success_definition_id=success_definition,
                     workload=workload,
                     cohort_key=cohort,
                     model_id=result.model_id,

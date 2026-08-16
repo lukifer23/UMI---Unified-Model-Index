@@ -461,8 +461,8 @@
   "score_scale": {
     "config_fingerprint": "30eb8eb9b7f05a4bb64a1a324ab6ab16398240e995c4868af73389118506fb73",
     "evidence_profile_id": "46e332fe3b8ed1ee273d7e92f21e47e13cf8f94959a45a100b71d5a8a5229422",
-    "formula_version": "umi-methodology-v0.3.12",
-    "id": "e1689b005201e813a52ad7ef6ce5cb259e2112be40a32b379dbe5e1a97a4cefd",
+    "formula_version": "umi-methodology-v0.3.13",
+    "id": "23e5f3816629a19f2185ba45dc551336a89eb1ab2945d86d56b10a218b11d2a7",
     "normalization_panel_ids": [
       "12cd101eedeabe429261e5c6e5f59696319fae3aa4536963b00020e2ab97675f",
       "1c7e7619d2f0d280f7b462de13b2b568708ab39bbfff8077a572b2a8afb9f496",
@@ -1000,7 +1000,7 @@
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
       "score": 82.80193236714976,
-      "score_scale_id": "e1689b005201e813a52ad7ef6ce5cb259e2112be40a32b379dbe5e1a97a4cefd",
+      "score_scale_id": "23e5f3816629a19f2185ba45dc551336a89eb1ab2945d86d56b10a218b11d2a7",
       "score_semantics": "weighted stable-panel percentile composite"
     },
     {
@@ -1523,7 +1523,7 @@
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
       "score": 1.9323671497584543,
-      "score_scale_id": "e1689b005201e813a52ad7ef6ce5cb259e2112be40a32b379dbe5e1a97a4cefd",
+      "score_scale_id": "23e5f3816629a19f2185ba45dc551336a89eb1ab2945d86d56b10a218b11d2a7",
       "score_semantics": "weighted stable-panel percentile composite"
     },
     {
@@ -2047,7 +2047,7 @@
         "uncertainty_mode": "deterministic_joint_endpoint_enumeration"
       },
       "score": 45.772946859903385,
-      "score_scale_id": "e1689b005201e813a52ad7ef6ce5cb259e2112be40a32b379dbe5e1a97a4cefd",
+      "score_scale_id": "23e5f3816629a19f2185ba45dc551336a89eb1ab2945d86d56b10a218b11d2a7",
       "score_semantics": "weighted stable-panel percentile composite"
     }
   ],

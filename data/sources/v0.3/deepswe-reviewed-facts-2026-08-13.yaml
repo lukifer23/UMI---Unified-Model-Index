@@ -3,6 +3,10 @@ artifact_id: deepswe-v1.1-2026-08-13
 as_of: 2026-08-13
 generated_at: 2026-08-13T16:11:55.708636+00:00
 benchmark_version: v1.1
+interaction_profile: autonomous_task
+operational_profile_id: deepswe-v1.1-mini-swe-agent-autonomous
+success_definition_id: deepswe-v1.1-trial-passed
+success_definition: Official DeepSWE v1.1 trial-ledger passed boolean for the fixed repository task and mini-swe-agent harness.
 task_count: 113
 run_count: 4
 ci_method: "95% run-to-run: SE across repeated whole-benchmark passes (1.96 * std(runs)/sqrt(R))"

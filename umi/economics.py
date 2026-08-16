@@ -23,10 +23,28 @@ from umi.workloads import aggregate_workloads
 
 
 def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputation:
-    efficiency: dict[tuple[str, str, str], list[EfficiencyMeasurement]] = defaultdict(list)
+    efficiency: dict[
+        tuple[str, str, str, str, str, str], list[EfficiencyMeasurement]
+    ] = defaultdict(list)
     for record in dataset.efficiency:
-        efficiency[(record.workload, record.cohort_key, record.model_id)].append(record)
-    direct: dict[tuple[str, str, str], list[TaskEconomicsMeasurement]] = defaultdict(list)
+        interaction = (
+            record.interaction_profile.value if record.interaction_profile else "unspecified"
+        )
+        operational_profile = record.operational_profile_id or "unspecified"
+        success_definition = record.success_definition_id or "unspecified"
+        efficiency[
+            (
+                record.workload,
+                operational_profile,
+                interaction,
+                success_definition,
+                record.cohort_key,
+                record.model_id,
+            )
+        ].append(record)
+    direct: dict[
+        tuple[str, str, str, str, str, str], list[TaskEconomicsMeasurement]
+    ] = defaultdict(list)
     evidence: dict[str, list[Provenance]] = defaultdict(list)
     excluded: dict[str, list[Provenance]] = defaultdict(list)
     conflicting_selected: dict[str, list[Provenance]] = defaultdict(list)
@@ -36,9 +54,19 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
             economics_record.cost_basis == CostBasis.SUCCESSFUL_TASK
             and economics_record.aggregation_statistic == AggregationStatistic.ARITHMETIC_MEAN
         ):
+            interaction = (
+                economics_record.interaction_profile.value
+                if economics_record.interaction_profile
+                else "unspecified"
+            )
+            operational_profile = economics_record.operational_profile_id or "unspecified"
+            success_definition = economics_record.success_definition_id or "unspecified"
             direct[
                 (
                     economics_record.workload,
+                    operational_profile,
+                    interaction,
+                    success_definition,
                     economics_record.cohort_key,
                     economics_record.model_id,
                 )
@@ -63,17 +91,49 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
     workload_definitions = {item.id: item for item in config.workloads}
     workload_families = {item.id: item for item in config.workload_families}
     series = sorted(
-        {(workload, cohort) for workload, cohort, _ in efficiency}
-        | {(workload, cohort) for workload, cohort, _ in direct}
+        {
+            (workload, operational_profile, interaction, success_definition, cohort)
+            for (
+                workload,
+                operational_profile,
+                interaction,
+                success_definition,
+                cohort,
+                _,
+            ) in efficiency
+        }
+        | {
+            (workload, operational_profile, interaction, success_definition, cohort)
+            for workload, operational_profile, interaction, success_definition, cohort, _ in direct
+        }
     )
-    for workload, cohort_key in series:
+    for workload, operational_profile, interaction, success_definition, cohort_key in series:
         definition = workload_definitions.get(workload)
         if definition is None:
             continue
         family = workload_families[definition.family]
         costs: dict[str, float] = {}
-        for (candidate, cohort, model_id), direct_records in direct.items():
-            if (candidate, cohort) != (workload, cohort_key):
+        for (
+            candidate,
+            candidate_operational_profile,
+            candidate_interaction,
+            candidate_success_definition,
+            cohort,
+            model_id,
+        ), direct_records in direct.items():
+            if (
+                candidate,
+                candidate_operational_profile,
+                candidate_interaction,
+                candidate_success_definition,
+                cohort,
+            ) != (
+                workload,
+                operational_profile,
+                interaction,
+                success_definition,
+                cohort_key,
+            ):
                 continue
             value, direct_selected, conflict = consolidate_numeric(
                 direct_records, "mean_cost_usd"
@@ -84,9 +144,31 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
             if conflict:
                 conflicting_selected[model_id].extend(direct_selected)
                 diagnostics[model_id].append(f"conflict consolidated for economics/{workload}")
-        for (candidate, cohort, model_id), efficiency_records in efficiency.items():
-            if (candidate, cohort) != (workload, cohort_key) or (
+        for (
+            candidate,
+            candidate_operational_profile,
+            candidate_interaction,
+            candidate_success_definition,
+            cohort,
+            model_id,
+        ), efficiency_records in efficiency.items():
+            if (
                 candidate,
+                candidate_operational_profile,
+                candidate_interaction,
+                candidate_success_definition,
+                cohort,
+            ) != (
+                workload,
+                operational_profile,
+                interaction,
+                success_definition,
+                cohort_key,
+            ) or (
+                candidate,
+                candidate_operational_profile,
+                candidate_interaction,
+                candidate_success_definition,
                 cohort,
                 model_id,
             ) in direct:
@@ -112,6 +194,9 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
             {
                 "component": "economics",
                 "workload": workload,
+                "operational_profile_id": operational_profile,
+                "interaction_profile": interaction,
+                "success_definition_id": success_definition,
                 "cohort_key": cohort_key,
                 "metric": "cost_per_success",
             },
@@ -125,10 +210,15 @@ def score_economics(dataset: Dataset, config: ProjectConfig) -> ComponentComputa
             normalized_scores[workload][model_id].append(score)
             panel_ids_by_model[model_id].add(panel_id)
             profile_series[model_id].add(
-                f"{family.category.value}/{family.id}/{workload}/{cohort_key}/cost_per_success"
+                f"{family.category.value}/{family.id}/{interaction}/"
+                f"{operational_profile}/{success_definition}/{workload}/{cohort_key}/"
+                "cost_per_success"
             )
             if normalized.provisional:
-                provisional_by_model[model_id].add(f"{workload}/{cohort_key}/cost_per_success")
+                provisional_by_model[model_id].add(
+                    f"{interaction}/{operational_profile}/{success_definition}/{workload}/"
+                    f"{cohort_key}/cost_per_success"
+                )
 
     output: dict[str, ComponentScore] = {}
     scales: dict[str, ScoreScale] = {}

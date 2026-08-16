@@ -1,0 +1,1521 @@
+{
+  "$defs": {
+    "AggregationStatistic": {
+      "enum": [
+        "arithmetic_mean",
+        "median",
+        "total",
+        "unspecified"
+      ],
+      "title": "AggregationStatistic",
+      "type": "string"
+    },
+    "ArtifactCaptureType": {
+      "enum": [
+        "raw_upstream_payload",
+        "archived_source_snapshot",
+        "reviewed_fact_extract",
+        "citation_only",
+        "derived_artifact"
+      ],
+      "title": "ArtifactCaptureType",
+      "type": "string"
+    },
+    "AttemptMetricSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "mean": {
+          "minimum": 0,
+          "title": "Mean",
+          "type": "number"
+        },
+        "metric": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Metric",
+          "type": "string"
+        },
+        "observation_count": {
+          "exclusiveMinimum": 0,
+          "title": "Observation Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "metric",
+        "observation_count",
+        "mean"
+      ],
+      "title": "AttemptMetricSummary",
+      "type": "object"
+    },
+    "BillingEvidenceKind": {
+      "enum": [
+        "provider_billing_record",
+        "router_response_cost",
+        "pricing_replay",
+        "source_calculated",
+        "none"
+      ],
+      "title": "BillingEvidenceKind",
+      "type": "string"
+    },
+    "ConfigurationVerification": {
+      "additionalProperties": false,
+      "properties": {
+        "deployment_identity_verified": {
+          "default": false,
+          "title": "Deployment Identity Verified",
+          "type": "boolean"
+        },
+        "effort_label_exact": {
+          "default": false,
+          "title": "Effort Label Exact",
+          "type": "boolean"
+        },
+        "endpoint_verified": {
+          "default": false,
+          "title": "Endpoint Verified",
+          "type": "boolean"
+        },
+        "fallback_absent": {
+          "default": false,
+          "title": "Fallback Absent",
+          "type": "boolean"
+        },
+        "model_label_exact": {
+          "default": false,
+          "title": "Model Label Exact",
+          "type": "boolean"
+        },
+        "provider_snapshot_verified": {
+          "default": false,
+          "title": "Provider Snapshot Verified",
+          "type": "boolean"
+        },
+        "release_label_exact": {
+          "default": false,
+          "title": "Release Label Exact",
+          "type": "boolean"
+        },
+        "service_tier_verified": {
+          "default": false,
+          "title": "Service Tier Verified",
+          "type": "boolean"
+        }
+      },
+      "title": "ConfigurationVerification",
+      "type": "object"
+    },
+    "CostBasis": {
+      "enum": [
+        "attempted_task",
+        "successful_task"
+      ],
+      "title": "CostBasis",
+      "type": "string"
+    },
+    "EfficiencyMeasurement": {
+      "additionalProperties": false,
+      "properties": {
+        "aggregation_statistic": {
+          "$ref": "#/$defs/AggregationStatistic",
+          "default": "arithmetic_mean"
+        },
+        "attempts": {
+          "exclusiveMinimum": 0,
+          "title": "Attempts",
+          "type": "integer"
+        },
+        "benchmark_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Benchmark Version"
+        },
+        "capture_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArtifactCaptureType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cohort_key": {
+          "default": "unspecified",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Cohort Key",
+          "type": "string"
+        },
+        "configuration_verification": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ConfigurationVerification"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "crosswalk_entry_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Crosswalk Entry Id"
+        },
+        "endpoint_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Endpoint Id"
+        },
+        "evaluation_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evaluation Date"
+        },
+        "evaluator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evaluator"
+        },
+        "harness_owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Harness Owner"
+        },
+        "harness_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Harness Version"
+        },
+        "interaction_profile": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/InteractionProfile"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "leaderboard_publish_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Leaderboard Publish Date"
+        },
+        "mean_agent_steps": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mean Agent Steps"
+        },
+        "mean_cached_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mean Cached Tokens"
+        },
+        "mean_cost_per_attempt": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mean Cost Per Attempt"
+        },
+        "mean_input_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mean Input Tokens"
+        },
+        "mean_output_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mean Output Tokens"
+        },
+        "mean_reasoning_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mean Reasoning Tokens"
+        },
+        "mean_tool_calls": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mean Tool Calls"
+        },
+        "mean_total_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mean Total Tokens"
+        },
+        "mean_turns": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mean Turns"
+        },
+        "mean_wall_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mean Wall Seconds"
+        },
+        "measurement_as_of_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Measurement As Of Date"
+        },
+        "metric_definition": {
+          "minLength": 1,
+          "title": "Metric Definition",
+          "type": "string"
+        },
+        "model_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "model_release_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Release Date"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "observation_counts": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EfficiencyObservationCounts"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "observed_agent_steps_summary": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed Agent Steps Summary"
+        },
+        "observed_cost_summary_usd": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed Cost Summary Usd"
+        },
+        "observed_output_tokens_summary": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed Output Tokens Summary"
+        },
+        "operational_profile_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Operational Profile Id"
+        },
+        "provider_snapshot_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Snapshot Id"
+        },
+        "record_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Record Id",
+          "type": "string"
+        },
+        "record_status": {
+          "$ref": "#/$defs/RecordStatus",
+          "default": "ready"
+        },
+        "reproducible": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reproducible"
+        },
+        "result_type": {
+          "$ref": "#/$defs/ResultType"
+        },
+        "run_executor": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Executor"
+        },
+        "scoring_disposition": {
+          "$ref": "#/$defs/ScoringDisposition",
+          "default": "scored"
+        },
+        "service_tier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Service Tier"
+        },
+        "serving_provider": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Serving Provider"
+        },
+        "signal_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signal Id"
+        },
+        "signal_role": {
+          "$ref": "#/$defs/SignalRole",
+          "default": "task"
+        },
+        "source": {
+          "$ref": "#/$defs/Source"
+        },
+        "source_artifact_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Artifact Id"
+        },
+        "source_model_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Model Id"
+        },
+        "source_published_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Published Date"
+        },
+        "source_registry_snapshot_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Registry Snapshot Id"
+        },
+        "success_definition": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Success Definition"
+        },
+        "success_definition_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Success Definition Id"
+        },
+        "success_rate": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Success Rate",
+          "type": "number"
+        },
+        "successful_attempts": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Successful Attempts"
+        },
+        "tools_enabled": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tools Enabled"
+        },
+        "workload": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Workload",
+          "type": "string"
+        },
+        "workload_category": {
+          "$ref": "#/$defs/WorkloadCategory"
+        }
+      },
+      "required": [
+        "record_id",
+        "source",
+        "result_type",
+        "metric_definition",
+        "model_id",
+        "workload",
+        "workload_category",
+        "attempts",
+        "success_rate"
+      ],
+      "title": "EfficiencyMeasurement",
+      "type": "object"
+    },
+    "EfficiencyObservationCounts": {
+      "additionalProperties": false,
+      "description": "Attempt counts contributing to each arithmetic-mean resource field.",
+      "properties": {
+        "agent_steps": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Agent Steps"
+        },
+        "cached_tokens": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cached Tokens"
+        },
+        "cost_per_attempt": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cost Per Attempt"
+        },
+        "input_tokens": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Input Tokens"
+        },
+        "output_tokens": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Output Tokens"
+        },
+        "reasoning_tokens": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reasoning Tokens"
+        },
+        "tool_calls": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tool Calls"
+        },
+        "total_tokens": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Total Tokens"
+        },
+        "turns": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Turns"
+        },
+        "wall_seconds": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Wall Seconds"
+        }
+      },
+      "title": "EfficiencyObservationCounts",
+      "type": "object"
+    },
+    "InteractionProfile": {
+      "enum": [
+        "interactive_round",
+        "autonomous_task"
+      ],
+      "title": "InteractionProfile",
+      "type": "string"
+    },
+    "RecordStatus": {
+      "enum": [
+        "ready",
+        "diagnostic_only",
+        "synthetic",
+        "invalid"
+      ],
+      "title": "RecordStatus",
+      "type": "string"
+    },
+    "ResultType": {
+      "enum": [
+        "independent",
+        "community_reproduction",
+        "vendor_reported",
+        "derived"
+      ],
+      "title": "ResultType",
+      "type": "string"
+    },
+    "ScoringDisposition": {
+      "enum": [
+        "scored",
+        "diagnostic_only"
+      ],
+      "title": "ScoringDisposition",
+      "type": "string"
+    },
+    "SignalRole": {
+      "enum": [
+        "composite",
+        "preference",
+        "task",
+        "efficiency",
+        "economics",
+        "reference"
+      ],
+      "title": "SignalRole",
+      "type": "string"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "accessed": {
+          "format": "date",
+          "title": "Accessed",
+          "type": "string"
+        },
+        "organization": {
+          "minLength": 1,
+          "title": "Organization",
+          "type": "string"
+        },
+        "url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "organization",
+        "url",
+        "accessed"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "TaskEconomicsMeasurement": {
+      "additionalProperties": false,
+      "properties": {
+        "aggregation_statistic": {
+          "$ref": "#/$defs/AggregationStatistic",
+          "default": "arithmetic_mean"
+        },
+        "attempts": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempts"
+        },
+        "benchmark_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Benchmark Version"
+        },
+        "billing_evidence": {
+          "$ref": "#/$defs/BillingEvidenceKind",
+          "default": "none"
+        },
+        "capture_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArtifactCaptureType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cohort_key": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Cohort Key",
+          "type": "string"
+        },
+        "configuration_verification": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ConfigurationVerification"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cost_basis": {
+          "$ref": "#/$defs/CostBasis"
+        },
+        "cost_observation_count": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cost Observation Count"
+        },
+        "crosswalk_entry_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Crosswalk Entry Id"
+        },
+        "endpoint_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Endpoint Id"
+        },
+        "evaluation_date": {
+          "format": "date",
+          "title": "Evaluation Date",
+          "type": "string"
+        },
+        "evaluator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evaluator"
+        },
+        "harness_owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Harness Owner"
+        },
+        "harness_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Harness Version"
+        },
+        "interaction_profile": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/InteractionProfile"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "leaderboard_publish_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Leaderboard Publish Date"
+        },
+        "mean_cost_usd": {
+          "minimum": 0,
+          "title": "Mean Cost Usd",
+          "type": "number"
+        },
+        "measurement_as_of_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Measurement As Of Date"
+        },
+        "metric_definition": {
+          "minLength": 1,
+          "title": "Metric Definition",
+          "type": "string"
+        },
+        "model_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "model_release_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Release Date"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "number_of_tasks": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Number Of Tasks"
+        },
+        "operational_profile_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Operational Profile Id"
+        },
+        "provider_snapshot_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Snapshot Id"
+        },
+        "record_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Record Id",
+          "type": "string"
+        },
+        "record_status": {
+          "$ref": "#/$defs/RecordStatus",
+          "default": "ready"
+        },
+        "reproducible": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reproducible"
+        },
+        "result_type": {
+          "$ref": "#/$defs/ResultType"
+        },
+        "run_executor": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Executor"
+        },
+        "scoring_disposition": {
+          "$ref": "#/$defs/ScoringDisposition",
+          "default": "scored"
+        },
+        "service_tier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Service Tier"
+        },
+        "serving_provider": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Serving Provider"
+        },
+        "signal_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signal Id"
+        },
+        "signal_role": {
+          "$ref": "#/$defs/SignalRole",
+          "default": "task"
+        },
+        "source": {
+          "$ref": "#/$defs/Source"
+        },
+        "source_artifact_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Artifact Id"
+        },
+        "source_model_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Model Id"
+        },
+        "source_published_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Published Date"
+        },
+        "source_registry_snapshot_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Registry Snapshot Id"
+        },
+        "success_definition": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Success Definition"
+        },
+        "success_definition_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Success Definition Id"
+        },
+        "successful_attempts": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Successful Attempts"
+        },
+        "tools_enabled": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tools Enabled"
+        },
+        "total_observed_cost_usd": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Total Observed Cost Usd"
+        },
+        "workload": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "title": "Workload",
+          "type": "string"
+        },
+        "workload_category": {
+          "$ref": "#/$defs/WorkloadCategory"
+        }
+      },
+      "required": [
+        "record_id",
+        "source",
+        "result_type",
+        "metric_definition",
+        "model_id",
+        "workload",
+        "workload_category",
+        "cohort_key",
+        "evaluation_date",
+        "cost_basis",
+        "mean_cost_usd"
+      ],
+      "title": "TaskEconomicsMeasurement",
+      "type": "object"
+    },
+    "WorkloadCategory": {
+      "enum": [
+        "coding_agents",
+        "research_analysis",
+        "tool_use_agents",
+        "browser_computer_use",
+        "general_interaction",
+        "long_horizon"
+      ],
+      "title": "WorkloadCategory",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "attempt_count": {
+      "exclusiveMinimum": 0,
+      "title": "Attempt Count",
+      "type": "integer"
+    },
+    "diagnostics": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Diagnostics",
+      "type": "array"
+    },
+    "economics_records": {
+      "items": {
+        "$ref": "#/$defs/TaskEconomicsMeasurement"
+      },
+      "title": "Economics Records",
+      "type": "array"
+    },
+    "efficiency_records": {
+      "items": {
+        "$ref": "#/$defs/EfficiencyMeasurement"
+      },
+      "title": "Efficiency Records",
+      "type": "array"
+    },
+    "fingerprint": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Fingerprint",
+      "type": "string"
+    },
+    "ledger_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "title": "Ledger Id",
+      "type": "string"
+    },
+    "metric_summaries": {
+      "items": {
+        "$ref": "#/$defs/AttemptMetricSummary"
+      },
+      "title": "Metric Summaries",
+      "type": "array"
+    },
+    "success_rate": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Success Rate",
+      "type": "number"
+    },
+    "successful_attempts": {
+      "minimum": 0,
+      "title": "Successful Attempts",
+      "type": "integer"
+    },
+    "task_count": {
+      "exclusiveMinimum": 0,
+      "title": "Task Count",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "ledger_id",
+    "fingerprint",
+    "task_count",
+    "attempt_count",
+    "successful_attempts",
+    "success_rate",
+    "metric_summaries",
+    "efficiency_records",
+    "economics_records"
+  ],
+  "title": "AttemptLedgerAggregation",
+  "type": "object"
+}

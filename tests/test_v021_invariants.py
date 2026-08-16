@@ -262,7 +262,15 @@ def test_pareto_results_are_workload_and_cohort_scoped(
     output = pareto_dimensions(synthetic_dataset, score_dataset(synthetic_dataset, config))
     assert output["status"] == "ok"
     rows = output["results"]
-    assert all(item["metric"] and item["workload"] and item["cohort_key"] for item in rows)
+    assert all(
+        item["metric"]
+        and item["interaction_profile"]
+        and item["operational_profile_id"]
+        and item["success_definition_id"]
+        and item["workload"]
+        and item["cohort_key"]
+        for item in rows
+    )
     assert {item["workload_category"] for item in rows} >= {
         "coding_agents",
         "research_analysis",

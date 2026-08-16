@@ -151,8 +151,12 @@ source_model_id: exact-upstream-model-label
 provider_snapshot_id: null
 workload: workload-id
 workload_category: coding_agents
+interaction_profile: autonomous_task
+operational_profile_id: workload-harness-v2-autonomous
 cohort_key: workload-harness-v2
 evaluation_date: 2026-08-10
+success_definition_id: fixed-evaluator-pass-v1
+success_definition: Task passes the fixed workload evaluator.
 attempts: 100
 successful_attempts: 72
 success_rate: 0.72
@@ -186,6 +190,50 @@ Task Economics records use `cost_basis: attempted_task|successful_task`, nonnega
 `mean_cost_usd`, and `aggregation_statistic: arithmetic_mean|median|total|unspecified`. Only
 arithmetic means can enter mean-based success adjustment. UMI never joins a numerator and rate from
 different records or silently treats a median, total, or ambiguous “average” as a mean.
+
+### Attempt-level operational ledger
+
+`schemas/attempt-ledger.schema.json` defines the frozen intake artifact used to produce operational
+records. One ledger contains exactly one deployment, workload cohort, harness, operational-profile
+ID, versioned success-definition ID and literal definition, and interaction profile
+(`interactive_round` or `autonomous_task`). Ready ledgers require exact model, release, effort,
+fallback absence, endpoint, service tier, and deployment verification plus a raw or archived
+artifact and its SHA-256.
+
+Each attempt has unique `attempt_id`, a stable `task_id`, explicit `success`, and independently
+nullable nonnegative physical observations:
+
+```yaml
+attempts:
+  - task_id: task-001
+    attempt_id: task-001-run-01
+    success: true
+    input_tokens: 12000
+    output_tokens: 2400
+    reasoning_tokens: 800
+    cache_read_tokens: 5000
+    cache_write_tokens: 900
+    turns: 6
+    agent_steps: 14
+    wall_seconds: 93.2
+    tool_calls: 11
+    retry_count: 1
+    observed_cost_usd: 1.42
+    billing_evidence: provider_billing_record
+    cost_evidence_id: immutable-billing-row-reference
+    provider_request_id: provider-request-reference
+```
+
+Missing observations remain null; zero means observed zero. `observed_cost_usd` requires an explicit
+billing-evidence kind and evidence reference. The offline aggregator sorts attempts by stable
+identity, fingerprints the order-independent ledger, calculates each mean from its own denominator,
+and splits complete and partial metrics. Cache-read populates the current cached-token Efficiency
+metric; cache-write and retries remain explicit physical diagnostics. A successful-task Economics
+record additionally carries attempt, success, and cost counts, total observed cost, and billing
+evidence. It is ready only when provider-billing cost covers every attempt and at least one succeeds.
+`schemas/attempt-ledger-aggregation.schema.json` defines this deterministic output.
+Aggregation does not itself authorize scoring: the frozen artifact, registry entry, exact crosswalk,
+and resulting scored bundle must still clear their ordinary validation gates.
 
 Pricing records preserve advertised input/output/cache/reasoning/tool prices but do not substitute
 for observed successful-task Economics in v0.3. `cache_write_per_million` is the ordinary or

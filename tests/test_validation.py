@@ -1,6 +1,6 @@
 from umi.config import ProjectConfig
 from umi.loading import Dataset
-from umi.schemas import BenchmarkDefinition
+from umi.schemas import BenchmarkDefinition, InteractionProfile
 from umi.validation import DataValidationError, validate_dataset
 
 
@@ -63,3 +63,83 @@ def test_declared_overlap_must_share_family(
     invalid_config = config.model_copy(update={"benchmarks": (*config.benchmarks, invalid_overlap)})
     errors = validate_dataset(synthetic_dataset, invalid_config).errors
     assert any("must share a family" in error for error in errors)
+
+
+def test_workload_interaction_profiles_cannot_collide_without_policy(
+    synthetic_dataset: Dataset, config: ProjectConfig
+) -> None:
+    source = synthetic_dataset.efficiency[0]
+    autonomous = source.model_copy(
+        update={
+            "record_id": "autonomous-workload-record",
+            "interaction_profile": InteractionProfile.AUTONOMOUS_TASK,
+        }
+    )
+    interactive = source.model_copy(
+        update={
+            "record_id": "interactive-workload-record",
+            "interaction_profile": InteractionProfile.INTERACTIVE_ROUND,
+        }
+    )
+    dataset = synthetic_dataset.model_copy(update={"efficiency": (autonomous, interactive)})
+    errors = validate_dataset(dataset, config).errors
+    assert any(
+        "multiple scoring operational/interaction/success/cohort identities" in error
+        for error in errors
+    )
+
+
+def test_workload_operational_profiles_cannot_collide_without_policy(
+    synthetic_dataset: Dataset, config: ProjectConfig
+) -> None:
+    source = synthetic_dataset.efficiency[0]
+    first = source.model_copy(
+        update={
+            "record_id": "first-operational-profile",
+            "interaction_profile": InteractionProfile.AUTONOMOUS_TASK,
+            "operational_profile_id": "harness-a-autonomous",
+        }
+    )
+    second = source.model_copy(
+        update={
+            "record_id": "second-operational-profile",
+            "interaction_profile": InteractionProfile.AUTONOMOUS_TASK,
+            "operational_profile_id": "harness-b-autonomous",
+        }
+    )
+    dataset = synthetic_dataset.model_copy(update={"efficiency": (first, second)})
+    errors = validate_dataset(dataset, config).errors
+    assert any(
+        "multiple scoring operational/interaction/success/cohort identities" in error
+        for error in errors
+    )
+
+
+def test_workload_success_definitions_cannot_collide_without_policy(
+    synthetic_dataset: Dataset, config: ProjectConfig
+) -> None:
+    source = synthetic_dataset.efficiency[0]
+    first = source.model_copy(
+        update={
+            "record_id": "first-success-definition",
+            "interaction_profile": InteractionProfile.AUTONOMOUS_TASK,
+            "operational_profile_id": "harness-a-autonomous",
+            "success_definition_id": "evaluator-pass-v1",
+            "success_definition": "The fixed evaluator passes the task",
+        }
+    )
+    second = source.model_copy(
+        update={
+            "record_id": "second-success-definition",
+            "interaction_profile": InteractionProfile.AUTONOMOUS_TASK,
+            "operational_profile_id": "harness-a-autonomous",
+            "success_definition_id": "evaluator-pass-v2",
+            "success_definition": "The revised evaluator passes the task",
+        }
+    )
+    dataset = synthetic_dataset.model_copy(update={"efficiency": (first, second)})
+    errors = validate_dataset(dataset, config).errors
+    assert any(
+        "multiple scoring operational/interaction/success/cohort identities" in error
+        for error in errors
+    )

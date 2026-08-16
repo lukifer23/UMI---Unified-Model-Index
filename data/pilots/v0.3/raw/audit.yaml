@@ -1,5 +1,5 @@
-scored_audit_fingerprint: 031ccb053a80175375e590260fb4752675141b5b676104d10923797fceb1fa4d
-complete_audit_fingerprint: 4629129892796917b75ba2eba81ec9932a6cf132c3e53d89c3f1710296bf8585
+scored_audit_fingerprint: 377191db5686a265d1ebe3868a6488e69a4dd48f3abb4909680823724a202fbb
+complete_audit_fingerprint: 2e8e9922f76590751058d009e29c52ba2bff9f0c14c9d5cda4e3f7234f91e0ff
 adapter_versions:
 - aa-gdpval-reviewed-facts-v1
 - aa-lcr-reviewed-facts-v1

@@ -17,7 +17,10 @@ v0.3 is a good fail-closed pilot. It has immutable records, frozen artifacts, ex
 crosswalks, source/license registry, offline adapters, overlap controls, hierarchical
 coverage, per-record success adjustment, per-metric arithmetic-mean denominators, fingerprints,
 diagnostics, and headline gates. The DeepSWE facts now reconcile exactly to its public 27,558-row
-trial ledger without redistributing rights-unclear raw records.
+trial ledger without redistributing rights-unclear raw records. The controlled-evaluation path now
+has a typed single-deployment attempt ledger and deterministic offline aggregation into complete
+Efficiency, partial diagnostics, and provider-billed successful-task Economics; no controlled pilot
+ledger is admitted yet.
 
 It does not yet support a public UMI. The current five-model pilot has 48 of 75 configured
 Capability cells ready. Opus, Sol, Kimi, and GLM now span five domains and clear the Capability-only

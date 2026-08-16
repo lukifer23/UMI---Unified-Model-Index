@@ -7,6 +7,8 @@ from umi.loading import Dataset
 from umi.schemas import (
     AggregationStatistic,
     BenchmarkMeasurement,
+    BillingEvidenceKind,
+    CostBasis,
     EfficiencyMeasurement,
     ExternalIndexMeasurement,
     IdentityAssurance,
@@ -61,6 +63,13 @@ def readiness_failures(record: ScoredRecord, model: ModelConfiguration) -> tuple
     failures: list[str] = []
     if record.record_status != RecordStatus.READY:
         failures.append("record status is not ready")
+    if isinstance(record, (EfficiencyMeasurement, TaskEconomicsMeasurement)):
+        if record.interaction_profile is None:
+            failures.append("interaction profile is missing")
+        if record.operational_profile_id is None:
+            failures.append("operational profile ID is missing")
+        if record.success_definition_id is None or not record.success_definition:
+            failures.append("success definition identity is missing")
     if (
         isinstance(record, EfficiencyMeasurement)
         and record.aggregation_statistic == AggregationStatistic.ARITHMETIC_MEAN
@@ -91,6 +100,23 @@ def readiness_failures(record: ScoredRecord, model: ModelConfiguration) -> tuple
                 failures.append(f"observation count is missing for {mean_field}")
             elif count != record.attempts:
                 failures.append(f"observation count does not match attempts for {mean_field}")
+    if isinstance(record, TaskEconomicsMeasurement):
+        if record.cost_basis != CostBasis.SUCCESSFUL_TASK:
+            failures.append("economics record is not successful-task cost")
+        if record.aggregation_statistic != AggregationStatistic.ARITHMETIC_MEAN:
+            failures.append("economics record is not an arithmetic mean")
+        if (
+            record.attempts is None
+            or record.successful_attempts is None
+            or record.cost_observation_count is None
+        ):
+            failures.append("economics attempt, success, or cost count is missing")
+        elif record.cost_observation_count != record.attempts:
+            failures.append("economics cost observations do not cover every attempt")
+        if record.total_observed_cost_usd is None:
+            failures.append("total observed cost is missing")
+        if record.billing_evidence != BillingEvidenceKind.PROVIDER_BILLING_RECORD:
+            failures.append("provider billing-record evidence is missing")
     if record.source.organization.strip().lower() in {"", "unknown", "unspecified"}:
         failures.append("source organization is unknown")
     if not record.evaluator:
@@ -122,6 +148,11 @@ def readiness_failures(record: ScoredRecord, model: ModelConfiguration) -> tuple
         )
         if endpoint_sensitive and not verification.deployment_identity_verified:
             failures.append("deployment identity is not verified for endpoint-sensitive evidence")
+        if isinstance(record, TaskEconomicsMeasurement):
+            if not verification.endpoint_verified:
+                failures.append("economics endpoint is not verified")
+            if not verification.service_tier_verified:
+                failures.append("economics service tier is not verified")
     if record.capture_type is None or not record.source_artifact_id:
         failures.append("retained source artifact reference is missing")
     if record.cohort_key == "unspecified":
