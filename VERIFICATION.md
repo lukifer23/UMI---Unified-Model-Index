@@ -31,7 +31,7 @@ project contract.
 | `umi certificate` for Opus/Kimi/GLM | passed; eleven common stable panels, 33 selected records, nine exact artifact checksums, 512 joint scenarios, deterministic result fingerprint `bf1c8f3a…e91b0e` and scored-input fingerprint `ffa7c3bf…f89fe9` |
 | portable dashboard packaging | passed at 1440 px and 390 px; 17 delivered blocks, eleven charts, and four metrics rendered; source dialog passed; no overflow, external-request, or browser-error failure |
 | consecutive complete pilot rebuilds plus schema regeneration | passed byte-for-byte with no artifact or schema drift |
-| `uv build` plus fresh temporary-environment wheel install outside the checkout | passed locally on Python 3.14.3 with wheel SHA-256 `48a0518bca8b843996a27c141f846a32d42b6ada596369f8a212b1135886fd7a`; `import umi`, `umi --help`, and an isolated three-model comparison passed; the latest hosted Python 3.11 and 3.14 wheel baseline remains run `31942672009` pending this milestone's CI |
+| `uv build` plus fresh temporary-environment wheel install outside the checkout | passed locally on Python 3.14.3 with wheel SHA-256 `48a0518bca8b843996a27c141f846a32d42b6ada596369f8a212b1135886fd7a`; `import umi`, `umi --help`, and an isolated three-model comparison passed; hosted Python 3.11 and 3.14 wheel checks passed in run `31943817385` |
 | `scripts/verify_deepswe_trial_ledger.py --accept-network` | passed against official ledger SHA-256 `13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971`; reconciled 27,558 total rows, 2,257 selected rows, 2,231 scored attempts, 26 excluded error rows, all five success/resource means, and Fable cost coverage of 432/436 attempts |
 | `umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config` | passed without a source registry; schema and selected scored inputs are valid |
 | previously verified explicit Epoch/Arena network acquisition evidence | retained unchanged with its checksum manifest; this milestone additionally used the explicitly acknowledged read-only OpenRouter preflight and insufficient-credit execution gate recorded above; no completion request was made |
@@ -42,8 +42,8 @@ wheel with `--no-editable` and uses `--no-sync` for subsequent commands. This is
 README rather than hidden as a local workaround.
 
 The most recent completed GitHub Actions baseline is
-[run 31942672009](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31942672009)
-for UMI v0.3.14 billing-reconciliation commit `024b2c0`. It completed successfully. Linux passed the full quality, schema,
+[run 31943817385](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31943817385)
+for UMI v0.3.15 workload-authority commit `32a2109`. It completed successfully. Linux passed the full quality, schema,
 governed validation, deterministic rebuild, CLI, and isolated-wheel gates. Linux 3.11 and 3.14 each
 passed the test suite plus isolated-wheel import/help/comparison smokes. Windows 3.12 passed tests,
 generic validation, governed bundle validation, strict source/checksum audit, deterministic rebuild
