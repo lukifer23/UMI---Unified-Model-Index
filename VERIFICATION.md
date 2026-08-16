@@ -1,30 +1,31 @@
-# UMI v0.3.12 verification record
+# UMI v0.3.13 verification record
 
-Verified on 2026-08-15 from `main` on macOS with Python 3.14.3 against the Python 3.11+
+Verified on 2026-08-16 from `main` on macOS with Python 3.14.3 against the Python 3.11+
 project contract.
 
 ## Commands and outcomes
 
 | Check | Outcome |
 |---|---|
-| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.12 as a wheel from the committed lock |
+| `uv sync --frozen --extra dev --no-editable --reinstall-package unified-model-index` | passed; installed UMI 0.3.13 as a wheel from the committed lock |
 | `uv run --no-sync python -m scripts.build_v03_pilot` | passed; rebuilt all raw and processed pilot artifacts offline |
 | schema equality test against `umi.schema_export.rendered_schemas()` | passed; committed machine-readable schemas remain current |
-| `uv run pytest` | 133 passed |
-| `uv run pytest --cov=umi --cov=analysis --cov=scripts --cov-report=term-missing --cov-fail-under=90` | 133 passed; 91.91% combined coverage |
+| `uv run pytest` | 145 passed |
+| `uv run pytest --cov=umi --cov=analysis --cov=scripts --cov-report=term-missing --cov-fail-under=90` | 145 passed; 92.08% combined coverage |
 | `PYTHONPATH=. uv run --no-sync ruff check .` | passed |
-| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 51 source files |
+| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 52 source files |
 | `umi sources validate --strict` | passed; complete registry, crosswalk, licensing, attribution, diagnostic, pricing, and release-claim audit is valid |
 | `umi crosswalk` and `umi overlap` | passed |
 | `umi bundle validate --data-dir data/pilots/v0.3/raw` | passed; acceptance manifest admits 53 records and excludes 8 diagnostic records with 0 unready scored records |
 | all seventeen offline `umi ingest --source ...` commands | passed: AA composite facts, AA HLE, AA GDPval, AA-LCR, AA Omniscience, AA τ³-Banking, AA Terminal-Bench v2.1, CursorBench, Epoch ECI, Epoch benchmarks, both Arena cohorts, DeepSWE, and four lab-release sources |
+| `umi attempts aggregate --ledger ...` | passed; deterministic order-independent aggregation preserves per-metric denominators, splits partial diagnostics, rejects duplicate IDs and unverified ready deployments, emits no finite Economics at zero success, and requires complete provider-billing evidence for observed successful-task cost |
 | documented validation, ingestion, scoring, comparison, analysis, and certificate CLI flows | passed with valid JSON output |
 | five-model and three-model common-evidence comparisons | passed; Kimi DeepSWE remains 25.0 on the identical five-model panel, and every raw/normalized contribution carries panel and scale identity |
 | joint comparison sensitivity | passed; 32 exhaustive five-model scenarios and 512 exhaustive three-model scenarios, with possible-rank and robust-dominance envelopes and no probability claims; the retained Opus/Kimi/GLM ranks remain robust at 1/2/3 after adding Terminal-Bench |
-| `umi certificate` for Opus/Kimi/GLM | passed; eleven common stable panels, 33 selected records, nine exact artifact checksums, 512 joint scenarios, deterministic result fingerprint `5e719699…92eea12` and scored-input fingerprint `bffc0aa8…eea8c1` |
+| `umi certificate` for Opus/Kimi/GLM | passed; eleven common stable panels, 33 selected records, nine exact artifact checksums, 512 joint scenarios, deterministic result fingerprint `2158ccfd…69310c` and scored-input fingerprint `fdfac327…7bf136` |
 | portable dashboard packaging | passed at 1440 px and 390 px; 17 delivered blocks, eleven charts, and four metrics rendered; source dialog passed; no overflow, external-request, or browser-error failure |
 | consecutive complete pilot rebuilds plus schema regeneration | passed byte-for-byte with no artifact or schema drift |
-| `uv build` plus fresh temporary-environment wheel installs outside the checkout | passed on Python 3.11.15 and 3.14.3 with wheel SHA-256 `f01129c636687651eddf737d9c8fa19b0eee4ec3e38e17b189c66d8aa0f04ec8`; `import umi`, `umi --help`, and certificate output passed, and both interpreters emitted byte-identical certificates matching the governed artifact |
+| `uv build` plus fresh temporary-environment wheel installs outside the checkout | passed on Python 3.11.15 and 3.14.3 with wheel SHA-256 `5168470d058e6f69ef41173e0c50a5f875dc05399de307cbb46d80ccbe3a09c9`; `import umi`, `umi --help`, `umi attempts aggregate --help`, and certificate output passed, and both interpreters emitted byte-identical certificates matching the governed artifact |
 | `scripts/verify_deepswe_trial_ledger.py --accept-network` | passed against official ledger SHA-256 `13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971`; reconciled 27,558 total rows, 2,257 selected rows, 2,231 scored attempts, 26 excluded error rows, all five success/resource means, and Fable cost coverage of 432/436 attempts |
 | `umi validate --data-dir tests/fixtures --config-dir tests/fixtures/config` | passed without a source registry; schema and selected scored inputs are valid |
 | previously verified explicit Epoch/Arena network acquisition evidence | retained unchanged with its checksum manifest; the only network operation for this milestone was the explicit, checksum-pinned DeepSWE verification above |
@@ -34,8 +35,8 @@ underscore-prefixed editable `.pth` emitted in this environment, so the verified
 wheel with `--no-editable` and uses `--no-sync` for subsequent commands. This is documented in the
 README rather than hidden as a local workaround.
 
-GitHub Actions [run 31891087375](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31891087375)
-for UMI v0.3.12 commit `b358d30` completed successfully. Linux passed the full quality, schema,
+GitHub Actions [run 31934539053](https://github.com/lukifer23/UMI---Unified-Model-Index/actions/runs/31934539053)
+for UMI v0.3.13 commit `66f2f3f` completed successfully. Linux passed the full quality, schema,
 governed validation, deterministic rebuild, CLI, and isolated-wheel gates. Linux 3.11 and 3.14 each
 passed the test suite plus isolated-wheel import/help/comparison smokes. Windows 3.12 passed tests,
 generic validation, governed bundle validation, strict source/checksum audit, deterministic rebuild
@@ -119,6 +120,9 @@ annotations for `actions/checkout@v4` and `astral-sh/setup-uv@v6`; no UMI job fa
   8.25%. Opus, Sol, Kimi, and GLM clear the Capability-only coverage and breadth gates,
   but not the complete headline gates.
 - Every publishable rank and every `headline_overall` remains null.
+- Operational comparison identity now binds interaction mode, operational profile, versioned success
+  definition, and cohort; incompatible task semantics cannot share normalization panels or Pareto
+  series.
 - The retained Opus/Kimi/GLM comparison certificate is provisional and source-bound; it is not a
   headline UMI score or public universal rank.
 - No workload category has ready all-model Efficiency evidence or successful-task Economics
@@ -165,8 +169,9 @@ umi/                              validation, readiness, scoring, fingerprinting
 - empirical calibration or decorrelation of within-domain family budgets, a longitudinal reference
   cohort, and formal uncertainty propagation.
 
-The highest-value missing artifact remains one complete five-model task-level workload cohort with
-deployment-bound success, cost, tokens, cache use, wall time, and turns. Additional capability
+The highest-value missing artifact remains one complete five-model task-level workload cohort run
+through the governed attempt-ledger path with deployment-bound success, cost, tokens, cache use, wall
+time, and turns. Additional capability
 sources are useful only when they close a configured cell or materially strengthen source diversity;
 they do not substitute for the operational evidence blocking Efficiency and Economics. The current
 gates must remain closed until those artifacts exist; missing evidence must not be inferred, imputed,
