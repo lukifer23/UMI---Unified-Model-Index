@@ -68,6 +68,23 @@ them:
 | 6. Phase map | `Record v0.5 coherent commit phases` | `0ac6a38` | `feat/umi-v05-governed-public` |
 | 7. Baseline audit | `Add v0.5 baseline audit` | `6ffcbcb` | `feat/umi-v05-governed-public` |
 | 8. Weight sensitivity | `Add diagnostic Public weight-sensitivity hypotheses` | `e4f7db4` | `feat/umi-v05-governed-public` |
+| 9. Implementation report | `Complete the v0.5 implementation-report checklist` | `9dfa44e` | `feat/umi-v05-governed-public` |
 
 Phases 1–3 stay on `main`. Later phases are separate commits on `feat/umi-v05-governed-public`.
 History is not rewritten.
+
+## Suggested commit sequence
+
+```text
+Add UMI Public v0.5 Governed: freeze, validate, uncertainty, expand
+Add governed Public index certificate, zip checksum, and overlap ranks
+Wire dashboard to uncertainty sidecars and finish Public index packaging
+Audit Grok 4.5 High and Gemini 3.1 Pro Preview as diagnostic-only
+Emit a precise v0.5 blocker report and remaining packaging
+Record v0.5 coherent commit phases
+Add v0.5 baseline audit
+Add diagnostic Public weight-sensitivity hypotheses
+Complete the v0.5 implementation-report checklist
+```
+
+Fulfilled as `40ffb7b`, `75f6cbc`, `f4cc49b` on `main`, then `4896e6e`, `de709d1`, `0ac6a38`, `6ffcbcb`, `e4f7db4`, `9dfa44e` on `feat/umi-v05-governed-public`.
