@@ -16,8 +16,17 @@ from umi.public_candidates import (
     PublicCandidateAudit,
     PublicCandidateAuditReport,
     audit_named_candidates,
+    audit_near_miss_candidates,
 )
 from umi.public_certificate import build_public_certificate, overlapping_pairs, verify_epoch_zip
+from umi.public_freeze import (
+    EXPANDED_ENTITY_IDS,
+    FROZEN_EVIDENCE_FINGERPRINT,
+    FROZEN_SCORED_DATA_FINGERPRINT,
+    FROZEN_SCORES,
+    PublicEvidenceFreeze,
+    build_evidence_freeze,
+)
 from umi.public_governance import source_concentration
 from umi.public_scale import apply_public_scale, build_public_panels_and_scales
 from umi.public_sensitivity import WEIGHT_HYPOTHESES, quantify_weight_sensitivity
@@ -246,7 +255,7 @@ def test_committed_candidate_audits_match_live() -> None:
     root = Path(__file__).resolve().parents[1] / "data" / "editions" / "v0.5" / "processed"
     stored = json.loads((root / "candidate-audits.json").read_text(encoding="utf-8"))
     assert stored == live
-    for item in live["candidates"]:
+    for item in (*live["candidates"], *audit_near_miss_candidates()):
         path = root / f"candidate-{item['candidate_id']}.json"
         assert json.loads(path.read_text(encoding="utf-8")) == item
     audit = validate_public_artifacts("v0.5")
@@ -391,6 +400,57 @@ def test_rank_stability_marks_sol_and_kimi() -> None:
         assert row["interval_rank_low"] <= item["rank"] <= row["interval_rank_high"]
         assert row["family_ablation_rank_low"] <= row["family_ablation_rank_high"]
         assert row["source_ablation_score_low"] <= row["source_ablation_score_high"]
+
+
+def test_expanded_evidence_freeze_binds_seven_models_and_candidates() -> None:
+    payload = score_public_edition(edition_name="v0.5")
+    report = build_evidence_freeze(payload)
+    assert report["status"] == "frozen_expanded_public_evidence"
+    assert report["scored_data_fingerprint"] == FROZEN_SCORED_DATA_FINGERPRINT
+    assert report["evidence_fingerprint"] == FROZEN_EVIDENCE_FINGERPRINT
+    assert set(report["accepted_entity_ids"]) == set(EXPANDED_ENTITY_IDS)
+    by_id = {item["entity_id"]: item for item in report["accepted_scores"]}
+    for entity_id, expected in FROZEN_SCORES.items():
+        assert by_id[entity_id]["umi_public"] == expected
+    named = {item["candidate_id"]: item for item in report["named_candidates"]}
+    assert named["grok-4.5-high"]["missing_series"] == [
+        "epoch-weirdml",
+        "weirdml-cost-per-run",
+    ]
+    assert named["gemini-3.1-pro-preview"]["missing_series"] == ["weirdml-cost-per-run"]
+    near = {item["candidate_id"]: item for item in report["near_miss_candidates"]}
+    assert set(near) == {
+        "gpt-5.6-terra-max",
+        "gpt-5.6-luna-max",
+        "claude-sonnet-5-max",
+        "claude-opus-4-8-max",
+    }
+    for item in (*named.values(), *near.values()):
+        assert item["umi_public"] is None
+        assert item["status"] == "insufficient_common_support"
+        assert item["headline_eligible"] is False
+    again = build_evidence_freeze(payload)
+    assert again["freeze_fingerprint"] == report["freeze_fingerprint"]
+    drifted = {**report, "accepted_entity_ids": [*report["accepted_entity_ids"], "grok-4.5-high"]}
+    with pytest.raises(ValidationError, match="accepted entity set"):
+        PublicEvidenceFreeze.model_validate(drifted)
+    invented = {
+        **report["named_candidates"][0],
+        "umi_public": 50.0,
+        "headline_eligible": False,
+        "status": "insufficient_common_support",
+    }
+    with pytest.raises(ValidationError, match="must not invent umi_public"):
+        PublicEvidenceFreeze.model_validate({**report, "named_candidates": [invented]})
+
+
+def test_committed_evidence_freeze_matches_live() -> None:
+    payload = score_public_edition(edition_name="v0.5")
+    live = build_evidence_freeze(payload)
+    root = Path(__file__).resolve().parents[1] / "data" / "editions" / "v0.5" / "processed"
+    stored = json.loads((root / "evidence-freeze.json").read_text(encoding="utf-8"))
+    assert stored == live
+    assert payload["scored_data_fingerprint"] == FROZEN_SCORED_DATA_FINGERPRINT
 
 
 def test_committed_uncertainty_surfaces_are_governed() -> None:

@@ -116,6 +116,15 @@ def write_governance_artifacts(
         ablation = pack["source_ablation"]
         stability = pack["rank_stability"]
     sensitivity = write_weight_sensitivity(destination, edition_name=edition_name)
+    evidence_freeze = None
+    scores_path = destination / "model-scores.json"
+    if scores_path.is_file():
+        from umi.public_freeze import write_evidence_freeze
+
+        scores = json.loads(scores_path.read_text(encoding="utf-8"))
+        evidence_freeze = write_evidence_freeze(
+            scores, destination, edition_name=edition_name
+        )
     return {
         "blocker_report": blockers,
         "source_concentration": concentration,
@@ -123,4 +132,5 @@ def write_governance_artifacts(
         "source_ablation": ablation,
         "rank_stability": stability,
         "weight_sensitivity": sensitivity,
+        "evidence_freeze": evidence_freeze,
     }

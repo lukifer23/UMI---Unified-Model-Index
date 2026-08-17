@@ -416,6 +416,14 @@ insufficient_common_support`, `headline_eligible: false`, and `umi_public: null`
 lists present and missing common-core series and does not invent a score. Changing the
 Access suffix panel to admit an unsuffixed WeirdML cost is out of scope for this schema.
 
+## Public evidence freeze
+
+`schemas/public-evidence-freeze.schema.json` is the contract for the frozen expanded Public
+evidence set. It binds the Epoch zip SHA-256, `evidence_fingerprint`,
+`scored_data_fingerprint`, the seven accepted identities and their `umi_public` numbers,
+named-candidate audits, and `_max` near-miss audits. Unpublished rows keep `umi_public:
+null`. `freeze_fingerprint` is SHA-256 over the freeze JSON excluding that field.
+
 ## Public blocker report
 
 `schemas/public-blocker-report.schema.json` is the machine-readable contract for unavailable

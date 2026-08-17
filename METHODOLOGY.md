@@ -177,7 +177,10 @@ do not receive `umi_public` numbers. Missing a required series is
 `insufficient_common_support`. Changing the Access high-effort suffix filter to admit an
 unsuffixed WeirdML cost would rescore every published Access point and break v0.4
 reproduction; that filter stays. `umi edition --edition v0.5 candidates` writes diagnostic
-certificates only.
+certificates only. Four `_max` near-misses are audited with the same gate and stay
+unpublished. `umi edition --edition v0.5 freeze` binds the seven accepted scores, the
+bundle `evidence_fingerprint`, the scored-data fingerprint, and those unpublished
+audits. The freeze has no timestamps and does not invent `umi_public`.
 
 ### Evidence blockers
 

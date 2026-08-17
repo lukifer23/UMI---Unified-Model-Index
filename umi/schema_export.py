@@ -12,6 +12,7 @@ from umi.public_blockers import PublicBlockerReport
 from umi.public_bundle import PublicScoringBundle
 from umi.public_candidates import PublicCandidateAuditReport
 from umi.public_certificate import PublicIndexCertificate
+from umi.public_freeze import PublicEvidenceFreeze
 from umi.public_scale import PublicAnchorPanelSet, PublicScoreScaleSet
 from umi.public_stability import PublicRankStabilityReport, PublicSourceAblationReport
 from umi.public_uncertainty import PublicUncertaintyReport
@@ -58,6 +59,7 @@ SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "public-uncertainty.schema.json": PublicUncertaintyReport,
     "public-source-ablation.schema.json": PublicSourceAblationReport,
     "public-rank-stability.schema.json": PublicRankStabilityReport,
+    "public-evidence-freeze.schema.json": PublicEvidenceFreeze,
 }
 
 

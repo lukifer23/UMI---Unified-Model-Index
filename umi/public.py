@@ -533,6 +533,7 @@ def write_public_artifacts(
         from umi.public_bundle import load_public_scoring_bundle, write_public_scoring_bundle
         from umi.public_candidates import write_candidate_audits
         from umi.public_certificate import build_public_certificate
+        from umi.public_freeze import write_evidence_freeze
         from umi.public_governance import write_governance_artifacts
         from umi.public_stability import write_rank_stability_artifacts
         from umi.public_uncertainty import quantify_public_uncertainty
@@ -570,6 +571,9 @@ def write_public_artifacts(
             edition_name=edition_name,
         )
         candidate_audits = write_candidate_audits(destination)
+        evidence_freeze = write_evidence_freeze(
+            payload, destination, edition_name=edition_name
+        )
         governance = write_governance_artifacts(destination, edition_name=edition_name)
         payload = {
             **payload,
@@ -577,6 +581,7 @@ def write_public_artifacts(
             "uncertainty": uncertainty,
             "certificate": certificate,
             "candidate_audits": candidate_audits,
+            "evidence_freeze": evidence_freeze,
             "governance": governance,
             "source_ablation": stability_pack["source_ablation"],
             "rank_stability": stability_pack["rank_stability"],

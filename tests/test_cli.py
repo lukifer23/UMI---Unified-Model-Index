@@ -242,6 +242,20 @@ def test_edition_candidates_v05_are_abstentions(capsys: pytest.CaptureFixture[st
     assert all(item["status"] == "insufficient_common_support" for item in report["candidates"])
 
 
+def test_edition_freeze_v05(capsys: pytest.CaptureFixture[str]) -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.5", "freeze"])
+    assert run(args) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["status"] == "frozen_expanded_public_evidence"
+    assert report["headline_additions"] == []
+    assert len(report["accepted_scores"]) == 7
+    assert {item["candidate_id"] for item in report["named_candidates"]} == {
+        "grok-4.5-high",
+        "gemini-3.1-pro-preview",
+    }
+    assert all(item["umi_public"] is None for item in report["near_miss_candidates"])
+
+
 def test_edition_bundle_v05(capsys: pytest.CaptureFixture[str]) -> None:
     args = build_parser().parse_args(["edition", "--edition", "v0.5", "bundle"])
     assert run(args) == 0
@@ -285,6 +299,7 @@ def test_edition_blockers_v05(capsys: pytest.CaptureFixture[str]) -> None:
     [
         "certificate",
         "candidates",
+        "freeze",
         "blockers",
         "sensitivity",
         "uncertainty",

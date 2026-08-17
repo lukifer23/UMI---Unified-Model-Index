@@ -27,6 +27,32 @@ CANDIDATES = (
         "config_ids": ("gemini-3.1-pro-preview", "gemini-3.1-pro-preview_high"),
     },
 )
+NEAR_MISS_CANDIDATES = (
+    {
+        "candidate_id": "gpt-5.6-terra-max",
+        "named_release": "GPT-5.6 Terra",
+        "requested_effort": "max",
+        "config_ids": ("gpt-5.6-terra_max",),
+    },
+    {
+        "candidate_id": "gpt-5.6-luna-max",
+        "named_release": "GPT-5.6 Luna",
+        "requested_effort": "max",
+        "config_ids": ("gpt-5.6-luna_max",),
+    },
+    {
+        "candidate_id": "claude-sonnet-5-max",
+        "named_release": "Claude Sonnet 5",
+        "requested_effort": "max",
+        "config_ids": ("claude-sonnet-5_max",),
+    },
+    {
+        "candidate_id": "claude-opus-4-8-max",
+        "named_release": "Claude Opus 4.8",
+        "requested_effort": "max",
+        "config_ids": ("claude-opus-4-8_max",),
+    },
+)
 
 
 class PublicCandidateAudit(ConfigModel):
@@ -149,6 +175,10 @@ def audit_named_candidates() -> dict[str, Any]:
     return PublicCandidateAuditReport.model_validate(report).model_dump(mode="json")
 
 
+def audit_near_miss_candidates() -> tuple[dict[str, Any], ...]:
+    return tuple(audit_candidate(item) for item in NEAR_MISS_CANDIDATES)
+
+
 def write_candidate_audits(output_dir: Path | None = None) -> dict[str, Any]:
     destination = output_dir or ROOT / "data" / "editions" / "v0.5" / "processed"
     destination.mkdir(parents=True, exist_ok=True)
@@ -158,7 +188,7 @@ def write_candidate_audits(output_dir: Path | None = None) -> dict[str, Any]:
     (destination / "candidate-audits.json").write_text(
         json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
-    for item in payload["candidates"]:
+    for item in (*payload["candidates"], *audit_near_miss_candidates()):
         path = destination / f"candidate-{item['candidate_id']}.json"
         path.write_text(json.dumps(item, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return payload

@@ -227,6 +227,7 @@ def build_parser() -> argparse.ArgumentParser:
     edition_commands.add_parser("audit")
     edition_commands.add_parser("certificate")
     edition_commands.add_parser("candidates")
+    edition_commands.add_parser("freeze")
     edition_commands.add_parser("blockers")
     edition_commands.add_parser("sensitivity")
     edition_uncertainty = edition_commands.add_parser("uncertainty")
@@ -341,6 +342,7 @@ def run(args: argparse.Namespace) -> int:
         governed_only = {
             "certificate",
             "candidates",
+            "freeze",
             "blockers",
             "sensitivity",
             "uncertainty",
@@ -355,9 +357,9 @@ def run(args: argparse.Namespace) -> int:
         ):
             raise SystemExit(
                 f"{public_config.edition_id} is {public_config.release_class}; "
-                "the governed certificate, candidate audits, blocker report, "
-                "weight sensitivity, uncertainty, source ablation, and rank "
-                "stability belong to umi-public-v0.5"
+                "the governed certificate, candidate audits, evidence freeze, "
+                "blocker report, weight sensitivity, uncertainty, source "
+                "ablation, and rank stability belong to umi-public-v0.5"
             )
         if args.edition_command == "validate":
             validate_public_edition_feasibility(public_config)
@@ -394,6 +396,11 @@ def run(args: argparse.Namespace) -> int:
 
             audits = write_candidate_audits()
             _emit(audits, "json", None)
+            return 0
+        if args.edition_command == "freeze":
+            from umi.public_freeze import write_evidence_freeze
+
+            _emit(write_evidence_freeze(), "json", None)
             return 0
         if args.edition_command == "blockers":
             from umi.public_governance import write_governance_artifacts

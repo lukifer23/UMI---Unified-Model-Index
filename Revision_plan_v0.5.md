@@ -71,7 +71,8 @@ them:
 | 7. Baseline audit | `Add v0.5 baseline audit` | `6ffcbcb` | `feat/umi-v05-governed-public` |
 | 8. Weight sensitivity | `Add diagnostic Public weight-sensitivity hypotheses` | `e4f7db4` | `feat/umi-v05-governed-public` |
 | 9. Implementation report | `Complete the v0.5 implementation-report checklist` | `9dfa44e` | `feat/umi-v05-governed-public` |
-| 10. Uncertainty surfaces | `Add uncertainty, source ablation, and rank stability` | this commit | `feat/umi-v05-governed-public` |
+| 10. Uncertainty surfaces | `Add uncertainty, source ablation, and rank stability` | `b6c565e` | `feat/umi-v05-governed-public` |
+| 11. Evidence freeze | `Freeze expanded public evidence and audit candidate models` | this commit | `feat/umi-v05-governed-public` |
 
 Phases 1–3 stay on `main`. Later phases are separate commits on `feat/umi-v05-governed-public`.
 History is not rewritten.
@@ -95,6 +96,7 @@ Add v0.5 baseline audit
 Add diagnostic Public weight-sensitivity hypotheses
 Complete the v0.5 implementation-report checklist
 Add uncertainty, source ablation, and rank stability
+Freeze expanded public evidence and audit candidate models
 ```
 
-Fulfilled as `40ffb7b`, `75f6cbc`, `f4cc49b` on `main`, then `4896e6e`, `de709d1`, `0ac6a38`, `6ffcbcb`, `e4f7db4`, `9dfa44e`, and this uncertainty/ablation/stability commit on `feat/umi-v05-governed-public`.
+Fulfilled as `40ffb7b`, `75f6cbc`, `f4cc49b` on `main`, then `4896e6e`, `de709d1`, `0ac6a38`, `6ffcbcb`, `e4f7db4`, `9dfa44e`, `b6c565e`, and this evidence-freeze commit on `feat/umi-v05-governed-public`.

@@ -30,10 +30,10 @@ Further spec work continues from this tree, not from `9712b35`.
 6. **Expansion:** +2 complete common-core systems (`gemini-3.6-flash-high`, `gpt-5.4-2026-03-05-xhigh`). Four `_max` near-misses remain unpublished (no WeirdML).
 7. **Five-pilot reproduction:** Sol 66.265839, Kimi 59.690663, Opus 55.510021, Fable 54.429636, GLM 54.202703.
 8. **Certificate:** `public-index-certificate.json` binds scores, zip checksum, license, intervals, and overlap pairs. Schema: `schemas/public-index-certificate.schema.json`.
-9. **Named candidates:** Grok 4.5 High misses WeirdML accuracy and cost (8/10). Gemini 3.1 Pro Preview misses high-effort WeirdML cost (9/10; unsuffixed cost 1.36 is excluded by the Access suffix panel). Both emit diagnostic certificates with `umi_public: null`. Neither is added to identities or headline scores.
+9. **Named candidates:** Grok 4.5 High misses WeirdML accuracy and cost (8/10). Gemini 3.1 Pro Preview misses high-effort WeirdML cost (9/10; unsuffixed cost 1.36 is excluded by the Access suffix panel). Both emit diagnostic certificates with `umi_public: null`. Neither is added to identities or headline scores. Four `_max` near-misses are audited with the same gate. The expanded seven-model evidence set is frozen in `evidence-freeze.json`.
 10. **v0.4 classification:** historical experimental point-score edition. It does not prove rank stability or independent validation. v0.5 is the governed public index.
 11. **No paid requests. No API keys. No v0.3 or v0.4 rewrite.**
-12. **Verification this turn:** 237 pytest passed after golden restore; 91.88% coverage; ruff clean; mypy 75 files. v0.3/v0.4 goldens restored after pytest rewrite.
+12. **Verification this turn:** 241 pytest passed after golden restore; 91.68% coverage; ruff clean; mypy 76 files. v0.3/v0.4 goldens restored after pytest rewrite.
 13. **Blocker report:** `docs/editions/v0.5/BLOCKER_REPORT.md` and `data/editions/v0.5/processed/blocker-report.json` list every unpublished identity and omitted construct with sources, URLs, and resolving evidence. No invented scores.
 14. **Nonblocked packaging:** edition manifest, source concentration (Epoch Capability 0.35 at the cap), pairwise overlap export, and diagnostic family ablation.
 15. **Commit phases (1.5):** suggested sequence is in `Revision_plan_v0.5.md`. On `main`: `40ffb7b`, `75f6cbc`, `f4cc49b`. On the feature branch: `4896e6e`, `de709d1`, `0ac6a38`, `6ffcbcb`, `e4f7db4`, `9dfa44e`. No history rewrite.

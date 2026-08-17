@@ -21,6 +21,7 @@ from umi.public_blockers import build_blocker_report
 from umi.public_candidates import audit_named_candidates
 from umi.public_certificate import EPOCH_SHA256, verify_epoch_zip
 from umi.public_crosswalk import config_id_for_entity
+from umi.public_freeze import build_evidence_freeze
 
 V04_PILOTS = {
     "claude-opus-5-max",
@@ -205,6 +206,28 @@ def validate_public_artifacts(
     report = validate_public_scores(payload, edition_name=edition_name)
     if edition_name != "v0.5":
         return report
-    extra = _stored_candidate_errors() + _stored_blocker_errors()
+    extra = (
+        _stored_candidate_errors()
+        + _stored_blocker_errors()
+        + _stored_freeze_errors(payload)
+    )
     errors = tuple(report["errors"]) + extra
     return {**report, "valid": not errors, "errors": errors}
+
+
+def _stored_freeze_errors(payload: dict[str, Any]) -> tuple[str, ...]:
+    try:
+        live = build_evidence_freeze(payload)
+    except ValueError as error:
+        return (str(error),)
+    path = ROOT / "data" / "editions" / "v0.5" / "processed" / "evidence-freeze.json"
+    if not path.is_file():
+        return ("missing evidence-freeze.json",)
+    stored = json.loads(path.read_text(encoding="utf-8"))
+    if stored.get("freeze_fingerprint") != live["freeze_fingerprint"]:
+        return ("stored evidence freeze drifted from live",)
+    if stored.get("scored_data_fingerprint") != live["scored_data_fingerprint"]:
+        return ("stored scored_data_fingerprint drifted",)
+    if stored.get("evidence_fingerprint") != live["evidence_fingerprint"]:
+        return ("stored evidence_fingerprint drifted",)
+    return ()

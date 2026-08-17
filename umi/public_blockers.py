@@ -10,7 +10,12 @@ from pydantic import Field, model_validator
 
 from umi.edition import GOVERNED_EDITION_ID, ConfigModel, load_public_edition_config
 from umi.public import ROOT, _diagnostic_blockers, public_series_specs
-from umi.public_candidates import CANDIDATES, _present_series, audit_named_candidates
+from umi.public_candidates import (
+    CANDIDATES,
+    NEAR_MISS_CANDIDATES,
+    _present_series,
+    audit_named_candidates,
+)
 from umi.public_certificate import EPOCH_SHA256, verify_epoch_zip
 
 BLOCKER_REPORT_VERSION = "umi-public-blocker-report-v0.5"
@@ -23,32 +28,7 @@ LIVEBENCH_URL = "https://livebench.ai/"
 AA_URL = "https://artificialanalysis.ai/"
 CURSORBENCH_URL = "https://cursor.com/cursorbench"
 
-NEAR_MISS_MAX = (
-    {
-        "candidate_id": "gpt-5.6-terra-max",
-        "named_release": "GPT-5.6 Terra",
-        "requested_effort": "max",
-        "config_ids": ("gpt-5.6-terra_max",),
-    },
-    {
-        "candidate_id": "gpt-5.6-luna-max",
-        "named_release": "GPT-5.6 Luna",
-        "requested_effort": "max",
-        "config_ids": ("gpt-5.6-luna_max",),
-    },
-    {
-        "candidate_id": "claude-sonnet-5-max",
-        "named_release": "Claude Sonnet 5",
-        "requested_effort": "max",
-        "config_ids": ("claude-sonnet-5_max",),
-    },
-    {
-        "candidate_id": "claude-opus-4-8-max",
-        "named_release": "Claude Opus 4.8",
-        "requested_effort": "max",
-        "config_ids": ("claude-opus-4-8_max",),
-    },
-)
+NEAR_MISS_MAX = NEAR_MISS_CANDIDATES
 
 OMITTED_CONSTRUCTS = (
     {
