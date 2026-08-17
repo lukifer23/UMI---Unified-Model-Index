@@ -12,6 +12,7 @@ from umi.identity import load_public_identities
 from umi.public import ROOT, SERIES
 from umi.public_blockers import write_blocker_report
 from umi.public_certificate import EPOCH_SHA256, verify_epoch_zip
+from umi.public_sensitivity import write_weight_sensitivity
 from umi.version import ENGINE_VERSION, PACKAGE_VERSION
 
 
@@ -113,9 +114,11 @@ def write_governance_artifacts(
         (destination / "source-ablation.json").write_text(
             json.dumps(ablation, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
+    sensitivity = write_weight_sensitivity(destination, edition_name=edition_name)
     return {
         "blocker_report": blockers,
         "source_concentration": concentration,
         "edition_manifest": manifest,
         "source_ablation": ablation,
+        "weight_sensitivity": sensitivity,
     }

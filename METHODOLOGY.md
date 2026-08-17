@@ -171,6 +171,14 @@ tokens/steps, and WeirdML cost stay at their point values, so intervals are labe
 multi-family series at a time and renormalizes only that domain; those orders are diagnostic,
 not the headline. This is not an attempt-level hierarchical bootstrap.
 
+### Weight sensitivity
+
+Named overall-weight hypotheses recombine the published Capability, Operational
+Efficiency, and Access component scores. They do not renormalize series, do not change
+`umi_public`, and do not change ranks on the certificate. The hypotheses are `baseline`
+0.55/0.25/0.20, `capability_60`, `operational_30`, `access_15`, and `access_25`. Output
+is diagnostic `weight-sensitivity.json`.
+
 Models whose partial intervals overlap are `indistinguishable_from` one another. The
 certificate and dashboard must show that cluster; they must not present overlapping ranks as
 a unique order.

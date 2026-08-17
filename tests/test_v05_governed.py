@@ -18,6 +18,7 @@ from umi.public_candidates import (
 )
 from umi.public_certificate import build_public_certificate, overlapping_pairs, verify_epoch_zip
 from umi.public_governance import source_concentration
+from umi.public_sensitivity import WEIGHT_HYPOTHESES, quantify_weight_sensitivity
 from umi.public_uncertainty import quantify_public_uncertainty
 from umi.public_validate import validate_public_artifacts, validate_public_scores
 
@@ -186,6 +187,21 @@ def test_source_concentration_stays_inside_the_cap() -> None:
     assert capability["largest_share"] == pytest.approx(0.35)
     assert concentration["components"]["operational_efficiency"]["cap_applied"] is False
     assert concentration["components"]["access_economics"]["cap_applied"] is False
+
+
+def test_weight_sensitivity_is_diagnostic_and_preserves_headline() -> None:
+    payload = score_public_edition(edition_name="v0.5")
+    report = quantify_weight_sensitivity(payload)
+    assert report["status"] == "diagnostic"
+    assert report["headline_unchanged"] is True
+    assert [item["name"] for item in WEIGHT_HYPOTHESES] == report["hypotheses"]
+    baseline = next(item for item in report["scenarios"] if item["name"] == "baseline")
+    ranked = sorted(payload["models"], key=lambda row: row["rank"])
+    published = [item["entity_id"] for item in ranked]
+    assert baseline["order"] == published
+    by_id = {item["entity_id"]: item for item in payload["models"]}
+    for row in baseline["models"]:
+        assert row["diagnostic_public"] == pytest.approx(by_id[row["entity_id"]]["umi_public"])
 
 
 def test_committed_blocker_report_matches_live() -> None:

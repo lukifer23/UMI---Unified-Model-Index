@@ -242,6 +242,15 @@ def test_edition_candidates_v05_are_abstentions(capsys: pytest.CaptureFixture[st
     assert all(item["status"] == "insufficient_common_support" for item in report["candidates"])
 
 
+def test_edition_sensitivity_v05(capsys: pytest.CaptureFixture[str]) -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.5", "sensitivity"])
+    assert run(args) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["status"] == "diagnostic"
+    assert report["headline_unchanged"] is True
+    assert "baseline" in report["hypotheses"]
+
+
 def test_edition_blockers_v05(capsys: pytest.CaptureFixture[str]) -> None:
     args = build_parser().parse_args(["edition", "--edition", "v0.5", "blockers"])
     assert run(args) == 0

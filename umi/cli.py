@@ -228,6 +228,7 @@ def build_parser() -> argparse.ArgumentParser:
     edition_commands.add_parser("certificate")
     edition_commands.add_parser("candidates")
     edition_commands.add_parser("blockers")
+    edition_commands.add_parser("sensitivity")
     edition_score = edition_commands.choices["score"]
     edition_score.add_argument("--format", choices=("json", "csv"), default="json")
     edition_score.add_argument("--output")
@@ -376,6 +377,13 @@ def run(args: argparse.Namespace) -> int:
 
             governance = write_governance_artifacts()
             _emit(governance["blocker_report"], "json", None)
+            return 0
+        if args.edition_command == "sensitivity":
+            if args.edition != "v0.5":
+                raise SystemExit("weight sensitivity is a v0.5 diagnostic surface")
+            from umi.public_sensitivity import write_weight_sensitivity
+
+            _emit(write_weight_sensitivity(), "json", None)
             return 0
         if args.edition_command == "score":
             public_payload = write_public_artifacts(edition_name=args.edition)

@@ -374,6 +374,12 @@ public evidence. Each row records missing series, affected model, required ident
 sources investigated, URLs investigated, the fail reason, and the evidence that would
 resolve the blocker. `umi_public` is always null. The report does not rescore.
 
+## Public weight sensitivity
+
+`data/editions/v0.5/processed/weight-sensitivity.json` is a diagnostic recombination of
+published component scores under named overall-weight hypotheses. It does not change
+`umi_public` or the certificate ranks.
+
 ## Comparison certificate
 
 `schemas/comparison-certificate.schema.json` is the authoritative contract. A certificate is a
