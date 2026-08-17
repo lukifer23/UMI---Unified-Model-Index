@@ -1,5 +1,18 @@
 # UMI verification record
 
+## UMI Public v0.5 Governed on main
+
+| Check | Outcome |
+|---|---|
+| `uv run pytest --cov=umi --cov=analysis --cov-fail-under=90` | 200 passed; 92.49% coverage |
+| `uv run ruff check .` | passed |
+| `uv run mypy --strict umi analysis scripts` | passed; 65 source files |
+| `umi edition --edition v0.5 validate` | valid |
+| `uv run python -m scripts.build_v05_governed` | published; validation true; seven models |
+| v0.4 five-pilot reproduction | exact |
+| v0.4 golden SHA-256 set | `tests/test_v04_legacy_freeze.py` passed |
+| Paid OpenRouter / live execute | not run |
+
 ## UMI Public v0.4 on main
 
 Verified on 2026-08-17 from `main` on Windows. UMI Public publishes five `umi_public`

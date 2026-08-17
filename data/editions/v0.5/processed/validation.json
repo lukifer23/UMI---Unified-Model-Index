@@ -1,0 +1,22 @@
+{
+  "checked_entities": [
+    "claude-fable-5-max",
+    "claude-opus-5-max",
+    "gemini-3.6-flash-high",
+    "glm-5.2-max",
+    "gpt-5.4-2026-03-05-xhigh",
+    "gpt-5.6-sol-max",
+    "kimi-k3-max"
+  ],
+  "edition_id": "umi-public-v0.5",
+  "errors": [],
+  "scored_data_fingerprint": "5624c3b417e4c0e42dd35411065f200c38ccfc6b49474f47cb671c2d43a22c6c",
+  "v04_reproduction": {
+    "claude-fable-5-max": 54.429636426057556,
+    "claude-opus-5-max": 55.510021169743936,
+    "glm-5.2-max": 54.202702676964044,
+    "gpt-5.6-sol-max": 66.26583886547628,
+    "kimi-k3-max": 59.69066272741414
+  },
+  "valid": true
+}

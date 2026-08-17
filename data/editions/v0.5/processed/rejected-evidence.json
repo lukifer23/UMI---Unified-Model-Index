@@ -1,0 +1,43 @@
+{
+  "blockers": [
+    {
+      "affected_model": "claude-fable-5-max",
+      "complete_cost_entity_ids": [
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max"
+      ],
+      "missing_series": "deepswe-mean-cost",
+      "reason": "Official DeepSWE v1.1 cost is observed on 432 of 436 scored Fable attempts and cannot enter a complete all-attempt Access series",
+      "required_identity": "complete cost observation count",
+      "resolving_evidence": "Complete Fable cost denominator or another all-five billed/calculated series",
+      "sources_investigated": [
+        "DeepSWE reviewed facts",
+        "Epoch deepswe_external.csv"
+      ]
+    },
+    {
+      "affected_model": "edition-scope",
+      "missing_series": "context_reliability_and_factual_discipline",
+      "reason": "No frozen public series has all five exact Max identities and an 8+ same-harness anchor panel for context reliability",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch simpleqa_verified.csv (missing claude-fable-5_max)",
+        "AA five-row extracts (anchor n=5)"
+      ]
+    },
+    {
+      "affected_model": "edition-scope",
+      "missing_series": "language_data_and_instruction_following",
+      "reason": "No frozen public series has all five exact Max identities and an 8+ same-harness anchor panel for language, data, or instruction following",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch live_bench_external.csv (zero 2026 Max pilots)",
+        "AA five-row extracts (anchor n=5)"
+      ]
+    }
+  ]
+}

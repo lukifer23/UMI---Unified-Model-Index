@@ -219,11 +219,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     operational_preflight_parser.add_argument("--output")
     edition = subparsers.add_parser("edition")
-    edition.add_argument("--edition", required=True, choices=("v0.3", "v0.4"))
+    edition.add_argument("--edition", required=True, choices=("v0.3", "v0.4", "v0.5"))
     edition_commands = edition.add_subparsers(dest="edition_command", required=True)
     edition_commands.add_parser("validate")
     edition_commands.add_parser("score")
     edition_commands.add_parser("dashboard")
+    edition_commands.add_parser("audit")
     edition_score = edition_commands.choices["score"]
     edition_score.add_argument("--format", choices=("json", "csv"), default="json")
     edition_score.add_argument("--output")
@@ -326,7 +327,7 @@ def run(args: argparse.Namespace) -> int:
                 _emit({"valid": True, "edition": "v0.3"}, "json", None)
                 return 0
             raise SystemExit("v0.3 edition score remains the legacy umi estimates path")
-        public_config = load_public_edition_config()
+        public_config = load_public_edition_config(edition=args.edition)
         if args.edition_command == "validate":
             validate_public_edition_feasibility(public_config)
             _emit({"valid": True, "edition": public_config.edition_id}, "json", None)
@@ -335,16 +336,22 @@ def run(args: argparse.Namespace) -> int:
             from analysis.public_dashboard import write_public_dashboard
 
             scores_path = (
-                Path("data") / "editions" / "v0.4" / "processed" / "model-scores.json"
+                Path("data") / "editions" / args.edition / "processed" / "model-scores.json"
             )
             scores = json.loads(scores_path.read_text(encoding="utf-8"))
             dashboard = write_public_dashboard(scores, scores_path.parent)
             _emit(dashboard, "json", None)
             return 0
+        if args.edition_command == "audit":
+            from umi.public_validate import validate_public_artifacts
+
+            audit = validate_public_artifacts(args.edition)
+            _emit(audit, "json", None)
+            return 0 if audit["valid"] else 1
         if args.edition_command == "score":
-            public_payload = write_public_artifacts()
+            public_payload = write_public_artifacts(edition_name=args.edition)
         else:
-            public_payload = score_public_edition()
+            public_payload = score_public_edition(edition_name=args.edition)
         _emit(public_payload, getattr(args, "format", "json"), getattr(args, "output", None))
         return 0 if public_payload["publication_state"] == "published" else 0
     if args.command == "operational":

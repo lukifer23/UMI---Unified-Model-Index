@@ -12,6 +12,11 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 ROOT = Path(__file__).resolve().parents[1]
 LEGACY_EDITION_ID = "umi-public-v0.3-legacy"
 PUBLIC_EDITION_ID = "umi-public-v0.4"
+GOVERNED_EDITION_ID = "umi-public-v0.5"
+PUBLIC_EDITION_IDS = {
+    PUBLIC_EDITION_ID: "umi-methodology-v0.4.0",
+    GOVERNED_EDITION_ID: "umi-methodology-v0.5.0",
+}
 
 
 class ConfigModel(BaseModel):
@@ -126,10 +131,13 @@ class PublicEditionConfig(ConfigModel):
 
     @model_validator(mode="after")
     def validate_edition(self) -> PublicEditionConfig:
-        if self.edition_id != PUBLIC_EDITION_ID:
-            raise ValueError(f"expected {PUBLIC_EDITION_ID}")
+        if self.edition_id not in PUBLIC_EDITION_IDS:
+            raise ValueError(f"unknown public edition {self.edition_id}")
+        expected_formula = PUBLIC_EDITION_IDS[self.edition_id]
+        if self.formula_version != expected_formula:
+            raise ValueError(f"{self.edition_id} formula must be {expected_formula}")
         if self.policy_mode != "public":
-            raise ValueError("v0.4 Public policy_mode must be public")
+            raise ValueError("Public policy_mode must be public")
         family_ids = [item.id for item in self.families]
         if len(family_ids) != len(set(family_ids)):
             raise ValueError("public family IDs must be unique")
@@ -154,15 +162,19 @@ def edition_config_dir(edition: str, *, root: Path | None = None) -> Path:
     return base / "config" / "editions" / edition
 
 
-def load_public_edition_config(path: Path | None = None) -> PublicEditionConfig:
-    directory = path or edition_config_dir("v0.4")
-    edition = _load_yaml(directory / "edition.yaml")
+def load_public_edition_config(
+    path: Path | None = None,
+    *,
+    edition: str = "v0.4",
+) -> PublicEditionConfig:
+    directory = path or edition_config_dir(edition)
+    edition_raw = _load_yaml(directory / "edition.yaml")
     weights = _load_yaml(directory / "weights.yaml")
     eligibility = _load_yaml(directory / "eligibility.yaml")
     families_raw = _load_yaml(directory / "families.yaml")
     core_raw = _load_yaml(directory / "common-core.yaml")
     payload = {
-        **edition,
+        **edition_raw,
         "weights": weights,
         "eligibility": eligibility,
         "families": families_raw["families"],

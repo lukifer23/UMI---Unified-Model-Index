@@ -17,6 +17,8 @@ SHORT_NAMES = {
     "gpt-5.6-sol-max": "Sol",
     "kimi-k3-max": "Kimi K3",
     "glm-5.2-max": "GLM-5.2",
+    "gemini-3.6-flash-high": "Gemini 3.6 Flash",
+    "gpt-5.4-2026-03-05-xhigh": "GPT-5.4",
 }
 SERIES_LABELS = {
     "epoch-chess-puzzles": "Chess puzzles",
@@ -69,7 +71,7 @@ def chart_rows(payload: dict[str, Any]) -> list[dict[str, Any]]:
                 "entity_id": item["entity_id"],
                 "named_release": item["named_release"],
                 "entity_kind": item["entity_kind"],
-                "short_name": SHORT_NAMES[item["entity_id"]],
+                "short_name": SHORT_NAMES.get(item["entity_id"], item["named_release"]),
                 "capability": _round(capability),
                 "operational_efficiency": _round(opeff),
                 "access_economics": _round(access),
@@ -99,7 +101,7 @@ def series_rows(payload: dict[str, Any]) -> list[dict[str, Any]]:
                 rows.append(
                     {
                         "entity_id": item["entity_id"],
-                        "short_name": SHORT_NAMES[item["entity_id"]],
+                        "short_name": SHORT_NAMES.get(item["entity_id"], item["named_release"]),
                         "component": component,
                         "series_id": series_id,
                         "series_label": SERIES_LABELS.get(series_id, series_id),

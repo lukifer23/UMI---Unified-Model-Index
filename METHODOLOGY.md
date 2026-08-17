@@ -10,6 +10,11 @@ current policy values; code must not contradict this document. Two editions are 
   `umi-normalization-v0.4.0`) is a separate edition that publishes one `umi_public` number per
   exact Max pilot from frozen public extracts. It does not rewrite v0.3 artifacts, gates, or
   certificates.
+- **v0.5 Governed Public** (`umi-public-v0.5`, formula `umi-methodology-v0.5.0`, normalization
+  `umi-normalization-v0.5.0`) freezes v0.4, independently validates published raw values against
+  the Epoch zip, adds source-interval uncertainty and family ablation, and scores every frozen
+  configuration that has the complete ten-series common core. The five v0.4 Max pilots must
+  reproduce their v0.4 `umi_public` numbers exactly.
 
 All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
 produce identical serialized results and fingerprints across supported Python versions; this is
@@ -106,6 +111,39 @@ instability is therefore not claimed as a probability.
 `scored_data_fingerprint` is SHA-256 over the edition identity, formula, normalization, weights,
 series IDs, and each model's raw series values and component scores. Input order and wall-clock
 timestamps are excluded.
+
+## UMI Public v0.5 Governed
+
+v0.5 does not change the v0.4 formula, domain weights, transforms, or common-core series. It
+governs that edition.
+
+### Hardening
+
+v0.4 processed artifacts are frozen by SHA-256 in `tests/test_v04_legacy_freeze.py`. Rerunning
+v0.5 must not rewrite them. The five Max pilots' `umi_public` values are a reproduction gate.
+
+### Score validation
+
+`umi edition --edition v0.5 audit` reloads the frozen zip, checks every published raw against
+the extract, checks that `umi_public` is the configured weighted sum, rebuilds the edition, and
+compares fingerprints. A mismatch fails closed.
+
+### Model expansion
+
+Only configurations that have all ten common-core series are scored. The frozen archive has
+seven such rows: the five v0.4 Max pilots plus `gemini-3.6-flash_high` and
+`gpt-5.4-2026-03-05_xhigh`. Those two are scored as their exact high / xhigh entities, not as
+Max substitutes. Four additional `_max` rows (GPT-5.6 Terra, GPT-5.6 Luna, Claude Sonnet 5,
+Claude Opus 4.8) miss only WeirdML and remain unpublished.
+
+### Uncertainty
+
+Primary intervals are a 2,048-draw Monte Carlo that perturbs series with a published stderr or
+95% CI half-width, using the headline's frozen panel statistics. SciCode, CritPt, DeepSWE
+tokens/steps, and WeirdML cost stay at their point values, so intervals are labeled
+`partial_source_interval`. Rank ranges come from the same draws. Family ablation drops one
+multi-family series at a time and renormalizes only that domain; those orders are diagnostic,
+not the headline. This is not an attempt-level hierarchical bootstrap.
 
 ## v0.3.15 legacy
 

@@ -1,0 +1,61 @@
+families:
+  - id: epoch-chess
+    component: capability
+    parent: general_reasoning_and_knowledge
+    weight: 1.0
+    correlation_group: epoch-chess-puzzles
+    source_organization: epoch
+  - id: deepswe-v1.1
+    component: capability
+    parent: software_engineering
+    weight: 0.55
+    correlation_group: deepswe-v1.1-four-run-cohort
+    source_organization: datacurve
+  - id: epoch-scicode
+    component: capability
+    parent: software_engineering
+    weight: 0.45
+    correlation_group: aa-scicode
+    source_organization: artificial-analysis
+  - id: epoch-weirdml
+    component: capability
+    parent: agentic_and_tool_mediated_work
+    weight: 1.0
+    correlation_group: weirdml-leaderboard
+    source_organization: weirdml
+  - id: epoch-gpqa
+    component: capability
+    parent: mathematics_and_science
+    weight: 0.50
+    correlation_group: epoch-simple-evals-gpqa
+    source_organization: epoch
+  - id: epoch-otis
+    component: capability
+    parent: mathematics_and_science
+    weight: 0.25
+    correlation_group: epoch-otis-mock-aime
+    source_organization: epoch
+  - id: epoch-critpt
+    component: capability
+    parent: mathematics_and_science
+    weight: 0.25
+    correlation_group: epoch-critpt
+    source_organization: epoch
+  - id: deepswe-resources
+    component: operational_efficiency
+    parent: task_resource_intensity
+    weight: 1.0
+    correlation_group: deepswe-v1.1-four-run-cohort
+    source_organization: datacurve
+  - id: deepswe-duration-steps
+    component: operational_efficiency
+    parent: task_completion_time_and_steps
+    weight: 1.0
+    correlation_group: deepswe-v1.1-four-run-cohort
+    source_organization: datacurve
+  - id: weirdml-task-cost
+    component: access_economics
+    parent: public_benchmark_task_cost
+    weight: 1.0
+    correlation_group: weirdml-leaderboard
+    source_organization: weirdml

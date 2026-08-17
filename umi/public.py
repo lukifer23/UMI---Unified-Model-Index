@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, NotRequired, TypedDict
 
-from umi.edition import PUBLIC_EDITION_ID, PublicEditionConfig, load_public_edition_config
+from umi.edition import PublicEditionConfig, load_public_edition_config
 from umi.identity import PublicSystemIdentity, evidence_matches_entity, load_public_identities
 from umi.version import ENGINE_VERSION, PACKAGE_VERSION
 
@@ -25,6 +25,21 @@ PILOT_MAP = {
     "kimi-k3_max": "kimi-k3-max",
     "glm-5.2_max": "glm-5.2-max",
 }
+EFFORT_SUFFIXES = ("promax", "xhigh", "high", "medium", "low", "max")
+
+
+def config_id_for_entity(entity_id: str) -> str:
+    for suffix in EFFORT_SUFFIXES:
+        token = f"-{suffix}"
+        if entity_id.endswith(token):
+            return f"{entity_id[: -len(token)]}_{suffix}"
+    raise ValueError(f"entity {entity_id} has no effort suffix")
+
+
+def entity_map_from_identities(
+    identities: tuple[PublicSystemIdentity, ...],
+) -> dict[str, str]:
+    return {config_id_for_entity(item.entity_id): item.entity_id for item in identities}
 INCOMPLETE_COST = {"claude-fable-5_max"}
 HIGH_EFFORT_SUFFIXES = ("_max", "_xhigh", "_high", "_promax")
 LOGIT_EPS = 1e-3
@@ -92,8 +107,9 @@ def _source_effort(row: dict[str, str], config_id: str) -> str | None:
     effort = str(row.get("Reasoning effort") or "").strip()
     if effort:
         return effort
-    if config_id.endswith("_max"):
-        return "max"
+    for suffix in EFFORT_SUFFIXES:
+        if config_id.endswith(f"_{suffix}"):
+            return suffix
     return None
 
 
@@ -157,8 +173,10 @@ def epoch_points(
     skip_incomplete_cost: bool = False,
     identities: tuple[PublicSystemIdentity, ...] | None = None,
     panel_filter: str | None = None,
+    entity_map: dict[str, str] | None = None,
 ) -> tuple[SeriesPoint, ...]:
     known = {item.entity_id: item for item in identities} if identities is not None else None
+    mapping = entity_map if entity_map is not None else PILOT_MAP
     seen: set[str] = set()
     points: list[SeriesPoint] = []
     for row in load_epoch_member(member):
@@ -175,7 +193,7 @@ def epoch_points(
         if skip_incomplete_cost and config_id in INCOMPLETE_COST:
             continue
         seen.add(config_id)
-        entity_id = PILOT_MAP.get(config_id)
+        entity_id = mapping.get(config_id)
         if entity_id is not None and known is not None:
             identity = known[entity_id]
             composite, fallbacks = _composite_from_row(row)
@@ -385,9 +403,14 @@ def _diagnostic_blockers() -> tuple[dict[str, Any], ...]:
 
 def score_public_edition(
     config: PublicEditionConfig | None = None,
+    *,
+    edition_name: str = "v0.4",
+    identities: tuple[PublicSystemIdentity, ...] | None = None,
 ) -> dict[str, Any]:
-    edition = config or load_public_edition_config()
-    identities = load_public_identities()
+    edition = config or load_public_edition_config(edition=edition_name)
+    loaded = identities or load_public_identities(edition=edition_name)
+    mapping = entity_map_from_identities(loaded)
+    identities = loaded
     domain_weights = {
         item.value: weight for item, weight in edition.weights.capability_domains.items()
     }
@@ -408,6 +431,7 @@ def score_public_edition(
             require_harness=spec.get("harness"),
             identities=identities,
             panel_filter=spec.get("panel_filter"),
+            entity_map=mapping,
         )
         pilots = {item.entity_id for item in points if item.entity_id}
         if pilots != required or len(points) < edition.eligibility.minimum_anchor_panel:
@@ -531,7 +555,7 @@ def score_public_edition(
         "normalization_version": edition.normalization_version,
         "engine_version": ENGINE_VERSION,
         "package_version": PACKAGE_VERSION,
-        "comparison_profile_id": f"{PUBLIC_EDITION_ID}/frozen-epoch-common-core",
+        "comparison_profile_id": f"{edition.edition_id}/frozen-epoch-common-core",
         "publication_state": "published",
         "required_common_core_coverage": 1.0,
         "scored_data_fingerprint": fingerprint,
@@ -542,10 +566,14 @@ def score_public_edition(
     }
 
 
-def write_public_artifacts(output_dir: Path | None = None) -> dict[str, Any]:
-    destination = output_dir or ROOT / "data" / "editions" / "v0.4" / "processed"
+def write_public_artifacts(
+    output_dir: Path | None = None,
+    *,
+    edition_name: str = "v0.4",
+) -> dict[str, Any]:
+    destination = output_dir or ROOT / "data" / "editions" / edition_name / "processed"
     destination.mkdir(parents=True, exist_ok=True)
-    payload = score_public_edition()
+    payload = score_public_edition(edition_name=edition_name)
     (destination / "model-scores.json").write_text(
         json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
@@ -571,4 +599,19 @@ def write_public_artifacts(output_dir: Path | None = None) -> dict[str, Any]:
     from analysis.public_dashboard import write_public_dashboard
 
     write_public_dashboard(payload, destination)
+    if edition_name == "v0.5":
+        from umi.public_uncertainty import quantify_public_uncertainty
+        from umi.public_validate import validate_public_scores
+
+        validation = validate_public_scores(payload, edition_name=edition_name)
+        if not validation["valid"]:
+            raise ValueError("v0.5 validation failed: " + "; ".join(validation["errors"]))
+        uncertainty = quantify_public_uncertainty(payload, edition_name=edition_name)
+        (destination / "validation.json").write_text(
+            json.dumps(validation, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        (destination / "uncertainty.json").write_text(
+            json.dumps(uncertainty, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        payload = {**payload, "validation": validation, "uncertainty": uncertainty}
     return payload

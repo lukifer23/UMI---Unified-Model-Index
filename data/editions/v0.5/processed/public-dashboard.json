@@ -1,0 +1,814 @@
+{
+  "charts": [
+    {
+      "id": "umi_public",
+      "note": "One published number per exact Max configuration.",
+      "title": "UMI Public v0.4",
+      "type": "bar",
+      "y_field": "umi_public"
+    },
+    {
+      "id": "components",
+      "note": "Each component is 0-100 before overall weights are applied.",
+      "title": "Unweighted component scores",
+      "type": "grouped_bar"
+    },
+    {
+      "id": "contributions",
+      "note": "Segments are 0.55 Capability, 0.25 Operational Efficiency, 0.20 Access.",
+      "title": "Weighted contributions to umi_public",
+      "type": "stacked_bar"
+    },
+    {
+      "id": "capability_heatmap",
+      "note": "0-100 robust-z scores from the frozen common-core extracts.",
+      "title": "Capability series scores",
+      "type": "heatmap"
+    }
+  ],
+  "comparison_profile_id": "umi-public-v0.5/frozen-epoch-common-core",
+  "edition_id": "umi-public-v0.5",
+  "formula": {
+    "access_economics": 0.2,
+    "capability": 0.55,
+    "operational_efficiency": 0.25,
+    "text": "umi_public = 0.55 x Capability + 0.25 x Operational Efficiency + 0.20 x Access Economics"
+  },
+  "formula_version": "umi-methodology-v0.5.0",
+  "limitations": [
+    "Access Economics is source-reported public task cost, not provider billing.",
+    "95% intervals are unpublished because the extracts are configuration-level means.",
+    "This is not v0.3 headline_overall.",
+    "Fable is the documented fallback composite product.",
+    "DeepSWE cost is diagnostic only (Fable 432/436)."
+  ],
+  "publication_state": "published",
+  "ranking": [
+    {
+      "access_economics": 16.40246,
+      "access_economics_weighted": 3.280492,
+      "capability": 91.944801,
+      "capability_weighted": 50.569641,
+      "entity_id": "gpt-5.6-sol-max",
+      "entity_kind": "single_model_service",
+      "interval": null,
+      "interval_status": "unpublished_point_extracts",
+      "named_release": "GPT-5.6 Sol",
+      "operational_efficiency": 49.662825,
+      "operational_efficiency_weighted": 12.415706,
+      "rank": 1,
+      "short_name": "Sol",
+      "umi_public": 66.265839
+    },
+    {
+      "access_economics": 19.398245,
+      "access_economics_weighted": 3.879649,
+      "capability": 88.839676,
+      "capability_weighted": 48.861822,
+      "entity_id": "kimi-k3-max",
+      "entity_kind": "open_weight_deployment",
+      "interval": null,
+      "interval_status": "unpublished_point_extracts",
+      "named_release": "Kimi K3",
+      "operational_efficiency": 27.796768,
+      "operational_efficiency_weighted": 6.949192,
+      "rank": 2,
+      "short_name": "Kimi K3",
+      "umi_public": 59.690663
+    },
+    {
+      "access_economics": 2.403291,
+      "access_economics_weighted": 0.480658,
+      "capability": 81.690792,
+      "capability_weighted": 44.929936,
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "entity_kind": "single_model_service",
+      "interval": null,
+      "interval_status": "unpublished_point_extracts",
+      "named_release": "GPT-5.4",
+      "operational_efficiency": 40.403134,
+      "operational_efficiency_weighted": 10.100783,
+      "rank": 3,
+      "short_name": "GPT-5.4",
+      "umi_public": 55.511377
+    },
+    {
+      "access_economics": 3.965025,
+      "access_economics_weighted": 0.793005,
+      "capability": 90.731355,
+      "capability_weighted": 49.902245,
+      "entity_id": "claude-opus-5-max",
+      "entity_kind": "single_model_service",
+      "interval": null,
+      "interval_status": "unpublished_point_extracts",
+      "named_release": "Claude Opus 5",
+      "operational_efficiency": 19.259083,
+      "operational_efficiency_weighted": 4.814771,
+      "rank": 4,
+      "short_name": "Opus 5",
+      "umi_public": 55.510021
+    },
+    {
+      "access_economics": 51.166188,
+      "access_economics_weighted": 10.233238,
+      "capability": 72.601845,
+      "capability_weighted": 39.931015,
+      "entity_id": "gemini-3.6-flash-high",
+      "entity_kind": "single_model_service",
+      "interval": null,
+      "interval_status": "unpublished_point_extracts",
+      "named_release": "Gemini 3.6 Flash",
+      "operational_efficiency": 21.102979,
+      "operational_efficiency_weighted": 5.275745,
+      "rank": 5,
+      "short_name": "Gemini 3.6 Flash",
+      "umi_public": 55.439997
+    },
+    {
+      "access_economics": 0.705849,
+      "access_economics_weighted": 0.14117,
+      "capability": 88.710888,
+      "capability_weighted": 48.790988,
+      "entity_id": "claude-fable-5-max",
+      "entity_kind": "fallback_composite_service",
+      "interval": null,
+      "interval_status": "unpublished_point_extracts",
+      "named_release": "Claude Fable 5",
+      "operational_efficiency": 21.989913,
+      "operational_efficiency_weighted": 5.497478,
+      "rank": 6,
+      "short_name": "Fable 5",
+      "umi_public": 54.429636
+    },
+    {
+      "access_economics": 55.306275,
+      "access_economics_weighted": 11.061255,
+      "capability": 67.885646,
+      "capability_weighted": 37.337106,
+      "entity_id": "glm-5.2-max",
+      "entity_kind": "open_weight_deployment",
+      "interval": null,
+      "interval_status": "unpublished_point_extracts",
+      "named_release": "GLM-5.2",
+      "operational_efficiency": 23.217369,
+      "operational_efficiency_weighted": 5.804342,
+      "rank": 7,
+      "short_name": "GLM-5.2",
+      "umi_public": 54.202703
+    }
+  ],
+  "scored_data_fingerprint": "5624c3b417e4c0e42dd35411065f200c38ccfc6b49474f47cb671c2d43a22c6c",
+  "series": [
+    {
+      "component": "capability",
+      "entity_id": "gpt-5.6-sol-max",
+      "raw": 0.726667,
+      "score": 83.956441,
+      "series_id": "deepswe-v1.1-pass1",
+      "series_label": "DeepSWE Pass@1",
+      "short_name": "Sol"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gpt-5.6-sol-max",
+      "raw": 0.55,
+      "score": 96.129618,
+      "series_id": "epoch-chess-puzzles",
+      "series_label": "Chess puzzles",
+      "short_name": "Sol"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gpt-5.6-sol-max",
+      "raw": 0.323,
+      "score": 80.599167,
+      "series_id": "epoch-critpt",
+      "series_label": "CritPt",
+      "short_name": "Sol"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gpt-5.6-sol-max",
+      "raw": 0.934975,
+      "score": 89.018162,
+      "series_id": "epoch-gpqa",
+      "series_label": "GPQA Diamond",
+      "short_name": "Sol"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gpt-5.6-sol-max",
+      "raw": 1.0,
+      "score": 99.829818,
+      "series_id": "epoch-otis-aime",
+      "series_label": "OTIS Mock AIME",
+      "short_name": "Sol"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gpt-5.6-sol-max",
+      "raw": 0.561343,
+      "score": 89.807907,
+      "series_id": "epoch-scicode",
+      "series_label": "SciCode",
+      "short_name": "Sol"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gpt-5.6-sol-max",
+      "raw": 0.8697,
+      "score": 99.86501,
+      "series_id": "epoch-weirdml",
+      "series_label": "WeirdML",
+      "short_name": "Sol"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "gpt-5.6-sol-max",
+      "raw": 61.253333,
+      "score": 60.30505,
+      "series_id": "deepswe-agent-steps",
+      "series_label": "DeepSWE steps",
+      "short_name": "Sol"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "gpt-5.6-sol-max",
+      "raw": 60013.644444,
+      "score": 42.568009,
+      "series_id": "deepswe-output-tokens",
+      "series_label": "DeepSWE tokens",
+      "short_name": "Sol"
+    },
+    {
+      "component": "access_economics",
+      "entity_id": "gpt-5.6-sol-max",
+      "raw": 2.312208,
+      "score": 16.40246,
+      "series_id": "weirdml-cost-per-run",
+      "series_label": "WeirdML cost/run",
+      "short_name": "Sol"
+    },
+    {
+      "component": "capability",
+      "entity_id": "kimi-k3-max",
+      "raw": 0.685144,
+      "score": 77.391605,
+      "series_id": "deepswe-v1.1-pass1",
+      "series_label": "DeepSWE Pass@1",
+      "short_name": "Kimi K3"
+    },
+    {
+      "component": "capability",
+      "entity_id": "kimi-k3-max",
+      "raw": 0.39,
+      "score": 85.195911,
+      "series_id": "epoch-chess-puzzles",
+      "series_label": "Chess puzzles",
+      "short_name": "Kimi K3"
+    },
+    {
+      "component": "capability",
+      "entity_id": "kimi-k3-max",
+      "raw": 0.234,
+      "score": 76.580345,
+      "series_id": "epoch-critpt",
+      "series_label": "CritPt",
+      "short_name": "Kimi K3"
+    },
+    {
+      "component": "capability",
+      "entity_id": "kimi-k3-max",
+      "raw": 0.931187,
+      "score": 88.074028,
+      "series_id": "epoch-gpqa",
+      "series_label": "GPQA Diamond",
+      "short_name": "Kimi K3"
+    },
+    {
+      "component": "capability",
+      "entity_id": "kimi-k3-max",
+      "raw": 0.972222,
+      "score": 90.287635,
+      "series_id": "epoch-otis-aime",
+      "series_label": "OTIS Mock AIME",
+      "short_name": "Kimi K3"
+    },
+    {
+      "component": "capability",
+      "entity_id": "kimi-k3-max",
+      "raw": 0.586806,
+      "score": 94.02314,
+      "series_id": "epoch-scicode",
+      "series_label": "SciCode",
+      "short_name": "Kimi K3"
+    },
+    {
+      "component": "capability",
+      "entity_id": "kimi-k3-max",
+      "raw": 0.8257,
+      "score": 99.836678,
+      "series_id": "epoch-weirdml",
+      "series_label": "WeirdML",
+      "short_name": "Kimi K3"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "kimi-k3-max",
+      "raw": 97.587583,
+      "score": 28.033845,
+      "series_id": "deepswe-agent-steps",
+      "series_label": "DeepSWE steps",
+      "short_name": "Kimi K3"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "kimi-k3-max",
+      "raw": 81499.842572,
+      "score": 27.638716,
+      "series_id": "deepswe-output-tokens",
+      "series_label": "DeepSWE tokens",
+      "short_name": "Kimi K3"
+    },
+    {
+      "component": "access_economics",
+      "entity_id": "kimi-k3-max",
+      "raw": 2.053659,
+      "score": 19.398245,
+      "series_id": "weirdml-cost-per-run",
+      "series_label": "WeirdML cost/run",
+      "short_name": "Kimi K3"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 0.517699,
+      "score": 46.090285,
+      "series_id": "deepswe-v1.1-pass1",
+      "series_label": "DeepSWE Pass@1",
+      "short_name": "GPT-5.4"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 0.44,
+      "score": 89.871627,
+      "series_id": "epoch-chess-puzzles",
+      "series_label": "Chess puzzles",
+      "short_name": "GPT-5.4"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 0.234286,
+      "score": 76.595483,
+      "series_id": "epoch-critpt",
+      "series_label": "CritPt",
+      "short_name": "GPT-5.4"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 0.933,
+      "score": 88.526675,
+      "series_id": "epoch-gpqa",
+      "series_label": "GPQA Diamond",
+      "short_name": "GPT-5.4"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 0.953,
+      "score": 84.908629,
+      "series_id": "epoch-otis-aime",
+      "series_label": "OTIS Mock AIME",
+      "short_name": "GPT-5.4"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 0.565972,
+      "score": 90.697804,
+      "series_id": "epoch-scicode",
+      "series_label": "SciCode",
+      "short_name": "GPT-5.4"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 0.777,
+      "score": 99.26683,
+      "series_id": "epoch-weirdml",
+      "series_label": "WeirdML",
+      "short_name": "GPT-5.4"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 70.471239,
+      "score": 50.320176,
+      "series_id": "deepswe-agent-steps",
+      "series_label": "DeepSWE steps",
+      "short_name": "GPT-5.4"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 71408.873894,
+      "score": 33.791772,
+      "series_id": "deepswe-output-tokens",
+      "series_label": "DeepSWE tokens",
+      "short_name": "GPT-5.4"
+    },
+    {
+      "component": "access_economics",
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 5.7199,
+      "score": 2.403291,
+      "series_id": "weirdml-cost-per-run",
+      "series_label": "WeirdML cost/run",
+      "short_name": "GPT-5.4"
+    },
+    {
+      "component": "capability",
+      "entity_id": "claude-opus-5-max",
+      "raw": 0.736486,
+      "score": 85.378801,
+      "series_id": "deepswe-v1.1-pass1",
+      "series_label": "DeepSWE Pass@1",
+      "short_name": "Opus 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "claude-opus-5-max",
+      "raw": 0.42,
+      "score": 88.168577,
+      "series_id": "epoch-chess-puzzles",
+      "series_label": "Chess puzzles",
+      "short_name": "Opus 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "claude-opus-5-max",
+      "raw": 0.291429,
+      "score": 79.310246,
+      "series_id": "epoch-critpt",
+      "series_label": "CritPt",
+      "short_name": "Opus 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "claude-opus-5-max",
+      "raw": 0.938763,
+      "score": 89.955395,
+      "series_id": "epoch-gpqa",
+      "series_label": "GPQA Diamond",
+      "short_name": "Opus 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "claude-opus-5-max",
+      "raw": 0.988889,
+      "score": 96.013035,
+      "series_id": "epoch-otis-aime",
+      "series_label": "OTIS Mock AIME",
+      "short_name": "Opus 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "claude-opus-5-max",
+      "raw": 0.556713,
+      "score": 88.85987,
+      "series_id": "epoch-scicode",
+      "series_label": "SciCode",
+      "short_name": "Opus 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "claude-opus-5-max",
+      "raw": 0.9178,
+      "score": 99.86501,
+      "series_id": "epoch-weirdml",
+      "series_label": "WeirdML",
+      "short_name": "Opus 5"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "claude-opus-5-max",
+      "raw": 99.042793,
+      "score": 27.13592,
+      "series_id": "deepswe-agent-steps",
+      "series_label": "DeepSWE steps",
+      "short_name": "Opus 5"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "claude-opus-5-max",
+      "raw": 117565.693694,
+      "score": 14.007858,
+      "series_id": "deepswe-output-tokens",
+      "series_label": "DeepSWE tokens",
+      "short_name": "Opus 5"
+    },
+    {
+      "component": "access_economics",
+      "entity_id": "claude-opus-5-max",
+      "raw": 4.741955,
+      "score": 3.965025,
+      "series_id": "weirdml-cost-per-run",
+      "series_label": "WeirdML cost/run",
+      "short_name": "Opus 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.485588,
+      "score": 40.024922,
+      "series_id": "deepswe-v1.1-pass1",
+      "series_label": "DeepSWE Pass@1",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.4,
+      "score": 86.246012,
+      "series_id": "epoch-chess-puzzles",
+      "series_label": "Chess puzzles",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.105714,
+      "score": 66.675151,
+      "series_id": "epoch-critpt",
+      "series_label": "CritPt",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.941288,
+      "score": 90.575203,
+      "series_id": "epoch-gpqa",
+      "series_label": "GPQA Diamond",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.941667,
+      "score": 82.16303,
+      "series_id": "epoch-otis-aime",
+      "series_label": "OTIS Mock AIME",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.52662,
+      "score": 81.223137,
+      "series_id": "epoch-scicode",
+      "series_label": "SciCode",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.561,
+      "score": 78.959466,
+      "series_id": "epoch-weirdml",
+      "series_label": "WeirdML",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 108.310421,
+      "score": 22.03013,
+      "series_id": "deepswe-agent-steps",
+      "series_label": "DeepSWE steps",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 96978.283814,
+      "score": 20.484878,
+      "series_id": "deepswe-output-tokens",
+      "series_label": "DeepSWE tokens",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "access_economics",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.622712,
+      "score": 51.166188,
+      "series_id": "weirdml-cost-per-run",
+      "series_label": "WeirdML cost/run",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "capability",
+      "entity_id": "claude-fable-5-max",
+      "raw": 0.697248,
+      "score": 79.389629,
+      "series_id": "deepswe-v1.1-pass1",
+      "series_label": "DeepSWE Pass@1",
+      "short_name": "Fable 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "claude-fable-5-max",
+      "raw": 0.41,
+      "score": 87.236014,
+      "series_id": "epoch-chess-puzzles",
+      "series_label": "Chess puzzles",
+      "short_name": "Fable 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "claude-fable-5-max",
+      "raw": 0.285714,
+      "score": 79.063026,
+      "series_id": "epoch-critpt",
+      "series_label": "CritPt",
+      "short_name": "Fable 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "claude-fable-5-max",
+      "raw": 0.858586,
+      "score": 70.337525,
+      "series_id": "epoch-gpqa",
+      "series_label": "GPQA Diamond",
+      "short_name": "Fable 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "claude-fable-5-max",
+      "raw": 0.997222,
+      "score": 99.24667,
+      "series_id": "epoch-otis-aime",
+      "series_label": "OTIS Mock AIME",
+      "short_name": "Fable 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "claude-fable-5-max",
+      "raw": 0.601852,
+      "score": 95.801542,
+      "series_id": "epoch-scicode",
+      "series_label": "SciCode",
+      "short_name": "Fable 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "claude-fable-5-max",
+      "raw": 0.9194,
+      "score": 99.86501,
+      "series_id": "epoch-weirdml",
+      "series_label": "WeirdML",
+      "short_name": "Fable 5"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "claude-fable-5-max",
+      "raw": 88.428899,
+      "score": 34.346227,
+      "series_id": "deepswe-agent-steps",
+      "series_label": "DeepSWE steps",
+      "short_name": "Fable 5"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "claude-fable-5-max",
+      "raw": 118592.772936,
+      "score": 13.75237,
+      "series_id": "deepswe-output-tokens",
+      "series_label": "DeepSWE tokens",
+      "short_name": "Fable 5"
+    },
+    {
+      "component": "access_economics",
+      "entity_id": "claude-fable-5-max",
+      "raw": 8.42441,
+      "score": 0.705849,
+      "series_id": "weirdml-cost-per-run",
+      "series_label": "WeirdML cost/run",
+      "short_name": "Fable 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "glm-5.2-max",
+      "raw": 0.437778,
+      "score": 31.410261,
+      "series_id": "deepswe-v1.1-pass1",
+      "series_label": "DeepSWE Pass@1",
+      "short_name": "GLM-5.2"
+    },
+    {
+      "component": "capability",
+      "entity_id": "glm-5.2-max",
+      "raw": 0.21,
+      "score": 52.722246,
+      "series_id": "epoch-chess-puzzles",
+      "series_label": "Chess puzzles",
+      "short_name": "GLM-5.2"
+    },
+    {
+      "component": "capability",
+      "entity_id": "glm-5.2-max",
+      "raw": 0.208571,
+      "score": 75.153844,
+      "series_id": "epoch-critpt",
+      "series_label": "CritPt",
+      "short_name": "GLM-5.2"
+    },
+    {
+      "component": "capability",
+      "entity_id": "glm-5.2-max",
+      "raw": 0.918561,
+      "score": 84.901851,
+      "series_id": "epoch-gpqa",
+      "series_label": "GPQA Diamond",
+      "short_name": "GLM-5.2"
+    },
+    {
+      "component": "capability",
+      "entity_id": "glm-5.2-max",
+      "raw": 0.863889,
+      "score": 67.989537,
+      "series_id": "epoch-otis-aime",
+      "series_label": "OTIS Mock AIME",
+      "short_name": "GLM-5.2"
+    },
+    {
+      "component": "capability",
+      "entity_id": "glm-5.2-max",
+      "raw": 0.50463,
+      "score": 74.031652,
+      "series_id": "epoch-scicode",
+      "series_label": "SciCode",
+      "short_name": "GLM-5.2"
+    },
+    {
+      "component": "capability",
+      "entity_id": "glm-5.2-max",
+      "raw": 0.7012,
+      "score": 96.376002,
+      "series_id": "epoch-weirdml",
+      "series_label": "WeirdML",
+      "short_name": "GLM-5.2"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "glm-5.2-max",
+      "raw": 129.126667,
+      "score": 13.766975,
+      "series_id": "deepswe-agent-steps",
+      "series_label": "DeepSWE steps",
+      "short_name": "GLM-5.2"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "glm-5.2-max",
+      "raw": 78175.306667,
+      "score": 29.517631,
+      "series_id": "deepswe-output-tokens",
+      "series_label": "DeepSWE tokens",
+      "short_name": "GLM-5.2"
+    },
+    {
+      "component": "access_economics",
+      "entity_id": "glm-5.2-max",
+      "raw": 0.507287,
+      "score": 55.306275,
+      "series_id": "weirdml-cost-per-run",
+      "series_label": "WeirdML cost/run",
+      "short_name": "GLM-5.2"
+    }
+  ],
+  "surface": "public-dashboard",
+  "weights": {
+    "access_economics": {
+      "public_benchmark_task_cost": 1.0
+    },
+    "capability_domains": {
+      "agentic_and_tool_mediated_work": 0.25,
+      "general_reasoning_and_knowledge": 0.15,
+      "mathematics_and_science": 0.2,
+      "software_engineering": 0.4
+    },
+    "operational_efficiency": {
+      "task_completion_time_and_steps": 0.4,
+      "task_resource_intensity": 0.6
+    },
+    "overall": {
+      "access_economics": 0.2,
+      "capability": 0.55,
+      "operational_efficiency": 0.25
+    }
+  }
+}

@@ -47,8 +47,12 @@ class PublicSystemIdentity(ConfigModel):
         return self
 
 
-def load_public_identities(path: Path | None = None) -> tuple[PublicSystemIdentity, ...]:
-    source = path or edition_config_dir("v0.4") / "identities.yaml"
+def load_public_identities(
+    path: Path | None = None,
+    *,
+    edition: str = "v0.4",
+) -> tuple[PublicSystemIdentity, ...]:
+    source = path or edition_config_dir(edition) / "identities.yaml"
     raw = yaml.safe_load(source.read_text(encoding="utf-8"))
     if not isinstance(raw, dict) or "entities" not in raw:
         raise ValueError(f"identity manifest missing entities: {source}")

@@ -212,6 +212,14 @@ def test_edition_validate_and_score_v04(capsys: pytest.CaptureFixture[str]) -> N
     assert dashboard["scored_data_fingerprint"] == payload["scored_data_fingerprint"]
 
 
+def test_edition_validate_v05(capsys: pytest.CaptureFixture[str]) -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.5", "validate"])
+    assert run(args) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["valid"] is True
+    assert report["edition"] == "umi-public-v0.5"
+
+
 def test_legacy_edition_validate_reports_infeasible(
     capsys: pytest.CaptureFixture[str],
 ) -> None:

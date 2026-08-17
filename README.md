@@ -7,12 +7,15 @@ frozen public extracts, while the v0.3.15 legacy edition still does **not** publ
 `headline_overall`.
 
 UMI Public is `0.55 × Capability + 0.25 × Operational Efficiency + 0.20 × Access Economics`.
-Rebuild it offline with no API keys:
+v0.5 is the governed edition: it freezes v0.4, validates every published raw against the
+Epoch zip, adds partial source-interval uncertainty, and scores the two extra high-effort
+systems that have the complete common core. Rebuild offline with no API keys:
 
 ```bash
-PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 validate
-PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 score
-PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 dashboard
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 validate
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 score
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 audit
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 dashboard
 ```
 
 | Rank | Configuration | Capability | Operational Efficiency | Access Economics | UMI Public |
@@ -22,6 +25,9 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 dashboard
 | 3 | Claude Opus 5 Max | 90.73 | 19.26 | 3.97 | **55.51** |
 | 4 | Claude Fable 5 Max | 88.71 | 21.99 | 0.71 | **54.43** |
 | 5 | GLM-5.2 Max | 67.89 | 23.22 | 55.31 | **54.20** |
+
+v0.5 keeps those five numbers and adds GPT-5.4 xhigh (**55.51**) and Gemini 3.6 Flash high
+(**55.44**). Sol and Kimi stay ranks 1 and 2 under partial intervals; places 3–7 overlap.
 
 Open [public-dashboard.html](data/editions/v0.4/processed/public-dashboard.html) for the
 four committed views: rank-order UMI Public bars, stacked weighted contributions, grouped

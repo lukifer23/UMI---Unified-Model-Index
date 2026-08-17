@@ -1,0 +1,155 @@
+entities:
+  - entity_id: claude-opus-5-max
+    entity_kind: single_model_service
+    developer: Anthropic
+    named_release: Claude Opus 5
+    revision: null
+    release_date: "2026-07-24"
+    effort_setting: max
+    reasoning_mode: max
+    serving_provider: null
+    endpoint_id: null
+    service_tier: null
+    region: null
+    interface: public_api
+    harness: null
+    scaffold: null
+    primary_target: claude-opus-5
+    fallback_targets: []
+    route_scope: none
+    fallback_trigger: none
+    route_rate: null
+    route_rate_evidence: null
+    run_level_routes_available: false
+  - entity_id: claude-fable-5-max
+    entity_kind: fallback_composite_service
+    developer: Anthropic
+    named_release: Claude Fable 5
+    revision: null
+    release_date: "2026-06-09"
+    effort_setting: max
+    reasoning_mode: adaptive_max
+    serving_provider: null
+    endpoint_id: null
+    service_tier: null
+    region: null
+    interface: public_api
+    harness: null
+    scaffold: null
+    primary_target: claude-fable-5
+    fallback_targets: [claude-opus-4.8]
+    route_scope: documented_product_fallback
+    fallback_trigger: product_policy
+    route_rate: null
+    route_rate_evidence: public_product_documentation
+    run_level_routes_available: false
+  - entity_id: gpt-5.6-sol-max
+    entity_kind: single_model_service
+    developer: OpenAI
+    named_release: GPT-5.6 Sol
+    revision: null
+    release_date: "2026-07-09"
+    effort_setting: max
+    reasoning_mode: max
+    serving_provider: null
+    endpoint_id: null
+    service_tier: default
+    region: null
+    interface: public_api
+    harness: null
+    scaffold: null
+    primary_target: gpt-5.6-sol
+    fallback_targets: []
+    route_scope: none
+    fallback_trigger: none
+    route_rate: null
+    route_rate_evidence: null
+    run_level_routes_available: false
+  - entity_id: kimi-k3-max
+    entity_kind: open_weight_deployment
+    developer: Moonshot AI
+    named_release: Kimi K3
+    revision: null
+    release_date: "2026-07-16"
+    effort_setting: max
+    reasoning_mode: max
+    serving_provider: null
+    endpoint_id: null
+    service_tier: null
+    region: null
+    interface: public_api
+    harness: null
+    scaffold: null
+    primary_target: kimi-k3
+    fallback_targets: []
+    route_scope: none
+    fallback_trigger: none
+    route_rate: null
+    route_rate_evidence: null
+    run_level_routes_available: false
+  - entity_id: glm-5.2-max
+    entity_kind: open_weight_deployment
+    developer: Zhipu AI
+    named_release: GLM-5.2
+    revision: null
+    release_date: "2026-06-16"
+    effort_setting: max
+    reasoning_mode: xhigh
+    serving_provider: null
+    endpoint_id: null
+    service_tier: null
+    region: null
+    interface: public_api
+    harness: null
+    scaffold: null
+    primary_target: glm-5.2
+    fallback_targets: []
+    route_scope: none
+    fallback_trigger: none
+    route_rate: null
+    route_rate_evidence: null
+    run_level_routes_available: false
+  - entity_id: gemini-3.6-flash-high
+    entity_kind: single_model_service
+    developer: Google DeepMind
+    named_release: Gemini 3.6 Flash
+    revision: null
+    release_date: "2026-07-21"
+    effort_setting: high
+    reasoning_mode: high
+    serving_provider: null
+    endpoint_id: null
+    service_tier: null
+    region: null
+    interface: public_api
+    harness: null
+    scaffold: null
+    primary_target: gemini-3.6-flash
+    fallback_targets: []
+    route_scope: none
+    fallback_trigger: none
+    route_rate: null
+    route_rate_evidence: null
+    run_level_routes_available: false
+  - entity_id: gpt-5.4-2026-03-05-xhigh
+    entity_kind: single_model_service
+    developer: OpenAI
+    named_release: GPT-5.4
+    revision: "2026-03-05"
+    release_date: "2026-03-05"
+    effort_setting: xhigh
+    reasoning_mode: xhigh
+    serving_provider: null
+    endpoint_id: null
+    service_tier: null
+    region: null
+    interface: public_api
+    harness: null
+    scaffold: null
+    primary_target: gpt-5.4-2026-03-05
+    fallback_targets: []
+    route_scope: none
+    fallback_trigger: none
+    route_rate: null
+    route_rate_evidence: null
+    run_level_routes_available: false
