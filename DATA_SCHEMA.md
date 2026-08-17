@@ -367,6 +367,13 @@ insufficient_common_support`, `headline_eligible: false`, and `umi_public: null`
 lists present and missing common-core series and does not invent a score. Changing the
 Access suffix panel to admit an unsuffixed WeirdML cost is out of scope for this schema.
 
+## Public blocker report
+
+`schemas/public-blocker-report.schema.json` is the machine-readable contract for unavailable
+public evidence. Each row records missing series, affected model, required identity,
+sources investigated, URLs investigated, the fail reason, and the evidence that would
+resolve the blocker. `umi_public` is always null. The report does not rescore.
+
 ## Comparison certificate
 
 `schemas/comparison-certificate.schema.json` is the authoritative contract. A certificate is a

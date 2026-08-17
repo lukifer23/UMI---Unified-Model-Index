@@ -18,6 +18,7 @@ from umi.public import (
     epoch_points,
     score_public_edition,
 )
+from umi.public_blockers import build_blocker_report
 from umi.public_candidates import audit_named_candidates
 from umi.public_certificate import EPOCH_SHA256, verify_epoch_zip
 
@@ -161,6 +162,30 @@ def _stored_candidate_errors() -> tuple[str, ...]:
     return tuple(errors)
 
 
+def _stored_blocker_errors() -> tuple[str, ...]:
+    live = build_blocker_report()
+    path = ROOT / "data" / "editions" / "v0.5" / "processed" / "blocker-report.json"
+    if not path.is_file():
+        return ("missing blocker-report.json",)
+    stored = json.loads(path.read_text(encoding="utf-8"))
+    errors: list[str] = []
+    if stored.get("source_artifact_sha256") != live["source_artifact_sha256"]:
+        errors.append("stored blocker-report zip checksum drifted")
+    live_ids = {item["blocker_id"]: item for item in live["blockers"]}
+    stored_ids = {item["blocker_id"]: item for item in stored.get("blockers", [])}
+    if set(stored_ids) != set(live_ids):
+        errors.append("stored blocker IDs do not match the live report")
+    for blocker_id, item in live_ids.items():
+        committed = stored_ids.get(blocker_id)
+        if committed is None:
+            continue
+        if committed.get("missing_series") != item["missing_series"]:
+            errors.append(f"{blocker_id} missing_series drifted")
+        if committed.get("umi_public") is not None:
+            errors.append(f"{blocker_id} invented umi_public")
+    return tuple(errors)
+
+
 def validate_public_artifacts(
     edition_name: str = "v0.4",
     scores_path: Path | None = None,
@@ -173,6 +198,6 @@ def validate_public_artifacts(
     report = validate_public_scores(payload, edition_name=edition_name)
     if edition_name != "v0.5":
         return report
-    extra = _stored_candidate_errors()
+    extra = _stored_candidate_errors() + _stored_blocker_errors()
     errors = tuple(report["errors"]) + extra
     return {**report, "valid": not errors, "errors": errors}

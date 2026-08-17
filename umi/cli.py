@@ -227,6 +227,7 @@ def build_parser() -> argparse.ArgumentParser:
     edition_commands.add_parser("audit")
     edition_commands.add_parser("certificate")
     edition_commands.add_parser("candidates")
+    edition_commands.add_parser("blockers")
     edition_score = edition_commands.choices["score"]
     edition_score.add_argument("--format", choices=("json", "csv"), default="json")
     edition_score.add_argument("--output")
@@ -367,6 +368,14 @@ def run(args: argparse.Namespace) -> int:
 
             audits = write_candidate_audits()
             _emit(audits, "json", None)
+            return 0
+        if args.edition_command == "blockers":
+            if args.edition != "v0.5":
+                raise SystemExit("blocker reports are a v0.5 governed-index surface")
+            from umi.public_governance import write_governance_artifacts
+
+            governance = write_governance_artifacts()
+            _emit(governance["blocker_report"], "json", None)
             return 0
         if args.edition_command == "score":
             public_payload = write_public_artifacts(edition_name=args.edition)

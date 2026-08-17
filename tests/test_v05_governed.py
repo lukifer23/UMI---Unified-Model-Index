@@ -10,12 +10,14 @@ from umi.edition import GOVERNED_EDITION_ID, load_public_edition_config
 from umi.feasibility import validate_public_edition_feasibility
 from umi.identity import load_public_identities
 from umi.public import score_public_edition
+from umi.public_blockers import PublicEvidenceBlocker, build_blocker_report
 from umi.public_candidates import (
     PublicCandidateAudit,
     PublicCandidateAuditReport,
     audit_named_candidates,
 )
 from umi.public_certificate import build_public_certificate, overlapping_pairs, verify_epoch_zip
+from umi.public_governance import source_concentration
 from umi.public_uncertainty import quantify_public_uncertainty
 from umi.public_validate import validate_public_artifacts, validate_public_scores
 
@@ -142,6 +144,57 @@ def test_committed_candidate_audits_match_live() -> None:
         assert json.loads(path.read_text(encoding="utf-8")) == item
     audit = validate_public_artifacts("v0.5")
     assert audit["valid"] is True
+
+
+def test_blocker_report_is_precise_and_unscored() -> None:
+    report = build_blocker_report()
+    by_id = {item["blocker_id"]: item for item in report["blockers"]}
+    assert report["headline_published"] is True
+    assert by_id["candidate-grok-4.5-high"]["missing_series"] == [
+        "epoch-weirdml",
+        "weirdml-cost-per-run",
+    ]
+    assert by_id["candidate-gemini-3.1-pro-preview"]["missing_series"] == [
+        "weirdml-cost-per-run"
+    ]
+    for blocker_id in (
+        "near-miss-gpt-5.6-terra-max",
+        "near-miss-gpt-5.6-luna-max",
+        "near-miss-claude-sonnet-5-max",
+        "near-miss-claude-opus-4-8-max",
+    ):
+        assert by_id[blocker_id]["missing_series"] == [
+            "epoch-weirdml",
+            "weirdml-cost-per-run",
+        ]
+    assert "construct-billed-economics" in by_id
+    assert "construct-interactive-latency" in by_id
+    for item in report["blockers"]:
+        assert item["umi_public"] is None
+        assert item["urls_investigated"]
+        assert item["sources_investigated"]
+        assert item["resolving_evidence"]
+    with pytest.raises(ValidationError, match="must not invent umi_public"):
+        PublicEvidenceBlocker.model_validate({**report["blockers"][0], "umi_public": 50.0})
+
+
+def test_source_concentration_stays_inside_the_cap() -> None:
+    concentration = source_concentration(edition_name="v0.5")
+    capability = concentration["components"]["capability"]
+    assert capability["cap_applied"] is True
+    assert capability["source_shares"]["epoch"] == pytest.approx(0.35)
+    assert capability["largest_share"] == pytest.approx(0.35)
+    assert concentration["components"]["operational_efficiency"]["cap_applied"] is False
+    assert concentration["components"]["access_economics"]["cap_applied"] is False
+
+
+def test_committed_blocker_report_matches_live() -> None:
+    live = build_blocker_report()
+    root = Path(__file__).resolve().parents[1] / "data" / "editions" / "v0.5" / "processed"
+    stored = json.loads((root / "blocker-report.json").read_text(encoding="utf-8"))
+    assert stored == live
+    assert (root / "edition-manifest.json").is_file()
+    assert (root / "source-concentration.json").is_file()
 
 
 def test_incomplete_candidate_identity_fails_closed() -> None:

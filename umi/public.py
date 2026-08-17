@@ -599,6 +599,7 @@ def write_public_artifacts(
     if edition_name == "v0.5":
         from umi.public_candidates import write_candidate_audits
         from umi.public_certificate import build_public_certificate
+        from umi.public_governance import write_governance_artifacts
         from umi.public_uncertainty import quantify_public_uncertainty
         from umi.public_validate import validate_public_scores
 
@@ -617,12 +618,14 @@ def write_public_artifacts(
             json.dumps(certificate, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
         candidate_audits = write_candidate_audits(destination)
+        governance = write_governance_artifacts(destination, edition_name=edition_name)
         payload = {
             **payload,
             "validation": validation,
             "uncertainty": uncertainty,
             "certificate": certificate,
             "candidate_audits": candidate_audits,
+            "governance": governance,
         }
     from analysis.public_dashboard import write_public_dashboard
 

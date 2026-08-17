@@ -33,4 +33,6 @@ Further spec work continues from this tree, not from `9712b35`.
 9. **Named candidates:** Grok 4.5 High misses WeirdML accuracy and cost (8/10). Gemini 3.1 Pro Preview misses high-effort WeirdML cost (9/10; unsuffixed cost 1.36 is excluded by the Access suffix panel). Both emit diagnostic certificates with `umi_public: null`. Neither is added to identities or headline scores.
 10. **v0.4 classification:** historical experimental point-score edition. It does not prove rank stability or independent validation. v0.5 is the governed public index.
 11. **No paid requests. No API keys. No v0.3 or v0.4 rewrite.**
-12. **Verification this turn:** 208 pytest passed; 92.47% coverage; ruff clean; mypy 67 files; v0.5 validate/audit/candidates/certificate smoked. v0.3/v0.4 goldens restored after pytest rewrite.
+12. **Verification this turn:** 212 pytest passed; 92.48% coverage; ruff clean; mypy 69 files; v0.5 validate/audit/candidates/certificate/blockers smoked. v0.3/v0.4 goldens restored after pytest rewrite.
+13. **Blocker report:** `docs/editions/v0.5/BLOCKER_REPORT.md` and `data/editions/v0.5/processed/blocker-report.json` list every unpublished identity and omitted construct with sources, URLs, and resolving evidence. No invented scores.
+14. **Nonblocked packaging:** edition manifest, source concentration (Epoch Capability 0.35 at the cap), pairwise overlap export, and diagnostic family ablation.

@@ -154,6 +154,14 @@ unsuffixed WeirdML cost would rescore every published Access point and break v0.
 reproduction; that filter stays. `umi edition --edition v0.5 candidates` writes diagnostic
 certificates only.
 
+### Evidence blockers
+
+When exact public evidence is unavailable, v0.5 still publishes the complete common-core
+index and writes a precise blocker report. The report lists missing series, affected
+model, required identity, sources and URLs investigated, the fail reason, and the
+evidence that would resolve it. Every blocker has `umi_public: null`. The report does
+not lower gates.
+
 ### Uncertainty
 
 Primary intervals are a 2,048-draw Monte Carlo that perturbs series with a published stderr or

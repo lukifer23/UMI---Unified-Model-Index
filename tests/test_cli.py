@@ -242,6 +242,17 @@ def test_edition_candidates_v05_are_abstentions(capsys: pytest.CaptureFixture[st
     assert all(item["status"] == "insufficient_common_support" for item in report["candidates"])
 
 
+def test_edition_blockers_v05(capsys: pytest.CaptureFixture[str]) -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.5", "blockers"])
+    assert run(args) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["headline_published"] is True
+    assert all(item["umi_public"] is None for item in report["blockers"])
+    ids = {item["blocker_id"] for item in report["blockers"]}
+    assert "candidate-grok-4.5-high" in ids
+    assert "candidate-gemini-3.1-pro-preview" in ids
+
+
 def test_edition_candidates_rejected_on_v04() -> None:
     args = build_parser().parse_args(["edition", "--edition", "v0.4", "candidates"])
     with pytest.raises(SystemExit, match="v0.5 governed-index surface"):

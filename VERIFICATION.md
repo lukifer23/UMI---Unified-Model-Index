@@ -7,12 +7,13 @@ and Gemini 3.1 Pro Preview are diagnostic abstentions. No invented scores. No pa
 
 | Check | Outcome |
 |---|---|
-| `uv run pytest --cov=umi --cov=analysis --cov-fail-under=90` | 208 passed; 92.47% coverage |
+| `uv run pytest --cov=umi --cov=analysis --cov-fail-under=90` | 212 passed; 92.48% coverage |
 | `uv run ruff check .` | passed |
-| `uv run mypy --strict umi analysis scripts` | passed; 67 source files |
+| `uv run mypy --strict umi analysis scripts` | passed; 69 source files |
 | `umi edition --edition v0.5 validate` | valid |
 | `umi edition --edition v0.5 audit` | valid; five-pilot reproduction exact |
 | `umi edition --edition v0.5 candidates` | both `insufficient_common_support`; `umi_public` null; headline_additions empty |
+| `umi edition --edition v0.5 blockers` | 12 documented blockers; every `umi_public` null |
 | `umi edition --edition v0.5 certificate` | published_governed_index |
 | v0.4 five-pilot reproduction | exact |
 | v0.4 golden SHA-256 set | `tests/test_v04_legacy_freeze.py` passed |

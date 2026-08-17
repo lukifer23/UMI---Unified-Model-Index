@@ -12,6 +12,7 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 validate
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 score
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 audit
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 candidates
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 blockers
 ```
 
 | Rank | Configuration | Effort | UMI Public | Partial 95% interval | Rank range |
@@ -41,7 +42,9 @@ scored. v0.4 artifacts remain frozen.
 Grok 4.5 High and Gemini 3.1 Pro Preview were audited against the same ten-series gate.
 Neither is headline-eligible. Diagnostic certificates are
 [candidate-audits.json](data/editions/v0.5/processed/candidate-audits.json).
-`umi_public` is null on both.
+`umi_public` is null on both. The precise evidence blocker report is
+[BLOCKER_REPORT.md](docs/editions/v0.5/BLOCKER_REPORT.md) and
+[blocker-report.json](data/editions/v0.5/processed/blocker-report.json).
 
 | Candidate | Config IDs | Present | Missing | Status |
 |---|---|---:|---|---|

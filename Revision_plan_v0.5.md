@@ -44,3 +44,10 @@ Executed on `feat/umi-v05-governed-public`. This is the specification that was i
 
 Result: neither candidate is headline-eligible. Grok misses WeirdML accuracy and cost.
 Gemini misses the suffix-panel cost row (unsuffixed cost 1.36 exists and is excluded).
+
+### Precise blocker report
+
+When exact public evidence is unavailable, emit `blocker-report.json` with missing series,
+affected model, required identity, sources, URLs, fail reason, and resolving evidence.
+Also package source concentration, edition manifest, pairwise overlaps, and family ablation
+without inventing data.
