@@ -9,7 +9,7 @@ from pydantic import ValidationError
 from umi.edition import GOVERNED_EDITION_ID, GOVERNED_PUBLIC_INDEX, load_public_edition_config
 from umi.feasibility import validate_public_edition_feasibility
 from umi.identity import load_public_identities
-from umi.public import SERIES, score_public_edition
+from umi.public import public_series_specs, score_public_edition
 from umi.public_blockers import PublicEvidenceBlocker, build_blocker_report
 from umi.public_bundle import load_public_scoring_bundle
 from umi.public_candidates import (
@@ -48,7 +48,9 @@ def test_governed_public_bundle_binds_typed_zip_evidence() -> None:
     bundle = load_public_scoring_bundle(edition_name="v0.5")
     assert bundle.release_class == GOVERNED_PUBLIC_INDEX
     assert bundle.source_artifact_sha256 == verify_epoch_zip()
-    assert [item.series_id for item in bundle.series] == [spec["id"] for spec in SERIES]
+    assert [item.series_id for item in bundle.series] == [
+        spec["id"] for spec in public_series_specs(load_public_edition_config(edition="v0.5"))
+    ]
     identities = {item.entity_id for item in load_public_identities(edition="v0.5")}
     assert set(bundle.entity_ids) == identities
     for contract in bundle.series:
@@ -60,6 +62,23 @@ def test_governed_public_bundle_binds_typed_zip_evidence() -> None:
         )
     again = load_public_scoring_bundle(edition_name="v0.5")
     assert again.evidence_fingerprint == bundle.evidence_fingerprint
+
+
+def test_public_series_come_from_edition_policy() -> None:
+    edition = load_public_edition_config(edition="v0.5")
+    specs = public_series_specs(edition)
+    families = {item.id: item for item in edition.families}
+    by_id = {spec["id"]: spec for spec in specs}
+    assert by_id["deepswe-v1.1-pass1"]["family_weight"] == families["deepswe-v1.1"].weight
+    assert by_id["deepswe-v1.1-pass1"]["domain"] == families["deepswe-v1.1"].parent
+    assert by_id["weirdml-cost-per-run"]["panel_filter"] == "high_effort"
+    payload = edition.model_dump(mode="json")
+    payload["families"] = [
+        {**item, "weight": 0.5} if item["id"] == "epoch-chess" else item
+        for item in payload["families"]
+    ]
+    with pytest.raises(ValidationError, match="family weights must sum"):
+        type(edition).model_validate(payload)
 
 
 def test_v05_reproduces_v04_pilot_scores() -> None:

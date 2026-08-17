@@ -71,13 +71,13 @@ def _phi(z: float) -> float:
     return 0.5 * (1.0 + math.erf(z / math.sqrt(2.0)))
 
 
-def _logit(value: float) -> float:
-    clipped = min(max(value, LOGIT_EPS), 1.0 - LOGIT_EPS)
+def _logit(value: float, eps: float = LOGIT_EPS) -> float:
+    clipped = min(max(value, eps), 1.0 - eps)
     return math.log(clipped / (1.0 - clipped))
 
 
-def transform_proportion(raw: float) -> float:
-    return _logit(raw)
+def transform_proportion(raw: float, eps: float = LOGIT_EPS) -> float:
+    return _logit(raw, eps)
 
 
 def transform_lower_better(raw: float, offset: float = 1.0) -> float:
@@ -113,7 +113,12 @@ def _source_effort(row: dict[str, str], config_id: str) -> str | None:
     return None
 
 
-def robust_z(value: float, panel: tuple[float, ...]) -> tuple[float, float, float]:
+def robust_z(
+    value: float,
+    panel: tuple[float, ...],
+    *,
+    winsor: float = WINSOR,
+) -> tuple[float, float, float]:
     ordered = sorted(panel)
     mid = len(ordered) // 2
     median = ordered[mid] if len(ordered) % 2 else (ordered[mid - 1] + ordered[mid]) / 2
@@ -129,19 +134,29 @@ def robust_z(value: float, panel: tuple[float, ...]) -> tuple[float, float, floa
     if sigma <= 1e-12:
         raise ValueError("anchor panel has no robust scale")
     z = (value - median) / sigma
-    z = min(max(z, -WINSOR), WINSOR)
+    z = min(max(z, -winsor), winsor)
     return z, median, sigma
 
 
-def series_score(raw: float, panel: tuple[float, ...], *, kind: str) -> dict[str, float]:
+def series_score(
+    raw: float,
+    panel: tuple[float, ...],
+    *,
+    kind: str,
+    logit_eps: float = LOGIT_EPS,
+    winsor: float = WINSOR,
+) -> dict[str, float]:
     transformed_panel = tuple(
-        transform_proportion(item) if kind == "proportion" else transform_lower_better(item)
+        transform_proportion(item, logit_eps)
+        if kind == "proportion"
+        else transform_lower_better(item)
         for item in panel
     )
-    transformed = (
-        transform_proportion(raw) if kind == "proportion" else transform_lower_better(raw)
-    )
-    z, median, sigma = robust_z(transformed, transformed_panel)
+    if kind == "proportion":
+        transformed = transform_proportion(raw, logit_eps)
+    else:
+        transformed = transform_lower_better(raw)
+    z, median, sigma = robust_z(transformed, transformed_panel, winsor=winsor)
     return {
         "raw": raw,
         "transformed": transformed,
@@ -174,6 +189,7 @@ def epoch_points(
     identities: tuple[PublicSystemIdentity, ...] | None = None,
     panel_filter: str | None = None,
     entity_map: dict[str, str] | None = None,
+    high_effort_suffixes: tuple[str, ...] = HIGH_EFFORT_SUFFIXES,
 ) -> tuple[SeriesPoint, ...]:
     known = {item.entity_id: item for item in identities} if identities is not None else None
     mapping = entity_map if entity_map is not None else PILOT_MAP
@@ -186,7 +202,7 @@ def epoch_points(
         if raw_value is None:
             continue
         config_id = str(row["Model version"])
-        if panel_filter == "high_effort" and not config_id.endswith(HIGH_EFFORT_SUFFIXES):
+        if panel_filter == "high_effort" and not config_id.endswith(high_effort_suffixes):
             continue
         if config_id in seen:
             continue
@@ -226,7 +242,13 @@ def deepswe_points(field: str, *, require_complete_cost: bool = False) -> tuple[
     )
 
 
-def _pilot_scores(points: tuple[SeriesPoint, ...], kind: str) -> dict[str, dict[str, float]]:
+def _pilot_scores(
+    points: tuple[SeriesPoint, ...],
+    kind: str,
+    *,
+    logit_eps: float,
+    winsor: float,
+) -> dict[str, dict[str, float]]:
     panel = tuple(item.raw for item in points)
     if len(panel) < 8:
         raise ValueError("anchor panel smaller than 8")
@@ -234,111 +256,41 @@ def _pilot_scores(points: tuple[SeriesPoint, ...], kind: str) -> dict[str, dict[
     for item in points:
         if item.entity_id is None:
             continue
-        scores[item.entity_id] = series_score(item.raw, panel, kind=kind)
+        scores[item.entity_id] = series_score(
+            item.raw,
+            panel,
+            kind=kind,
+            logit_eps=logit_eps,
+            winsor=winsor,
+        )
     return scores
+
+
+def public_series_specs(edition: PublicEditionConfig) -> tuple[SeriesSpec, ...]:
+    families = {item.id: item for item in edition.families}
+    specs: list[SeriesSpec] = []
+    for series in edition.common_core:
+        family = families[series.family_id]
+        spec: SeriesSpec = {
+            "id": series.series_id,
+            "member": series.member,
+            "field": series.field,
+            "kind": series.kind,
+            "component": family.component,
+            "domain": family.parent,
+            "family_weight": family.weight,
+        }
+        if series.harness:
+            spec["harness"] = series.harness
+        if series.panel_filter:
+            spec["panel_filter"] = series.panel_filter
+        specs.append(spec)
+    return tuple(specs)
 
 
 def _digest(payload: dict[str, Any]) -> str:
     canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False)
     return hashlib.sha256(canonical.encode()).hexdigest()
-
-
-SERIES: tuple[SeriesSpec, ...] = (
-    {
-        "id": "epoch-chess-puzzles",
-        "member": "chess_puzzles.csv",
-        "field": "mean_score",
-        "kind": "proportion",
-        "component": "capability",
-        "domain": "general_reasoning_and_knowledge",
-        "family_weight": 1.0,
-    },
-    {
-        "id": "deepswe-v1.1-pass1",
-        "member": "deepswe_external.csv",
-        "field": "Pass@1",
-        "kind": "proportion",
-        "component": "capability",
-        "domain": "software_engineering",
-        "family_weight": 0.55,
-        "harness": "mini-swe-agent",
-    },
-    {
-        "id": "epoch-scicode",
-        "member": "scicode_external.csv",
-        "field": "Score",
-        "kind": "proportion",
-        "component": "capability",
-        "domain": "software_engineering",
-        "family_weight": 0.45,
-    },
-    {
-        "id": "epoch-weirdml",
-        "member": "weirdml_external.csv",
-        "field": "Accuracy",
-        "kind": "proportion",
-        "component": "capability",
-        "domain": "agentic_and_tool_mediated_work",
-        "family_weight": 1.0,
-    },
-    {
-        "id": "epoch-gpqa",
-        "member": "gpqa_diamond.csv",
-        "field": "mean_score",
-        "kind": "proportion",
-        "component": "capability",
-        "domain": "mathematics_and_science",
-        "family_weight": 0.50,
-    },
-    {
-        "id": "epoch-otis-aime",
-        "member": "otis_mock_aime_2024_2025.csv",
-        "field": "mean_score",
-        "kind": "proportion",
-        "component": "capability",
-        "domain": "mathematics_and_science",
-        "family_weight": 0.25,
-    },
-    {
-        "id": "epoch-critpt",
-        "member": "critpt_external.csv",
-        "field": "Accuracy",
-        "kind": "proportion",
-        "component": "capability",
-        "domain": "mathematics_and_science",
-        "family_weight": 0.25,
-    },
-    {
-        "id": "deepswe-output-tokens",
-        "member": "deepswe_external.csv",
-        "field": "Mean output tokens",
-        "kind": "lower",
-        "component": "operational_efficiency",
-        "domain": "task_resource_intensity",
-        "family_weight": 1.0,
-        "harness": "mini-swe-agent",
-    },
-    {
-        "id": "deepswe-agent-steps",
-        "member": "deepswe_external.csv",
-        "field": "Mean agent steps",
-        "kind": "lower",
-        "component": "operational_efficiency",
-        "domain": "task_completion_time_and_steps",
-        "family_weight": 1.0,
-        "harness": "mini-swe-agent",
-    },
-    {
-        "id": "weirdml-cost-per-run",
-        "member": "weirdml_external.csv",
-        "field": "Cost per run",
-        "kind": "lower",
-        "component": "access_economics",
-        "domain": "public_benchmark_task_cost",
-        "family_weight": 1.0,
-        "panel_filter": "high_effort",
-    },
-)
 
 
 def _weighted_sum(parts: list[tuple[float, float]]) -> float:
@@ -426,11 +378,17 @@ def score_public_edition(
     access_weights = {
         item.value: weight for item, weight in edition.weights.access_economics.items()
     }
+    specs = public_series_specs(edition)
     scored_series: dict[str, dict[str, dict[str, float]]] = {}
     anchors: dict[str, dict[str, Any]] = {}
-    for spec in SERIES:
+    for spec in specs:
         points = bundle_points(bundle, spec["id"])
-        scored_series[spec["id"]] = _pilot_scores(points, spec["kind"])
+        scored_series[spec["id"]] = _pilot_scores(
+            points,
+            spec["kind"],
+            logit_eps=edition.normalization.logit_eps,
+            winsor=edition.normalization.winsor,
+        )
         anchors[spec["id"]] = {
             "member": spec["member"],
             "field": spec["field"],
@@ -444,7 +402,7 @@ def score_public_edition(
     for identity in identities:
         cap_parts: dict[str, float] = {}
         capability_series: dict[str, dict[str, float]] = {}
-        for spec in SERIES:
+        for spec in specs:
             if spec["component"] != "capability":
                 continue
             detail = scored_series[spec["id"]][identity.entity_id]
@@ -457,7 +415,7 @@ def score_public_edition(
         )
         operational_series: dict[str, dict[str, float]] = {}
         opeff_parts: list[tuple[float, float]] = []
-        for spec in SERIES:
+        for spec in specs:
             if spec["component"] != "operational_efficiency":
                 continue
             detail = scored_series[spec["id"]][identity.entity_id]
@@ -466,7 +424,7 @@ def score_public_edition(
         opeff = _weighted_sum(opeff_parts)
         access_series: dict[str, dict[str, float]] = {}
         access_parts: list[tuple[float, float]] = []
-        for spec in SERIES:
+        for spec in specs:
             if spec["component"] != "access_economics":
                 continue
             detail = scored_series[spec["id"]][identity.entity_id]
@@ -507,7 +465,7 @@ def score_public_edition(
             "edition_id": edition.edition_id,
             "formula_version": edition.formula_version,
             "normalization_version": edition.normalization_version,
-            "series": [spec["id"] for spec in SERIES],
+            "series": [spec["id"] for spec in specs],
             "weights": edition.weights.model_dump(mode="json"),
             "models": [
                 {
@@ -545,7 +503,7 @@ def score_public_edition(
         "scored_data_fingerprint": fingerprint,
         "models": models,
         "blockers": _diagnostic_blockers(),
-        "series": [spec["id"] for spec in SERIES],
+        "series": [spec["id"] for spec in specs],
         "anchors": anchors,
     }
 

@@ -9,7 +9,7 @@ from typing import Any
 
 from umi.edition import load_public_edition_config
 from umi.identity import load_public_identities
-from umi.public import ROOT, SERIES
+from umi.public import ROOT, public_series_specs
 from umi.public_blockers import write_blocker_report
 from umi.public_certificate import EPOCH_SHA256, verify_epoch_zip
 from umi.public_sensitivity import write_weight_sensitivity
@@ -64,7 +64,7 @@ def edition_manifest(*, edition_name: str = "v0.5") -> dict[str, Any]:
         "engine_version": ENGINE_VERSION,
         "package_version": PACKAGE_VERSION,
         "source_artifact_sha256": verify_epoch_zip(),
-        "series": [spec["id"] for spec in SERIES],
+        "series": [spec["id"] for spec in public_series_specs(edition)],
         "entity_ids": [item.entity_id for item in identities],
         "required_common_core_coverage": edition.eligibility.required_common_core_coverage,
         "minimum_anchor_panel": edition.eligibility.minimum_anchor_panel,

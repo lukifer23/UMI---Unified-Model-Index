@@ -106,6 +106,18 @@ class PublicEligibilityConfig(ConfigModel):
     maximum_evidence_age_days: int | None = Field(default=None, gt=0)
 
 
+class PublicNormalizationConfig(ConfigModel):
+    logit_eps: float = Field(gt=0, lt=0.1)
+    winsor: float = Field(gt=0)
+    high_effort_suffixes: tuple[str, ...] = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def validate_suffixes(self) -> PublicNormalizationConfig:
+        if any(not item.startswith("_") for item in self.high_effort_suffixes):
+            raise ValueError("high-effort suffixes must start with _")
+        return self
+
+
 class PublicFamilyDefinition(ConfigModel):
     id: str = Field(pattern=r"^[a-z0-9][a-z0-9._-]*$")
     component: str = Field(pattern=r"^[a-z_]+$")
@@ -118,9 +130,27 @@ class PublicFamilyDefinition(ConfigModel):
 class CommonCoreSeries(ConfigModel):
     series_id: str = Field(min_length=1)
     family_id: str = Field(min_length=1)
+    member: str = Field(min_length=1)
+    field: str = Field(min_length=1)
+    kind: str = Field(pattern=r"^(proportion|lower)$")
     required_entity_ids: tuple[str, ...] = Field(min_length=1)
     anchor_panel_id: str = Field(min_length=1)
     correlation_group: str = Field(min_length=1)
+    harness: str | None = None
+    panel_filter: str | None = None
+    interval_field: str | None = None
+    interval_kind: str | None = None
+    ablate: bool = False
+
+    @model_validator(mode="after")
+    def validate_extract_and_interval(self) -> CommonCoreSeries:
+        if self.panel_filter not in {None, "high_effort"}:
+            raise ValueError(f"{self.series_id} has an unsupported panel_filter")
+        if (self.interval_field is None) != (self.interval_kind is None):
+            raise ValueError(f"{self.series_id} interval_field and interval_kind must be paired")
+        if self.interval_kind not in {None, "standard_error", "ci95_halfwidth"}:
+            raise ValueError(f"{self.series_id} has an unsupported interval_kind")
+        return self
 
 
 class PublicEditionConfig(ConfigModel):
@@ -133,6 +163,7 @@ class PublicEditionConfig(ConfigModel):
     release_class: str
     weights: PublicWeightConfig
     eligibility: PublicEligibilityConfig
+    normalization: PublicNormalizationConfig
     families: tuple[PublicFamilyDefinition, ...]
     common_core: tuple[CommonCoreSeries, ...]
 
@@ -151,10 +182,28 @@ class PublicEditionConfig(ConfigModel):
         family_ids = [item.id for item in self.families]
         if len(family_ids) != len(set(family_ids)):
             raise ValueError("public family IDs must be unique")
-        known = set(family_ids)
+        known = {item.id: item for item in self.families}
+        series_ids = [item.series_id for item in self.common_core]
+        if len(series_ids) != len(set(series_ids)):
+            raise ValueError("public series IDs must be unique")
+        used_families: set[str] = set()
         for series in self.common_core:
-            if series.family_id not in known:
+            family = known.get(series.family_id)
+            if family is None:
                 raise ValueError(f"common-core series {series.series_id} references unknown family")
+            if series.correlation_group != family.correlation_group:
+                raise ValueError(f"{series.series_id} correlation_group must match family")
+            used_families.add(family.id)
+        unused = set(known) - used_families
+        if unused:
+            raise ValueError("unused public families: " + ", ".join(sorted(unused)))
+        parent_weights: dict[tuple[str, str], float] = {}
+        for family in self.families:
+            key = (family.component, family.parent)
+            parent_weights[key] = parent_weights.get(key, 0.0) + family.weight
+        for key, total in parent_weights.items():
+            if abs(total - 1.0) > 1e-12:
+                raise ValueError(f"{key[0]}/{key[1]} family weights must sum to 1")
         return self
 
 
@@ -181,12 +230,14 @@ def load_public_edition_config(
     edition_raw = _load_yaml(directory / "edition.yaml")
     weights = _load_yaml(directory / "weights.yaml")
     eligibility = _load_yaml(directory / "eligibility.yaml")
+    normalization = _load_yaml(directory / "normalization.yaml")
     families_raw = _load_yaml(directory / "families.yaml")
     core_raw = _load_yaml(directory / "common-core.yaml")
     payload = {
         **edition_raw,
         "weights": weights,
         "eligibility": eligibility,
+        "normalization": normalization,
         "families": families_raw["families"],
         "common_core": core_raw.get("series", ()),
     }

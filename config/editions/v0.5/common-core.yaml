@@ -1,121 +1,170 @@
 series:
-  - series_id: epoch-chess-puzzles
-    family_id: epoch-chess
-    required_entity_ids:
-      - claude-opus-5-max
-      - claude-fable-5-max
-      - gpt-5.6-sol-max
-      - kimi-k3-max
-      - glm-5.2-max
-      - gemini-3.6-flash-high
-      - gpt-5.4-2026-03-05-xhigh
-    anchor_panel_id: epoch-chess-puzzles-all-configs
-    correlation_group: epoch-chess-puzzles
-  - series_id: deepswe-v1.1-pass1
-    family_id: deepswe-v1.1
-    required_entity_ids:
-      - claude-opus-5-max
-      - claude-fable-5-max
-      - gpt-5.6-sol-max
-      - kimi-k3-max
-      - glm-5.2-max
-      - gemini-3.6-flash-high
-      - gpt-5.4-2026-03-05-xhigh
-    anchor_panel_id: epoch-deepswe-v1.1-mini-swe-agent
-    correlation_group: deepswe-v1.1-four-run-cohort
-  - series_id: epoch-scicode
-    family_id: epoch-scicode
-    required_entity_ids:
-      - claude-opus-5-max
-      - claude-fable-5-max
-      - gpt-5.6-sol-max
-      - kimi-k3-max
-      - glm-5.2-max
-      - gemini-3.6-flash-high
-      - gpt-5.4-2026-03-05-xhigh
-    anchor_panel_id: epoch-scicode-all-configs
-    correlation_group: aa-scicode
-  - series_id: epoch-weirdml
-    family_id: epoch-weirdml
-    required_entity_ids:
-      - claude-opus-5-max
-      - claude-fable-5-max
-      - gpt-5.6-sol-max
-      - kimi-k3-max
-      - glm-5.2-max
-      - gemini-3.6-flash-high
-      - gpt-5.4-2026-03-05-xhigh
-    anchor_panel_id: epoch-weirdml-all-configs
-    correlation_group: weirdml-leaderboard
-  - series_id: epoch-gpqa
-    family_id: epoch-gpqa
-    required_entity_ids:
-      - claude-opus-5-max
-      - claude-fable-5-max
-      - gpt-5.6-sol-max
-      - kimi-k3-max
-      - glm-5.2-max
-      - gemini-3.6-flash-high
-      - gpt-5.4-2026-03-05-xhigh
-    anchor_panel_id: epoch-gpqa-all-configs
-    correlation_group: epoch-simple-evals-gpqa
-  - series_id: epoch-otis-aime
-    family_id: epoch-otis
-    required_entity_ids:
-      - claude-opus-5-max
-      - claude-fable-5-max
-      - gpt-5.6-sol-max
-      - kimi-k3-max
-      - glm-5.2-max
-      - gemini-3.6-flash-high
-      - gpt-5.4-2026-03-05-xhigh
-    anchor_panel_id: epoch-otis-mock-aime-all-configs
-    correlation_group: epoch-otis-mock-aime
-  - series_id: epoch-critpt
-    family_id: epoch-critpt
-    required_entity_ids:
-      - claude-opus-5-max
-      - claude-fable-5-max
-      - gpt-5.6-sol-max
-      - kimi-k3-max
-      - glm-5.2-max
-      - gemini-3.6-flash-high
-      - gpt-5.4-2026-03-05-xhigh
-    anchor_panel_id: epoch-critpt-all-configs
-    correlation_group: epoch-critpt
-  - series_id: deepswe-output-tokens
-    family_id: deepswe-resources
-    required_entity_ids:
-      - claude-opus-5-max
-      - claude-fable-5-max
-      - gpt-5.6-sol-max
-      - kimi-k3-max
-      - glm-5.2-max
-      - gemini-3.6-flash-high
-      - gpt-5.4-2026-03-05-xhigh
-    anchor_panel_id: epoch-deepswe-v1.1-mini-swe-agent
-    correlation_group: deepswe-v1.1-four-run-cohort
-  - series_id: deepswe-agent-steps
-    family_id: deepswe-duration-steps
-    required_entity_ids:
-      - claude-opus-5-max
-      - claude-fable-5-max
-      - gpt-5.6-sol-max
-      - kimi-k3-max
-      - glm-5.2-max
-      - gemini-3.6-flash-high
-      - gpt-5.4-2026-03-05-xhigh
-    anchor_panel_id: epoch-deepswe-v1.1-mini-swe-agent
-    correlation_group: deepswe-v1.1-four-run-cohort
-  - series_id: weirdml-cost-per-run
-    family_id: weirdml-task-cost
-    required_entity_ids:
-      - claude-opus-5-max
-      - claude-fable-5-max
-      - gpt-5.6-sol-max
-      - kimi-k3-max
-      - glm-5.2-max
-      - gemini-3.6-flash-high
-      - gpt-5.4-2026-03-05-xhigh
-    anchor_panel_id: epoch-weirdml-high-effort-configs
-    correlation_group: weirdml-leaderboard
+- series_id: epoch-chess-puzzles
+  family_id: epoch-chess
+  member: chess_puzzles.csv
+  field: mean_score
+  kind: proportion
+  anchor_panel_id: epoch-chess-puzzles-all-configs
+  correlation_group: epoch-chess-puzzles
+  interval_field: stderr
+  interval_kind: standard_error
+  required_entity_ids:
+  - claude-opus-5-max
+  - claude-fable-5-max
+  - gpt-5.6-sol-max
+  - kimi-k3-max
+  - glm-5.2-max
+  - gemini-3.6-flash-high
+  - gpt-5.4-2026-03-05-xhigh
+- series_id: deepswe-v1.1-pass1
+  family_id: deepswe-v1.1
+  member: deepswe_external.csv
+  field: Pass@1
+  kind: proportion
+  anchor_panel_id: epoch-deepswe-v1.1-mini-swe-agent
+  correlation_group: deepswe-v1.1-four-run-cohort
+  harness: mini-swe-agent
+  interval_field: 95% CI half-width
+  interval_kind: ci95_halfwidth
+  ablate: true
+  required_entity_ids:
+  - claude-opus-5-max
+  - claude-fable-5-max
+  - gpt-5.6-sol-max
+  - kimi-k3-max
+  - glm-5.2-max
+  - gemini-3.6-flash-high
+  - gpt-5.4-2026-03-05-xhigh
+- series_id: epoch-scicode
+  family_id: epoch-scicode
+  member: scicode_external.csv
+  field: Score
+  kind: proportion
+  anchor_panel_id: epoch-scicode-all-configs
+  correlation_group: aa-scicode
+  ablate: true
+  required_entity_ids:
+  - claude-opus-5-max
+  - claude-fable-5-max
+  - gpt-5.6-sol-max
+  - kimi-k3-max
+  - glm-5.2-max
+  - gemini-3.6-flash-high
+  - gpt-5.4-2026-03-05-xhigh
+- series_id: epoch-weirdml
+  family_id: epoch-weirdml
+  member: weirdml_external.csv
+  field: Accuracy
+  kind: proportion
+  anchor_panel_id: epoch-weirdml-all-configs
+  correlation_group: weirdml-leaderboard
+  interval_field: Accuracy SE
+  interval_kind: standard_error
+  required_entity_ids:
+  - claude-opus-5-max
+  - claude-fable-5-max
+  - gpt-5.6-sol-max
+  - kimi-k3-max
+  - glm-5.2-max
+  - gemini-3.6-flash-high
+  - gpt-5.4-2026-03-05-xhigh
+- series_id: epoch-gpqa
+  family_id: epoch-gpqa
+  member: gpqa_diamond.csv
+  field: mean_score
+  kind: proportion
+  anchor_panel_id: epoch-gpqa-all-configs
+  correlation_group: epoch-simple-evals-gpqa
+  interval_field: stderr
+  interval_kind: standard_error
+  ablate: true
+  required_entity_ids:
+  - claude-opus-5-max
+  - claude-fable-5-max
+  - gpt-5.6-sol-max
+  - kimi-k3-max
+  - glm-5.2-max
+  - gemini-3.6-flash-high
+  - gpt-5.4-2026-03-05-xhigh
+- series_id: epoch-otis-aime
+  family_id: epoch-otis
+  member: otis_mock_aime_2024_2025.csv
+  field: mean_score
+  kind: proportion
+  anchor_panel_id: epoch-otis-mock-aime-all-configs
+  correlation_group: epoch-otis-mock-aime
+  interval_field: stderr
+  interval_kind: standard_error
+  ablate: true
+  required_entity_ids:
+  - claude-opus-5-max
+  - claude-fable-5-max
+  - gpt-5.6-sol-max
+  - kimi-k3-max
+  - glm-5.2-max
+  - gemini-3.6-flash-high
+  - gpt-5.4-2026-03-05-xhigh
+- series_id: epoch-critpt
+  family_id: epoch-critpt
+  member: critpt_external.csv
+  field: Accuracy
+  kind: proportion
+  anchor_panel_id: epoch-critpt-all-configs
+  correlation_group: epoch-critpt
+  ablate: true
+  required_entity_ids:
+  - claude-opus-5-max
+  - claude-fable-5-max
+  - gpt-5.6-sol-max
+  - kimi-k3-max
+  - glm-5.2-max
+  - gemini-3.6-flash-high
+  - gpt-5.4-2026-03-05-xhigh
+- series_id: deepswe-output-tokens
+  family_id: deepswe-resources
+  member: deepswe_external.csv
+  field: Mean output tokens
+  kind: lower
+  anchor_panel_id: epoch-deepswe-v1.1-mini-swe-agent
+  correlation_group: deepswe-v1.1-four-run-cohort
+  harness: mini-swe-agent
+  required_entity_ids:
+  - claude-opus-5-max
+  - claude-fable-5-max
+  - gpt-5.6-sol-max
+  - kimi-k3-max
+  - glm-5.2-max
+  - gemini-3.6-flash-high
+  - gpt-5.4-2026-03-05-xhigh
+- series_id: deepswe-agent-steps
+  family_id: deepswe-duration-steps
+  member: deepswe_external.csv
+  field: Mean agent steps
+  kind: lower
+  anchor_panel_id: epoch-deepswe-v1.1-mini-swe-agent
+  correlation_group: deepswe-v1.1-four-run-cohort
+  harness: mini-swe-agent
+  required_entity_ids:
+  - claude-opus-5-max
+  - claude-fable-5-max
+  - gpt-5.6-sol-max
+  - kimi-k3-max
+  - glm-5.2-max
+  - gemini-3.6-flash-high
+  - gpt-5.4-2026-03-05-xhigh
+- series_id: weirdml-cost-per-run
+  family_id: weirdml-task-cost
+  member: weirdml_external.csv
+  field: Cost per run
+  kind: lower
+  anchor_panel_id: epoch-weirdml-high-effort-configs
+  correlation_group: weirdml-leaderboard
+  panel_filter: high_effort
+  required_entity_ids:
+  - claude-opus-5-max
+  - claude-fable-5-max
+  - gpt-5.6-sol-max
+  - kimi-k3-max
+  - glm-5.2-max
+  - gemini-3.6-flash-high
+  - gpt-5.4-2026-03-05-xhigh

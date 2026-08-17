@@ -18,11 +18,11 @@ from umi.edition import (
 from umi.identity import PublicSystemIdentity, load_public_identities
 from umi.public import (
     ROOT,
-    SERIES,
     SeriesPoint,
     SeriesSpec,
     entity_map_from_identities,
     epoch_points,
+    public_series_specs,
 )
 from umi.public_certificate import (
     EPOCH_ATTRIBUTION,
@@ -51,9 +51,8 @@ class PublicScoringBundle(ConfigModel):
         if self.source_artifact_sha256 != EPOCH_SHA256:
             raise ValueError("public bundle zip checksum does not match the registry")
         series_ids = [item.series_id for item in self.series]
-        required = [spec["id"] for spec in SERIES]
-        if series_ids != required:
-            raise ValueError("public bundle series must match the configured common core")
+        if len(series_ids) != len(set(series_ids)):
+            raise ValueError("public bundle series IDs must be unique")
         required_entities = set(self.entity_ids)
         for contract in self.series:
             if set(contract.accepted_entity_ids) != required_entities:
@@ -114,7 +113,8 @@ def load_public_scoring_bundle(
     required = {item.entity_id for item in loaded}
     contracts: list[PublicSeriesContract] = []
     blockers: list[dict[str, Any]] = []
-    for spec in SERIES:
+    suffixes = edition.normalization.high_effort_suffixes
+    for spec in public_series_specs(edition):
         points = epoch_points(
             spec["member"],
             spec["field"],
@@ -122,6 +122,7 @@ def load_public_scoring_bundle(
             identities=loaded,
             panel_filter=spec.get("panel_filter"),
             entity_map=mapping,
+            high_effort_suffixes=suffixes,
         )
         contract = _series_contract(spec, points, digest)
         pilots = set(contract.accepted_entity_ids)

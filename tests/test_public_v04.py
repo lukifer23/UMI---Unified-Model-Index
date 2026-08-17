@@ -7,9 +7,9 @@ import pytest
 from umi.edition import load_public_edition_config
 from umi.feasibility import validate_public_edition_feasibility
 from umi.public import (
-    SERIES,
     deepswe_points,
     epoch_points,
+    public_series_specs,
     score_public_edition,
     series_score,
     write_public_artifacts,
@@ -32,7 +32,7 @@ def test_deepswe_anchor_panel_has_at_least_eight_configs() -> None:
 
 
 def test_every_required_series_covers_all_five_pilots() -> None:
-    for spec in SERIES:
+    for spec in public_series_specs(load_public_edition_config()):
         points = epoch_points(
             spec["member"],
             spec["field"],
@@ -70,7 +70,9 @@ def test_public_scores_are_published_finite_and_display_invariant() -> None:
         )
         assert item["umi_public"] == pytest.approx(expected)
         assert set(item["capability_series"]) == {
-            spec["id"] for spec in SERIES if spec["component"] == "capability"
+            spec["id"]
+            for spec in public_series_specs(load_public_edition_config())
+            if spec["component"] == "capability"
         }
     opus = by_id["claude-opus-5-max"]
     glm = by_id["glm-5.2-max"]

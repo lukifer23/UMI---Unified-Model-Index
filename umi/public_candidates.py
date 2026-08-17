@@ -8,8 +8,8 @@ from typing import Any
 
 from pydantic import Field, model_validator
 
-from umi.edition import GOVERNED_EDITION_ID, ConfigModel
-from umi.public import ROOT, SERIES, epoch_points, load_epoch_member
+from umi.edition import GOVERNED_EDITION_ID, ConfigModel, load_public_edition_config
+from umi.public import ROOT, epoch_points, load_epoch_member, public_series_specs
 from umi.public_certificate import EPOCH_SHA256, verify_epoch_zip
 
 CANDIDATE_CERTIFICATE_VERSION = "umi-public-candidate-certificate-v0.5"
@@ -72,13 +72,15 @@ class PublicCandidateAuditReport(ConfigModel):
 
 
 def _present_series(config_ids: tuple[str, ...]) -> dict[str, str]:
+    edition = load_public_edition_config(edition="v0.5")
     found: dict[str, str] = {}
-    for spec in SERIES:
+    for spec in public_series_specs(edition):
         points = epoch_points(
             spec["member"],
             spec["field"],
             require_harness=spec.get("harness"),
             panel_filter=spec.get("panel_filter"),
+            high_effort_suffixes=edition.normalization.high_effort_suffixes,
         )
         match = next((item for item in points if item.config_id in config_ids), None)
         if match is not None:
@@ -101,7 +103,10 @@ def _weirdml_cost_note(config_ids: tuple[str, ...]) -> str | None:
 
 def audit_candidate(candidate: dict[str, Any]) -> dict[str, Any]:
     present = _present_series(candidate["config_ids"])
-    required = [spec["id"] for spec in SERIES]
+    required = [
+        spec["id"]
+        for spec in public_series_specs(load_public_edition_config(edition="v0.5"))
+    ]
     missing = tuple(series_id for series_id in required if series_id not in present)
     notes: list[str] = []
     cost_note = _weirdml_cost_note(candidate["config_ids"])

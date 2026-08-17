@@ -91,7 +91,9 @@ cannot map to Max.
 
 ### Normalization
 
-Each series is scored once against its frozen extract. Proportions use a logit with ε=1e-3.
+Extract bindings, family weights, transforms, and high-effort suffixes live in
+`config/editions/v0.4/` and `config/editions/v0.5/`. Scoring does not keep a parallel
+hardcoded series table. Each series is scored once against its frozen extract. Proportions use a logit with ε=1e-3.
 Lower-better resources and costs use `-log(x+1)`. The panel median and MAD define a robust-z,
 winsorized to ±3, then mapped through Φ to a 0–100 point. There is no percentile fallback.
 Display-row order does not change a pilot score. Non-finite source values are rejected.

@@ -350,6 +350,15 @@ Scenario counts are endpoint combinations, not probabilities.
 
 See `schemas/capability-comparison.schema.json` for the complete comparison contract.
 
+## Public edition policy
+
+`config/editions/v0.4/` and `config/editions/v0.5/` are the live Public scoring policy.
+`common-core.yaml` binds each series to an extract member, field, kind, optional harness
+and panel filter, optional source-interval field, and ablation flag. `families.yaml`
+supplies component, parent domain, and family weight. `normalization.yaml` supplies
+logit ε, winsor, and high-effort suffixes. Unused families and unpaired interval
+fields fail closed.
+
 ## Public scoring bundle
 
 `schemas/public-scoring-bundle.schema.json` is the machine-readable contract for governed

@@ -9,7 +9,7 @@ from typing import Any
 from pydantic import Field
 
 from umi.edition import ConfigModel
-from umi.public import EPOCH_ZIP, SERIES
+from umi.public import EPOCH_ZIP
 
 CERTIFICATE_VERSION = "umi-public-certificate-v0.5"
 EPOCH_SNAPSHOT_ID = "epoch-benchmark-data-2026-08-14"
@@ -129,7 +129,7 @@ def build_public_certificate(
         "source_artifact_sha256": zip_digest,
         "source_license": EPOCH_LICENSE,
         "source_attribution": EPOCH_ATTRIBUTION,
-        "series": tuple(spec["id"] for spec in SERIES),
+        "series": tuple(payload["series"]),
         "models": rows,
         "pairwise_indistinguishable": pairs,
         "limitations": tuple(uncertainty["limitations"]),

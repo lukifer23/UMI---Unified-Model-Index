@@ -8,8 +8,8 @@ from typing import Any
 
 from pydantic import Field, model_validator
 
-from umi.edition import GOVERNED_EDITION_ID, ConfigModel
-from umi.public import ROOT, SERIES, _diagnostic_blockers
+from umi.edition import GOVERNED_EDITION_ID, ConfigModel, load_public_edition_config
+from umi.public import ROOT, _diagnostic_blockers, public_series_specs
 from umi.public_candidates import CANDIDATES, _present_series, audit_named_candidates
 from umi.public_certificate import EPOCH_SHA256, verify_epoch_zip
 
@@ -159,7 +159,9 @@ def _config_blocker(
     extra_notes: tuple[str, ...] = (),
 ) -> dict[str, Any]:
     present = _present_series(candidate["config_ids"])
-    required = [spec["id"] for spec in SERIES]
+    required = [
+        spec["id"] for spec in public_series_specs(load_public_edition_config(edition="v0.5"))
+    ]
     missing = tuple(series_id for series_id in required if series_id not in present)
     notes = list(extra_notes)
     return {

@@ -11,11 +11,11 @@ from umi.edition import PUBLIC_EDITION_ID, load_public_edition_config
 from umi.identity import load_public_identities
 from umi.public import (
     ROOT,
-    SERIES,
     SeriesSpec,
     config_id_for_entity,
     entity_map_from_identities,
     epoch_points,
+    public_series_specs,
     score_public_edition,
 )
 from umi.public_blockers import build_blocker_report
@@ -34,6 +34,8 @@ V04_PILOTS = {
 def _raw_lookup(
     spec: SeriesSpec,
     mapping: dict[str, str],
+    *,
+    high_effort_suffixes: tuple[str, ...],
 ) -> dict[str, float]:
     points = epoch_points(
         spec["member"],
@@ -41,6 +43,7 @@ def _raw_lookup(
         require_harness=spec.get("harness"),
         panel_filter=spec.get("panel_filter"),
         entity_map=mapping,
+        high_effort_suffixes=high_effort_suffixes,
     )
     return {item.entity_id: item.raw for item in points if item.entity_id is not None}
 
@@ -85,13 +88,17 @@ def validate_public_scores(
         )
         if not math.isclose(item["umi_public"], expected, rel_tol=0, abs_tol=1e-9):
             errors.append(f"{identity.entity_id} umi_public is not the weighted sum")
-        for spec in SERIES:
+        for spec in public_series_specs(edition):
             group = {
                 "capability": "capability_series",
                 "operational_efficiency": "operational_series",
                 "access_economics": "access_series",
             }[spec["component"]]
-            raw_values = _raw_lookup(spec, mapping)
+            raw_values = _raw_lookup(
+                spec,
+                mapping,
+                high_effort_suffixes=edition.normalization.high_effort_suffixes,
+            )
             published_raw = item[group][spec["id"]]["raw"]
             if identity.entity_id not in raw_values:
                 errors.append(f"{identity.entity_id} missing zip raw for {spec['id']}")
