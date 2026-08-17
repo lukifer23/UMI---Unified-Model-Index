@@ -2,6 +2,8 @@
 
 Canonical scored payload: `processed/model-scores.json`.
 Typed evidence: `processed/public-scoring-bundle.json`.
+Named panels: `processed/anchor-panels.json`.
+Stable scales: `processed/score-scales.json`.
 Audit: `processed/validation.json`.
 Partial intervals: `processed/uncertainty.json`.
 Provenance certificate: `processed/public-index-certificate.json`.

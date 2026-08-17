@@ -42,6 +42,7 @@ class SeriesSpec(TypedDict):
     component: str
     domain: str
     family_weight: float
+    anchor_panel_id: str
     harness: NotRequired[str]
     panel_filter: NotRequired[str]
 
@@ -232,25 +233,19 @@ def deepswe_points(field: str, *, require_complete_cost: bool = False) -> tuple[
 
 def _pilot_scores(
     points: tuple[SeriesPoint, ...],
-    kind: str,
-    *,
-    logit_eps: float,
-    winsor: float,
+    scale: Any,
 ) -> dict[str, dict[str, float]]:
-    panel = tuple(item.raw for item in points)
-    if len(panel) < 8:
-        raise ValueError("anchor panel smaller than 8")
+    from umi.public_scale import PublicScoreScale, apply_public_scale
+
+    if not isinstance(scale, PublicScoreScale):
+        raise TypeError("public scoring requires a PublicScoreScale")
+    if len(points) != scale.n:
+        raise ValueError(f"{scale.series_id} panel n drifted from the named scale")
     scores: dict[str, dict[str, float]] = {}
     for item in points:
         if item.entity_id is None:
             continue
-        scores[item.entity_id] = series_score(
-            item.raw,
-            panel,
-            kind=kind,
-            logit_eps=logit_eps,
-            winsor=winsor,
-        )
+        scores[item.entity_id] = apply_public_scale(item.raw, scale)
     return scores
 
 
@@ -267,6 +262,7 @@ def public_series_specs(edition: PublicEditionConfig) -> tuple[SeriesSpec, ...]:
             "component": family.component,
             "domain": family.parent,
             "family_weight": family.weight,
+            "anchor_panel_id": series.anchor_panel_id,
         }
         if series.harness:
             spec["harness"] = series.harness
@@ -348,6 +344,7 @@ def score_public_edition(
     identities: tuple[PublicSystemIdentity, ...] | None = None,
 ) -> dict[str, Any]:
     from umi.public_bundle import bundle_points, load_public_scoring_bundle
+    from umi.public_scale import build_public_panels_and_scales
 
     edition = config or load_public_edition_config(edition=edition_name)
     loaded = identities or load_public_identities(edition=edition_name)
@@ -367,16 +364,13 @@ def score_public_edition(
         item.value: weight for item, weight in edition.weights.access_economics.items()
     }
     specs = public_series_specs(edition)
+    _panels, scales = build_public_panels_and_scales(bundle, edition)
+    scale_by_series = {item.series_id: item for item in scales}
     scored_series: dict[str, dict[str, dict[str, float]]] = {}
     anchors: dict[str, dict[str, Any]] = {}
     for spec in specs:
         points = bundle_points(bundle, spec["id"])
-        scored_series[spec["id"]] = _pilot_scores(
-            points,
-            spec["kind"],
-            logit_eps=edition.normalization.logit_eps,
-            winsor=edition.normalization.winsor,
-        )
+        scored_series[spec["id"]] = _pilot_scores(points, scale_by_series[spec["id"]])
         anchors[spec["id"]] = {
             "member": spec["member"],
             "field": spec["field"],
@@ -549,8 +543,17 @@ def write_public_artifacts(
         (destination / "public-index-certificate.json").write_text(
             json.dumps(certificate, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
+        scored_bundle = load_public_scoring_bundle(edition_name=edition_name)
         write_public_scoring_bundle(
-            load_public_scoring_bundle(edition_name=edition_name),
+            scored_bundle,
+            destination,
+            edition_name=edition_name,
+        )
+        from umi.public_scale import write_public_panels_and_scales
+
+        write_public_panels_and_scales(
+            scored_bundle,
+            edition,
             destination,
             edition_name=edition_name,
         )

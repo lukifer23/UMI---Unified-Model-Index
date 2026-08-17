@@ -97,7 +97,10 @@ cannot map to Max. Crosswalks live in `config/editions/v0.4/crosswalk.yaml` and
 
 Extract bindings, family weights, transforms, and high-effort suffixes live in
 `config/editions/v0.4/` and `config/editions/v0.5/`. Scoring does not keep a parallel
-hardcoded series table. Each series is scored once against its frozen extract. Proportions use a logit with ε=1e-3.
+hardcoded series table. Each series is scored on a named `anchor_panel_id` of at least eight same-extract
+configurations. The panel membership and the derived median/σ define a stable score scale.
+Changing the panel requires a new `scale_id`. Display-row order does not change a scale.
+Each series is scored once against its frozen extract. Proportions use a logit with ε=1e-3.
 Lower-better resources and costs use `-log(x+1)`. The panel median and MAD define a robust-z,
 winsorized to ±3, then mapped through Φ to a 0–100 point. There is no percentile fallback.
 Display-row order does not change a pilot score. Non-finite source values are rejected.

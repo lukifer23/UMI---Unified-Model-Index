@@ -230,6 +230,7 @@ def build_parser() -> argparse.ArgumentParser:
     edition_commands.add_parser("blockers")
     edition_commands.add_parser("sensitivity")
     edition_commands.add_parser("bundle")
+    edition_commands.add_parser("scales")
     edition_score = edition_commands.choices["score"]
     edition_score.add_argument("--format", choices=("json", "csv"), default="json")
     edition_score.add_argument("--output")
@@ -333,7 +334,14 @@ def run(args: argparse.Namespace) -> int:
                 return 0
             raise SystemExit("v0.3 edition score remains the legacy umi estimates path")
         public_config = load_public_edition_config(edition=args.edition)
-        governed_only = {"certificate", "candidates", "blockers", "sensitivity", "bundle"}
+        governed_only = {
+            "certificate",
+            "candidates",
+            "blockers",
+            "sensitivity",
+            "bundle",
+            "scales",
+        }
         if (
             args.edition_command in governed_only
             and public_config.release_class != GOVERNED_PUBLIC_INDEX
@@ -395,6 +403,19 @@ def run(args: argparse.Namespace) -> int:
 
             _emit(
                 write_public_scoring_bundle(load_public_scoring_bundle(edition_name=args.edition)),
+                "json",
+                None,
+            )
+            return 0
+        if args.edition_command == "scales":
+            from umi.public_bundle import load_public_scoring_bundle
+            from umi.public_scale import write_public_panels_and_scales
+
+            _emit(
+                write_public_panels_and_scales(
+                    load_public_scoring_bundle(edition_name=args.edition),
+                    public_config,
+                ),
                 "json",
                 None,
             )

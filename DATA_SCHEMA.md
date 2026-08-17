@@ -366,6 +366,13 @@ supplies component, parent domain, and family weight. `normalization.yaml` suppl
 logit ε, winsor, and high-effort suffixes. Unused families and unpaired interval
 fields fail closed.
 
+## Public anchor panels and score scales
+
+`schemas/public-anchor-panels.schema.json` and `schemas/public-score-scales.schema.json`
+are the contracts for named Public panels and frozen robust-z scales. A panel is a unique
+set of Epoch config IDs. A scale binds one series to one panel plus transform, winsor,
+median, and σ. `scale_id` is SHA-256 over those contents and the panel fingerprint.
+
 ## Public scoring bundle
 
 `schemas/public-scoring-bundle.schema.json` is the machine-readable contract for governed

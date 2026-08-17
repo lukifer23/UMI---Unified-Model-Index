@@ -273,7 +273,7 @@ def test_edition_blockers_v05(capsys: pytest.CaptureFixture[str]) -> None:
 
 @pytest.mark.parametrize(
     "command",
-    ["certificate", "candidates", "blockers", "sensitivity", "bundle"],
+    ["certificate", "candidates", "blockers", "sensitivity", "bundle", "scales"],
 )
 def test_governed_surfaces_rejected_on_experimental_v04(command: str) -> None:
     args = build_parser().parse_args(["edition", "--edition", "v0.4", command])

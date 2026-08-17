@@ -9,9 +9,9 @@ from pydantic import ValidationError
 from umi.edition import GOVERNED_EDITION_ID, GOVERNED_PUBLIC_INDEX, load_public_edition_config
 from umi.feasibility import validate_public_edition_feasibility
 from umi.identity import load_public_identities
-from umi.public import public_series_specs, score_public_edition
+from umi.public import public_series_specs, score_public_edition, series_score
 from umi.public_blockers import PublicEvidenceBlocker, build_blocker_report
-from umi.public_bundle import load_public_scoring_bundle
+from umi.public_bundle import bundle_points, load_public_scoring_bundle
 from umi.public_candidates import (
     PublicCandidateAudit,
     PublicCandidateAuditReport,
@@ -19,6 +19,7 @@ from umi.public_candidates import (
 )
 from umi.public_certificate import build_public_certificate, overlapping_pairs, verify_epoch_zip
 from umi.public_governance import source_concentration
+from umi.public_scale import apply_public_scale, build_public_panels_and_scales
 from umi.public_sensitivity import WEIGHT_HYPOTHESES, quantify_weight_sensitivity
 from umi.public_uncertainty import quantify_public_uncertainty
 from umi.public_validate import validate_public_artifacts, validate_public_scores
@@ -79,6 +80,33 @@ def test_public_series_come_from_edition_policy() -> None:
     ]
     with pytest.raises(ValidationError, match="family weights must sum"):
         type(edition).model_validate(payload)
+
+
+def test_named_anchor_panels_and_scales_are_stable() -> None:
+    edition = load_public_edition_config(edition="v0.5")
+    bundle = load_public_scoring_bundle(edition_name="v0.5")
+    panels, scales = build_public_panels_and_scales(bundle, edition)
+    assert {item.panel_id for item in panels} == {
+        series.anchor_panel_id for series in edition.common_core
+    }
+    assert all(item.n >= 8 for item in panels)
+    by_series = {item.series_id: item for item in scales}
+    chess = next(item for item in edition.common_core if item.series_id == "epoch-chess-puzzles")
+    points = bundle_points(bundle, chess.series_id)
+    raws = tuple(item.raw for item in points)
+    scale = by_series[chess.series_id]
+    applied = apply_public_scale(points[0].raw, scale)
+    rebuilt = series_score(
+        points[0].raw,
+        raws,
+        kind=chess.kind,
+        logit_eps=edition.normalization.logit_eps,
+        winsor=edition.normalization.winsor,
+    )
+    assert applied["score"] == rebuilt["score"]
+    again, again_scales = build_public_panels_and_scales(bundle, edition)
+    assert [item.panel_fingerprint for item in again] == [item.panel_fingerprint for item in panels]
+    assert [item.scale_id for item in again_scales] == [item.scale_id for item in scales]
 
 
 def test_v05_reproduces_v04_pilot_scores() -> None:
