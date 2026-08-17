@@ -36,3 +36,4 @@ Further spec work continues from this tree, not from `9712b35`.
 12. **Verification this turn:** 212 pytest passed; 92.48% coverage; ruff clean; mypy 69 files; v0.5 validate/audit/candidates/certificate/blockers smoked. v0.3/v0.4 goldens restored after pytest rewrite.
 13. **Blocker report:** `docs/editions/v0.5/BLOCKER_REPORT.md` and `data/editions/v0.5/processed/blocker-report.json` list every unpublished identity and omitted construct with sources, URLs, and resolving evidence. No invented scores.
 14. **Nonblocked packaging:** edition manifest, source concentration (Epoch Capability 0.35 at the cap), pairwise overlap export, and diagnostic family ablation.
+15. **Commit phases (1.5):** `40ffb7b` freeze/validate/expand; `75f6cbc` certificate; `f4cc49b` dashboard packaging on `main`. `4896e6e` candidate audits; `de709d1` blocker report on `feat/umi-v05-governed-public`. No history rewrite.

@@ -51,3 +51,20 @@ When exact public evidence is unavailable, emit `blocker-report.json` with missi
 affected model, required identity, sources, URLs, fail reason, and resolving evidence.
 Also package source concentration, edition manifest, pairwise overlaps, and family ablation
 without inventing data.
+
+## 1.5 Commit in coherent phases
+
+Commit each phase separately. Do not squash unrelated work. Do not rewrite history,
+force-push, or implement on `main`. Suggested messages and the commits that fulfilled
+them:
+
+| Phase | Suggested commit | SHA | Branch |
+|---|---|---|---|
+| 1. Freeze, validate, expand | `Add UMI Public v0.5 Governed: freeze, validate, uncertainty, expand` | `40ffb7b` | `main` (already published) |
+| 2. Certificate and overlap ranks | `Add governed Public index certificate, zip checksum, and overlap ranks` | `75f6cbc` | `main` (already published) |
+| 3. Dashboard packaging | `Wire dashboard to uncertainty sidecars and finish Public index packaging` | `f4cc49b` | `main` (already published) |
+| 4. Named-candidate audits | `Audit Grok 4.5 High and Gemini 3.1 Pro Preview as diagnostic-only` | `4896e6e` | `feat/umi-v05-governed-public` |
+| 5. Blocker report and remaining packaging | `Emit a precise v0.5 blocker report and remaining packaging` | `de709d1` | `feat/umi-v05-governed-public` |
+
+Phases 1–3 stay on `main`. Phases 4–5 are the remaining spec work on the feature branch.
+Further work continues as additional phase commits on `feat/umi-v05-governed-public`.
