@@ -1,0 +1,109 @@
+families:
+  - id: livebench-reasoning
+    component: capability
+    parent: general_reasoning_and_knowledge
+    weight: 1.0
+    correlation_group: livebench-current-release
+    source_organization: livebench
+  - id: deepswe-v1.1
+    component: capability
+    parent: software_engineering
+    weight: 0.55
+    correlation_group: deepswe-v1.1-four-run-cohort
+    source_organization: datacurve
+  - id: cursorbench-3.2
+    component: capability
+    parent: software_engineering
+    weight: 0.45
+    correlation_group: cursorbench-3.2
+    source_organization: cursor
+  - id: tau3-banking
+    component: capability
+    parent: agentic_and_tool_mediated_work
+    weight: 1.0
+    correlation_group: aa-intelligence-v4.1.1
+    source_organization: artificial-analysis
+  - id: epoch-gpqa-diamond
+    component: capability
+    parent: mathematics_and_science
+    weight: 1.0
+    correlation_group: epoch-simple-evals-gpqa
+    source_organization: epoch
+  - id: aa-omniscience
+    component: capability
+    parent: context_reliability_and_factual_discipline
+    weight: 1.0
+    correlation_group: aa-intelligence-v4.1.1
+    source_organization: artificial-analysis
+  - id: livebench-language
+    component: capability
+    parent: language_data_and_instruction_following
+    weight: 1.0
+    correlation_group: livebench-current-release
+    source_organization: livebench
+  - id: deepswe-resources
+    component: operational_efficiency
+    parent: task_resource_intensity
+    weight: 0.50
+    correlation_group: deepswe-v1.1-four-run-cohort
+    source_organization: datacurve
+  - id: cursorbench-tokens
+    component: operational_efficiency
+    parent: task_resource_intensity
+    weight: 0.25
+    correlation_group: cursorbench-3.2
+    source_organization: cursor
+  - id: livebench-resources
+    component: operational_efficiency
+    parent: task_resource_intensity
+    weight: 0.25
+    correlation_group: livebench-current-release
+    source_organization: livebench
+  - id: deepswe-duration-steps
+    component: operational_efficiency
+    parent: task_completion_time_and_steps
+    weight: 0.40
+    correlation_group: deepswe-v1.1-four-run-cohort
+    source_organization: datacurve
+  - id: cursorbench-steps
+    component: operational_efficiency
+    parent: task_completion_time_and_steps
+    weight: 0.30
+    correlation_group: cursorbench-3.2
+    source_organization: cursor
+  - id: livebench-duration
+    component: operational_efficiency
+    parent: task_completion_time_and_steps
+    weight: 0.30
+    correlation_group: livebench-current-release
+    source_organization: livebench
+  - id: aa-service-responsiveness
+    component: operational_efficiency
+    parent: interactive_service_responsiveness
+    weight: 1.0
+    correlation_group: aa-intelligence-v4.1.1
+    source_organization: artificial-analysis
+  - id: cursorbench-task-cost
+    component: access_economics
+    parent: public_benchmark_task_cost
+    weight: 0.60
+    correlation_group: cursorbench-3.2
+    source_organization: cursor
+  - id: aa-public-task-cost
+    component: access_economics
+    parent: public_benchmark_task_cost
+    weight: 0.40
+    correlation_group: aa-intelligence-v4.1.1
+    source_organization: artificial-analysis
+  - id: deepswe-task-cost
+    component: access_economics
+    parent: agentic_task_cost
+    weight: 1.0
+    correlation_group: deepswe-v1.1-four-run-cohort
+    source_organization: datacurve
+  - id: official-tariff-baskets
+    component: access_economics
+    parent: fixed_tariff_baskets
+    weight: 1.0
+    correlation_group: official-provider-tariffs
+    source_organization: first-party-labs

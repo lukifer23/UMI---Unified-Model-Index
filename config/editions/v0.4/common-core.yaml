@@ -1,0 +1,4 @@
+# Required series are added only after Phase 6 freezes exact all-five evidence.
+# An empty required set is vacuously 100% covered and remains infeasible to
+# publish a headline until Phase 7 commits real series.
+series: []

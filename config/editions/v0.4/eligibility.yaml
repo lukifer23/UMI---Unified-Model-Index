@@ -1,0 +1,5 @@
+required_common_core_coverage: 1.0
+minimum_anchor_panel: 8
+maximum_source_share: 0.35
+evidence_snapshot_cutoff: "2026-08-17"
+maximum_evidence_age_days: 400
