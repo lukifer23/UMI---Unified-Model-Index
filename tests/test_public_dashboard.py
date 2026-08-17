@@ -1,8 +1,15 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import pytest
 
-from analysis.public_dashboard import build_public_dashboard, write_public_dashboard
+from analysis.public_dashboard import (
+    attach_public_sidecars,
+    build_public_dashboard,
+    write_public_dashboard,
+)
 from umi.public import score_public_edition
 
 
@@ -58,3 +65,14 @@ def test_dashboard_artifacts_are_deterministic(tmp_path) -> None:
         if item["entity_id"] == "claude-opus-5-max" and item["series_id"] == "deepswe-v1.1-pass1"
     )
     assert f"{opus_deepswe['score']:.1f}" in html
+
+
+def test_dashboard_attaches_v05_uncertainty_sidecar() -> None:
+    processed = Path(__file__).resolve().parents[1] / "data" / "editions" / "v0.5" / "processed"
+    payload = json.loads((processed / "model-scores.json").read_text(encoding="utf-8"))
+    dashboard = build_public_dashboard(attach_public_sidecars(payload, processed))
+    sol = next(item for item in dashboard["ranking"] if item["entity_id"] == "gpt-5.6-sol-max")
+    assert sol["interval_low"] is not None
+    assert sol["interval_high"] is not None
+    assert sol["interval_status"] == "partial_source_interval"
+    assert "overlap" in " ".join(dashboard["limitations"])

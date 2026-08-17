@@ -1,5 +1,9 @@
 # Enforced source-readiness gate
 
+UMI Public v0.5 is a separate edition. Its scored rows come from the frozen Epoch zip
+(`epoch-benchmark-data-2026-08-14`, SHA-256 `35a7c21b…a18b`) and are re-checked by
+`umi edition --edition v0.5 audit`. That path does not replace this v0.3 readiness gate.
+
 UMI separates parseability from scoring readiness. `umi validate` reports `schema_valid`,
 `scored_inputs_ready`, structural `errors`, `readiness_failures`, and non-blocking `warnings`.
 It does not load the source registry by default and exits according to structural validity.

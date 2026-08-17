@@ -116,13 +116,26 @@ def series_rows(payload: dict[str, Any]) -> list[dict[str, Any]]:
     return rows
 
 
+def attach_public_sidecars(payload: dict[str, Any], processed_dir: Path) -> dict[str, Any]:
+    attached = dict(payload)
+    for name in ("uncertainty", "validation", "certificate"):
+        path = processed_dir / f"{name}.json"
+        if name == "certificate":
+            path = processed_dir / "public-index-certificate.json"
+        if name in attached or not path.is_file():
+            continue
+        attached[name] = json.loads(path.read_text(encoding="utf-8"))
+    return attached
+
+
 def build_public_dashboard(payload: dict[str, Any]) -> dict[str, Any]:
     if payload.get("publication_state") != "published":
         raise ValueError("public dashboard requires published umi_public scores")
     models = payload["models"]
     if any(item.get("umi_public") is None for item in models):
         raise ValueError("public dashboard refuses to plot a null umi_public as zero")
-    edition = load_public_edition_config()
+    edition_name = "v0.5" if str(payload.get("edition_id", "")).endswith("v0.5") else "v0.4"
+    edition = load_public_edition_config(edition=edition_name)
     ranking = chart_rows(payload)
     uncertainty_models = payload.get("uncertainty", {}).get("models", ())
     if uncertainty_models:
@@ -162,19 +175,13 @@ def build_public_dashboard(payload: dict[str, Any]) -> dict[str, Any]:
             ),
         },
         "weights": edition.weights.model_dump(mode="json"),
-        "limitations": [
-            "Access Economics is source-reported public task cost, not provider billing.",
-            "95% intervals are unpublished because the extracts are configuration-level means.",
-            "This is not v0.3 headline_overall.",
-            "Fable is the documented fallback composite product.",
-            "DeepSWE cost is diagnostic only (Fable 432/436).",
-        ],
+        "limitations": _dashboard_limitations(bool(uncertainty_models)),
         "ranking": ranking,
         "series": series_rows(payload),
         "charts": [
             {
                 "id": "umi_public",
-                "title": "UMI Public v0.4",
+                "title": "UMI Public",
                 "type": "bar",
                 "y_field": "umi_public",
                 "note": "One published number per exact Max configuration.",
@@ -550,11 +557,26 @@ def write_chart_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     path.write_text(handle.getvalue(), encoding="utf-8")
 
 
+def _dashboard_limitations(has_intervals: bool) -> list[str]:
+    interval_note = (
+        "Partial source-interval ranks overlap for some models and are not a unique order."
+        if has_intervals
+        else "95% intervals are unpublished because this payload has no uncertainty sidecar."
+    )
+    return [
+        "Access Economics is source-reported public task cost, not provider billing.",
+        interval_note,
+        "This is not v0.3 headline_overall.",
+        "Fable is the documented fallback composite product.",
+        "DeepSWE cost is diagnostic only (Fable 432/436).",
+    ]
+
+
 def write_public_dashboard(
     payload: dict[str, Any],
     output_dir: Path,
 ) -> dict[str, Any]:
-    dashboard = build_public_dashboard(payload)
+    dashboard = build_public_dashboard(attach_public_sidecars(payload, output_dir))
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / "public-dashboard.json").write_text(
         json.dumps(dashboard, indent=2, sort_keys=True) + "\n", encoding="utf-8"

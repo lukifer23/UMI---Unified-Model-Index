@@ -10,8 +10,9 @@ payload was downloaded for this note.
 Given no paid reruns, no invented Economics, and the current coverage hierarchy, the
 highest-value product is:
 
-1. **Ship UMI Public v0.4 as the five-model unified score** from the frozen Epoch
-   all-five 8+ extracts. That score is `umi_public`, not v0.3 `headline_overall`.
+1. **Ship UMI Public v0.5 Governed** from the frozen Epoch all-five 8+ extracts plus the
+   two extra complete high-effort systems. That score is `umi_public`, not v0.3
+   `headline_overall`.
 2. **Keep the Opus / Kimi / GLM Capability certificate** as the v0.3 legacy ranking.
 3. **Hunt DeepSWE-class public ledgers next** for billed Economics and the omitted
    v0.4 domains (context reliability, language/instruction, latency). Do not add empty

@@ -3,7 +3,7 @@
     {
       "id": "umi_public",
       "note": "One published number per exact Max configuration.",
-      "title": "UMI Public v0.4",
+      "title": "UMI Public",
       "type": "bar",
       "y_field": "umi_public"
     },
@@ -37,7 +37,7 @@
   "formula_version": "umi-methodology-v0.5.0",
   "limitations": [
     "Access Economics is source-reported public task cost, not provider billing.",
-    "95% intervals are unpublished because the extracts are configuration-level means.",
+    "Partial source-interval ranks overlap for some models and are not a unique order.",
     "This is not v0.3 headline_overall.",
     "Fable is the documented fallback composite product.",
     "DeepSWE cost is diagnostic only (Fable 432/436)."

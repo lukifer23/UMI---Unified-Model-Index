@@ -32,8 +32,11 @@ hunt DeepSWE-class public ledgers before opening empty workload families. The hu
 `data/sources/OPEN_LEDGER_HUNT.md`. Do not promote published calculated cost-per-task into
 billed Economics.
 
-The first official public product is now **UMI Public v0.4**, a five-model `umi_public`
-score. The v0.3 governed **Capability ranking** of Opus, Kimi, and GLM on
+The first official public product is now **UMI Public v0.5 Governed**, built from the
+frozen v0.4 point-score edition. It publishes `umi_public` for every complete common-core
+configuration, validates against the Epoch zip, attaches partial intervals, and issues a
+provenance certificate. The v0.4 five-pilot numbers remain the frozen reproduction gate.
+The v0.3 governed **Capability ranking** of Opus, Kimi, and GLM on
 their eleven common ready series remains the legacy certificate. It is not a headline Overall UMI. The current five-model pilot
 has 48 of 75 configured Capability cells ready. Opus, Sol, Kimi, and GLM now span five domains and
 clear the Capability-only coverage gate (100%, 100%, 100%, and 86.25% respectively), while Fable
