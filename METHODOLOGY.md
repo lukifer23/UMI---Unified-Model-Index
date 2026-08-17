@@ -83,11 +83,15 @@ complete all-attempt common core. Fixed tariff baskets have only five official c
 
 ### Identity
 
-The scored entity is the exact deployable system, not the marketing family. Claude Fable 5 Max is
+The scored entity is the exact deployable system, not the marketing family. Source rows enter
+scoring only through an explicit exact crosswalk from Epoch `Model version` to `entity_id`.
+UMI does not infer a config ID by rewriting hyphens, and does not map a source effort onto
+a different identity because `reasoning_mode` resembles it. Claude Fable 5 Max is
 a `fallback_composite_service` with documented Opus 4.8 fallback. Source rows whose Name or Notes
 field labels an Opus 4.8 fallback score that composite. Exact `_max` product-label rows also score
 the composite product. Composite evidence cannot score a single-model entity. Unknown effort
-cannot map to Max.
+cannot map to Max. Crosswalks live in `config/editions/v0.4/crosswalk.yaml` and
+`config/editions/v0.5/crosswalk.yaml`.
 
 ### Normalization
 

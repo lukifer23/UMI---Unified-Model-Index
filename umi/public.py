@@ -14,32 +14,20 @@ from typing import Any, NotRequired, TypedDict
 
 from umi.edition import GOVERNED_PUBLIC_INDEX, PublicEditionConfig, load_public_edition_config
 from umi.identity import PublicSystemIdentity, evidence_matches_entity, load_public_identities
+from umi.public_crosswalk import entity_map_from_crosswalk
 from umi.version import ENGINE_VERSION, PACKAGE_VERSION
 
 ROOT = Path(__file__).resolve().parents[1]
 EPOCH_ZIP = ROOT / "data" / "sources" / "v0.3" / "epoch-benchmark-data-2026-08-14.zip"
-PILOT_MAP = {
-    "claude-opus-5_max": "claude-opus-5-max",
-    "claude-fable-5_max": "claude-fable-5-max",
-    "gpt-5.6-sol_max": "gpt-5.6-sol-max",
-    "kimi-k3_max": "kimi-k3-max",
-    "glm-5.2_max": "glm-5.2-max",
-}
 EFFORT_SUFFIXES = ("promax", "xhigh", "high", "medium", "low", "max")
-
-
-def config_id_for_entity(entity_id: str) -> str:
-    for suffix in EFFORT_SUFFIXES:
-        token = f"-{suffix}"
-        if entity_id.endswith(token):
-            return f"{entity_id[: -len(token)]}_{suffix}"
-    raise ValueError(f"entity {entity_id} has no effort suffix")
 
 
 def entity_map_from_identities(
     identities: tuple[PublicSystemIdentity, ...],
+    *,
+    edition: str,
 ) -> dict[str, str]:
-    return {config_id_for_entity(item.entity_id): item.entity_id for item in identities}
+    return entity_map_from_crosswalk(identities, edition=edition)
 INCOMPLETE_COST = {"claude-fable-5_max"}
 HIGH_EFFORT_SUFFIXES = ("_max", "_xhigh", "_high", "_promax")
 LOGIT_EPS = 1e-3
@@ -192,7 +180,7 @@ def epoch_points(
     high_effort_suffixes: tuple[str, ...] = HIGH_EFFORT_SUFFIXES,
 ) -> tuple[SeriesPoint, ...]:
     known = {item.entity_id: item for item in identities} if identities is not None else None
-    mapping = entity_map if entity_map is not None else PILOT_MAP
+    mapping = entity_map if entity_map is not None else {}
     seen: set[str] = set()
     points: list[SeriesPoint] = []
     for row in load_epoch_member(member):

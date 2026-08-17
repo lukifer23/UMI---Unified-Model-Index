@@ -264,7 +264,7 @@ def test_incomplete_candidate_identity_fails_closed() -> None:
             "primary_target": "grok-4.5",
         }
     )
-    with pytest.raises(ValueError, match="required public series failed"):
+    with pytest.raises(ValueError, match="lack exact source crosswalks"):
         score_public_edition(edition_name="v0.5", identities=(*identities, grok))
 
 

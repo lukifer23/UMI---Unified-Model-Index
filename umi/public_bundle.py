@@ -109,7 +109,7 @@ def load_public_scoring_bundle(
     edition = config or load_public_edition_config(edition=edition_name)
     loaded = identities or load_public_identities(edition=edition_name)
     digest = verify_epoch_zip()
-    mapping = entity_map_from_identities(loaded)
+    mapping = entity_map_from_identities(loaded, edition=edition_name)
     required = {item.entity_id for item in loaded}
     contracts: list[PublicSeriesContract] = []
     blockers: list[dict[str, Any]] = []

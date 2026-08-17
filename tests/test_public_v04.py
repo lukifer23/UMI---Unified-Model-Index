@@ -6,8 +6,9 @@ import pytest
 
 from umi.edition import load_public_edition_config
 from umi.feasibility import validate_public_edition_feasibility
+from umi.identity import load_public_identities
 from umi.public import (
-    deepswe_points,
+    entity_map_from_identities,
     epoch_points,
     public_series_specs,
     score_public_edition,
@@ -25,19 +26,27 @@ REQUIRED_ENTITIES = {
 
 
 def test_deepswe_anchor_panel_has_at_least_eight_configs() -> None:
-    points = deepswe_points("Pass@1")
+    mapping = entity_map_from_identities(load_public_identities(), edition="v0.4")
+    points = epoch_points(
+        "deepswe_external.csv",
+        "Pass@1",
+        require_harness="mini-swe-agent",
+        entity_map=mapping,
+    )
     assert len(points) >= 8
     pilots = {item.entity_id for item in points if item.entity_id}
     assert pilots == REQUIRED_ENTITIES
 
 
 def test_every_required_series_covers_all_five_pilots() -> None:
+    mapping = entity_map_from_identities(load_public_identities(), edition="v0.4")
     for spec in public_series_specs(load_public_edition_config()):
         points = epoch_points(
             spec["member"],
             spec["field"],
             require_harness=spec.get("harness"),
             panel_filter=spec.get("panel_filter"),
+            entity_map=mapping,
         )
         pilots = {item.entity_id for item in points if item.entity_id}
         assert pilots == REQUIRED_ENTITIES, spec["id"]
@@ -86,7 +95,14 @@ def test_public_scores_are_published_finite_and_display_invariant() -> None:
 
 
 def test_fable_incomplete_cost_is_excluded_from_complete_series() -> None:
-    complete = deepswe_points("Mean cost (USD)", require_complete_cost=True)
+    mapping = entity_map_from_identities(load_public_identities(), edition="v0.4")
+    complete = epoch_points(
+        "deepswe_external.csv",
+        "Mean cost (USD)",
+        require_harness="mini-swe-agent",
+        skip_incomplete_cost=True,
+        entity_map=mapping,
+    )
     assert "claude-fable-5-max" not in {item.entity_id for item in complete}
     assert "claude-opus-5-max" in {item.entity_id for item in complete}
     payload = score_public_edition()
@@ -101,7 +117,13 @@ def test_non_finite_epoch_values_are_rejected() -> None:
 
 
 def test_hiding_a_display_row_does_not_change_pilot_scores() -> None:
-    points = deepswe_points("Pass@1")
+    mapping = entity_map_from_identities(load_public_identities(), edition="v0.4")
+    points = epoch_points(
+        "deepswe_external.csv",
+        "Pass@1",
+        require_harness="mini-swe-agent",
+        entity_map=mapping,
+    )
     panel = tuple(item.raw for item in points)
     opus = next(item for item in points if item.entity_id == "claude-opus-5-max")
     full = series_score(opus.raw, panel, kind="proportion")

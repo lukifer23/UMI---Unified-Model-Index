@@ -12,7 +12,6 @@ from umi.identity import load_public_identities
 from umi.public import (
     ROOT,
     SeriesSpec,
-    config_id_for_entity,
     entity_map_from_identities,
     epoch_points,
     public_series_specs,
@@ -21,6 +20,7 @@ from umi.public import (
 from umi.public_blockers import build_blocker_report
 from umi.public_candidates import audit_named_candidates
 from umi.public_certificate import EPOCH_SHA256, verify_epoch_zip
+from umi.public_crosswalk import config_id_for_entity
 
 V04_PILOTS = {
     "claude-opus-5-max",
@@ -55,7 +55,7 @@ def validate_public_scores(
 ) -> dict[str, Any]:
     edition = load_public_edition_config(edition=edition_name)
     identities = load_public_identities(edition=edition_name)
-    mapping = entity_map_from_identities(identities)
+    mapping = entity_map_from_identities(identities, edition=edition_name)
     errors: list[str] = []
     try:
         digest = verify_epoch_zip()
@@ -75,7 +75,7 @@ def validate_public_scores(
     if set(by_id) != expected_ids:
         errors.append("payload entities do not match the identity manifest")
     for identity in identities:
-        config_id = config_id_for_entity(identity.entity_id)
+        config_id = config_id_for_entity(identity.entity_id, edition=edition_name)
         if mapping.get(config_id) != identity.entity_id:
             errors.append(f"config map failed for {identity.entity_id}")
         item = by_id.get(identity.entity_id)

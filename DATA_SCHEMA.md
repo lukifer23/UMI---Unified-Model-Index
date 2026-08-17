@@ -350,6 +350,13 @@ Scenario counts are endpoint combinations, not probabilities.
 
 See `schemas/capability-comparison.schema.json` for the complete comparison contract.
 
+## Public identity crosswalk
+
+`config/editions/v0.4/crosswalk.yaml` and `config/editions/v0.5/crosswalk.yaml` bind each
+scored entity to one Epoch `Model version`. Entries are `status: exact` only. Source
+config IDs and entity IDs must carry the same effort token. Missing, duplicate, or
+effort-mismatched bindings fail closed.
+
 ## Public edition policy
 
 `config/editions/v0.4/` and `config/editions/v0.5/` are the live Public scoring policy.

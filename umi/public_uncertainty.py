@@ -14,13 +14,13 @@ from umi.edition import (
 )
 from umi.identity import load_public_identities
 from umi.public import (
-    config_id_for_entity,
     entity_map_from_identities,
     epoch_points,
     load_epoch_member,
     public_series_specs,
     series_score,
 )
+from umi.public_crosswalk import config_id_for_entity
 
 DRAW_COUNT = 2048
 
@@ -141,7 +141,7 @@ def quantify_public_uncertainty(
     identities = load_public_identities(edition=edition_name)
     edition = load_public_edition_config(edition=edition_name)
     specs = public_series_specs(edition)
-    mapping = entity_map_from_identities(identities)
+    mapping = entity_map_from_identities(identities, edition=edition_name)
     intervals = series_intervals(edition_name=edition_name)
     panels: dict[str, tuple[float, ...]] = {}
     point_raw: dict[str, dict[str, float]] = {}
@@ -174,7 +174,7 @@ def quantify_public_uncertainty(
     for _ in range(draws):
         public_by_id: dict[str, float] = {}
         for identity in identities:
-            config_id = config_id_for_entity(identity.entity_id)
+            config_id = config_id_for_entity(identity.entity_id, edition=edition_name)
             perturbed: dict[str, float] = {}
             for spec in specs:
                 raw = point_raw[identity.entity_id][spec["id"]]
@@ -209,7 +209,8 @@ def quantify_public_uncertainty(
         covered = [
             spec["id"]
             for spec in specs
-            if config_id_for_entity(entity_id) in intervals.get(spec["id"], {})
+            if config_id_for_entity(entity_id, edition=edition_name)
+            in intervals.get(spec["id"], {})
         ]
         models.append(
             {
