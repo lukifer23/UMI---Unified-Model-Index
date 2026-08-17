@@ -1,0 +1,119 @@
+{
+  "blockers": [
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "general_reasoning_and_knowledge",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "agentic_and_tool_mediated_work",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "mathematics_and_science",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "context_reliability_and_factual_discipline",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "language_data_and_instruction_following",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "interactive_service_responsiveness",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "public_benchmark_task_cost",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "fixed_tariff_baskets",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "claude-fable-5-max",
+      "missing_series": "deepswe-task-cost-complete",
+      "reason": "Fable DeepSWE cost is 432/436 and cannot enter a complete all-attempt series",
+      "required_identity": "complete cost observation count",
+      "resolving_evidence": "Complete Fable cost denominator or another all-five billed/calculated series",
+      "sources_investigated": [
+        "DeepSWE reviewed facts",
+        "Epoch deepswe_external.csv"
+      ]
+    }
+  ]
+}

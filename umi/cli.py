@@ -218,6 +218,14 @@ def build_parser() -> argparse.ArgumentParser:
         "--format", choices=("json", "csv"), default="json"
     )
     operational_preflight_parser.add_argument("--output")
+    edition = subparsers.add_parser("edition")
+    edition.add_argument("--edition", required=True, choices=("v0.3", "v0.4"))
+    edition_commands = edition.add_subparsers(dest="edition_command", required=True)
+    edition_commands.add_parser("validate")
+    edition_commands.add_parser("score")
+    edition_score = edition_commands.choices["score"]
+    edition_score.add_argument("--format", choices=("json", "csv"), default="json")
+    edition_score.add_argument("--output")
     return parser
 
 
@@ -287,6 +295,47 @@ def _adapt_source(args: argparse.Namespace) -> Any:
 
 
 def run(args: argparse.Namespace) -> int:
+    if args.command == "edition":
+        from umi.edition import load_public_edition_config
+        from umi.feasibility import (
+            validate_legacy_edition_feasibility,
+            validate_public_edition_feasibility,
+        )
+        from umi.public import score_public_edition, write_public_artifacts
+
+        if args.edition == "v0.3":
+            config = load_project_config("config")
+            if args.edition_command == "validate":
+                from umi.feasibility import FeasibilityError
+
+                try:
+                    validate_legacy_edition_feasibility(config)
+                except FeasibilityError as error:
+                    _emit(
+                        {
+                            "valid": False,
+                            "edition": "v0.3",
+                            "legacy_policy_mode": True,
+                            "error": str(error),
+                        },
+                        "json",
+                        None,
+                    )
+                    return 0
+                _emit({"valid": True, "edition": "v0.3"}, "json", None)
+                return 0
+            raise SystemExit("v0.3 edition score remains the legacy umi estimates path")
+        config = load_public_edition_config()
+        if args.edition_command == "validate":
+            validate_public_edition_feasibility(config)
+            _emit({"valid": True, "edition": config.edition_id}, "json", None)
+            return 0
+        if args.edition_command == "score":
+            payload = write_public_artifacts()
+        else:
+            payload = score_public_edition()
+        _emit(payload, getattr(args, "format", "json"), getattr(args, "output", None))
+        return 0 if payload["publication_state"] == "published" else 0
     if args.command == "operational":
         operational_report = operational_preflight(
             load_task_pack(args.task_pack), load_run_manifest(args.run_manifest)

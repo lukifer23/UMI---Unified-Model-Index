@@ -1,0 +1,344 @@
+{
+  "anchor_panel": {
+    "id": "epoch-deepswe-v1.1-mini-swe-agent",
+    "n": 50,
+    "source": "epoch-benchmark-data-2026-08-14.zip:deepswe_external.csv"
+  },
+  "blockers": [
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "general_reasoning_and_knowledge",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "agentic_and_tool_mediated_work",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "mathematics_and_science",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "context_reliability_and_factual_discipline",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "language_data_and_instruction_following",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "interactive_service_responsiveness",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "public_benchmark_task_cost",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "all-five-common-core",
+      "missing_series": "fixed_tariff_baskets",
+      "reason": "No frozen public series has all five pilots and an 8+ same-harness anchor panel outside DeepSWE v1.1 mini-swe-agent.",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch benchmark_data.zip live_bench_external.csv",
+        "Epoch hle_external.csv / gpqa_diamond.csv / scicode_external.csv / critpt_external.csv",
+        "AA reviewed five-row extracts",
+        "CursorBench five-row extract"
+      ]
+    },
+    {
+      "affected_model": "claude-fable-5-max",
+      "missing_series": "deepswe-task-cost-complete",
+      "reason": "Fable DeepSWE cost is 432/436 and cannot enter a complete all-attempt series",
+      "required_identity": "complete cost observation count",
+      "resolving_evidence": "Complete Fable cost denominator or another all-five billed/calculated series",
+      "sources_investigated": [
+        "DeepSWE reviewed facts",
+        "Epoch deepswe_external.csv"
+      ]
+    }
+  ],
+  "comparison_profile_id": "umi-public-v0.4/deepswe-public-partial",
+  "edition_id": "umi-public-v0.4",
+  "engine_version": "umi-engine-v0.3.13",
+  "formula_version": "umi-methodology-v0.4.0",
+  "models": [
+    {
+      "access_economics": null,
+      "capability": 85.37880137219524,
+      "capability_series": {
+        "deepswe-v1.1-pass1": {
+          "anchor_median": 0.1524389356014978,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.8314319288832102,
+          "raw": 0.7364864864864865,
+          "robust_z": 1.0528189621894568,
+          "score": 85.37880137219524,
+          "transformed": 1.0277862360994974
+        }
+      },
+      "effort_setting": "max",
+      "entity_id": "claude-opus-5-max",
+      "entity_kind": "single_model_service",
+      "named_release": "Claude Opus 5",
+      "operational_efficiency": 19.25908286695709,
+      "operational_series": {
+        "deepswe-agent-steps": {
+          "anchor_median": -4.2736715117148325,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.5452973227538561,
+          "raw": 99.0427927927928,
+          "robust_z": -0.6087073910244979,
+          "score": 27.135920356536587,
+          "transformed": -4.605598022380976
+        },
+        "deepswe-output-tokens": {
+          "anchor_median": -10.861180909062405,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.753338412446464,
+          "raw": 117565.6936936937,
+          "robust_z": -1.0799663669589368,
+          "score": 14.007857873904095,
+          "transformed": -11.674761057442826
+        }
+      },
+      "publication_state": "insufficient_common_support",
+      "umi_public": null
+    },
+    {
+      "access_economics": null,
+      "capability": 79.38962870882935,
+      "capability_series": {
+        "deepswe-v1.1-pass1": {
+          "anchor_median": 0.1524389356014978,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.8314319288832102,
+          "raw": 0.6972477064220184,
+          "robust_z": 0.8200152285877907,
+          "score": 79.38962870882935,
+          "transformed": 0.8342257788198512
+        }
+      },
+      "effort_setting": "max",
+      "entity_id": "claude-fable-5-max",
+      "entity_kind": "fallback_composite_service",
+      "named_release": "Claude Fable 5",
+      "operational_efficiency": 21.9899129304721,
+      "operational_series": {
+        "deepswe-agent-steps": {
+          "anchor_median": -4.2736715117148325,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.5452973227538561,
+          "raw": 88.4288990825688,
+          "robust_z": -0.4030321899912122,
+          "score": 34.34622719801723,
+          "transformed": -4.493443885900664
+        },
+        "deepswe-output-tokens": {
+          "anchor_median": -10.861180909062405,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.753338412446464,
+          "raw": 118592.77293577982,
+          "robust_z": -1.0915125749093966,
+          "score": 13.752370085442017,
+          "transformed": -11.683459259410002
+        }
+      },
+      "publication_state": "insufficient_common_support",
+      "umi_public": null
+    },
+    {
+      "access_economics": null,
+      "capability": 83.95644088938636,
+      "capability_series": {
+        "deepswe-v1.1-pass1": {
+          "anchor_median": 0.1524389356014978,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.8314319288832102,
+          "raw": 0.7266666666666667,
+          "robust_z": 0.9926692147028092,
+          "score": 83.95644088938636,
+          "transformed": 0.977775815524836
+        }
+      },
+      "effort_setting": "max",
+      "entity_id": "gpt-5.6-sol-max",
+      "entity_kind": "single_model_service",
+      "named_release": "GPT-5.6 Sol",
+      "operational_efficiency": 49.662825207576475,
+      "operational_series": {
+        "deepswe-agent-steps": {
+          "anchor_median": -4.2736715117148325,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.5452973227538561,
+          "raw": 61.25333333333333,
+          "robust_z": 0.26125092556984936,
+          "score": 60.30504958148622,
+          "transformed": -4.131212081434627
+        },
+        "deepswe-output-tokens": {
+          "anchor_median": -10.861180909062405,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.753338412446464,
+          "raw": 60013.64444444444,
+          "robust_z": -0.1873832186204983,
+          "score": 42.568008958303324,
+          "transformed": -11.00234388549708
+        }
+      },
+      "publication_state": "insufficient_common_support",
+      "umi_public": null
+    },
+    {
+      "access_economics": null,
+      "capability": 77.39160505306202,
+      "capability_series": {
+        "deepswe-v1.1-pass1": {
+          "anchor_median": 0.1524389356014978,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.8314319288832102,
+          "raw": 0.6851441241685144,
+          "robust_z": 0.7518057245342936,
+          "score": 77.39160505306202,
+          "transformed": 0.7775142192964849
+        }
+      },
+      "effort_setting": "max",
+      "entity_id": "kimi-k3-max",
+      "entity_kind": "open_weight_deployment",
+      "named_release": "Kimi K3",
+      "operational_efficiency": 27.796767515717043,
+      "operational_series": {
+        "deepswe-agent-steps": {
+          "anchor_median": -4.2736715117148325,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.5452973227538561,
+          "raw": 97.58758314855876,
+          "robust_z": -0.5818363618680907,
+          "score": 28.033845448124882,
+          "transformed": -4.590945322122346
+        },
+        "deepswe-output-tokens": {
+          "anchor_median": -10.861180909062405,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.753338412446464,
+          "raw": 81499.84257206209,
+          "robust_z": -0.5936080266614557,
+          "score": 27.638715560778486,
+          "transformed": -11.308368637483024
+        }
+      },
+      "publication_state": "insufficient_common_support",
+      "umi_public": null
+    },
+    {
+      "access_economics": null,
+      "capability": 31.410261320519687,
+      "capability_series": {
+        "deepswe-v1.1-pass1": {
+          "anchor_median": 0.1524389356014978,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.8314319288832102,
+          "raw": 0.4377777777777778,
+          "robust_z": -0.48425455121965294,
+          "score": 31.410261320519687,
+          "transformed": -0.2501857599895315
+        }
+      },
+      "effort_setting": "max",
+      "entity_id": "glm-5.2-max",
+      "entity_kind": "open_weight_deployment",
+      "named_release": "GLM-5.2",
+      "operational_efficiency": 23.217368565617463,
+      "operational_series": {
+        "deepswe-agent-steps": {
+          "anchor_median": -4.2736715117148325,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.5452973227538561,
+          "raw": 129.12666666666667,
+          "robust_z": -1.090848604081682,
+          "score": 13.76697527700777,
+          "transformed": -4.868508335050355
+        },
+        "deepswe-output-tokens": {
+          "anchor_median": -10.861180909062405,
+          "anchor_n": 50.0,
+          "anchor_sigma": 0.753338412446464,
+          "raw": 78175.30666666667,
+          "robust_z": -0.538325115326221,
+          "score": 29.517630758023927,
+          "transformed": -11.26672189682232
+        }
+      },
+      "publication_state": "insufficient_common_support",
+      "umi_public": null
+    }
+  ],
+  "normalization_version": "umi-normalization-v0.4.0",
+  "package_version": "0.3.16",
+  "publication_state": "insufficient_common_support",
+  "required_common_core_coverage": 0.0
+}

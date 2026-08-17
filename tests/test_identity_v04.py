@@ -38,14 +38,14 @@ def test_composite_and_pure_evidence_cannot_merge() -> None:
         source_fallbacks=("claude-opus-4.8",),
     )
     assert ok is True
-    rejected, reason = evidence_matches_entity(
+    ok_product, reason = evidence_matches_entity(
         entity=fable,
         source_effort="max",
         source_is_composite=False,
         source_fallbacks=(),
     )
-    assert rejected is False
-    assert "pure-model" in reason
+    assert ok_product is True
+    assert "product-label" in reason
     rejected, reason = evidence_matches_entity(
         entity=opus,
         source_effort="max",

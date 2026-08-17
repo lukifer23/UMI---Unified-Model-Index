@@ -82,11 +82,11 @@ def evidence_matches_entity(
     }:
         return False, "effort does not match the scored entity"
     if entity.entity_kind == EntityKind.FALLBACK_COMPOSITE_SERVICE:
-        if not source_is_composite:
-            return False, "pure-model evidence cannot score a composite product"
-        if not set(source_fallbacks).intersection(entity.fallback_targets):
-            return False, "composite evidence fallbacks do not match the product"
-        return True, "composite product match"
+        if source_is_composite:
+            if not set(source_fallbacks).intersection(entity.fallback_targets):
+                return False, "composite evidence fallbacks do not match the product"
+            return True, "composite product match"
+        return True, "exact product-label run of the composite service"
     if source_is_composite or source_fallbacks:
         return False, "composite evidence cannot score a single-model entity"
     return True, "single-model match"
