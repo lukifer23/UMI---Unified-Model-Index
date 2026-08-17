@@ -14,7 +14,7 @@
 12. **Weights:** Capability 0.15 / 0.40 / 0.25 / 0.20; OpEff 0.60 / 0.40; Access 1.00 WeirdML cost; overall 0.55 / 0.25 / 0.20.
 13. **Source concentration:** Epoch 0.35 of Capability (chess + math). DataCurve 0.22 and Artificial Analysis 0.18 of Capability. WeirdML 0.25. OpEff and Access are single-origin; the cap applies only when a component has two or more orgs.
 14–17. **Headline scores:** all five `umi_public` published in `data/editions/v0.4/processed/model-scores.json`. Rank: Sol 66.27, Kimi 59.69, Opus 55.51, Fable 54.43, GLM 54.20.
-18–21. Intervals and 10k bootstrap are unpublished (point extracts, no attempt residuals). Deterministic component points and `scored_data_fingerprint` are in `model-scores.json`.
+18–21. Intervals and 10k bootstrap are unpublished (point extracts, no attempt residuals). Deterministic component points and `scored_data_fingerprint` are in `model-scores.json`. Presentation-only charts in `public-dashboard.html` consume that JSON: rank bars, stacked weighted contributions, grouped unweighted components, and a Capability series heatmap. `umi edition --edition v0.4 dashboard` does not rescore.
 22. **Limitations:** Public evidence does not fill context reliability, language/instruction, service latency, or billed Economics. Access is source-reported WeirdML cost. Fable is the composite product.
 23–24. Verification: recorded in `VERIFICATION.md` after the full suite.
 25. **No paid requests.**

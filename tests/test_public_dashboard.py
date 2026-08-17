@@ -45,6 +45,15 @@ def test_dashboard_artifacts_are_deterministic(tmp_path) -> None:
     assert payload["scored_data_fingerprint"] in html
     assert "provider bill" in html
     assert html.count("unpublished") >= 5
+    assert "Unweighted components" in html
+    assert "Capability series scores" in html
+    assert "Chess puzzles" in html
     ranking = (tmp_path / "a" / "public-ranking.csv").read_text(encoding="utf-8")
     assert "umi_public" in ranking
     assert "gpt-5.6-sol-max" in ranking
+    opus_deepswe = next(
+        item
+        for item in first["series"]
+        if item["entity_id"] == "claude-opus-5-max" and item["series_id"] == "deepswe-v1.1-pass1"
+    )
+    assert f"{opus_deepswe['score']:.1f}" in html

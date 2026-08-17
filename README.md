@@ -23,9 +23,12 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 dashboard
 | 4 | Claude Fable 5 Max | 88.71 | 21.99 | 0.71 | **54.43** |
 | 5 | GLM-5.2 Max | 67.89 | 23.22 | 55.31 | **54.20** |
 
-Open [public-dashboard.html](data/editions/v0.4/processed/public-dashboard.html) for SVG
-bars and stacked contributions, or plot [public-ranking.csv](data/editions/v0.4/processed/public-ranking.csv).
-Methods and weights are in [PILOT_REPORT.md](PILOT_REPORT.md).
+Open [public-dashboard.html](data/editions/v0.4/processed/public-dashboard.html) for the
+four committed views: rank-order UMI Public bars, stacked weighted contributions, grouped
+unweighted components, and the Capability series heatmap. Plot-ready tables are
+[public-ranking.csv](data/editions/v0.4/processed/public-ranking.csv) and
+[public-series.csv](data/editions/v0.4/processed/public-series.csv). Methods and weights
+are in [PILOT_REPORT.md](PILOT_REPORT.md).
 
 Those numbers come from ten frozen Epoch-archive series that cover all five exact `_max`
 identities with 8+ anchors: chess, DeepSWE Pass@1, SciCode, WeirdML, GPQA, OTIS Mock AIME,

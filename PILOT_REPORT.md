@@ -112,23 +112,35 @@ xychart-beta
     bar [66.27, 59.69, 55.51, 54.43, 54.20]
 ```
 
-### How to plot
+### Capability series matrix
 
-Charts must read the published JSON. They must not recompute scores, render a null as
-zero, or label Access as billed cost.
+0–100 robust-z scores from the frozen common core. These are the Capability inputs, not
+`umi_public`.
 
-| Artifact | Use |
+| Configuration | Chess | DeepSWE | SciCode | WeirdML | GPQA | OTIS AIME | CritPt |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| GPT-5.6 Sol Max | 96.1 | 84.0 | 89.8 | 99.9 | 89.0 | 99.8 | 80.6 |
+| Kimi K3 Max | 85.2 | 77.4 | 94.0 | 99.8 | 88.1 | 90.3 | 76.6 |
+| Claude Opus 5 Max | 88.2 | 85.4 | 88.9 | 99.9 | 90.0 | 96.0 | 79.3 |
+| Claude Fable 5 Max | 87.2 | 79.4 | 95.8 | 99.9 | 70.3 | 99.2 | 79.1 |
+| GLM-5.2 Max | 52.7 | 31.4 | 74.0 | 96.4 | 84.9 | 68.0 | 75.2 |
+
+GLM’s Capability gap is DeepSWE and chess, not GPQA. Fable’s GPQA cell is the weakest
+frontier-lab science score in the five-set.
+
+### Charts
+
+The committed dashboard already draws the four views. Charts read published JSON only.
+They do not recompute scores, render a null as zero, or label Access as billed cost.
+Do not plot 95% intervals until attempt-level residuals exist.
+
+| Artifact | What it contains |
 |---|---|
-| [public-dashboard.html](data/editions/v0.4/processed/public-dashboard.html) | Offline SVG ranking, stacked contributions, and component bars |
+| [public-dashboard.html](data/editions/v0.4/processed/public-dashboard.html) | SVG: UMI Public bars, stacked weighted contributions, grouped unweighted components, Capability heatmap |
 | [public-dashboard.json](data/editions/v0.4/processed/public-dashboard.json) | Chart contract with weights, limitations, and rounded series |
 | [public-ranking.csv](data/editions/v0.4/processed/public-ranking.csv) | Rank, components, and weighted contributions |
 | [public-series.csv](data/editions/v0.4/processed/public-series.csv) | Long series table: raw + 0–100 score per model |
 | [model-scores.json](data/editions/v0.4/processed/model-scores.json) | Canonical scored payload |
-
-Recommended views: (1) UMI Public bars in rank order, (2) stacked weighted contributions
-that sum to `umi_public`, (3) unweighted Capability / Efficiency / Access grouped bars,
-(4) Capability series heatmap from `public-series.csv`. Do not plot 95% intervals until
-attempt-level residuals exist.
 
 ## v0.3 publication decision
 

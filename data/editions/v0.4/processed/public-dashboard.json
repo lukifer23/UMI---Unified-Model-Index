@@ -18,6 +18,12 @@
       "note": "Segments are 0.55 Capability, 0.25 Operational Efficiency, 0.20 Access.",
       "title": "Weighted contributions to umi_public",
       "type": "stacked_bar"
+    },
+    {
+      "id": "capability_heatmap",
+      "note": "0-100 robust-z scores from the frozen common-core extracts.",
+      "title": "Capability series scores",
+      "type": "heatmap"
     }
   ],
   "comparison_profile_id": "umi-public-v0.4/frozen-epoch-common-core",

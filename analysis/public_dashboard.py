@@ -36,6 +36,15 @@ COMPONENT_COLORS = {
     "access_economics": "#047857",
     "umi_public": "#111827",
 }
+CAPABILITY_SERIES_ORDER = (
+    "epoch-chess-puzzles",
+    "deepswe-v1.1-pass1",
+    "epoch-scicode",
+    "epoch-weirdml",
+    "epoch-gpqa",
+    "epoch-otis-aime",
+    "epoch-critpt",
+)
 
 
 def _round(value: float) -> float:
@@ -155,6 +164,12 @@ def build_public_dashboard(payload: dict[str, Any]) -> dict[str, Any]:
                 "type": "stacked_bar",
                 "note": "Segments are 0.55 Capability, 0.25 Operational Efficiency, 0.20 Access.",
             },
+            {
+                "id": "capability_heatmap",
+                "title": "Capability series scores",
+                "type": "heatmap",
+                "note": "0-100 robust-z scores from the frozen common-core extracts.",
+            },
         ],
     }
 
@@ -255,26 +270,129 @@ def _stacked_bars(
     return "".join(parts)
 
 
+def _grouped_component_bars(
+    ranking: list[dict[str, Any]],
+    *,
+    title: str,
+    width: int = 760,
+) -> str:
+    left = 40
+    top = 36
+    bottom = 56
+    plot_height = 220
+    height = top + plot_height + bottom
+    usable = width - left - 24
+    group_width = usable / max(len(ranking), 1)
+    bar_width = group_width / 5
+    fields = (
+        ("capability", COMPONENT_COLORS["capability"], "Capability"),
+        ("operational_efficiency", COMPONENT_COLORS["operational_efficiency"], "Op. Eff."),
+        ("access_economics", COMPONENT_COLORS["access_economics"], "Access"),
+    )
+    parts = [
+        f'<svg viewBox="0 0 {width} {height}" role="img" aria-label="{_escape(title)}">',
+        f'<text x="12" y="20" font-size="14" font-weight="600" fill="#111827">'
+        f"{_escape(title)}</text>",
+        f'<line x1="{left}" y1="{top}" x2="{left}" y2="{top + plot_height}" '
+        f'stroke="#d1d5db"></line>',
+        f'<line x1="{left}" y1="{top + plot_height}" x2="{width - 16}" '
+        f'y2="{top + plot_height}" stroke="#d1d5db"></line>',
+    ]
+    for index, row in enumerate(ranking):
+        group_x = left + index * group_width + bar_width
+        for offset, (field, color, _label) in enumerate(fields):
+            value = float(row[field])
+            bar_h = plot_height * (value / 100.0)
+            x = group_x + offset * bar_width
+            y = top + plot_height - bar_h
+            parts.append(
+                f'<rect x="{x:.2f}" y="{y:.2f}" width="{bar_width - 3:.2f}" '
+                f'height="{bar_h:.2f}" fill="{color}"></rect>'
+            )
+        parts.append(
+            f'<text x="{left + index * group_width + group_width / 2:.2f}" '
+            f'y="{top + plot_height + 18}" font-size="12" text-anchor="middle" '
+            f'fill="#374151">{_escape(row["short_name"])}</text>'
+        )
+    legend_y = height - 14
+    legend_x = left
+    for _field, color, label in fields:
+        parts.append(
+            f'<rect x="{legend_x}" y="{legend_y - 10}" width="10" height="10" '
+            f'fill="{color}"></rect>'
+        )
+        parts.append(
+            f'<text x="{legend_x + 14}" y="{legend_y}" font-size="11" fill="#374151">'
+            f"{label}</text>"
+        )
+        legend_x += 120
+    parts.append("</svg>")
+    return "".join(parts)
+
+
+def _score_fill(score: float) -> tuple[str, str]:
+    ratio = min(max(score / 100.0, 0.0), 1.0)
+    red = int(241 + (29 - 241) * ratio)
+    green = int(245 + (78 - 245) * ratio)
+    blue = int(249 + (216 - 249) * ratio)
+    ink = "#111827" if score < 58 else "#ffffff"
+    return f"rgb({red},{green},{blue})", ink
+
+
+def _capability_heatmap(
+    ranking: list[dict[str, Any]],
+    series: list[dict[str, Any]],
+    *,
+    title: str,
+    width: int = 760,
+) -> str:
+    models = [row["short_name"] for row in ranking]
+    lookup = {
+        (row["short_name"], row["series_id"]): float(row["score"])
+        for row in series
+        if row["component"] == "capability"
+    }
+    left = 108
+    top = 48
+    cell_w = (width - left - 16) / max(len(models), 1)
+    cell_h = 28
+    height = top + len(CAPABILITY_SERIES_ORDER) * cell_h + 28
+    parts = [
+        f'<svg viewBox="0 0 {width} {height}" role="img" aria-label="{_escape(title)}">',
+        f'<text x="12" y="20" font-size="14" font-weight="600" fill="#111827">'
+        f"{_escape(title)}</text>",
+    ]
+    for column, name in enumerate(models):
+        parts.append(
+            f'<text x="{left + column * cell_w + cell_w / 2:.2f}" y="{top - 8}" '
+            f'font-size="12" text-anchor="middle" fill="#374151">{_escape(name)}</text>'
+        )
+    for row_index, series_id in enumerate(CAPABILITY_SERIES_ORDER):
+        y = top + row_index * cell_h
+        parts.append(
+            f'<text x="8" y="{y + 19}" font-size="11" fill="#374151">'
+            f"{_escape(SERIES_LABELS[series_id])}</text>"
+        )
+        for column, name in enumerate(models):
+            score = lookup[(name, series_id)]
+            fill, ink = _score_fill(score)
+            x = left + column * cell_w
+            parts.append(
+                f'<rect x="{x:.2f}" y="{y:.2f}" width="{cell_w - 2:.2f}" '
+                f'height="{cell_h - 2:.2f}" fill="{fill}"></rect>'
+            )
+            parts.append(
+                f'<text x="{x + cell_w / 2:.2f}" y="{y + 18:.2f}" font-size="11" '
+                f'text-anchor="middle" fill="{ink}">{score:.1f}</text>'
+            )
+    parts.append("</svg>")
+    return "".join(parts)
+
+
 def render_public_dashboard_html(dashboard: dict[str, Any]) -> str:
     ranking = dashboard["ranking"]
     public_bars = [
         (row["short_name"], row["umi_public"], COMPONENT_COLORS["umi_public"])
-        for row in ranking
-    ]
-    cap_bars = [
-        (row["short_name"], row["capability"], COMPONENT_COLORS["capability"])
-        for row in ranking
-    ]
-    opeff_bars = [
-        (
-            row["short_name"],
-            row["operational_efficiency"],
-            COMPONENT_COLORS["operational_efficiency"],
-        )
-        for row in ranking
-    ]
-    access_bars = [
-        (row["short_name"], row["access_economics"], COMPONENT_COLORS["access_economics"])
         for row in ranking
     ]
     table_rows = "".join(
@@ -293,6 +411,25 @@ def render_public_dashboard_html(dashboard: dict[str, Any]) -> str:
         for row in ranking
     )
     limitations = "".join(f"<li>{_escape(item)}</li>" for item in dashboard["limitations"])
+    weights = dashboard["weights"]
+    series_header = "".join(
+        f"<th>{_escape(SERIES_LABELS[series_id])}</th>" for series_id in CAPABILITY_SERIES_ORDER
+    )
+    series_lookup = {
+        (row["short_name"], row["series_id"]): row["score"]
+        for row in dashboard["series"]
+        if row["component"] == "capability"
+    }
+    series_body = "".join(
+        "<tr>"
+        + f"<td>{_escape(row['short_name'])}</td>"
+        + "".join(
+            f"<td>{series_lookup[(row['short_name'], series_id)]:.1f}</td>"
+            for series_id in CAPABILITY_SERIES_ORDER
+        )
+        + "</tr>"
+        for row in ranking
+    )
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -320,9 +457,19 @@ def render_public_dashboard_html(dashboard: dict[str, Any]) -> str:
   not a provider bill. Intervals are unpublished.</p>
   {_horizontal_bars(public_bars, title="Published UMI Public")}
   {_stacked_bars(ranking, title="Weighted contributions to umi_public")}
-  {_horizontal_bars(cap_bars, title="Capability (unweighted)")}
-  {_horizontal_bars(opeff_bars, title="Operational Efficiency (unweighted)")}
-  {_horizontal_bars(access_bars, title="Access Economics (unweighted)")}
+  {_grouped_component_bars(ranking, title="Unweighted components")}
+  {_capability_heatmap(ranking, dashboard["series"], title="Capability series scores")}
+  <h2>Methods</h2>
+  <p class="note">Capability domains: general reasoning
+  {weights["capability_domains"]["general_reasoning_and_knowledge"]:.2f},
+  software {weights["capability_domains"]["software_engineering"]:.2f},
+  agentic {weights["capability_domains"]["agentic_and_tool_mediated_work"]:.2f},
+  math/science {weights["capability_domains"]["mathematics_and_science"]:.2f}.
+  Operational Efficiency is DeepSWE tokens
+  {weights["operational_efficiency"]["task_resource_intensity"]:.2f} and steps
+  {weights["operational_efficiency"]["task_completion_time_and_steps"]:.2f}.
+  Access is WeirdML high-effort cost
+  {weights["access_economics"]["public_benchmark_task_cost"]:.2f}.</p>
   <h2>Published ranking</h2>
   <table>
     <thead>
@@ -332,6 +479,13 @@ def render_public_dashboard_html(dashboard: dict[str, Any]) -> str:
       </tr>
     </thead>
     <tbody>{table_rows}</tbody>
+  </table>
+  <h2>Capability series</h2>
+  <table>
+    <thead>
+      <tr><th>Model</th>{series_header}</tr>
+    </thead>
+    <tbody>{series_body}</tbody>
   </table>
   <h2>Limitations</h2>
   <ul>{limitations}</ul>
