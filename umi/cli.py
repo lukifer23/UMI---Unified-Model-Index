@@ -226,6 +226,7 @@ def build_parser() -> argparse.ArgumentParser:
     edition_commands.add_parser("dashboard")
     edition_commands.add_parser("audit")
     edition_commands.add_parser("certificate")
+    edition_commands.add_parser("candidates")
     edition_score = edition_commands.choices["score"]
     edition_score.add_argument("--format", choices=("json", "csv"), default="json")
     edition_score.add_argument("--output")
@@ -358,6 +359,14 @@ def run(args: argparse.Namespace) -> int:
             uncertainty = json.loads((processed / "uncertainty.json").read_text(encoding="utf-8"))
             certificate = build_public_certificate(scores, validation, uncertainty)
             _emit(certificate, "json", None)
+            return 0
+        if args.edition_command == "candidates":
+            if args.edition != "v0.5":
+                raise SystemExit("named candidate audits are a v0.5 governed-index surface")
+            from umi.public_candidates import write_candidate_audits
+
+            audits = write_candidate_audits()
+            _emit(audits, "json", None)
             return 0
         if args.edition_command == "score":
             public_payload = write_public_artifacts(edition_name=args.edition)

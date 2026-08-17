@@ -1,0 +1,31 @@
+{
+  "candidate_id": "gemini-3.1-pro-preview",
+  "certificate_version": "umi-public-candidate-certificate-v0.5",
+  "config_ids": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-pro-preview_high"
+  ],
+  "headline_eligible": false,
+  "missing_series": [
+    "weirdml-cost-per-run"
+  ],
+  "named_release": "Gemini 3.1 Pro Preview",
+  "notes": [
+    "gemini-3.1-pro-preview has WeirdML Cost per run=1.36 but is excluded from the Access high-effort suffix panel"
+  ],
+  "present_series": {
+    "deepswe-agent-steps": "gemini-3.1-pro-preview",
+    "deepswe-output-tokens": "gemini-3.1-pro-preview",
+    "deepswe-v1.1-pass1": "gemini-3.1-pro-preview",
+    "epoch-chess-puzzles": "gemini-3.1-pro-preview_high",
+    "epoch-critpt": "gemini-3.1-pro-preview",
+    "epoch-gpqa": "gemini-3.1-pro-preview_high",
+    "epoch-otis-aime": "gemini-3.1-pro-preview_high",
+    "epoch-scicode": "gemini-3.1-pro-preview",
+    "epoch-weirdml": "gemini-3.1-pro-preview"
+  },
+  "publication_label": "diagnostic candidate certificate \u2014 missing required common-core series",
+  "requested_effort": "high",
+  "status": "insufficient_common_support",
+  "umi_public": null
+}

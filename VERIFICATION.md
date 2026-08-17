@@ -1,14 +1,19 @@
 # UMI verification record
 
-## UMI Public v0.5 Governed on main
+## UMI Public v0.5 Governed on feat/umi-v05-governed-public
+
+Verified on 2026-08-17 from `feat/umi-v05-governed-public`. Named candidates Grok 4.5 High
+and Gemini 3.1 Pro Preview are diagnostic abstentions. No invented scores. No paid requests.
 
 | Check | Outcome |
 |---|---|
-| `uv run pytest --cov=umi --cov=analysis --cov-fail-under=90` | 201 passed; 92.04% coverage |
+| `uv run pytest --cov=umi --cov=analysis --cov-fail-under=90` | 208 passed; 92.47% coverage |
 | `uv run ruff check .` | passed |
-| `uv run mypy --strict umi analysis scripts` | passed; 65 source files |
+| `uv run mypy --strict umi analysis scripts` | passed; 67 source files |
 | `umi edition --edition v0.5 validate` | valid |
-| `uv run python -m scripts.build_v05_governed` | published; validation true; seven models |
+| `umi edition --edition v0.5 audit` | valid; five-pilot reproduction exact |
+| `umi edition --edition v0.5 candidates` | both `insufficient_common_support`; `umi_public` null; headline_additions empty |
+| `umi edition --edition v0.5 certificate` | published_governed_index |
 | v0.4 five-pilot reproduction | exact |
 | v0.4 golden SHA-256 set | `tests/test_v04_legacy_freeze.py` passed |
 | Paid OpenRouter / live execute | not run |

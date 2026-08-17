@@ -2,7 +2,7 @@
 
 ## Repository Hardening, Score Validation, Uncertainty, and Model Expansion
 
-Executed on `main`. This is the specification that was implemented.
+Executed on `feat/umi-v05-governed-public`. This is the specification that was implemented.
 
 ### Hard constraints retained
 
@@ -35,3 +35,12 @@ Executed on `main`. This is the specification that was implemented.
 - Score every frozen configuration with the complete ten-series common core.
 - Result: five Max pilots plus Gemini 3.6 Flash high and GPT-5.4 xhigh.
 - Exact effort identities. Not Max substitutes.
+
+### Named candidate audits
+
+- Audit Grok 4.5 High and Gemini 3.1 Pro Preview against the same ten-series gate.
+- Do not invent scores. Missing series → `insufficient_common_support` diagnostic certificate.
+- Keep the Access high-effort suffix panel. Do not admit unsuffixed WeirdML cost.
+
+Result: neither candidate is headline-eligible. Grok misses WeirdML accuracy and cost.
+Gemini misses the suffix-panel cost row (unsuffixed cost 1.36 exists and is excluded).

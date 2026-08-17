@@ -11,6 +11,7 @@ not as Max. Rebuild:
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 validate
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 score
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 audit
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 candidates
 ```
 
 | Rank | Configuration | Effort | UMI Public | Partial 95% interval | Rank range |
@@ -37,9 +38,22 @@ as indistinguishable.
 Four other `_max` rows (Terra, Luna, Sonnet 5, Opus 4.8) miss only WeirdML and are not
 scored. v0.4 artifacts remain frozen.
 
+Grok 4.5 High and Gemini 3.1 Pro Preview were audited against the same ten-series gate.
+Neither is headline-eligible. Diagnostic certificates are
+[candidate-audits.json](data/editions/v0.5/processed/candidate-audits.json).
+`umi_public` is null on both.
+
+| Candidate | Config IDs | Present | Missing | Status |
+|---|---|---:|---|---|
+| Grok 4.5 High | `grok-4.5_high` | 8/10 | WeirdML accuracy and high-effort cost | `insufficient_common_support` |
+| Gemini 3.1 Pro Preview | `gemini-3.1-pro-preview`, `_high` | 9/10 | high-effort WeirdML cost (unsuffixed cost 1.36 is excluded by the Access suffix panel) | `insufficient_common_support` |
+
 ## UMI Public v0.4
 
-**First unified five-model score.** Edition `umi-public-v0.4`, formula
+**Historical experimental point-score edition.** It proved five exact Max identities can
+share one complete common core and yield deterministic `umi_public` numbers. It does not
+prove rank stability, independent zip validation, or coverage beyond those five systems.
+v0.5 is the governed public index. Edition `umi-public-v0.4`, formula
 `umi-methodology-v0.4.0`, normalization `umi-normalization-v0.4.0`. Publication state
 `published`. Fingerprint `e266af13b966cf79cfc5086513ec35f60cf2194f896f41f4b332f60ac9788e6d`.
 Authority: [METHODOLOGY.md](METHODOLOGY.md). Rebuild offline, no API keys:

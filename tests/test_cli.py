@@ -229,6 +229,25 @@ def test_edition_certificate_v05(capsys: pytest.CaptureFixture[str]) -> None:
     assert certificate["result_fingerprint"]
 
 
+def test_edition_candidates_v05_are_abstentions(capsys: pytest.CaptureFixture[str]) -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.5", "candidates"])
+    assert run(args) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["headline_additions"] == []
+    assert {item["candidate_id"] for item in report["candidates"]} == {
+        "grok-4.5-high",
+        "gemini-3.1-pro-preview",
+    }
+    assert all(item["umi_public"] is None for item in report["candidates"])
+    assert all(item["status"] == "insufficient_common_support" for item in report["candidates"])
+
+
+def test_edition_candidates_rejected_on_v04() -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.4", "candidates"])
+    with pytest.raises(SystemExit, match="v0.5 governed-index surface"):
+        run(args)
+
+
 def test_legacy_edition_validate_reports_infeasible(
     capsys: pytest.CaptureFixture[str],
 ) -> None:

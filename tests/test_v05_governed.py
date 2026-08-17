@@ -1,12 +1,23 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
+import pytest
+from pydantic import ValidationError
+
 from umi.edition import GOVERNED_EDITION_ID, load_public_edition_config
 from umi.feasibility import validate_public_edition_feasibility
 from umi.identity import load_public_identities
 from umi.public import score_public_edition
+from umi.public_candidates import (
+    PublicCandidateAudit,
+    PublicCandidateAuditReport,
+    audit_named_candidates,
+)
 from umi.public_certificate import build_public_certificate, overlapping_pairs, verify_epoch_zip
 from umi.public_uncertainty import quantify_public_uncertainty
-from umi.public_validate import validate_public_scores
+from umi.public_validate import validate_public_artifacts, validate_public_scores
 
 V04_PILOTS = {
     "claude-opus-5-max",
@@ -78,6 +89,75 @@ def test_v05_validation_and_partial_intervals() -> None:
     assert "claude-opus-5-max" in cluster
     pairs = overlapping_pairs(certificate["models"])
     assert pairs
+
+
+def test_named_candidates_are_diagnostic_abstentions() -> None:
+    identities = {item.entity_id for item in load_public_identities(edition="v0.5")}
+    report = audit_named_candidates()
+    assert report["headline_additions"] == []
+    assert report["source_artifact_sha256"] == verify_epoch_zip()
+    by_id = {item["candidate_id"]: item for item in report["candidates"]}
+    assert set(by_id) == {"grok-4.5-high", "gemini-3.1-pro-preview"}
+    grok = by_id["grok-4.5-high"]
+    gemini = by_id["gemini-3.1-pro-preview"]
+    assert grok["missing_series"] == ["epoch-weirdml", "weirdml-cost-per-run"]
+    assert gemini["missing_series"] == ["weirdml-cost-per-run"]
+    assert grok["notes"] == []
+    assert gemini["notes"] == [
+        "gemini-3.1-pro-preview has WeirdML Cost per run=1.36 but is excluded "
+        "from the Access high-effort suffix panel"
+    ]
+    for item in (grok, gemini):
+        assert item["headline_eligible"] is False
+        assert item["status"] == "insufficient_common_support"
+        assert item["umi_public"] is None
+        assert item["candidate_id"] not in identities
+        assert "diagnostic candidate certificate" in item["publication_label"]
+
+
+def test_candidate_audit_rejects_invented_scores() -> None:
+    live = audit_named_candidates()["candidates"][0]
+    with pytest.raises(ValidationError, match="must not invent umi_public"):
+        PublicCandidateAudit.model_validate({**live, "umi_public": 55.0})
+    with pytest.raises(ValidationError, match="cannot be headline eligible"):
+        PublicCandidateAudit.model_validate(
+            {**live, "headline_eligible": True, "status": "published"}
+        )
+    with pytest.raises(ValidationError, match="must abstain"):
+        PublicCandidateAudit.model_validate({**live, "status": "published"})
+    report = audit_named_candidates()
+    with pytest.raises(ValidationError, match="headline_additions must match"):
+        PublicCandidateAuditReport.model_validate(
+            {**report, "headline_additions": ["grok-4.5-high"]}
+        )
+
+
+def test_committed_candidate_audits_match_live() -> None:
+    live = audit_named_candidates()
+    root = Path(__file__).resolve().parents[1] / "data" / "editions" / "v0.5" / "processed"
+    stored = json.loads((root / "candidate-audits.json").read_text(encoding="utf-8"))
+    assert stored == live
+    for item in live["candidates"]:
+        path = root / f"candidate-{item['candidate_id']}.json"
+        assert json.loads(path.read_text(encoding="utf-8")) == item
+    audit = validate_public_artifacts("v0.5")
+    assert audit["valid"] is True
+
+
+def test_incomplete_candidate_identity_fails_closed() -> None:
+    identities = load_public_identities(edition="v0.5")
+    grok = identities[0].model_copy(
+        update={
+            "entity_id": "grok-4.5-high",
+            "developer": "xAI",
+            "named_release": "Grok 4.5",
+            "effort_setting": "high",
+            "reasoning_mode": "high",
+            "primary_target": "grok-4.5",
+        }
+    )
+    with pytest.raises(ValueError, match="required public series failed"):
+        score_public_edition(edition_name="v0.5", identities=(*identities, grok))
 
 
 def payload_score(payload: dict[str, object], entity_id: str) -> float:

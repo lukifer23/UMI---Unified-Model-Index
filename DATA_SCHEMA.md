@@ -359,6 +359,14 @@ pairwise interval overlap. `result_fingerprint` is SHA-256 over the certificate 
 that field. The certificate does not rescore. Overlapping partial intervals are
 `indistinguishable_from`, not a claim of equal capability.
 
+## Public candidate audit
+
+`schemas/public-candidate-audit.schema.json` is the machine-readable contract for v0.5 named
+candidate certificates. An incomplete candidate serializes `status:
+insufficient_common_support`, `headline_eligible: false`, and `umi_public: null`. The audit
+lists present and missing common-core series and does not invent a score. Changing the
+Access suffix panel to admit an unsuffixed WeirdML cost is out of scope for this schema.
+
 ## Comparison certificate
 
 `schemas/comparison-certificate.schema.json` is the authoritative contract. A certificate is a

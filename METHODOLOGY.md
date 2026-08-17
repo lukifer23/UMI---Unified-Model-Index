@@ -1,26 +1,34 @@
 # UMI methodology
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. Two editions are in force:
+current policy values; code must not contradict this document. Three editions are in force:
 
 - **v0.3.15 legacy** (`umi-public-v0.3-legacy`, formula `umi-methodology-v0.3.15`,
   normalization `umi-normalization-v0.3.4`) remains the multi-source reviewed-fact pilot. It does
   not publish `headline_overall`. Its three-model Capability certificate is unchanged.
 - **v0.4 Public** (`umi-public-v0.4`, formula `umi-methodology-v0.4.0`, normalization
-  `umi-normalization-v0.4.0`) is a separate edition that publishes one `umi_public` number per
-  exact Max pilot from frozen public extracts. It does not rewrite v0.3 artifacts, gates, or
-  certificates.
+  `umi-normalization-v0.4.0`) is a historical experimental point-score edition. It publishes one
+  `umi_public` number per exact Max pilot from frozen public extracts. It does not rewrite v0.3
+  artifacts, gates, or certificates. It is not the governed public index.
 - **v0.5 Governed Public** (`umi-public-v0.5`, formula `umi-methodology-v0.5.0`, normalization
   `umi-normalization-v0.5.0`) freezes v0.4, independently validates published raw values against
   the Epoch zip, adds source-interval uncertainty and family ablation, and scores every frozen
   configuration that has the complete ten-series common core. The five v0.4 Max pilots must
-  reproduce their v0.4 `umi_public` numbers exactly.
+  reproduce their v0.4 `umi_public` numbers exactly. Named candidates that miss a required series
+  receive diagnostic certificates with `umi_public: null`; they are not added to the headline.
 
 All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
 produce identical serialized results and fingerprints across supported Python versions; this is
 numerical canonicalization, not a change to weights or score semantics.
 
 ## UMI Public v0.4
+
+v0.4 is a historical experimental point-score edition. It proved that five exact Max identities
+can share one complete ten-series common core and yield deterministic `umi_public` numbers from
+frozen extracts. It does not prove rank stability, independent raw-value validation, zip-bound
+provenance, attempt-level residuals, billed Economics, or coverage beyond those five identities.
+Those governance surfaces belong to v0.5. The frozen v0.4 artifacts remain a reproduction gate,
+not a living index.
 
 UMI Public is the first five-model unified score that the configured evidence can actually support.
 It is not v0.3 Overall, not provider-billed Economics, and not a six-domain score. The Python
@@ -135,6 +143,16 @@ seven such rows: the five v0.4 Max pilots plus `gemini-3.6-flash_high` and
 `gpt-5.4-2026-03-05_xhigh`. Those two are scored as their exact high / xhigh entities, not as
 Max substitutes. Four additional `_max` rows (GPT-5.6 Terra, GPT-5.6 Luna, Claude Sonnet 5,
 Claude Opus 4.8) miss only WeirdML and remain unpublished.
+
+### Named candidate audits
+
+Grok 4.5 High (`grok-4.5_high`) and Gemini 3.1 Pro Preview (`gemini-3.1-pro-preview`,
+including `gemini-3.1-pro-preview_high`) are audited against the same ten-series gate. They
+do not receive `umi_public` numbers. Missing a required series is
+`insufficient_common_support`. Changing the Access high-effort suffix filter to admit an
+unsuffixed WeirdML cost would rescore every published Access point and break v0.4
+reproduction; that filter stays. `umi edition --edition v0.5 candidates` writes diagnostic
+certificates only.
 
 ### Uncertainty
 

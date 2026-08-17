@@ -5,6 +5,7 @@ v0.5 dashboard and certificate:
 
 - `data/editions/v0.5/processed/public-dashboard.html`
 - `data/editions/v0.5/processed/public-index-certificate.json`
+- `data/editions/v0.5/processed/candidate-audits.json` (diagnostic; no invented scores)
 
 Rebuild without scoring:
 

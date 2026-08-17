@@ -2,14 +2,15 @@
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
 Capability, Efficiency, Economics, Overall, and experimental Value. The current package is
-0.3.16. It now publishes a separate **UMI Public v0.4** score for all five exact Max pilots from
-frozen public extracts, while the v0.3.15 legacy edition still does **not** publish
-`headline_overall`.
+0.3.16. The living public index is **UMI Public v0.5 Governed**. v0.4 remains a historical
+experimental point-score edition for the five exact Max pilots. The v0.3.15 legacy edition
+still does **not** publish `headline_overall`.
 
 UMI Public is `0.55 × Capability + 0.25 × Operational Efficiency + 0.20 × Access Economics`.
-v0.5 is the governed edition: it freezes v0.4, validates every published raw against the
-Epoch zip, adds partial source-interval uncertainty, and scores the two extra high-effort
-systems that have the complete common core. Rebuild offline with no API keys:
+v0.5 freezes v0.4, validates every published raw against the Epoch zip, adds partial
+source-interval uncertainty, and scores every frozen configuration that has the complete
+common core. Named candidates that miss a required series get diagnostic certificates, not
+imputed scores. Rebuild offline with no API keys:
 
 ```bash
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 validate
@@ -17,6 +18,7 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 score
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 audit
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 dashboard
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 certificate
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 candidates
 ```
 
 | Rank | Configuration | Capability | Operational Efficiency | Access Economics | UMI Public |
@@ -29,13 +31,16 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 certificate
 
 v0.5 keeps those five numbers and adds GPT-5.4 xhigh (**55.51**) and Gemini 3.6 Flash high
 (**55.44**). Sol and Kimi stay ranks 1 and 2 under partial intervals; places 3–7 overlap.
+Grok 4.5 High and Gemini 3.1 Pro Preview remain diagnostic: they miss required WeirdML
+series and have no `umi_public`.
 
-Open [public-dashboard.html](data/editions/v0.4/processed/public-dashboard.html) for the
-four committed views: rank-order UMI Public bars, stacked weighted contributions, grouped
+Open [public-dashboard.html](data/editions/v0.5/processed/public-dashboard.html) for the
+governed views: rank-order UMI Public bars, stacked weighted contributions, grouped
 unweighted components, and the Capability series heatmap. Plot-ready tables are
-[public-ranking.csv](data/editions/v0.4/processed/public-ranking.csv) and
-[public-series.csv](data/editions/v0.4/processed/public-series.csv). Methods and weights
-are in [PILOT_REPORT.md](PILOT_REPORT.md).
+[public-ranking.csv](data/editions/v0.5/processed/public-ranking.csv) and
+[public-series.csv](data/editions/v0.5/processed/public-series.csv). The v0.4 dashboard
+remains the frozen experimental point-score surface. Methods and weights are in
+[PILOT_REPORT.md](PILOT_REPORT.md).
 
 Those numbers come from ten frozen Epoch-archive series that cover all five exact `_max`
 identities with 8+ anchors: chess, DeepSWE Pass@1, SciCode, WeirdML, GPQA, OTIS Mock AIME,

@@ -18,6 +18,7 @@ from umi.public import (
     epoch_points,
     score_public_edition,
 )
+from umi.public_candidates import audit_named_candidates
 from umi.public_certificate import EPOCH_SHA256, verify_epoch_zip
 
 V04_PILOTS = {
@@ -108,6 +109,7 @@ def validate_public_scores(
                 errors.append(f"{entity_id} v0.5 score drifted from frozen v0.4")
         if v04.get("edition_id") != PUBLIC_EDITION_ID:
             errors.append("frozen v0.4 edition_id is unexpected")
+        errors.extend(_live_candidate_errors(set(by_id)))
     return {
         "edition_id": edition.edition_id,
         "valid": not errors,
@@ -116,6 +118,47 @@ def validate_public_scores(
         "v04_reproduction": reproduction,
         "scored_data_fingerprint": payload.get("scored_data_fingerprint"),
     }
+
+
+def _live_candidate_errors(published_ids: set[str]) -> tuple[str, ...]:
+    live = audit_named_candidates()
+    errors: list[str] = []
+    if live["headline_additions"]:
+        errors.append("named candidates must not enter the headline without a complete common core")
+    for item in live["candidates"]:
+        if item["umi_public"] is not None:
+            errors.append(f"{item['candidate_id']} invented umi_public")
+        if item["headline_eligible"] or item["status"] != "insufficient_common_support":
+            errors.append(f"{item['candidate_id']} is not an abstention")
+        if item["candidate_id"] in published_ids:
+            errors.append(f"{item['candidate_id']} appears in published model-scores")
+    return tuple(errors)
+
+
+def _stored_candidate_errors() -> tuple[str, ...]:
+    live = audit_named_candidates()
+    errors: list[str] = []
+    path = ROOT / "data" / "editions" / "v0.5" / "processed" / "candidate-audits.json"
+    if not path.is_file():
+        return ("missing candidate-audits.json",)
+    stored = json.loads(path.read_text(encoding="utf-8"))
+    if stored.get("headline_additions"):
+        errors.append("stored candidate headline_additions must be empty")
+    if stored.get("source_artifact_sha256") != live["source_artifact_sha256"]:
+        errors.append("stored candidate audit zip checksum drifted")
+    live_by_id = {item["candidate_id"]: item for item in live["candidates"]}
+    stored_by_id = {item["candidate_id"]: item for item in stored.get("candidates", [])}
+    if set(stored_by_id) != set(live_by_id):
+        errors.append("stored candidate IDs do not match the live audit")
+    for candidate_id, item in live_by_id.items():
+        committed = stored_by_id.get(candidate_id)
+        if committed is None:
+            continue
+        if committed.get("missing_series") != item["missing_series"]:
+            errors.append(f"{candidate_id} stored missing_series drifted")
+        if committed.get("umi_public") is not None:
+            errors.append(f"{candidate_id} stored umi_public is not null")
+    return tuple(errors)
 
 
 def validate_public_artifacts(
@@ -127,4 +170,9 @@ def validate_public_artifacts(
         or ROOT / "data" / "editions" / edition_name / "processed" / "model-scores.json"
     )
     payload = json.loads(path.read_text(encoding="utf-8"))
-    return validate_public_scores(payload, edition_name=edition_name)
+    report = validate_public_scores(payload, edition_name=edition_name)
+    if edition_name != "v0.5":
+        return report
+    extra = _stored_candidate_errors()
+    errors = tuple(report["errors"]) + extra
+    return {**report, "valid": not errors, "errors": errors}
