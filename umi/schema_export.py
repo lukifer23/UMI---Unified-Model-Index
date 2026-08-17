@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from umi.adapters.models import AdaptationResult
 from umi.config import ProjectConfig
 from umi.loading import Dataset, SourceRegistry
+from umi.public_certificate import PublicIndexCertificate
 from umi.schemas import (
     AcceptanceManifest,
     AttemptLedger,
@@ -42,6 +43,7 @@ SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "comparison-certificate.schema.json": ComparisonCertificate,
     "controlled-task-pack.schema.json": ControlledTaskPack,
     "operational-run-manifest.schema.json": OperationalRunManifest,
+    "public-index-certificate.schema.json": PublicIndexCertificate,
 }
 
 

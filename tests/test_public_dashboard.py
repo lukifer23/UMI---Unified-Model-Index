@@ -16,7 +16,8 @@ def test_dashboard_reads_published_scores_and_does_not_invent_intervals() -> Non
         source = by_id[row["entity_id"]]
         assert row["umi_public"] == pytest.approx(source["umi_public"], abs=1e-6)
         assert row["capability"] == pytest.approx(source["capability"], abs=1e-6)
-        assert row["interval"] is None
+        assert row["interval_low"] is None
+        assert row["interval_high"] is None
         assert row["interval_status"] == "unpublished_point_extracts"
         reconstructed = (
             row["capability_weighted"]

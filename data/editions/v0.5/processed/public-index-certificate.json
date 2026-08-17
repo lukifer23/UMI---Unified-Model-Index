@@ -1,0 +1,197 @@
+{
+  "certificate_version": "umi-public-certificate-v0.5",
+  "edition_id": "umi-public-v0.5",
+  "formula_version": "umi-methodology-v0.5.0",
+  "limitations": [
+    "Intervals use published stderr or CI half-width where the frozen extract has them.",
+    "SciCode, CritPt, DeepSWE tokens/steps, and WeirdML cost stay at their point values.",
+    "This is not an attempt-level hierarchical bootstrap."
+  ],
+  "models": [
+    {
+      "effort_setting": "max",
+      "entity_id": "gpt-5.6-sol-max",
+      "entity_kind": "single_model_service",
+      "indistinguishable_from": [],
+      "interval_high": 66.90836129366487,
+      "interval_low": 65.45900364355276,
+      "interval_status": "partial_source_interval",
+      "named_release": "GPT-5.6 Sol",
+      "rank": 1,
+      "rank_high": 1,
+      "rank_low": 1,
+      "umi_public": 66.26583886547628
+    },
+    {
+      "effort_setting": "max",
+      "entity_id": "kimi-k3-max",
+      "entity_kind": "open_weight_deployment",
+      "indistinguishable_from": [],
+      "interval_high": 60.893895215936666,
+      "interval_low": 58.14908097631116,
+      "interval_status": "partial_source_interval",
+      "named_release": "Kimi K3",
+      "rank": 2,
+      "rank_high": 2,
+      "rank_low": 2,
+      "umi_public": 59.69066272741414
+    },
+    {
+      "effort_setting": "xhigh",
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "entity_kind": "single_model_service",
+      "indistinguishable_from": [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "gemini-3.6-flash-high",
+        "glm-5.2-max"
+      ],
+      "interval_high": 56.38747197299199,
+      "interval_low": 54.416354632321934,
+      "interval_status": "partial_source_interval",
+      "named_release": "GPT-5.4",
+      "rank": 3,
+      "rank_high": 7,
+      "rank_low": 3,
+      "umi_public": 55.51137725670947
+    },
+    {
+      "effort_setting": "max",
+      "entity_id": "claude-opus-5-max",
+      "entity_kind": "single_model_service",
+      "indistinguishable_from": [
+        "claude-fable-5-max",
+        "gemini-3.6-flash-high",
+        "glm-5.2-max",
+        "gpt-5.4-2026-03-05-xhigh"
+      ],
+      "interval_high": 56.39422329748467,
+      "interval_low": 54.21417790374281,
+      "interval_status": "partial_source_interval",
+      "named_release": "Claude Opus 5",
+      "rank": 4,
+      "rank_high": 7,
+      "rank_low": 3,
+      "umi_public": 55.510021169743936
+    },
+    {
+      "effort_setting": "high",
+      "entity_id": "gemini-3.6-flash-high",
+      "entity_kind": "single_model_service",
+      "indistinguishable_from": [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "gpt-5.4-2026-03-05-xhigh"
+      ],
+      "interval_high": 56.860238117567434,
+      "interval_low": 53.86105059524749,
+      "interval_status": "partial_source_interval",
+      "named_release": "Gemini 3.6 Flash",
+      "rank": 5,
+      "rank_high": 7,
+      "rank_low": 3,
+      "umi_public": 55.4399971625043
+    },
+    {
+      "effort_setting": "max",
+      "entity_id": "claude-fable-5-max",
+      "entity_kind": "fallback_composite_service",
+      "indistinguishable_from": [
+        "claude-opus-5-max",
+        "gemini-3.6-flash-high",
+        "glm-5.2-max",
+        "gpt-5.4-2026-03-05-xhigh"
+      ],
+      "interval_high": 55.59444449064061,
+      "interval_low": 52.99973967224041,
+      "interval_status": "partial_source_interval",
+      "named_release": "Claude Fable 5",
+      "rank": 6,
+      "rank_high": 7,
+      "rank_low": 3,
+      "umi_public": 54.429636426057556
+    },
+    {
+      "effort_setting": "max",
+      "entity_id": "glm-5.2-max",
+      "entity_kind": "open_weight_deployment",
+      "indistinguishable_from": [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "gemini-3.6-flash-high",
+        "gpt-5.4-2026-03-05-xhigh"
+      ],
+      "interval_high": 55.82124004005812,
+      "interval_low": 51.998747241927944,
+      "interval_status": "partial_source_interval",
+      "named_release": "GLM-5.2",
+      "rank": 7,
+      "rank_high": 7,
+      "rank_low": 3,
+      "umi_public": 54.202702676964044
+    }
+  ],
+  "pairwise_indistinguishable": [
+    [
+      "claude-opus-5-max",
+      "gpt-5.4-2026-03-05-xhigh"
+    ],
+    [
+      "gemini-3.6-flash-high",
+      "gpt-5.4-2026-03-05-xhigh"
+    ],
+    [
+      "claude-fable-5-max",
+      "gpt-5.4-2026-03-05-xhigh"
+    ],
+    [
+      "glm-5.2-max",
+      "gpt-5.4-2026-03-05-xhigh"
+    ],
+    [
+      "claude-opus-5-max",
+      "gemini-3.6-flash-high"
+    ],
+    [
+      "claude-fable-5-max",
+      "claude-opus-5-max"
+    ],
+    [
+      "claude-opus-5-max",
+      "glm-5.2-max"
+    ],
+    [
+      "claude-fable-5-max",
+      "gemini-3.6-flash-high"
+    ],
+    [
+      "gemini-3.6-flash-high",
+      "glm-5.2-max"
+    ],
+    [
+      "claude-fable-5-max",
+      "glm-5.2-max"
+    ]
+  ],
+  "result_fingerprint": "efd31df7ce05a8e921fef185b7d60791766822a320f1950493554cbac7e410e2",
+  "scored_data_fingerprint": "5624c3b417e4c0e42dd35411065f200c38ccfc6b49474f47cb671c2d43a22c6c",
+  "series": [
+    "epoch-chess-puzzles",
+    "deepswe-v1.1-pass1",
+    "epoch-scicode",
+    "epoch-weirdml",
+    "epoch-gpqa",
+    "epoch-otis-aime",
+    "epoch-critpt",
+    "deepswe-output-tokens",
+    "deepswe-agent-steps",
+    "weirdml-cost-per-run"
+  ],
+  "source_artifact_id": "epoch-benchmark-data-2026-08-14",
+  "source_artifact_sha256": "35a7c21ba7d535514ebcf9bbe7b8265d2e2da40ef6b1fa63fe49323c3395a18b",
+  "source_attribution": "Epoch AI, AI Benchmarking Hub, 2026",
+  "source_license": "CC-BY-4.0",
+  "status": "published_governed_index",
+  "validation_valid": true
+}

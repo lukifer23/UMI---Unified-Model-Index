@@ -4,6 +4,7 @@ from umi.edition import GOVERNED_EDITION_ID, load_public_edition_config
 from umi.feasibility import validate_public_edition_feasibility
 from umi.identity import load_public_identities
 from umi.public import score_public_edition
+from umi.public_certificate import build_public_certificate, overlapping_pairs, verify_epoch_zip
 from umi.public_uncertainty import quantify_public_uncertainty
 from umi.public_validate import validate_public_scores
 
@@ -54,6 +55,29 @@ def test_v05_validation_and_partial_intervals() -> None:
         assert item["interval_status"] == "partial_source_interval"
         assert "epoch-scicode" in item["series_without_intervals"]
     assert uncertainty["family_ablations"]
+    certificate = build_public_certificate(payload, report, uncertainty)
+    assert certificate["status"] == "published_governed_index"
+    assert certificate["source_artifact_sha256"] == verify_epoch_zip()
+    assert certificate["result_fingerprint"]
+    assert certificate["result_fingerprint"] != payload["scored_data_fingerprint"]
+    sol = next(item for item in certificate["models"] if item["entity_id"] == "gpt-5.6-sol-max")
+    assert sol["indistinguishable_from"] == []
+    cluster = {
+        item["entity_id"]
+        for item in certificate["models"]
+        if item["entity_id"]
+        in {
+            "claude-opus-5-max",
+            "glm-5.2-max",
+            "gemini-3.6-flash-high",
+            "gpt-5.4-2026-03-05-xhigh",
+            "claude-fable-5-max",
+        }
+        and item["indistinguishable_from"]
+    }
+    assert "claude-opus-5-max" in cluster
+    pairs = overlapping_pairs(certificate["models"])
+    assert pairs
 
 
 def payload_score(payload: dict[str, object], entity_id: str) -> float:

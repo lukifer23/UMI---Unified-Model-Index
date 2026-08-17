@@ -596,10 +596,8 @@ def write_public_artifacts(
         + "\n",
         encoding="utf-8",
     )
-    from analysis.public_dashboard import write_public_dashboard
-
-    write_public_dashboard(payload, destination)
     if edition_name == "v0.5":
+        from umi.public_certificate import build_public_certificate
         from umi.public_uncertainty import quantify_public_uncertainty
         from umi.public_validate import validate_public_scores
 
@@ -613,5 +611,17 @@ def write_public_artifacts(
         (destination / "uncertainty.json").write_text(
             json.dumps(uncertainty, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
-        payload = {**payload, "validation": validation, "uncertainty": uncertainty}
+        certificate = build_public_certificate(payload, validation, uncertainty)
+        (destination / "public-index-certificate.json").write_text(
+            json.dumps(certificate, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        payload = {
+            **payload,
+            "validation": validation,
+            "uncertainty": uncertainty,
+            "certificate": certificate,
+        }
+    from analysis.public_dashboard import write_public_dashboard
+
+    write_public_dashboard(payload, destination)
     return payload

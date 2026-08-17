@@ -1,0 +1,209 @@
+{
+  "$defs": {
+    "PublicIndexModelRow": {
+      "additionalProperties": false,
+      "properties": {
+        "effort_setting": {
+          "title": "Effort Setting",
+          "type": "string"
+        },
+        "entity_id": {
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "entity_kind": {
+          "title": "Entity Kind",
+          "type": "string"
+        },
+        "indistinguishable_from": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Indistinguishable From",
+          "type": "array"
+        },
+        "interval_high": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Interval High"
+        },
+        "interval_low": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Interval Low"
+        },
+        "interval_status": {
+          "title": "Interval Status",
+          "type": "string"
+        },
+        "named_release": {
+          "title": "Named Release",
+          "type": "string"
+        },
+        "rank": {
+          "title": "Rank",
+          "type": "integer"
+        },
+        "rank_high": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rank High"
+        },
+        "rank_low": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rank Low"
+        },
+        "umi_public": {
+          "title": "Umi Public",
+          "type": "number"
+        }
+      },
+      "required": [
+        "entity_id",
+        "named_release",
+        "entity_kind",
+        "effort_setting",
+        "umi_public",
+        "rank",
+        "interval_status"
+      ],
+      "title": "PublicIndexModelRow",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "certificate_version": {
+      "title": "Certificate Version",
+      "type": "string"
+    },
+    "edition_id": {
+      "title": "Edition Id",
+      "type": "string"
+    },
+    "formula_version": {
+      "title": "Formula Version",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "models": {
+      "items": {
+        "$ref": "#/$defs/PublicIndexModelRow"
+      },
+      "title": "Models",
+      "type": "array"
+    },
+    "pairwise_indistinguishable": {
+      "items": {
+        "maxItems": 2,
+        "minItems": 2,
+        "prefixItems": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          }
+        ],
+        "type": "array"
+      },
+      "title": "Pairwise Indistinguishable",
+      "type": "array"
+    },
+    "result_fingerprint": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Result Fingerprint",
+      "type": "string"
+    },
+    "scored_data_fingerprint": {
+      "title": "Scored Data Fingerprint",
+      "type": "string"
+    },
+    "series": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Series",
+      "type": "array"
+    },
+    "source_artifact_id": {
+      "title": "Source Artifact Id",
+      "type": "string"
+    },
+    "source_artifact_sha256": {
+      "title": "Source Artifact Sha256",
+      "type": "string"
+    },
+    "source_attribution": {
+      "title": "Source Attribution",
+      "type": "string"
+    },
+    "source_license": {
+      "title": "Source License",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "validation_valid": {
+      "title": "Validation Valid",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "certificate_version",
+    "status",
+    "edition_id",
+    "formula_version",
+    "scored_data_fingerprint",
+    "validation_valid",
+    "source_artifact_id",
+    "source_artifact_sha256",
+    "source_license",
+    "source_attribution",
+    "series",
+    "models",
+    "pairwise_indistinguishable",
+    "limitations",
+    "result_fingerprint"
+  ],
+  "title": "PublicIndexCertificate",
+  "type": "object"
+}

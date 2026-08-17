@@ -18,6 +18,7 @@ from umi.public import (
     epoch_points,
     score_public_edition,
 )
+from umi.public_certificate import EPOCH_SHA256, verify_epoch_zip
 
 V04_PILOTS = {
     "claude-opus-5-max",
@@ -51,6 +52,12 @@ def validate_public_scores(
     identities = load_public_identities(edition=edition_name)
     mapping = entity_map_from_identities(identities)
     errors: list[str] = []
+    try:
+        digest = verify_epoch_zip()
+        if digest != EPOCH_SHA256:
+            errors.append("Epoch zip checksum mismatch")
+    except ValueError as error:
+        errors.append(str(error))
     if payload.get("edition_id") != edition.edition_id:
         errors.append("payload edition_id does not match loaded policy")
     if payload.get("publication_state") != "published":

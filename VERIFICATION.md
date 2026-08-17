@@ -4,7 +4,7 @@
 
 | Check | Outcome |
 |---|---|
-| `uv run pytest --cov=umi --cov=analysis --cov-fail-under=90` | 200 passed; 92.49% coverage |
+| `uv run pytest --cov=umi --cov=analysis --cov-fail-under=90` | 201 passed; 92.04% coverage |
 | `uv run ruff check .` | passed |
 | `uv run mypy --strict umi analysis scripts` | passed; 65 source files |
 | `umi edition --edition v0.5 validate` | valid |

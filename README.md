@@ -16,6 +16,7 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 validate
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 score
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 audit
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 dashboard
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 certificate
 ```
 
 | Rank | Configuration | Capability | Operational Efficiency | Access Economics | UMI Public |

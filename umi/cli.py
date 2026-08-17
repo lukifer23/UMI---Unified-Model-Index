@@ -225,6 +225,7 @@ def build_parser() -> argparse.ArgumentParser:
     edition_commands.add_parser("score")
     edition_commands.add_parser("dashboard")
     edition_commands.add_parser("audit")
+    edition_commands.add_parser("certificate")
     edition_score = edition_commands.choices["score"]
     edition_score.add_argument("--format", choices=("json", "csv"), default="json")
     edition_score.add_argument("--output")
@@ -348,6 +349,16 @@ def run(args: argparse.Namespace) -> int:
             audit = validate_public_artifacts(args.edition)
             _emit(audit, "json", None)
             return 0 if audit["valid"] else 1
+        if args.edition_command == "certificate":
+            from umi.public_certificate import build_public_certificate
+
+            processed = Path("data") / "editions" / args.edition / "processed"
+            scores = json.loads((processed / "model-scores.json").read_text(encoding="utf-8"))
+            validation = json.loads((processed / "validation.json").read_text(encoding="utf-8"))
+            uncertainty = json.loads((processed / "uncertainty.json").read_text(encoding="utf-8"))
+            certificate = build_public_certificate(scores, validation, uncertainty)
+            _emit(certificate, "json", None)
+            return 0
         if args.edition_command == "score":
             public_payload = write_public_artifacts(edition_name=args.edition)
         else:

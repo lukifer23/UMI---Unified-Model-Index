@@ -7,4 +7,5 @@
 5. **Uncertainty:** 2048-draw source-interval Monte Carlo plus family ablation. Partial intervals only.
 6. **Expansion:** +2 complete common-core systems (`gemini-3.6-flash-high`, `gpt-5.4-2026-03-05-xhigh`). Four `_max` near-misses remain unpublished (no WeirdML).
 7. **Five-pilot reproduction:** Sol 66.265839, Kimi 59.690663, Opus 55.510021, Fable 54.429636, GLM 54.202703.
-8. **No paid requests. No API keys. No v0.3 or v0.4 rewrite.**
+8. **Certificate:** `public-index-certificate.json` binds scores, zip checksum, license, intervals, and overlap pairs. Schema: `schemas/public-index-certificate.schema.json`.
+9. **No paid requests. No API keys. No v0.3 or v0.4 rewrite.**

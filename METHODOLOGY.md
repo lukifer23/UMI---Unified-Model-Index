@@ -145,6 +145,17 @@ tokens/steps, and WeirdML cost stay at their point values, so intervals are labe
 multi-family series at a time and renormalizes only that domain; those orders are diagnostic,
 not the headline. This is not an attempt-level hierarchical bootstrap.
 
+Models whose partial intervals overlap are `indistinguishable_from` one another. The
+certificate and dashboard must show that cluster; they must not present overlapping ranks as
+a unique order.
+
+### Provenance certificate
+
+`public-index-certificate.json` binds the published scores to the frozen Epoch zip checksum
+`35a7c21b…a18b`, CC BY 4.0 attribution, the validation result, and the uncertainty rows.
+It does not compute a second formula. A zip checksum mismatch fails validation and blocks the
+certificate.
+
 ## v0.3.15 legacy
 
 UMI v0.3.15 retains the manually

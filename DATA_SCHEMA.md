@@ -350,6 +350,15 @@ Scenario counts are endpoint combinations, not probabilities.
 
 See `schemas/capability-comparison.schema.json` for the complete comparison contract.
 
+## Public index certificate
+
+`schemas/public-index-certificate.schema.json` is the machine-readable contract for the UMI
+Public v0.5 governed index. It binds the published scores to the Epoch zip SHA-256, license,
+attribution, common-core series, validation result, partial intervals, rank ranges, and
+pairwise interval overlap. `result_fingerprint` is SHA-256 over the certificate JSON excluding
+that field. The certificate does not rescore. Overlapping partial intervals are
+`indistinguishable_from`, not a claim of equal capability.
+
 ## Comparison certificate
 
 `schemas/comparison-certificate.schema.json` is the authoritative contract. A certificate is a

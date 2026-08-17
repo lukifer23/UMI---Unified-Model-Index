@@ -81,8 +81,12 @@ def chart_rows(payload: dict[str, Any]) -> list[dict[str, Any]]:
                     weights.operational_efficiency * opeff
                 ),
                 "access_economics_weighted": _round(weights.access_economics * access),
-                "interval": None,
+                "interval_low": None,
+                "interval_high": None,
+                "rank_low": item["rank"],
+                "rank_high": item["rank"],
                 "interval_status": "unpublished_point_extracts",
+                "indistinguishable_from": (),
             }
         )
     return rows
@@ -120,6 +124,27 @@ def build_public_dashboard(payload: dict[str, Any]) -> dict[str, Any]:
         raise ValueError("public dashboard refuses to plot a null umi_public as zero")
     edition = load_public_edition_config()
     ranking = chart_rows(payload)
+    uncertainty_models = payload.get("uncertainty", {}).get("models", ())
+    if uncertainty_models:
+        from umi.public_certificate import overlapping_pairs
+
+        by_id = {item["entity_id"]: item for item in uncertainty_models}
+        for row in ranking:
+            interval = by_id.get(row["entity_id"])
+            if interval is None:
+                continue
+            row["interval_low"] = _round(interval["interval_low"])
+            row["interval_high"] = _round(interval["interval_high"])
+            row["rank_low"] = interval["rank_low"]
+            row["rank_high"] = interval["rank_high"]
+            row["interval_status"] = interval["interval_status"]
+        pairs = overlapping_pairs(ranking)
+        neighbors: dict[str, list[str]] = {row["entity_id"]: [] for row in ranking}
+        for left, right in pairs:
+            neighbors[left].append(right)
+            neighbors[right].append(left)
+        for row in ranking:
+            row["indistinguishable_from"] = tuple(sorted(neighbors[row["entity_id"]]))
     return {
         "surface": "public-dashboard",
         "edition_id": payload["edition_id"],
@@ -391,6 +416,17 @@ def _capability_heatmap(
     return "".join(parts)
 
 
+def _interval_cell(row: dict[str, Any]) -> str:
+    if row.get("interval_low") is None or row.get("interval_high") is None:
+        return "unpublished"
+    cluster = row.get("indistinguishable_from") or ()
+    note = f" overlaps {len(cluster)}" if cluster else " distinct"
+    return (
+        f"{row['interval_low']:.2f}–{row['interval_high']:.2f} "
+        f"(ranks {row['rank_low']}–{row['rank_high']}){note}"
+    )
+
+
 def render_public_dashboard_html(dashboard: dict[str, Any]) -> str:
     ranking = dashboard["ranking"]
     public_bars = [
@@ -407,7 +443,7 @@ def render_public_dashboard_html(dashboard: dict[str, Any]) -> str:
             f"<td>{row['operational_efficiency']:.2f}</td>"
             f"<td>{row['access_economics']:.2f}</td>"
             f"<td><strong>{row['umi_public']:.2f}</strong></td>"
-            "<td>unpublished</td>"
+            f"<td>{_interval_cell(row)}</td>"
             "</tr>"
         )
         for row in ranking
@@ -456,7 +492,8 @@ def render_public_dashboard_html(dashboard: dict[str, Any]) -> str:
   <p class="meta">Fingerprint <code>{_escape(dashboard["scored_data_fingerprint"])}</code></p>
   <p class="note">Charts read published <code>model-scores.json</code>.
   They do not recompute scores. Access Economics is source-reported task cost,
-  not a provider bill. Intervals are unpublished.</p>
+  not a provider bill. Partial intervals are shown when published; overlapping
+  intervals are not a unique rank.</p>
   {_horizontal_bars(public_bars, title="Published UMI Public")}
   {_stacked_bars(ranking, title="Weighted contributions to umi_public")}
   {_grouped_component_bars(ranking, title="Unweighted components")}
@@ -502,7 +539,14 @@ def write_chart_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     handle = io.StringIO()
     writer = csv.DictWriter(handle, fieldnames=list(rows[0].keys()), lineterminator="\n")
     writer.writeheader()
-    writer.writerows(rows)
+    flattened = []
+    for row in rows:
+        item = dict(row)
+        for key, value in item.items():
+            if isinstance(value, tuple):
+                item[key] = "|".join(str(part) for part in value)
+        flattened.append(item)
+    writer.writerows(flattened)
     path.write_text(handle.getvalue(), encoding="utf-8")
 
 

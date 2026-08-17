@@ -29,7 +29,10 @@ WeirdML cost stay at their point values. Sol and Kimi are rank-stable. Places 3â
 
 Charts: [v0.5 dashboard](data/editions/v0.5/processed/public-dashboard.html). Validation:
 [validation.json](data/editions/v0.5/processed/validation.json). Uncertainty:
-[uncertainty.json](data/editions/v0.5/processed/uncertainty.json).
+[uncertainty.json](data/editions/v0.5/processed/uncertainty.json). Certificate:
+[public-index-certificate.json](data/editions/v0.5/processed/public-index-certificate.json).
+The certificate binds those scores to the Epoch zip SHA-256 and marks overlapping intervals
+as indistinguishable.
 
 Four other `_max` rows (Terra, Luna, Sonnet 5, Opus 4.8) miss only WeirdML and are not
 scored. v0.4 artifacts remain frozen.
