@@ -137,5 +137,7 @@ def test_write_public_artifacts_round_trips(tmp_path) -> None:
     assert (tmp_path / "model-scores.json").is_file()
     assert (tmp_path / "rejected-evidence.json").is_file()
     assert (tmp_path / "common-core.json").is_file()
+    assert (tmp_path / "public-dashboard.html").is_file()
+    assert (tmp_path / "public-ranking.csv").is_file()
     assert payload["publication_state"] == "published"
     assert all(item["umi_public"] is not None for item in payload["models"])

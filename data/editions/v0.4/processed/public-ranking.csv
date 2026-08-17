@@ -1,0 +1,6 @@
+rank,entity_id,named_release,entity_kind,short_name,capability,operational_efficiency,access_economics,umi_public,capability_weighted,operational_efficiency_weighted,access_economics_weighted,interval,interval_status
+1,gpt-5.6-sol-max,GPT-5.6 Sol,single_model_service,Sol,91.944801,49.662825,16.40246,66.265839,50.569641,12.415706,3.280492,,unpublished_point_extracts
+2,kimi-k3-max,Kimi K3,open_weight_deployment,Kimi K3,88.839676,27.796768,19.398245,59.690663,48.861822,6.949192,3.879649,,unpublished_point_extracts
+3,claude-opus-5-max,Claude Opus 5,single_model_service,Opus 5,90.731355,19.259083,3.965025,55.510021,49.902245,4.814771,0.793005,,unpublished_point_extracts
+4,claude-fable-5-max,Claude Fable 5,fallback_composite_service,Fable 5,88.710888,21.989913,0.705849,54.429636,48.790988,5.497478,0.14117,,unpublished_point_extracts
+5,glm-5.2-max,GLM-5.2,open_weight_deployment,GLM-5.2,67.885646,23.217369,55.306275,54.202703,37.337106,5.804342,11.061255,,unpublished_point_extracts

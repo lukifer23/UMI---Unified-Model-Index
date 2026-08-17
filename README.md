@@ -12,6 +12,7 @@ Rebuild it offline with no API keys:
 ```bash
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 validate
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 score
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 dashboard
 ```
 
 | Rank | Configuration | Capability | Operational Efficiency | Access Economics | UMI Public |
@@ -21,6 +22,10 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 score
 | 3 | Claude Opus 5 Max | 90.73 | 19.26 | 3.97 | **55.51** |
 | 4 | Claude Fable 5 Max | 88.71 | 21.99 | 0.71 | **54.43** |
 | 5 | GLM-5.2 Max | 67.89 | 23.22 | 55.31 | **54.20** |
+
+Open [public-dashboard.html](data/editions/v0.4/processed/public-dashboard.html) for SVG
+bars and stacked contributions, or plot [public-ranking.csv](data/editions/v0.4/processed/public-ranking.csv).
+Methods and weights are in [PILOT_REPORT.md](PILOT_REPORT.md).
 
 Those numbers come from ten frozen Epoch-archive series that cover all five exact `_max`
 identities with 8+ anchors: chess, DeepSWE Pass@1, SciCode, WeirdML, GPQA, OTIS Mock AIME,

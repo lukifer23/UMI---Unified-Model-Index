@@ -568,4 +568,7 @@ def write_public_artifacts(output_dir: Path | None = None) -> dict[str, Any]:
         + "\n",
         encoding="utf-8",
     )
+    from analysis.public_dashboard import write_public_dashboard
+
+    write_public_dashboard(payload, destination)
     return payload

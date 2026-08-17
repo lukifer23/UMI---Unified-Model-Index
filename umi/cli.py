@@ -223,6 +223,7 @@ def build_parser() -> argparse.ArgumentParser:
     edition_commands = edition.add_subparsers(dest="edition_command", required=True)
     edition_commands.add_parser("validate")
     edition_commands.add_parser("score")
+    edition_commands.add_parser("dashboard")
     edition_score = edition_commands.choices["score"]
     edition_score.add_argument("--format", choices=("json", "csv"), default="json")
     edition_score.add_argument("--output")
@@ -329,6 +330,16 @@ def run(args: argparse.Namespace) -> int:
         if args.edition_command == "validate":
             validate_public_edition_feasibility(public_config)
             _emit({"valid": True, "edition": public_config.edition_id}, "json", None)
+            return 0
+        if args.edition_command == "dashboard":
+            from analysis.public_dashboard import write_public_dashboard
+
+            scores_path = (
+                Path("data") / "editions" / "v0.4" / "processed" / "model-scores.json"
+            )
+            scores = json.loads(scores_path.read_text(encoding="utf-8"))
+            dashboard = write_public_dashboard(scores, scores_path.parent)
+            _emit(dashboard, "json", None)
             return 0
         if args.edition_command == "score":
             public_payload = write_public_artifacts()

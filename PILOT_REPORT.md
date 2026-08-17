@@ -1,31 +1,134 @@
 # UMI pilot report
 
-## UMI Public v0.4 ranking
+## UMI Public v0.4
 
-**First unified five-model score: UMI Public v0.4.** Edition `umi-public-v0.4`, formula
-`umi-methodology-v0.4.0`. Publication state `published`. Fingerprint
-`e266af13b966cf79cfc5086513ec35f60cf2194f896f41f4b332f60ac9788e6d`. Rebuild with
-`umi edition --edition v0.4 score` or `python -m scripts.build_v04_public`. No API keys.
+**First unified five-model score.** Edition `umi-public-v0.4`, formula
+`umi-methodology-v0.4.0`, normalization `umi-normalization-v0.4.0`. Publication state
+`published`. Fingerprint `e266af13b966cf79cfc5086513ec35f60cf2194f896f41f4b332f60ac9788e6d`.
+Authority: [METHODOLOGY.md](METHODOLOGY.md). Rebuild offline, no API keys:
 
-| Rank | Configuration | Kind | Capability | Op. Efficiency | Access Economics | UMI Public |
-|---:|---|---|---:|---:|---:|---:|
-| 1 | GPT-5.6 Sol Max | single_model_service | 91.944801 | 49.662825 | 16.402460 | 66.265839 |
-| 2 | Kimi K3 Max | open_weight_deployment | 88.839676 | 27.796768 | 19.398245 | 59.690663 |
-| 3 | Claude Opus 5 Max | single_model_service | 90.731355 | 19.259083 | 3.965025 | 55.510021 |
-| 4 | Claude Fable 5 Max | fallback_composite_service | 88.710888 | 21.989913 | 0.705849 | 54.429636 |
-| 5 | GLM-5.2 Max | open_weight_deployment | 67.885646 | 23.217369 | 55.306275 | 54.202703 |
+```bash
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 score
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 dashboard
+```
 
-`umi_public = 0.55 × Capability + 0.25 × Operational Efficiency + 0.20 × Access Economics`.
-Capability uses chess, DeepSWE Pass@1, SciCode, WeirdML, GPQA, OTIS Mock AIME, and CritPt.
-Operational Efficiency uses DeepSWE output tokens and agent steps. Access Economics uses
-WeirdML cost per run on the high-effort (`_max` / `_xhigh` / `_high` / `_promax`) 50-config
-panel. Sol leads because it is strong on Capability and far cheaper in DeepSWE tokens and
-steps. GLM is last on Capability but cheapest on Access. Fable is the public composite product,
-including SciCode and CritPt rows that name an Opus 4.8 fallback. DeepSWE cost is not in the
-headline because Fable's official observation count is 432/436.
+This is not v0.3 `headline_overall` and not provider-billed Economics.
 
-This is not v0.3 `headline_overall` and not billed Economics. Intervals are unpublished: the
-extracts are configuration-level means.
+### Methods
+
+The scored entity is the exact Max deployment, not the marketing family. Claude Fable 5 Max
+is a `fallback_composite_service` with documented Opus 4.8 fallback. SciCode and CritPt rows
+that name that fallback score the composite product. Exact `_max` product-label rows also
+score it. Unknown effort cannot map to Max.
+
+Every headline series must contain all five exact entity IDs and an 8+ same-extract anchor
+panel. A domain with no such series is omitted from the edition, not zero-filled. Required
+common-core coverage is 1.0. Maximum independent-lab share is 0.35 when a component has two
+or more originating organizations.
+
+Each series is scored once against its frozen Epoch extract. Proportions use a logit with
+ε = 1e-3. Lower-better resources and costs use `-log(x+1)`. Robust-z uses the panel median
+and MAD, winsorized to ±3, then mapped through Φ to a 0–100 point. There is no percentile
+fallback. Display-row order does not change a score. Non-finite source values are rejected.
+Access Economics uses the WeirdML cost extract restricted to high-effort IDs ending in
+`_max`, `_xhigh`, `_high`, or `_promax` so cheap historical completions cannot collapse the
+scale. DeepSWE rows are restricted to `mini-swe-agent`.
+
+```text
+umi_public = 0.55 × Capability
+           + 0.25 × Operational Efficiency
+           + 0.20 × Access Economics
+```
+
+| Layer | Allocation | Why |
+|---|---:|---|
+| Capability | 0.55 | Primary construct |
+| Operational Efficiency | 0.25 | Success-relevant resource intensity and steps |
+| Access Economics | 0.20 | Source-reported public task cost, not a bill |
+
+| Capability domain | Weight | Families |
+|---|---:|---|
+| General reasoning and knowledge | 0.15 | Epoch chess puzzles 1.00 |
+| Software engineering | 0.40 | DeepSWE v1.1 Pass@1 0.55; AA SciCode 0.45 |
+| Agentic and tool-mediated work | 0.25 | WeirdML accuracy 1.00 |
+| Mathematics and science | 0.20 | GPQA Diamond 0.50; OTIS Mock AIME 0.25; CritPt 0.25 |
+
+Software is 0.40 because it is the only Capability domain with two originating organizations
+and a same-harness 50-config panel. General plus math/science sum to 0.35 so Epoch stays at
+the source-share cap. Operational Efficiency is DeepSWE output tokens 0.60 and agent steps
+0.40. Access Economics is WeirdML cost per run 1.00.
+
+Omitted from this edition: context reliability, language/instruction following, interactive
+latency, fixed tariff baskets, and DeepSWE cost (Fable official coverage is 432/436). AA and
+Cursor five-row extracts fail the 8+ panel gate. Intervals are unpublished: the extracts are
+configuration-level means without attempt residuals.
+
+```mermaid
+pie title UMI Public overall weights
+    "Capability 0.55" : 55
+    "Operational Efficiency 0.25" : 25
+    "Access Economics 0.20" : 20
+```
+
+```mermaid
+flowchart TD
+    public["umi_public"] --> cap["Capability 0.55"]
+    public --> opeff["Operational Efficiency 0.25"]
+    public --> access["Access Economics 0.20"]
+    cap --> chess["Chess 0.15"]
+    cap --> swe["Software 0.40"]
+    cap --> agent["WeirdML 0.25"]
+    cap --> math["Math and science 0.20"]
+    swe --> deepswe["DeepSWE Pass@1 0.55"]
+    swe --> scicode["SciCode 0.45"]
+    math --> gpqa["GPQA 0.50"]
+    math --> otis["OTIS AIME 0.25"]
+    math --> critpt["CritPt 0.25"]
+    opeff --> tokens["DeepSWE tokens 0.60"]
+    opeff --> steps["DeepSWE steps 0.40"]
+    access --> weirdcost["WeirdML high-effort cost 1.00"]
+```
+
+### Published ranking
+
+| Rank | Configuration | Kind | Capability | Op. Efficiency | Access Economics | Weighted Cap | Weighted Eff | Weighted Acc | UMI Public |
+|---:|---|---|---:|---:|---:|---:|---:|---:|---:|
+| 1 | GPT-5.6 Sol Max | single_model_service | 91.944801 | 49.662825 | 16.402460 | 50.569641 | 12.415706 | 3.280492 | 66.265839 |
+| 2 | Kimi K3 Max | open_weight_deployment | 88.839676 | 27.796768 | 19.398245 | 48.861822 | 6.949192 | 3.879649 | 59.690663 |
+| 3 | Claude Opus 5 Max | single_model_service | 90.731355 | 19.259083 | 3.965025 | 49.902245 | 4.814771 | 0.793005 | 55.510021 |
+| 4 | Claude Fable 5 Max | fallback_composite_service | 88.710888 | 21.989913 | 0.705849 | 48.790988 | 5.497478 | 0.141170 | 54.429636 |
+| 5 | GLM-5.2 Max | open_weight_deployment | 67.885646 | 23.217369 | 55.306275 | 37.337106 | 5.804342 | 11.061255 | 54.202703 |
+
+Sol leads because Capability is high and DeepSWE tokens/steps are much lower than the
+Anthropic and Kimi Max rows. GLM is last on Capability but cheapest on Access, which is
+why it finishes within a point of Fable. Fable's Access score is the expensive tail of
+the high-effort WeirdML cost panel.
+
+```mermaid
+xychart-beta
+    title "UMI Public v0.4"
+    x-axis ["Sol", "Kimi K3", "Opus 5", "Fable 5", "GLM-5.2"]
+    y-axis "UMI Public" 0 --> 100
+    bar [66.27, 59.69, 55.51, 54.43, 54.20]
+```
+
+### How to plot
+
+Charts must read the published JSON. They must not recompute scores, render a null as
+zero, or label Access as billed cost.
+
+| Artifact | Use |
+|---|---|
+| [public-dashboard.html](data/editions/v0.4/processed/public-dashboard.html) | Offline SVG ranking, stacked contributions, and component bars |
+| [public-dashboard.json](data/editions/v0.4/processed/public-dashboard.json) | Chart contract with weights, limitations, and rounded series |
+| [public-ranking.csv](data/editions/v0.4/processed/public-ranking.csv) | Rank, components, and weighted contributions |
+| [public-series.csv](data/editions/v0.4/processed/public-series.csv) | Long series table: raw + 0–100 score per model |
+| [model-scores.json](data/editions/v0.4/processed/model-scores.json) | Canonical scored payload |
+
+Recommended views: (1) UMI Public bars in rank order, (2) stacked weighted contributions
+that sum to `umi_public`, (3) unweighted Capability / Efficiency / Access grouped bars,
+(4) Capability series heatmap from `public-series.csv`. Do not plot 95% intervals until
+attempt-level residuals exist.
 
 ## v0.3 publication decision
 

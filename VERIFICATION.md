@@ -13,6 +13,7 @@ nulls are unchanged. No API keys and no paid requests.
 | `uv run mypy --strict umi analysis scripts` | passed; 61 source files |
 | `PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 validate` | `{"edition":"umi-public-v0.4","valid":true}` |
 | `PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 score` | published; fingerprint `e266af13b966cf79cfc5086513ec35f60cf2194f896f41f4b332f60ac9788e6d` |
+| `PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 dashboard` | writes `public-dashboard.html`, ranking/series CSVs; does not rescore |
 | `uv run python -m scripts.build_v04_public` | Sol 66.27, Kimi 59.69, Opus 55.51, Fable 54.43, GLM 54.20 |
 | `PYTHONPATH=. uv run --no-sync umi edition --edition v0.3 validate` | infeasible as a Public edition, as designed |
 | `PYTHONPATH=. uv run --no-sync umi estimates --data-dir data/pilots/v0.3/raw` | five model-specific partials; all `headline_overall` null |

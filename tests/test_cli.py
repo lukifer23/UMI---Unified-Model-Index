@@ -205,6 +205,12 @@ def test_edition_validate_and_score_v04(capsys: pytest.CaptureFixture[str]) -> N
     assert len(payload["models"]) == 5
     assert all(item["umi_public"] is not None for item in payload["models"])
 
+    dashboard_args = build_parser().parse_args(["edition", "--edition", "v0.4", "dashboard"])
+    assert run(dashboard_args) == 0
+    dashboard = json.loads(capsys.readouterr().out)
+    assert dashboard["surface"] == "public-dashboard"
+    assert dashboard["scored_data_fingerprint"] == payload["scored_data_fingerprint"]
+
 
 def test_legacy_edition_validate_reports_infeasible(
     capsys: pytest.CaptureFixture[str],
