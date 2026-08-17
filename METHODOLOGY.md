@@ -1,10 +1,119 @@
-# UMI methodology v0.3.15
+# UMI methodology
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. UMI v0.3.15 retains the manually
+current policy values; code must not contradict this document. Two editions are in force:
+
+- **v0.3.15 legacy** (`umi-public-v0.3-legacy`, formula `umi-methodology-v0.3.15`,
+  normalization `umi-normalization-v0.3.4`) remains the multi-source reviewed-fact pilot. It does
+  not publish `headline_overall`. Its three-model Capability certificate is unchanged.
+- **v0.4 Public** (`umi-public-v0.4`, formula `umi-methodology-v0.4.0`, normalization
+  `umi-normalization-v0.4.0`) is a separate edition that publishes one `umi_public` number per
+  exact Max pilot from frozen public extracts. It does not rewrite v0.3 artifacts, gates, or
+  certificates.
+
+All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
+produce identical serialized results and fingerprints across supported Python versions; this is
+numerical canonicalization, not a change to weights or score semantics.
+
+## UMI Public v0.4
+
+UMI Public is the first five-model unified score that the configured evidence can actually support.
+It is not v0.3 Overall, not provider-billed Economics, and not a six-domain score. The Python
+package remains `0.3.16` / `umi-engine-v0.3.13`; edition identity lives in
+`config/editions/v0.4/`.
+
+### Formula
+
+```text
+umi_public = 0.55 × Capability
+           + 0.25 × Operational Efficiency
+           + 0.20 × Access Economics
+```
+
+Access Economics is source-reported public benchmark task cost. It is never labeled observed
+billing. Controlled billed Economics stays on the v0.3 / operational path and is not mixed into
+`umi_public`.
+
+### First-edition domain scope
+
+A domain or subcomponent is positive-weight only when at least one frozen series has all five
+exact Max identities and an 8+ same-extract anchor panel. Missing constructs are omitted from the
+edition weights. They are not silently zero-filled and they are not required.
+
+| Capability domain | Weight | Common-core families |
+|---|---:|---|
+| General reasoning and knowledge | 0.15 | Epoch chess puzzles 1.00 |
+| Software engineering | 0.40 | DeepSWE v1.1 Pass@1 0.55; AA SciCode 0.45 |
+| Agentic and tool-mediated work | 0.25 | WeirdML accuracy 1.00 |
+| Mathematics and science | 0.20 | Epoch GPQA Diamond 0.50; OTIS Mock AIME 0.25; CritPt 0.25 |
+
+Software engineering is 0.40 because it is the only Capability domain with two originating
+organizations and a same-harness 50-config panel. General reasoning plus mathematics and science
+sum to 0.35 so Epoch's independent-lab share meets the 0.35 source-concentration cap.
+
+Context reliability and language / instruction following have no all-five 8+ exact-Max series in
+the frozen archive (SimpleQA lacks `claude-fable-5_max`; LiveBench has none of the 2026 Max
+pilots; AA extracts have n=5). They are out of this edition.
+
+Operational Efficiency is DeepSWE mean output tokens 0.60 and mean agent steps 0.40. Interactive
+service responsiveness has no all-five 8+ public latency series and is omitted. The component has
+one originating organization; the source-share cap is applied only when a component has two or
+more originating organizations.
+
+Access Economics is WeirdML cost per run 1.00. DeepSWE mean cost is diagnostic only: official
+DeepSWE v1.1 observes Fable cost on 432 of 436 scored attempts, so that series cannot enter a
+complete all-attempt common core. Fixed tariff baskets have only five official cards and fail the
+8+ panel gate.
+
+### Identity
+
+The scored entity is the exact deployable system, not the marketing family. Claude Fable 5 Max is
+a `fallback_composite_service` with documented Opus 4.8 fallback. Source rows whose Name or Notes
+field labels an Opus 4.8 fallback score that composite. Exact `_max` product-label rows also score
+the composite product. Composite evidence cannot score a single-model entity. Unknown effort
+cannot map to Max.
+
+### Normalization
+
+Each series is scored once against its frozen extract. Proportions use a logit with ε=1e-3.
+Lower-better resources and costs use `-log(x+1)`. The panel median and MAD define a robust-z,
+winsorized to ±3, then mapped through Φ to a 0–100 point. There is no percentile fallback.
+Display-row order does not change a pilot score. Non-finite source values are rejected.
+
+Capability and Operational Efficiency use every complete row in the named extract (DeepSWE is
+restricted to `mini-swe-agent`). Access Economics uses the same WeirdML extract restricted to
+high-effort configuration IDs ending in `_max`, `_xhigh`, `_high`, or `_promax`. The full
+historical cost table is dominated by cheap low-effort completions whose MAD collapses every
+frontier Max row onto the winsor floor; the high-effort filter is an exact suffix rule, not a
+score cutoff.
+
+### Common core, coverage, and concentration
+
+Required common-core coverage is 1.0. Every configured series must contain all five entity IDs
+and at least eight anchor rows. Missing one required series fails the edition closed. Maximum
+source share is 0.35 of a component when that component has two or more originating
+organizations. Epoch is treated as the originating lab for chess, GPQA, OTIS, and CritPt;
+DataCurve for DeepSWE; Artificial Analysis for SciCode; WeirdML for WeirdML.
+
+### Uncertainty
+
+The first Public edition publishes point scores. Hierarchical bootstrap is unpublished because
+the frozen extracts are configuration-level means without attempt-level residuals. Rank
+instability is therefore not claimed as a probability.
+
+### Fingerprint
+
+`scored_data_fingerprint` is SHA-256 over the edition identity, formula, normalization, weights,
+series IDs, and each model's raw series values and component scores. Input order and wall-clock
+timestamps are excluded.
+
+## v0.3.15 legacy
+
+UMI v0.3.15 retains the manually
 reviewed, multi-source evidence pilot, hardens arithmetic-mean resource denominators against the
 official DeepSWE v1.1 trial ledger, and adds the governed attempt-level operational evidence path.
-It does not publish a headline UMI Overall ranking. The first official ranking product is the
+It does not publish a headline UMI Overall ranking. The first official ranking product of that
+edition is the
 governed three-model Capability comparison of Opus, Kimi, and GLM; that certificate is not
 Overall. Paid execution of the frozen MMLU-Pro cohort is out of scope for that product and
 cannot clear the configured Efficiency or Economics headline gates.
@@ -12,9 +121,6 @@ The scoring formula identity is `umi-methodology-v0.3.15`; normalization remains
 `umi-normalization-v0.3.4`. v0.3.15 adds the first approved General Interaction workload profile so
 a completed governed MMLU-Pro cohort can enter Efficiency and Economics without standing in for
 other workload categories. Existing evidence and headline gates remain unchanged.
-All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
-produce identical serialized results and certificate fingerprints across supported Python versions;
-this is numerical canonicalization, not a change to weights or score semantics.
 
 ## v0.3 source roles and exact identity
 

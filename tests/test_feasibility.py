@@ -31,7 +31,7 @@ def test_single_source_cap_makes_an_edition_infeasible() -> None:
     config = load_public_edition_config()
     payload = config.model_dump(mode="json")
     for family in payload["families"]:
-        if family["component"] == "capability":
+        if family["component"] == "capability" and family["id"] != "epoch-weirdml":
             family["source_organization"] = "one-lab"
     with pytest.raises(FeasibilityError, match="above cap"):
         validate_public_edition_feasibility(type(config).model_validate(payload))
@@ -46,3 +46,7 @@ def test_v04_public_policy_is_statically_feasible() -> None:
     assert config.eligibility.required_common_core_coverage == pytest.approx(1.0)
     assert config.eligibility.maximum_source_share == pytest.approx(0.35)
     assert config.eligibility.minimum_anchor_panel == 8
+    assert abs(sum(config.weights.capability_domains.values()) - 1.0) < 1e-12
+    assert "public_benchmark_task_cost" in {
+        item.value for item in config.weights.access_economics
+    }

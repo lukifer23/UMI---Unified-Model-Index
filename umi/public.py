@@ -3,16 +3,17 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import io
 import json
 import math
 import zipfile
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, NotRequired, TypedDict
 
 from umi.edition import PUBLIC_EDITION_ID, PublicEditionConfig, load_public_edition_config
-from umi.identity import load_public_identities
+from umi.identity import PublicSystemIdentity, evidence_matches_entity, load_public_identities
 from umi.version import ENGINE_VERSION, PACKAGE_VERSION
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,8 +26,21 @@ PILOT_MAP = {
     "glm-5.2_max": "glm-5.2-max",
 }
 INCOMPLETE_COST = {"claude-fable-5_max"}
+HIGH_EFFORT_SUFFIXES = ("_max", "_xhigh", "_high", "_promax")
 LOGIT_EPS = 1e-3
 WINSOR = 3.0
+
+
+class SeriesSpec(TypedDict):
+    id: str
+    member: str
+    field: str
+    kind: str
+    component: str
+    domain: str
+    family_weight: float
+    harness: NotRequired[str]
+    panel_filter: NotRequired[str]
 
 
 @dataclass(frozen=True)
@@ -35,6 +49,7 @@ class SeriesPoint:
     entity_id: str | None
     raw: float
     complete: bool
+    source_name: str
 
 
 def _phi(z: float) -> float:
@@ -52,6 +67,34 @@ def transform_proportion(raw: float) -> float:
 
 def transform_lower_better(raw: float, offset: float = 1.0) -> float:
     return -math.log(raw + offset)
+
+
+def _finite(raw_text: str | None) -> float | None:
+    if raw_text is None or raw_text == "":
+        return None
+    try:
+        value = float(raw_text)
+    except ValueError:
+        return None
+    if not math.isfinite(value):
+        return None
+    return value
+
+
+def _composite_from_row(row: dict[str, str]) -> tuple[bool, tuple[str, ...]]:
+    blob = f"{row.get('Name', '')} {row.get('Notes', '')}".lower()
+    if "fallback" in blob or "opus 4.8" in blob:
+        return True, ("claude-opus-4.8",)
+    return False, ()
+
+
+def _source_effort(row: dict[str, str], config_id: str) -> str | None:
+    effort = str(row.get("Reasoning effort") or "").strip()
+    if effort:
+        return effort
+    if config_id.endswith("_max"):
+        return "max"
+    return None
 
 
 def robust_z(value: float, panel: tuple[float, ...]) -> tuple[float, float, float]:
@@ -94,33 +137,75 @@ def series_score(raw: float, panel: tuple[float, ...], *, kind: str) -> dict[str
     }
 
 
+def load_epoch_member(member: str) -> tuple[dict[str, str], ...]:
+    with zipfile.ZipFile(EPOCH_ZIP) as archive:
+        raw = archive.read(member).decode("utf-8")
+    return tuple(csv.DictReader(io.StringIO(raw)))
+
+
 def load_deepswe_epoch_rows(path: Path = EPOCH_ZIP) -> tuple[dict[str, str], ...]:
     with zipfile.ZipFile(path) as archive:
         raw = archive.read("deepswe_external.csv").decode("utf-8")
     return tuple(csv.DictReader(io.StringIO(raw)))
 
 
-def deepswe_points(field: str, *, require_complete_cost: bool = False) -> tuple[SeriesPoint, ...]:
+def epoch_points(
+    member: str,
+    field: str,
+    *,
+    require_harness: str | None = None,
+    skip_incomplete_cost: bool = False,
+    identities: tuple[PublicSystemIdentity, ...] | None = None,
+    panel_filter: str | None = None,
+) -> tuple[SeriesPoint, ...]:
+    known = {item.entity_id: item for item in identities} if identities is not None else None
+    seen: set[str] = set()
     points: list[SeriesPoint] = []
-    for row in load_deepswe_epoch_rows():
-        if row.get("Harness") != "mini-swe-agent":
+    for row in load_epoch_member(member):
+        if require_harness and row.get("Harness") != require_harness:
             continue
-        raw_text = row.get(field, "")
-        if raw_text in {"", None}:
+        raw_value = _finite(row.get(field))
+        if raw_value is None:
             continue
         config_id = str(row["Model version"])
-        complete = not (require_complete_cost and config_id in INCOMPLETE_COST)
-        if require_complete_cost and not complete:
+        if panel_filter == "high_effort" and not config_id.endswith(HIGH_EFFORT_SUFFIXES):
             continue
+        if config_id in seen:
+            continue
+        if skip_incomplete_cost and config_id in INCOMPLETE_COST:
+            continue
+        seen.add(config_id)
+        entity_id = PILOT_MAP.get(config_id)
+        if entity_id is not None and known is not None:
+            identity = known[entity_id]
+            composite, fallbacks = _composite_from_row(row)
+            accepted, _reason = evidence_matches_entity(
+                entity=identity,
+                source_effort=_source_effort(row, config_id),
+                source_is_composite=composite,
+                source_fallbacks=fallbacks,
+            )
+            if not accepted:
+                entity_id = None
         points.append(
             SeriesPoint(
                 config_id=config_id,
-                entity_id=PILOT_MAP.get(config_id),
-                raw=float(raw_text),
-                complete=complete,
+                entity_id=entity_id,
+                raw=raw_value,
+                complete=config_id not in INCOMPLETE_COST,
+                source_name=str(row.get("Name") or ""),
             )
         )
     return tuple(points)
+
+
+def deepswe_points(field: str, *, require_complete_cost: bool = False) -> tuple[SeriesPoint, ...]:
+    return epoch_points(
+        "deepswe_external.csv",
+        field,
+        require_harness="mini-swe-agent",
+        skip_incomplete_cost=require_complete_cost,
+    )
 
 
 def _pilot_scores(points: tuple[SeriesPoint, ...], kind: str) -> dict[str, dict[str, float]]:
@@ -135,107 +220,325 @@ def _pilot_scores(points: tuple[SeriesPoint, ...], kind: str) -> dict[str, dict[
     return scores
 
 
+def _digest(payload: dict[str, Any]) -> str:
+    canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    return hashlib.sha256(canonical.encode()).hexdigest()
+
+
+SERIES: tuple[SeriesSpec, ...] = (
+    {
+        "id": "epoch-chess-puzzles",
+        "member": "chess_puzzles.csv",
+        "field": "mean_score",
+        "kind": "proportion",
+        "component": "capability",
+        "domain": "general_reasoning_and_knowledge",
+        "family_weight": 1.0,
+    },
+    {
+        "id": "deepswe-v1.1-pass1",
+        "member": "deepswe_external.csv",
+        "field": "Pass@1",
+        "kind": "proportion",
+        "component": "capability",
+        "domain": "software_engineering",
+        "family_weight": 0.55,
+        "harness": "mini-swe-agent",
+    },
+    {
+        "id": "epoch-scicode",
+        "member": "scicode_external.csv",
+        "field": "Score",
+        "kind": "proportion",
+        "component": "capability",
+        "domain": "software_engineering",
+        "family_weight": 0.45,
+    },
+    {
+        "id": "epoch-weirdml",
+        "member": "weirdml_external.csv",
+        "field": "Accuracy",
+        "kind": "proportion",
+        "component": "capability",
+        "domain": "agentic_and_tool_mediated_work",
+        "family_weight": 1.0,
+    },
+    {
+        "id": "epoch-gpqa",
+        "member": "gpqa_diamond.csv",
+        "field": "mean_score",
+        "kind": "proportion",
+        "component": "capability",
+        "domain": "mathematics_and_science",
+        "family_weight": 0.50,
+    },
+    {
+        "id": "epoch-otis-aime",
+        "member": "otis_mock_aime_2024_2025.csv",
+        "field": "mean_score",
+        "kind": "proportion",
+        "component": "capability",
+        "domain": "mathematics_and_science",
+        "family_weight": 0.25,
+    },
+    {
+        "id": "epoch-critpt",
+        "member": "critpt_external.csv",
+        "field": "Accuracy",
+        "kind": "proportion",
+        "component": "capability",
+        "domain": "mathematics_and_science",
+        "family_weight": 0.25,
+    },
+    {
+        "id": "deepswe-output-tokens",
+        "member": "deepswe_external.csv",
+        "field": "Mean output tokens",
+        "kind": "lower",
+        "component": "operational_efficiency",
+        "domain": "task_resource_intensity",
+        "family_weight": 1.0,
+        "harness": "mini-swe-agent",
+    },
+    {
+        "id": "deepswe-agent-steps",
+        "member": "deepswe_external.csv",
+        "field": "Mean agent steps",
+        "kind": "lower",
+        "component": "operational_efficiency",
+        "domain": "task_completion_time_and_steps",
+        "family_weight": 1.0,
+        "harness": "mini-swe-agent",
+    },
+    {
+        "id": "weirdml-cost-per-run",
+        "member": "weirdml_external.csv",
+        "field": "Cost per run",
+        "kind": "lower",
+        "component": "access_economics",
+        "domain": "public_benchmark_task_cost",
+        "family_weight": 1.0,
+        "panel_filter": "high_effort",
+    },
+)
+
+
+def _weighted_sum(parts: list[tuple[float, float]]) -> float:
+    return math.fsum(weight * value for weight, value in parts)
+
+
+def _diagnostic_blockers() -> tuple[dict[str, Any], ...]:
+    complete_cost = deepswe_points("Mean cost (USD)", require_complete_cost=True)
+    complete_ids = {item.entity_id for item in complete_cost if item.entity_id}
+    return (
+        {
+            "affected_model": "claude-fable-5-max",
+            "missing_series": "deepswe-mean-cost",
+            "reason": (
+                "Official DeepSWE v1.1 cost is observed on 432 of 436 scored Fable attempts "
+                "and cannot enter a complete all-attempt Access series"
+            ),
+            "required_identity": "complete cost observation count",
+            "resolving_evidence": (
+                "Complete Fable cost denominator or another all-five billed/calculated series"
+            ),
+            "sources_investigated": [
+                "DeepSWE reviewed facts",
+                "Epoch deepswe_external.csv",
+            ],
+            "complete_cost_entity_ids": sorted(complete_ids),
+        },
+        {
+            "affected_model": "edition-scope",
+            "missing_series": "context_reliability_and_factual_discipline",
+            "reason": (
+                "No frozen public series has all five exact Max identities and an 8+ same-harness "
+                "anchor panel for context reliability"
+            ),
+            "required_identity": "exact Max or documented composite",
+            "resolving_evidence": (
+                "A frozen same-harness extract with all five pilots plus 8+ anchors"
+            ),
+            "sources_investigated": [
+                "Epoch simpleqa_verified.csv (missing claude-fable-5_max)",
+                "AA five-row extracts (anchor n=5)",
+            ],
+        },
+        {
+            "affected_model": "edition-scope",
+            "missing_series": "language_data_and_instruction_following",
+            "reason": (
+                "No frozen public series has all five exact Max identities and an 8+ same-harness "
+                "anchor panel for language, data, or instruction following"
+            ),
+            "required_identity": "exact Max or documented composite",
+            "resolving_evidence": (
+                "A frozen same-harness extract with all five pilots plus 8+ anchors"
+            ),
+            "sources_investigated": [
+                "Epoch live_bench_external.csv (zero 2026 Max pilots)",
+                "AA five-row extracts (anchor n=5)",
+            ],
+        },
+    )
+
+
 def score_public_edition(
     config: PublicEditionConfig | None = None,
 ) -> dict[str, Any]:
     edition = config or load_public_edition_config()
     identities = load_public_identities()
-    capability = _pilot_scores(deepswe_points("Pass@1"), "proportion")
-    resources = _pilot_scores(deepswe_points("Mean output tokens"), "lower")
-    steps = _pilot_scores(deepswe_points("Mean agent steps"), "lower")
-    cost_complete = deepswe_points("Mean cost (USD)", require_complete_cost=True)
-    complete_entities = {item.entity_id for item in cost_complete if item.entity_id}
-    missing_cost = sorted(set(PILOT_MAP.values()) - complete_entities)
-    blockers = [
-        {
-            "missing_series": series,
-            "affected_model": "all-five-common-core",
-            "required_identity": "exact Max or documented composite",
-            "sources_investigated": [
-                "Epoch benchmark_data.zip live_bench_external.csv",
-                "Epoch hle/gpqa/scicode/critpt external CSVs",
-                "AA reviewed five-row extracts",
-                "CursorBench five-row extract",
-            ],
-            "reason": (
-                "No frozen public series has all five pilots and an 8+ same-harness "
-                "anchor panel outside DeepSWE v1.1 mini-swe-agent."
-            ),
-            "resolving_evidence": (
-                "A frozen same-harness extract with all five pilots plus 8+ anchors"
-            ),
+    domain_weights = {
+        item.value: weight for item, weight in edition.weights.capability_domains.items()
+    }
+    opeff_weights = {
+        item.value: weight for item, weight in edition.weights.operational_efficiency.items()
+    }
+    access_weights = {
+        item.value: weight for item, weight in edition.weights.access_economics.items()
+    }
+    scored_series: dict[str, dict[str, dict[str, float]]] = {}
+    anchors: dict[str, dict[str, Any]] = {}
+    blockers: list[dict[str, Any]] = []
+    required = {item.entity_id for item in identities}
+    for spec in SERIES:
+        points = epoch_points(
+            spec["member"],
+            spec["field"],
+            require_harness=spec.get("harness"),
+            identities=identities,
+            panel_filter=spec.get("panel_filter"),
+        )
+        pilots = {item.entity_id for item in points if item.entity_id}
+        if pilots != required or len(points) < edition.eligibility.minimum_anchor_panel:
+            blockers.append(
+                {
+                    "series": spec["id"],
+                    "pilots": sorted(item for item in pilots if item is not None),
+                    "anchor_n": len(points),
+                    "reason": "series missing a pilot or an 8+ anchor panel",
+                }
+            )
+            continue
+        scored_series[spec["id"]] = _pilot_scores(points, spec["kind"])
+        anchors[spec["id"]] = {
+            "member": spec["member"],
+            "field": spec["field"],
+            "kind": spec["kind"],
+            "n": len(points),
+            "panel_filter": spec.get("panel_filter"),
+            "source": f"epoch-benchmark-data-2026-08-14.zip:{spec['member']}",
         }
-        for series in (
-            "general_reasoning_and_knowledge",
-            "agentic_and_tool_mediated_work",
-            "mathematics_and_science",
-            "context_reliability_and_factual_discipline",
-            "language_data_and_instruction_following",
-            "interactive_service_responsiveness",
-            "public_benchmark_task_cost",
-            "fixed_tariff_baskets",
-        )
-    ]
-    if missing_cost:
-        blockers.append(
-            {
-                "missing_series": "deepswe-task-cost-complete",
-                "affected_model": ",".join(missing_cost),
-                "required_identity": "complete cost observation count",
-                "sources_investigated": ["DeepSWE reviewed facts", "Epoch deepswe_external.csv"],
-                "reason": (
-                    "Fable DeepSWE cost is 432/436 and cannot enter a complete series"
-                ),
-                "resolving_evidence": (
-                    "Complete Fable cost denominator or another all-five cost series"
-                ),
-            }
-        )
+    if blockers:
+        raise ValueError("required public series failed: " + str(blockers))
 
     models: list[dict[str, Any]] = []
     for identity in identities:
-        cap = capability.get(identity.entity_id)
-        res = resources.get(identity.entity_id)
-        step = steps.get(identity.entity_id)
-        operational = None
-        if res and step:
-            operational = (
-                0.45 / 0.75 * res["score"] + 0.30 / 0.75 * step["score"]
+        cap_parts: dict[str, float] = {}
+        capability_series: dict[str, dict[str, float]] = {}
+        for spec in SERIES:
+            if spec["component"] != "capability":
+                continue
+            detail = scored_series[spec["id"]][identity.entity_id]
+            capability_series[spec["id"]] = detail
+            cap_parts[spec["domain"]] = cap_parts.get(spec["domain"], 0.0) + (
+                spec["family_weight"] * detail["score"]
             )
+        capability = _weighted_sum(
+            [(domain_weights[domain], value) for domain, value in sorted(cap_parts.items())]
+        )
+        operational_series: dict[str, dict[str, float]] = {}
+        opeff_parts: list[tuple[float, float]] = []
+        for spec in SERIES:
+            if spec["component"] != "operational_efficiency":
+                continue
+            detail = scored_series[spec["id"]][identity.entity_id]
+            operational_series[spec["id"]] = detail
+            opeff_parts.append((opeff_weights[spec["domain"]], detail["score"]))
+        opeff = _weighted_sum(opeff_parts)
+        access_series: dict[str, dict[str, float]] = {}
+        access_parts: list[tuple[float, float]] = []
+        for spec in SERIES:
+            if spec["component"] != "access_economics":
+                continue
+            detail = scored_series[spec["id"]][identity.entity_id]
+            access_series[spec["id"]] = detail
+            access_parts.append((access_weights[spec["domain"]], detail["score"]))
+        access = _weighted_sum(access_parts)
+        public = _weighted_sum(
+            [
+                (edition.weights.overall.capability, capability),
+                (edition.weights.overall.operational_efficiency, opeff),
+                (edition.weights.overall.access_economics, access),
+            ]
+        )
+        if not all(math.isfinite(value) for value in (capability, opeff, access, public)):
+            raise ValueError(f"non-finite public score for {identity.entity_id}")
         models.append(
             {
                 "entity_id": identity.entity_id,
                 "entity_kind": identity.entity_kind.value,
                 "named_release": identity.named_release,
                 "effort_setting": identity.effort_setting,
-                "capability": cap["score"] if cap else None,
-                "operational_efficiency": operational,
-                "access_economics": None,
-                "umi_public": None,
-                "publication_state": "insufficient_common_support",
-                "capability_series": {"deepswe-v1.1-pass1": cap},
-                "operational_series": {
-                    "deepswe-output-tokens": res,
-                    "deepswe-agent-steps": step,
-                },
+                "capability": capability,
+                "operational_efficiency": opeff,
+                "access_economics": access,
+                "umi_public": public,
+                "publication_state": "published",
+                "cost_evidence": "source_reported",
+                "capability_series": capability_series,
+                "operational_series": operational_series,
+                "access_series": access_series,
             }
         )
+    ranked = sorted(models, key=lambda item: (-item["umi_public"], item["entity_id"]))
+    for index, item in enumerate(ranked, start=1):
+        item["rank"] = index
+    fingerprint = _digest(
+        {
+            "edition_id": edition.edition_id,
+            "formula_version": edition.formula_version,
+            "normalization_version": edition.normalization_version,
+            "series": [spec["id"] for spec in SERIES],
+            "weights": edition.weights.model_dump(mode="json"),
+            "models": [
+                {
+                    "entity_id": item["entity_id"],
+                    "capability": item["capability"],
+                    "operational_efficiency": item["operational_efficiency"],
+                    "access_economics": item["access_economics"],
+                    "umi_public": item["umi_public"],
+                    "capability_series": {
+                        series_id: detail["raw"]
+                        for series_id, detail in item["capability_series"].items()
+                    },
+                    "operational_series": {
+                        series_id: detail["raw"]
+                        for series_id, detail in item["operational_series"].items()
+                    },
+                    "access_series": {
+                        series_id: detail["raw"]
+                        for series_id, detail in item["access_series"].items()
+                    },
+                }
+                for item in sorted(models, key=lambda row: row["entity_id"])
+            ],
+        }
+    )
     return {
         "edition_id": edition.edition_id,
         "formula_version": edition.formula_version,
         "normalization_version": edition.normalization_version,
         "engine_version": ENGINE_VERSION,
         "package_version": PACKAGE_VERSION,
-        "comparison_profile_id": f"{PUBLIC_EDITION_ID}/deepswe-public-partial",
-        "publication_state": "insufficient_common_support",
-        "required_common_core_coverage": 0.0,
+        "comparison_profile_id": f"{PUBLIC_EDITION_ID}/frozen-epoch-common-core",
+        "publication_state": "published",
+        "required_common_core_coverage": 1.0,
+        "scored_data_fingerprint": fingerprint,
         "models": models,
-        "blockers": blockers,
-        "anchor_panel": {
-            "id": "epoch-deepswe-v1.1-mini-swe-agent",
-            "n": len(deepswe_points("Pass@1")),
-            "source": "epoch-benchmark-data-2026-08-14.zip:deepswe_external.csv",
-        },
+        "blockers": _diagnostic_blockers(),
+        "series": [spec["id"] for spec in SERIES],
+        "anchors": anchors,
     }
 
 
@@ -248,6 +551,21 @@ def write_public_artifacts(output_dir: Path | None = None) -> dict[str, Any]:
     )
     (destination / "rejected-evidence.json").write_text(
         json.dumps({"blockers": payload["blockers"]}, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    (destination / "common-core.json").write_text(
+        json.dumps(
+            {
+                "edition_id": payload["edition_id"],
+                "series": payload["series"],
+                "anchors": payload["anchors"],
+                "required_common_core_coverage": payload["required_common_core_coverage"],
+                "scored_data_fingerprint": payload["scored_data_fingerprint"],
+            },
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
         encoding="utf-8",
     )
     return payload

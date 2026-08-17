@@ -26,12 +26,15 @@ executor's offline status, crash/resume, and identity/cost review artifacts. Pai
 that cohort is out of scope for the first ranking: it cannot clear Efficiency or Economics
 headline gates, and no controlled ledger is admitted.
 
-Chosen next step under the no-paid-run constraint: publish that Capability certificate now, and
+Chosen next step under the no-paid-run constraint: publish UMI Public v0.4 from the frozen
+all-five Epoch extracts, keep the v0.3 Capability certificate as the legacy ranking, and
 hunt DeepSWE-class public ledgers before opening empty workload families. The hunt list lives in
-`data/sources/OPEN_LEDGER_HUNT.md`. Do not promote published calculated cost-per-task.
+`data/sources/OPEN_LEDGER_HUNT.md`. Do not promote published calculated cost-per-task into
+billed Economics.
 
-The first official public product is a governed **Capability ranking** of Opus, Kimi, and GLM on
-their eleven common ready series. It is not a headline Overall UMI. The current five-model pilot
+The first official public product is now **UMI Public v0.4**, a five-model `umi_public`
+score. The v0.3 governed **Capability ranking** of Opus, Kimi, and GLM on
+their eleven common ready series remains the legacy certificate. It is not a headline Overall UMI. The current five-model pilot
 has 48 of 75 configured Capability cells ready. Opus, Sol, Kimi, and GLM now span five domains and
 clear the Capability-only coverage gate (100%, 100%, 100%, and 86.25% respectively), while Fable
 remains at 8.25% because fallback-qualified evidence is rejected. Efficiency is still 4.5%

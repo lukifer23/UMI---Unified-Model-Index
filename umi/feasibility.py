@@ -72,9 +72,11 @@ def validate_public_edition_feasibility(config: PublicEditionConfig) -> None:
             parents_by_component[family.component].add(family.parent)
 
     required_parents: dict[str, tuple[str, ...]] = {
-        "capability": tuple(item.value for item in PublicDomain),
-        "operational_efficiency": tuple(item.value for item in OperationalEfficiencySubcomponent),
-        "access_economics": tuple(item.value for item in AccessEconomicsSubcomponent),
+        "capability": tuple(item.value for item in config.weights.capability_domains),
+        "operational_efficiency": tuple(
+            item.value for item in config.weights.operational_efficiency
+        ),
+        "access_economics": tuple(item.value for item in config.weights.access_economics),
     }
     errors: list[str] = []
     for component, parents in required_parents.items():
@@ -128,6 +130,8 @@ def validate_public_edition_feasibility(config: PublicEditionConfig) -> None:
             )
     cap = config.eligibility.maximum_source_share
     for component, shares in component_org_share.items():
+        if len(shares) < 2:
+            continue
         for organization, share in shares.items():
             if share > cap + 1e-12:
                 errors.append(

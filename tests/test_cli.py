@@ -189,3 +189,28 @@ def test_certificate_cli_emits_the_governed_certificate(
     assert certificate["certificate_version"] == "umi-certificate-v0.1"
     assert certificate["source_artifact_checksums"]
     assert certificate["result_fingerprint"]
+
+
+def test_edition_validate_and_score_v04(capsys: pytest.CaptureFixture[str]) -> None:
+    validate_args = build_parser().parse_args(["edition", "--edition", "v0.4", "validate"])
+    assert run(validate_args) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["valid"] is True
+    assert report["edition"] == "umi-public-v0.4"
+
+    score_args = build_parser().parse_args(["edition", "--edition", "v0.4", "score"])
+    assert run(score_args) == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["publication_state"] == "published"
+    assert len(payload["models"]) == 5
+    assert all(item["umi_public"] is not None for item in payload["models"])
+
+
+def test_legacy_edition_validate_reports_infeasible(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.3", "validate"])
+    assert run(args) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["valid"] is False
+    assert report["legacy_policy_mode"] is True

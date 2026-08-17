@@ -82,14 +82,8 @@ class PublicWeightConfig(ConfigModel):
             ("access_economics", self.access_economics),
         ):
             positive = all(value > 0 for value in weights.values())
-            if abs(sum(weights.values()) - 1.0) > 1e-9 or not positive:
+            if not weights or abs(sum(weights.values()) - 1.0) > 1e-9 or not positive:
                 raise ValueError(f"{name} weights must be positive and sum to 1")
-        if set(self.capability_domains) != set(PublicDomain):
-            raise ValueError("capability_domains must define every Public domain")
-        if set(self.operational_efficiency) != set(OperationalEfficiencySubcomponent):
-            raise ValueError("operational_efficiency must define every Public subcomponent")
-        if set(self.access_economics) != set(AccessEconomicsSubcomponent):
-            raise ValueError("access_economics must define every Public subcomponent")
         return self
 
 

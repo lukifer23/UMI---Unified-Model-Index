@@ -10,13 +10,16 @@ payload was downloaded for this note.
 Given no paid reruns, no invented Economics, and the current coverage hierarchy, the
 highest-value product is:
 
-1. **Ship the existing Opus / Kimi / GLM Capability certificate as the first official
-   ranking.** It is already built, source-bound, and fail-closed. It is not
-   `headline_overall`.
-2. **Hunt DeepSWE-class public ledgers next.** Do not add empty workload families first.
-   An empty family changes methodology identity and adds zero coverage.
-3. **Do not promote published calculated cost-per-task.** Artificial Analysis, CursorBench,
-   Epoch ARC, DeepSWE LiteLLM dollars, and lab `$ / million` tariffs remain diagnostic.
+1. **Ship UMI Public v0.4 as the five-model unified score** from the frozen Epoch
+   all-five 8+ extracts. That score is `umi_public`, not v0.3 `headline_overall`.
+2. **Keep the Opus / Kimi / GLM Capability certificate** as the v0.3 legacy ranking.
+3. **Hunt DeepSWE-class public ledgers next** for billed Economics and the omitted
+   v0.4 domains (context reliability, language/instruction, latency). Do not add empty
+   workload families first.
+4. **Do not promote published calculated cost-per-task into billed Economics.**
+   WeirdML cost is Access Economics (`source_reported`) only. Artificial Analysis,
+   CursorBench, Epoch ARC, DeepSWE LiteLLM dollars, and lab `$ / million` tariffs remain
+   diagnostic for v0.3 Economics.
 
 Adding a τ³-Banking tool-use family is the right *later* methodology step, but only in
 the same change that admits a ready resource ledger for that family. Opening the family

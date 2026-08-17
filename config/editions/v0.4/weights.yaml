@@ -1,18 +1,13 @@
 capability_domains:
-  general_reasoning_and_knowledge: 0.20
-  software_engineering: 0.25
-  agentic_and_tool_mediated_work: 0.20
-  mathematics_and_science: 0.15
-  context_reliability_and_factual_discipline: 0.10
-  language_data_and_instruction_following: 0.10
+  general_reasoning_and_knowledge: 0.15
+  software_engineering: 0.40
+  agentic_and_tool_mediated_work: 0.25
+  mathematics_and_science: 0.20
 operational_efficiency:
-  task_resource_intensity: 0.45
-  task_completion_time_and_steps: 0.30
-  interactive_service_responsiveness: 0.25
+  task_resource_intensity: 0.60
+  task_completion_time_and_steps: 0.40
 access_economics:
-  public_benchmark_task_cost: 0.45
-  agentic_task_cost: 0.30
-  fixed_tariff_baskets: 0.25
+  public_benchmark_task_cost: 1.0
 overall:
   capability: 0.55
   operational_efficiency: 0.25

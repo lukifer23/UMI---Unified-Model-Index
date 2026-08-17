@@ -1,0 +1,99 @@
+{
+  "anchors": {
+    "deepswe-agent-steps": {
+      "field": "Mean agent steps",
+      "kind": "lower",
+      "member": "deepswe_external.csv",
+      "n": 50,
+      "panel_filter": null,
+      "source": "epoch-benchmark-data-2026-08-14.zip:deepswe_external.csv"
+    },
+    "deepswe-output-tokens": {
+      "field": "Mean output tokens",
+      "kind": "lower",
+      "member": "deepswe_external.csv",
+      "n": 50,
+      "panel_filter": null,
+      "source": "epoch-benchmark-data-2026-08-14.zip:deepswe_external.csv"
+    },
+    "deepswe-v1.1-pass1": {
+      "field": "Pass@1",
+      "kind": "proportion",
+      "member": "deepswe_external.csv",
+      "n": 50,
+      "panel_filter": null,
+      "source": "epoch-benchmark-data-2026-08-14.zip:deepswe_external.csv"
+    },
+    "epoch-chess-puzzles": {
+      "field": "mean_score",
+      "kind": "proportion",
+      "member": "chess_puzzles.csv",
+      "n": 158,
+      "panel_filter": null,
+      "source": "epoch-benchmark-data-2026-08-14.zip:chess_puzzles.csv"
+    },
+    "epoch-critpt": {
+      "field": "Accuracy",
+      "kind": "proportion",
+      "member": "critpt_external.csv",
+      "n": 139,
+      "panel_filter": null,
+      "source": "epoch-benchmark-data-2026-08-14.zip:critpt_external.csv"
+    },
+    "epoch-gpqa": {
+      "field": "mean_score",
+      "kind": "proportion",
+      "member": "gpqa_diamond.csv",
+      "n": 260,
+      "panel_filter": null,
+      "source": "epoch-benchmark-data-2026-08-14.zip:gpqa_diamond.csv"
+    },
+    "epoch-otis-aime": {
+      "field": "mean_score",
+      "kind": "proportion",
+      "member": "otis_mock_aime_2024_2025.csv",
+      "n": 235,
+      "panel_filter": null,
+      "source": "epoch-benchmark-data-2026-08-14.zip:otis_mock_aime_2024_2025.csv"
+    },
+    "epoch-scicode": {
+      "field": "Score",
+      "kind": "proportion",
+      "member": "scicode_external.csv",
+      "n": 128,
+      "panel_filter": null,
+      "source": "epoch-benchmark-data-2026-08-14.zip:scicode_external.csv"
+    },
+    "epoch-weirdml": {
+      "field": "Accuracy",
+      "kind": "proportion",
+      "member": "weirdml_external.csv",
+      "n": 163,
+      "panel_filter": null,
+      "source": "epoch-benchmark-data-2026-08-14.zip:weirdml_external.csv"
+    },
+    "weirdml-cost-per-run": {
+      "field": "Cost per run",
+      "kind": "lower",
+      "member": "weirdml_external.csv",
+      "n": 50,
+      "panel_filter": "high_effort",
+      "source": "epoch-benchmark-data-2026-08-14.zip:weirdml_external.csv"
+    }
+  },
+  "edition_id": "umi-public-v0.4",
+  "required_common_core_coverage": 1.0,
+  "scored_data_fingerprint": "e266af13b966cf79cfc5086513ec35f60cf2194f896f41f4b332f60ac9788e6d",
+  "series": [
+    "epoch-chess-puzzles",
+    "deepswe-v1.1-pass1",
+    "epoch-scicode",
+    "epoch-weirdml",
+    "epoch-gpqa",
+    "epoch-otis-aime",
+    "epoch-critpt",
+    "deepswe-output-tokens",
+    "deepswe-agent-steps",
+    "weirdml-cost-per-run"
+  ]
+}

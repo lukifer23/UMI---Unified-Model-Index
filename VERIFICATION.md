@@ -1,3 +1,24 @@
+# UMI verification record
+
+## UMI Public v0.4 on main
+
+Verified on 2026-08-17 from `main` on Windows. UMI Public publishes five `umi_public`
+scores from frozen Epoch extracts. v0.3 processed artifacts and `headline_overall`
+nulls are unchanged. No API keys and no paid requests.
+
+| Check | Outcome |
+|---|---|
+| `uv run pytest --cov=umi --cov=analysis --cov-report=term-missing --cov-fail-under=90` | 191 passed; 92.60% coverage |
+| `uv run ruff check .` | passed |
+| `uv run mypy --strict umi analysis scripts` | passed; 61 source files |
+| `PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 validate` | `{"edition":"umi-public-v0.4","valid":true}` |
+| `PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 score` | published; fingerprint `e266af13b966cf79cfc5086513ec35f60cf2194f896f41f4b332f60ac9788e6d` |
+| `uv run python -m scripts.build_v04_public` | Sol 66.27, Kimi 59.69, Opus 55.51, Fable 54.43, GLM 54.20 |
+| `PYTHONPATH=. uv run --no-sync umi edition --edition v0.3 validate` | infeasible as a Public edition, as designed |
+| `PYTHONPATH=. uv run --no-sync umi estimates --data-dir data/pilots/v0.3/raw` | five model-specific partials; all `headline_overall` null |
+| v0.3 golden SHA-256 set | `tests/test_v03_legacy_freeze.py` bytes unchanged |
+| Paid OpenRouter / live execute | not run |
+
 # UMI v0.3.16 verification record
 
 Verified on 2026-08-17 from `main` on Windows with the Python 3.11+ project contract.

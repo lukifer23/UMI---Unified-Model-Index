@@ -304,12 +304,12 @@ def run(args: argparse.Namespace) -> int:
         from umi.public import score_public_edition, write_public_artifacts
 
         if args.edition == "v0.3":
-            config = load_project_config("config")
+            legacy = load_project_config("config")
             if args.edition_command == "validate":
                 from umi.feasibility import FeasibilityError
 
                 try:
-                    validate_legacy_edition_feasibility(config)
+                    validate_legacy_edition_feasibility(legacy)
                 except FeasibilityError as error:
                     _emit(
                         {
@@ -325,17 +325,17 @@ def run(args: argparse.Namespace) -> int:
                 _emit({"valid": True, "edition": "v0.3"}, "json", None)
                 return 0
             raise SystemExit("v0.3 edition score remains the legacy umi estimates path")
-        config = load_public_edition_config()
+        public_config = load_public_edition_config()
         if args.edition_command == "validate":
-            validate_public_edition_feasibility(config)
-            _emit({"valid": True, "edition": config.edition_id}, "json", None)
+            validate_public_edition_feasibility(public_config)
+            _emit({"valid": True, "edition": public_config.edition_id}, "json", None)
             return 0
         if args.edition_command == "score":
-            payload = write_public_artifacts()
+            public_payload = write_public_artifacts()
         else:
-            payload = score_public_edition()
-        _emit(payload, getattr(args, "format", "json"), getattr(args, "output", None))
-        return 0 if payload["publication_state"] == "published" else 0
+            public_payload = score_public_edition()
+        _emit(public_payload, getattr(args, "format", "json"), getattr(args, "output", None))
+        return 0 if public_payload["publication_state"] == "published" else 0
     if args.command == "operational":
         operational_report = operational_preflight(
             load_task_pack(args.task_pack), load_run_manifest(args.run_manifest)

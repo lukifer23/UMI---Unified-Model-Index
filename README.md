@@ -1,22 +1,35 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.16 hardens the
-offline crash/resume path of the governed OpenRouter runner while retaining the
-real, five-configuration, multi-source pilot with exact DeepSWE trial-ledger denominators and a
-governed, offline attempt-ledger aggregation path, plus AA
-Terminal-Bench v2.1, AA-Omniscience, AA-LCR,
-τ³-Banking, GDPval-AA v2, HLE, CursorBench 3.2, DeepSWE,
-GPQA Diamond, SciCode, CritPt, and ARC-AGI-2 results plus DeepSWE confidence intervals and
-harness-resource means. It does **not**
-publish a headline UMI Overall score. The first official ranking product is the governed
-**Capability comparison** of Claude Opus 5 Max, Kimi K3 Max, and GLM-5.2 Max on their eleven
-common ready series. That certificate is not Overall, not Efficiency, and not Economics.
-GPT-5.6 Sol Max has full Capability coverage but is not in that three-model common-evidence
-panel as published; Claude Fable 5 Max remains a DeepSWE-only partial. Paid benchmark execution
-is out of scope for this ranking: even a completed 350-request MMLU-Pro run cannot clear the
-configured Efficiency 0.50 or Economics 0.40 gates, because those baskets still have no approved
-families outside coding and general interaction.
+Capability, Efficiency, Economics, Overall, and experimental Value. The current package is
+0.3.16. It now publishes a separate **UMI Public v0.4** score for all five exact Max pilots from
+frozen public extracts, while the v0.3.15 legacy edition still does **not** publish
+`headline_overall`.
+
+UMI Public is `0.55 × Capability + 0.25 × Operational Efficiency + 0.20 × Access Economics`.
+Rebuild it offline with no API keys:
+
+```bash
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 validate
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.4 score
+```
+
+| Rank | Configuration | Capability | Operational Efficiency | Access Economics | UMI Public |
+|---:|---|---:|---:|---:|---:|
+| 1 | GPT-5.6 Sol Max | 91.94 | 49.66 | 16.40 | **66.27** |
+| 2 | Kimi K3 Max | 88.84 | 27.80 | 19.40 | **59.69** |
+| 3 | Claude Opus 5 Max | 90.73 | 19.26 | 3.97 | **55.51** |
+| 4 | Claude Fable 5 Max | 88.71 | 21.99 | 0.71 | **54.43** |
+| 5 | GLM-5.2 Max | 67.89 | 23.22 | 55.31 | **54.20** |
+
+Those numbers come from ten frozen Epoch-archive series that cover all five exact `_max`
+identities with 8+ anchors: chess, DeepSWE Pass@1, SciCode, WeirdML, GPQA, OTIS Mock AIME,
+CritPt, DeepSWE tokens, DeepSWE steps, and high-effort WeirdML cost. Access is source-reported
+task cost, not a provider bill. Fable is scored as the documented fallback composite. DeepSWE
+cost stays diagnostic because Fable's official cost denominator is 432/436. v0.3
+`headline_overall` remains null: that edition's Efficiency 0.50 and Economics 0.40 workload
+gates are still theoretically unreachable. The v0.3 Capability certificate of Opus, Kimi, and
+GLM is unchanged.
 
 The pilot cohort is Claude Opus 5 Max, Claude Fable 5 Max, GPT-5.6 Sol Max, Kimi K3 Max, and
 GLM-5.2 Max. Its frozen sources are Artificial Analysis public facts, Epoch ECI and Benchmarking Hub

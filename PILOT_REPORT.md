@@ -1,8 +1,35 @@
-# UMI v0.3 multi-source pilot report
+# UMI pilot report
 
-## Publication decision
+## UMI Public v0.4 ranking
 
-**First official product: a governed Capability ranking of Opus, Kimi, and GLM. No headline UMI
+**First unified five-model score: UMI Public v0.4.** Edition `umi-public-v0.4`, formula
+`umi-methodology-v0.4.0`. Publication state `published`. Fingerprint
+`e266af13b966cf79cfc5086513ec35f60cf2194f896f41f4b332f60ac9788e6d`. Rebuild with
+`umi edition --edition v0.4 score` or `python -m scripts.build_v04_public`. No API keys.
+
+| Rank | Configuration | Kind | Capability | Op. Efficiency | Access Economics | UMI Public |
+|---:|---|---|---:|---:|---:|---:|
+| 1 | GPT-5.6 Sol Max | single_model_service | 91.944801 | 49.662825 | 16.402460 | 66.265839 |
+| 2 | Kimi K3 Max | open_weight_deployment | 88.839676 | 27.796768 | 19.398245 | 59.690663 |
+| 3 | Claude Opus 5 Max | single_model_service | 90.731355 | 19.259083 | 3.965025 | 55.510021 |
+| 4 | Claude Fable 5 Max | fallback_composite_service | 88.710888 | 21.989913 | 0.705849 | 54.429636 |
+| 5 | GLM-5.2 Max | open_weight_deployment | 67.885646 | 23.217369 | 55.306275 | 54.202703 |
+
+`umi_public = 0.55 × Capability + 0.25 × Operational Efficiency + 0.20 × Access Economics`.
+Capability uses chess, DeepSWE Pass@1, SciCode, WeirdML, GPQA, OTIS Mock AIME, and CritPt.
+Operational Efficiency uses DeepSWE output tokens and agent steps. Access Economics uses
+WeirdML cost per run on the high-effort (`_max` / `_xhigh` / `_high` / `_promax`) 50-config
+panel. Sol leads because it is strong on Capability and far cheaper in DeepSWE tokens and
+steps. GLM is last on Capability but cheapest on Access. Fable is the public composite product,
+including SciCode and CritPt rows that name an Opus 4.8 fallback. DeepSWE cost is not in the
+headline because Fable's official observation count is 432/436.
+
+This is not v0.3 `headline_overall` and not billed Economics. Intervals are unpublished: the
+extracts are configuration-level means.
+
+## v0.3 publication decision
+
+**Legacy product: a governed Capability ranking of Opus, Kimi, and GLM. No headline UMI
 Overall score and no universal rank.**
 
 The five configurations remain visible as model-specific partial estimates. None is eligible for
