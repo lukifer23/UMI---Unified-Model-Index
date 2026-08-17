@@ -1,8 +1,8 @@
 # UMI — Unified Model Index
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
-Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.15 adds the first
-bounded General Interaction workload authority for the governed MMLU-Pro cohort while retaining the
+Capability, Efficiency, Economics, Overall, and experimental Value. Version 0.3.16 hardens the
+offline crash/resume path of the governed OpenRouter runner while retaining the
 real, five-configuration, multi-source pilot with exact DeepSWE trial-ledger denominators and a
 governed, offline attempt-ledger aggregation path, plus AA
 Terminal-Bench v2.1, AA-Omniscience, AA-LCR,
@@ -10,7 +10,8 @@ Terminal-Bench v2.1, AA-Omniscience, AA-LCR,
 GPQA Diamond, SciCode, CritPt, and ARC-AGI-2 results plus DeepSWE confidence intervals and
 harness-resource means. It does **not**
 publish a headline UMI score: the evidence supports only provisional, model-specific partial
-Capability and Efficiency estimates.
+Capability and Efficiency estimates. The frozen 70-task / five-deployment MMLU-Pro contract still
+cannot clear Efficiency or Economics headline gates by itself.
 
 The pilot cohort is Claude Opus 5 Max, Claude Fable 5 Max, GPT-5.6 Sol Max, Kimi K3 Max, and
 GLM-5.2 Max. Its frozen sources are Artificial Analysis public facts, Epoch ECI and Benchmarking Hub
@@ -124,14 +125,33 @@ PYTHONPATH=. uv run --no-sync python -m scripts.run_openrouter_operational_pilot
   --run-manifest data/operational/pilot-v0.1/openrouter-five-model-run.yaml
 ```
 
+After a crash or interrupt, inspect the run directory offline. This command does not accept
+`--accept-network`, does not write artifacts, and does not contact OpenRouter:
+
+```bash
+PYTHONPATH=. uv run --no-sync python -m scripts.run_openrouter_operational_pilot \
+  --status \
+  --task-pack data/operational/pilot-v0.1/mmlu-pro-test-balanced-70-v1.json \
+  --run-manifest data/operational/pilot-v0.1/openrouter-five-model-run.yaml \
+  --output-dir PATH_TO_EXISTING_RUN
+```
+
+The report prints run-contract identity, completed/remaining/blocked counts, the remaining
+conservative ceiling, blocked paths (`request-started` without a response, `request-error.json`,
+`review-error.json`, or checksum/request drift), and whether 350 valid results are present.
+A started request with no retained response, a request error, or a post-response identity/cost
+mismatch is blocked for manual review. Resume with `--execute --resume` only after the operator
+understands those blockers; the runner still will not automatically retry a paid request.
+
 Execution additionally requires `--execute`, `--accept-cost`, a numeric `--max-cost-usd` at least
 as large as the remaining conservative ceiling, a caller-supplied stable run ID/evaluation date,
 and an output directory. It writes the exact request before each call, marks the paid request as
 started, and never retries a missing or failed paid response automatically. A resumed run reuses
 retained byte-exact response bodies, polls only their non-billable generation metadata, and rejects
 any changed task, manifest, endpoint, provider, price, model, tier, checksum, or artifact fingerprint.
-The run contract binds the exact executor source SHA-256 and harness version, so code drift also blocks
-resume.
+Identity or cost mismatches after a retained response persist `review-error.json` and still refuse
+automatic retry. The run contract binds the exact executor source SHA-256 and harness version, so
+code drift also blocks resume.
 Completed deployments
 produce raw-artifact manifests, ready attempt ledgers, deterministic aggregations, and a run summary.
 Raw OpenRouter response cost remains `router_response_cost`. The derived ledgers promote it to

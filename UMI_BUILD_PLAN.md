@@ -21,8 +21,9 @@ trial ledger without redistributing rights-unclear raw records. The controlled-e
 has a typed single-deployment attempt ledger and deterministic offline aggregation into complete
 Efficiency, partial diagnostics, and provider-billed successful-task Economics. Its first exact
 five-model execution contract is a frozen, balanced 70-task MMLU-Pro cohort with a conservative
-350-request price ceiling and fail-closed provider/effort/tier mappings; no controlled pilot ledger
-is admitted yet because the paid run and billing evidence do not exist.
+350-request price ceiling and fail-closed provider/effort/tier mappings. v0.3.16 hardens that
+executor's offline status, crash/resume, and identity/cost review artifacts; no controlled pilot
+ledger is admitted yet because the paid run and billing evidence do not exist.
 
 It does not yet support a public UMI. The current five-model pilot has 48 of 75 configured
 Capability cells ready. Opus, Sol, Kimi, and GLM now span five domains and clear the Capability-only

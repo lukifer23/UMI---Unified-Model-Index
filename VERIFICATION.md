@@ -1,4 +1,27 @@
-# UMI v0.3.15 verification record
+# UMI v0.3.16 verification record
+
+Verified on 2026-08-17 from `main` on Windows with the Python 3.11+ project contract.
+This release hardens the offline OpenRouter runner state machine. It does not execute the
+paid 350-request cohort, does not admit an operational ledger, and does not change scored
+fingerprints, coverage, or headline gates. Formula identity remains `umi-methodology-v0.3.15`.
+
+The prior v0.3.15 hosted Linux/Windows CI evidence is retained below.
+
+## v0.3.16 offline runner hardening
+
+| Check | Outcome |
+|---|---|
+| `uv run pytest` | 171 passed |
+| `uv run pytest --cov=umi --cov=analysis --cov-report=term-missing --cov-fail-under=90` | 171 passed; 93.33% core package and analysis coverage; live acquisition/execution behavior is still verified separately rather than through mocked HTTP |
+| `PYTHONPATH=. uv run --no-sync ruff check .` | passed |
+| `PYTHONPATH=. uv run --no-sync mypy --strict umi analysis scripts` | passed, 55 source files |
+| offline `scripts.run_openrouter_operational_pilot --status` on a clean run contract | passed; 350 pending attempts, remaining ceiling `$39.455197`, `finalize_possible` false; no network and no writes |
+| crash/resume unit tests over frozen local artifacts | passed; HTTP helpers unused; request-started, request-error, request-bytes drift, raw-body checksums, identity/cost `review-error.json`, remaining-cost invariance, ledger region rejection, and incomplete 350-result finalize all fail closed |
+| `umi operational preflight --task-pack ... --run-manifest ...` | passed; still 70/5/350 and `$39.455197` |
+| documented validation, ingestion, scoring, comparison, analysis, and certificate CLI flows | passed with valid JSON output |
+| live `--preflight` / `--execute` | not run; no paid request |
+
+## Prior v0.3.15 verification record
 
 Verified on 2026-08-16 from `main` on macOS with Python 3.14.3 against the Python 3.11+
 project contract.

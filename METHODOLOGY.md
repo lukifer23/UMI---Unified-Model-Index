@@ -693,7 +693,11 @@ remaining worst-case ceiling.
 
 The runner writes an immutable request and paid-request-start marker before sending. It performs no
 automatic completion retries. If a response is missing after a started request, or a request error
-could have ambiguous billing, the run blocks for manual reconciliation. Resume may retrieve
+could have ambiguous billing, the run blocks for manual reconciliation. Package 0.3.16 also persists
+a non-retryable `review-error.json` when a retained response and generation fail identity or cost
+reconciliation, and adds an offline `--status` inspection that neither writes artifacts nor uses
+the network. These are operator and persistence rules; they do not change scored fingerprints,
+coverage, or headline gates. Resume may retrieve
 generation metadata for an already retained response because that lookup is non-billable; it may not
 silently duplicate the generation. The exact response and generation wire bytes are retained beside
 their parsed envelopes and verified by SHA-256 before aggregation. Each result binds the raw response

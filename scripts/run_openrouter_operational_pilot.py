@@ -34,6 +34,7 @@ from umi.schemas import (
     OperationalDeploymentContract,
     OperationalRunManifest,
 )
+from umi.version import PACKAGE_VERSION
 
 REQUIRED_ENDPOINT_PARAMETERS = {"max_tokens", "reasoning", "reasoning_effort", "response_format"}
 SAFE_RESPONSE_HEADERS = {
@@ -47,6 +48,8 @@ SAFE_RESPONSE_HEADERS = {
 }
 BILLING_RECONCILIATION_ABS_TOLERANCE_USD = 0.00000005
 RUNNER_CONTRACT_VERSION = "umi-openrouter-controlled-harness-v0.2"
+REQUEST_ERROR_NAME = "request-error.json"
+REVIEW_ERROR_NAME = "review-error.json"
 
 
 class RunnerError(ValueError):
@@ -127,7 +130,7 @@ def _headers(api_key: str) -> dict[str, str]:
         "Content-Type": "application/json",
         "HTTP-Referer": "https://github.com/lukifer23/UMI---Unified-Model-Index",
         "X-Title": "UMI controlled operational pilot",
-        "User-Agent": f"UMI-controlled-runner/0.3.15 ({RUNNER_CONTRACT_VERSION})",
+        "User-Agent": f"UMI-controlled-runner/{PACKAGE_VERSION} ({RUNNER_CONTRACT_VERSION})",
     }
 
 
@@ -557,15 +560,19 @@ def _perform_attempt(
     generation_body_path = directory / "generation-body.json"
     generation_path = directory / "generation.json"
     result_path = directory / "result.json"
-    error_path = directory / "request-error.json"
+    error_path = directory / REQUEST_ERROR_NAME
+    review_path = directory / REVIEW_ERROR_NAME
     error_body_path = directory / "request-error-body.bin"
     if result_path.is_file():
         result = _read_json(result_path)
         if canonical_fingerprint(result) != result.get("fingerprint"):
             raise RunnerError(f"attempt result fingerprint mismatch: {result_path}")
         return result
-    if error_path.exists():
-        raise RunnerError(f"ambiguous or failed paid request requires manual review: {error_path}")
+    blocking_path = error_path if error_path.exists() else review_path
+    if blocking_path.exists():
+        raise RunnerError(
+            f"ambiguous or failed paid request requires manual review: {blocking_path}"
+        )
     request = request_payload(task, deployment)
     request_bytes = _canonical_bytes(request)
     request_sha256 = _sha256_bytes(request_bytes)
@@ -671,7 +678,21 @@ def _perform_attempt(
         generation_body_path
     ) != generation_artifact.get("generation_sha256"):
         raise RunnerError(f"generation raw-body checksum mismatch: {generation_body_path}")
-    result = _attempt_result(task, deployment, response_artifact, generation_artifact)
+    try:
+        result = _attempt_result(task, deployment, response_artifact, generation_artifact)
+    except RunnerError as error:
+        _write_new(
+            review_path,
+            {
+                "error_type": type(error).__name__,
+                "error": str(error),
+                "request_sha256": request_sha256,
+                "response_sha256": response_artifact.get("response_sha256"),
+                "generation_sha256": generation_artifact.get("generation_sha256"),
+                "automatic_retry_permitted": False,
+            },
+        )
+        raise
     _write_new(result_path, result)
     return result
 
@@ -1000,6 +1021,161 @@ def _billing_reconciliation(
     return total_cost, credit_delta, reconciled
 
 
+def _attempt_status(
+    output_dir: Path,
+    task: ControlledTask,
+    deployment: OperationalDeploymentContract,
+) -> dict[str, Any]:
+    directory = _attempt_directory(output_dir, task, deployment)
+    request_bytes = _canonical_bytes(request_payload(task, deployment))
+    reasons: list[str] = []
+    result_path = directory / "result.json"
+    error_path = directory / REQUEST_ERROR_NAME
+    review_path = directory / REVIEW_ERROR_NAME
+    started_path = directory / "request-started.json"
+    request_path = directory / "request.json"
+    response_path = directory / "response.json"
+    response_body_path = directory / "response-body.json"
+    generation_path = directory / "generation.json"
+    generation_body_path = directory / "generation-body.json"
+    valid_result = False
+    if result_path.is_file():
+        try:
+            result = _read_json(result_path)
+            if canonical_fingerprint(result) != result.get("fingerprint"):
+                reasons.append("result_fingerprint_mismatch")
+            else:
+                valid_result = True
+        except (OSError, json.JSONDecodeError, RunnerError):
+            reasons.append("result_unreadable")
+    if error_path.exists():
+        reasons.append("request_error")
+    if review_path.exists():
+        reasons.append("review_error")
+    if started_path.exists() and not response_path.exists():
+        reasons.append("request_started_without_response")
+    if request_path.exists() and request_path.read_bytes() != request_bytes:
+        reasons.append("request_bytes_drift")
+    if response_path.exists():
+        try:
+            response_artifact = _read_json(response_path)
+            checksum = response_artifact.get("response_sha256")
+            if not response_body_path.is_file() or _sha256_file(response_body_path) != checksum:
+                reasons.append("response_raw_body_checksum_mismatch")
+        except (OSError, json.JSONDecodeError, RunnerError):
+            reasons.append("response_unreadable")
+    if generation_path.exists():
+        try:
+            generation_artifact = _read_json(generation_path)
+            generation_checksum = generation_artifact.get("generation_sha256")
+            if (
+                not generation_body_path.is_file()
+                or _sha256_file(generation_body_path) != generation_checksum
+            ):
+                reasons.append("generation_raw_body_checksum_mismatch")
+        except (OSError, json.JSONDecodeError, RunnerError):
+            reasons.append("generation_unreadable")
+    if valid_result and not reasons:
+        state = "completed"
+    elif reasons:
+        state = "blocked"
+    elif response_path.exists() or generation_path.exists():
+        state = "retained_unfinalized"
+    else:
+        state = "pending"
+    return {
+        "task_id": task.task_id,
+        "deployment_id": deployment.deployment_id,
+        "path": (
+            directory.relative_to(output_dir).as_posix() if directory.exists() else None
+        ),
+        "state": state,
+        "reasons": reasons,
+    }
+
+
+def inspect_run_status(
+    output_dir: Path,
+    pack: ControlledTaskPack,
+    manifest: OperationalRunManifest,
+) -> dict[str, Any]:
+    """Inspect an existing run directory without network access or writes."""
+    if not output_dir.exists():
+        raise RunnerError(f"output directory does not exist: {output_dir}")
+    state_path = output_dir / "run-contract.json"
+    if not state_path.is_file():
+        raise RunnerError(f"run directory is missing run-contract.json: {state_path}")
+    contract = _read_json(state_path)
+    contract_errors: list[str] = []
+    if canonical_fingerprint(contract) != contract.get("fingerprint"):
+        contract_errors.append("run_contract_fingerprint_mismatch")
+    expected_contract = {
+        "run_state_version": "umi-openrouter-run-state-v0.2",
+        "runner_contract_version": RUNNER_CONTRACT_VERSION,
+        "runner_source_sha256": _sha256_file(Path(__file__)),
+        "run_id": contract.get("run_id"),
+        "evaluation_date": contract.get("evaluation_date"),
+        "task_pack_id": pack.pack_id,
+        "task_pack_fingerprint": pack.fingerprint,
+        "manifest_id": manifest.manifest_id,
+        "manifest_fingerprint": manifest.fingerprint,
+    }
+    expected_contract["fingerprint"] = canonical_fingerprint(expected_contract)
+    if (
+        contract.get("task_pack_id") != pack.pack_id
+        or contract.get("task_pack_fingerprint") != pack.fingerprint
+    ):
+        contract_errors.append("run contract does not match the loaded task pack")
+    if (
+        contract.get("manifest_id") != manifest.manifest_id
+        or contract.get("manifest_fingerprint") != manifest.fingerprint
+    ):
+        contract_errors.append("run contract does not match the loaded run manifest")
+    if contract.get("runner_contract_version") != RUNNER_CONTRACT_VERSION:
+        contract_errors.append("run contract harness version does not match this runner")
+    if contract.get("runner_source_sha256") != expected_contract["runner_source_sha256"]:
+        contract_errors.append("run contract runner source SHA-256 does not match this runner")
+    attempt_reports = [
+        _attempt_status(output_dir, task, deployment)
+        for task, deployment in execution_schedule(pack, manifest)
+    ]
+    completed = [item for item in attempt_reports if item["state"] == "completed"]
+    blocked = [item for item in attempt_reports if item["state"] == "blocked"]
+    retained = [item for item in attempt_reports if item["state"] == "retained_unfinalized"]
+    pending = [item for item in attempt_reports if item["state"] == "pending"]
+    expected = len(attempt_reports)
+    return {
+        "run_id": contract.get("run_id"),
+        "evaluation_date": contract.get("evaluation_date"),
+        "runner_contract_version": contract.get("runner_contract_version"),
+        "runner_source_sha256": contract.get("runner_source_sha256"),
+        "task_pack_id": contract.get("task_pack_id"),
+        "task_pack_fingerprint": contract.get("task_pack_fingerprint"),
+        "manifest_id": contract.get("manifest_id"),
+        "manifest_fingerprint": contract.get("manifest_fingerprint"),
+        "contract_matches_inputs": not contract_errors,
+        "contract_errors": contract_errors,
+        "expected_attempts": expected,
+        "completed_attempts": len(completed),
+        "pending_attempts": len(pending),
+        "blocked_attempts": len(blocked),
+        "retained_unfinalized_attempts": len(retained),
+        "remaining_attempts": expected - len(completed),
+        "remaining_cost_usd": _remaining_cost(output_dir, pack, manifest),
+        "finalize_possible": len(completed) == expected and not blocked,
+        "blocked": blocked,
+        "retained_unfinalized": retained,
+    }
+
+
+def _status(args: argparse.Namespace) -> int:
+    pack = load_task_pack(args.task_pack)
+    manifest = load_run_manifest(args.run_manifest)
+    report = inspect_run_status(Path(args.output_dir), pack, manifest)
+    print(json.dumps(report, indent=2, sort_keys=True, allow_nan=False))
+    return 0
+
+
 def _execute(args: argparse.Namespace) -> int:
     pack = load_task_pack(args.task_pack)
     manifest = load_run_manifest(args.run_manifest)
@@ -1125,6 +1301,11 @@ def build_parser() -> argparse.ArgumentParser:
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--preflight", action="store_true")
     mode.add_argument("--execute", action="store_true")
+    mode.add_argument(
+        "--status",
+        action="store_true",
+        help="Inspect an existing run directory without network access or writes",
+    )
     parser.add_argument("--accept-cost", action="store_true")
     parser.add_argument("--max-cost-usd", type=float)
     parser.add_argument("--run-id")
@@ -1136,6 +1317,10 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> int:
     args = build_parser().parse_args()
+    if args.status:
+        if not args.output_dir:
+            raise RunnerError("status requires --output-dir")
+        return _status(args)
     if not args.accept_network:
         raise RunnerError("--accept-network is required")
     if args.execute and not all((args.run_id, args.evaluation_date, args.output_dir)):
