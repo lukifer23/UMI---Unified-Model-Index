@@ -9,8 +9,9 @@ from pydantic import ValidationError
 from umi.edition import GOVERNED_EDITION_ID, GOVERNED_PUBLIC_INDEX, load_public_edition_config
 from umi.feasibility import validate_public_edition_feasibility
 from umi.identity import load_public_identities
-from umi.public import score_public_edition
+from umi.public import SERIES, score_public_edition
 from umi.public_blockers import PublicEvidenceBlocker, build_blocker_report
+from umi.public_bundle import load_public_scoring_bundle
 from umi.public_candidates import (
     PublicCandidateAudit,
     PublicCandidateAuditReport,
@@ -41,6 +42,24 @@ def test_v05_policy_is_feasible_and_expands_identities() -> None:
         "gemini-3.6-flash-high",
         "gpt-5.4-2026-03-05-xhigh",
     }
+
+
+def test_governed_public_bundle_binds_typed_zip_evidence() -> None:
+    bundle = load_public_scoring_bundle(edition_name="v0.5")
+    assert bundle.release_class == GOVERNED_PUBLIC_INDEX
+    assert bundle.source_artifact_sha256 == verify_epoch_zip()
+    assert [item.series_id for item in bundle.series] == [spec["id"] for spec in SERIES]
+    identities = {item.entity_id for item in load_public_identities(edition="v0.5")}
+    assert set(bundle.entity_ids) == identities
+    for contract in bundle.series:
+        assert set(contract.accepted_entity_ids) == identities
+        assert contract.anchor_n >= 8
+        assert all(
+            item.source_artifact_sha256 == bundle.source_artifact_sha256
+            for item in contract.records
+        )
+    again = load_public_scoring_bundle(edition_name="v0.5")
+    assert again.evidence_fingerprint == bundle.evidence_fingerprint
 
 
 def test_v05_reproduces_v04_pilot_scores() -> None:

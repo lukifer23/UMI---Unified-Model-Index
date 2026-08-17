@@ -9,6 +9,7 @@ from umi.adapters.models import AdaptationResult
 from umi.config import ProjectConfig
 from umi.loading import Dataset, SourceRegistry
 from umi.public_blockers import PublicBlockerReport
+from umi.public_bundle import PublicScoringBundle
 from umi.public_candidates import PublicCandidateAuditReport
 from umi.public_certificate import PublicIndexCertificate
 from umi.schemas import (
@@ -48,6 +49,7 @@ SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "public-index-certificate.schema.json": PublicIndexCertificate,
     "public-candidate-audit.schema.json": PublicCandidateAuditReport,
     "public-blocker-report.schema.json": PublicBlockerReport,
+    "public-scoring-bundle.schema.json": PublicScoringBundle,
 }
 
 

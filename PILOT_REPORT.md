@@ -13,6 +13,7 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 score
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 audit
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 candidates
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 blockers
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 bundle
 ```
 
 | Rank | Configuration | Effort | UMI Public | Partial 95% interval | Rank range |

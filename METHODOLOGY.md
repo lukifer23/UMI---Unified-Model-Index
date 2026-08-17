@@ -133,6 +133,14 @@ governs that edition.
 v0.4 processed artifacts are frozen by SHA-256 in `tests/test_v04_legacy_freeze.py`. Rerunning
 v0.5 must not rewrite them. The five Max pilots' `umi_public` values are a reproduction gate.
 
+### Scoring bundle and evidence contracts
+
+v0.5 scoring consumes a revalidated `PublicScoringBundle`. Every accepted cell is a typed
+`PublicEvidenceRecord` bound to the Epoch zip member, field, config ID, entity ID, and zip
+SHA-256. Missing a required entity or an 8+ panel fails closed before components are
+combined. The bundle fingerprint excludes timestamps and input order. The scorer does not
+read unbound CSV rows.
+
 ### Score validation
 
 `umi edition --edition v0.5 audit` reloads the frozen zip, checks every published raw against

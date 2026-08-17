@@ -20,6 +20,7 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 dashboard
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 certificate
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 candidates
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 blockers
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 bundle
 ```
 
 | Rank | Configuration | Capability | Operational Efficiency | Access Economics | UMI Public |

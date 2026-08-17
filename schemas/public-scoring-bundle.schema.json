@@ -1,0 +1,216 @@
+{
+  "$defs": {
+    "PublicEvidenceRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "complete": {
+          "title": "Complete",
+          "type": "boolean"
+        },
+        "config_id": {
+          "title": "Config Id",
+          "type": "string"
+        },
+        "entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Entity Id"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "member": {
+          "title": "Member",
+          "type": "string"
+        },
+        "raw": {
+          "title": "Raw",
+          "type": "number"
+        },
+        "series_id": {
+          "title": "Series Id",
+          "type": "string"
+        },
+        "source_artifact_id": {
+          "title": "Source Artifact Id",
+          "type": "string"
+        },
+        "source_artifact_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Artifact Sha256",
+          "type": "string"
+        },
+        "source_name": {
+          "title": "Source Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "series_id",
+        "config_id",
+        "raw",
+        "complete",
+        "source_name",
+        "member",
+        "field",
+        "source_artifact_id",
+        "source_artifact_sha256"
+      ],
+      "title": "PublicEvidenceRecord",
+      "type": "object"
+    },
+    "PublicSeriesContract": {
+      "additionalProperties": false,
+      "properties": {
+        "accepted_entity_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Accepted Entity Ids",
+          "type": "array"
+        },
+        "anchor_n": {
+          "minimum": 0,
+          "title": "Anchor N",
+          "type": "integer"
+        },
+        "component": {
+          "title": "Component",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "harness": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Harness"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "member": {
+          "title": "Member",
+          "type": "string"
+        },
+        "panel_filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Panel Filter"
+        },
+        "records": {
+          "items": {
+            "$ref": "#/$defs/PublicEvidenceRecord"
+          },
+          "title": "Records",
+          "type": "array"
+        },
+        "series_id": {
+          "title": "Series Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "series_id",
+        "member",
+        "field",
+        "kind",
+        "component",
+        "anchor_n",
+        "accepted_entity_ids",
+        "records"
+      ],
+      "title": "PublicSeriesContract",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "edition_id": {
+      "title": "Edition Id",
+      "type": "string"
+    },
+    "entity_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Entity Ids",
+      "type": "array"
+    },
+    "evidence_fingerprint": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Fingerprint",
+      "type": "string"
+    },
+    "formula_version": {
+      "title": "Formula Version",
+      "type": "string"
+    },
+    "release_class": {
+      "title": "Release Class",
+      "type": "string"
+    },
+    "series": {
+      "items": {
+        "$ref": "#/$defs/PublicSeriesContract"
+      },
+      "title": "Series",
+      "type": "array"
+    },
+    "source_artifact_id": {
+      "title": "Source Artifact Id",
+      "type": "string"
+    },
+    "source_artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Artifact Sha256",
+      "type": "string"
+    },
+    "source_attribution": {
+      "title": "Source Attribution",
+      "type": "string"
+    },
+    "source_license": {
+      "title": "Source License",
+      "type": "string"
+    }
+  },
+  "required": [
+    "edition_id",
+    "release_class",
+    "formula_version",
+    "source_artifact_id",
+    "source_artifact_sha256",
+    "source_license",
+    "source_attribution",
+    "entity_ids",
+    "series",
+    "evidence_fingerprint"
+  ],
+  "title": "PublicScoringBundle",
+  "type": "object"
+}

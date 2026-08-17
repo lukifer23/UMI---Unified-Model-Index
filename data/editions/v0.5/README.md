@@ -1,6 +1,7 @@
 # UMI Public v0.5 processed index
 
 Canonical scored payload: `processed/model-scores.json`.
+Typed evidence: `processed/public-scoring-bundle.json`.
 Audit: `processed/validation.json`.
 Partial intervals: `processed/uncertainty.json`.
 Provenance certificate: `processed/public-index-certificate.json`.

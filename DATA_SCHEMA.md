@@ -350,6 +350,13 @@ Scenario counts are endpoint combinations, not probabilities.
 
 See `schemas/capability-comparison.schema.json` for the complete comparison contract.
 
+## Public scoring bundle
+
+`schemas/public-scoring-bundle.schema.json` is the machine-readable contract for governed
+Public evidence. It binds identities, the Epoch zip SHA-256, and every common-core series
+to typed `PublicEvidenceRecord` rows. `evidence_fingerprint` is SHA-256 over the edition,
+zip checksum, and accepted config/entity/raw triples. The bundle does not score.
+
 ## Public index certificate
 
 `schemas/public-index-certificate.schema.json` is the machine-readable contract for the UMI

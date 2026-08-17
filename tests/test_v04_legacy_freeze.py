@@ -56,6 +56,16 @@ def test_v04_cannot_be_relabeled_as_governed() -> None:
         type(config).model_validate(payload)
 
 
+def test_v04_scores_through_the_public_bundle_without_drift() -> None:
+    from umi.public import score_public_edition
+    from umi.public_bundle import load_public_scoring_bundle
+
+    bundle = load_public_scoring_bundle(edition_name="v0.4")
+    assert bundle.release_class == EXPERIMENTAL_POINT_SCORE
+    payload = score_public_edition(edition_name="v0.4")
+    assert payload["scored_data_fingerprint"] == V04_FINGERPRINT
+
+
 def test_v04_is_the_experimental_five_model_point_score() -> None:
     payload = json.loads(
         (ROOT / "data" / "editions" / "v0.4" / "processed" / "model-scores.json").read_text(

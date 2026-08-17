@@ -407,10 +407,16 @@ def score_public_edition(
     edition_name: str = "v0.4",
     identities: tuple[PublicSystemIdentity, ...] | None = None,
 ) -> dict[str, Any]:
+    from umi.public_bundle import bundle_points, load_public_scoring_bundle
+
     edition = config or load_public_edition_config(edition=edition_name)
     loaded = identities or load_public_identities(edition=edition_name)
-    mapping = entity_map_from_identities(loaded)
     identities = loaded
+    bundle = load_public_scoring_bundle(
+        edition_name=edition_name,
+        config=edition,
+        identities=identities,
+    )
     domain_weights = {
         item.value: weight for item, weight in edition.weights.capability_domains.items()
     }
@@ -422,28 +428,8 @@ def score_public_edition(
     }
     scored_series: dict[str, dict[str, dict[str, float]]] = {}
     anchors: dict[str, dict[str, Any]] = {}
-    blockers: list[dict[str, Any]] = []
-    required = {item.entity_id for item in identities}
     for spec in SERIES:
-        points = epoch_points(
-            spec["member"],
-            spec["field"],
-            require_harness=spec.get("harness"),
-            identities=identities,
-            panel_filter=spec.get("panel_filter"),
-            entity_map=mapping,
-        )
-        pilots = {item.entity_id for item in points if item.entity_id}
-        if pilots != required or len(points) < edition.eligibility.minimum_anchor_panel:
-            blockers.append(
-                {
-                    "series": spec["id"],
-                    "pilots": sorted(item for item in pilots if item is not None),
-                    "anchor_n": len(points),
-                    "reason": "series missing a pilot or an 8+ anchor panel",
-                }
-            )
-            continue
+        points = bundle_points(bundle, spec["id"])
         scored_series[spec["id"]] = _pilot_scores(points, spec["kind"])
         anchors[spec["id"]] = {
             "member": spec["member"],
@@ -453,8 +439,6 @@ def score_public_edition(
             "panel_filter": spec.get("panel_filter"),
             "source": f"epoch-benchmark-data-2026-08-14.zip:{spec['member']}",
         }
-    if blockers:
-        raise ValueError("required public series failed: " + str(blockers))
 
     models: list[dict[str, Any]] = []
     for identity in identities:
@@ -598,6 +582,7 @@ def write_public_artifacts(
     )
     edition = load_public_edition_config(edition=edition_name)
     if edition.release_class == GOVERNED_PUBLIC_INDEX:
+        from umi.public_bundle import load_public_scoring_bundle, write_public_scoring_bundle
         from umi.public_candidates import write_candidate_audits
         from umi.public_certificate import build_public_certificate
         from umi.public_governance import write_governance_artifacts
@@ -617,6 +602,11 @@ def write_public_artifacts(
         certificate = build_public_certificate(payload, validation, uncertainty)
         (destination / "public-index-certificate.json").write_text(
             json.dumps(certificate, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        write_public_scoring_bundle(
+            load_public_scoring_bundle(edition_name=edition_name),
+            destination,
+            edition_name=edition_name,
         )
         candidate_audits = write_candidate_audits(destination)
         governance = write_governance_artifacts(destination, edition_name=edition_name)

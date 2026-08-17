@@ -242,6 +242,15 @@ def test_edition_candidates_v05_are_abstentions(capsys: pytest.CaptureFixture[st
     assert all(item["status"] == "insufficient_common_support" for item in report["candidates"])
 
 
+def test_edition_bundle_v05(capsys: pytest.CaptureFixture[str]) -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.5", "bundle"])
+    assert run(args) == 0
+    bundle = json.loads(capsys.readouterr().out)
+    assert bundle["release_class"] == "governed_public_index"
+    assert bundle["evidence_fingerprint"]
+    assert len(bundle["series"]) == 10
+
+
 def test_edition_sensitivity_v05(capsys: pytest.CaptureFixture[str]) -> None:
     args = build_parser().parse_args(["edition", "--edition", "v0.5", "sensitivity"])
     assert run(args) == 0
@@ -262,7 +271,10 @@ def test_edition_blockers_v05(capsys: pytest.CaptureFixture[str]) -> None:
     assert "candidate-gemini-3.1-pro-preview" in ids
 
 
-@pytest.mark.parametrize("command", ["certificate", "candidates", "blockers", "sensitivity"])
+@pytest.mark.parametrize(
+    "command",
+    ["certificate", "candidates", "blockers", "sensitivity", "bundle"],
+)
 def test_governed_surfaces_rejected_on_experimental_v04(command: str) -> None:
     args = build_parser().parse_args(["edition", "--edition", "v0.4", command])
     with pytest.raises(SystemExit, match="historical_experimental_point_score"):
