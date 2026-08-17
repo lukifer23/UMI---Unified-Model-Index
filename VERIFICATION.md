@@ -215,10 +215,15 @@ umi/                              validation, readiness, scoring, fingerprinting
 - empirical calibration or decorrelation of within-domain family budgets, a longitudinal reference
   cohort, and formal uncertainty propagation.
 
-The highest-value missing artifact remains one complete five-model task-level workload cohort run
-through the governed attempt-ledger path with deployment-bound success, cost, tokens, cache use, wall
-time, and turns. Additional capability
-sources are useful only when they close a configured cell or materially strengthen source diversity;
-they do not substitute for the operational evidence blocking Efficiency and Economics. The current
-gates must remain closed until those artifacts exist; missing evidence must not be inferred, imputed,
-or reweighted away.
+Paid execution of the frozen MMLU-Pro cohort is out of scope for the first ranking product. That
+cohort can fill at most the 10% general-interaction family. Completing every currently approved
+workload (DeepSWE, Terminal-Bench, CursorBench, and MMLU-Pro) still tops out at 0.35 Efficiency
+and 0.35 Economics coverage, below the 0.50 / 0.40 gates. Additional Capability sources are useful
+only when they close a configured cell or materially strengthen source diversity; they do not
+substitute for the operational evidence blocking Overall. The current gates must remain closed
+until approved families exist outside coding plus general interaction **and** DeepSWE-class public
+ledgers fill them; missing evidence must not be inferred, imputed, reweighted, or replaced by
+published calculated cost-per-task.
+
+The first official ranking product is the existing Opus / Kimi / GLM Capability certificate. It is
+not `headline_overall`.

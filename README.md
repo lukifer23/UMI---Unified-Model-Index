@@ -9,9 +9,14 @@ Terminal-Bench v2.1, AA-Omniscience, AA-LCR,
 τ³-Banking, GDPval-AA v2, HLE, CursorBench 3.2, DeepSWE,
 GPQA Diamond, SciCode, CritPt, and ARC-AGI-2 results plus DeepSWE confidence intervals and
 harness-resource means. It does **not**
-publish a headline UMI score: the evidence supports only provisional, model-specific partial
-Capability and Efficiency estimates. The frozen 70-task / five-deployment MMLU-Pro contract still
-cannot clear Efficiency or Economics headline gates by itself.
+publish a headline UMI Overall score. The first official ranking product is the governed
+**Capability comparison** of Claude Opus 5 Max, Kimi K3 Max, and GLM-5.2 Max on their eleven
+common ready series. That certificate is not Overall, not Efficiency, and not Economics.
+GPT-5.6 Sol Max has full Capability coverage but is not in that three-model common-evidence
+panel as published; Claude Fable 5 Max remains a DeepSWE-only partial. Paid benchmark execution
+is out of scope for this ranking: even a completed 350-request MMLU-Pro run cannot clear the
+configured Efficiency 0.50 or Economics 0.40 gates, because those baskets still have no approved
+families outside coding and general interaction.
 
 The pilot cohort is Claude Opus 5 Max, Claude Fable 5 Max, GPT-5.6 Sol Max, Kimi K3 Max, and
 GLM-5.2 Max. Its frozen sources are Artificial Analysis public facts, Epoch ECI and Benchmarking Hub
@@ -202,8 +207,10 @@ second scoring implementation or a headline ranking.
 embedded manifest, snapshot, and sources are tested against the canonical JSON after every build.
 
 Every model-specific output is labeled `real evidence — model-specific partial estimate`; it is
-not a ranking. All `headline_overall` fields are null. `umi compare` produces a separately labeled,
-provisional rank only after explicitly restricting the requested models to their common evidence.
+not an Overall ranking. All `headline_overall` fields are null. `umi compare` produces a separately
+labeled Capability ranking only after explicitly restricting the requested models to their common
+evidence. The first official such product is the Opus / Kimi / GLM certificate on eleven shared
+series. It is not a headline UMI score.
 It leads with raw benchmark values and uses bundle-wide stable normalization panels: hiding a model
 from the display never refits another model's percentile. Every normalized contribution includes
 its applied fallback trace, absolute configured weight, panel ID, and score-scale ID. Joint

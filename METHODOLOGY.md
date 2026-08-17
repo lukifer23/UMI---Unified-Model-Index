@@ -4,7 +4,10 @@ This document is the authority for UMI scoring behavior. Configuration files con
 current policy values; code must not contradict this document. UMI v0.3.15 retains the manually
 reviewed, multi-source evidence pilot, hardens arithmetic-mean resource denominators against the
 official DeepSWE v1.1 trial ledger, and adds the governed attempt-level operational evidence path.
-It does not publish a headline UMI ranking.
+It does not publish a headline UMI Overall ranking. The first official ranking product is the
+governed three-model Capability comparison of Opus, Kimi, and GLM; that certificate is not
+Overall. Paid execution of the frozen MMLU-Pro cohort is out of scope for that product and
+cannot clear the configured Efficiency or Economics headline gates.
 The scoring formula identity is `umi-methodology-v0.3.15`; normalization remains
 `umi-normalization-v0.3.4`. v0.3.15 adds the first approved General Interaction workload profile so
 a completed governed MMLU-Pro cohort can enter Efficiency and Economics without standing in for
@@ -669,10 +672,13 @@ result is a fixed 70-task cohort; source category labels and answers are preserv
 IDs are slugged. The prompt contains the question and options but never the upstream chain-of-thought
 field or frozen correct answer.
 
-After the completed run clears artifact, crosswalk, registry, readiness, and bundle gates, its exact
+After a completed run clears artifact, crosswalk, registry, readiness, and bundle gates, its exact
 `mmlu-pro-controlled-general` series may populate the one-turn knowledge/reasoning family for both
 Efficiency and observed Economics. It cannot increase any other category, family, or workload's
-coverage and cannot by itself clear either component headline threshold.
+coverage and cannot by itself clear either component headline threshold. Completing every currently
+approved operational family (DeepSWE, Terminal-Bench, CursorBench, and this cohort) still tops out
+at 0.35 Efficiency and 0.35 Economics coverage. Paid execution is therefore not the path to the
+first ranking product.
 
 Every deployment receives the identical task pack, system prompt, JSON-object response contract,
 4,096-token completion ceiling, one-turn/no-tool policy, deterministic grader, and no automatic

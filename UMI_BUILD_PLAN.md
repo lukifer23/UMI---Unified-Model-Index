@@ -22,14 +22,23 @@ has a typed single-deployment attempt ledger and deterministic offline aggregati
 Efficiency, partial diagnostics, and provider-billed successful-task Economics. Its first exact
 five-model execution contract is a frozen, balanced 70-task MMLU-Pro cohort with a conservative
 350-request price ceiling and fail-closed provider/effort/tier mappings. v0.3.16 hardens that
-executor's offline status, crash/resume, and identity/cost review artifacts; no controlled pilot
-ledger is admitted yet because the paid run and billing evidence do not exist.
+executor's offline status, crash/resume, and identity/cost review artifacts. Paid execution of
+that cohort is out of scope for the first ranking: it cannot clear Efficiency or Economics
+headline gates, and no controlled ledger is admitted.
 
-It does not yet support a public UMI. The current five-model pilot has 48 of 75 configured
-Capability cells ready. Opus, Sol, Kimi, and GLM now span five domains and clear the Capability-only
-coverage gate (100%, 100%, 100%, and 86.25% respectively), while Fable remains at 8.25%
-because fallback-qualified evidence is rejected. Efficiency is still 4.5% DeepSWE-only coverage
-and Economics has no ready workload evidence. Weights remain hypotheses, normalization remains
+Chosen next step under the no-paid-run constraint: publish that Capability certificate now, and
+hunt DeepSWE-class public ledgers before opening empty workload families. The hunt list lives in
+`data/sources/OPEN_LEDGER_HUNT.md`. Do not promote published calculated cost-per-task.
+
+The first official public product is a governed **Capability ranking** of Opus, Kimi, and GLM on
+their eleven common ready series. It is not a headline Overall UMI. The current five-model pilot
+has 48 of 75 configured Capability cells ready. Opus, Sol, Kimi, and GLM now span five domains and
+clear the Capability-only coverage gate (100%, 100%, 100%, and 86.25% respectively), while Fable
+remains at 8.25% because fallback-qualified evidence is rejected. Efficiency is still 4.5%
+DeepSWE-only coverage and Economics has no ready workload evidence. A later Overall headline still
+requires approved families outside coding plus general interaction, DeepSWE-class public ledgers
+for those families, and provider-billing Economics. Published AA/Cursor calculated costs must not
+be promoted to fill that hole. Weights remain hypotheses, normalization remains
 cohort-relative, and source-bound uncertainty is deterministic endpoint sensitivity rather than a
 fully calibrated probabilistic model. Lab claims are first-class diagnostics but mostly lack an
 independent, cohort-identical comparison.

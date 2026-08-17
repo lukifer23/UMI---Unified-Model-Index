@@ -2,10 +2,20 @@
 
 ## Publication decision
 
-**Real evidence — model-specific partial estimates. No headline UMI score or universal rank.**
+**First official product: a governed Capability ranking of Opus, Kimi, and GLM. No headline UMI
+Overall score and no universal rank.**
 
-The five configurations remain visible, but none passes the inherited v0.2.1 coverage, component,
-workload, and Capability-domain gates. This is the expected outcome, not a failed run.
+The five configurations remain visible as model-specific partial estimates. None is eligible for
+`headline_overall`. Opus, Sol, Kimi, and GLM clear the Capability-only coverage and breadth gates;
+Fable does not. Efficiency is 4.5% DeepSWE-only coverage and Economics is empty, so Overall stays
+null. Paid benchmark execution is out of scope for this publication: completing the frozen
+MMLU-Pro contract would fill at most the 10% general-interaction family and still could not clear
+the 0.50 / 0.40 component gates.
+
+The first ranking we will stand behind is the existing three-model common-evidence comparison and
+[certificate](data/pilots/v0.3/processed/comparison-certificate-three-model.json) for Claude Opus 5
+Max, Kimi K3 Max, and GLM-5.2 Max. It is a Capability ranking on eleven shared series. It is not
+Overall, not Efficiency, and not Economics.
 
 ## Scored raw evidence
 
@@ -140,15 +150,17 @@ warnings and prevent the certificate from becoming a universal UMI score.
 - missing workload evidence is not reweighted to make the cohort eligible.
 
 The generated [model-specific partial estimates](data/pilots/v0.3/processed/model-specific-partial-estimates.json)
-have no model-specific rank and null `headline_overall` for every model. The five-model
+have no model-specific Overall rank and null `headline_overall` for every model. The five-model
 [common-evidence comparison](data/pilots/v0.3/processed/common-evidence-five-model-comparison.json)
-uses DeepSWE only because Fable's other benchmark identities are not cleared; the exact three-model
+uses DeepSWE only because Fable's other benchmark identities are not cleared; that panel cannot be
+the first official ranking. The exact three-model
 [common-evidence comparison](data/pilots/v0.3/processed/common-evidence-three-model-comparison.json)
-uses all eleven scored series under the current strict identity policy. Both are provisional and separately
-labeled, lead with raw values, and carry stable-panel and score-scale identity. The
+uses all eleven scored series under the current strict identity policy and is the first official
+**Capability** ranking product. Both lead with raw values and carry stable-panel and score-scale
+identity. The
 [three-model comparison certificate](data/pilots/v0.3/processed/comparison-certificate-three-model.json)
 adds the governed bundle, source-record, artifact-checksum, identity, and deterministic result
-fingerprint proof. The
+fingerprint proof. It must not be restyled as a headline UMI Overall score. The
 [source-bound uncertainty report](data/pilots/v0.3/processed/source-bound-uncertainty.json)
 re-scores one published bound at a time; it is not probabilistic propagation. The
 [source readiness report](data/pilots/v0.3/processed/source-readiness.json),
