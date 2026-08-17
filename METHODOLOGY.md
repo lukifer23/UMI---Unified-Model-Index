@@ -7,11 +7,14 @@ current policy values; code must not contradict this document. Three editions ar
   normalization `umi-normalization-v0.3.4`) remains the multi-source reviewed-fact pilot. It does
   not publish `headline_overall`. Its three-model Capability certificate is unchanged.
 - **v0.4 Public** (`umi-public-v0.4`, formula `umi-methodology-v0.4.0`, normalization
-  `umi-normalization-v0.4.0`) is a historical experimental point-score edition. It publishes one
-  `umi_public` number per exact Max pilot from frozen public extracts. It does not rewrite v0.3
-  artifacts, gates, or certificates. It is not the governed public index.
+  `umi-normalization-v0.4.0`, `release_class: historical_experimental_point_score`) is a
+  historical experimental point-score edition. It publishes one `umi_public` number per exact
+  Max pilot from frozen public extracts. It does not rewrite v0.3 artifacts, gates, or
+  certificates. It is not the governed public index. Classification is in
+  `docs/editions/v0.4/CLASSIFICATION.md`.
 - **v0.5 Governed Public** (`umi-public-v0.5`, formula `umi-methodology-v0.5.0`, normalization
-  `umi-normalization-v0.5.0`) freezes v0.4, independently validates published raw values against
+  `umi-normalization-v0.5.0`, `release_class: governed_public_index`) freezes v0.4, independently
+  validates published raw values against
   the Epoch zip, adds source-interval uncertainty and family ablation, and scores every frozen
   configuration that has the complete ten-series common core. The five v0.4 Max pilots must
   reproduce their v0.4 `umi_public` numbers exactly. Named candidates that miss a required series

@@ -76,6 +76,7 @@ History is not rewritten.
 ## Suggested commit sequence
 
 ```text
+Freeze and classify the v0.4 experimental score release
 Add UMI Public v0.5 Governed: freeze, validate, uncertainty, expand
 Add governed Public index certificate, zip checksum, and overlap ranks
 Wire dashboard to uncertainty sidecars and finish Public index packaging

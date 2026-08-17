@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from umi.edition import GOVERNED_EDITION_ID, load_public_edition_config
+from umi.edition import GOVERNED_EDITION_ID, GOVERNED_PUBLIC_INDEX, load_public_edition_config
 from umi.feasibility import validate_public_edition_feasibility
 from umi.identity import load_public_identities
 from umi.public import score_public_edition
@@ -35,6 +35,7 @@ def test_v05_policy_is_feasible_and_expands_identities() -> None:
     config = load_public_edition_config(edition="v0.5")
     validate_public_edition_feasibility(config)
     assert config.edition_id == GOVERNED_EDITION_ID
+    assert config.release_class == GOVERNED_PUBLIC_INDEX
     identities = load_public_identities(edition="v0.5")
     assert {item.entity_id for item in identities} == V04_PILOTS | {
         "gemini-3.6-flash-high",

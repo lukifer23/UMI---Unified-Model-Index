@@ -302,7 +302,7 @@ def _adapt_source(args: argparse.Namespace) -> Any:
 
 def run(args: argparse.Namespace) -> int:
     if args.command == "edition":
-        from umi.edition import load_public_edition_config
+        from umi.edition import GOVERNED_PUBLIC_INDEX, load_public_edition_config
         from umi.feasibility import (
             validate_legacy_edition_feasibility,
             validate_public_edition_feasibility,
@@ -332,6 +332,16 @@ def run(args: argparse.Namespace) -> int:
                 return 0
             raise SystemExit("v0.3 edition score remains the legacy umi estimates path")
         public_config = load_public_edition_config(edition=args.edition)
+        governed_only = {"certificate", "candidates", "blockers", "sensitivity"}
+        if (
+            args.edition_command in governed_only
+            and public_config.release_class != GOVERNED_PUBLIC_INDEX
+        ):
+            raise SystemExit(
+                f"{public_config.edition_id} is {public_config.release_class}; "
+                "the governed certificate, candidate audits, blocker report, and "
+                "weight sensitivity belong to umi-public-v0.5"
+            )
         if args.edition_command == "validate":
             validate_public_edition_feasibility(public_config)
             _emit({"valid": True, "edition": public_config.edition_id}, "json", None)
@@ -363,24 +373,18 @@ def run(args: argparse.Namespace) -> int:
             _emit(certificate, "json", None)
             return 0
         if args.edition_command == "candidates":
-            if args.edition != "v0.5":
-                raise SystemExit("named candidate audits are a v0.5 governed-index surface")
             from umi.public_candidates import write_candidate_audits
 
             audits = write_candidate_audits()
             _emit(audits, "json", None)
             return 0
         if args.edition_command == "blockers":
-            if args.edition != "v0.5":
-                raise SystemExit("blocker reports are a v0.5 governed-index surface")
             from umi.public_governance import write_governance_artifacts
 
             governance = write_governance_artifacts()
             _emit(governance["blocker_report"], "json", None)
             return 0
         if args.edition_command == "sensitivity":
-            if args.edition != "v0.5":
-                raise SystemExit("weight sensitivity is a v0.5 diagnostic surface")
             from umi.public_sensitivity import write_weight_sensitivity
 
             _emit(write_weight_sensitivity(), "json", None)

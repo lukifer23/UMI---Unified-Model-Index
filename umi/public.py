@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, NotRequired, TypedDict
 
-from umi.edition import PublicEditionConfig, load_public_edition_config
+from umi.edition import GOVERNED_PUBLIC_INDEX, PublicEditionConfig, load_public_edition_config
 from umi.identity import PublicSystemIdentity, evidence_matches_entity, load_public_identities
 from umi.version import ENGINE_VERSION, PACKAGE_VERSION
 
@@ -596,7 +596,8 @@ def write_public_artifacts(
         + "\n",
         encoding="utf-8",
     )
-    if edition_name == "v0.5":
+    edition = load_public_edition_config(edition=edition_name)
+    if edition.release_class == GOVERNED_PUBLIC_INDEX:
         from umi.public_candidates import write_candidate_audits
         from umi.public_certificate import build_public_certificate
         from umi.public_governance import write_governance_artifacts

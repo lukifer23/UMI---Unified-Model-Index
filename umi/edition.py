@@ -17,6 +17,12 @@ PUBLIC_EDITION_IDS = {
     PUBLIC_EDITION_ID: "umi-methodology-v0.4.0",
     GOVERNED_EDITION_ID: "umi-methodology-v0.5.0",
 }
+EXPERIMENTAL_POINT_SCORE = "historical_experimental_point_score"
+GOVERNED_PUBLIC_INDEX = "governed_public_index"
+EDITION_RELEASE_CLASSES = {
+    PUBLIC_EDITION_ID: EXPERIMENTAL_POINT_SCORE,
+    GOVERNED_EDITION_ID: GOVERNED_PUBLIC_INDEX,
+}
 
 
 class ConfigModel(BaseModel):
@@ -124,6 +130,7 @@ class PublicEditionConfig(ConfigModel):
     engine_version: str
     package_version: str
     policy_mode: str
+    release_class: str
     weights: PublicWeightConfig
     eligibility: PublicEligibilityConfig
     families: tuple[PublicFamilyDefinition, ...]
@@ -138,6 +145,9 @@ class PublicEditionConfig(ConfigModel):
             raise ValueError(f"{self.edition_id} formula must be {expected_formula}")
         if self.policy_mode != "public":
             raise ValueError("Public policy_mode must be public")
+        expected_class = EDITION_RELEASE_CLASSES[self.edition_id]
+        if self.release_class != expected_class:
+            raise ValueError(f"{self.edition_id} release_class must be {expected_class}")
         family_ids = [item.id for item in self.families]
         if len(family_ids) != len(set(family_ids)):
             raise ValueError("public family IDs must be unique")

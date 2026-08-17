@@ -262,9 +262,10 @@ def test_edition_blockers_v05(capsys: pytest.CaptureFixture[str]) -> None:
     assert "candidate-gemini-3.1-pro-preview" in ids
 
 
-def test_edition_candidates_rejected_on_v04() -> None:
-    args = build_parser().parse_args(["edition", "--edition", "v0.4", "candidates"])
-    with pytest.raises(SystemExit, match="v0.5 governed-index surface"):
+@pytest.mark.parametrize("command", ["certificate", "candidates", "blockers", "sensitivity"])
+def test_governed_surfaces_rejected_on_experimental_v04(command: str) -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.4", command])
+    with pytest.raises(SystemExit, match="historical_experimental_point_score"):
         run(args)
 
 
