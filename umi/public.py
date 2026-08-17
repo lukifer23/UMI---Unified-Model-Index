@@ -363,6 +363,14 @@ def score_public_edition(
     access_weights = {
         item.value: weight for item, weight in edition.weights.access_economics.items()
     }
+    families = {item.id: item for item in edition.families}
+    access_cost_evidence = next(
+        series.cost_evidence
+        for series in edition.common_core
+        if families[series.family_id].component == "access_economics"
+    )
+    if access_cost_evidence != "source_reported":
+        raise ValueError("public Access cost_evidence must be source_reported")
     specs = public_series_specs(edition)
     _panels, scales = build_public_panels_and_scales(bundle, edition)
     scale_by_series = {item.series_id: item for item in scales}
@@ -433,7 +441,7 @@ def score_public_edition(
                 "access_economics": access,
                 "umi_public": public,
                 "publication_state": "published",
-                "cost_evidence": "source_reported",
+                "cost_evidence": access_cost_evidence,
                 "capability_series": capability_series,
                 "operational_series": operational_series,
                 "access_series": access_series,

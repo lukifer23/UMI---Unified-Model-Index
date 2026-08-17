@@ -14,6 +14,7 @@ series:
   - gpt-5.6-sol-max
   - kimi-k3-max
   - glm-5.2-max
+  evidence_kind: capability_measurement
 - series_id: deepswe-v1.1-pass1
   family_id: deepswe-v1.1
   member: deepswe_external.csv
@@ -31,6 +32,7 @@ series:
   - gpt-5.6-sol-max
   - kimi-k3-max
   - glm-5.2-max
+  evidence_kind: capability_measurement
 - series_id: epoch-scicode
   family_id: epoch-scicode
   member: scicode_external.csv
@@ -45,6 +47,7 @@ series:
   - gpt-5.6-sol-max
   - kimi-k3-max
   - glm-5.2-max
+  evidence_kind: capability_measurement
 - series_id: epoch-weirdml
   family_id: epoch-weirdml
   member: weirdml_external.csv
@@ -60,6 +63,7 @@ series:
   - gpt-5.6-sol-max
   - kimi-k3-max
   - glm-5.2-max
+  evidence_kind: capability_measurement
 - series_id: epoch-gpqa
   family_id: epoch-gpqa
   member: gpqa_diamond.csv
@@ -76,6 +80,7 @@ series:
   - gpt-5.6-sol-max
   - kimi-k3-max
   - glm-5.2-max
+  evidence_kind: capability_measurement
 - series_id: epoch-otis-aime
   family_id: epoch-otis
   member: otis_mock_aime_2024_2025.csv
@@ -92,6 +97,7 @@ series:
   - gpt-5.6-sol-max
   - kimi-k3-max
   - glm-5.2-max
+  evidence_kind: capability_measurement
 - series_id: epoch-critpt
   family_id: epoch-critpt
   member: critpt_external.csv
@@ -106,6 +112,7 @@ series:
   - gpt-5.6-sol-max
   - kimi-k3-max
   - glm-5.2-max
+  evidence_kind: capability_measurement
 - series_id: deepswe-output-tokens
   family_id: deepswe-resources
   member: deepswe_external.csv
@@ -120,6 +127,8 @@ series:
   - gpt-5.6-sol-max
   - kimi-k3-max
   - glm-5.2-max
+  evidence_kind: source_reported_resource_mean
+  success_adjusted: false
 - series_id: deepswe-agent-steps
   family_id: deepswe-duration-steps
   member: deepswe_external.csv
@@ -134,6 +143,8 @@ series:
   - gpt-5.6-sol-max
   - kimi-k3-max
   - glm-5.2-max
+  evidence_kind: source_reported_resource_mean
+  success_adjusted: false
 - series_id: weirdml-cost-per-run
   family_id: weirdml-task-cost
   member: weirdml_external.csv
@@ -148,3 +159,6 @@ series:
   - gpt-5.6-sol-max
   - kimi-k3-max
   - glm-5.2-max
+  evidence_kind: source_reported_task_cost
+  success_adjusted: false
+  cost_evidence: source_reported

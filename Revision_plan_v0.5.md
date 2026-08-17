@@ -81,6 +81,7 @@ Add governed public scoring bundle and typed evidence contracts
 Unify v0.5 policy configuration and eliminate hardcoded scoring specs
 Harden deployable-system identity and source crosswalks
 Add explicit anchor panels and stable score scales
+Correct public efficiency and economics evidence semantics
 Add UMI Public v0.5 Governed: freeze, validate, uncertainty, expand
 Add governed Public index certificate, zip checksum, and overlap ranks
 Wire dashboard to uncertainty sidecars and finish Public index packaging

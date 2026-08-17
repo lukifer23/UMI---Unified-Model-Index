@@ -141,6 +141,9 @@ class CommonCoreSeries(ConfigModel):
     interval_field: str | None = None
     interval_kind: str | None = None
     ablate: bool = False
+    evidence_kind: str = Field(min_length=1)
+    success_adjusted: bool | None = None
+    cost_evidence: str | None = None
 
     @model_validator(mode="after")
     def validate_extract_and_interval(self) -> CommonCoreSeries:
@@ -150,6 +153,20 @@ class CommonCoreSeries(ConfigModel):
             raise ValueError(f"{self.series_id} interval_field and interval_kind must be paired")
         if self.interval_kind not in {None, "standard_error", "ci95_halfwidth"}:
             raise ValueError(f"{self.series_id} has an unsupported interval_kind")
+        allowed_kinds = {
+            "capability_measurement",
+            "source_reported_resource_mean",
+            "source_reported_task_cost",
+        }
+        if self.evidence_kind not in allowed_kinds:
+            raise ValueError(f"{self.series_id} has an unsupported evidence_kind")
+        if self.cost_evidence == CostEvidenceKind.PROVIDER_BILLING_RECORD.value:
+            raise ValueError(f"{self.series_id} cannot treat public cost as provider billing")
+        if self.success_adjusted is True:
+            raise ValueError(
+                f"{self.series_id} cannot claim success-adjusted resources "
+                "without attempt residuals"
+            )
         return self
 
 
@@ -193,6 +210,34 @@ class PublicEditionConfig(ConfigModel):
                 raise ValueError(f"common-core series {series.series_id} references unknown family")
             if series.correlation_group != family.correlation_group:
                 raise ValueError(f"{series.series_id} correlation_group must match family")
+            expected_kind = {
+                "capability": "capability_measurement",
+                "operational_efficiency": "source_reported_resource_mean",
+                "access_economics": "source_reported_task_cost",
+            }.get(family.component)
+            if expected_kind is None:
+                raise ValueError(f"{series.series_id} family has an unsupported component")
+            if series.evidence_kind != expected_kind:
+                raise ValueError(
+                    f"{series.series_id} evidence_kind must be {expected_kind} "
+                    f"for {family.component}"
+                )
+            if family.component == "access_economics":
+                if series.cost_evidence != CostEvidenceKind.SOURCE_REPORTED.value:
+                    raise ValueError(f"{series.series_id} Access cost must be source_reported")
+                if series.success_adjusted is not False:
+                    raise ValueError(f"{series.series_id} Access cost is not success-adjusted")
+            elif family.component == "operational_efficiency":
+                if series.cost_evidence is not None:
+                    raise ValueError(f"{series.series_id} OpEff series cannot carry cost_evidence")
+                if series.success_adjusted is not False:
+                    raise ValueError(
+                        f"{series.series_id} OpEff means are not success-adjusted"
+                    )
+            elif series.cost_evidence is not None or series.success_adjusted is not None:
+                raise ValueError(
+                    f"{series.series_id} capability series cannot carry cost semantics"
+                )
             used_families.add(family.id)
         unused = set(known) - used_families
         if unused:

@@ -25,6 +25,8 @@
       ],
       "anchor_n": 158,
       "component": "capability",
+      "cost_evidence": null,
+      "evidence_kind": "capability_measurement",
       "field": "mean_score",
       "harness": null,
       "kind": "proportion",
@@ -1928,7 +1930,8 @@
           "source_name": ""
         }
       ],
-      "series_id": "epoch-chess-puzzles"
+      "series_id": "epoch-chess-puzzles",
+      "success_adjusted": null
     },
     {
       "accepted_entity_ids": [
@@ -1942,6 +1945,8 @@
       ],
       "anchor_n": 50,
       "component": "capability",
+      "cost_evidence": null,
+      "evidence_kind": "capability_measurement",
       "field": "Pass@1",
       "harness": "mini-swe-agent",
       "kind": "proportion",
@@ -2549,7 +2554,8 @@
           "source_name": "claude-sonnet-5 (low)"
         }
       ],
-      "series_id": "deepswe-v1.1-pass1"
+      "series_id": "deepswe-v1.1-pass1",
+      "success_adjusted": null
     },
     {
       "accepted_entity_ids": [
@@ -2563,6 +2569,8 @@
       ],
       "anchor_n": 128,
       "component": "capability",
+      "cost_evidence": null,
+      "evidence_kind": "capability_measurement",
       "field": "Score",
       "harness": null,
       "kind": "proportion",
@@ -4106,7 +4114,8 @@
           "source_name": "gpt-oss-120b (low)"
         }
       ],
-      "series_id": "epoch-scicode"
+      "series_id": "epoch-scicode",
+      "success_adjusted": null
     },
     {
       "accepted_entity_ids": [
@@ -4120,6 +4129,8 @@
       ],
       "anchor_n": 163,
       "component": "capability",
+      "cost_evidence": null,
+      "evidence_kind": "capability_measurement",
       "field": "Accuracy",
       "harness": null,
       "kind": "proportion",
@@ -6083,7 +6094,8 @@
           "source_name": ""
         }
       ],
-      "series_id": "epoch-weirdml"
+      "series_id": "epoch-weirdml",
+      "success_adjusted": null
     },
     {
       "accepted_entity_ids": [
@@ -6097,6 +6109,8 @@
       ],
       "anchor_n": 260,
       "component": "capability",
+      "cost_evidence": null,
+      "evidence_kind": "capability_measurement",
       "field": "mean_score",
       "harness": null,
       "kind": "proportion",
@@ -9224,7 +9238,8 @@
           "source_name": ""
         }
       ],
-      "series_id": "epoch-gpqa"
+      "series_id": "epoch-gpqa",
+      "success_adjusted": null
     },
     {
       "accepted_entity_ids": [
@@ -9238,6 +9253,8 @@
       ],
       "anchor_n": 235,
       "component": "capability",
+      "cost_evidence": null,
+      "evidence_kind": "capability_measurement",
       "field": "mean_score",
       "harness": null,
       "kind": "proportion",
@@ -12065,7 +12082,8 @@
           "source_name": ""
         }
       ],
-      "series_id": "epoch-otis-aime"
+      "series_id": "epoch-otis-aime",
+      "success_adjusted": null
     },
     {
       "accepted_entity_ids": [
@@ -12079,6 +12097,8 @@
       ],
       "anchor_n": 139,
       "component": "capability",
+      "cost_evidence": null,
+      "evidence_kind": "capability_measurement",
       "field": "Accuracy",
       "harness": null,
       "kind": "proportion",
@@ -13754,7 +13774,8 @@
           "source_name": "gpt-oss-120b (low)"
         }
       ],
-      "series_id": "epoch-critpt"
+      "series_id": "epoch-critpt",
+      "success_adjusted": null
     },
     {
       "accepted_entity_ids": [
@@ -13768,6 +13789,8 @@
       ],
       "anchor_n": 50,
       "component": "operational_efficiency",
+      "cost_evidence": null,
+      "evidence_kind": "source_reported_resource_mean",
       "field": "Mean output tokens",
       "harness": "mini-swe-agent",
       "kind": "lower",
@@ -14375,7 +14398,8 @@
           "source_name": "claude-sonnet-5 (low)"
         }
       ],
-      "series_id": "deepswe-output-tokens"
+      "series_id": "deepswe-output-tokens",
+      "success_adjusted": false
     },
     {
       "accepted_entity_ids": [
@@ -14389,6 +14413,8 @@
       ],
       "anchor_n": 50,
       "component": "operational_efficiency",
+      "cost_evidence": null,
+      "evidence_kind": "source_reported_resource_mean",
       "field": "Mean agent steps",
       "harness": "mini-swe-agent",
       "kind": "lower",
@@ -14996,7 +15022,8 @@
           "source_name": "claude-sonnet-5 (low)"
         }
       ],
-      "series_id": "deepswe-agent-steps"
+      "series_id": "deepswe-agent-steps",
+      "success_adjusted": false
     },
     {
       "accepted_entity_ids": [
@@ -15010,6 +15037,8 @@
       ],
       "anchor_n": 50,
       "component": "access_economics",
+      "cost_evidence": "source_reported",
+      "evidence_kind": "source_reported_task_cost",
       "field": "Cost per run",
       "harness": null,
       "kind": "lower",
@@ -15617,7 +15646,8 @@
           "source_name": ""
         }
       ],
-      "series_id": "weirdml-cost-per-run"
+      "series_id": "weirdml-cost-per-run",
+      "success_adjusted": false
     }
   ],
   "source_artifact_id": "epoch-benchmark-data-2026-08-14",

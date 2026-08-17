@@ -71,14 +71,18 @@ Context reliability and language / instruction following have no all-five 8+ exa
 the frozen archive (SimpleQA lacks `claude-fable-5_max`; LiveBench has none of the 2026 Max
 pilots; AA extracts have n=5). They are out of this edition.
 
-Operational Efficiency is DeepSWE mean output tokens 0.60 and mean agent steps 0.40. Interactive
-service responsiveness has no all-five 8+ public latency series and is omitted. The component has
-one originating organization; the source-share cap is applied only when a component has two or
-more originating organizations.
+Operational Efficiency is DeepSWE mean output tokens 0.60 and mean agent steps 0.40. Those
+values are source-reported extract means. They are not success-adjusted: the frozen zip has
+no attempt-level residuals, so UMI does not pair another record's Pass@1 with these resource
+numerators and does not invent a success-conditioned mean. Interactive service responsiveness
+has no all-five 8+ public latency series and is omitted. The component has one originating
+organization; the source-share cap is applied only when a component has two or more originating
+organizations.
 
-Access Economics is WeirdML cost per run 1.00. DeepSWE mean cost is diagnostic only: official
-DeepSWE v1.1 observes Fable cost on 432 of 436 scored attempts, so that series cannot enter a
-complete all-attempt common core. Fixed tariff baskets have only five official cards and fail the
+Access Economics is WeirdML cost per run 1.00 with `cost_evidence: source_reported`. It is
+never a provider billing record. DeepSWE mean cost is diagnostic only: official DeepSWE v1.1
+observes Fable cost on 432 of 436 scored attempts, so that series cannot enter a complete
+all-attempt common core. Fixed tariff baskets have only five official cards and fail the
 8+ panel gate.
 
 ### Identity

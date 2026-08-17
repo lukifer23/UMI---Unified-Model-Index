@@ -565,6 +565,7 @@ def _dashboard_limitations(has_intervals: bool) -> list[str]:
     )
     return [
         "Access Economics is source-reported public task cost, not provider billing.",
+        "Operational Efficiency is source-reported DeepSWE means, not success-adjusted resources.",
         interval_note,
         "This is not v0.3 headline_overall.",
         "Fable is the documented fallback composite product.",

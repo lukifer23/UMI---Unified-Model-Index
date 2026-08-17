@@ -36,6 +36,9 @@ class PublicSeriesContract(ConfigModel):
     component: str
     harness: str | None = None
     panel_filter: str | None = None
+    evidence_kind: str
+    success_adjusted: bool | None = None
+    cost_evidence: str | None = None
     anchor_n: int = Field(ge=0)
     accepted_entity_ids: tuple[str, ...]
     records: tuple[PublicEvidenceRecord, ...]

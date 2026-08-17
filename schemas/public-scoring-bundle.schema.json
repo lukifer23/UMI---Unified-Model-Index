@@ -86,6 +86,22 @@
           "title": "Component",
           "type": "string"
         },
+        "cost_evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cost Evidence"
+        },
+        "evidence_kind": {
+          "title": "Evidence Kind",
+          "type": "string"
+        },
         "field": {
           "title": "Field",
           "type": "string"
@@ -132,6 +148,18 @@
         "series_id": {
           "title": "Series Id",
           "type": "string"
+        },
+        "success_adjusted": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Success Adjusted"
         }
       },
       "required": [
@@ -140,6 +168,7 @@
         "field",
         "kind",
         "component",
+        "evidence_kind",
         "anchor_n",
         "accepted_entity_ids",
         "records"

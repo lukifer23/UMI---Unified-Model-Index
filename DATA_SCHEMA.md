@@ -361,7 +361,10 @@ effort-mismatched bindings fail closed.
 
 `config/editions/v0.4/` and `config/editions/v0.5/` are the live Public scoring policy.
 `common-core.yaml` binds each series to an extract member, field, kind, optional harness
-and panel filter, optional source-interval field, and ablation flag. `families.yaml`
+and panel filter, optional source-interval field, ablation flag, and evidence semantics.
+Operational Efficiency series are `source_reported_resource_mean` with
+`success_adjusted: false`. Access series are `source_reported_task_cost` with
+`cost_evidence: source_reported`. Provider billing labels fail closed. `families.yaml`
 supplies component, parent domain, and family weight. `normalization.yaml` supplies
 logit ε, winsor, and high-effort suffixes. Unused families and unpaired interval
 fields fail closed.

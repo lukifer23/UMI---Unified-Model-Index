@@ -65,6 +65,41 @@ def test_governed_public_bundle_binds_typed_zip_evidence() -> None:
     assert again.evidence_fingerprint == bundle.evidence_fingerprint
 
 
+def test_public_efficiency_and_access_semantics_are_source_reported() -> None:
+    edition = load_public_edition_config(edition="v0.5")
+    families = {item.id: item for item in edition.families}
+    for series in edition.common_core:
+        component = families[series.family_id].component
+        if component == "operational_efficiency":
+            assert series.evidence_kind == "source_reported_resource_mean"
+            assert series.success_adjusted is False
+            assert series.cost_evidence is None
+        elif component == "access_economics":
+            assert series.evidence_kind == "source_reported_task_cost"
+            assert series.cost_evidence == "source_reported"
+            assert series.success_adjusted is False
+    payload = edition.model_dump(mode="json")
+    access = next(
+        item
+        for item in payload["common_core"]
+        if item["series_id"] == "weirdml-cost-per-run"
+    )
+    access["cost_evidence"] = "provider_billing_record"
+    with pytest.raises(ValidationError, match="provider billing"):
+        type(edition).model_validate(payload)
+    payload = edition.model_dump(mode="json")
+    tokens = next(
+        item
+        for item in payload["common_core"]
+        if item["series_id"] == "deepswe-output-tokens"
+    )
+    tokens["success_adjusted"] = True
+    with pytest.raises(ValidationError, match="success-adjusted"):
+        type(edition).model_validate(payload)
+    scores = score_public_edition(edition_name="v0.5")
+    assert {item["cost_evidence"] for item in scores["models"]} == {"source_reported"}
+
+
 def test_public_series_come_from_edition_policy() -> None:
     edition = load_public_edition_config(edition="v0.5")
     specs = public_series_specs(edition)

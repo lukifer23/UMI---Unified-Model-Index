@@ -11,6 +11,7 @@ from pydantic import Field, model_validator
 
 from umi.edition import (
     GOVERNED_PUBLIC_INDEX,
+    CommonCoreSeries,
     ConfigModel,
     PublicEditionConfig,
     load_public_edition_config,
@@ -69,6 +70,7 @@ def _series_contract(
     spec: SeriesSpec,
     points: tuple[SeriesPoint, ...],
     digest: str,
+    series: CommonCoreSeries,
 ) -> PublicSeriesContract:
     records = tuple(
         PublicEvidenceRecord(
@@ -94,6 +96,9 @@ def _series_contract(
         component=spec["component"],
         harness=spec.get("harness"),
         panel_filter=spec.get("panel_filter"),
+        evidence_kind=series.evidence_kind,
+        success_adjusted=series.success_adjusted,
+        cost_evidence=series.cost_evidence,
         anchor_n=len(records),
         accepted_entity_ids=accepted,
         records=records,
@@ -114,6 +119,7 @@ def load_public_scoring_bundle(
     contracts: list[PublicSeriesContract] = []
     blockers: list[dict[str, Any]] = []
     suffixes = edition.normalization.high_effort_suffixes
+    core = {item.series_id: item for item in edition.common_core}
     for spec in public_series_specs(edition):
         points = epoch_points(
             spec["member"],
@@ -124,7 +130,7 @@ def load_public_scoring_bundle(
             entity_map=mapping,
             high_effort_suffixes=suffixes,
         )
-        contract = _series_contract(spec, points, digest)
+        contract = _series_contract(spec, points, digest, core[spec["id"]])
         pilots = set(contract.accepted_entity_ids)
         if pilots != required or contract.anchor_n < edition.eligibility.minimum_anchor_panel:
             blockers.append(
