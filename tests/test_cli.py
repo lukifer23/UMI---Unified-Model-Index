@@ -260,6 +260,15 @@ def test_edition_sensitivity_v05(capsys: pytest.CaptureFixture[str]) -> None:
     assert "baseline" in report["hypotheses"]
 
 
+def test_edition_uncertainty_v05_parses_draws() -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.5", "uncertainty"])
+    assert args.draws == 2048
+    args = build_parser().parse_args(
+        ["edition", "--edition", "v0.5", "uncertainty", "--draws", "32"]
+    )
+    assert args.draws == 32
+
+
 def test_edition_blockers_v05(capsys: pytest.CaptureFixture[str]) -> None:
     args = build_parser().parse_args(["edition", "--edition", "v0.5", "blockers"])
     assert run(args) == 0
@@ -273,7 +282,17 @@ def test_edition_blockers_v05(capsys: pytest.CaptureFixture[str]) -> None:
 
 @pytest.mark.parametrize(
     "command",
-    ["certificate", "candidates", "blockers", "sensitivity", "bundle", "scales"],
+    [
+        "certificate",
+        "candidates",
+        "blockers",
+        "sensitivity",
+        "uncertainty",
+        "ablation",
+        "stability",
+        "bundle",
+        "scales",
+    ],
 )
 def test_governed_surfaces_rejected_on_experimental_v04(command: str) -> None:
     args = build_parser().parse_args(["edition", "--edition", "v0.4", command])

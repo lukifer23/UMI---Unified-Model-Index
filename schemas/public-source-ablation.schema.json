@@ -1,0 +1,100 @@
+{
+  "$defs": {
+    "PublicCannotAblate": {
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "title": "Component",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "source_organization": {
+          "title": "Source Organization",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_organization",
+        "component",
+        "reason"
+      ],
+      "title": "PublicCannotAblate",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "cannot_ablate": {
+      "items": {
+        "$ref": "#/$defs/PublicCannotAblate"
+      },
+      "title": "Cannot Ablate",
+      "type": "array"
+    },
+    "edition_id": {
+      "title": "Edition Id",
+      "type": "string"
+    },
+    "family_ablations": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Family Ablations",
+      "type": "array"
+    },
+    "headline_unchanged": {
+      "title": "Headline Unchanged",
+      "type": "boolean"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "method": {
+      "title": "Method",
+      "type": "string"
+    },
+    "score_ranges": {
+      "additionalProperties": {
+        "additionalProperties": {
+          "type": "number"
+        },
+        "type": "object"
+      },
+      "title": "Score Ranges",
+      "type": "object"
+    },
+    "source_ablations": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Source Ablations",
+      "type": "array"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "edition_id",
+    "status",
+    "headline_unchanged",
+    "method",
+    "family_ablations",
+    "source_ablations",
+    "cannot_ablate",
+    "score_ranges",
+    "limitations"
+  ],
+  "title": "PublicSourceAblationReport",
+  "type": "object"
+}

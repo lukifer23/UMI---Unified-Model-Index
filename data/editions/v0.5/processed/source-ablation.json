@@ -1,4 +1,16 @@
 {
+  "cannot_ablate": [
+    {
+      "component": "access_economics",
+      "reason": "single-origin component; dropping weirdml empties Access Economics",
+      "source_organization": "weirdml"
+    },
+    {
+      "component": "operational_efficiency",
+      "reason": "single-origin component; dropping datacurve empties Operational Efficiency",
+      "source_organization": "datacurve"
+    }
+  ],
   "edition_id": "umi-public-v0.5",
   "family_ablations": [
     {
@@ -105,6 +117,324 @@
         "gpt-5.6-sol-max": 0,
         "kimi-k3-max": 0
       }
+    }
+  ],
+  "headline_unchanged": true,
+  "limitations": [
+    "Family and source-organization ablations are diagnostic and do not change umi_public.",
+    "Only Capability series are dropped.",
+    "Operational Efficiency and Access Economics are single-origin and cannot be removed without emptying a required headline component.",
+    "Empty Capability domains are dropped and remaining domain weights are renormalized.",
+    "The remaining series after a drop are not a valid headline common core."
+  ],
+  "method": "capability_family_and_source_organization_ablation",
+  "score_ranges": {
+    "claude-fable-5-max": {
+      "high": 56.41547796912687,
+      "low": 52.38471400935882
+    },
+    "claude-opus-5-max": {
+      "high": 56.160700263960265,
+      "low": 53.83551779874048
+    },
+    "gemini-3.6-flash-high": {
+      "high": 60.42498121790614,
+      "low": 51.36137384444825
+    },
+    "glm-5.2-max": {
+      "high": 59.35989100953575,
+      "low": 48.9794708355582
+    },
+    "gpt-5.4-2026-03-05-xhigh": {
+      "high": 60.90888706924973,
+      "low": 51.09523286463108
+    },
+    "gpt-5.6-sol-max": {
+      "high": 66.97386623604196,
+      "low": 64.81380050472197
+    },
+    "kimi-k3-max": {
+      "high": 61.7030784561218,
+      "low": 57.67454571737023
+    }
+  },
+  "source_ablations": [
+    {
+      "dropped_organization": "artificial-analysis",
+      "dropped_series": [
+        "epoch-scicode"
+      ],
+      "emptied_domains": [],
+      "models": [
+        {
+          "diagnostic_public": 65.68654374410437,
+          "entity_id": "gpt-5.6-sol-max",
+          "rank": 1
+        },
+        {
+          "diagnostic_public": 58.04414076756242,
+          "entity_id": "kimi-k3-max",
+          "rank": 2
+        },
+        {
+          "diagnostic_public": 55.16539539053886,
+          "entity_id": "claude-opus-5-max",
+          "rank": 3
+        },
+        {
+          "diagnostic_public": 52.8048569817281,
+          "entity_id": "claude-fable-5-max",
+          "rank": 4
+        },
+        {
+          "diagnostic_public": 51.36137384444825,
+          "entity_id": "gemini-3.6-flash-high",
+          "rank": 5
+        },
+        {
+          "diagnostic_public": 51.09523286463108,
+          "entity_id": "gpt-5.4-2026-03-05-xhigh",
+          "rank": 6
+        },
+        {
+          "diagnostic_public": 49.98318495031447,
+          "entity_id": "glm-5.2-max",
+          "rank": 7
+        }
+      ],
+      "order": [
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "claude-opus-5-max",
+        "claude-fable-5-max",
+        "gemini-3.6-flash-high",
+        "gpt-5.4-2026-03-05-xhigh",
+        "glm-5.2-max"
+      ],
+      "rank_changes": {
+        "claude-fable-5-max": -2,
+        "claude-opus-5-max": -1,
+        "gemini-3.6-flash-high": 0,
+        "glm-5.2-max": 0,
+        "gpt-5.4-2026-03-05-xhigh": 3,
+        "gpt-5.6-sol-max": 0,
+        "kimi-k3-max": 0
+      },
+      "remaining_capability_domains": [
+        "agentic_and_tool_mediated_work",
+        "general_reasoning_and_knowledge",
+        "mathematics_and_science",
+        "software_engineering"
+      ]
+    },
+    {
+      "dropped_organization": "datacurve",
+      "dropped_series": [
+        "deepswe-v1.1-pass1"
+      ],
+      "emptied_domains": [],
+      "models": [
+        {
+          "diagnostic_public": 66.97386623604196,
+          "entity_id": "gpt-5.6-sol-max",
+          "rank": 1
+        },
+        {
+          "diagnostic_public": 61.7030784561218,
+          "entity_id": "kimi-k3-max",
+          "rank": 2
+        },
+        {
+          "diagnostic_public": 60.90888706924973,
+          "entity_id": "gpt-5.4-2026-03-05-xhigh",
+          "rank": 3
+        },
+        {
+          "diagnostic_public": 60.42498121790614,
+          "entity_id": "gemini-3.6-flash-high",
+          "rank": 4
+        },
+        {
+          "diagnostic_public": 59.35989100953575,
+          "entity_id": "glm-5.2-max",
+          "rank": 5
+        },
+        {
+          "diagnostic_public": 56.41547796912687,
+          "entity_id": "claude-fable-5-max",
+          "rank": 6
+        },
+        {
+          "diagnostic_public": 55.93123045543902,
+          "entity_id": "claude-opus-5-max",
+          "rank": 7
+        }
+      ],
+      "order": [
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "gpt-5.4-2026-03-05-xhigh",
+        "gemini-3.6-flash-high",
+        "glm-5.2-max",
+        "claude-fable-5-max",
+        "claude-opus-5-max"
+      ],
+      "rank_changes": {
+        "claude-fable-5-max": 0,
+        "claude-opus-5-max": 3,
+        "gemini-3.6-flash-high": -1,
+        "glm-5.2-max": -2,
+        "gpt-5.4-2026-03-05-xhigh": 0,
+        "gpt-5.6-sol-max": 0,
+        "kimi-k3-max": 0
+      },
+      "remaining_capability_domains": [
+        "agentic_and_tool_mediated_work",
+        "general_reasoning_and_knowledge",
+        "mathematics_and_science",
+        "software_engineering"
+      ]
+    },
+    {
+      "dropped_organization": "epoch",
+      "dropped_series": [
+        "epoch-chess-puzzles",
+        "epoch-gpqa",
+        "epoch-otis-aime",
+        "epoch-critpt"
+      ],
+      "emptied_domains": [
+        "general_reasoning_and_knowledge",
+        "mathematics_and_science"
+      ],
+      "models": [
+        {
+          "diagnostic_public": 66.12873836886656,
+          "entity_id": "gpt-5.6-sol-max",
+          "rank": 1
+        },
+        {
+          "diagnostic_public": 60.67533051591161,
+          "entity_id": "kimi-k3-max",
+          "rank": 2
+        },
+        {
+          "diagnostic_public": 56.160700263960265,
+          "entity_id": "claude-opus-5-max",
+          "rank": 3
+        },
+        {
+          "diagnostic_public": 56.13393524071956,
+          "entity_id": "claude-fable-5-max",
+          "rank": 4
+        },
+        {
+          "diagnostic_public": 54.37555941757579,
+          "entity_id": "glm-5.2-max",
+          "rank": 5
+        },
+        {
+          "diagnostic_public": 53.97405114450624,
+          "entity_id": "gpt-5.4-2026-03-05-xhigh",
+          "rank": 6
+        },
+        {
+          "diagnostic_public": 52.03364800810404,
+          "entity_id": "gemini-3.6-flash-high",
+          "rank": 7
+        }
+      ],
+      "order": [
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "claude-opus-5-max",
+        "claude-fable-5-max",
+        "glm-5.2-max",
+        "gpt-5.4-2026-03-05-xhigh",
+        "gemini-3.6-flash-high"
+      ],
+      "rank_changes": {
+        "claude-fable-5-max": -2,
+        "claude-opus-5-max": -1,
+        "gemini-3.6-flash-high": 2,
+        "glm-5.2-max": -2,
+        "gpt-5.4-2026-03-05-xhigh": 3,
+        "gpt-5.6-sol-max": 0,
+        "kimi-k3-max": 0
+      },
+      "remaining_capability_domains": [
+        "agentic_and_tool_mediated_work",
+        "software_engineering"
+      ]
+    },
+    {
+      "dropped_organization": "weirdml",
+      "dropped_series": [
+        "epoch-weirdml"
+      ],
+      "emptied_domains": [
+        "agentic_and_tool_mediated_work"
+      ],
+      "models": [
+        {
+          "diagnostic_public": 64.81380050472197,
+          "entity_id": "gpt-5.6-sol-max",
+          "rank": 1
+        },
+        {
+          "diagnostic_public": 57.67454571737023,
+          "entity_id": "kimi-k3-max",
+          "rank": 2
+        },
+        {
+          "diagnostic_public": 54.27443333855038,
+          "entity_id": "gemini-3.6-flash-high",
+          "rank": 3
+        },
+        {
+          "diagnostic_public": 53.83551779874048,
+          "entity_id": "claude-opus-5-max",
+          "rank": 4
+        },
+        {
+          "diagnostic_public": 52.38471400935882,
+          "entity_id": "claude-fable-5-max",
+          "rank": 5
+        },
+        {
+          "diagnostic_public": 52.28910367952874,
+          "entity_id": "gpt-5.4-2026-03-05-xhigh",
+          "rank": 6
+        },
+        {
+          "diagnostic_public": 48.9794708355582,
+          "entity_id": "glm-5.2-max",
+          "rank": 7
+        }
+      ],
+      "order": [
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "gemini-3.6-flash-high",
+        "claude-opus-5-max",
+        "claude-fable-5-max",
+        "gpt-5.4-2026-03-05-xhigh",
+        "glm-5.2-max"
+      ],
+      "rank_changes": {
+        "claude-fable-5-max": -1,
+        "claude-opus-5-max": 0,
+        "gemini-3.6-flash-high": -2,
+        "glm-5.2-max": 0,
+        "gpt-5.4-2026-03-05-xhigh": 3,
+        "gpt-5.6-sol-max": 0,
+        "kimi-k3-max": 0
+      },
+      "remaining_capability_domains": [
+        "general_reasoning_and_knowledge",
+        "mathematics_and_science",
+        "software_engineering"
+      ]
     }
   ],
   "status": "diagnostic"

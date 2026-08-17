@@ -26,14 +26,14 @@ Further spec work continues from this tree, not from `9712b35`.
 2. **Branch:** `feat/umi-v05-governed-public`. Spec work is not implemented on `main`.
 3. **Hardening:** v0.4 processed artifacts frozen in `tests/test_v04_legacy_freeze.py`.
 4. **Validation:** `umi/public_validate.py` reloads the Epoch zip, checks raw values, weighted sums, rebuilt fingerprints, and exact v0.4 reproduction for the five Max pilots.
-5. **Uncertainty:** 2048-draw source-interval Monte Carlo plus family ablation. Partial intervals only.
+5. **Uncertainty:** 2048-draw source-interval Monte Carlo plus family and source-organization ablation, pairwise difference intervals, and diagnostic rank stability. Partial intervals only.
 6. **Expansion:** +2 complete common-core systems (`gemini-3.6-flash-high`, `gpt-5.4-2026-03-05-xhigh`). Four `_max` near-misses remain unpublished (no WeirdML).
 7. **Five-pilot reproduction:** Sol 66.265839, Kimi 59.690663, Opus 55.510021, Fable 54.429636, GLM 54.202703.
 8. **Certificate:** `public-index-certificate.json` binds scores, zip checksum, license, intervals, and overlap pairs. Schema: `schemas/public-index-certificate.schema.json`.
 9. **Named candidates:** Grok 4.5 High misses WeirdML accuracy and cost (8/10). Gemini 3.1 Pro Preview misses high-effort WeirdML cost (9/10; unsuffixed cost 1.36 is excluded by the Access suffix panel). Both emit diagnostic certificates with `umi_public: null`. Neither is added to identities or headline scores.
 10. **v0.4 classification:** historical experimental point-score edition. It does not prove rank stability or independent validation. v0.5 is the governed public index.
 11. **No paid requests. No API keys. No v0.3 or v0.4 rewrite.**
-12. **Verification this turn:** 212 pytest passed; 92.48% coverage; ruff clean; mypy 69 files; v0.5 validate/audit/candidates/certificate/blockers smoked. v0.3/v0.4 goldens restored after pytest rewrite.
+12. **Verification this turn:** 237 pytest passed after golden restore; 91.88% coverage; ruff clean; mypy 75 files. v0.3/v0.4 goldens restored after pytest rewrite.
 13. **Blocker report:** `docs/editions/v0.5/BLOCKER_REPORT.md` and `data/editions/v0.5/processed/blocker-report.json` list every unpublished identity and omitted construct with sources, URLs, and resolving evidence. No invented scores.
 14. **Nonblocked packaging:** edition manifest, source concentration (Epoch Capability 0.35 at the cap), pairwise overlap export, and diagnostic family ablation.
 15. **Commit phases (1.5):** suggested sequence is in `Revision_plan_v0.5.md`. On `main`: `40ffb7b`, `75f6cbc`, `f4cc49b`. On the feature branch: `4896e6e`, `de709d1`, `0ac6a38`, `6ffcbcb`, `e4f7db4`, `9dfa44e`. No history rewrite.
@@ -54,8 +54,8 @@ Further spec work continues from this tree, not from `9712b35`.
 12. **Weights:** Capability 0.15/0.40/0.25/0.20; OpEff 0.60/0.40; Access 1.00; overall 0.55/0.25/0.20.
 13. **Source concentration:** Epoch 0.35 of Capability (at the cap). DataCurve 0.22, AA 0.18, WeirdML 0.25. OpEff and Access are single-origin.
 14–17. **Headline scores:** Sol 66.265839, Kimi 59.690663, GPT-5.4 xhigh 55.511377, Opus 55.510021, Gemini 3.6 Flash high 55.439997, Fable 54.429636, GLM 54.202703.
-18–19. **Partial intervals and rank ranges:** Sol 1–1, Kimi 2–2, places 3–7 overlap. See `uncertainty.json`.
-20. **Source ablation:** diagnostic family drops in `source-ablation.json`. Sol and Kimi stay 1–2.
+18–19. **Partial intervals and rank ranges:** Sol 1–1, Kimi 2–2, places 3–7 overlap. See `uncertainty.json` and `rank-stability.json`. Sol and Kimi are `diagnostically_stable`.
+20. **Source ablation:** diagnostic family drops and Capability source-organization drops in `source-ablation.json`. Sol and Kimi stay 1–2 under family and source-organization ablation. OpEff and Access are `cannot_ablate`.
 21. **Weight sensitivity:** diagnostic named hypotheses. Sol and Kimi stay 1–2; places 3–7 move. Headline unchanged.
 22. **Limitations:** no context/language/latency/billed Economics; intervals are partial; bootstrap unpublished.
 23–24. **Verification:** last full suite 212 passed, 92.48% coverage, ruff clean, mypy 69 files. Later phases add targeted tests.

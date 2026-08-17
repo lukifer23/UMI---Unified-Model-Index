@@ -15,7 +15,8 @@ current policy values; code must not contradict this document. Three editions ar
 - **v0.5 Governed Public** (`umi-public-v0.5`, formula `umi-methodology-v0.5.0`, normalization
   `umi-normalization-v0.5.0`, `release_class: governed_public_index`) freezes v0.4, independently
   validates published raw values against
-  the Epoch zip, adds source-interval uncertainty and family ablation, and scores every frozen
+  the Epoch zip, adds source-interval uncertainty, family and source-organization ablation,
+  and rank-stability diagnostics, and scores every frozen
   configuration that has the complete ten-series common core. The five v0.4 Max pilots must
   reproduce their v0.4 `umi_public` numbers exactly. Named candidates that miss a required series
   receive diagnostic certificates with `umi_public: null`; they are not added to the headline.
@@ -191,9 +192,33 @@ not lower gates.
 Primary intervals are a 2,048-draw Monte Carlo that perturbs series with a published stderr or
 95% CI half-width, using the headline's frozen panel statistics. SciCode, CritPt, DeepSWE
 tokens/steps, and WeirdML cost stay at their point values, so intervals are labeled
-`partial_source_interval`. Rank ranges come from the same draws. Family ablation drops one
-multi-family series at a time and renormalizes only that domain; those orders are diagnostic,
-not the headline. This is not an attempt-level hierarchical bootstrap.
+`partial_source_interval`. Rank ranges and pairwise difference intervals come from the same
+draws. Series that share a `correlation_group` and both have published intervals reuse one
+residual. The seed is the first 16 hex characters of `scored_data_fingerprint`. Component
+intervals are stored beside the overall interval; Operational Efficiency and Access stay at
+their point values because those series have no published interval. This is not an
+attempt-level hierarchical bootstrap.
+
+### Source ablation
+
+Family ablation drops one `ablate: true` Capability series and renormalizes only that domain.
+Source-organization ablation drops every Capability series from one `source_organization`. If
+that empties a Capability domain, the remaining domain weights are renormalized. Operational
+Efficiency (DataCurve) and Access Economics (WeirdML) are single-origin and are listed under
+`cannot_ablate`; dropping them would empty a required headline component. Ablation orders and
+score ranges are diagnostic. They do not change `umi_public` and the remaining series after a
+drop are not a valid headline common core.
+
+### Rank stability
+
+`rank-stability.json` reports three diagnostic rank ranges beside the published rank: the
+partial-interval Monte Carlo range, the family and source-organization ablation ranges, and
+the named weight-hypothesis range. A model is `interval_stable` only when the Monte Carlo
+rank range is a single rank that equals the published rank. `diagnostically_stable` requires
+that same unique rank under family ablation, source ablation, and weight hypotheses.
+Overlapping partial intervals remain `indistinguishable_from` on the certificate. `umi edition
+--edition v0.5 uncertainty|ablation|stability` writes these artifacts. They do not rescore
+the headline.
 
 ### Weight sensitivity
 

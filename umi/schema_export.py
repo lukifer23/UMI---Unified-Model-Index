@@ -13,6 +13,8 @@ from umi.public_bundle import PublicScoringBundle
 from umi.public_candidates import PublicCandidateAuditReport
 from umi.public_certificate import PublicIndexCertificate
 from umi.public_scale import PublicAnchorPanelSet, PublicScoreScaleSet
+from umi.public_stability import PublicRankStabilityReport, PublicSourceAblationReport
+from umi.public_uncertainty import PublicUncertaintyReport
 from umi.schemas import (
     AcceptanceManifest,
     AttemptLedger,
@@ -53,6 +55,9 @@ SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "public-scoring-bundle.schema.json": PublicScoringBundle,
     "public-anchor-panels.schema.json": PublicAnchorPanelSet,
     "public-score-scales.schema.json": PublicScoreScaleSet,
+    "public-uncertainty.schema.json": PublicUncertaintyReport,
+    "public-source-ablation.schema.json": PublicSourceAblationReport,
+    "public-rank-stability.schema.json": PublicRankStabilityReport,
 }
 
 

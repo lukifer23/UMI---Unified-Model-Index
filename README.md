@@ -20,6 +20,9 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 dashboard
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 certificate
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 candidates
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 blockers
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 uncertainty
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 ablation
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 stability
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 bundle
 ```
 

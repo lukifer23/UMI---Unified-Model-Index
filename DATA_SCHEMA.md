@@ -392,6 +392,22 @@ pairwise interval overlap. `result_fingerprint` is SHA-256 over the certificate 
 that field. The certificate does not rescore. Overlapping partial intervals are
 `indistinguishable_from`, not a claim of equal capability.
 
+## Public uncertainty, source ablation, and rank stability
+
+`schemas/public-uncertainty.schema.json` is the contract for the 2,048-draw partial
+source-interval Monte Carlo. Each model row carries overall and component intervals, the
+Monte Carlo rank range, and which series had published intervals. Pairwise rows carry
+`p_left_greater` and a difference interval from the same draws. Family and
+source-organization ablations are included on the same payload.
+
+`schemas/public-source-ablation.schema.json` is the diagnostic Capability ablation contract.
+It lists family drops, organization drops, emptied domains, `cannot_ablate` single-origin
+components, and per-model diagnostic score ranges. It does not change `umi_public`.
+
+`schemas/public-rank-stability.schema.json` binds published ranks to interval, ablation, and
+weight-hypothesis rank ranges. `interval_stable` is a Monte Carlo fact. Overlapping partial
+intervals stay `indistinguishable_from`.
+
 ## Public candidate audit
 
 `schemas/public-candidate-audit.schema.json` is the machine-readable contract for v0.5 named

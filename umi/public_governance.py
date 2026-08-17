@@ -104,21 +104,23 @@ def write_governance_artifacts(
         )
     uncertainty_path = destination / "uncertainty.json"
     ablation = None
+    stability = None
     if uncertainty_path.is_file():
+        from umi.public_stability import write_rank_stability_artifacts
+
+        scores = json.loads((destination / "model-scores.json").read_text(encoding="utf-8"))
         uncertainty = json.loads(uncertainty_path.read_text(encoding="utf-8"))
-        ablation = {
-            "edition_id": uncertainty["edition_id"],
-            "status": "diagnostic",
-            "family_ablations": uncertainty["family_ablations"],
-        }
-        (destination / "source-ablation.json").write_text(
-            json.dumps(ablation, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        pack = write_rank_stability_artifacts(
+            destination, scores, uncertainty, edition_name=edition_name
         )
+        ablation = pack["source_ablation"]
+        stability = pack["rank_stability"]
     sensitivity = write_weight_sensitivity(destination, edition_name=edition_name)
     return {
         "blocker_report": blockers,
         "source_concentration": concentration,
         "edition_manifest": manifest,
         "source_ablation": ablation,
+        "rank_stability": stability,
         "weight_sensitivity": sensitivity,
     }

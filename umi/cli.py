@@ -229,6 +229,10 @@ def build_parser() -> argparse.ArgumentParser:
     edition_commands.add_parser("candidates")
     edition_commands.add_parser("blockers")
     edition_commands.add_parser("sensitivity")
+    edition_uncertainty = edition_commands.add_parser("uncertainty")
+    edition_uncertainty.add_argument("--draws", type=int, default=2048)
+    edition_commands.add_parser("ablation")
+    edition_commands.add_parser("stability")
     edition_commands.add_parser("bundle")
     edition_commands.add_parser("scales")
     edition_score = edition_commands.choices["score"]
@@ -339,6 +343,9 @@ def run(args: argparse.Namespace) -> int:
             "candidates",
             "blockers",
             "sensitivity",
+            "uncertainty",
+            "ablation",
+            "stability",
             "bundle",
             "scales",
         }
@@ -348,8 +355,9 @@ def run(args: argparse.Namespace) -> int:
         ):
             raise SystemExit(
                 f"{public_config.edition_id} is {public_config.release_class}; "
-                "the governed certificate, candidate audits, blocker report, and "
-                "weight sensitivity belong to umi-public-v0.5"
+                "the governed certificate, candidate audits, blocker report, "
+                "weight sensitivity, uncertainty, source ablation, and rank "
+                "stability belong to umi-public-v0.5"
             )
         if args.edition_command == "validate":
             validate_public_edition_feasibility(public_config)
@@ -397,6 +405,35 @@ def run(args: argparse.Namespace) -> int:
             from umi.public_sensitivity import write_weight_sensitivity
 
             _emit(write_weight_sensitivity(), "json", None)
+            return 0
+        if args.edition_command == "uncertainty":
+            from umi.public_stability import write_rank_stability_artifacts
+            from umi.public_uncertainty import write_public_uncertainty
+
+            processed = Path("data") / "editions" / args.edition / "processed"
+            uncertainty = write_public_uncertainty(
+                output_dir=processed,
+                edition_name=args.edition,
+                draws=args.draws,
+            )
+            write_rank_stability_artifacts(
+                processed, uncertainty=uncertainty, edition_name=args.edition
+            )
+            _emit(uncertainty, "json", None)
+            return 0
+        if args.edition_command == "ablation":
+            from umi.public_stability import write_rank_stability_artifacts
+
+            processed = Path("data") / "editions" / args.edition / "processed"
+            pack = write_rank_stability_artifacts(processed, edition_name=args.edition)
+            _emit(pack["source_ablation"], "json", None)
+            return 0
+        if args.edition_command == "stability":
+            from umi.public_stability import write_rank_stability_artifacts
+
+            processed = Path("data") / "editions" / args.edition / "processed"
+            pack = write_rank_stability_artifacts(processed, edition_name=args.edition)
+            _emit(pack["rank_stability"], "json", None)
             return 0
         if args.edition_command == "bundle":
             from umi.public_bundle import load_public_scoring_bundle, write_public_scoring_bundle

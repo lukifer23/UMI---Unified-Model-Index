@@ -21,6 +21,7 @@ from umi.public_certificate import build_public_certificate, overlapping_pairs, 
 from umi.public_governance import source_concentration
 from umi.public_scale import apply_public_scale, build_public_panels_and_scales
 from umi.public_sensitivity import WEIGHT_HYPOTHESES, quantify_weight_sensitivity
+from umi.public_stability import quantify_rank_stability, quantify_source_ablation
 from umi.public_uncertainty import quantify_public_uncertainty
 from umi.public_validate import validate_public_artifacts, validate_public_scores
 
@@ -171,6 +172,9 @@ def test_v05_validation_and_partial_intervals() -> None:
         assert item["interval_status"] == "partial_source_interval"
         assert "epoch-scicode" in item["series_without_intervals"]
     assert uncertainty["family_ablations"]
+    assert uncertainty["source_ablations"]
+    assert uncertainty["pairwise"]
+    assert uncertainty["resampling_method_version"] == "umi-public-uncertainty-v0.5"
     certificate = build_public_certificate(payload, report, uncertainty)
     assert certificate["status"] == "published_governed_index"
     assert certificate["source_artifact_sha256"] == verify_epoch_zip()
@@ -313,6 +317,94 @@ def test_committed_blocker_report_matches_live() -> None:
     assert stored == live
     assert (root / "edition-manifest.json").is_file()
     assert (root / "source-concentration.json").is_file()
+
+
+def test_uncertainty_is_deterministic_and_widens_with_sigma() -> None:
+    payload = score_public_edition(edition_name="v0.5")
+    first = quantify_public_uncertainty(payload, edition_name="v0.5", draws=64)
+    second = quantify_public_uncertainty(payload, edition_name="v0.5", draws=64)
+    assert first == second
+    wider = quantify_public_uncertainty(
+        payload, edition_name="v0.5", draws=64, sigma_scale=2.0
+    )
+    by_base = {item["entity_id"]: item for item in first["models"]}
+    by_wide = {item["entity_id"]: item for item in wider["models"]}
+    for entity_id, item in by_base.items():
+        base_width = item["interval_high"] - item["interval_low"]
+        wide_width = by_wide[entity_id]["interval_high"] - by_wide[entity_id]["interval_low"]
+        assert wide_width + 1e-12 >= base_width
+        assert item["operational_efficiency_low"] == item["operational_efficiency_high"]
+        assert item["access_economics_low"] == item["access_economics_high"]
+        assert "epoch-scicode" in item["series_without_intervals"]
+        assert "weirdml-cost-per-run" in item["series_without_intervals"]
+
+
+def test_source_ablation_is_diagnostic_and_drops_capability_orgs() -> None:
+    payload = score_public_edition(edition_name="v0.5")
+    uncertainty = quantify_public_uncertainty(payload, edition_name="v0.5", draws=32)
+    report = quantify_source_ablation(payload, uncertainty)
+    assert report["status"] == "diagnostic"
+    assert report["headline_unchanged"] is True
+    orgs = {item["dropped_organization"] for item in report["source_ablations"]}
+    assert orgs == {"artificial-analysis", "datacurve", "epoch", "weirdml"}
+    epoch = next(
+        item for item in report["source_ablations"] if item["dropped_organization"] == "epoch"
+    )
+    assert "epoch-chess-puzzles" in epoch["dropped_series"]
+    assert "epoch-gpqa" in epoch["dropped_series"]
+    assert "general_reasoning_and_knowledge" in epoch["emptied_domains"]
+    assert "mathematics_and_science" in epoch["emptied_domains"]
+    assert "software_engineering" in epoch["remaining_capability_domains"]
+    cannot = {item["component"]: item["source_organization"] for item in report["cannot_ablate"]}
+    assert cannot["operational_efficiency"] == "datacurve"
+    assert cannot["access_economics"] == "weirdml"
+    published = [
+        item["entity_id"]
+        for item in sorted(payload["models"], key=lambda row: row["rank"])
+    ]
+    assert published[0] == "gpt-5.6-sol-max"
+    assert published[1] == "kimi-k3-max"
+    for scenario in report["family_ablations"]:
+        assert scenario["order"][0] == "gpt-5.6-sol-max"
+        assert scenario["order"][1] == "kimi-k3-max"
+        assert scenario["rank_changes"]["gpt-5.6-sol-max"] == 0
+        assert scenario["rank_changes"]["kimi-k3-max"] == 0
+
+
+def test_rank_stability_marks_sol_and_kimi() -> None:
+    payload = score_public_edition(edition_name="v0.5")
+    uncertainty = quantify_public_uncertainty(payload, edition_name="v0.5", draws=128)
+    ablation = quantify_source_ablation(payload, uncertainty)
+    stability = quantify_rank_stability(payload, uncertainty, ablation)
+    assert stability["headline_unchanged"] is True
+    assert stability["interval_stable_prefix"][:2] == ["gpt-5.6-sol-max", "kimi-k3-max"]
+    by_id = {item["entity_id"]: item for item in stability["models"]}
+    assert by_id["gpt-5.6-sol-max"]["interval_stable"] is True
+    assert by_id["kimi-k3-max"]["interval_stable"] is True
+    assert by_id["gpt-5.6-sol-max"]["published_rank"] == 1
+    assert by_id["kimi-k3-max"]["published_rank"] == 2
+    overlap = set(stability["overlap_cluster"])
+    assert "claude-opus-5-max" in overlap
+    assert "gpt-5.6-sol-max" not in overlap
+    for item in payload["models"]:
+        row = by_id[item["entity_id"]]
+        assert row["interval_rank_low"] <= item["rank"] <= row["interval_rank_high"]
+        assert row["family_ablation_rank_low"] <= row["family_ablation_rank_high"]
+        assert row["source_ablation_score_low"] <= row["source_ablation_score_high"]
+
+
+def test_committed_uncertainty_surfaces_are_governed() -> None:
+    root = Path(__file__).resolve().parents[1] / "data" / "editions" / "v0.5" / "processed"
+    uncertainty = json.loads((root / "uncertainty.json").read_text(encoding="utf-8"))
+    ablation = json.loads((root / "source-ablation.json").read_text(encoding="utf-8"))
+    stability = json.loads((root / "rank-stability.json").read_text(encoding="utf-8"))
+    assert uncertainty["draws"] == 2048
+    assert uncertainty["seed_source"] == "scored_data_fingerprint"
+    assert uncertainty["source_ablations"]
+    assert ablation["headline_unchanged"] is True
+    assert ablation["status"] == "diagnostic"
+    assert stability["interval_stable_prefix"][:2] == ["gpt-5.6-sol-max", "kimi-k3-max"]
+    assert "claude-opus-5-max" in set(stability["overlap_cluster"])
 
 
 def test_incomplete_candidate_identity_fails_closed() -> None:

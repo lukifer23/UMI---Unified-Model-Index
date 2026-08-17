@@ -118,10 +118,15 @@ def series_rows(payload: dict[str, Any]) -> list[dict[str, Any]]:
 
 def attach_public_sidecars(payload: dict[str, Any], processed_dir: Path) -> dict[str, Any]:
     attached = dict(payload)
-    for name in ("uncertainty", "validation", "certificate"):
-        path = processed_dir / f"{name}.json"
-        if name == "certificate":
-            path = processed_dir / "public-index-certificate.json"
+    sidecars = {
+        "uncertainty": "uncertainty.json",
+        "validation": "validation.json",
+        "certificate": "public-index-certificate.json",
+        "source_ablation": "source-ablation.json",
+        "rank_stability": "rank-stability.json",
+    }
+    for name, filename in sidecars.items():
+        path = processed_dir / filename
         if name in attached or not path.is_file():
             continue
         attached[name] = json.loads(path.read_text(encoding="utf-8"))
@@ -158,6 +163,15 @@ def build_public_dashboard(payload: dict[str, Any]) -> dict[str, Any]:
             neighbors[right].append(left)
         for row in ranking:
             row["indistinguishable_from"] = tuple(sorted(neighbors[row["entity_id"]]))
+    stability_models = payload.get("rank_stability", {}).get("models", ())
+    if stability_models:
+        by_id = {item["entity_id"]: item for item in stability_models}
+        for row in ranking:
+            stability = by_id.get(row["entity_id"])
+            if stability is None:
+                continue
+            row["interval_stable"] = stability["interval_stable"]
+            row["diagnostically_stable"] = stability["diagnostically_stable"]
     return {
         "surface": "public-dashboard",
         "edition_id": payload["edition_id"],
@@ -427,7 +441,12 @@ def _interval_cell(row: dict[str, Any]) -> str:
     if row.get("interval_low") is None or row.get("interval_high") is None:
         return "unpublished"
     cluster = row.get("indistinguishable_from") or ()
-    note = f" overlaps {len(cluster)}" if cluster else " distinct"
+    if row.get("interval_stable"):
+        note = " interval-stable"
+    elif cluster:
+        note = f" overlaps {len(cluster)}"
+    else:
+        note = " distinct"
     return (
         f"{row['interval_low']:.2f}–{row['interval_high']:.2f} "
         f"(ranks {row['rank_low']}–{row['rank_high']}){note}"
@@ -559,7 +578,8 @@ def write_chart_csv(path: Path, rows: list[dict[str, Any]]) -> None:
 
 def _dashboard_limitations(has_intervals: bool) -> list[str]:
     interval_note = (
-        "Partial source-interval ranks overlap for some models and are not a unique order."
+        "Partial source-interval ranks overlap for some models and are not a unique order. "
+        "Source ablation and weight hypotheses are diagnostic rank-stability checks."
         if has_intervals
         else "95% intervals are unpublished because this payload has no uncertainty sidecar."
     )

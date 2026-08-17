@@ -534,6 +534,7 @@ def write_public_artifacts(
         from umi.public_candidates import write_candidate_audits
         from umi.public_certificate import build_public_certificate
         from umi.public_governance import write_governance_artifacts
+        from umi.public_stability import write_rank_stability_artifacts
         from umi.public_uncertainty import quantify_public_uncertainty
         from umi.public_validate import validate_public_scores
 
@@ -546,6 +547,9 @@ def write_public_artifacts(
         )
         (destination / "uncertainty.json").write_text(
             json.dumps(uncertainty, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        stability_pack = write_rank_stability_artifacts(
+            destination, payload, uncertainty, edition_name=edition_name
         )
         certificate = build_public_certificate(payload, validation, uncertainty)
         (destination / "public-index-certificate.json").write_text(
@@ -574,6 +578,8 @@ def write_public_artifacts(
             "certificate": certificate,
             "candidate_audits": candidate_audits,
             "governance": governance,
+            "source_ablation": stability_pack["source_ablation"],
+            "rank_stability": stability_pack["rank_stability"],
         }
     from analysis.public_dashboard import write_public_dashboard
 

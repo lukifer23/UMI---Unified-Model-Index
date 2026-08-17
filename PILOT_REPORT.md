@@ -13,6 +13,9 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 score
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 audit
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 candidates
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 blockers
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 uncertainty
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 ablation
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 stability
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 bundle
 ```
 
@@ -28,11 +31,18 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 bundle
 
 Intervals are `partial_source_interval`: published stderr / CI half-width on chess, GPQA,
 OTIS, DeepSWE Pass@1, and WeirdML accuracy. SciCode, CritPt, DeepSWE tokens/steps, and
-WeirdML cost stay at their point values. Sol and Kimi are rank-stable. Places 3–7 overlap.
+WeirdML cost stay at their point values. Sol and Kimi are interval-stable and
+diagnostically stable (they stay ranks 1 and 2 under family ablation, Capability
+source-organization ablation, and named weight hypotheses). Places 3–7 overlap.
+Family and source-organization ablation and named weight hypotheses are diagnostic; they do
+not change `umi_public`. Operational Efficiency and Access cannot be source-ablated without
+emptying a required component.
 
 Charts: [v0.5 dashboard](data/editions/v0.5/processed/public-dashboard.html). Validation:
 [validation.json](data/editions/v0.5/processed/validation.json). Uncertainty:
-[uncertainty.json](data/editions/v0.5/processed/uncertainty.json). Certificate:
+[uncertainty.json](data/editions/v0.5/processed/uncertainty.json). Source ablation:
+[source-ablation.json](data/editions/v0.5/processed/source-ablation.json). Rank stability:
+[rank-stability.json](data/editions/v0.5/processed/rank-stability.json). Certificate:
 [public-index-certificate.json](data/editions/v0.5/processed/public-index-certificate.json).
 The certificate binds those scores to the Epoch zip SHA-256 and marks overlapping intervals
 as indistinguishable.

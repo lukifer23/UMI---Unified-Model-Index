@@ -1,4 +1,13 @@
 {
+  "correlation_groups": [
+    "aa-scicode",
+    "deepswe-v1.1-four-run-cohort",
+    "epoch-chess-puzzles",
+    "epoch-critpt",
+    "epoch-otis-mock-aime",
+    "epoch-simple-evals-gpqa",
+    "weirdml-leaderboard"
+  ],
   "draws": 2048,
   "edition_id": "umi-public-v0.5",
   "family_ablations": [
@@ -111,15 +120,23 @@
   "limitations": [
     "Intervals use published stderr or CI half-width where the frozen extract has them.",
     "SciCode, CritPt, DeepSWE tokens/steps, and WeirdML cost stay at their point values.",
+    "Series in one correlation group share a residual when both have published intervals.",
+    "Source-organization ablation drops Capability series only and is diagnostic.",
     "This is not an attempt-level hierarchical bootstrap."
   ],
-  "method": "source_interval_monte_carlo_plus_family_ablation",
+  "method": "source_interval_monte_carlo_plus_family_and_source_ablation",
   "models": [
     {
+      "access_economics_high": 3.965024788773297,
+      "access_economics_low": 3.965024788773297,
+      "capability_high": 92.33899567816496,
+      "capability_low": 88.37527678045248,
       "entity_id": "claude-opus-5-max",
       "interval_high": 56.39422329748467,
       "interval_low": 54.21417790374281,
       "interval_status": "partial_source_interval",
+      "operational_efficiency_high": 19.259082866957094,
+      "operational_efficiency_low": 19.259082866957094,
       "rank_high": 7,
       "rank_low": 3,
       "series_with_intervals": [
@@ -139,10 +156,16 @@
       "umi_public": 55.510021169743936
     },
     {
+      "access_economics_high": 0.7058491763769492,
+      "access_economics_low": 0.7058491763769492,
+      "capability_high": 90.82872076863126,
+      "capability_low": 86.11107564426726,
       "entity_id": "claude-fable-5-max",
       "interval_high": 55.59444449064061,
       "interval_low": 52.99973967224041,
       "interval_status": "partial_source_interval",
+      "operational_efficiency_high": 21.9899129304721,
+      "operational_efficiency_low": 21.9899129304721,
       "rank_high": 7,
       "rank_low": 3,
       "series_with_intervals": [
@@ -162,10 +185,16 @@
       "umi_public": 54.429636426057556
     },
     {
+      "access_economics_high": 16.40246018792375,
+      "access_economics_low": 16.40246018792375,
+      "capability_high": 93.11302355306543,
+      "capability_low": 90.47782782558888,
       "entity_id": "gpt-5.6-sol-max",
       "interval_high": 66.90836129366487,
       "interval_low": 65.45900364355276,
       "interval_status": "partial_source_interval",
+      "operational_efficiency_high": 49.66282520757648,
+      "operational_efficiency_low": 49.66282520757648,
       "rank_high": 1,
       "rank_low": 1,
       "series_with_intervals": [
@@ -185,10 +214,16 @@
       "umi_public": 66.26583886547628
     },
     {
+      "access_economics_high": 19.398244660737653,
+      "access_economics_low": 19.398244660737653,
+      "capability_high": 91.02737164519976,
+      "capability_low": 86.03680030042611,
       "entity_id": "kimi-k3-max",
       "interval_high": 60.893895215936666,
       "interval_low": 58.14908097631116,
       "interval_status": "partial_source_interval",
+      "operational_efficiency_high": 27.796767515717043,
+      "operational_efficiency_low": 27.796767515717043,
       "rank_high": 2,
       "rank_low": 2,
       "series_with_intervals": [
@@ -208,10 +243,16 @@
       "umi_public": 59.69066272741414
     },
     {
+      "access_economics_high": 55.30627496754019,
+      "access_economics_low": 55.30627496754019,
+      "capability_high": 70.82844164571948,
+      "capability_low": 63.878454740028246,
       "entity_id": "glm-5.2-max",
       "interval_high": 55.82124004005812,
       "interval_low": 51.998747241927944,
       "interval_status": "partial_source_interval",
+      "operational_efficiency_high": 23.217368565617466,
+      "operational_efficiency_low": 23.217368565617466,
       "rank_high": 7,
       "rank_low": 3,
       "series_with_intervals": [
@@ -231,10 +272,16 @@
       "umi_public": 54.202702676964044
     },
     {
+      "access_economics_high": 51.16618751679488,
+      "access_economics_low": 51.16618751679488,
+      "capability_high": 75.1841016674366,
+      "capability_low": 69.73103344503669,
       "entity_id": "gemini-3.6-flash-high",
       "interval_high": 56.860238117567434,
       "interval_low": 53.86105059524749,
       "interval_status": "partial_source_interval",
+      "operational_efficiency_high": 21.10297878847333,
+      "operational_efficiency_low": 21.10297878847333,
       "rank_high": 7,
       "rank_low": 3,
       "series_with_intervals": [
@@ -254,10 +301,16 @@
       "umi_public": 55.4399971625043
     },
     {
+      "access_economics_high": 2.4032911824358405,
+      "access_economics_low": 2.4032911824358405,
+      "capability_high": 83.2836914271299,
+      "capability_low": 79.69984171682071,
       "entity_id": "gpt-5.4-2026-03-05-xhigh",
       "interval_high": 56.38747197299199,
       "interval_low": 54.416354632321934,
       "interval_status": "partial_source_interval",
+      "operational_efficiency_high": 40.4031338063335,
+      "operational_efficiency_low": 40.4031338063335,
       "rank_high": 7,
       "rank_low": 3,
       "series_with_intervals": [
@@ -277,5 +330,497 @@
       "umi_public": 55.51137725670947
     }
   ],
-  "seed_source": "scored_data_fingerprint"
+  "pairwise": [
+    {
+      "difference_high": 8.234468105607895,
+      "difference_low": 5.160451146292289,
+      "difference_status": "left_greater",
+      "left": "gpt-5.6-sol-max",
+      "mean_difference": 6.579364185257403,
+      "p_left_greater": 1.0,
+      "p_right_greater": 0.0,
+      "right": "kimi-k3-max"
+    },
+    {
+      "difference_high": 11.999829980712683,
+      "difference_low": 9.494534763057473,
+      "difference_status": "left_greater",
+      "left": "gpt-5.6-sol-max",
+      "mean_difference": 10.74256562759985,
+      "p_left_greater": 1.0,
+      "p_right_greater": 0.0,
+      "right": "gpt-5.4-2026-03-05-xhigh"
+    },
+    {
+      "difference_high": 12.14231098928255,
+      "difference_low": 9.542788152693333,
+      "difference_status": "left_greater",
+      "left": "gpt-5.6-sol-max",
+      "mean_difference": 10.807288037484867,
+      "p_left_greater": 1.0,
+      "p_right_greater": 0.0,
+      "right": "claude-opus-5-max"
+    },
+    {
+      "difference_high": 12.464320576402443,
+      "difference_low": 9.14671417190742,
+      "difference_status": "left_greater",
+      "left": "gpt-5.6-sol-max",
+      "mean_difference": 10.819002362677736,
+      "p_left_greater": 1.0,
+      "p_right_greater": 0.0,
+      "right": "gemini-3.6-flash-high"
+    },
+    {
+      "difference_high": 13.334766445467793,
+      "difference_low": 10.412360607139007,
+      "difference_status": "left_greater",
+      "left": "gpt-5.6-sol-max",
+      "mean_difference": 11.84296747928647,
+      "p_left_greater": 1.0,
+      "p_right_greater": 0.0,
+      "right": "claude-fable-5-max"
+    },
+    {
+      "difference_high": 14.327705238458755,
+      "difference_low": 10.266639732873372,
+      "difference_status": "left_greater",
+      "left": "gpt-5.6-sol-max",
+      "mean_difference": 12.101334748086098,
+      "p_left_greater": 1.0,
+      "p_right_greater": 0.0,
+      "right": "glm-5.2-max"
+    },
+    {
+      "difference_high": 5.859276906058163,
+      "difference_low": 2.458451351284374,
+      "difference_status": "left_greater",
+      "left": "kimi-k3-max",
+      "mean_difference": 4.163201442342447,
+      "p_left_greater": 1.0,
+      "p_right_greater": 0.0,
+      "right": "gpt-5.4-2026-03-05-xhigh"
+    },
+    {
+      "difference_high": 6.002470445504983,
+      "difference_low": 2.467171003850609,
+      "difference_status": "left_greater",
+      "left": "kimi-k3-max",
+      "mean_difference": 4.227923852227464,
+      "p_left_greater": 1.0,
+      "p_right_greater": 0.0,
+      "right": "claude-opus-5-max"
+    },
+    {
+      "difference_high": 6.215651960278571,
+      "difference_low": 2.1791047486856954,
+      "difference_status": "left_greater",
+      "left": "kimi-k3-max",
+      "mean_difference": 4.239638177420333,
+      "p_left_greater": 1.0,
+      "p_right_greater": 0.0,
+      "right": "gemini-3.6-flash-high"
+    },
+    {
+      "difference_high": 7.15863913627696,
+      "difference_low": 3.3901566108492958,
+      "difference_status": "left_greater",
+      "left": "kimi-k3-max",
+      "mean_difference": 5.263603294029068,
+      "p_left_greater": 1.0,
+      "p_right_greater": 0.0,
+      "right": "claude-fable-5-max"
+    },
+    {
+      "difference_high": 7.955299573857943,
+      "difference_low": 3.310095345498688,
+      "difference_status": "left_greater",
+      "left": "kimi-k3-max",
+      "mean_difference": 5.5219705628286935,
+      "p_left_greater": 1.0,
+      "p_right_greater": 0.0,
+      "right": "glm-5.2-max"
+    },
+    {
+      "difference_high": 1.6258212371857041,
+      "difference_low": -1.4155001491825345,
+      "difference_status": "indistinguishable",
+      "left": "gpt-5.4-2026-03-05-xhigh",
+      "mean_difference": 0.06472240988501744,
+      "p_left_greater": 0.52734375,
+      "p_right_greater": 0.47265625,
+      "right": "claude-opus-5-max"
+    },
+    {
+      "difference_high": 1.908470840932928,
+      "difference_low": -1.7380245458654215,
+      "difference_status": "indistinguishable",
+      "left": "gpt-5.4-2026-03-05-xhigh",
+      "mean_difference": 0.0764367350778865,
+      "p_left_greater": 0.5234375,
+      "p_right_greater": 0.4765625,
+      "right": "gemini-3.6-flash-high"
+    },
+    {
+      "difference_high": 2.7325352379413985,
+      "difference_low": -0.5343696223906917,
+      "difference_status": "indistinguishable",
+      "left": "gpt-5.4-2026-03-05-xhigh",
+      "mean_difference": 1.1004018516866207,
+      "p_left_greater": 0.9052734375,
+      "p_right_greater": 0.0947265625,
+      "right": "claude-fable-5-max"
+    },
+    {
+      "difference_high": 3.6524506889528396,
+      "difference_low": -0.6051117962129453,
+      "difference_status": "indistinguishable",
+      "left": "gpt-5.4-2026-03-05-xhigh",
+      "mean_difference": 1.358769120486247,
+      "p_left_greater": 0.90087890625,
+      "p_right_greater": 0.09912109375,
+      "right": "glm-5.2-max"
+    },
+    {
+      "difference_high": 1.860190422392563,
+      "difference_low": -1.850931111376127,
+      "difference_status": "indistinguishable",
+      "left": "claude-opus-5-max",
+      "mean_difference": 0.011714325192869052,
+      "p_left_greater": 0.5087890625,
+      "p_right_greater": 0.4912109375,
+      "right": "gemini-3.6-flash-high"
+    },
+    {
+      "difference_high": 2.745699303511749,
+      "difference_low": -0.6382223254614061,
+      "difference_status": "indistinguishable",
+      "left": "claude-opus-5-max",
+      "mean_difference": 1.0356794418016033,
+      "p_left_greater": 0.89208984375,
+      "p_right_greater": 0.10791015625,
+      "right": "claude-fable-5-max"
+    },
+    {
+      "difference_high": 3.600954595943037,
+      "difference_low": -0.7645329837137211,
+      "difference_status": "indistinguishable",
+      "left": "claude-opus-5-max",
+      "mean_difference": 1.2940467106012297,
+      "p_left_greater": 0.880859375,
+      "p_right_greater": 0.119140625,
+      "right": "glm-5.2-max"
+    },
+    {
+      "difference_high": 2.9546907567827603,
+      "difference_low": -0.8749862420690562,
+      "difference_status": "indistinguishable",
+      "left": "gemini-3.6-flash-high",
+      "mean_difference": 1.0239651166087342,
+      "p_left_greater": 0.8447265625,
+      "p_right_greater": 0.1552734375,
+      "right": "claude-fable-5-max"
+    },
+    {
+      "difference_high": 3.881040648977155,
+      "difference_low": -1.0506605739690258,
+      "difference_status": "indistinguishable",
+      "left": "gemini-3.6-flash-high",
+      "mean_difference": 1.2823323854083606,
+      "p_left_greater": 0.85595703125,
+      "p_right_greater": 0.14404296875,
+      "right": "glm-5.2-max"
+    },
+    {
+      "difference_high": 2.7518658206908384,
+      "difference_low": -1.828699306372087,
+      "difference_status": "indistinguishable",
+      "left": "claude-fable-5-max",
+      "mean_difference": 0.2583672687996263,
+      "p_left_greater": 0.56982421875,
+      "p_right_greater": 0.43017578125,
+      "right": "glm-5.2-max"
+    }
+  ],
+  "resampling_method_version": "umi-public-uncertainty-v0.5",
+  "seed_source": "scored_data_fingerprint",
+  "source_ablations": [
+    {
+      "dropped_organization": "artificial-analysis",
+      "dropped_series": [
+        "epoch-scicode"
+      ],
+      "emptied_domains": [],
+      "models": [
+        {
+          "diagnostic_public": 65.68654374410437,
+          "entity_id": "gpt-5.6-sol-max",
+          "rank": 1
+        },
+        {
+          "diagnostic_public": 58.04414076756242,
+          "entity_id": "kimi-k3-max",
+          "rank": 2
+        },
+        {
+          "diagnostic_public": 55.16539539053886,
+          "entity_id": "claude-opus-5-max",
+          "rank": 3
+        },
+        {
+          "diagnostic_public": 52.8048569817281,
+          "entity_id": "claude-fable-5-max",
+          "rank": 4
+        },
+        {
+          "diagnostic_public": 51.36137384444825,
+          "entity_id": "gemini-3.6-flash-high",
+          "rank": 5
+        },
+        {
+          "diagnostic_public": 51.09523286463108,
+          "entity_id": "gpt-5.4-2026-03-05-xhigh",
+          "rank": 6
+        },
+        {
+          "diagnostic_public": 49.98318495031447,
+          "entity_id": "glm-5.2-max",
+          "rank": 7
+        }
+      ],
+      "order": [
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "claude-opus-5-max",
+        "claude-fable-5-max",
+        "gemini-3.6-flash-high",
+        "gpt-5.4-2026-03-05-xhigh",
+        "glm-5.2-max"
+      ],
+      "rank_changes": {
+        "claude-fable-5-max": -2,
+        "claude-opus-5-max": -1,
+        "gemini-3.6-flash-high": 0,
+        "glm-5.2-max": 0,
+        "gpt-5.4-2026-03-05-xhigh": 3,
+        "gpt-5.6-sol-max": 0,
+        "kimi-k3-max": 0
+      },
+      "remaining_capability_domains": [
+        "agentic_and_tool_mediated_work",
+        "general_reasoning_and_knowledge",
+        "mathematics_and_science",
+        "software_engineering"
+      ]
+    },
+    {
+      "dropped_organization": "datacurve",
+      "dropped_series": [
+        "deepswe-v1.1-pass1"
+      ],
+      "emptied_domains": [],
+      "models": [
+        {
+          "diagnostic_public": 66.97386623604196,
+          "entity_id": "gpt-5.6-sol-max",
+          "rank": 1
+        },
+        {
+          "diagnostic_public": 61.7030784561218,
+          "entity_id": "kimi-k3-max",
+          "rank": 2
+        },
+        {
+          "diagnostic_public": 60.90888706924973,
+          "entity_id": "gpt-5.4-2026-03-05-xhigh",
+          "rank": 3
+        },
+        {
+          "diagnostic_public": 60.42498121790614,
+          "entity_id": "gemini-3.6-flash-high",
+          "rank": 4
+        },
+        {
+          "diagnostic_public": 59.35989100953575,
+          "entity_id": "glm-5.2-max",
+          "rank": 5
+        },
+        {
+          "diagnostic_public": 56.41547796912687,
+          "entity_id": "claude-fable-5-max",
+          "rank": 6
+        },
+        {
+          "diagnostic_public": 55.93123045543902,
+          "entity_id": "claude-opus-5-max",
+          "rank": 7
+        }
+      ],
+      "order": [
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "gpt-5.4-2026-03-05-xhigh",
+        "gemini-3.6-flash-high",
+        "glm-5.2-max",
+        "claude-fable-5-max",
+        "claude-opus-5-max"
+      ],
+      "rank_changes": {
+        "claude-fable-5-max": 0,
+        "claude-opus-5-max": 3,
+        "gemini-3.6-flash-high": -1,
+        "glm-5.2-max": -2,
+        "gpt-5.4-2026-03-05-xhigh": 0,
+        "gpt-5.6-sol-max": 0,
+        "kimi-k3-max": 0
+      },
+      "remaining_capability_domains": [
+        "agentic_and_tool_mediated_work",
+        "general_reasoning_and_knowledge",
+        "mathematics_and_science",
+        "software_engineering"
+      ]
+    },
+    {
+      "dropped_organization": "epoch",
+      "dropped_series": [
+        "epoch-chess-puzzles",
+        "epoch-gpqa",
+        "epoch-otis-aime",
+        "epoch-critpt"
+      ],
+      "emptied_domains": [
+        "general_reasoning_and_knowledge",
+        "mathematics_and_science"
+      ],
+      "models": [
+        {
+          "diagnostic_public": 66.12873836886656,
+          "entity_id": "gpt-5.6-sol-max",
+          "rank": 1
+        },
+        {
+          "diagnostic_public": 60.67533051591161,
+          "entity_id": "kimi-k3-max",
+          "rank": 2
+        },
+        {
+          "diagnostic_public": 56.160700263960265,
+          "entity_id": "claude-opus-5-max",
+          "rank": 3
+        },
+        {
+          "diagnostic_public": 56.13393524071956,
+          "entity_id": "claude-fable-5-max",
+          "rank": 4
+        },
+        {
+          "diagnostic_public": 54.37555941757579,
+          "entity_id": "glm-5.2-max",
+          "rank": 5
+        },
+        {
+          "diagnostic_public": 53.97405114450624,
+          "entity_id": "gpt-5.4-2026-03-05-xhigh",
+          "rank": 6
+        },
+        {
+          "diagnostic_public": 52.03364800810404,
+          "entity_id": "gemini-3.6-flash-high",
+          "rank": 7
+        }
+      ],
+      "order": [
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "claude-opus-5-max",
+        "claude-fable-5-max",
+        "glm-5.2-max",
+        "gpt-5.4-2026-03-05-xhigh",
+        "gemini-3.6-flash-high"
+      ],
+      "rank_changes": {
+        "claude-fable-5-max": -2,
+        "claude-opus-5-max": -1,
+        "gemini-3.6-flash-high": 2,
+        "glm-5.2-max": -2,
+        "gpt-5.4-2026-03-05-xhigh": 3,
+        "gpt-5.6-sol-max": 0,
+        "kimi-k3-max": 0
+      },
+      "remaining_capability_domains": [
+        "agentic_and_tool_mediated_work",
+        "software_engineering"
+      ]
+    },
+    {
+      "dropped_organization": "weirdml",
+      "dropped_series": [
+        "epoch-weirdml"
+      ],
+      "emptied_domains": [
+        "agentic_and_tool_mediated_work"
+      ],
+      "models": [
+        {
+          "diagnostic_public": 64.81380050472197,
+          "entity_id": "gpt-5.6-sol-max",
+          "rank": 1
+        },
+        {
+          "diagnostic_public": 57.67454571737023,
+          "entity_id": "kimi-k3-max",
+          "rank": 2
+        },
+        {
+          "diagnostic_public": 54.27443333855038,
+          "entity_id": "gemini-3.6-flash-high",
+          "rank": 3
+        },
+        {
+          "diagnostic_public": 53.83551779874048,
+          "entity_id": "claude-opus-5-max",
+          "rank": 4
+        },
+        {
+          "diagnostic_public": 52.38471400935882,
+          "entity_id": "claude-fable-5-max",
+          "rank": 5
+        },
+        {
+          "diagnostic_public": 52.28910367952874,
+          "entity_id": "gpt-5.4-2026-03-05-xhigh",
+          "rank": 6
+        },
+        {
+          "diagnostic_public": 48.9794708355582,
+          "entity_id": "glm-5.2-max",
+          "rank": 7
+        }
+      ],
+      "order": [
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "gemini-3.6-flash-high",
+        "claude-opus-5-max",
+        "claude-fable-5-max",
+        "gpt-5.4-2026-03-05-xhigh",
+        "glm-5.2-max"
+      ],
+      "rank_changes": {
+        "claude-fable-5-max": -1,
+        "claude-opus-5-max": 0,
+        "gemini-3.6-flash-high": -2,
+        "glm-5.2-max": 0,
+        "gpt-5.4-2026-03-05-xhigh": 3,
+        "gpt-5.6-sol-max": 0,
+        "kimi-k3-max": 0
+      },
+      "remaining_capability_domains": [
+        "general_reasoning_and_knowledge",
+        "mathematics_and_science",
+        "software_engineering"
+      ]
+    }
+  ]
 }
