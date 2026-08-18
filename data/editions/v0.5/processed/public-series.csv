@@ -2,70 +2,70 @@ entity_id,short_name,component,series_id,series_label,raw,score
 gpt-5.6-sol-max,Sol,capability,deepswe-v1.1-pass1,DeepSWE Pass@1,0.726667,83.956441
 gpt-5.6-sol-max,Sol,capability,epoch-chess-puzzles,Chess puzzles,0.55,96.129618
 gpt-5.6-sol-max,Sol,capability,epoch-critpt,CritPt,0.323,80.599167
-gpt-5.6-sol-max,Sol,capability,epoch-gpqa,GPQA Diamond,0.934975,89.018162
-gpt-5.6-sol-max,Sol,capability,epoch-otis-aime,OTIS Mock AIME,1.0,99.829818
+gpt-5.6-sol-max,Sol,capability,epoch-gpqa,GPQA Diamond,0.934975,88.939012
+gpt-5.6-sol-max,Sol,capability,epoch-otis-aime,OTIS Mock AIME,1.0,99.86501
 gpt-5.6-sol-max,Sol,capability,epoch-scicode,SciCode,0.561343,89.807907
 gpt-5.6-sol-max,Sol,capability,epoch-weirdml,WeirdML,0.8697,99.86501
-gpt-5.6-sol-max,Sol,operational_efficiency,deepswe-agent-steps,DeepSWE steps,61.253333,60.30505
-gpt-5.6-sol-max,Sol,operational_efficiency,deepswe-output-tokens,DeepSWE tokens,60013.644444,42.568009
-gpt-5.6-sol-max,Sol,access_economics,weirdml-cost-per-run,WeirdML cost/run,2.312208,16.40246
+gpt-5.6-sol-max,Sol,operational_efficiency,deepswe-agent-steps,DeepSWE steps,61.253333,60.28592
+gpt-5.6-sol-max,Sol,operational_efficiency,deepswe-output-tokens,DeepSWE tokens,60013.644444,42.568025
+gpt-5.6-sol-max,Sol,access_economics,weirdml-cost-per-run,WeirdML cost/run,2.312208,26.290398
 kimi-k3-max,Kimi K3,capability,deepswe-v1.1-pass1,DeepSWE Pass@1,0.685144,77.391605
 kimi-k3-max,Kimi K3,capability,epoch-chess-puzzles,Chess puzzles,0.39,85.195911
 kimi-k3-max,Kimi K3,capability,epoch-critpt,CritPt,0.234,76.580345
-kimi-k3-max,Kimi K3,capability,epoch-gpqa,GPQA Diamond,0.931187,88.074028
-kimi-k3-max,Kimi K3,capability,epoch-otis-aime,OTIS Mock AIME,0.972222,90.287635
+kimi-k3-max,Kimi K3,capability,epoch-gpqa,GPQA Diamond,0.931187,87.993446
+kimi-k3-max,Kimi K3,capability,epoch-otis-aime,OTIS Mock AIME,0.972222,91.404656
 kimi-k3-max,Kimi K3,capability,epoch-scicode,SciCode,0.586806,94.02314
-kimi-k3-max,Kimi K3,capability,epoch-weirdml,WeirdML,0.8257,99.836678
-kimi-k3-max,Kimi K3,operational_efficiency,deepswe-agent-steps,DeepSWE steps,97.587583,28.033845
-kimi-k3-max,Kimi K3,operational_efficiency,deepswe-output-tokens,DeepSWE tokens,81499.842572,27.638716
-kimi-k3-max,Kimi K3,access_economics,weirdml-cost-per-run,WeirdML cost/run,2.053659,19.398245
-gpt-5.4-2026-03-05-xhigh,GPT-5.4,capability,deepswe-v1.1-pass1,DeepSWE Pass@1,0.517699,46.090285
-gpt-5.4-2026-03-05-xhigh,GPT-5.4,capability,epoch-chess-puzzles,Chess puzzles,0.44,89.871627
-gpt-5.4-2026-03-05-xhigh,GPT-5.4,capability,epoch-critpt,CritPt,0.234286,76.595483
-gpt-5.4-2026-03-05-xhigh,GPT-5.4,capability,epoch-gpqa,GPQA Diamond,0.933,88.526675
-gpt-5.4-2026-03-05-xhigh,GPT-5.4,capability,epoch-otis-aime,OTIS Mock AIME,0.953,84.908629
-gpt-5.4-2026-03-05-xhigh,GPT-5.4,capability,epoch-scicode,SciCode,0.565972,90.697804
-gpt-5.4-2026-03-05-xhigh,GPT-5.4,capability,epoch-weirdml,WeirdML,0.777,99.26683
-gpt-5.4-2026-03-05-xhigh,GPT-5.4,operational_efficiency,deepswe-agent-steps,DeepSWE steps,70.471239,50.320176
-gpt-5.4-2026-03-05-xhigh,GPT-5.4,operational_efficiency,deepswe-output-tokens,DeepSWE tokens,71408.873894,33.791772
-gpt-5.4-2026-03-05-xhigh,GPT-5.4,access_economics,weirdml-cost-per-run,WeirdML cost/run,5.7199,2.403291
+kimi-k3-max,Kimi K3,capability,epoch-weirdml,WeirdML,0.8257,99.807552
+kimi-k3-max,Kimi K3,operational_efficiency,deepswe-agent-steps,DeepSWE steps,97.587583,28.131176
+kimi-k3-max,Kimi K3,operational_efficiency,deepswe-output-tokens,DeepSWE tokens,81499.842572,27.638808
+kimi-k3-max,Kimi K3,access_economics,weirdml-cost-per-run,WeirdML cost/run,2.053659,28.274921
 claude-opus-5-max,Opus 5,capability,deepswe-v1.1-pass1,DeepSWE Pass@1,0.736486,85.378801
 claude-opus-5-max,Opus 5,capability,epoch-chess-puzzles,Chess puzzles,0.42,88.168577
 claude-opus-5-max,Opus 5,capability,epoch-critpt,CritPt,0.291429,79.310246
-claude-opus-5-max,Opus 5,capability,epoch-gpqa,GPQA Diamond,0.938763,89.955395
-claude-opus-5-max,Opus 5,capability,epoch-otis-aime,OTIS Mock AIME,0.988889,96.013035
+claude-opus-5-max,Opus 5,capability,epoch-gpqa,GPQA Diamond,0.938763,89.878063
+claude-opus-5-max,Opus 5,capability,epoch-otis-aime,OTIS Mock AIME,0.988889,96.680907
 claude-opus-5-max,Opus 5,capability,epoch-scicode,SciCode,0.556713,88.85987
 claude-opus-5-max,Opus 5,capability,epoch-weirdml,WeirdML,0.9178,99.86501
-claude-opus-5-max,Opus 5,operational_efficiency,deepswe-agent-steps,DeepSWE steps,99.042793,27.13592
-claude-opus-5-max,Opus 5,operational_efficiency,deepswe-output-tokens,DeepSWE tokens,117565.693694,14.007858
-claude-opus-5-max,Opus 5,access_economics,weirdml-cost-per-run,WeirdML cost/run,4.741955,3.965025
-gemini-3.6-flash-high,Gemini 3.6 Flash,capability,deepswe-v1.1-pass1,DeepSWE Pass@1,0.485588,40.024922
-gemini-3.6-flash-high,Gemini 3.6 Flash,capability,epoch-chess-puzzles,Chess puzzles,0.4,86.246012
-gemini-3.6-flash-high,Gemini 3.6 Flash,capability,epoch-critpt,CritPt,0.105714,66.675151
-gemini-3.6-flash-high,Gemini 3.6 Flash,capability,epoch-gpqa,GPQA Diamond,0.941288,90.575203
-gemini-3.6-flash-high,Gemini 3.6 Flash,capability,epoch-otis-aime,OTIS Mock AIME,0.941667,82.16303
-gemini-3.6-flash-high,Gemini 3.6 Flash,capability,epoch-scicode,SciCode,0.52662,81.223137
-gemini-3.6-flash-high,Gemini 3.6 Flash,capability,epoch-weirdml,WeirdML,0.561,78.959466
-gemini-3.6-flash-high,Gemini 3.6 Flash,operational_efficiency,deepswe-agent-steps,DeepSWE steps,108.310421,22.03013
-gemini-3.6-flash-high,Gemini 3.6 Flash,operational_efficiency,deepswe-output-tokens,DeepSWE tokens,96978.283814,20.484878
-gemini-3.6-flash-high,Gemini 3.6 Flash,access_economics,weirdml-cost-per-run,WeirdML cost/run,0.622712,51.166188
+claude-opus-5-max,Opus 5,operational_efficiency,deepswe-agent-steps,DeepSWE steps,99.042793,27.237815
+claude-opus-5-max,Opus 5,operational_efficiency,deepswe-output-tokens,DeepSWE tokens,117565.693694,14.008026
+claude-opus-5-max,Opus 5,access_economics,weirdml-cost-per-run,WeirdML cost/run,4.741955,15.958286
+gpt-5.4-2026-03-05-xhigh,GPT-5.4,capability,deepswe-v1.1-pass1,DeepSWE Pass@1,0.517699,46.090285
+gpt-5.4-2026-03-05-xhigh,GPT-5.4,capability,epoch-chess-puzzles,Chess puzzles,0.44,89.871627
+gpt-5.4-2026-03-05-xhigh,GPT-5.4,capability,epoch-critpt,CritPt,0.234286,76.595483
+gpt-5.4-2026-03-05-xhigh,GPT-5.4,capability,epoch-gpqa,GPQA Diamond,0.933,88.446732
+gpt-5.4-2026-03-05-xhigh,GPT-5.4,capability,epoch-otis-aime,OTIS Mock AIME,0.953,86.244154
+gpt-5.4-2026-03-05-xhigh,GPT-5.4,capability,epoch-scicode,SciCode,0.565972,90.697804
+gpt-5.4-2026-03-05-xhigh,GPT-5.4,capability,epoch-weirdml,WeirdML,0.777,99.175243
+gpt-5.4-2026-03-05-xhigh,GPT-5.4,operational_efficiency,deepswe-agent-steps,DeepSWE steps,70.471239,50.319231
+gpt-5.4-2026-03-05-xhigh,GPT-5.4,operational_efficiency,deepswe-output-tokens,DeepSWE tokens,71408.873894,33.791828
+gpt-5.4-2026-03-05-xhigh,GPT-5.4,access_economics,weirdml-cost-per-run,WeirdML cost/run,5.7199,13.772185
 claude-fable-5-max,Fable 5,capability,deepswe-v1.1-pass1,DeepSWE Pass@1,0.697248,79.389629
 claude-fable-5-max,Fable 5,capability,epoch-chess-puzzles,Chess puzzles,0.41,87.236014
 claude-fable-5-max,Fable 5,capability,epoch-critpt,CritPt,0.285714,79.063026
-claude-fable-5-max,Fable 5,capability,epoch-gpqa,GPQA Diamond,0.858586,70.337525
-claude-fable-5-max,Fable 5,capability,epoch-otis-aime,OTIS Mock AIME,0.997222,99.24667
+claude-fable-5-max,Fable 5,capability,epoch-gpqa,GPQA Diamond,0.858586,70.274225
+claude-fable-5-max,Fable 5,capability,epoch-otis-aime,OTIS Mock AIME,0.997222,99.442237
 claude-fable-5-max,Fable 5,capability,epoch-scicode,SciCode,0.601852,95.801542
 claude-fable-5-max,Fable 5,capability,epoch-weirdml,WeirdML,0.9194,99.86501
-claude-fable-5-max,Fable 5,operational_efficiency,deepswe-agent-steps,DeepSWE steps,88.428899,34.346227
-claude-fable-5-max,Fable 5,operational_efficiency,deepswe-output-tokens,DeepSWE tokens,118592.772936,13.75237
-claude-fable-5-max,Fable 5,access_economics,weirdml-cost-per-run,WeirdML cost/run,8.42441,0.705849
+claude-fable-5-max,Fable 5,operational_efficiency,deepswe-agent-steps,DeepSWE steps,88.428899,34.411319
+claude-fable-5-max,Fable 5,operational_efficiency,deepswe-output-tokens,DeepSWE tokens,118592.772936,13.752539
+claude-fable-5-max,Fable 5,access_economics,weirdml-cost-per-run,WeirdML cost/run,8.42441,9.928753
+gemini-3.6-flash-high,Gemini 3.6 Flash,capability,deepswe-v1.1-pass1,DeepSWE Pass@1,0.485588,40.024922
+gemini-3.6-flash-high,Gemini 3.6 Flash,capability,epoch-chess-puzzles,Chess puzzles,0.4,86.246012
+gemini-3.6-flash-high,Gemini 3.6 Flash,capability,epoch-critpt,CritPt,0.105714,66.675151
+gemini-3.6-flash-high,Gemini 3.6 Flash,capability,epoch-gpqa,GPQA Diamond,0.941288,90.499311
+gemini-3.6-flash-high,Gemini 3.6 Flash,capability,epoch-otis-aime,OTIS Mock AIME,0.941667,83.561759
+gemini-3.6-flash-high,Gemini 3.6 Flash,capability,epoch-scicode,SciCode,0.52662,81.223137
+gemini-3.6-flash-high,Gemini 3.6 Flash,capability,epoch-weirdml,WeirdML,0.561,78.511462
+gemini-3.6-flash-high,Gemini 3.6 Flash,operational_efficiency,deepswe-agent-steps,DeepSWE steps,108.310421,22.156709
+gemini-3.6-flash-high,Gemini 3.6 Flash,operational_efficiency,deepswe-output-tokens,DeepSWE tokens,96978.283814,20.485015
+gemini-3.6-flash-high,Gemini 3.6 Flash,access_economics,weirdml-cost-per-run,WeirdML cost/run,0.622712,51.050155
 glm-5.2-max,GLM-5.2,capability,deepswe-v1.1-pass1,DeepSWE Pass@1,0.437778,31.410261
 glm-5.2-max,GLM-5.2,capability,epoch-chess-puzzles,Chess puzzles,0.21,52.722246
 glm-5.2-max,GLM-5.2,capability,epoch-critpt,CritPt,0.208571,75.153844
-glm-5.2-max,GLM-5.2,capability,epoch-gpqa,GPQA Diamond,0.918561,84.901851
-glm-5.2-max,GLM-5.2,capability,epoch-otis-aime,OTIS Mock AIME,0.863889,67.989537
+glm-5.2-max,GLM-5.2,capability,epoch-gpqa,GPQA Diamond,0.918561,84.818925
+glm-5.2-max,GLM-5.2,capability,epoch-otis-aime,OTIS Mock AIME,0.863889,69.383895
 glm-5.2-max,GLM-5.2,capability,epoch-scicode,SciCode,0.50463,74.031652
-glm-5.2-max,GLM-5.2,capability,epoch-weirdml,WeirdML,0.7012,96.376002
-glm-5.2-max,GLM-5.2,operational_efficiency,deepswe-agent-steps,DeepSWE steps,129.126667,13.766975
-glm-5.2-max,GLM-5.2,operational_efficiency,deepswe-output-tokens,DeepSWE tokens,78175.306667,29.517631
-glm-5.2-max,GLM-5.2,access_economics,weirdml-cost-per-run,WeirdML cost/run,0.507287,55.306275
+glm-5.2-max,GLM-5.2,capability,epoch-weirdml,WeirdML,0.7012,96.113963
+glm-5.2-max,GLM-5.2,operational_efficiency,deepswe-agent-steps,DeepSWE steps,129.126667,13.921319
+glm-5.2-max,GLM-5.2,operational_efficiency,deepswe-output-tokens,DeepSWE tokens,78175.306667,29.517711
+glm-5.2-max,GLM-5.2,access_economics,weirdml-cost-per-run,WeirdML cost/run,0.507287,55.155103

@@ -40,7 +40,11 @@ families:
     parent: mathematics_and_science
     weight: 0.25
     correlation_group: epoch-critpt
-    source_organization: epoch
+    source_organization: artificial-analysis
+    evaluator_organization: artificial-analysis
+    run_executor_organization: artificial-analysis
+    data_distributor: epoch
+    benchmark_owner: critpt
   - id: deepswe-resources
     component: operational_efficiency
     parent: task_resource_intensity

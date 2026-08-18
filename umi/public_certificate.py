@@ -4,12 +4,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+from pathlib import Path
 from typing import Any
 
 from pydantic import Field
 
 from umi.edition import ConfigModel
-from umi.public import EPOCH_ZIP, SERIES
+from umi.public_paths import resolve_epoch_zip
 
 CERTIFICATE_VERSION = "umi-public-certificate-v0.5"
 EPOCH_SNAPSHOT_ID = "epoch-benchmark-data-2026-08-14"
@@ -56,8 +57,9 @@ def _digest(payload: dict[str, Any]) -> str:
     return hashlib.sha256(rendered.encode()).hexdigest()
 
 
-def verify_epoch_zip() -> str:
-    digest = hashlib.sha256(EPOCH_ZIP.read_bytes()).hexdigest()
+def verify_epoch_zip(zip_path: Path | str | None = None) -> str:
+    archive = Path(zip_path) if zip_path is not None else resolve_epoch_zip()
+    digest = hashlib.sha256(archive.read_bytes()).hexdigest()
     if digest != EPOCH_SHA256:
         raise ValueError(
             f"Epoch zip checksum {digest} does not match registry {EPOCH_SHA256}"
@@ -120,7 +122,7 @@ def build_public_certificate(
         row["indistinguishable_from"] = tuple(sorted(neighbors[row["entity_id"]]))
     unsigned = {
         "certificate_version": CERTIFICATE_VERSION,
-        "status": "published_governed_index",
+        "status": "provisional_public_score",
         "edition_id": payload["edition_id"],
         "formula_version": payload["formula_version"],
         "scored_data_fingerprint": payload["scored_data_fingerprint"],
@@ -129,7 +131,7 @@ def build_public_certificate(
         "source_artifact_sha256": zip_digest,
         "source_license": EPOCH_LICENSE,
         "source_attribution": EPOCH_ATTRIBUTION,
-        "series": tuple(spec["id"] for spec in SERIES),
+        "series": tuple(payload["series"]),
         "models": rows,
         "pairwise_indistinguishable": pairs,
         "limitations": tuple(uncertainty["limitations"]),

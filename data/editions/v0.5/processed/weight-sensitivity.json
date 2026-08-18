@@ -1,0 +1,359 @@
+{
+  "edition_id": "umi-public-v0.5",
+  "headline_unchanged": true,
+  "hypotheses": [
+    "baseline",
+    "capability_60",
+    "operational_30",
+    "access_15",
+    "access_25"
+  ],
+  "scenarios": [
+    {
+      "models": [
+        {
+          "diagnostic_public": 68.2381304832757,
+          "entity_id": "gpt-5.6-sol-max",
+          "rank": 1
+        },
+        {
+          "diagnostic_public": 61.49802612989175,
+          "entity_id": "kimi-k3-max",
+          "rank": 2
+        },
+        {
+          "diagnostic_public": 57.93300140039848,
+          "entity_id": "claude-opus-5-max",
+          "rank": 3
+        },
+        {
+          "diagnostic_public": 57.80480678218027,
+          "entity_id": "gpt-5.4-2026-03-05-xhigh",
+          "rank": 4
+        },
+        {
+          "diagnostic_public": 56.282648308051385,
+          "entity_id": "claude-fable-5-max",
+          "rank": 5
+        },
+        {
+          "diagnostic_public": 55.40215942538946,
+          "entity_id": "gemini-3.6-flash-high",
+          "rank": 6
+        },
+        {
+          "diagnostic_public": 54.18566825659842,
+          "entity_id": "glm-5.2-max",
+          "rank": 7
+        }
+      ],
+      "name": "baseline",
+      "order": [
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "claude-opus-5-max",
+        "gpt-5.4-2026-03-05-xhigh",
+        "claude-fable-5-max",
+        "gemini-3.6-flash-high",
+        "glm-5.2-max"
+      ],
+      "rank_changes": {
+        "claude-fable-5-max": 0,
+        "claude-opus-5-max": 0,
+        "gemini-3.6-flash-high": 0,
+        "glm-5.2-max": 0,
+        "gpt-5.4-2026-03-05-xhigh": 0,
+        "gpt-5.6-sol-max": 0,
+        "kimi-k3-max": 0
+      },
+      "weights": {
+        "access_economics": 0.2,
+        "capability": 0.55,
+        "operational_efficiency": 0.25
+      }
+    },
+    {
+      "models": [
+        {
+          "diagnostic_public": 70.35230361391325,
+          "entity_id": "gpt-5.6-sol-max",
+          "rank": 1
+        },
+        {
+          "diagnostic_public": 64.55024775238806,
+          "entity_id": "kimi-k3-max",
+          "rank": 2
+        },
+        {
+          "diagnostic_public": 61.50585511443866,
+          "entity_id": "claude-opus-5-max",
+          "rank": 3
+        },
+        {
+          "diagnostic_public": 59.87100119109375,
+          "entity_id": "gpt-5.4-2026-03-05-xhigh",
+          "rank": 4
+        },
+        {
+          "diagnostic_public": 59.6175625607089,
+          "entity_id": "claude-fable-5-max",
+          "rank": 5
+        },
+        {
+          "diagnostic_public": 57.97208439013624,
+          "entity_id": "gemini-3.6-flash-high",
+          "rank": 6
+        },
+        {
+          "diagnostic_public": 56.41578863101222,
+          "entity_id": "glm-5.2-max",
+          "rank": 7
+        }
+      ],
+      "name": "capability_60",
+      "order": [
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "claude-opus-5-max",
+        "gpt-5.4-2026-03-05-xhigh",
+        "claude-fable-5-max",
+        "gemini-3.6-flash-high",
+        "glm-5.2-max"
+      ],
+      "rank_changes": {
+        "claude-fable-5-max": 0,
+        "claude-opus-5-max": 0,
+        "gemini-3.6-flash-high": 0,
+        "glm-5.2-max": 0,
+        "gpt-5.4-2026-03-05-xhigh": 0,
+        "gpt-5.6-sol-max": 0,
+        "kimi-k3-max": 0
+      },
+      "weights": {
+        "access_economics": 0.2,
+        "capability": 0.6,
+        "operational_efficiency": 0.2
+      }
+    },
+    {
+      "models": [
+        {
+          "diagnostic_public": 66.12395735263813,
+          "entity_id": "gpt-5.6-sol-max",
+          "rank": 1
+        },
+        {
+          "diagnostic_public": 58.44580450739543,
+          "entity_id": "kimi-k3-max",
+          "rank": 2
+        },
+        {
+          "diagnostic_public": 55.73861237326679,
+          "entity_id": "gpt-5.4-2026-03-05-xhigh",
+          "rank": 3
+        },
+        {
+          "diagnostic_public": 54.36014768635829,
+          "entity_id": "claude-opus-5-max",
+          "rank": 4
+        },
+        {
+          "diagnostic_public": 52.94773405539386,
+          "entity_id": "claude-fable-5-max",
+          "rank": 5
+        },
+        {
+          "diagnostic_public": 52.83223446064268,
+          "entity_id": "gemini-3.6-flash-high",
+          "rank": 6
+        },
+        {
+          "diagnostic_public": 51.95554788218461,
+          "entity_id": "glm-5.2-max",
+          "rank": 7
+        }
+      ],
+      "name": "operational_30",
+      "order": [
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "gpt-5.4-2026-03-05-xhigh",
+        "claude-opus-5-max",
+        "claude-fable-5-max",
+        "gemini-3.6-flash-high",
+        "glm-5.2-max"
+      ],
+      "rank_changes": {
+        "claude-fable-5-max": 0,
+        "claude-opus-5-max": -1,
+        "gemini-3.6-flash-high": 0,
+        "glm-5.2-max": 0,
+        "gpt-5.4-2026-03-05-xhigh": 1,
+        "gpt-5.6-sol-max": 0,
+        "kimi-k3-max": 0
+      },
+      "weights": {
+        "access_economics": 0.2,
+        "capability": 0.5,
+        "operational_efficiency": 0.3
+      }
+    },
+    {
+      "models": [
+        {
+          "diagnostic_public": 71.52054285599026,
+          "entity_id": "gpt-5.6-sol-max",
+          "rank": 1
+        },
+        {
+          "diagnostic_public": 64.52828943946363,
+          "entity_id": "kimi-k3-max",
+          "rank": 2
+        },
+        {
+          "diagnostic_public": 61.67293787530772,
+          "entity_id": "claude-opus-5-max",
+          "rank": 3
+        },
+        {
+          "diagnostic_public": 61.20253139662038,
+          "entity_id": "gpt-5.4-2026-03-05-xhigh",
+          "rank": 4
+        },
+        {
+          "diagnostic_public": 60.22192747897084,
+          "entity_id": "claude-fable-5-max",
+          "rank": 5
+        },
+        {
+          "diagnostic_public": 56.477261277539796,
+          "entity_id": "gemini-3.6-flash-high",
+          "rank": 6
+        },
+        {
+          "diagnostic_public": 54.82199119449646,
+          "entity_id": "glm-5.2-max",
+          "rank": 7
+        }
+      ],
+      "name": "access_15",
+      "order": [
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "claude-opus-5-max",
+        "gpt-5.4-2026-03-05-xhigh",
+        "claude-fable-5-max",
+        "gemini-3.6-flash-high",
+        "glm-5.2-max"
+      ],
+      "rank_changes": {
+        "claude-fable-5-max": 0,
+        "claude-opus-5-max": 0,
+        "gemini-3.6-flash-high": 0,
+        "glm-5.2-max": 0,
+        "gpt-5.4-2026-03-05-xhigh": 0,
+        "gpt-5.6-sol-max": 0,
+        "kimi-k3-max": 0
+      },
+      "weights": {
+        "access_economics": 0.15,
+        "capability": 0.6,
+        "operational_efficiency": 0.25
+      }
+    },
+    {
+      "models": [
+        {
+          "diagnostic_public": 64.95571811056112,
+          "entity_id": "gpt-5.6-sol-max",
+          "rank": 1
+        },
+        {
+          "diagnostic_public": 58.46776282031984,
+          "entity_id": "kimi-k3-max",
+          "rank": 2
+        },
+        {
+          "diagnostic_public": 54.40708216774016,
+          "entity_id": "gpt-5.4-2026-03-05-xhigh",
+          "rank": 3
+        },
+        {
+          "diagnostic_public": 54.327057573239124,
+          "entity_id": "gemini-3.6-flash-high",
+          "rank": 4
+        },
+        {
+          "diagnostic_public": 54.19306492548923,
+          "entity_id": "claude-opus-5-max",
+          "rank": 5
+        },
+        {
+          "diagnostic_public": 53.54934531870037,
+          "entity_id": "glm-5.2-max",
+          "rank": 6
+        },
+        {
+          "diagnostic_public": 52.34336913713192,
+          "entity_id": "claude-fable-5-max",
+          "rank": 7
+        }
+      ],
+      "name": "access_25",
+      "order": [
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "gpt-5.4-2026-03-05-xhigh",
+        "gemini-3.6-flash-high",
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "claude-fable-5-max"
+      ],
+      "rank_changes": {
+        "claude-fable-5-max": -2,
+        "claude-opus-5-max": -2,
+        "gemini-3.6-flash-high": 2,
+        "glm-5.2-max": 1,
+        "gpt-5.4-2026-03-05-xhigh": 1,
+        "gpt-5.6-sol-max": 0,
+        "kimi-k3-max": 0
+      },
+      "weights": {
+        "access_economics": 0.25,
+        "capability": 0.5,
+        "operational_efficiency": 0.25
+      }
+    }
+  ],
+  "score_ranges": {
+    "claude-fable-5-max": {
+      "high": 60.22192747897084,
+      "low": 52.34336913713192
+    },
+    "claude-opus-5-max": {
+      "high": 61.67293787530772,
+      "low": 54.19306492548923
+    },
+    "gemini-3.6-flash-high": {
+      "high": 57.97208439013624,
+      "low": 52.83223446064268
+    },
+    "glm-5.2-max": {
+      "high": 56.41578863101222,
+      "low": 51.95554788218461
+    },
+    "gpt-5.4-2026-03-05-xhigh": {
+      "high": 61.20253139662038,
+      "low": 54.40708216774016
+    },
+    "gpt-5.6-sol-max": {
+      "high": 71.52054285599026,
+      "low": 64.95571811056112
+    },
+    "kimi-k3-max": {
+      "high": 64.55024775238806,
+      "low": 58.44580450739543
+    }
+  },
+  "status": "diagnostic"
+}

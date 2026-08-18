@@ -1,0 +1,57 @@
+{
+  "certified_headline_allowed": false,
+  "components": {
+    "access_economics": {
+      "cap_applied": true,
+      "effective_source_weight": {
+        "weirdml": 1.0
+      },
+      "exceeds_cap": true,
+      "largest_share": 1.0,
+      "maximum_source_share": 0.35,
+      "measurement_origin_count": 1,
+      "source_HHI": 1.0,
+      "source_count": 1,
+      "source_shares": {
+        "weirdml": 1.0
+      }
+    },
+    "capability": {
+      "cap_applied": true,
+      "effective_source_weight": {
+        "artificial-analysis": 0.23,
+        "datacurve": 0.22,
+        "epoch": 0.3,
+        "weirdml": 0.25
+      },
+      "exceeds_cap": false,
+      "largest_share": 0.3,
+      "maximum_source_share": 0.35,
+      "measurement_origin_count": 4,
+      "source_HHI": 0.2538,
+      "source_count": 4,
+      "source_shares": {
+        "artificial-analysis": 0.23,
+        "datacurve": 0.22,
+        "epoch": 0.3,
+        "weirdml": 0.25
+      }
+    },
+    "operational_efficiency": {
+      "cap_applied": true,
+      "effective_source_weight": {
+        "datacurve": 1.0
+      },
+      "exceeds_cap": true,
+      "largest_share": 1.0,
+      "maximum_source_share": 0.35,
+      "measurement_origin_count": 1,
+      "source_HHI": 1.0,
+      "source_count": 1,
+      "source_shares": {
+        "datacurve": 1.0
+      }
+    }
+  },
+  "edition_id": "umi-public-v0.5"
+}

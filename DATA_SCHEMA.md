@@ -4,6 +4,11 @@ The generated JSON Schemas in `schemas/` are the machine-readable authority. Thi
 their intended use. Run `python scripts/generate_schemas.py` after changing a Pydantic model; the test
 suite fails if committed schemas drift.
 
+Public v0.5 contracts (also generated): `public-scoring-bundle.schema.json`,
+`public-anchor-panels.schema.json`, `public-score-scales.schema.json`,
+`public-index-certificate.schema.json`, `public-candidate-audit.schema.json`,
+`public-blocker-report.schema.json`. Extra fields are forbidden.
+
 All Pydantic records are frozen, reject unknown fields, and reject source NaN and infinity. IDs match
 `^[a-z0-9][a-z0-9._-]*$`. YAML is an immutable input format; derived results retain source record IDs.
 
@@ -350,6 +355,39 @@ Scenario counts are endpoint combinations, not probabilities.
 
 See `schemas/capability-comparison.schema.json` for the complete comparison contract.
 
+## Public identity crosswalk
+
+`config/editions/v0.4/crosswalk.yaml` and `config/editions/v0.5/crosswalk.yaml` bind each
+scored entity to one Epoch `Model version`. Entries are `status: exact` only. Source
+config IDs and entity IDs must carry the same effort token. Missing, duplicate, or
+effort-mismatched bindings fail closed.
+
+## Public edition policy
+
+`config/editions/v0.4/` and `config/editions/v0.5/` are the live Public scoring policy.
+`common-core.yaml` binds each series to an extract member, field, kind, optional harness
+and panel filter, optional source-interval field, ablation flag, and evidence semantics.
+Operational Efficiency series are `source_reported_resource_mean` with
+`success_adjusted: false`. Access series are `source_reported_task_cost` with
+`cost_evidence: source_reported`. Provider billing labels fail closed. `families.yaml`
+supplies component, parent domain, and family weight. `normalization.yaml` supplies
+logit ε, winsor, and high-effort suffixes. Unused families and unpaired interval
+fields fail closed.
+
+## Public anchor panels and score scales
+
+`schemas/public-anchor-panels.schema.json` and `schemas/public-score-scales.schema.json`
+are the contracts for named Public panels and frozen robust-z scales. A panel is a unique
+set of Epoch config IDs. A scale binds one series to one panel plus transform, winsor,
+median, and σ. `scale_id` is SHA-256 over those contents and the panel fingerprint.
+
+## Public scoring bundle
+
+`schemas/public-scoring-bundle.schema.json` is the machine-readable contract for governed
+Public evidence. It binds identities, the Epoch zip SHA-256, and every common-core series
+to typed `PublicEvidenceRecord` rows. `evidence_fingerprint` is SHA-256 over the edition,
+zip checksum, and accepted config/entity/raw triples. The bundle does not score.
+
 ## Public index certificate
 
 `schemas/public-index-certificate.schema.json` is the machine-readable contract for the UMI
@@ -358,6 +396,27 @@ attribution, common-core series, validation result, partial intervals, rank rang
 pairwise interval overlap. `result_fingerprint` is SHA-256 over the certificate JSON excluding
 that field. The certificate does not rescore. Overlapping partial intervals are
 `indistinguishable_from`, not a claim of equal capability.
+
+## Public candidate audit
+
+`schemas/public-candidate-audit.schema.json` is the machine-readable contract for v0.5 named
+candidate certificates. An incomplete candidate serializes `status:
+insufficient_common_support`, `headline_eligible: false`, and `umi_public: null`. The audit
+lists present and missing common-core series and does not invent a score. Changing the
+Access suffix panel to admit an unsuffixed WeirdML cost is out of scope for this schema.
+
+## Public blocker report
+
+`schemas/public-blocker-report.schema.json` is the machine-readable contract for unavailable
+public evidence. Each row records missing series, affected model, required identity,
+sources investigated, URLs investigated, the fail reason, and the evidence that would
+resolve the blocker. `umi_public` is always null. The report does not rescore.
+
+## Public weight sensitivity
+
+`data/editions/v0.5/processed/weight-sensitivity.json` is a diagnostic recombination of
+published component scores under named overall-weight hypotheses. It does not change
+`umi_public` or the certificate ranks.
 
 ## Comparison certificate
 

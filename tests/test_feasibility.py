@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 
 from umi.config import load_project_config
-from umi.edition import load_public_edition_config
+from umi.edition import SOURCE_CONCENTRATION_FAILED, load_public_edition_config
 from umi.feasibility import (
     FeasibilityError,
     theoretical_legacy_workload_coverage,
@@ -11,6 +11,7 @@ from umi.feasibility import (
     validate_legacy_edition_feasibility,
     validate_public_edition_feasibility,
 )
+from umi.public_eligibility import decide_public_eligibility
 
 
 def test_legacy_v03_is_infeasible_as_a_public_edition() -> None:
@@ -27,14 +28,17 @@ def test_legacy_v03_is_infeasible_as_a_public_edition() -> None:
         validate_legacy_edition_feasibility(config)
 
 
-def test_single_source_cap_makes_an_edition_infeasible() -> None:
+def test_single_source_cap_blocks_certified_headline() -> None:
     config = load_public_edition_config()
     payload = config.model_dump(mode="json")
     for family in payload["families"]:
         if family["component"] == "capability" and family["id"] != "epoch-weirdml":
             family["source_organization"] = "one-lab"
-    with pytest.raises(FeasibilityError, match="above cap"):
-        validate_public_edition_feasibility(type(config).model_validate(payload))
+    mutated = type(config).model_validate(payload)
+    validate_public_edition_feasibility(mutated)
+    decision = decide_public_eligibility(mutated)
+    assert decision.certified is False
+    assert SOURCE_CONCENTRATION_FAILED in decision.reason_codes
 
 
 def test_v04_public_policy_is_statically_feasible() -> None:

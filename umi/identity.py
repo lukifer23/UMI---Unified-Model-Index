@@ -44,6 +44,9 @@ class PublicSystemIdentity(ConfigModel):
             raise ValueError(f"{self.entity_id} is not a composite service but lists fallbacks")
         if self.effort_setting.lower() == "unknown":
             raise ValueError(f"{self.entity_id} effort cannot be unknown")
+        token = f"-{self.effort_setting}"
+        if not self.entity_id.endswith(token):
+            raise ValueError(f"{self.entity_id} must end with {token}")
         return self
 
 
@@ -51,8 +54,9 @@ def load_public_identities(
     path: Path | None = None,
     *,
     edition: str = "v0.4",
+    bundle_dir: Path | str | None = None,
 ) -> tuple[PublicSystemIdentity, ...]:
-    source = path or edition_config_dir(edition) / "identities.yaml"
+    source = path or edition_config_dir(edition, bundle_dir=bundle_dir) / "identities.yaml"
     raw = yaml.safe_load(source.read_text(encoding="utf-8"))
     if not isinstance(raw, dict) or "entities" not in raw:
         raise ValueError(f"identity manifest missing entities: {source}")
@@ -78,12 +82,16 @@ def evidence_matches_entity(
     source_effort: str | None,
     source_is_composite: bool,
     source_fallbacks: tuple[str, ...],
+    reviewed_crosswalk_effort: str | None = None,
 ) -> tuple[bool, str]:
     if source_effort is None or source_effort.lower() in {"unknown", ""}:
-        return False, "unknown effort cannot map to a Max entity"
-    if source_effort.lower() != entity.effort_setting.lower() and source_effort.lower() not in {
-        entity.reasoning_mode.lower()
-    }:
+        if (
+            reviewed_crosswalk_effort
+            and reviewed_crosswalk_effort.lower() == entity.effort_setting.lower()
+        ):
+            return True, "reviewed crosswalk effort; row effort field blank"
+        return False, "unknown effort cannot map without a reviewed crosswalk"
+    if source_effort.lower() != entity.effort_setting.lower():
         return False, "effort does not match the scored entity"
     if entity.entity_kind == EntityKind.FALLBACK_COMPOSITE_SERVICE:
         if source_is_composite:

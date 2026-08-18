@@ -1,0 +1,22 @@
+source_artifact_id: epoch-benchmark-data-2026-08-14
+entries:
+  - source_config_id: claude-opus-5_max
+    entity_id: claude-opus-5-max
+    source_effort: max
+    status: exact
+  - source_config_id: claude-fable-5_max
+    entity_id: claude-fable-5-max
+    source_effort: max
+    status: exact
+  - source_config_id: gpt-5.6-sol_max
+    entity_id: gpt-5.6-sol-max
+    source_effort: max
+    status: exact
+  - source_config_id: kimi-k3_max
+    entity_id: kimi-k3-max
+    source_effort: max
+    status: exact
+  - source_config_id: glm-5.2_max
+    entity_id: glm-5.2-max
+    source_effort: max
+    status: exact

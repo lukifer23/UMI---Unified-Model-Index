@@ -1,0 +1,28 @@
+{
+  "candidate_id": "grok-4.5-high",
+  "certificate_version": "umi-public-candidate-certificate-v0.5",
+  "config_ids": [
+    "grok-4.5_high"
+  ],
+  "headline_eligible": false,
+  "missing_series": [
+    "epoch-weirdml",
+    "weirdml-cost-per-run"
+  ],
+  "named_release": "Grok 4.5",
+  "notes": [],
+  "present_series": {
+    "deepswe-agent-steps": "grok-4.5_high",
+    "deepswe-output-tokens": "grok-4.5_high",
+    "deepswe-v1.1-pass1": "grok-4.5_high",
+    "epoch-chess-puzzles": "grok-4.5_high",
+    "epoch-critpt": "grok-4.5_high",
+    "epoch-gpqa": "grok-4.5_high",
+    "epoch-otis-aime": "grok-4.5_high",
+    "epoch-scicode": "grok-4.5_high"
+  },
+  "publication_label": "diagnostic candidate certificate \u2014 missing required common-core series",
+  "requested_effort": "high",
+  "status": "insufficient_common_support",
+  "umi_public": null
+}

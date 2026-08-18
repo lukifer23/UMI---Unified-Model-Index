@@ -10,15 +10,15 @@
         "gpt-5.4-2026-03-05-xhigh",
         "gemini-3.6-flash-high",
         "glm-5.2-max",
-        "claude-fable-5-max",
-        "claude-opus-5-max"
+        "claude-opus-5-max",
+        "claude-fable-5-max"
       ],
       "rank_changes": {
-        "claude-fable-5-max": 0,
+        "claude-fable-5-max": 2,
         "claude-opus-5-max": 3,
-        "gemini-3.6-flash-high": -1,
+        "gemini-3.6-flash-high": -2,
         "glm-5.2-max": -2,
-        "gpt-5.4-2026-03-05-xhigh": 0,
+        "gpt-5.4-2026-03-05-xhigh": -1,
         "gpt-5.6-sol-max": 0,
         "kimi-k3-max": 0
       }
@@ -30,16 +30,16 @@
         "kimi-k3-max",
         "claude-opus-5-max",
         "claude-fable-5-max",
-        "gemini-3.6-flash-high",
         "gpt-5.4-2026-03-05-xhigh",
+        "gemini-3.6-flash-high",
         "glm-5.2-max"
       ],
       "rank_changes": {
-        "claude-fable-5-max": -2,
-        "claude-opus-5-max": -1,
+        "claude-fable-5-max": -1,
+        "claude-opus-5-max": 0,
         "gemini-3.6-flash-high": 0,
         "glm-5.2-max": 0,
-        "gpt-5.4-2026-03-05-xhigh": 3,
+        "gpt-5.4-2026-03-05-xhigh": 1,
         "gpt-5.6-sol-max": 0,
         "kimi-k3-max": 0
       }
@@ -49,18 +49,18 @@
       "order": [
         "gpt-5.6-sol-max",
         "kimi-k3-max",
-        "claude-fable-5-max",
         "claude-opus-5-max",
         "gpt-5.4-2026-03-05-xhigh",
+        "claude-fable-5-max",
         "gemini-3.6-flash-high",
         "glm-5.2-max"
       ],
       "rank_changes": {
-        "claude-fable-5-max": -3,
+        "claude-fable-5-max": 0,
         "claude-opus-5-max": 0,
-        "gemini-3.6-flash-high": 1,
+        "gemini-3.6-flash-high": 0,
         "glm-5.2-max": 0,
-        "gpt-5.4-2026-03-05-xhigh": 2,
+        "gpt-5.4-2026-03-05-xhigh": 0,
         "gpt-5.6-sol-max": 0,
         "kimi-k3-max": 0
       }
@@ -71,17 +71,17 @@
         "gpt-5.6-sol-max",
         "kimi-k3-max",
         "gpt-5.4-2026-03-05-xhigh",
-        "gemini-3.6-flash-high",
         "claude-opus-5-max",
-        "glm-5.2-max",
-        "claude-fable-5-max"
+        "claude-fable-5-max",
+        "gemini-3.6-flash-high",
+        "glm-5.2-max"
       ],
       "rank_changes": {
-        "claude-fable-5-max": 1,
+        "claude-fable-5-max": 0,
         "claude-opus-5-max": 1,
-        "gemini-3.6-flash-high": -1,
-        "glm-5.2-max": -1,
-        "gpt-5.4-2026-03-05-xhigh": 0,
+        "gemini-3.6-flash-high": 0,
+        "glm-5.2-max": 0,
+        "gpt-5.4-2026-03-05-xhigh": -1,
         "gpt-5.6-sol-max": 0,
         "kimi-k3-max": 0
       }
@@ -91,18 +91,18 @@
       "order": [
         "gpt-5.6-sol-max",
         "kimi-k3-max",
-        "gemini-3.6-flash-high",
         "claude-opus-5-max",
         "gpt-5.4-2026-03-05-xhigh",
         "claude-fable-5-max",
+        "gemini-3.6-flash-high",
         "glm-5.2-max"
       ],
       "rank_changes": {
         "claude-fable-5-max": 0,
         "claude-opus-5-max": 0,
-        "gemini-3.6-flash-high": -2,
+        "gemini-3.6-flash-high": 0,
         "glm-5.2-max": 0,
-        "gpt-5.4-2026-03-05-xhigh": 2,
+        "gpt-5.4-2026-03-05-xhigh": 0,
         "gpt-5.6-sol-max": 0,
         "kimi-k3-max": 0
       }
@@ -117,11 +117,11 @@
   "models": [
     {
       "entity_id": "claude-opus-5-max",
-      "interval_high": 56.39422329748467,
-      "interval_low": 54.21417790374281,
+      "interval_high": 58.82775334048127,
+      "interval_low": 56.69841549937639,
       "interval_status": "partial_source_interval",
-      "rank_high": 7,
-      "rank_low": 3,
+      "rank_high": 6,
+      "rank_low": 2,
       "series_with_intervals": [
         "epoch-chess-puzzles",
         "deepswe-v1.1-pass1",
@@ -136,12 +136,12 @@
         "deepswe-agent-steps",
         "weirdml-cost-per-run"
       ],
-      "umi_public": 55.510021169743936
+      "umi_public": 57.93300140039848
     },
     {
       "entity_id": "claude-fable-5-max",
-      "interval_high": 55.59444449064061,
-      "interval_low": 52.99973967224041,
+      "interval_high": 57.40521950359459,
+      "interval_low": 54.83072936456937,
       "interval_status": "partial_source_interval",
       "rank_high": 7,
       "rank_low": 3,
@@ -159,12 +159,12 @@
         "deepswe-agent-steps",
         "weirdml-cost-per-run"
       ],
-      "umi_public": 54.429636426057556
+      "umi_public": 56.282648308051385
     },
     {
       "entity_id": "gpt-5.6-sol-max",
-      "interval_high": 66.90836129366487,
-      "interval_low": 65.45900364355276,
+      "interval_high": 68.88095636904693,
+      "interval_low": 67.43715720830707,
       "interval_status": "partial_source_interval",
       "rank_high": 1,
       "rank_low": 1,
@@ -182,14 +182,14 @@
         "deepswe-agent-steps",
         "weirdml-cost-per-run"
       ],
-      "umi_public": 66.26583886547628
+      "umi_public": 68.2381304832757
     },
     {
       "entity_id": "kimi-k3-max",
-      "interval_high": 60.893895215936666,
-      "interval_low": 58.14908097631116,
+      "interval_high": 62.6806242337474,
+      "interval_low": 59.8591076021121,
       "interval_status": "partial_source_interval",
-      "rank_high": 2,
+      "rank_high": 3,
       "rank_low": 2,
       "series_with_intervals": [
         "epoch-chess-puzzles",
@@ -205,15 +205,15 @@
         "deepswe-agent-steps",
         "weirdml-cost-per-run"
       ],
-      "umi_public": 59.69066272741414
+      "umi_public": 61.49802612989175
     },
     {
       "entity_id": "glm-5.2-max",
-      "interval_high": 55.82124004005812,
-      "interval_low": 51.998747241927944,
+      "interval_high": 55.809503678486934,
+      "interval_low": 52.21180100378666,
       "interval_status": "partial_source_interval",
       "rank_high": 7,
-      "rank_low": 3,
+      "rank_low": 5,
       "series_with_intervals": [
         "epoch-chess-puzzles",
         "deepswe-v1.1-pass1",
@@ -228,15 +228,15 @@
         "deepswe-agent-steps",
         "weirdml-cost-per-run"
       ],
-      "umi_public": 54.202702676964044
+      "umi_public": 54.18566825659842
     },
     {
       "entity_id": "gemini-3.6-flash-high",
-      "interval_high": 56.860238117567434,
-      "interval_low": 53.86105059524749,
+      "interval_high": 56.81205104298109,
+      "interval_low": 53.827122706486556,
       "interval_status": "partial_source_interval",
       "rank_high": 7,
-      "rank_low": 3,
+      "rank_low": 4,
       "series_with_intervals": [
         "epoch-chess-puzzles",
         "deepswe-v1.1-pass1",
@@ -251,14 +251,14 @@
         "deepswe-agent-steps",
         "weirdml-cost-per-run"
       ],
-      "umi_public": 55.4399971625043
+      "umi_public": 55.40215942538946
     },
     {
       "entity_id": "gpt-5.4-2026-03-05-xhigh",
-      "interval_high": 56.38747197299199,
-      "interval_low": 54.416354632321934,
+      "interval_high": 58.66937526861001,
+      "interval_low": 56.725612621310724,
       "interval_status": "partial_source_interval",
-      "rank_high": 7,
+      "rank_high": 6,
       "rank_low": 3,
       "series_with_intervals": [
         "epoch-chess-puzzles",
@@ -274,7 +274,7 @@
         "deepswe-agent-steps",
         "weirdml-cost-per-run"
       ],
-      "umi_public": 55.51137725670947
+      "umi_public": 57.80480678218027
     }
   ],
   "seed_source": "scored_data_fingerprint"

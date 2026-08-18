@@ -1,16 +1,23 @@
 # UMI verification record
 
-## UMI Public v0.5 Governed on main
+## UMI Public v0.5 provisional on feat/umi-v05-governed-public-2
+
+Verified on 2026-08-17 from `feat/umi-v05-governed-public-2`. v0.5 is
+`provisional_public_score`, not certified. Named candidates Grok 4.5 High and
+Gemini 3.1 Pro Preview are diagnostic abstentions. No invented scores. No paid requests.
 
 | Check | Outcome |
 |---|---|
-| `uv run pytest --cov=umi --cov=analysis --cov-fail-under=90` | 201 passed; 92.04% coverage |
-| `uv run ruff check .` | passed |
-| `uv run mypy --strict umi analysis scripts` | passed; 65 source files |
-| `umi edition --edition v0.5 validate` | valid |
-| `uv run python -m scripts.build_v05_governed` | published; validation true; seven models |
-| v0.4 five-pilot reproduction | exact |
-| v0.4 golden SHA-256 set | `tests/test_v04_legacy_freeze.py` passed |
+| `uv run pytest --cov-fail-under=90` | run at handoff; see IMPLEMENTATION_REPORT_V05.md |
+| `uv run ruff check .` | required at handoff |
+| `uv run mypy --strict umi analysis scripts` | required at handoff |
+| `python -m scripts.build_v04_public --check` | v0.4 freeze |
+| `python -m scripts.build_v05_public --check` | provisional, not certified |
+| `umi edition --edition v0.5 validate` | structurally valid |
+| `umi edition --edition v0.5 --bundle-dir data/sources/v0.3 score` | offline bundle score |
+| `umi edition --edition v0.5 candidates` | both `insufficient_common_support` |
+| `umi edition --edition v0.5 certificate` | `provisional_public_score` |
+| Isolated wheel public score | CI: `--bundle-dir` + packaged edition YAML |
 | Paid OpenRouter / live execute | not run |
 
 ## UMI Public v0.4 on main

@@ -220,15 +220,26 @@ def build_parser() -> argparse.ArgumentParser:
     operational_preflight_parser.add_argument("--output")
     edition = subparsers.add_parser("edition")
     edition.add_argument("--edition", required=True, choices=("v0.3", "v0.4", "v0.5"))
+    edition.add_argument("--bundle-dir")
     edition_commands = edition.add_subparsers(dest="edition_command", required=True)
     edition_commands.add_parser("validate")
     edition_commands.add_parser("score")
+    edition_commands.add_parser("build")
     edition_commands.add_parser("dashboard")
     edition_commands.add_parser("audit")
     edition_commands.add_parser("certificate")
+    edition_commands.add_parser("candidates")
+    edition_commands.add_parser("blockers")
+    edition_commands.add_parser("sensitivity")
+    edition_commands.add_parser("bundle")
+    edition_commands.add_parser("scales")
     edition_score = edition_commands.choices["score"]
     edition_score.add_argument("--format", choices=("json", "csv"), default="json")
     edition_score.add_argument("--output")
+    edition_build = edition_commands.choices["build"]
+    edition_build.add_argument("--format", choices=("json", "csv"), default="json")
+    edition_build.add_argument("--output")
+    edition_build.add_argument("--output-dir")
     return parser
 
 
@@ -299,7 +310,7 @@ def _adapt_source(args: argparse.Namespace) -> Any:
 
 def run(args: argparse.Namespace) -> int:
     if args.command == "edition":
-        from umi.edition import load_public_edition_config
+        from umi.edition import V05_ANALYSIS_SURFACES, load_public_edition_config
         from umi.feasibility import (
             validate_legacy_edition_feasibility,
             validate_public_edition_feasibility,
@@ -328,7 +339,26 @@ def run(args: argparse.Namespace) -> int:
                 _emit({"valid": True, "edition": "v0.3"}, "json", None)
                 return 0
             raise SystemExit("v0.3 edition score remains the legacy umi estimates path")
-        public_config = load_public_edition_config(edition=args.edition)
+        public_config = load_public_edition_config(
+            edition=args.edition, bundle_dir=getattr(args, "bundle_dir", None)
+        )
+        governed_only = {
+            "certificate",
+            "candidates",
+            "blockers",
+            "sensitivity",
+            "bundle",
+            "scales",
+        }
+        if (
+            args.edition_command in governed_only
+            and public_config.release_class not in V05_ANALYSIS_SURFACES
+        ):
+            raise SystemExit(
+                f"{public_config.edition_id} is {public_config.release_class}; "
+                "the governed certificate, candidate audits, blocker report, and "
+                "weight sensitivity belong to umi-public-v0.5"
+            )
         if args.edition_command == "validate":
             validate_public_edition_feasibility(public_config)
             _emit({"valid": True, "edition": public_config.edition_id}, "json", None)
@@ -359,12 +389,66 @@ def run(args: argparse.Namespace) -> int:
             certificate = build_public_certificate(scores, validation, uncertainty)
             _emit(certificate, "json", None)
             return 0
+        if args.edition_command == "candidates":
+            from umi.public_candidates import write_candidate_audits
+
+            audits = write_candidate_audits()
+            _emit(audits, "json", None)
+            return 0
+        if args.edition_command == "blockers":
+            from umi.public_governance import write_governance_artifacts
+
+            governance = write_governance_artifacts()
+            _emit(governance["blocker_report"], "json", None)
+            return 0
+        if args.edition_command == "sensitivity":
+            from umi.public_sensitivity import write_weight_sensitivity
+
+            _emit(write_weight_sensitivity(), "json", None)
+            return 0
+        if args.edition_command == "bundle":
+            from umi.public_bundle import load_public_scoring_bundle, write_public_scoring_bundle
+
+            _emit(
+                write_public_scoring_bundle(load_public_scoring_bundle(edition_name=args.edition)),
+                "json",
+                None,
+            )
+            return 0
+        if args.edition_command == "scales":
+            from umi.public_bundle import load_public_scoring_bundle
+            from umi.public_scale import write_public_panels_and_scales
+
+            _emit(
+                write_public_panels_and_scales(
+                    load_public_scoring_bundle(edition_name=args.edition),
+                    public_config,
+                ),
+                "json",
+                None,
+            )
+            return 0
+        bundle_dir = getattr(args, "bundle_dir", None)
         if args.edition_command == "score":
-            public_payload = write_public_artifacts(edition_name=args.edition)
+            public_payload = score_public_edition(
+                edition_name=args.edition, bundle_dir=bundle_dir
+            )
+        elif args.edition_command == "build":
+            public_payload = write_public_artifacts(
+                getattr(args, "output_dir", None),
+                edition_name=args.edition,
+                bundle_dir=bundle_dir,
+            )
         else:
-            public_payload = score_public_edition(edition_name=args.edition)
+            public_payload = score_public_edition(
+                edition_name=args.edition, bundle_dir=bundle_dir
+            )
         _emit(public_payload, getattr(args, "format", "json"), getattr(args, "output", None))
-        return 0 if public_payload["publication_state"] == "published" else 0
+        if public_payload.get("certified"):
+            return 0
+        if args.edition_command in {"score", "build"} and public_payload.get("certified") is False:
+            return 0
+        return 0
     if args.command == "operational":
         operational_report = operational_preflight(
             load_task_pack(args.task_pack), load_run_manifest(args.run_manifest)

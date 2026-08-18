@@ -1,0 +1,32 @@
+{
+  "edition_id": "umi-public-v0.5",
+  "engine_version": "umi-engine-v0.3.13",
+  "entity_ids": [
+    "claude-opus-5-max",
+    "claude-fable-5-max",
+    "gpt-5.6-sol-max",
+    "kimi-k3-max",
+    "glm-5.2-max",
+    "gemini-3.6-flash-high",
+    "gpt-5.4-2026-03-05-xhigh"
+  ],
+  "formula_version": "umi-methodology-v0.5.0",
+  "maximum_source_share": 0.35,
+  "minimum_anchor_panel": 8,
+  "normalization_version": "umi-normalization-v0.5.0",
+  "package_version": "0.5.0",
+  "required_common_core_coverage": 1.0,
+  "series": [
+    "epoch-chess-puzzles",
+    "deepswe-v1.1-pass1",
+    "epoch-scicode",
+    "epoch-weirdml",
+    "epoch-gpqa",
+    "epoch-otis-aime",
+    "epoch-critpt",
+    "deepswe-output-tokens",
+    "deepswe-agent-steps",
+    "weirdml-cost-per-run"
+  ],
+  "source_artifact_sha256": "35a7c21ba7d535514ebcf9bbe7b8265d2e2da40ef6b1fa63fe49323c3395a18b"
+}

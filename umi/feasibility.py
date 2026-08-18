@@ -5,12 +5,7 @@ from __future__ import annotations
 from collections import defaultdict
 
 from umi.config import ProjectConfig
-from umi.edition import (
-    AccessEconomicsSubcomponent,
-    OperationalEfficiencySubcomponent,
-    PublicDomain,
-    PublicEditionConfig,
-)
+from umi.edition import PublicEditionConfig
 from umi.schemas import WorkloadCategory
 
 
@@ -98,45 +93,6 @@ def validate_public_edition_feasibility(config: PublicEditionConfig) -> None:
         errors.append("UMI Public required common-core coverage must be 1.0")
     if config.eligibility.maximum_source_share > 0.35 + 1e-12:
         errors.append("maximum_source_share exceeds the 0.35 Public cap")
-    org_family_weight: dict[tuple[str, str], float] = defaultdict(float)
-    parent_totals: dict[tuple[str, str], float] = defaultdict(float)
-    for family in config.families:
-        org_family_weight[(family.component, family.source_organization)] += family.weight
-        parent_totals[(family.component, family.parent)] += family.weight
-    component_org_share: dict[str, dict[str, float]] = defaultdict(lambda: defaultdict(float))
-    for family in config.families:
-        parent_total = parent_totals[(family.component, family.parent)]
-        if parent_total <= 0:
-            continue
-        parent_share = family.weight / parent_total
-        if family.component == "capability":
-            domain_weight = config.weights.capability_domains[PublicDomain(family.parent)]
-            component_org_share[family.component][family.source_organization] += (
-                domain_weight * parent_share
-            )
-        elif family.component == "operational_efficiency":
-            sub_weight = config.weights.operational_efficiency[
-                OperationalEfficiencySubcomponent(family.parent)
-            ]
-            component_org_share[family.component][family.source_organization] += (
-                sub_weight * parent_share
-            )
-        elif family.component == "access_economics":
-            sub_weight = config.weights.access_economics[
-                AccessEconomicsSubcomponent(family.parent)
-            ]
-            component_org_share[family.component][family.source_organization] += (
-                sub_weight * parent_share
-            )
-    cap = config.eligibility.maximum_source_share
-    for component, shares in component_org_share.items():
-        if len(shares) < 2:
-            continue
-        for organization, share in shares.items():
-            if share > cap + 1e-12:
-                errors.append(
-                    f"{organization} would hold {share:.3f} of {component}, above cap {cap:.2f}"
-                )
     if errors:
         raise FeasibilityError(
             f"edition {config.edition_id} is infeasible: " + "; ".join(errors)

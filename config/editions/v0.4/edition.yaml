@@ -4,3 +4,4 @@ normalization_version: umi-normalization-v0.4.0
 engine_version: umi-engine-v0.3.13
 package_version: "0.4.0"
 policy_mode: public
+release_class: historical_experimental_point_score

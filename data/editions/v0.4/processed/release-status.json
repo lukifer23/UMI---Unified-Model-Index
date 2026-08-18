@@ -1,0 +1,18 @@
+{
+  "edition_id": "umi-public-v0.4",
+  "publication_state": "experimental_point_score",
+  "release_class": "historical_experimental_point_score",
+  "scored_data_fingerprint": "e266af13b966cf79cfc5086513ec35f60cf2194f896f41f4b332f60ac9788e6d",
+  "ranks_are": "point_estimate_order_only",
+  "proves": [
+    "Five exact Max identities share one complete ten-series common core",
+    "Those identities yield deterministic umi_public numbers from the frozen Epoch zip"
+  ],
+  "does_not_prove": [
+    "rank stability or overlapping-interval ties",
+    "source-concentration compliance under a 0.35 cap without exemption",
+    "success-adjusted Operational Efficiency",
+    "provider-billed Access Economics",
+    "broad general-intelligence Capability coverage"
+  ]
+}

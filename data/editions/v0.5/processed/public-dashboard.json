@@ -37,133 +37,107 @@
   "formula_version": "umi-methodology-v0.5.0",
   "limitations": [
     "Access Economics is source-reported public task cost, not provider billing.",
+    "Operational Efficiency is source-reported DeepSWE means, not success-adjusted resources.",
     "Partial source-interval ranks overlap for some models and are not a unique order.",
     "This is not v0.3 headline_overall.",
     "Fable is the documented fallback composite product.",
     "DeepSWE cost is diagnostic only (Fable 432/436)."
   ],
-  "publication_state": "published",
+  "publication_state": "provisional_public_score",
   "ranking": [
     {
-      "access_economics": 16.40246,
-      "access_economics_weighted": 3.280492,
-      "capability": 91.944801,
-      "capability_weighted": 50.569641,
+      "access_economics": 26.290398,
+      "access_economics_weighted": 5.25808,
+      "capability": 91.938646,
+      "capability_weighted": 50.566255,
       "entity_id": "gpt-5.6-sol-max",
       "entity_kind": "single_model_service",
       "indistinguishable_from": [],
-      "interval_high": 66.908361,
-      "interval_low": 65.459004,
+      "interval_high": 68.880956,
+      "interval_low": 67.437157,
       "interval_status": "partial_source_interval",
       "named_release": "GPT-5.6 Sol",
-      "operational_efficiency": 49.662825,
-      "operational_efficiency_weighted": 12.415706,
+      "operational_efficiency": 49.655183,
+      "operational_efficiency_weighted": 12.413796,
       "rank": 1,
       "rank_high": 1,
       "rank_low": 1,
       "short_name": "Sol",
-      "umi_public": 66.265839
+      "umi_public": 68.23813
     },
     {
-      "access_economics": 19.398245,
-      "access_economics_weighted": 3.879649,
-      "capability": 88.839676,
-      "capability_weighted": 48.861822,
+      "access_economics": 28.274921,
+      "access_economics_weighted": 5.654984,
+      "capability": 88.880187,
+      "capability_weighted": 48.884103,
       "entity_id": "kimi-k3-max",
       "entity_kind": "open_weight_deployment",
       "indistinguishable_from": [],
-      "interval_high": 60.893895,
-      "interval_low": 58.149081,
+      "interval_high": 62.680624,
+      "interval_low": 59.859108,
       "interval_status": "partial_source_interval",
       "named_release": "Kimi K3",
-      "operational_efficiency": 27.796768,
-      "operational_efficiency_weighted": 6.949192,
+      "operational_efficiency": 27.835755,
+      "operational_efficiency_weighted": 6.958939,
       "rank": 2,
-      "rank_high": 2,
+      "rank_high": 3,
       "rank_low": 2,
       "short_name": "Kimi K3",
-      "umi_public": 59.690663
+      "umi_public": 61.498026
     },
     {
-      "access_economics": 2.403291,
-      "access_economics_weighted": 0.480658,
-      "capability": 81.690792,
-      "capability_weighted": 44.929936,
-      "entity_id": "gpt-5.4-2026-03-05-xhigh",
-      "entity_kind": "single_model_service",
-      "indistinguishable_from": [
-        "claude-fable-5-max",
-        "claude-opus-5-max",
-        "gemini-3.6-flash-high",
-        "glm-5.2-max"
-      ],
-      "interval_high": 56.387472,
-      "interval_low": 54.416355,
-      "interval_status": "partial_source_interval",
-      "named_release": "GPT-5.4",
-      "operational_efficiency": 40.403134,
-      "operational_efficiency_weighted": 10.100783,
-      "rank": 3,
-      "rank_high": 7,
-      "rank_low": 3,
-      "short_name": "GPT-5.4",
-      "umi_public": 55.511377
-    },
-    {
-      "access_economics": 3.965025,
-      "access_economics_weighted": 0.793005,
-      "capability": 90.731355,
-      "capability_weighted": 49.902245,
+      "access_economics": 15.958286,
+      "access_economics_weighted": 3.191657,
+      "capability": 90.757016,
+      "capability_weighted": 49.916359,
       "entity_id": "claude-opus-5-max",
       "entity_kind": "single_model_service",
       "indistinguishable_from": [
         "claude-fable-5-max",
         "gemini-3.6-flash-high",
-        "glm-5.2-max",
         "gpt-5.4-2026-03-05-xhigh"
       ],
-      "interval_high": 56.394223,
-      "interval_low": 54.214178,
+      "interval_high": 58.827753,
+      "interval_low": 56.698415,
       "interval_status": "partial_source_interval",
       "named_release": "Claude Opus 5",
-      "operational_efficiency": 19.259083,
-      "operational_efficiency_weighted": 4.814771,
-      "rank": 4,
-      "rank_high": 7,
-      "rank_low": 3,
+      "operational_efficiency": 19.299942,
+      "operational_efficiency_weighted": 4.824985,
+      "rank": 3,
+      "rank_high": 6,
+      "rank_low": 2,
       "short_name": "Opus 5",
-      "umi_public": 55.510021
+      "umi_public": 57.933001
     },
     {
-      "access_economics": 51.166188,
-      "access_economics_weighted": 10.233238,
-      "capability": 72.601845,
-      "capability_weighted": 39.931015,
-      "entity_id": "gemini-3.6-flash-high",
+      "access_economics": 13.772185,
+      "access_economics_weighted": 2.754437,
+      "capability": 81.726677,
+      "capability_weighted": 44.949673,
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
       "entity_kind": "single_model_service",
       "indistinguishable_from": [
         "claude-fable-5-max",
         "claude-opus-5-max",
-        "glm-5.2-max",
-        "gpt-5.4-2026-03-05-xhigh"
+        "gemini-3.6-flash-high"
       ],
-      "interval_high": 56.860238,
-      "interval_low": 53.861051,
+      "interval_high": 58.669375,
+      "interval_low": 56.725613,
       "interval_status": "partial_source_interval",
-      "named_release": "Gemini 3.6 Flash",
-      "operational_efficiency": 21.102979,
-      "operational_efficiency_weighted": 5.275745,
-      "rank": 5,
-      "rank_high": 7,
+      "named_release": "GPT-5.4",
+      "operational_efficiency": 40.402789,
+      "operational_efficiency_weighted": 10.100697,
+      "rank": 4,
+      "rank_high": 6,
       "rank_low": 3,
-      "short_name": "Gemini 3.6 Flash",
-      "umi_public": 55.439997
+      "short_name": "GPT-5.4",
+      "umi_public": 57.804807
     },
     {
-      "access_economics": 0.705849,
-      "access_economics_weighted": 0.14117,
-      "capability": 88.710888,
-      "capability_weighted": 48.790988,
+      "access_economics": 9.928753,
+      "access_economics_weighted": 1.985751,
+      "capability": 88.714336,
+      "capability_weighted": 48.792885,
       "entity_id": "claude-fable-5-max",
       "entity_kind": "fallback_composite_service",
       "indistinguishable_from": [
@@ -172,45 +146,68 @@
         "glm-5.2-max",
         "gpt-5.4-2026-03-05-xhigh"
       ],
-      "interval_high": 55.594444,
-      "interval_low": 52.99974,
+      "interval_high": 57.40522,
+      "interval_low": 54.830729,
       "interval_status": "partial_source_interval",
       "named_release": "Claude Fable 5",
-      "operational_efficiency": 21.989913,
-      "operational_efficiency_weighted": 5.497478,
-      "rank": 6,
+      "operational_efficiency": 22.016051,
+      "operational_efficiency_weighted": 5.504013,
+      "rank": 5,
       "rank_high": 7,
       "rank_low": 3,
       "short_name": "Fable 5",
-      "umi_public": 54.429636
+      "umi_public": 56.282648
     },
     {
-      "access_economics": 55.306275,
-      "access_economics_weighted": 11.061255,
-      "capability": 67.885646,
-      "capability_weighted": 37.337106,
+      "access_economics": 51.050155,
+      "access_economics_weighted": 10.210031,
+      "capability": 72.552192,
+      "capability_weighted": 39.903705,
+      "entity_id": "gemini-3.6-flash-high",
+      "entity_kind": "single_model_service",
+      "indistinguishable_from": [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "gpt-5.4-2026-03-05-xhigh"
+      ],
+      "interval_high": 56.812051,
+      "interval_low": 53.827123,
+      "interval_status": "partial_source_interval",
+      "named_release": "Gemini 3.6 Flash",
+      "operational_efficiency": 21.153692,
+      "operational_efficiency_weighted": 5.288423,
+      "rank": 6,
+      "rank_high": 7,
+      "rank_low": 4,
+      "short_name": "Gemini 3.6 Flash",
+      "umi_public": 55.402159
+    },
+    {
+      "access_economics": 55.155103,
+      "access_economics_weighted": 11.031021,
+      "capability": 67.881562,
+      "capability_weighted": 37.334859,
       "entity_id": "glm-5.2-max",
       "entity_kind": "open_weight_deployment",
       "indistinguishable_from": [
         "claude-fable-5-max",
-        "claude-opus-5-max",
-        "gemini-3.6-flash-high",
-        "gpt-5.4-2026-03-05-xhigh"
+        "gemini-3.6-flash-high"
       ],
-      "interval_high": 55.82124,
-      "interval_low": 51.998747,
+      "interval_high": 55.809504,
+      "interval_low": 52.211801,
       "interval_status": "partial_source_interval",
       "named_release": "GLM-5.2",
-      "operational_efficiency": 23.217369,
-      "operational_efficiency_weighted": 5.804342,
+      "operational_efficiency": 23.279154,
+      "operational_efficiency_weighted": 5.819789,
       "rank": 7,
       "rank_high": 7,
-      "rank_low": 3,
+      "rank_low": 5,
       "short_name": "GLM-5.2",
-      "umi_public": 54.202703
+      "umi_public": 54.185668
     }
   ],
-  "scored_data_fingerprint": "5624c3b417e4c0e42dd35411065f200c38ccfc6b49474f47cb671c2d43a22c6c",
+  "scored_data_fingerprint": "7d1b91aab68a6d5b92dbfb97b9e5e5279abd18435aa398eda00e61ab3a378aa6",
   "series": [
     {
       "component": "capability",
@@ -243,7 +240,7 @@
       "component": "capability",
       "entity_id": "gpt-5.6-sol-max",
       "raw": 0.934975,
-      "score": 89.018162,
+      "score": 88.939012,
       "series_id": "epoch-gpqa",
       "series_label": "GPQA Diamond",
       "short_name": "Sol"
@@ -252,7 +249,7 @@
       "component": "capability",
       "entity_id": "gpt-5.6-sol-max",
       "raw": 1.0,
-      "score": 99.829818,
+      "score": 99.86501,
       "series_id": "epoch-otis-aime",
       "series_label": "OTIS Mock AIME",
       "short_name": "Sol"
@@ -279,7 +276,7 @@
       "component": "operational_efficiency",
       "entity_id": "gpt-5.6-sol-max",
       "raw": 61.253333,
-      "score": 60.30505,
+      "score": 60.28592,
       "series_id": "deepswe-agent-steps",
       "series_label": "DeepSWE steps",
       "short_name": "Sol"
@@ -288,7 +285,7 @@
       "component": "operational_efficiency",
       "entity_id": "gpt-5.6-sol-max",
       "raw": 60013.644444,
-      "score": 42.568009,
+      "score": 42.568025,
       "series_id": "deepswe-output-tokens",
       "series_label": "DeepSWE tokens",
       "short_name": "Sol"
@@ -297,7 +294,7 @@
       "component": "access_economics",
       "entity_id": "gpt-5.6-sol-max",
       "raw": 2.312208,
-      "score": 16.40246,
+      "score": 26.290398,
       "series_id": "weirdml-cost-per-run",
       "series_label": "WeirdML cost/run",
       "short_name": "Sol"
@@ -333,7 +330,7 @@
       "component": "capability",
       "entity_id": "kimi-k3-max",
       "raw": 0.931187,
-      "score": 88.074028,
+      "score": 87.993446,
       "series_id": "epoch-gpqa",
       "series_label": "GPQA Diamond",
       "short_name": "Kimi K3"
@@ -342,7 +339,7 @@
       "component": "capability",
       "entity_id": "kimi-k3-max",
       "raw": 0.972222,
-      "score": 90.287635,
+      "score": 91.404656,
       "series_id": "epoch-otis-aime",
       "series_label": "OTIS Mock AIME",
       "short_name": "Kimi K3"
@@ -360,7 +357,7 @@
       "component": "capability",
       "entity_id": "kimi-k3-max",
       "raw": 0.8257,
-      "score": 99.836678,
+      "score": 99.807552,
       "series_id": "epoch-weirdml",
       "series_label": "WeirdML",
       "short_name": "Kimi K3"
@@ -369,7 +366,7 @@
       "component": "operational_efficiency",
       "entity_id": "kimi-k3-max",
       "raw": 97.587583,
-      "score": 28.033845,
+      "score": 28.131176,
       "series_id": "deepswe-agent-steps",
       "series_label": "DeepSWE steps",
       "short_name": "Kimi K3"
@@ -378,7 +375,7 @@
       "component": "operational_efficiency",
       "entity_id": "kimi-k3-max",
       "raw": 81499.842572,
-      "score": 27.638716,
+      "score": 27.638808,
       "series_id": "deepswe-output-tokens",
       "series_label": "DeepSWE tokens",
       "short_name": "Kimi K3"
@@ -387,100 +384,10 @@
       "component": "access_economics",
       "entity_id": "kimi-k3-max",
       "raw": 2.053659,
-      "score": 19.398245,
+      "score": 28.274921,
       "series_id": "weirdml-cost-per-run",
       "series_label": "WeirdML cost/run",
       "short_name": "Kimi K3"
-    },
-    {
-      "component": "capability",
-      "entity_id": "gpt-5.4-2026-03-05-xhigh",
-      "raw": 0.517699,
-      "score": 46.090285,
-      "series_id": "deepswe-v1.1-pass1",
-      "series_label": "DeepSWE Pass@1",
-      "short_name": "GPT-5.4"
-    },
-    {
-      "component": "capability",
-      "entity_id": "gpt-5.4-2026-03-05-xhigh",
-      "raw": 0.44,
-      "score": 89.871627,
-      "series_id": "epoch-chess-puzzles",
-      "series_label": "Chess puzzles",
-      "short_name": "GPT-5.4"
-    },
-    {
-      "component": "capability",
-      "entity_id": "gpt-5.4-2026-03-05-xhigh",
-      "raw": 0.234286,
-      "score": 76.595483,
-      "series_id": "epoch-critpt",
-      "series_label": "CritPt",
-      "short_name": "GPT-5.4"
-    },
-    {
-      "component": "capability",
-      "entity_id": "gpt-5.4-2026-03-05-xhigh",
-      "raw": 0.933,
-      "score": 88.526675,
-      "series_id": "epoch-gpqa",
-      "series_label": "GPQA Diamond",
-      "short_name": "GPT-5.4"
-    },
-    {
-      "component": "capability",
-      "entity_id": "gpt-5.4-2026-03-05-xhigh",
-      "raw": 0.953,
-      "score": 84.908629,
-      "series_id": "epoch-otis-aime",
-      "series_label": "OTIS Mock AIME",
-      "short_name": "GPT-5.4"
-    },
-    {
-      "component": "capability",
-      "entity_id": "gpt-5.4-2026-03-05-xhigh",
-      "raw": 0.565972,
-      "score": 90.697804,
-      "series_id": "epoch-scicode",
-      "series_label": "SciCode",
-      "short_name": "GPT-5.4"
-    },
-    {
-      "component": "capability",
-      "entity_id": "gpt-5.4-2026-03-05-xhigh",
-      "raw": 0.777,
-      "score": 99.26683,
-      "series_id": "epoch-weirdml",
-      "series_label": "WeirdML",
-      "short_name": "GPT-5.4"
-    },
-    {
-      "component": "operational_efficiency",
-      "entity_id": "gpt-5.4-2026-03-05-xhigh",
-      "raw": 70.471239,
-      "score": 50.320176,
-      "series_id": "deepswe-agent-steps",
-      "series_label": "DeepSWE steps",
-      "short_name": "GPT-5.4"
-    },
-    {
-      "component": "operational_efficiency",
-      "entity_id": "gpt-5.4-2026-03-05-xhigh",
-      "raw": 71408.873894,
-      "score": 33.791772,
-      "series_id": "deepswe-output-tokens",
-      "series_label": "DeepSWE tokens",
-      "short_name": "GPT-5.4"
-    },
-    {
-      "component": "access_economics",
-      "entity_id": "gpt-5.4-2026-03-05-xhigh",
-      "raw": 5.7199,
-      "score": 2.403291,
-      "series_id": "weirdml-cost-per-run",
-      "series_label": "WeirdML cost/run",
-      "short_name": "GPT-5.4"
     },
     {
       "component": "capability",
@@ -513,7 +420,7 @@
       "component": "capability",
       "entity_id": "claude-opus-5-max",
       "raw": 0.938763,
-      "score": 89.955395,
+      "score": 89.878063,
       "series_id": "epoch-gpqa",
       "series_label": "GPQA Diamond",
       "short_name": "Opus 5"
@@ -522,7 +429,7 @@
       "component": "capability",
       "entity_id": "claude-opus-5-max",
       "raw": 0.988889,
-      "score": 96.013035,
+      "score": 96.680907,
       "series_id": "epoch-otis-aime",
       "series_label": "OTIS Mock AIME",
       "short_name": "Opus 5"
@@ -549,7 +456,7 @@
       "component": "operational_efficiency",
       "entity_id": "claude-opus-5-max",
       "raw": 99.042793,
-      "score": 27.13592,
+      "score": 27.237815,
       "series_id": "deepswe-agent-steps",
       "series_label": "DeepSWE steps",
       "short_name": "Opus 5"
@@ -558,7 +465,7 @@
       "component": "operational_efficiency",
       "entity_id": "claude-opus-5-max",
       "raw": 117565.693694,
-      "score": 14.007858,
+      "score": 14.008026,
       "series_id": "deepswe-output-tokens",
       "series_label": "DeepSWE tokens",
       "short_name": "Opus 5"
@@ -567,100 +474,100 @@
       "component": "access_economics",
       "entity_id": "claude-opus-5-max",
       "raw": 4.741955,
-      "score": 3.965025,
+      "score": 15.958286,
       "series_id": "weirdml-cost-per-run",
       "series_label": "WeirdML cost/run",
       "short_name": "Opus 5"
     },
     {
       "component": "capability",
-      "entity_id": "gemini-3.6-flash-high",
-      "raw": 0.485588,
-      "score": 40.024922,
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 0.517699,
+      "score": 46.090285,
       "series_id": "deepswe-v1.1-pass1",
       "series_label": "DeepSWE Pass@1",
-      "short_name": "Gemini 3.6 Flash"
+      "short_name": "GPT-5.4"
     },
     {
       "component": "capability",
-      "entity_id": "gemini-3.6-flash-high",
-      "raw": 0.4,
-      "score": 86.246012,
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 0.44,
+      "score": 89.871627,
       "series_id": "epoch-chess-puzzles",
       "series_label": "Chess puzzles",
-      "short_name": "Gemini 3.6 Flash"
+      "short_name": "GPT-5.4"
     },
     {
       "component": "capability",
-      "entity_id": "gemini-3.6-flash-high",
-      "raw": 0.105714,
-      "score": 66.675151,
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 0.234286,
+      "score": 76.595483,
       "series_id": "epoch-critpt",
       "series_label": "CritPt",
-      "short_name": "Gemini 3.6 Flash"
+      "short_name": "GPT-5.4"
     },
     {
       "component": "capability",
-      "entity_id": "gemini-3.6-flash-high",
-      "raw": 0.941288,
-      "score": 90.575203,
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 0.933,
+      "score": 88.446732,
       "series_id": "epoch-gpqa",
       "series_label": "GPQA Diamond",
-      "short_name": "Gemini 3.6 Flash"
+      "short_name": "GPT-5.4"
     },
     {
       "component": "capability",
-      "entity_id": "gemini-3.6-flash-high",
-      "raw": 0.941667,
-      "score": 82.16303,
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 0.953,
+      "score": 86.244154,
       "series_id": "epoch-otis-aime",
       "series_label": "OTIS Mock AIME",
-      "short_name": "Gemini 3.6 Flash"
+      "short_name": "GPT-5.4"
     },
     {
       "component": "capability",
-      "entity_id": "gemini-3.6-flash-high",
-      "raw": 0.52662,
-      "score": 81.223137,
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 0.565972,
+      "score": 90.697804,
       "series_id": "epoch-scicode",
       "series_label": "SciCode",
-      "short_name": "Gemini 3.6 Flash"
+      "short_name": "GPT-5.4"
     },
     {
       "component": "capability",
-      "entity_id": "gemini-3.6-flash-high",
-      "raw": 0.561,
-      "score": 78.959466,
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 0.777,
+      "score": 99.175243,
       "series_id": "epoch-weirdml",
       "series_label": "WeirdML",
-      "short_name": "Gemini 3.6 Flash"
+      "short_name": "GPT-5.4"
     },
     {
       "component": "operational_efficiency",
-      "entity_id": "gemini-3.6-flash-high",
-      "raw": 108.310421,
-      "score": 22.03013,
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 70.471239,
+      "score": 50.319231,
       "series_id": "deepswe-agent-steps",
       "series_label": "DeepSWE steps",
-      "short_name": "Gemini 3.6 Flash"
+      "short_name": "GPT-5.4"
     },
     {
       "component": "operational_efficiency",
-      "entity_id": "gemini-3.6-flash-high",
-      "raw": 96978.283814,
-      "score": 20.484878,
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 71408.873894,
+      "score": 33.791828,
       "series_id": "deepswe-output-tokens",
       "series_label": "DeepSWE tokens",
-      "short_name": "Gemini 3.6 Flash"
+      "short_name": "GPT-5.4"
     },
     {
       "component": "access_economics",
-      "entity_id": "gemini-3.6-flash-high",
-      "raw": 0.622712,
-      "score": 51.166188,
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "raw": 5.7199,
+      "score": 13.772185,
       "series_id": "weirdml-cost-per-run",
       "series_label": "WeirdML cost/run",
-      "short_name": "Gemini 3.6 Flash"
+      "short_name": "GPT-5.4"
     },
     {
       "component": "capability",
@@ -693,7 +600,7 @@
       "component": "capability",
       "entity_id": "claude-fable-5-max",
       "raw": 0.858586,
-      "score": 70.337525,
+      "score": 70.274225,
       "series_id": "epoch-gpqa",
       "series_label": "GPQA Diamond",
       "short_name": "Fable 5"
@@ -702,7 +609,7 @@
       "component": "capability",
       "entity_id": "claude-fable-5-max",
       "raw": 0.997222,
-      "score": 99.24667,
+      "score": 99.442237,
       "series_id": "epoch-otis-aime",
       "series_label": "OTIS Mock AIME",
       "short_name": "Fable 5"
@@ -729,7 +636,7 @@
       "component": "operational_efficiency",
       "entity_id": "claude-fable-5-max",
       "raw": 88.428899,
-      "score": 34.346227,
+      "score": 34.411319,
       "series_id": "deepswe-agent-steps",
       "series_label": "DeepSWE steps",
       "short_name": "Fable 5"
@@ -738,7 +645,7 @@
       "component": "operational_efficiency",
       "entity_id": "claude-fable-5-max",
       "raw": 118592.772936,
-      "score": 13.75237,
+      "score": 13.752539,
       "series_id": "deepswe-output-tokens",
       "series_label": "DeepSWE tokens",
       "short_name": "Fable 5"
@@ -747,10 +654,100 @@
       "component": "access_economics",
       "entity_id": "claude-fable-5-max",
       "raw": 8.42441,
-      "score": 0.705849,
+      "score": 9.928753,
       "series_id": "weirdml-cost-per-run",
       "series_label": "WeirdML cost/run",
       "short_name": "Fable 5"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.485588,
+      "score": 40.024922,
+      "series_id": "deepswe-v1.1-pass1",
+      "series_label": "DeepSWE Pass@1",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.4,
+      "score": 86.246012,
+      "series_id": "epoch-chess-puzzles",
+      "series_label": "Chess puzzles",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.105714,
+      "score": 66.675151,
+      "series_id": "epoch-critpt",
+      "series_label": "CritPt",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.941288,
+      "score": 90.499311,
+      "series_id": "epoch-gpqa",
+      "series_label": "GPQA Diamond",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.941667,
+      "score": 83.561759,
+      "series_id": "epoch-otis-aime",
+      "series_label": "OTIS Mock AIME",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.52662,
+      "score": 81.223137,
+      "series_id": "epoch-scicode",
+      "series_label": "SciCode",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "capability",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.561,
+      "score": 78.511462,
+      "series_id": "epoch-weirdml",
+      "series_label": "WeirdML",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 108.310421,
+      "score": 22.156709,
+      "series_id": "deepswe-agent-steps",
+      "series_label": "DeepSWE steps",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "operational_efficiency",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 96978.283814,
+      "score": 20.485015,
+      "series_id": "deepswe-output-tokens",
+      "series_label": "DeepSWE tokens",
+      "short_name": "Gemini 3.6 Flash"
+    },
+    {
+      "component": "access_economics",
+      "entity_id": "gemini-3.6-flash-high",
+      "raw": 0.622712,
+      "score": 51.050155,
+      "series_id": "weirdml-cost-per-run",
+      "series_label": "WeirdML cost/run",
+      "short_name": "Gemini 3.6 Flash"
     },
     {
       "component": "capability",
@@ -783,7 +780,7 @@
       "component": "capability",
       "entity_id": "glm-5.2-max",
       "raw": 0.918561,
-      "score": 84.901851,
+      "score": 84.818925,
       "series_id": "epoch-gpqa",
       "series_label": "GPQA Diamond",
       "short_name": "GLM-5.2"
@@ -792,7 +789,7 @@
       "component": "capability",
       "entity_id": "glm-5.2-max",
       "raw": 0.863889,
-      "score": 67.989537,
+      "score": 69.383895,
       "series_id": "epoch-otis-aime",
       "series_label": "OTIS Mock AIME",
       "short_name": "GLM-5.2"
@@ -810,7 +807,7 @@
       "component": "capability",
       "entity_id": "glm-5.2-max",
       "raw": 0.7012,
-      "score": 96.376002,
+      "score": 96.113963,
       "series_id": "epoch-weirdml",
       "series_label": "WeirdML",
       "short_name": "GLM-5.2"
@@ -819,7 +816,7 @@
       "component": "operational_efficiency",
       "entity_id": "glm-5.2-max",
       "raw": 129.126667,
-      "score": 13.766975,
+      "score": 13.921319,
       "series_id": "deepswe-agent-steps",
       "series_label": "DeepSWE steps",
       "short_name": "GLM-5.2"
@@ -828,7 +825,7 @@
       "component": "operational_efficiency",
       "entity_id": "glm-5.2-max",
       "raw": 78175.306667,
-      "score": 29.517631,
+      "score": 29.517711,
       "series_id": "deepswe-output-tokens",
       "series_label": "DeepSWE tokens",
       "short_name": "GLM-5.2"
@@ -837,7 +834,7 @@
       "component": "access_economics",
       "entity_id": "glm-5.2-max",
       "raw": 0.507287,
-      "score": 55.306275,
+      "score": 55.155103,
       "series_id": "weirdml-cost-per-run",
       "series_label": "WeirdML cost/run",
       "short_name": "GLM-5.2"

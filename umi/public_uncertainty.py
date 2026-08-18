@@ -14,29 +14,17 @@ from umi.edition import (
 )
 from umi.identity import load_public_identities
 from umi.public import (
-    SERIES,
-    config_id_for_entity,
     entity_map_from_identities,
     epoch_points,
     load_epoch_member,
+    public_series_specs,
     series_score,
+    series_score_kwargs,
 )
+from umi.public_crosswalk import config_id_for_entity
+from umi.public_paths import resolve_epoch_zip
 
-UNCERTAINTY_FIELDS = {
-    "epoch-chess-puzzles": ("stderr", "standard_error"),
-    "epoch-gpqa": ("stderr", "standard_error"),
-    "epoch-otis-aime": ("stderr", "standard_error"),
-    "deepswe-v1.1-pass1": ("95% CI half-width", "ci95_halfwidth"),
-    "epoch-weirdml": ("Accuracy SE", "standard_error"),
-}
 DRAW_COUNT = 2048
-FAMILY_ABLATIONS = (
-    "deepswe-v1.1-pass1",
-    "epoch-scicode",
-    "epoch-gpqa",
-    "epoch-otis-aime",
-    "epoch-critpt",
-)
 
 
 def _finite(raw_text: str | None) -> float | None:
@@ -57,26 +45,33 @@ def _sigma_from_source(kind: str, value: float) -> float:
     return value
 
 
-def series_intervals() -> dict[str, dict[str, float]]:
+def series_intervals(*, edition_name: str = "v0.5") -> dict[str, dict[str, float]]:
+    edition = load_public_edition_config(edition=edition_name)
     intervals: dict[str, dict[str, float]] = {}
-    for spec in SERIES:
-        field_info = UNCERTAINTY_FIELDS.get(spec["id"])
-        if field_info is None:
+    for series in edition.common_core:
+        if series.interval_field is None or series.interval_kind is None:
             continue
-        field, kind = field_info
         seen: set[str] = set()
-        for row in load_epoch_member(spec["member"]):
-            if spec.get("harness") and row.get("Harness") != spec.get("harness"):
+        for row in load_epoch_member(series.member, zip_path=resolve_epoch_zip()):
+            if series.harness and row.get("Harness") != series.harness:
                 continue
             config_id = str(row["Model version"])
             if config_id in seen:
                 continue
             seen.add(config_id)
-            width = _finite(row.get(field))
+            width = _finite(row.get(series.interval_field))
             if width is None or width < 0:
                 continue
-            intervals.setdefault(spec["id"], {})[config_id] = _sigma_from_source(kind, width)
+            intervals.setdefault(series.series_id, {})[config_id] = _sigma_from_source(
+                series.interval_kind,
+                width,
+            )
     return intervals
+
+
+def _ablation_series(edition_name: str) -> tuple[str, ...]:
+    edition = load_public_edition_config(edition=edition_name)
+    return tuple(item.series_id for item in edition.common_core if item.ablate)
 
 
 def _combine(
@@ -86,15 +81,16 @@ def _combine(
     edition_name: str = "v0.5",
 ) -> dict[str, float]:
     edition = load_public_edition_config(edition=edition_name)
+    specs = public_series_specs(edition)
     cap_parts: dict[str, float] = {}
     family_totals: dict[str, float] = {}
-    for spec in SERIES:
+    for spec in specs:
         if spec["component"] != "capability" or spec["id"] == dropped:
             continue
         family_totals[spec["domain"]] = family_totals.get(spec["domain"], 0.0) + spec[
             "family_weight"
         ]
-    for spec in SERIES:
+    for spec in specs:
         if spec["component"] != "capability" or spec["id"] == dropped:
             continue
         weight = spec["family_weight"] / family_totals[spec["domain"]]
@@ -108,13 +104,13 @@ def _combine(
     opeff = math.fsum(
         edition.weights.operational_efficiency[OperationalEfficiencySubcomponent(spec["domain"])]
         * series_scores[spec["id"]]
-        for spec in SERIES
+        for spec in specs
         if spec["component"] == "operational_efficiency"
     )
     access = math.fsum(
         edition.weights.access_economics[AccessEconomicsSubcomponent(spec["domain"])]
         * series_scores[spec["id"]]
-        for spec in SERIES
+        for spec in specs
         if spec["component"] == "access_economics"
     )
     public = math.fsum(
@@ -132,6 +128,40 @@ def _combine(
     }
 
 
+def attach_interval_ranks(
+    models: list[dict[str, Any]],
+    uncertainty: dict[str, Any],
+) -> list[dict[str, Any]]:
+    by_id = {item["entity_id"]: item for item in uncertainty.get("models", ())}
+    overlapping = {
+        tuple(pair)
+        for pair in uncertainty.get("pairwise_indistinguishable", ())
+    }
+    if not overlapping:
+        from umi.public_certificate import overlapping_pairs
+
+        overlapping = set(overlapping_pairs(list(by_id.values())))
+    for item in models:
+        interval = by_id.get(item["entity_id"])
+        if interval is None:
+            continue
+        item["rank_low"] = interval["rank_low"]
+        item["rank_high"] = interval["rank_high"]
+        peers = sorted(
+            peer
+            for left, right in overlapping
+            for peer in (left, right)
+            if item["entity_id"] in (left, right) and peer != item["entity_id"]
+        )
+        if interval["rank_low"] != interval["rank_high"] or peers:
+            item["rank_status"] = "interval_overlap"
+            item["tie_group"] = tuple(sorted({item["entity_id"], *peers}))
+        else:
+            item["rank_status"] = "interval_unique"
+            item["tie_group"] = (item["entity_id"],)
+    return models
+
+
 def _clip_raw(raw: float, kind: str) -> float:
     if kind == "proportion":
         return min(max(raw, 1e-6), 1.0 - 1e-6)
@@ -145,19 +175,26 @@ def quantify_public_uncertainty(
     draws: int = DRAW_COUNT,
 ) -> dict[str, Any]:
     identities = load_public_identities(edition=edition_name)
-    mapping = entity_map_from_identities(identities)
-    intervals = series_intervals()
+    edition = load_public_edition_config(edition=edition_name)
+    specs = public_series_specs(edition)
+    mapping = entity_map_from_identities(identities, edition=edition_name)
+    intervals = series_intervals(edition_name=edition_name)
     panels: dict[str, tuple[float, ...]] = {}
     point_raw: dict[str, dict[str, float]] = {}
     point_scores: dict[str, dict[str, float]] = {}
-    for spec in SERIES:
+    score_kwargs = series_score_kwargs(edition.normalization)
+    for spec in specs:
         points = epoch_points(
             spec["member"],
             spec["field"],
+            zip_path=resolve_epoch_zip(),
             require_harness=spec.get("harness"),
             panel_filter=spec.get("panel_filter"),
             identities=identities,
             entity_map=mapping,
+            high_effort_suffixes=edition.normalization.high_effort_suffixes,
+            duplicate_policy=edition.normalization.duplicate_policy,
+            excluded_config_ids=edition.normalization.excluded_config_ids,
         )
         panels[spec["id"]] = tuple(item.raw for item in points)
         for item in points:
@@ -165,7 +202,10 @@ def quantify_public_uncertainty(
                 continue
             point_raw.setdefault(item.entity_id, {})[spec["id"]] = item.raw
             point_scores.setdefault(item.entity_id, {})[spec["id"]] = series_score(
-                item.raw, panels[spec["id"]], kind=spec["kind"]
+                item.raw,
+                panels[spec["id"]],
+                kind=spec["kind"],
+                **score_kwargs,
             )["score"]
     seed = int(str(payload["scored_data_fingerprint"])[:16], 16)
     rng = random.Random(seed)
@@ -173,15 +213,18 @@ def quantify_public_uncertainty(
     for _ in range(draws):
         public_by_id: dict[str, float] = {}
         for identity in identities:
-            config_id = config_id_for_entity(identity.entity_id)
+            config_id = config_id_for_entity(identity.entity_id, edition=edition_name)
             perturbed: dict[str, float] = {}
-            for spec in SERIES:
+            for spec in specs:
                 raw = point_raw[identity.entity_id][spec["id"]]
                 sigma = intervals.get(spec["id"], {}).get(config_id)
                 if sigma is not None and sigma > 0:
                     raw = _clip_raw(raw + rng.gauss(0.0, sigma), spec["kind"])
                 perturbed[spec["id"]] = series_score(
-                    raw, panels[spec["id"]], kind=spec["kind"]
+                    raw,
+                    panels[spec["id"]],
+                    kind=spec["kind"],
+                    **score_kwargs,
                 )["score"]
             public_by_id[identity.entity_id] = _combine(
                 perturbed, edition_name=edition_name
@@ -203,8 +246,9 @@ def quantify_public_uncertainty(
             ranks.append(next(i for i, pair in enumerate(ordered, start=1) if pair[0] == entity_id))
         covered = [
             spec["id"]
-            for spec in SERIES
-            if config_id_for_entity(entity_id) in intervals.get(spec["id"], {})
+            for spec in specs
+            if config_id_for_entity(entity_id, edition=edition_name)
+            in intervals.get(spec["id"], {})
         ]
         models.append(
             {
@@ -217,7 +261,7 @@ def quantify_public_uncertainty(
                 "interval_status": "partial_source_interval",
                 "series_with_intervals": covered,
                 "series_without_intervals": [
-                    spec["id"] for spec in SERIES if spec["id"] not in covered
+                    spec["id"] for spec in specs if spec["id"] not in covered
                 ],
             }
         )
@@ -226,7 +270,7 @@ def quantify_public_uncertainty(
         item["entity_id"]
         for item in sorted(payload["models"], key=lambda row: row["rank"])
     ]
-    for dropped in FAMILY_ABLATIONS:
+    for dropped in _ablation_series(edition_name):
         scenario = []
         for identity in identities:
             combined = _combine(

@@ -1,0 +1,178 @@
+{
+  "$defs": {
+    "PublicAnchorMember": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_member_id": {
+          "title": "Anchor Member Id",
+          "type": "string"
+        },
+        "entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Entity Id"
+        },
+        "exclusion_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exclusion Reason"
+        },
+        "included": {
+          "default": true,
+          "title": "Included",
+          "type": "boolean"
+        },
+        "raw_value": {
+          "title": "Raw Value",
+          "type": "number"
+        },
+        "source_model_id": {
+          "title": "Source Model Id",
+          "type": "string"
+        },
+        "source_row_id": {
+          "title": "Source Row Id",
+          "type": "string"
+        },
+        "transformed_value": {
+          "title": "Transformed Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "anchor_member_id",
+        "source_row_id",
+        "source_model_id",
+        "raw_value",
+        "transformed_value"
+      ],
+      "title": "PublicAnchorMember",
+      "type": "object"
+    },
+    "PublicAnchorPanel": {
+      "additionalProperties": false,
+      "properties": {
+        "config_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Config Ids",
+          "type": "array"
+        },
+        "harness": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Harness"
+        },
+        "member": {
+          "title": "Member",
+          "type": "string"
+        },
+        "members": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PublicAnchorMember"
+          },
+          "title": "Members",
+          "type": "array"
+        },
+        "n": {
+          "minimum": 8,
+          "title": "N",
+          "type": "integer"
+        },
+        "panel_filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Panel Filter"
+        },
+        "panel_fingerprint": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Panel Fingerprint",
+          "type": "string"
+        },
+        "panel_id": {
+          "title": "Panel Id",
+          "type": "string"
+        },
+        "series_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Series Ids",
+          "type": "array"
+        },
+        "source_artifact_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Artifact Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "panel_id",
+        "member",
+        "source_artifact_sha256",
+        "series_ids",
+        "config_ids",
+        "n",
+        "panel_fingerprint"
+      ],
+      "title": "PublicAnchorPanel",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "edition_id": {
+      "title": "Edition Id",
+      "type": "string"
+    },
+    "panels": {
+      "items": {
+        "$ref": "#/$defs/PublicAnchorPanel"
+      },
+      "title": "Panels",
+      "type": "array"
+    },
+    "source_artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Artifact Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "edition_id",
+    "source_artifact_sha256",
+    "panels"
+  ],
+  "title": "PublicAnchorPanelSet",
+  "type": "object"
+}

@@ -201,7 +201,7 @@ def test_edition_validate_and_score_v04(capsys: pytest.CaptureFixture[str]) -> N
     score_args = build_parser().parse_args(["edition", "--edition", "v0.4", "score"])
     assert run(score_args) == 0
     payload = json.loads(capsys.readouterr().out)
-    assert payload["publication_state"] == "published"
+    assert payload["publication_state"] == "experimental_point_score"
     assert len(payload["models"]) == 5
     assert all(item["umi_public"] is not None for item in payload["models"])
 
@@ -209,7 +209,10 @@ def test_edition_validate_and_score_v04(capsys: pytest.CaptureFixture[str]) -> N
     assert run(dashboard_args) == 0
     dashboard = json.loads(capsys.readouterr().out)
     assert dashboard["surface"] == "public-dashboard"
-    assert dashboard["scored_data_fingerprint"] == payload["scored_data_fingerprint"]
+    stored = json.loads(
+        Path("data/editions/v0.4/processed/model-scores.json").read_text(encoding="utf-8")
+    )
+    assert dashboard["scored_data_fingerprint"] == stored["scored_data_fingerprint"]
 
 
 def test_edition_validate_v05(capsys: pytest.CaptureFixture[str]) -> None:
@@ -224,9 +227,61 @@ def test_edition_certificate_v05(capsys: pytest.CaptureFixture[str]) -> None:
     args = build_parser().parse_args(["edition", "--edition", "v0.5", "certificate"])
     assert run(args) == 0
     certificate = json.loads(capsys.readouterr().out)
-    assert certificate["status"] == "published_governed_index"
+    assert certificate["status"] == "provisional_public_score"
     assert certificate["source_artifact_sha256"]
     assert certificate["result_fingerprint"]
+
+
+def test_edition_candidates_v05_are_abstentions(capsys: pytest.CaptureFixture[str]) -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.5", "candidates"])
+    assert run(args) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["headline_additions"] == []
+    assert {item["candidate_id"] for item in report["candidates"]} == {
+        "grok-4.5-high",
+        "gemini-3.1-pro-preview",
+    }
+    assert all(item["umi_public"] is None for item in report["candidates"])
+    assert all(item["status"] == "insufficient_common_support" for item in report["candidates"])
+
+
+def test_edition_bundle_v05(capsys: pytest.CaptureFixture[str]) -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.5", "bundle"])
+    assert run(args) == 0
+    bundle = json.loads(capsys.readouterr().out)
+    assert bundle["release_class"] == "provisional_public_score"
+    assert bundle["evidence_fingerprint"]
+    assert len(bundle["series"]) == 10
+
+
+def test_edition_sensitivity_v05(capsys: pytest.CaptureFixture[str]) -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.5", "sensitivity"])
+    assert run(args) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["status"] == "diagnostic"
+    assert report["headline_unchanged"] is True
+    assert "baseline" in report["hypotheses"]
+
+
+def test_edition_blockers_v05(capsys: pytest.CaptureFixture[str]) -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.5", "blockers"])
+    assert run(args) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["headline_published"] is False
+    assert all(item["umi_public"] is None for item in report["blockers"])
+    ids = {item["blocker_id"] for item in report["blockers"]}
+    assert "candidate-grok-4.5-high" in ids
+    assert "candidate-gemini-3.1-pro-preview" in ids
+
+
+@pytest.mark.parametrize(
+    "command",
+    ["certificate", "candidates", "blockers", "sensitivity", "bundle", "scales"],
+)
+def test_governed_surfaces_rejected_on_experimental_v04(command: str) -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.4", command])
+    with pytest.raises(SystemExit, match="historical_experimental_point_score"):
+        run(args)
 
 
 def test_legacy_edition_validate_reports_infeasible(

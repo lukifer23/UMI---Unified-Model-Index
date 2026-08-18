@@ -1,0 +1,127 @@
+{
+  "$defs": {
+    "PublicScoreScale": {
+      "additionalProperties": false,
+      "properties": {
+        "formula_version": {
+          "title": "Formula Version",
+          "type": "string"
+        },
+        "iqr_scale": {
+          "default": "legacy_mad_iqr",
+          "title": "Iqr Scale",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "logit_eps": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Logit Eps"
+        },
+        "lower_transform": {
+          "default": "neglog1p",
+          "title": "Lower Transform",
+          "type": "string"
+        },
+        "median": {
+          "title": "Median",
+          "type": "number"
+        },
+        "n": {
+          "minimum": 8,
+          "title": "N",
+          "type": "integer"
+        },
+        "normalization_version": {
+          "title": "Normalization Version",
+          "type": "string"
+        },
+        "panel_id": {
+          "title": "Panel Id",
+          "type": "string"
+        },
+        "reject_out_of_range": {
+          "default": false,
+          "title": "Reject Out Of Range",
+          "type": "boolean"
+        },
+        "scale_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Scale Id",
+          "type": "string"
+        },
+        "series_id": {
+          "title": "Series Id",
+          "type": "string"
+        },
+        "sigma": {
+          "title": "Sigma",
+          "type": "number"
+        },
+        "transform": {
+          "title": "Transform",
+          "type": "string"
+        },
+        "winsor": {
+          "title": "Winsor",
+          "type": "number"
+        }
+      },
+      "required": [
+        "scale_id",
+        "panel_id",
+        "series_id",
+        "kind",
+        "transform",
+        "winsor",
+        "median",
+        "sigma",
+        "n",
+        "formula_version",
+        "normalization_version"
+      ],
+      "title": "PublicScoreScale",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "edition_id": {
+      "title": "Edition Id",
+      "type": "string"
+    },
+    "formula_version": {
+      "title": "Formula Version",
+      "type": "string"
+    },
+    "normalization_version": {
+      "title": "Normalization Version",
+      "type": "string"
+    },
+    "scales": {
+      "items": {
+        "$ref": "#/$defs/PublicScoreScale"
+      },
+      "title": "Scales",
+      "type": "array"
+    }
+  },
+  "required": [
+    "edition_id",
+    "formula_version",
+    "normalization_version",
+    "scales"
+  ],
+  "title": "PublicScoreScaleSet",
+  "type": "object"
+}

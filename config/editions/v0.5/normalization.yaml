@@ -1,0 +1,13 @@
+logit_eps: 0.001
+winsor: 3.0
+high_effort_suffixes:
+  - _max
+  - _xhigh
+  - _high
+  - _promax
+lower_transform: log
+iqr_scale: iqr_over_1_349
+reject_out_of_range: true
+duplicate_policy: declared
+excluded_config_ids:
+  - Qwen3-235B-A22B-Thinking-2507

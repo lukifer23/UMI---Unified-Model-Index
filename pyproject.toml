@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "unified-model-index"
-version = "0.3.16"
+version = "0.5.0"
 description = "Transparent, auditable scoring for AI model capability, efficiency, economics, and value."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -35,6 +35,10 @@ umi = "umi.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["umi", "analysis"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"config/editions" = "umi/packaged_config/editions"
+"config/candidates" = "umi/packaged_config/candidates"
 
 [tool.pytest.ini_options]
 addopts = "--strict-markers -p no:cacheprovider --cov=umi --cov=analysis --cov-report=term-missing"

@@ -33,7 +33,7 @@ GOLDEN = {
 
 def test_legacy_edition_identity_and_formula_are_unchanged() -> None:
     assert LEGACY_EDITION_ID == "umi-public-v0.3-legacy"
-    assert PACKAGE_VERSION == "0.3.16"
+    assert PACKAGE_VERSION == "0.5.0"
     assert FORMULA_VERSION == "umi-methodology-v0.3.15"
     assert NORMALIZATION_VERSION == "umi-normalization-v0.3.4"
     assert ENGINE_VERSION == "umi-engine-v0.3.13"

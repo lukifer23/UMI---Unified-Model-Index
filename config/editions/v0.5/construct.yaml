@@ -1,0 +1,26 @@
+# Precommitted v0.5 construct. Missing parents do not silent-reweight.
+# They withhold certified_public_score.
+profile_id: umi-public-v0.5-target-construct
+overall:
+  capability: 0.55
+  operational_efficiency: 0.25
+  access_economics: 0.20
+capability_domains:
+  general_reasoning_and_knowledge: 0.20
+  software_engineering: 0.25
+  agentic_and_tool_mediated_work: 0.20
+  mathematics_and_science: 0.15
+  context_reliability_and_factual_discipline: 0.10
+  language_data_and_instruction_following: 0.10
+operational_efficiency:
+  task_resource_intensity: 0.45
+  task_completion_time_and_steps: 0.30
+  interactive_service_responsiveness: 0.25
+access_economics:
+  public_benchmark_task_cost: 0.45
+  agentic_task_cost: 0.30
+  fixed_tariff_baskets: 0.25
+notes:
+  - Chess puzzles are a narrow search/puzzle signal, not broad general reasoning.
+  - WeirdML is ML-engineering agent capability, not all agentic work.
+  - The experimental 10-series basket is labeled experimental_v0.4_compatible_profile.
