@@ -8,7 +8,7 @@
 | Reviewed spec baseline | `9712b35f2c3fe162110c4c29e25101f2fe3a58f8` |
 | `origin/main` at start | `f4cc49b5ef3e79f60d15cbc302596c97eed078a2` |
 | Branch | `feat/umi-v05-governed-public-2` |
-| Ending commit | recorded at handoff in the status block |
+| Ending commit | `1e5dc2d1352c3638c32df4973f8b1a855cda4cea` |
 
 Commits unique to this replacement branch:
 
