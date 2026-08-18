@@ -339,6 +339,19 @@ def _diagnostic_blockers() -> tuple[dict[str, Any], ...]:
     )
 
 
+def score_public_bundle(
+    bundle: Any | None = None,
+    *,
+    edition_name: str = "v0.5",
+) -> dict[str, Any]:
+    """Production public scorer. Always revalidates the edition and bundle."""
+    if bundle is None:
+        from umi.public_bundle import load_public_scoring_bundle
+
+        load_public_scoring_bundle(edition_name=edition_name)
+    return score_public_edition(edition_name=edition_name)
+
+
 def score_public_edition(
     config: PublicEditionConfig | None = None,
     *,

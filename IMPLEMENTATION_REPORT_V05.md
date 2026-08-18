@@ -1,5 +1,40 @@
 # IMPLEMENTATION_REPORT_V05
 
+## Current hardening branch (`feat/umi-v05-governed-public-2`)
+
+Starting commit for this unique replacement branch: `4af92006c1ec8263d693d7b03bca5c345b582729`.
+Reviewed spec baseline: `9712b35f2c3fe162110c4c29e25101f2fe3a58f8`.
+`origin/main` at branch creation: `f4cc49b5ef3e79f60d15cbc302596c97eed078a2`.
+Local checkout before fetch was stale at `976460f`. No reset. No history rewrite.
+
+### Publication decision
+
+v0.5 is **`provisional_public_score`**, not `certified_public_score`.
+
+Reason codes from `decide_public_eligibility`:
+
+- `source_concentration_failed` — Access 1.00 WeirdML; Operational Efficiency 1.00 DataCurve. The 0.35 cap has no single-source exemption.
+- `construct_incomplete` — missing context reliability, language/instruction following, interactive latency, agentic task cost, and fixed tariff baskets.
+- `success_adjustment_unavailable` — DeepSWE tokens/steps and WeirdML cost are unadjusted means.
+
+CritPt concentration origin is now Artificial Analysis (evaluator/run executor). Epoch is the distributor only. Capability Epoch share is 0.30, under the cap.
+
+### v0.4 freeze
+
+Companion `data/editions/v0.4/processed/release-status.json` labels the release `experimental_point_score`. The five committed scores and fingerprint `e266af13…8e6d` are unchanged. Ranks remain point-estimate order only.
+
+### Identity
+
+`_source_effort` no longer infers Max/High/xhigh from suffixes. Blank row effort is unknown unless a reviewed crosswalk binds the exact `Model version`.
+
+### Candidates
+
+Unchanged diagnostic result: Grok 4.5 High 8/10 (missing WeirdML accuracy and cost); Gemini 3.1 Pro Preview 9/10 (missing high-effort WeirdML cost). `umi_public: null`. Grok 4.6 remains intake.
+
+### Remaining work
+
+Public package split, metric-specific transforms, success-adjusted OpEff, diversified Access, hierarchical uncertainty, isolated-wheel public smokes, and rights-clear source expansion are not closed. Missing public evidence is recorded in `docs/editions/v0.5/BLOCKER_REPORT.md` rather than invented.
+
 ## Reviewed baseline versus current HEAD
 
 The execution spec reviewed `9712b35f2c3fe162110c4c29e25101f2fe3a58f8`

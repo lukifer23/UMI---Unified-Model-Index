@@ -31,6 +31,9 @@ jobs:
       - run: uv run umi bundle validate --data-dir data/pilots/v0.3/raw
       - run: uv run python -m scripts.build_v03_pilot
       - run: git diff --exit-code -- data/pilots/v0.3
+      - run: uv run python -m scripts.build_v04_public --check
+      - run: git diff --exit-code -- data/editions/v0.4/processed/model-scores.json data/editions/v0.4/processed/common-core.json data/editions/v0.4/processed/rejected-evidence.json
+      - run: uv run python -m scripts.build_v05_public --check
       - name: CLI smoke tests
         run: |
           uv run umi estimates --data-dir data/pilots/v0.3/raw >/dev/null
@@ -46,6 +49,11 @@ jobs:
             --task-pack data/operational/pilot-v0.1/mmlu-pro-test-balanced-70-v1.json \
             --run-manifest data/operational/pilot-v0.1/openrouter-five-model-run.yaml >/dev/null
           uv run python -m scripts.run_openrouter_operational_pilot --help >/dev/null
+          uv run umi edition --edition v0.4 validate >/dev/null
+          uv run umi edition --edition v0.4 score >/dev/null
+          uv run umi edition --edition v0.5 validate >/dev/null
+          uv run umi edition --edition v0.5 score >/dev/null
+          uv run umi edition --edition v0.5 candidates >/dev/null
       - name: Build and smoke isolated wheel
         shell: bash
         run: |
