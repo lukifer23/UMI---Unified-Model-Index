@@ -2,28 +2,33 @@
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
 Capability, Efficiency, Economics, Overall, and experimental Value. The current package is
-0.3.16. The living public index is **UMI Public v0.5 Governed**. v0.4 remains a historical
-experimental point-score edition for the five exact Max pilots. The v0.3.15 legacy edition
-still does **not** publish `headline_overall`.
+**0.5.0**. UMI Public v0.5 is a **`provisional_public_score`**, not a certified governed
+headline. v0.4 is a frozen `experimental_point_score` for the five Max pilots. The v0.3.15
+legacy edition still does **not** publish `headline_overall`.
 
 UMI Public is `0.55 × Capability + 0.25 × Operational Efficiency + 0.20 × Access Economics`.
-v0.5 freezes v0.4, validates every published raw against the Epoch zip, adds partial
-source-interval uncertainty, and scores every frozen configuration that has the complete
-common core. Named candidates that miss a required series get diagnostic certificates, not
-imputed scores. Rebuild offline with no API keys:
+v0.5 scores only a checksum-bound `PublicScoringBundle`. It does **not** meet the 0.35 source
+cap (Access is 100% WeirdML; Operational Efficiency is 100% DataCurve), does not fill the
+precommitted six-domain Capability construct, and does not have success-adjusted resources.
+Named candidates that miss a required series get diagnostic certificates, not imputed scores.
+Rebuild offline with no API keys:
 
 ```bash
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 validate
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 score
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 --bundle-dir data/sources/v0.3 score
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 audit
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 dashboard
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 certificate
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 candidates
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 blockers
-PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 bundle
+PYTHONPATH=. uv run --no-sync python -m scripts.build_v04_public --check
+PYTHONPATH=. uv run --no-sync python -m scripts.build_v05_public --check
 ```
 
-| Rank | Configuration | Capability | Operational Efficiency | Access Economics | UMI Public |
+v0.4 frozen experimental point scores (immutable; ranks are point order only):
+
+| Point order | Configuration | Capability | Operational Efficiency | Access Economics | UMI Public |
 |---:|---|---:|---:|---:|---:|
 | 1 | GPT-5.6 Sol Max | 91.94 | 49.66 | 16.40 | **66.27** |
 | 2 | Kimi K3 Max | 88.84 | 27.80 | 19.40 | **59.69** |
@@ -31,10 +36,21 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 bundle
 | 4 | Claude Fable 5 Max | 88.71 | 21.99 | 0.71 | **54.43** |
 | 5 | GLM-5.2 Max | 67.89 | 23.22 | 55.31 | **54.20** |
 
-v0.5 keeps those five numbers and adds GPT-5.4 xhigh (**55.51**) and Gemini 3.6 Flash high
-(**55.44**). Sol and Kimi stay ranks 1 and 2 under partial intervals; places 3–7 overlap.
-Grok 4.5 High and Gemini 3.1 Pro Preview remain diagnostic: they miss required WeirdML
-series and have no `umi_public`.
+v0.5 provisional experimental profile (new log/IQR scale; **not certified**; not strict ranks):
+
+| Point order | Configuration | UMI Public |
+|---:|---|---:|
+| 1 | GPT-5.6 Sol Max | **68.24** |
+| 2 | Kimi K3 Max | **61.50** |
+| 3 | Claude Opus 5 Max | **57.93** |
+| 4 | GPT-5.4 xhigh | **57.80** |
+| 5 | Claude Fable 5 Max | **56.28** |
+| 6 | Gemini 3.6 Flash high | **55.40** |
+| 7 | GLM-5.2 Max | **54.19** |
+
+Places 2–7 overlap under partial source intervals. Grok 4.5 High and Gemini 3.1 Pro Preview
+remain `insufficient_common_support`: they miss required WeirdML series and have no
+`umi_public`.
 
 Open [public-dashboard.html](data/editions/v0.5/processed/public-dashboard.html) for the
 governed views: rank-order UMI Public bars, stacked weighted contributions, grouped

@@ -304,19 +304,60 @@ def _load_yaml(path: Path) -> dict[str, Any]:
     return raw
 
 
-def edition_config_dir(edition: str, *, root: Path | None = None) -> Path:
-    base = root or ROOT
-    if edition == "v0.3":
-        return base / "config"
-    return base / "config" / "editions" / edition
+def _config_search_roots(bundle_dir: Path | str | None = None) -> tuple[Path, ...]:
+    here = Path(__file__).resolve()
+    roots: list[Path] = []
+    if bundle_dir is not None:
+        roots.append(Path(bundle_dir))
+    roots.extend(
+        (
+            Path.cwd(),
+            here.parents[1],
+            here.parent / "packaged_config",
+        )
+    )
+    return tuple(roots)
+
+
+def edition_config_dir(
+    edition: str,
+    *,
+    root: Path | None = None,
+    bundle_dir: Path | str | None = None,
+) -> Path:
+    if root is not None:
+        base = root
+        if edition == "v0.3":
+            return base / "config"
+        return base / "config" / "editions" / edition
+    checked: list[Path] = []
+    for base in _config_search_roots(bundle_dir):
+        candidates: tuple[Path, ...]
+        if edition == "v0.3":
+            candidates = (base / "config",)
+        else:
+            candidates = (
+                base / "config" / "editions" / edition,
+                base / "editions" / edition,
+            )
+        for candidate in candidates:
+            checked.append(candidate)
+            marker = "weights.yaml" if edition == "v0.3" else "edition.yaml"
+            if (candidate / marker).is_file():
+                return candidate
+    raise FileNotFoundError(
+        f"public edition config for {edition} not found; searched "
+        + ", ".join(str(item) for item in checked)
+    )
 
 
 def load_public_edition_config(
     path: Path | None = None,
     *,
     edition: str = "v0.4",
+    bundle_dir: Path | str | None = None,
 ) -> PublicEditionConfig:
-    directory = path or edition_config_dir(edition)
+    directory = path or edition_config_dir(edition, bundle_dir=bundle_dir)
     edition_raw = _load_yaml(directory / "edition.yaml")
     weights = _load_yaml(directory / "weights.yaml")
     eligibility = _load_yaml(directory / "eligibility.yaml")

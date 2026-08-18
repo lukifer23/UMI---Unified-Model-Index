@@ -1,0 +1,28 @@
+{
+  "artifacts": [
+    {
+      "path": "epoch-eci-benchmarks.csv",
+      "sha256": "946538f24b2d16cbbccc54c554d86e5afb6d4b3f175bf9bdeae2af61869658b6",
+      "url": "https://epoch.ai/data/eci_benchmarks.csv"
+    },
+    {
+      "content_sha256": "9e7d26f29a1d3f0cf9e1293d21930e8ade3b7ab728a1865fe3b378fd552e5f6c",
+      "path": "epoch-benchmark-data.zip",
+      "sha256": "7284f0a202e0d3396452ba57e84b0bc3ce812828826043eea2bb8c2b4f7f47e9",
+      "url": "https://epoch.ai/data/benchmark_data.zip"
+    },
+    {
+      "path": "arena-agent-latest.parquet",
+      "sha256": "49ae967b0ba24e67f22441f268a365f66b8ccd8351ff983e7375279411b7e53c",
+      "upstream_revision": "08dd89df7a8aa9df2ead3799f6422af4ad2e97a7",
+      "url": "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset/resolve/08dd89df7a8aa9df2ead3799f6422af4ad2e97a7/agent/latest-00000-of-00001.parquet?download=true"
+    },
+    {
+      "path": "arena-text-style-control-latest.parquet",
+      "sha256": "e7f24a5b803cd9622a620f146b21e36141a803607a2eef3b021c4a4de1464e3a",
+      "upstream_revision": "08dd89df7a8aa9df2ead3799f6422af4ad2e97a7",
+      "url": "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset/resolve/08dd89df7a8aa9df2ead3799f6422af4ad2e97a7/text_style_control/latest-00000-of-00001.parquet?download=true"
+    }
+  ],
+  "snapshot_id": "v05-epoch-probe-2026-08-17"
+}

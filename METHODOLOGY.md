@@ -51,8 +51,9 @@ not a living index.
 
 UMI Public is the first five-model unified score that the configured evidence can actually support.
 It is not v0.3 Overall, not provider-billed Economics, and not a six-domain score. The Python
-package remains `0.3.16` / `umi-engine-v0.3.13`; edition identity lives in
-`config/editions/v0.4/`.
+package is `0.5.0`. v0.3 formula/engine identities in `umi.version` remain
+`umi-methodology-v0.3.15` / `umi-engine-v0.3.13` so legacy fingerprints do not move.
+v0.4 edition identity lives in `config/editions/v0.4/`.
 
 ### Formula
 

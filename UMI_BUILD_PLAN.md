@@ -26,11 +26,11 @@ executor's offline status, crash/resume, and identity/cost review artifacts. Pai
 that cohort is out of scope for the first ranking: it cannot clear Efficiency or Economics
 headline gates, and no controlled ledger is admitted.
 
-Chosen next step under the no-paid-run constraint: publish UMI Public v0.4 from the frozen
-all-five Epoch extracts, keep the v0.3 Capability certificate as the legacy ranking, and
-hunt DeepSWE-class public ledgers before opening empty workload families. The hunt list lives in
-`data/sources/OPEN_LEDGER_HUNT.md`. Do not promote published calculated cost-per-task into
-billed Economics.
+v0.4 is frozen as an experimental point-score edition. v0.5 is the first provisional
+public index: governed bundle, no suffix inference, no source-cap exemption, v0.5-only
+normalization. It is **not** certified. Next evidence work is a rights-clear public freeze
+that can fill Access, success-adjusted OpEff, and the missing Capability parents. Do not
+promote published calculated cost-per-task into billed Economics.
 
 The first official public product is now **UMI Public v0.5 Governed**, built from the
 frozen v0.4 point-score edition. It publishes `umi_public` for every complete common-core

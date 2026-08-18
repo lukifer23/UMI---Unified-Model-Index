@@ -1,105 +1,121 @@
 # IMPLEMENTATION_REPORT_V05
 
-## Current hardening branch (`feat/umi-v05-governed-public-2`)
+## 1–4. Git identity
 
-Starting commit for this unique replacement branch: `4af92006c1ec8263d693d7b03bca5c345b582729`.
-Reviewed spec baseline: `9712b35f2c3fe162110c4c29e25101f2fe3a58f8`.
-`origin/main` at branch creation: `f4cc49b5ef3e79f60d15cbc302596c97eed078a2`.
-Local checkout before fetch was stale at `976460f`. No reset. No history rewrite.
-
-### Publication decision
-
-v0.5 is **`provisional_public_score`**, not `certified_public_score`.
-
-Reason codes from `decide_public_eligibility`:
-
-- `source_concentration_failed` — Access 1.00 WeirdML; Operational Efficiency 1.00 DataCurve. The 0.35 cap has no single-source exemption.
-- `construct_incomplete` — missing context reliability, language/instruction following, interactive latency, agentic task cost, and fixed tariff baskets.
-- `success_adjustment_unavailable` — DeepSWE tokens/steps and WeirdML cost are unadjusted means.
-
-CritPt concentration origin is now Artificial Analysis (evaluator/run executor). Epoch is the distributor only. Capability Epoch share is 0.30, under the cap.
-
-### v0.4 freeze
-
-Companion `data/editions/v0.4/processed/release-status.json` labels the release `experimental_point_score`. The five committed scores and fingerprint `e266af13…8e6d` are unchanged. Ranks remain point-estimate order only.
-
-### Identity
-
-`_source_effort` no longer infers Max/High/xhigh from suffixes. Blank row effort is unknown unless a reviewed crosswalk binds the exact `Model version`.
-
-### Candidates
-
-Unchanged diagnostic result: Grok 4.5 High 8/10 (missing WeirdML accuracy and cost); Gemini 3.1 Pro Preview 9/10 (missing high-effort WeirdML cost). `umi_public: null`. Grok 4.6 remains intake.
-
-### Remaining work after the bundle/normalization slice
-
-Success-adjusted OpEff, diversified Access, hierarchical attempt bootstrap, isolated-wheel
-CI smoke, and rights-clear source expansion remain open. Missing public evidence is recorded
-in `docs/editions/v0.5/BLOCKER_REPORT.md` rather than invented.
-
-This slice made `score_public_bundle` the production scorer, added explicit fingerprinted
-anchor members, applied v0.5-only log/IQR normalization, excluded the conflicting WeirdML
-Qwen row by declared policy, and stopped claiming strict ranks.
-
-## Reviewed baseline versus current HEAD
-
-The execution spec reviewed `9712b35f2c3fe162110c4c29e25101f2fe3a58f8`
-(`Publish first five-model UMI Public scores from frozen Epoch extracts`).
-Current `HEAD` is `f4cc49b5ef3e79f60d15cbc302596c97eed078a2`
-(`Wire dashboard to uncertainty sidecars and finish Public index packaging`).
-`main` moved. The checked-out tree is authoritative. No reset to `9712b35`.
-
-Commits after the reviewed baseline:
-
-| Commit | Title |
+| Item | Value |
 |---|---|
-| `2dfb1e4` | Add Public methods write-up and presentation-only charts |
-| `e76e68a` | Add grouped component bars and Capability heatmap to Public dashboard |
-| `40ffb7b` | Add UMI Public v0.5 Governed: freeze, validate, uncertainty, expand |
-| `75f6cbc` | Add governed Public index certificate, zip checksum, and overlap ranks |
-| `f4cc49b` | Wire dashboard to uncertainty sidecars and finish Public index packaging |
+| Starting commit (feat tip) | `4af92006c1ec8263d693d7b03bca5c345b582729` |
+| Reviewed spec baseline | `9712b35f2c3fe162110c4c29e25101f2fe3a58f8` |
+| `origin/main` at start | `f4cc49b5ef3e79f60d15cbc302596c97eed078a2` |
+| Branch | `feat/umi-v05-governed-public-2` |
+| Ending commit | recorded at handoff in the status block |
 
-That delta already added v0.5 scoring, zip validation, partial intervals, two extra
-complete high-effort systems, a public-index certificate, and dashboard packaging.
-Further spec work continues from this tree, not from `9712b35`.
+Commits unique to this replacement branch:
 
-1. **Starting commit for remaining spec work:** `f4cc49b`
-2. **Branch:** `feat/umi-v05-governed-public`. Spec work is not implemented on `main`.
-3. **Hardening:** v0.4 processed artifacts frozen in `tests/test_v04_legacy_freeze.py`.
-4. **Validation:** `umi/public_validate.py` reloads the Epoch zip, checks raw values, weighted sums, rebuilt fingerprints, and exact v0.4 reproduction for the five Max pilots.
-5. **Uncertainty:** 2048-draw source-interval Monte Carlo plus family ablation. Partial intervals only.
-6. **Expansion:** +2 complete common-core systems (`gemini-3.6-flash-high`, `gpt-5.4-2026-03-05-xhigh`). Four `_max` near-misses remain unpublished (no WeirdML).
-7. **Five-pilot reproduction:** Sol 66.265839, Kimi 59.690663, Opus 55.510021, Fable 54.429636, GLM 54.202703.
-8. **Certificate:** `public-index-certificate.json` binds scores, zip checksum, license, intervals, and overlap pairs. Schema: `schemas/public-index-certificate.schema.json`.
-9. **Named candidates:** Grok 4.5 High misses WeirdML accuracy and cost (8/10). Gemini 3.1 Pro Preview misses high-effort WeirdML cost (9/10; unsuffixed cost 1.36 is excluded by the Access suffix panel). Both emit diagnostic certificates with `umi_public: null`. Neither is added to identities or headline scores.
-10. **v0.4 classification:** historical experimental point-score edition. It does not prove rank stability or independent validation. v0.5 is the governed public index.
-11. **No paid requests. No API keys. No v0.3 or v0.4 rewrite.**
-12. **Verification this turn:** 212 pytest passed; 92.48% coverage; ruff clean; mypy 69 files; v0.5 validate/audit/candidates/certificate/blockers smoked. v0.3/v0.4 goldens restored after pytest rewrite.
-13. **Blocker report:** `docs/editions/v0.5/BLOCKER_REPORT.md` and `data/editions/v0.5/processed/blocker-report.json` list every unpublished identity and omitted construct with sources, URLs, and resolving evidence. No invented scores.
-14. **Nonblocked packaging:** edition manifest, source concentration (Epoch Capability 0.35 at the cap), pairwise overlap export, and diagnostic family ablation.
-15. **Commit phases (1.5):** suggested sequence is in `Revision_plan_v0.5.md`. On `main`: `40ffb7b`, `75f6cbc`, `f4cc49b`. On the feature branch: `4896e6e`, `de709d1`, `0ac6a38`, `6ffcbcb`, `e4f7db4`, `9dfa44e`. No history rewrite.
+1. `07ca9bd` Withhold certified v0.5 headlines and close source-cap and identity P0s
+2. `77768d4` Add v0.4/v0.5 freeze checks, public API exports, and CI smokes
+3. `c6edcc0` Score public editions only from a bundle, with v0.5 scales and no strict ranks
+4. (this handoff) docs, wheel packaging, isolated public smoke, complete report
 
-## Final checklist
+No reset, no force push, no history rewrite. Draft PR: https://github.com/lukifer23/UMI---Unified-Model-Index/pull/2
 
-1. **Starting commit:** `f4cc49b` (`main` at branch creation). Reviewed spec baseline `9712b35`.
-2. **Ending commit:** this report's commit on `feat/umi-v05-governed-public`.
-3. **Branch:** `feat/umi-v05-governed-public`. Not implemented on `main`.
-4. **Architecture:** v0.5 governed Public edition beside frozen v0.3 and historical experimental v0.4. Formula remains 0.55/0.25/0.20. Validation, partial intervals, certificate, candidate audits, blocker report, and diagnostic sensitivity are separate from the scorer.
-5. **Added:** `umi/public_candidates.py`, `umi/public_blockers.py`, `umi/public_governance.py`, `umi/public_sensitivity.py`, candidate/blocker/governance artifacts, `docs/editions/v0.5/BLOCKER_REPORT.md`, `docs/editions/v0.5/BASELINE_AUDIT.md`.
-6. **Changed:** `umi/cli.py`, `umi/public.py`, `umi/public_validate.py`, `umi/schema_export.py`, METHODOLOGY, README, PILOT_REPORT, DATA_SCHEMA, VERIFICATION.
-7. **Accepted sources:** same ten Epoch-zip series as v0.4, plus the two extra complete high-effort identities.
-8. **Rejected / blocked:** Grok 4.5 High; Gemini 3.1 Pro Preview; Terra/Luna/Sonnet 5/Opus 4.8 Max; DeepSWE cost; context reliability; language/instruction; interactive latency; billed Economics; hierarchical bootstrap. See `BLOCKER_REPORT.md`.
-9. **Scored identities:** five Max pilots plus `gemini-3.6-flash-high` and `gpt-5.4-2026-03-05-xhigh`.
-10. **Common core:** ten series, coverage 1.0, every panel n≥8.
-11. **Anchors:** robust-z after logit or `-log(x+1)`, winsor ±3, Φ. Access uses the high-effort suffix panel.
-12. **Weights:** Capability 0.15/0.40/0.25/0.20; OpEff 0.60/0.40; Access 1.00; overall 0.55/0.25/0.20.
-13. **Source concentration:** Epoch 0.35 of Capability (at the cap). DataCurve 0.22, AA 0.18, WeirdML 0.25. OpEff and Access are single-origin.
-14–17. **Headline scores:** Sol 66.265839, Kimi 59.690663, GPT-5.4 xhigh 55.511377, Opus 55.510021, Gemini 3.6 Flash high 55.439997, Fable 54.429636, GLM 54.202703.
-18–19. **Partial intervals and rank ranges:** Sol 1–1, Kimi 2–2, places 3–7 overlap. See `uncertainty.json`.
-20. **Source ablation:** diagnostic family drops in `source-ablation.json`. Sol and Kimi stay 1–2.
-21. **Weight sensitivity:** diagnostic named hypotheses. Sol and Kimi stay 1–2; places 3–7 move. Headline unchanged.
-22. **Limitations:** no context/language/latency/billed Economics; intervals are partial; bootstrap unpublished.
-23–24. **Verification:** last full suite 212 passed, 92.48% coverage, ruff clean, mypy 69 files. Later phases add targeted tests.
-25. **No paid requests.**
-26. **No API keys required.**
-27. **v0.3 and frozen v0.4 goldens** remain the SHA-256 sets in the freeze tests.
+## 5. Baseline verification
+
+v0.4 frozen scores (unchanged):
+
+| Point order | Entity | Capability | OpEff | Access | UMI Public |
+|---:|---|---:|---:|---:|---:|
+| 1 | gpt-5.6-sol-max | 91.9448 | 49.6628 | 16.4025 | 66.2658 |
+| 2 | kimi-k3-max | 88.8397 | 27.7968 | 19.3982 | 59.6907 |
+| 3 | claude-opus-5-max | 90.7314 | 19.2591 | 3.9650 | 55.5100 |
+| 4 | claude-fable-5-max | 88.7109 | 21.9899 | 0.7058 | 54.4296 |
+| 5 | glm-5.2-max | 67.8856 | 23.2174 | 55.3063 | 54.2027 |
+
+Fingerprint `e266af13b966cf79cfc5086513ec35f60cf2194f896f41f4b332f60ac9788e6d`.
+Epoch zip `35a7c21ba7d535514ebcf9bbe7b8265d2e2da40ef6b1fa63fe49323c3395a18b`.
+
+## 6. v0.4 classification
+
+`experimental_point_score` / `historical_experimental_point_score`. Companion
+`data/editions/v0.4/processed/release-status.json`. Ranks are point-estimate order only.
+
+## 7. P0 dispositions
+
+| ID | Disposition |
+|---|---|
+| P0-01 | Production score requires `PublicScoringBundle`. `--bundle-dir` locates the zip. |
+| P0-02 | Series come from edition YAML. |
+| P0-03 | `decide_public_eligibility` is shared; failed certification yields no headline. |
+| P0-04 | No single-source exemption. CritPt origin is Artificial Analysis. |
+| P0-05/06 | No suffix effort inference. Crosswalk is reviewed evidence. |
+| P0-07 | Anchor members are explicit and fingerprinted. |
+| P0-08/09 | v0.4 first-seen; v0.5 declared exclude for conflicting WeirdML Qwen row. |
+| P0-10 | v0.5-only log / IQR/1.349 / range reject. v0.4 unchanged. |
+| P0-11 | Hierarchy unchanged; missing parents do not silent-reweight certified construct. |
+| P0-12/13/14 | Still unadjusted / single-source; labeled and certification withheld. |
+| P0-15/16 | Partial source intervals; no strict ranks. |
+| P0-17/18 | Bundle + certificate + sidecars. |
+| P0-19 | Package 0.5.0; v0.3 formula ids unchanged; edition YAML holds public versions. |
+| P0-20 | Packaged edition YAML in the wheel; zip via `--bundle-dir`. |
+| P0-21 | `score` is read-only; `build` writes. Frozen v0.4 processed scores are not overwritten. |
+| P0-22 | Edition score/build return 0 for successful provisional analysis. |
+| P0-23 | `score_dataset` warns on ungoverned real data. |
+
+## 8–18. Architecture and policy
+
+See `docs/editions/v0.5/{PUBLICATION_POLICY,NORMALIZATION,LIMITATIONS,REPRODUCIBILITY}.md`
+and `METHODOLOGY.md`. Formula remains 0.55 / 0.25 / 0.20. v0.5 target construct is in
+`config/editions/v0.5/construct.yaml`. Experimental profile weights remain the 10-series basket.
+
+## 19–21. Sources
+
+Accepted for the experimental profile: the ten Epoch-zip series listed in
+`config/editions/v0.5/common-core.yaml`. Rejected / diagnostic: DeepSWE incomplete Fable cost,
+Grok/Gemini missing WeirdML cells, context/language/latency/billed Economics. Contamination:
+Grok CursorBench stays diagnostic if ever admitted.
+
+## 22–24. Candidates
+
+- Grok 4.5 High: 8/10, missing WeirdML accuracy + cost, `insufficient_common_support`.
+- Gemini 3.1 Pro Preview: 9/10, missing high-effort WeirdML cost, `insufficient_common_support`.
+- Grok 4.6: intake only.
+
+## 25–29. Scores
+
+v0.4 frozen: see §5. Not recertified.
+
+v0.5 experimental profile (new scale, provisional):
+
+| Point order | Entity | UMI Public |
+|---:|---|---:|
+| 1 | gpt-5.6-sol-max | 68.2381 |
+| 2 | kimi-k3-max | 61.4980 |
+| 3 | claude-opus-5-max | 57.9330 |
+| 4 | gpt-5.4-2026-03-05-xhigh | 57.8048 |
+| 5 | claude-fable-5-max | 56.2826 |
+| 6 | gemini-3.6-flash-high | 55.4022 |
+| 7 | glm-5.2-max | 54.1857 |
+
+No certified scores. Interval ranks attach on `build`. Places 2–7 overlap under partial intervals.
+
+## 30–33. Sensitivity
+
+Source ablation, weight sensitivity, and family ablation remain diagnostic JSON sidecars.
+They do not change `umi_public`. External validation is not a weight-tuning target.
+
+## 34–38. Verification
+
+Executed at handoff (do not claim checks that were not run). See the status block.
+No paid requests. No API keys.
+
+## 39. Remaining blockers
+
+- Access 1.00 WeirdML; OpEff 1.00 DataCurve
+- Missing construct parents
+- Success-adjusted resources unavailable on frozen extracts
+- Hierarchical attempt bootstrap unpublished
+- Grok 4.5 / Gemini 3.1 Pro common-core holes
+
+## 40. Reproduction
+
+See `docs/editions/v0.5/REPRODUCIBILITY.md`.

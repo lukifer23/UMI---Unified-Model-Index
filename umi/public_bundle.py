@@ -115,11 +115,17 @@ def load_public_scoring_bundle(
     bundle_dir: Path | str | None = None,
     zip_path: Path | str | None = None,
 ) -> PublicScoringBundle:
-    edition = config or load_public_edition_config(edition=edition_name)
-    loaded = identities or load_public_identities(edition=edition_name)
+    edition = config or load_public_edition_config(
+        edition=edition_name, bundle_dir=bundle_dir
+    )
+    loaded = identities or load_public_identities(
+        edition=edition_name, bundle_dir=bundle_dir
+    )
     archive = Path(zip_path) if zip_path is not None else resolve_epoch_zip(bundle_dir)
     digest = verify_epoch_zip(archive)
-    mapping = entity_map_from_identities(loaded, edition=edition_name)
+    mapping = entity_map_from_identities(
+        loaded, edition=edition_name
+    )
     required = {item.entity_id for item in loaded}
     contracts: list[PublicSeriesContract] = []
     blockers: list[dict[str, Any]] = []

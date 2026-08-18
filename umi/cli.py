@@ -339,7 +339,9 @@ def run(args: argparse.Namespace) -> int:
                 _emit({"valid": True, "edition": "v0.3"}, "json", None)
                 return 0
             raise SystemExit("v0.3 edition score remains the legacy umi estimates path")
-        public_config = load_public_edition_config(edition=args.edition)
+        public_config = load_public_edition_config(
+            edition=args.edition, bundle_dir=getattr(args, "bundle_dir", None)
+        )
         governed_only = {
             "certificate",
             "candidates",

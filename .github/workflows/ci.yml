@@ -72,6 +72,10 @@ jobs:
             --source-registry "$GITHUB_WORKSPACE/data/sources/registry.yaml" \
             --crosswalk "$GITHUB_WORKSPACE/data/sources/v0.3/crosswalk.yaml" \
             --models claude-opus-5-max kimi-k3-max glm-5.2-max >/dev/null
+          "$isolated_dir/.venv/bin/umi" edition --edition v0.5 \
+            --bundle-dir "$GITHUB_WORKSPACE/data/sources/v0.3" validate >/dev/null
+          "$isolated_dir/.venv/bin/umi" edition --edition v0.5 \
+            --bundle-dir "$GITHUB_WORKSPACE/data/sources/v0.3" score >/dev/null
 
   linux-compatibility:
     runs-on: ubuntu-latest
@@ -106,8 +110,10 @@ jobs:
             --source-registry "$GITHUB_WORKSPACE/data/sources/registry.yaml" \
             --crosswalk "$GITHUB_WORKSPACE/data/sources/v0.3/crosswalk.yaml" \
             --models claude-opus-5-max kimi-k3-max glm-5.2-max >/dev/null
-
-  windows-smoke:
+          "$isolated_dir/.venv/bin/umi" edition --edition v0.5 \
+            --bundle-dir "$GITHUB_WORKSPACE/data/sources/v0.3" validate >/dev/null
+          "$isolated_dir/.venv/bin/umi" edition --edition v0.5 \
+            --bundle-dir "$GITHUB_WORKSPACE/data/sources/v0.3" score >/dev/null
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4

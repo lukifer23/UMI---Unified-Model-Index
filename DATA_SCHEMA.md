@@ -4,6 +4,11 @@ The generated JSON Schemas in `schemas/` are the machine-readable authority. Thi
 their intended use. Run `python scripts/generate_schemas.py` after changing a Pydantic model; the test
 suite fails if committed schemas drift.
 
+Public v0.5 contracts (also generated): `public-scoring-bundle.schema.json`,
+`public-anchor-panels.schema.json`, `public-score-scales.schema.json`,
+`public-index-certificate.schema.json`, `public-candidate-audit.schema.json`,
+`public-blocker-report.schema.json`. Extra fields are forbidden.
+
 All Pydantic records are frozen, reject unknown fields, and reject source NaN and infinity. IDs match
 `^[a-z0-9][a-z0-9._-]*$`. YAML is an immutable input format; derived results retain source record IDs.
 

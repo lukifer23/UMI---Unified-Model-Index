@@ -302,10 +302,15 @@
       "point_order": 3,
       "publication_state": "provisional_public_score",
       "rank": 3,
-      "rank_high": 3,
-      "rank_low": 3,
-      "rank_status": "point_order_only",
-      "tie_group": null,
+      "rank_high": 6,
+      "rank_low": 2,
+      "rank_status": "interval_overlap",
+      "tie_group": [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "gemini-3.6-flash-high",
+        "gpt-5.4-2026-03-05-xhigh"
+      ],
       "umi_public": 57.93300140039848
     },
     {
@@ -416,10 +421,16 @@
       "point_order": 5,
       "publication_state": "provisional_public_score",
       "rank": 5,
-      "rank_high": 5,
-      "rank_low": 5,
-      "rank_status": "point_order_only",
-      "tie_group": null,
+      "rank_high": 7,
+      "rank_low": 3,
+      "rank_status": "interval_overlap",
+      "tie_group": [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "gemini-3.6-flash-high",
+        "glm-5.2-max",
+        "gpt-5.4-2026-03-05-xhigh"
+      ],
       "umi_public": 56.282648308051385
     },
     {
@@ -532,8 +543,10 @@
       "rank": 1,
       "rank_high": 1,
       "rank_low": 1,
-      "rank_status": "point_order_only",
-      "tie_group": null,
+      "rank_status": "interval_unique",
+      "tie_group": [
+        "gpt-5.6-sol-max"
+      ],
       "umi_public": 68.2381304832757
     },
     {
@@ -644,10 +657,12 @@
       "point_order": 2,
       "publication_state": "provisional_public_score",
       "rank": 2,
-      "rank_high": 2,
+      "rank_high": 3,
       "rank_low": 2,
-      "rank_status": "point_order_only",
-      "tie_group": null,
+      "rank_status": "interval_overlap",
+      "tie_group": [
+        "kimi-k3-max"
+      ],
       "umi_public": 61.49802612989175
     },
     {
@@ -759,9 +774,13 @@
       "publication_state": "provisional_public_score",
       "rank": 7,
       "rank_high": 7,
-      "rank_low": 7,
-      "rank_status": "point_order_only",
-      "tie_group": null,
+      "rank_low": 5,
+      "rank_status": "interval_overlap",
+      "tie_group": [
+        "claude-fable-5-max",
+        "gemini-3.6-flash-high",
+        "glm-5.2-max"
+      ],
       "umi_public": 54.18566825659842
     },
     {
@@ -872,10 +891,16 @@
       "point_order": 6,
       "publication_state": "provisional_public_score",
       "rank": 6,
-      "rank_high": 6,
-      "rank_low": 6,
-      "rank_status": "point_order_only",
-      "tie_group": null,
+      "rank_high": 7,
+      "rank_low": 4,
+      "rank_status": "interval_overlap",
+      "tie_group": [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "gemini-3.6-flash-high",
+        "glm-5.2-max",
+        "gpt-5.4-2026-03-05-xhigh"
+      ],
       "umi_public": 55.40215942538946
     },
     {
@@ -986,10 +1011,15 @@
       "point_order": 4,
       "publication_state": "provisional_public_score",
       "rank": 4,
-      "rank_high": 4,
-      "rank_low": 4,
-      "rank_status": "point_order_only",
-      "tie_group": null,
+      "rank_high": 6,
+      "rank_low": 3,
+      "rank_status": "interval_overlap",
+      "tie_group": [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "gemini-3.6-flash-high",
+        "gpt-5.4-2026-03-05-xhigh"
+      ],
       "umi_public": 57.80480678218027
     }
   ],

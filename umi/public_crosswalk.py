@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import yaml
 from pydantic import Field, model_validator
 
@@ -48,8 +50,9 @@ class PublicSourceCrosswalk(ConfigModel):
 def load_public_crosswalk(
     *,
     edition: str = "v0.4",
+    bundle_dir: Path | str | None = None,
 ) -> PublicSourceCrosswalk:
-    path = edition_config_dir(edition) / "crosswalk.yaml"
+    path = edition_config_dir(edition, bundle_dir=bundle_dir) / "crosswalk.yaml"
     raw = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(raw, dict):
         raise ValueError(f"public crosswalk missing mapping: {path}")
@@ -80,8 +83,9 @@ def entity_map_from_crosswalk(
     identities: tuple[PublicSystemIdentity, ...],
     *,
     edition: str,
+    bundle_dir: Path | str | None = None,
 ) -> dict[str, str]:
-    crosswalk = load_public_crosswalk(edition=edition)
+    crosswalk = load_public_crosswalk(edition=edition, bundle_dir=bundle_dir)
     validate_public_crosswalk(crosswalk, identities)
     allowed = {item.entity_id for item in identities}
     return {

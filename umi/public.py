@@ -617,8 +617,12 @@ def score_public_edition(
 ) -> dict[str, Any]:
     from umi.public_bundle import load_public_scoring_bundle
 
-    edition = config or load_public_edition_config(edition=edition_name)
-    loaded = identities or load_public_identities(edition=edition_name)
+    edition = config or load_public_edition_config(
+        edition=edition_name, bundle_dir=bundle_dir
+    )
+    loaded = identities or load_public_identities(
+        edition=edition_name, bundle_dir=bundle_dir
+    )
     bundle = load_public_scoring_bundle(
         edition_name=edition_name,
         config=edition,
@@ -634,18 +638,7 @@ def score_public_edition(
     )
 
 
-def write_public_artifacts(
-    output_dir: Path | None = None,
-    *,
-    edition_name: str = "v0.4",
-    bundle_dir: Path | str | None = None,
-) -> dict[str, Any]:
-    destination = output_dir or ROOT / "data" / "editions" / edition_name / "processed"
-    destination.mkdir(parents=True, exist_ok=True)
-    payload = score_public_edition(edition_name=edition_name, bundle_dir=bundle_dir)
-    frozen_v04 = ROOT / "data" / "editions" / "v0.4" / "processed"
-    if edition_name == "v0.4" and destination.resolve() == frozen_v04.resolve():
-        return payload
+def _write_core_score_files(destination: Path, payload: dict[str, Any]) -> None:
     (destination / "model-scores.json").write_text(
         json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
@@ -668,7 +661,21 @@ def write_public_artifacts(
         + "\n",
         encoding="utf-8",
     )
-    edition = load_public_edition_config(edition=edition_name)
+
+
+def write_public_artifacts(
+    output_dir: Path | None = None,
+    *,
+    edition_name: str = "v0.4",
+    bundle_dir: Path | str | None = None,
+) -> dict[str, Any]:
+    destination = output_dir or ROOT / "data" / "editions" / edition_name / "processed"
+    destination.mkdir(parents=True, exist_ok=True)
+    payload = score_public_edition(edition_name=edition_name, bundle_dir=bundle_dir)
+    frozen_v04 = ROOT / "data" / "editions" / "v0.4" / "processed"
+    if edition_name == "v0.4" and destination.resolve() == frozen_v04.resolve():
+        return payload
+    edition = load_public_edition_config(edition=edition_name, bundle_dir=bundle_dir)
     if edition.release_class in V05_ANALYSIS_SURFACES:
         from umi.public_bundle import load_public_scoring_bundle, write_public_scoring_bundle
         from umi.public_candidates import write_candidate_audits
@@ -684,6 +691,7 @@ def write_public_artifacts(
         from umi.public_uncertainty import attach_interval_ranks
 
         attach_interval_ranks(payload["models"], uncertainty)
+        _write_core_score_files(destination, payload)
         (destination / "validation.json").write_text(
             json.dumps(validation, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
@@ -718,6 +726,8 @@ def write_public_artifacts(
             "candidate_audits": candidate_audits,
             "governance": governance,
         }
+    else:
+        _write_core_score_files(destination, payload)
     from analysis.public_dashboard import write_public_dashboard
 
     write_public_dashboard(payload, destination)

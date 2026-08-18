@@ -1,11 +1,12 @@
 # UMI pilot report
 
-## UMI Public v0.5 Governed
+## UMI Public v0.5 provisional
 
-**Governed expansion of the frozen v0.4 Public score.** Edition `umi-public-v0.5`, formula
-`umi-methodology-v0.5.0`. The five Max pilots reproduce v0.4 exactly. Two additional
-high-effort systems have the complete ten-series common core and are scored as themselves,
-not as Max. Rebuild:
+**Not a certified headline.** Edition `umi-public-v0.5`, formula `umi-methodology-v0.5.0`,
+`release_class: provisional_public_score`. The five Max pilots keep a frozen v0.4
+experimental point-score edition. v0.5 uses a new log/IQR scale, so its experimental
+profile numbers are **not** the v0.4 goldens. Two additional complete high-effort systems
+are scored as themselves, not as Max. Rebuild:
 
 ```bash
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 validate
@@ -16,19 +17,19 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 blockers
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 bundle
 ```
 
-| Rank | Configuration | Effort | UMI Public | Partial 95% interval | Rank range |
-|---:|---|---|---:|---|---|
-| 1 | GPT-5.6 Sol Max | max | 66.27 | 65.46–66.91 | 1–1 |
-| 2 | Kimi K3 Max | max | 59.69 | 58.15–60.89 | 2–2 |
-| 3 | GPT-5.4 (2026-03-05) | xhigh | 55.51 | 54.42–56.39 | 3–7 |
-| 4 | Claude Opus 5 Max | max | 55.51 | 54.21–56.39 | 3–7 |
-| 5 | Gemini 3.6 Flash | high | 55.44 | 53.86–56.86 | 3–7 |
-| 6 | Claude Fable 5 Max | max | 54.43 | 53.00–55.59 | 3–7 |
-| 7 | GLM-5.2 Max | max | 54.20 | 52.00–55.82 | 3–7 |
+| Point order | Configuration | Effort | UMI Public (v0.5 scale) |
+|---:|---|---|---:|
+| 1 | GPT-5.6 Sol Max | max | 68.24 |
+| 2 | Kimi K3 Max | max | 61.50 |
+| 3 | Claude Opus 5 Max | max | 57.93 |
+| 4 | GPT-5.4 (2026-03-05) | xhigh | 57.80 |
+| 5 | Claude Fable 5 Max | max | 56.28 |
+| 6 | Gemini 3.6 Flash | high | 55.40 |
+| 7 | GLM-5.2 Max | max | 54.19 |
 
 Intervals are `partial_source_interval`: published stderr / CI half-width on chess, GPQA,
 OTIS, DeepSWE Pass@1, and WeirdML accuracy. SciCode, CritPt, DeepSWE tokens/steps, and
-WeirdML cost stay at their point values. Sol and Kimi are rank-stable. Places 3–7 overlap.
+WeirdML cost stay at their point values. These are not certified ranks. Places 2–7 overlap.
 
 Charts: [v0.5 dashboard](data/editions/v0.5/processed/public-dashboard.html). Validation:
 [validation.json](data/editions/v0.5/processed/validation.json). Uncertainty:
