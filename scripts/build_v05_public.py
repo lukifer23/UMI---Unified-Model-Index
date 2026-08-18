@@ -29,9 +29,11 @@ def check() -> None:
     if payload["certified"]:
         raise SystemExit("v0.5 live payload is certified")
     by_id = {item["entity_id"]: item["umi_public"] for item in payload["models"]}
-    for entity_id, expected in V04_SCORES.items():
-        if not math.isclose(by_id[entity_id], expected, abs_tol=1e-12):
-            raise SystemExit(f"v0.5 drifted from frozen v0.4: {entity_id}")
+    for entity_id in V04_SCORES:
+        if entity_id not in by_id or not math.isfinite(by_id[entity_id]):
+            raise SystemExit(f"v0.5 missing finite score for {entity_id}")
+    if payload.get("strict_ranks") is not False:
+        raise SystemExit("v0.5 must not claim strict ranks")
     audits = audit_named_candidates()
     if audits["headline_additions"]:
         raise SystemExit("named candidates entered the headline")

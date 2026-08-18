@@ -31,9 +31,15 @@ Companion `data/editions/v0.4/processed/release-status.json` labels the release 
 
 Unchanged diagnostic result: Grok 4.5 High 8/10 (missing WeirdML accuracy and cost); Gemini 3.1 Pro Preview 9/10 (missing high-effort WeirdML cost). `umi_public: null`. Grok 4.6 remains intake.
 
-### Remaining work
+### Remaining work after the bundle/normalization slice
 
-Public package split, metric-specific transforms, success-adjusted OpEff, diversified Access, hierarchical uncertainty, isolated-wheel public smokes, and rights-clear source expansion are not closed. Missing public evidence is recorded in `docs/editions/v0.5/BLOCKER_REPORT.md` rather than invented.
+Success-adjusted OpEff, diversified Access, hierarchical attempt bootstrap, isolated-wheel
+CI smoke, and rights-clear source expansion remain open. Missing public evidence is recorded
+in `docs/editions/v0.5/BLOCKER_REPORT.md` rather than invented.
+
+This slice made `score_public_bundle` the production scorer, added explicit fingerprinted
+anchor members, applied v0.5-only log/IQR normalization, excluded the conflicting WeirdML
+Qwen row by declared policy, and stopped claiming strict ranks.
 
 ## Reviewed baseline versus current HEAD
 

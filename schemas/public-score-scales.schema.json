@@ -7,6 +7,11 @@
           "title": "Formula Version",
           "type": "string"
         },
+        "iqr_scale": {
+          "default": "legacy_mad_iqr",
+          "title": "Iqr Scale",
+          "type": "string"
+        },
         "kind": {
           "title": "Kind",
           "type": "string"
@@ -22,6 +27,11 @@
           ],
           "default": null,
           "title": "Logit Eps"
+        },
+        "lower_transform": {
+          "default": "neglog1p",
+          "title": "Lower Transform",
+          "type": "string"
         },
         "median": {
           "title": "Median",
@@ -39,6 +49,11 @@
         "panel_id": {
           "title": "Panel Id",
           "type": "string"
+        },
+        "reject_out_of_range": {
+          "default": false,
+          "title": "Reject Out Of Range",
+          "type": "boolean"
         },
         "scale_id": {
           "pattern": "^[0-9a-f]{64}$",

@@ -4,12 +4,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+from pathlib import Path
 from typing import Any
 
 from pydantic import Field
 
 from umi.edition import ConfigModel
-from umi.public import EPOCH_ZIP
+from umi.public_paths import resolve_epoch_zip
 
 CERTIFICATE_VERSION = "umi-public-certificate-v0.5"
 EPOCH_SNAPSHOT_ID = "epoch-benchmark-data-2026-08-14"
@@ -56,8 +57,9 @@ def _digest(payload: dict[str, Any]) -> str:
     return hashlib.sha256(rendered.encode()).hexdigest()
 
 
-def verify_epoch_zip() -> str:
-    digest = hashlib.sha256(EPOCH_ZIP.read_bytes()).hexdigest()
+def verify_epoch_zip(zip_path: Path | str | None = None) -> str:
+    archive = Path(zip_path) if zip_path is not None else resolve_epoch_zip()
+    digest = hashlib.sha256(archive.read_bytes()).hexdigest()
     if digest != EPOCH_SHA256:
         raise ValueError(
             f"Epoch zip checksum {digest} does not match registry {EPOCH_SHA256}"

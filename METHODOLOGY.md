@@ -26,6 +26,16 @@ current policy values; code must not contradict this document. Three editions ar
   pass, v0.5 emits `provisional_public_score` and exact blockers. Named candidates that miss a
   required series receive diagnostic certificates with `umi_public: null`.
 
+v0.5 normalization (`umi-normalization-v0.5.0`) is edition-specific and does **not** rewrite
+v0.4. Bounded accuracies use a documented-epsilon logit and reject values outside `[0, 1]`.
+Positive costs, tokens, and steps use `-log(x)` with no `+1` offset. Robust scale still uses
+`1.4826 × MAD` when MAD is positive; the IQR fallback is `IQR / 1.349` and is not multiplied
+again by `1.4826`. Conflicting duplicate source IDs fail unless a declared exclusion exists.
+The current declared exclusion is `Qwen3-235B-A22B-Thinking-2507` on WeirdML, which has two
+source row IDs with different accuracy and cost. v0.5 does not publish strict ranks: live
+scores carry `point_order` only until interval ranks are attached. Production scoring accepts
+only a `PublicScoringBundle`.
+
 All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
 produce identical serialized results and fingerprints across supported Python versions; this is
 numerical canonicalization, not a change to weights or score semantics.

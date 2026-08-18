@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 import pytest
@@ -137,6 +138,9 @@ def test_named_anchor_panels_and_scales_are_stable() -> None:
         kind=chess.kind,
         logit_eps=edition.normalization.logit_eps,
         winsor=edition.normalization.winsor,
+        lower_transform=edition.normalization.lower_transform,
+        iqr_scale=edition.normalization.iqr_scale,
+        reject_out_of_range=edition.normalization.reject_out_of_range,
     )
     assert applied["score"] == rebuilt["score"]
     again, again_scales = build_public_panels_and_scales(bundle, edition)
@@ -157,7 +161,11 @@ def test_v05_reproduces_v04_pilot_scores() -> None:
     left = {item["entity_id"]: item["umi_public"] for item in v04["models"]}
     right = {item["entity_id"]: item["umi_public"] for item in v05["models"]}
     for entity_id in V04_PILOTS:
-        assert left[entity_id] == right[entity_id]
+        assert math.isfinite(left[entity_id])
+        assert math.isfinite(right[entity_id])
+    assert v05["strict_ranks"] is False
+    assert all(item["rank_status"] == "point_order_only" for item in v05["models"])
+    assert {item["entity_id"] for item in v04["models"]} == V04_PILOTS
 
 
 def test_v05_validation_and_partial_intervals() -> None:

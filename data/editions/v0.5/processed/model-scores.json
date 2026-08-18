@@ -1,4 +1,14 @@
 {
+  "anchor_panel_fingerprints": {
+    "epoch-chess-puzzles-all-configs": "08f0a4ca937e272b535f0a7cfdd2d6f99f41ddd6329941aa8a3d70ba7efa4708",
+    "epoch-critpt-all-configs": "68a3956c7cba4a1ed47ed769b15286963d5c54a7ecda1f9c924aebc477223ce6",
+    "epoch-deepswe-v1.1-mini-swe-agent": "e7b2ae61386ae6cd13dfc8a3a141190310b0a8333bde15594c4e786a8a102ebf",
+    "epoch-gpqa-all-configs": "110b9bbaed2886e91b9190ab9f39289c425bcd410d857758828ddff666d37c1a",
+    "epoch-otis-mock-aime-all-configs": "5cbe16ce55bed82210d86f2a2f714c51d9082fb21b835a35c51adbcab48376cd",
+    "epoch-scicode-all-configs": "9c0c5dfd83eb8e9d8359cee2ca33407d82956cee4f59be5fd2c607c163af412b",
+    "epoch-weirdml-all-configs": "bb201ac3ab42ecbca49defe548dce2bad5a5698fbfbc5690eb6f6ab89264db44",
+    "epoch-weirdml-high-effort-configs": "592295bfe1baa6483ac91e2ab6e3c98580c147340a6e9bd6fa52c275c0573b49"
+  },
   "anchors": {
     "deepswe-agent-steps": {
       "field": "Mean agent steps",
@@ -28,7 +38,7 @@
       "field": "mean_score",
       "kind": "proportion",
       "member": "chess_puzzles.csv",
-      "n": 158,
+      "n": 157,
       "panel_filter": null,
       "source": "epoch-benchmark-data-2026-08-14.zip:chess_puzzles.csv"
     },
@@ -44,7 +54,7 @@
       "field": "mean_score",
       "kind": "proportion",
       "member": "gpqa_diamond.csv",
-      "n": 260,
+      "n": 259,
       "panel_filter": null,
       "source": "epoch-benchmark-data-2026-08-14.zip:gpqa_diamond.csv"
     },
@@ -52,7 +62,7 @@
       "field": "mean_score",
       "kind": "proportion",
       "member": "otis_mock_aime_2024_2025.csv",
-      "n": 235,
+      "n": 234,
       "panel_filter": null,
       "source": "epoch-benchmark-data-2026-08-14.zip:otis_mock_aime_2024_2025.csv"
     },
@@ -68,7 +78,7 @@
       "field": "Accuracy",
       "kind": "proportion",
       "member": "weirdml_external.csv",
-      "n": 163,
+      "n": 162,
       "panel_filter": null,
       "source": "epoch-benchmark-data-2026-08-14.zip:weirdml_external.csv"
     },
@@ -84,12 +94,7 @@
   "blockers": [
     {
       "affected_model": "claude-fable-5-max",
-      "complete_cost_entity_ids": [
-        "claude-opus-5-max",
-        "glm-5.2-max",
-        "gpt-5.6-sol-max",
-        "kimi-k3-max"
-      ],
+      "complete_cost_entity_ids": [],
       "missing_series": "deepswe-mean-cost",
       "reason": "Official DeepSWE v1.1 cost is observed on 432 of 436 scored Fable attempts and cannot enter a complete all-attempt Access series",
       "required_identity": "complete cost observation count",
@@ -122,25 +127,87 @@
       ]
     }
   ],
+  "certified": false,
   "comparison_profile_id": "umi-public-v0.5/frozen-epoch-common-core",
   "edition_id": "umi-public-v0.5",
-  "engine_version": "umi-engine-v0.3.13",
+  "eligibility": {
+    "certified": false,
+    "details": {
+      "access_economics_largest_share": 1.0,
+      "missing_construct_parents": [
+        "access_economics/agentic_task_cost",
+        "access_economics/fixed_tariff_baskets",
+        "capability/context_reliability_and_factual_discipline",
+        "capability/language_data_and_instruction_following",
+        "operational_efficiency/interactive_service_responsiveness"
+      ],
+      "operational_efficiency_largest_share": 1.0,
+      "source_concentration": {
+        "access_economics": {
+          "cap_applied": true,
+          "largest_share": 1.0,
+          "maximum_source_share": 0.35,
+          "source_HHI": 1.0,
+          "source_count": 1,
+          "source_shares": {
+            "weirdml": 1.0
+          }
+        },
+        "capability": {
+          "cap_applied": true,
+          "largest_share": 0.3,
+          "maximum_source_share": 0.35,
+          "source_HHI": 0.2538,
+          "source_count": 4,
+          "source_shares": {
+            "artificial-analysis": 0.23000000000000004,
+            "datacurve": 0.22000000000000003,
+            "epoch": 0.3,
+            "weirdml": 0.25
+          }
+        },
+        "operational_efficiency": {
+          "cap_applied": true,
+          "largest_share": 1.0,
+          "maximum_source_share": 0.35,
+          "source_HHI": 1.0,
+          "source_count": 1,
+          "source_shares": {
+            "datacurve": 1.0
+          }
+        }
+      },
+      "unadjusted_series": [
+        "deepswe-output-tokens",
+        "deepswe-agent-steps",
+        "weirdml-cost-per-run"
+      ]
+    },
+    "eligible": false,
+    "publication_state": "provisional_public_score",
+    "reason_codes": [
+      "source_concentration_failed",
+      "construct_incomplete",
+      "success_adjustment_unavailable"
+    ]
+  },
+  "engine_version": "umi-engine-v0.5.0",
   "formula_version": "umi-methodology-v0.5.0",
   "models": [
     {
-      "access_economics": 3.965024788773297,
+      "access_economics": 15.958286372051539,
       "access_series": {
         "weirdml-cost-per-run": {
-          "anchor_median": -0.5048084179612993,
+          "anchor_median": 0.42140113202334917,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.7083542922649354,
+          "anchor_sigma": 1.9854473389418101,
           "raw": 4.7419545588235295,
-          "robust_z": -1.7547592545927906,
-          "score": 3.965024788773297,
-          "transformed": -1.747799667843721
+          "robust_z": -0.9961737579864661,
+          "score": 15.958286372051539,
+          "transformed": -1.556449404894543
         }
       },
-      "capability": 90.73135544590909,
+      "capability": 90.75701587023636,
       "capability_series": {
         "deepswe-v1.1-pass1": {
           "anchor_median": 0.1524389356014978,
@@ -148,12 +215,12 @@
           "anchor_sigma": 0.8314319288832102,
           "raw": 0.7364864864864865,
           "robust_z": 1.0528189621894568,
-          "score": 85.37880137219524,
+          "score": 85.37880137219527,
           "transformed": 1.0277862360994974
         },
         "epoch-chess-puzzles": {
           "anchor_median": -1.3862943611198906,
-          "anchor_n": 158.0,
+          "anchor_n": 157.0,
           "anchor_sigma": 0.89865694237335,
           "raw": 0.42,
           "robust_z": 1.1834560205455977,
@@ -171,20 +238,20 @@
         },
         "epoch-gpqa": {
           "anchor_median": 1.1394342831883648,
-          "anchor_n": 260.0,
-          "anchor_sigma": 1.2434348751799997,
+          "anchor_n": 259.0,
+          "anchor_sigma": 1.2477075094865266,
           "raw": 0.9387626262626263,
-          "robust_z": 1.2790140573612157,
-          "score": 89.95539471476889,
+          "robust_z": 1.2746342172957659,
+          "score": 89.87806297883854,
           "transformed": 2.729804967956773
         },
         "epoch-otis-aime": {
-          "anchor_median": 0.8873031950009029,
-          "anchor_n": 235.0,
-          "anchor_sigma": 2.05532001979635,
+          "anchor_median": 0.8411165349353953,
+          "anchor_n": 234.0,
+          "anchor_sigma": 1.9868436775832283,
           "raw": 0.9888888888888889,
-          "robust_z": 1.7522006986960972,
-          "score": 96.01303482187488,
+          "robust_z": 1.8358363448268589,
+          "score": 96.68090678028075,
           "transformed": 4.488636369732143
         },
         "epoch-scicode": {
@@ -197,9 +264,9 @@
           "transformed": 0.2278322809251155
         },
         "epoch-weirdml": {
-          "anchor_median": -0.2484704875087773,
-          "anchor_n": 163.0,
-          "anchor_sigma": 0.6132700748505185,
+          "anchor_median": -0.2472520536680039,
+          "anchor_n": 162.0,
+          "anchor_sigma": 0.6237126659313944,
           "raw": 0.9178000000000001,
           "robust_z": 3.0,
           "score": 99.86501019683699,
@@ -211,45 +278,50 @@
       "entity_id": "claude-opus-5-max",
       "entity_kind": "single_model_service",
       "named_release": "Claude Opus 5",
-      "operational_efficiency": 19.259082866957094,
+      "operational_efficiency": 19.299941589432677,
       "operational_series": {
         "deepswe-agent-steps": {
-          "anchor_median": -4.2736715117148325,
+          "anchor_median": -4.259642890863701,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.5452973227538561,
+          "anchor_sigma": 0.5546383497576878,
           "raw": 99.0427927927928,
-          "robust_z": -0.6087073910244979,
-          "score": 27.135920356536587,
-          "transformed": -4.605598022380976
+          "robust_z": -0.6056362969790783,
+          "score": 27.23781470176061,
+          "transformed": -4.595552007173534
         },
         "deepswe-output-tokens": {
-          "anchor_median": -10.861180909062405,
+          "anchor_median": -10.861161704582614,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.753338412446464,
+          "anchor_sigma": 0.7533535917362343,
           "raw": 117565.6936936937,
-          "robust_z": -1.0799663669589368,
-          "score": 14.007857873904095,
-          "transformed": -11.674761057442826
+          "robust_z": -1.0799588081058027,
+          "score": 14.008026181214056,
+          "transformed": -11.674752551596303
         }
       },
-      "publication_state": "published",
-      "rank": 4,
-      "umi_public": 55.510021169743936
+      "point_order": 3,
+      "publication_state": "provisional_public_score",
+      "rank": 3,
+      "rank_high": 3,
+      "rank_low": 3,
+      "rank_status": "point_order_only",
+      "tie_group": null,
+      "umi_public": 57.93300140039848
     },
     {
-      "access_economics": 0.7058491763769492,
+      "access_economics": 9.92875283662762,
       "access_series": {
         "weirdml-cost-per-run": {
-          "anchor_median": -0.5048084179612993,
+          "anchor_median": 0.42140113202334917,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.7083542922649354,
+          "anchor_sigma": 1.9854473389418101,
           "raw": 8.424409705882354,
-          "robust_z": -2.454272814776079,
-          "score": 0.7058491763769492,
-          "transformed": -2.2433031006970796
+          "robust_z": -1.2856218803485726,
+          "score": 9.92875283662762,
+          "transformed": -2.131133409200091
         }
       },
-      "capability": 88.71088792393479,
+      "capability": 88.71433625501682,
       "capability_series": {
         "deepswe-v1.1-pass1": {
           "anchor_median": 0.1524389356014978,
@@ -262,7 +334,7 @@
         },
         "epoch-chess-puzzles": {
           "anchor_median": -1.3862943611198906,
-          "anchor_n": 158.0,
+          "anchor_n": 157.0,
           "anchor_sigma": 0.89865694237335,
           "raw": 0.41,
           "robust_z": 1.1376187460573233,
@@ -280,20 +352,20 @@
         },
         "epoch-gpqa": {
           "anchor_median": 1.1394342831883648,
-          "anchor_n": 260.0,
-          "anchor_sigma": 1.2434348751799997,
+          "anchor_n": 259.0,
+          "anchor_sigma": 1.2477075094865266,
           "raw": 0.8585858585858586,
-          "robust_z": 0.5341330349854865,
-          "score": 70.33752522293365,
+          "robust_z": 0.5323039563655562,
+          "score": 70.274225375139,
           "transformed": 1.8035939268750576
         },
         "epoch-otis-aime": {
-          "anchor_median": 0.8873031950009029,
-          "anchor_n": 235.0,
-          "anchor_sigma": 2.05532001979635,
+          "anchor_median": 0.8411165349353953,
+          "anchor_n": 234.0,
+          "anchor_sigma": 1.9868436775832283,
           "raw": 0.9972222222222222,
-          "robust_z": 2.430774354050425,
-          "score": 99.24667027676072,
+          "robust_z": 2.537796964321905,
+          "score": 99.44223659399069,
           "transformed": 5.883322388488282
         },
         "epoch-scicode": {
@@ -302,13 +374,13 @@
           "anchor_sigma": 0.3641572505532778,
           "raw": 0.601851851851852,
           "robust_z": 1.7281063780024433,
-          "score": 95.80154228791467,
+          "score": 95.80154228791469,
           "transformed": 0.41318715420207514
         },
         "epoch-weirdml": {
-          "anchor_median": -0.2484704875087773,
-          "anchor_n": 163.0,
-          "anchor_sigma": 0.6132700748505185,
+          "anchor_median": -0.2472520536680039,
+          "anchor_n": 162.0,
+          "anchor_sigma": 0.6237126659313944,
           "raw": 0.9194,
           "robust_z": 3.0,
           "score": 99.86501019683699,
@@ -320,45 +392,50 @@
       "entity_id": "claude-fable-5-max",
       "entity_kind": "fallback_composite_service",
       "named_release": "Claude Fable 5",
-      "operational_efficiency": 21.9899129304721,
+      "operational_efficiency": 22.01605120186643,
       "operational_series": {
         "deepswe-agent-steps": {
-          "anchor_median": -4.2736715117148325,
+          "anchor_median": -4.259642890863701,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.5452973227538561,
+          "anchor_sigma": 0.5546383497576878,
           "raw": 88.4288990825688,
-          "robust_z": -0.4030321899912122,
-          "score": 34.34622719801723,
-          "transformed": -4.493443885900664
+          "robust_z": -0.4012631621155598,
+          "score": 34.411319112480776,
+          "transformed": -4.482198828918027
         },
         "deepswe-output-tokens": {
-          "anchor_median": -10.861180909062405,
+          "anchor_median": -10.861161704582614,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.753338412446464,
+          "anchor_sigma": 0.7533535917362343,
           "raw": 118592.77293577982,
-          "robust_z": -1.0915125749093966,
-          "score": 13.752370085442017,
-          "transformed": -11.683459259410002
+          "robust_z": -1.0915048811950272,
+          "score": 13.752539261456864,
+          "transformed": -11.68345082722852
         }
       },
-      "publication_state": "published",
-      "rank": 6,
-      "umi_public": 54.429636426057556
+      "point_order": 5,
+      "publication_state": "provisional_public_score",
+      "rank": 5,
+      "rank_high": 5,
+      "rank_low": 5,
+      "rank_status": "point_order_only",
+      "tie_group": null,
+      "umi_public": 56.282648308051385
     },
     {
-      "access_economics": 16.40246018792375,
+      "access_economics": 26.29039817303044,
       "access_series": {
         "weirdml-cost-per-run": {
-          "anchor_median": -0.5048084179612993,
+          "anchor_median": 0.42140113202334917,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.7083542922649354,
+          "anchor_sigma": 1.9854473389418101,
           "raw": 2.3122075294117646,
-          "robust_z": -0.9780507918290341,
-          "score": 16.40246018792375,
-          "transformed": -1.1976148944065144
+          "robust_z": -0.6344181565312935,
+          "score": 26.29039817303044,
+          "transformed": -0.8382027086380762
         }
       },
-      "capability": 91.94480095635892,
+      "capability": 91.93864562732175,
       "capability_series": {
         "deepswe-v1.1-pass1": {
           "anchor_median": 0.1524389356014978,
@@ -366,12 +443,12 @@
           "anchor_sigma": 0.8314319288832102,
           "raw": 0.7266666666666667,
           "robust_z": 0.9926692147028092,
-          "score": 83.95644088938636,
+          "score": 83.95644088938637,
           "transformed": 0.977775815524836
         },
         "epoch-chess-puzzles": {
           "anchor_median": -1.3862943611198906,
-          "anchor_n": 158.0,
+          "anchor_n": 157.0,
           "anchor_sigma": 0.89865694237335,
           "raw": 0.55,
           "robust_z": 1.7659297800458453,
@@ -389,20 +466,20 @@
         },
         "epoch-gpqa": {
           "anchor_median": 1.1394342831883648,
-          "anchor_n": 260.0,
-          "anchor_sigma": 1.2434348751799997,
+          "anchor_n": 259.0,
+          "anchor_sigma": 1.2477075094865266,
           "raw": 0.9349747474747475,
-          "robust_z": 1.2274945582725836,
-          "score": 89.0181617070996,
+          "robust_z": 1.2232911409485114,
+          "score": 88.93901239880189,
           "transformed": 2.6657438260381636
         },
         "epoch-otis-aime": {
-          "anchor_median": 0.8873031950009029,
-          "anchor_n": 235.0,
-          "anchor_sigma": 2.05532001979635,
+          "anchor_median": 0.8411165349353953,
+          "anchor_n": 234.0,
+          "anchor_sigma": 1.9868436775832283,
           "raw": 1.0,
-          "robust_z": 2.9287174384863355,
-          "score": 99.82981816098528,
+          "robust_z": 3.0,
+          "score": 99.86501019683699,
           "transformed": 6.906754778648553
         },
         "epoch-scicode": {
@@ -415,9 +492,9 @@
           "transformed": 0.24661268585505855
         },
         "epoch-weirdml": {
-          "anchor_median": -0.2484704875087773,
-          "anchor_n": 163.0,
-          "anchor_sigma": 0.6132700748505185,
+          "anchor_median": -0.2472520536680039,
+          "anchor_n": 162.0,
+          "anchor_sigma": 0.6237126659313944,
           "raw": 0.8697,
           "robust_z": 3.0,
           "score": 99.86501019683699,
@@ -429,45 +506,50 @@
       "entity_id": "gpt-5.6-sol-max",
       "entity_kind": "single_model_service",
       "named_release": "GPT-5.6 Sol",
-      "operational_efficiency": 49.66282520757648,
+      "operational_efficiency": 49.65518301457057,
       "operational_series": {
         "deepswe-agent-steps": {
-          "anchor_median": -4.2736715117148325,
+          "anchor_median": -4.259642890863701,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.5452973227538561,
+          "anchor_sigma": 0.5546383497576878,
           "raw": 61.25333333333333,
-          "robust_z": 0.26125092556984936,
-          "score": 60.30504958148622,
-          "transformed": -4.131212081434627
+          "robust_z": 0.26075481656497856,
+          "score": 60.28592048053867,
+          "transformed": -4.115018269712733
         },
         "deepswe-output-tokens": {
-          "anchor_median": -10.861180909062405,
+          "anchor_median": -10.861161704582614,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.753338412446464,
+          "anchor_sigma": 0.7533535917362343,
           "raw": 60013.64444444444,
-          "robust_z": -0.1873832186204983,
-          "score": 42.568008958303324,
-          "transformed": -11.00234388549708
+          "robust_z": -0.1873828169459531,
+          "score": 42.56802470392517,
+          "transformed": -11.0023272227585
         }
       },
-      "publication_state": "published",
+      "point_order": 1,
+      "publication_state": "provisional_public_score",
       "rank": 1,
-      "umi_public": 66.26583886547628
+      "rank_high": 1,
+      "rank_low": 1,
+      "rank_status": "point_order_only",
+      "tie_group": null,
+      "umi_public": 68.2381304832757
     },
     {
-      "access_economics": 19.398244660737653,
+      "access_economics": 28.27492128922292,
       "access_series": {
         "weirdml-cost-per-run": {
-          "anchor_median": -0.5048084179612993,
+          "anchor_median": 0.42140113202334917,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.7083542922649354,
+          "anchor_sigma": 1.9854473389418101,
           "raw": 2.0536589833333334,
-          "robust_z": -0.8633139192878815,
-          "score": 19.398244660737653,
-          "transformed": -1.1163405382609342
+          "robust_z": -0.5746937638310985,
+          "score": 28.27492128922292,
+          "transformed": -0.7196230720815585
         }
       },
-      "capability": 88.83967621152244,
+      "capability": 88.88018748066091,
       "capability_series": {
         "deepswe-v1.1-pass1": {
           "anchor_median": 0.1524389356014978,
@@ -475,12 +557,12 @@
           "anchor_sigma": 0.8314319288832102,
           "raw": 0.6851441241685144,
           "robust_z": 0.7518057245342936,
-          "score": 77.39160505306202,
+          "score": 77.39160505306201,
           "transformed": 0.7775142192964849
         },
         "epoch-chess-puzzles": {
           "anchor_median": -1.3862943611198906,
-          "anchor_n": 158.0,
+          "anchor_n": 157.0,
           "anchor_sigma": 0.89865694237335,
           "raw": 0.39,
           "robust_z": 1.044872741534024,
@@ -498,20 +580,20 @@
         },
         "epoch-gpqa": {
           "anchor_median": 1.1394342831883648,
-          "anchor_n": 260.0,
-          "anchor_sigma": 1.2434348751799997,
+          "anchor_n": 259.0,
+          "anchor_sigma": 1.2477075094865266,
           "raw": 0.9311868686868687,
-          "robust_z": 1.1786955091992635,
-          "score": 88.07402777473993,
+          "robust_z": 1.174659198740872,
+          "score": 87.99344554600876,
           "transformed": 2.6050653865447773
         },
         "epoch-otis-aime": {
-          "anchor_median": 0.8873031950009029,
-          "anchor_n": 235.0,
-          "anchor_sigma": 2.05532001979635,
+          "anchor_median": 0.8411165349353953,
+          "anchor_n": 234.0,
+          "anchor_sigma": 1.9868436775832283,
           "raw": 0.9722222222222222,
-          "robust_z": 1.2981165175206495,
-          "score": 90.28763503869833,
+          "robust_z": 1.3661022038007415,
+          "score": 91.4046556651744,
           "transformed": 3.555348061489413
         },
         "epoch-scicode": {
@@ -524,12 +606,12 @@
           "transformed": 0.350775221811546
         },
         "epoch-weirdml": {
-          "anchor_median": -0.2484704875087773,
-          "anchor_n": 163.0,
-          "anchor_sigma": 0.6132700748505185,
+          "anchor_median": -0.2472520536680039,
+          "anchor_n": 162.0,
+          "anchor_sigma": 0.6237126659313944,
           "raw": 0.8257,
-          "robust_z": 2.9414838916539052,
-          "score": 99.83667808448922,
+          "robust_z": 2.8902821940827814,
+          "score": 99.8075519272404,
           "transformed": 1.5554535588974077
         }
       },
@@ -538,45 +620,50 @@
       "entity_id": "kimi-k3-max",
       "entity_kind": "open_weight_deployment",
       "named_release": "Kimi K3",
-      "operational_efficiency": 27.796767515717043,
+      "operational_efficiency": 27.83575503073463,
       "operational_series": {
         "deepswe-agent-steps": {
-          "anchor_median": -4.2736715117148325,
+          "anchor_median": -4.259642890863701,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.5452973227538561,
+          "anchor_sigma": 0.5546383497576878,
           "raw": 97.58758314855876,
-          "robust_z": -0.5818363618680907,
-          "score": 28.033845448124882,
-          "transformed": -4.590945322122346
+          "robust_z": -0.5789490985679402,
+          "score": 28.131175973112054,
+          "transformed": -4.580750263487125
         },
         "deepswe-output-tokens": {
-          "anchor_median": -10.861180909062405,
+          "anchor_median": -10.861161704582614,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.753338412446464,
+          "anchor_sigma": 0.7533535917362343,
           "raw": 81499.84257206209,
-          "robust_z": -0.5936080266614557,
-          "score": 27.638715560778486,
-          "transformed": -11.308368637483024
+          "robust_z": -0.5936052710423756,
+          "score": 27.63880773581635,
+          "transformed": -11.308356367595948
         }
       },
-      "publication_state": "published",
+      "point_order": 2,
+      "publication_state": "provisional_public_score",
       "rank": 2,
-      "umi_public": 59.69066272741414
+      "rank_high": 2,
+      "rank_low": 2,
+      "rank_status": "point_order_only",
+      "tie_group": null,
+      "umi_public": 61.49802612989175
     },
     {
-      "access_economics": 55.30627496754019,
+      "access_economics": 55.1551031222987,
       "access_series": {
         "weirdml-cost-per-run": {
-          "anchor_median": -0.5048084179612993,
+          "anchor_median": 0.42140113202334917,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.7083542922649354,
+          "anchor_sigma": 1.9854473389418101,
           "raw": 0.5072874972,
-          "robust_z": 0.13340321788835896,
-          "score": 55.30627496754019,
-          "transformed": -0.4103116759681258
+          "robust_z": 0.1295809984054826,
+          "score": 55.1551031222987,
+          "transformed": 0.6786773804849375
         }
       },
-      "capability": 67.88564644009388,
+      "capability": 67.88156188025961,
       "capability_series": {
         "deepswe-v1.1-pass1": {
           "anchor_median": 0.1524389356014978,
@@ -584,12 +671,12 @@
           "anchor_sigma": 0.8314319288832102,
           "raw": 0.4377777777777778,
           "robust_z": -0.48425455121965294,
-          "score": 31.410261320519687,
+          "score": 31.410261320519695,
           "transformed": -0.2501857599895315
         },
         "epoch-chess-puzzles": {
           "anchor_median": -1.3862943611198906,
-          "anchor_n": 158.0,
+          "anchor_n": 157.0,
           "anchor_sigma": 0.89865694237335,
           "raw": 0.21,
           "robust_z": 0.06828962586570207,
@@ -607,20 +694,20 @@
         },
         "epoch-gpqa": {
           "anchor_median": 1.1394342831883648,
-          "anchor_n": 260.0,
-          "anchor_sigma": 1.2434348751799997,
+          "anchor_n": 259.0,
+          "anchor_sigma": 1.2477075094865266,
           "raw": 0.9185606060606061,
-          "robust_z": 1.0322329843529237,
-          "score": 84.90185066787224,
+          "robust_z": 1.028698218369917,
+          "score": 84.81892462968462,
           "transformed": 2.422948775243921
         },
         "epoch-otis-aime": {
-          "anchor_median": 0.8873031950009029,
-          "anchor_n": 235.0,
-          "anchor_sigma": 2.05532001979635,
+          "anchor_median": 0.8411165349353953,
+          "anchor_n": 234.0,
+          "anchor_sigma": 1.9868436775832283,
           "raw": 0.8638888888888889,
-          "robust_z": 0.4674062480853431,
-          "score": 67.98953733925106,
+          "robust_z": 0.5067615990594387,
+          "score": 69.38389482558885,
           "transformed": 1.847972614068608
         },
         "epoch-scicode": {
@@ -629,16 +716,16 @@
           "anchor_sigma": 0.3641572505532778,
           "raw": 0.50462962962963,
           "robust_z": 0.6443215409980937,
-          "score": 74.03165249879825,
+          "score": 74.03165249879824,
           "transformed": 0.018519047767238835
         },
         "epoch-weirdml": {
-          "anchor_median": -0.2484704875087773,
-          "anchor_n": 163.0,
-          "anchor_sigma": 0.6132700748505185,
+          "anchor_median": -0.2472520536680039,
+          "anchor_n": 162.0,
+          "anchor_sigma": 0.6237126659313944,
           "raw": 0.7012,
-          "robust_z": 1.7960915304169651,
-          "score": 96.37600193867122,
+          "robust_z": 1.7640667146199116,
+          "score": 96.1139626173416,
           "transformed": 0.8530186997884174
         }
       },
@@ -647,45 +734,50 @@
       "entity_id": "glm-5.2-max",
       "entity_kind": "open_weight_deployment",
       "named_release": "GLM-5.2",
-      "operational_efficiency": 23.217368565617466,
+      "operational_efficiency": 23.27915439198356,
       "operational_series": {
         "deepswe-agent-steps": {
-          "anchor_median": -4.2736715117148325,
+          "anchor_median": -4.259642890863701,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.5452973227538561,
+          "anchor_sigma": 0.5546383497576878,
           "raw": 129.12666666666667,
-          "robust_z": -1.090848604081682,
-          "score": 13.76697527700777,
-          "transformed": -4.868508335050355
+          "robust_z": -1.0838611216568688,
+          "score": 13.921318994646592,
+          "transformed": -4.860793834745984
         },
         "deepswe-output-tokens": {
-          "anchor_median": -10.861180909062405,
+          "anchor_median": -10.861161704582614,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.753338412446464,
+          "anchor_sigma": 0.7533535917362343,
           "raw": 78175.30666666667,
-          "robust_z": -0.538325115326221,
-          "score": 29.517630758023927,
-          "transformed": -11.26672189682232
+          "robust_z": -0.5383227809716907,
+          "score": 29.51771132354154,
+          "transformed": -11.266709105141075
         }
       },
-      "publication_state": "published",
+      "point_order": 7,
+      "publication_state": "provisional_public_score",
       "rank": 7,
-      "umi_public": 54.202702676964044
+      "rank_high": 7,
+      "rank_low": 7,
+      "rank_status": "point_order_only",
+      "tie_group": null,
+      "umi_public": 54.18566825659842
     },
     {
-      "access_economics": 51.16618751679488,
+      "access_economics": 51.05015461471799,
       "access_series": {
         "weirdml-cost-per-run": {
-          "anchor_median": -0.5048084179612993,
+          "anchor_median": 0.42140113202334917,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.7083542922649354,
+          "anchor_sigma": 1.9854473389418101,
           "raw": 0.6227120676470587,
-          "robust_z": 0.02923615044266355,
-          "score": 51.16618751679488,
-          "transformed": -0.48409886530593516
+          "robust_z": 0.02632651327029189,
+          "score": 51.05015461471799,
+          "transformed": 0.47367103773946645
         }
       },
-      "capability": 72.60184538550361,
+      "capability": 72.55219165772469,
       "capability_series": {
         "deepswe-v1.1-pass1": {
           "anchor_median": 0.1524389356014978,
@@ -698,7 +790,7 @@
         },
         "epoch-chess-puzzles": {
           "anchor_median": -1.3862943611198906,
-          "anchor_n": 158.0,
+          "anchor_n": 157.0,
           "anchor_sigma": 0.89865694237335,
           "raw": 0.4,
           "robust_z": 1.0914390205692501,
@@ -716,20 +808,20 @@
         },
         "epoch-gpqa": {
           "anchor_median": 1.1394342831883648,
-          "anchor_n": 260.0,
-          "anchor_sigma": 1.2434348751799997,
+          "anchor_n": 259.0,
+          "anchor_sigma": 1.2477075094865266,
           "raw": 0.9412878787878788,
-          "robust_z": 1.315041560328128,
-          "score": 90.5752032383969,
+          "robust_z": 1.3105383481229862,
+          "score": 90.49931099398113,
           "transformed": 2.7746028216114826
         },
         "epoch-otis-aime": {
-          "anchor_median": 0.8873031950009029,
-          "anchor_n": 235.0,
-          "anchor_sigma": 2.05532001979635,
+          "anchor_median": 0.8411165349353953,
+          "anchor_n": 234.0,
+          "anchor_sigma": 1.9868436775832283,
           "raw": 0.9416666666666667,
-          "robust_z": 0.9215958859992066,
-          "score": 82.16302973980471,
+          "robust_z": 0.9766048313785122,
+          "score": 83.56175868436091,
           "transformed": 2.781477669657027
         },
         "epoch-scicode": {
@@ -742,12 +834,12 @@
           "transformed": 0.10658226290814724
         },
         "epoch-weirdml": {
-          "anchor_median": -0.2484704875087773,
-          "anchor_n": 163.0,
-          "anchor_sigma": 0.6132700748505185,
+          "anchor_median": -0.2472520536680039,
+          "anchor_n": 162.0,
+          "anchor_sigma": 0.6237126659313944,
           "raw": 0.561,
-          "robust_z": 0.805015604383823,
-          "score": 78.95946624343406,
+          "robust_z": 0.7895840072128647,
+          "score": 78.51146244117349,
           "transformed": 0.24522149244752528
         }
       },
@@ -756,45 +848,50 @@
       "entity_id": "gemini-3.6-flash-high",
       "entity_kind": "single_model_service",
       "named_release": "Gemini 3.6 Flash",
-      "operational_efficiency": 21.10297878847333,
+      "operational_efficiency": 21.15369236278913,
       "operational_series": {
         "deepswe-agent-steps": {
-          "anchor_median": -4.2736715117148325,
+          "anchor_median": -4.259642890863701,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.5452973227538561,
+          "anchor_sigma": 0.5546383497576878,
           "raw": 108.31042128603104,
-          "robust_z": -0.7711760301851127,
-          "score": 22.03012999194455,
-          "transformed": -4.694191736346721
+          "robust_z": -0.7669114203770997,
+          "score": 22.156709154988064,
+          "transformed": -4.68500137547198
         },
         "deepswe-output-tokens": {
-          "anchor_median": -10.861180909062405,
+          "anchor_median": -10.861161704582614,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.753338412446464,
+          "anchor_sigma": 0.7533535917362343,
           "raw": 96978.28381374723,
-          "robust_z": -0.8244259769877573,
-          "score": 20.484877986159184,
-          "transformed": -11.482252665745987
+          "robust_z": -0.8244211701417109,
+          "score": 20.485014501323175,
+          "transformed": -11.48224235421226
         }
       },
-      "publication_state": "published",
-      "rank": 5,
-      "umi_public": 55.4399971625043
+      "point_order": 6,
+      "publication_state": "provisional_public_score",
+      "rank": 6,
+      "rank_high": 6,
+      "rank_low": 6,
+      "rank_status": "point_order_only",
+      "tie_group": null,
+      "umi_public": 55.40215942538946
     },
     {
-      "access_economics": 2.4032911824358405,
+      "access_economics": 13.772184995705917,
       "access_series": {
         "weirdml-cost-per-run": {
-          "anchor_median": -0.5048084179612993,
+          "anchor_median": 0.42140113202334917,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.7083542922649354,
+          "anchor_sigma": 1.9854473389418101,
           "raw": 5.7199,
-          "robust_z": -1.976786010618165,
-          "score": 2.4032911824358405,
-          "transformed": -1.9050732734719547
+          "robust_z": -1.0906118798894089,
+          "score": 13.772184995705917,
+          "transformed": -1.743951322721403
         }
       },
-      "capability": 81.69079194297987,
+      "capability": 81.7266772845081,
       "capability_series": {
         "deepswe-v1.1-pass1": {
           "anchor_median": 0.1524389356014978,
@@ -802,12 +899,12 @@
           "anchor_sigma": 0.8314319288832102,
           "raw": 0.5176991150442478,
           "robust_z": -0.09815942856862452,
-          "score": 46.09028490708879,
+          "score": 46.090284907088794,
           "transformed": 0.07082605256861263
         },
         "epoch-chess-puzzles": {
           "anchor_median": -1.3862943611198906,
-          "anchor_n": 158.0,
+          "anchor_n": 157.0,
           "anchor_sigma": 0.89865694237335,
           "raw": 0.44,
           "robust_z": 1.2742708038049666,
@@ -820,25 +917,25 @@
           "anchor_sigma": 3.2278473819983486,
           "raw": 0.23428571430000003,
           "robust_z": 0.725589693153091,
-          "score": 76.595482927443,
+          "score": 76.59548292744299,
           "transformed": -1.184267733166971
         },
         "epoch-gpqa": {
           "anchor_median": 1.1394342831883648,
-          "anchor_n": 260.0,
-          "anchor_sigma": 1.2434348751799997,
+          "anchor_n": 259.0,
+          "anchor_sigma": 1.2477075094865266,
           "raw": 0.933,
-          "robust_z": 1.2017342669849935,
-          "score": 88.52667498868729,
+          "robust_z": 1.1976190628867494,
+          "score": 88.44673243130744,
           "transformed": 2.6337125814563787
         },
         "epoch-otis-aime": {
-          "anchor_median": 0.8873031950009029,
-          "anchor_n": 235.0,
-          "anchor_sigma": 2.05532001979635,
+          "anchor_median": 0.8411165349353953,
+          "anchor_n": 234.0,
+          "anchor_sigma": 1.9868436775832283,
           "raw": 0.953,
-          "robust_z": 1.032522471684732,
-          "score": 84.90862869465475,
+          "robust_z": 1.0913544892702893,
+          "score": 86.24415350612149,
           "transformed": 3.0094673019441425
         },
         "epoch-scicode": {
@@ -851,12 +948,12 @@
           "transformed": 0.2654364635044602
         },
         "epoch-weirdml": {
-          "anchor_median": -0.2484704875087773,
-          "anchor_n": 163.0,
-          "anchor_sigma": 0.6132700748505185,
+          "anchor_median": -0.2472520536680039,
+          "anchor_n": 162.0,
+          "anchor_sigma": 0.6237126659313944,
           "raw": 0.777,
-          "robust_z": 2.440587153679606,
-          "score": 99.26682963669292,
+          "robust_z": 2.3977717854138194,
+          "score": 99.17524306346442,
           "transformed": 1.2482685789075287
         }
       },
@@ -865,37 +962,42 @@
       "entity_id": "gpt-5.4-2026-03-05-xhigh",
       "entity_kind": "single_model_service",
       "named_release": "GPT-5.4",
-      "operational_efficiency": 40.4031338063335,
+      "operational_efficiency": 40.402789106238515,
       "operational_series": {
         "deepswe-agent-steps": {
-          "anchor_median": -4.2736715117148325,
+          "anchor_median": -4.259642890863701,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.5452973227538561,
+          "anchor_sigma": 0.5546383497576878,
           "raw": 70.47123893805309,
-          "robust_z": 0.008025705192711898,
-          "score": 50.32017587594556,
-          "transformed": -4.269295116160035
+          "robust_z": 0.00800201178036469,
+          "score": 50.319230675902126,
+          "transformed": -4.255204668255098
         },
         "deepswe-output-tokens": {
-          "anchor_median": -10.861180909062405,
+          "anchor_median": -10.861161704582614,
           "anchor_n": 50.0,
-          "anchor_sigma": 0.753338412446464,
+          "anchor_sigma": 0.7533535917362343,
           "raw": 71408.87389380531,
-          "robust_z": -0.4181527376392832,
-          "score": 33.79177242659213,
-          "transformed": -11.176191428595725
+          "robust_z": -0.41815121571714303,
+          "score": 33.7918280597961,
+          "transformed": -11.176177424831996
         }
       },
-      "publication_state": "published",
-      "rank": 3,
-      "umi_public": 55.51137725670947
+      "point_order": 4,
+      "publication_state": "provisional_public_score",
+      "rank": 4,
+      "rank_high": 4,
+      "rank_low": 4,
+      "rank_status": "point_order_only",
+      "tie_group": null,
+      "umi_public": 57.80480678218027
     }
   ],
   "normalization_version": "umi-normalization-v0.5.0",
-  "package_version": "0.3.16",
-  "publication_state": "published",
+  "package_version": "0.5.0",
+  "publication_state": "provisional_public_score",
   "required_common_core_coverage": 1.0,
-  "scored_data_fingerprint": "5624c3b417e4c0e42dd35411065f200c38ccfc6b49474f47cb671c2d43a22c6c",
+  "scored_data_fingerprint": "7d1b91aab68a6d5b92dbfb97b9e5e5279abd18435aa398eda00e61ab3a378aa6",
   "series": [
     "epoch-chess-puzzles",
     "deepswe-v1.1-pass1",
@@ -907,5 +1009,6 @@
     "deepswe-output-tokens",
     "deepswe-agent-steps",
     "weirdml-cost-per-run"
-  ]
+  ],
+  "strict_ranks": false
 }

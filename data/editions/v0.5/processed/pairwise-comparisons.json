@@ -6,39 +6,31 @@
       "gpt-5.4-2026-03-05-xhigh"
     ],
     [
-      "gemini-3.6-flash-high",
-      "gpt-5.4-2026-03-05-xhigh"
-    ],
-    [
-      "claude-fable-5-max",
-      "gpt-5.4-2026-03-05-xhigh"
-    ],
-    [
-      "glm-5.2-max",
-      "gpt-5.4-2026-03-05-xhigh"
-    ],
-    [
-      "claude-opus-5-max",
-      "gemini-3.6-flash-high"
-    ],
-    [
       "claude-fable-5-max",
       "claude-opus-5-max"
     ],
     [
       "claude-opus-5-max",
-      "glm-5.2-max"
+      "gemini-3.6-flash-high"
+    ],
+    [
+      "claude-fable-5-max",
+      "gpt-5.4-2026-03-05-xhigh"
+    ],
+    [
+      "gemini-3.6-flash-high",
+      "gpt-5.4-2026-03-05-xhigh"
     ],
     [
       "claude-fable-5-max",
       "gemini-3.6-flash-high"
     ],
     [
-      "gemini-3.6-flash-high",
+      "claude-fable-5-max",
       "glm-5.2-max"
     ],
     [
-      "claude-fable-5-max",
+      "gemini-3.6-flash-high",
       "glm-5.2-max"
     ]
   ]

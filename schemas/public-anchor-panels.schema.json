@@ -1,5 +1,68 @@
 {
   "$defs": {
+    "PublicAnchorMember": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_member_id": {
+          "title": "Anchor Member Id",
+          "type": "string"
+        },
+        "entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Entity Id"
+        },
+        "exclusion_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exclusion Reason"
+        },
+        "included": {
+          "default": true,
+          "title": "Included",
+          "type": "boolean"
+        },
+        "raw_value": {
+          "title": "Raw Value",
+          "type": "number"
+        },
+        "source_model_id": {
+          "title": "Source Model Id",
+          "type": "string"
+        },
+        "source_row_id": {
+          "title": "Source Row Id",
+          "type": "string"
+        },
+        "transformed_value": {
+          "title": "Transformed Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "anchor_member_id",
+        "source_row_id",
+        "source_model_id",
+        "raw_value",
+        "transformed_value"
+      ],
+      "title": "PublicAnchorMember",
+      "type": "object"
+    },
     "PublicAnchorPanel": {
       "additionalProperties": false,
       "properties": {
@@ -25,6 +88,14 @@
         "member": {
           "title": "Member",
           "type": "string"
+        },
+        "members": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PublicAnchorMember"
+          },
+          "title": "Members",
+          "type": "array"
         },
         "n": {
           "minimum": 8,

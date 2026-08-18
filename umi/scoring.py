@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from typing import TYPE_CHECKING, cast
 
 from umi._component import weighted_available
@@ -68,8 +69,24 @@ def eligible_for_weights(
 
 
 def score_dataset(
-    dataset: Dataset, config: ProjectConfig, *, allow_unready: bool = False
+    dataset: Dataset,
+    config: ProjectConfig,
+    *,
+    allow_unready: bool = False,
+    allow_ungoverned_real: bool = False,
+    synthetic: bool = False,
 ) -> list[ScoringResult]:
+    real_records = any(
+        getattr(item, "source_artifact_id", None)
+        for item in (*dataset.benchmarks, *dataset.efficiency, *dataset.task_economics)
+    )
+    if real_records and not allow_ungoverned_real and not synthetic:
+        warnings.warn(
+            "score_dataset is deprecated for real data; use score_bundle. "
+            "Pass allow_ungoverned_real=True only for tests or diagnosis.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
     report = validate_dataset(dataset, config)
     report.raise_for_errors()
     scored_dataset, _ = scoring_dataset(dataset, allow_unready=allow_unready)
@@ -349,4 +366,9 @@ def score_bundle(bundle: ScoringBundle, *, allow_unready: bool = False) -> list[
         errors.append("acceptance manifest does not match the governed bundle inputs")
     if errors:
         raise DataValidationError(tuple(sorted(set(errors))))
-    return score_dataset(bundle.dataset, bundle.config, allow_unready=allow_unready)
+    return score_dataset(
+        bundle.dataset,
+        bundle.config,
+        allow_unready=allow_unready,
+        allow_ungoverned_real=True,
+    )

@@ -9,15 +9,15 @@
         "gpt-5.4-2026-03-05-xhigh",
         "gemini-3.6-flash-high",
         "glm-5.2-max",
-        "claude-fable-5-max",
-        "claude-opus-5-max"
+        "claude-opus-5-max",
+        "claude-fable-5-max"
       ],
       "rank_changes": {
-        "claude-fable-5-max": 0,
+        "claude-fable-5-max": 2,
         "claude-opus-5-max": 3,
-        "gemini-3.6-flash-high": -1,
+        "gemini-3.6-flash-high": -2,
         "glm-5.2-max": -2,
-        "gpt-5.4-2026-03-05-xhigh": 0,
+        "gpt-5.4-2026-03-05-xhigh": -1,
         "gpt-5.6-sol-max": 0,
         "kimi-k3-max": 0
       }
@@ -29,16 +29,16 @@
         "kimi-k3-max",
         "claude-opus-5-max",
         "claude-fable-5-max",
-        "gemini-3.6-flash-high",
         "gpt-5.4-2026-03-05-xhigh",
+        "gemini-3.6-flash-high",
         "glm-5.2-max"
       ],
       "rank_changes": {
-        "claude-fable-5-max": -2,
-        "claude-opus-5-max": -1,
+        "claude-fable-5-max": -1,
+        "claude-opus-5-max": 0,
         "gemini-3.6-flash-high": 0,
         "glm-5.2-max": 0,
-        "gpt-5.4-2026-03-05-xhigh": 3,
+        "gpt-5.4-2026-03-05-xhigh": 1,
         "gpt-5.6-sol-max": 0,
         "kimi-k3-max": 0
       }
@@ -48,18 +48,18 @@
       "order": [
         "gpt-5.6-sol-max",
         "kimi-k3-max",
-        "claude-fable-5-max",
         "claude-opus-5-max",
         "gpt-5.4-2026-03-05-xhigh",
+        "claude-fable-5-max",
         "gemini-3.6-flash-high",
         "glm-5.2-max"
       ],
       "rank_changes": {
-        "claude-fable-5-max": -3,
+        "claude-fable-5-max": 0,
         "claude-opus-5-max": 0,
-        "gemini-3.6-flash-high": 1,
+        "gemini-3.6-flash-high": 0,
         "glm-5.2-max": 0,
-        "gpt-5.4-2026-03-05-xhigh": 2,
+        "gpt-5.4-2026-03-05-xhigh": 0,
         "gpt-5.6-sol-max": 0,
         "kimi-k3-max": 0
       }
@@ -70,17 +70,17 @@
         "gpt-5.6-sol-max",
         "kimi-k3-max",
         "gpt-5.4-2026-03-05-xhigh",
-        "gemini-3.6-flash-high",
         "claude-opus-5-max",
-        "glm-5.2-max",
-        "claude-fable-5-max"
+        "claude-fable-5-max",
+        "gemini-3.6-flash-high",
+        "glm-5.2-max"
       ],
       "rank_changes": {
-        "claude-fable-5-max": 1,
+        "claude-fable-5-max": 0,
         "claude-opus-5-max": 1,
-        "gemini-3.6-flash-high": -1,
-        "glm-5.2-max": -1,
-        "gpt-5.4-2026-03-05-xhigh": 0,
+        "gemini-3.6-flash-high": 0,
+        "glm-5.2-max": 0,
+        "gpt-5.4-2026-03-05-xhigh": -1,
         "gpt-5.6-sol-max": 0,
         "kimi-k3-max": 0
       }
@@ -90,18 +90,18 @@
       "order": [
         "gpt-5.6-sol-max",
         "kimi-k3-max",
-        "gemini-3.6-flash-high",
         "claude-opus-5-max",
         "gpt-5.4-2026-03-05-xhigh",
         "claude-fable-5-max",
+        "gemini-3.6-flash-high",
         "glm-5.2-max"
       ],
       "rank_changes": {
         "claude-fable-5-max": 0,
         "claude-opus-5-max": 0,
-        "gemini-3.6-flash-high": -2,
+        "gemini-3.6-flash-high": 0,
         "glm-5.2-max": 0,
-        "gpt-5.4-2026-03-05-xhigh": 2,
+        "gpt-5.4-2026-03-05-xhigh": 0,
         "gpt-5.6-sol-max": 0,
         "kimi-k3-max": 0
       }

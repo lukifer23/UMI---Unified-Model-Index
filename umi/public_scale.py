@@ -13,14 +13,24 @@ from umi.edition import V05_ANALYSIS_SURFACES, ConfigModel, PublicEditionConfig
 from umi.public import (
     ROOT,
     _phi,
+    _transform_raw,
     robust_z,
-    transform_lower_better,
-    transform_proportion,
 )
 from umi.public_bundle import PublicScoringBundle, bundle_points
 from umi.public_certificate import EPOCH_SHA256
 
-TRANSFORM_NAMES = {"proportion": "logit", "lower": "neglog1p"}
+TRANSFORM_NAMES = {"proportion": "logit", "neglog1p": "neglog1p", "log": "neglog"}
+
+
+class PublicAnchorMember(ConfigModel):
+    anchor_member_id: str
+    source_row_id: str
+    source_model_id: str
+    entity_id: str | None = None
+    raw_value: float
+    transformed_value: float
+    included: bool = True
+    exclusion_reason: str | None = None
 
 
 class PublicAnchorPanel(ConfigModel):
@@ -31,6 +41,7 @@ class PublicAnchorPanel(ConfigModel):
     source_artifact_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
     series_ids: tuple[str, ...]
     config_ids: tuple[str, ...]
+    members: tuple[PublicAnchorMember, ...] = ()
     n: int = Field(ge=8)
     panel_fingerprint: str = Field(pattern=r"^[0-9a-f]{64}$")
 
@@ -50,6 +61,9 @@ class PublicScoreScale(ConfigModel):
     kind: str
     transform: str
     logit_eps: float | None = None
+    lower_transform: str = "neglog1p"
+    iqr_scale: str = "legacy_mad_iqr"
+    reject_out_of_range: bool = False
     winsor: float
     median: float
     sigma: float
@@ -80,12 +94,15 @@ def apply_public_scale(
     raw: float,
     scale: PublicScoreScale,
 ) -> dict[str, float]:
-    if scale.kind == "proportion":
-        if scale.logit_eps is None:
-            raise ValueError(f"{scale.series_id} proportion scale missing logit_eps")
-        transformed = transform_proportion(raw, scale.logit_eps)
-    else:
-        transformed = transform_lower_better(raw)
+    if scale.kind == "proportion" and scale.logit_eps is None:
+        raise ValueError(f"{scale.series_id} proportion scale missing logit_eps")
+    transformed = _transform_raw(
+        raw,
+        kind=scale.kind,
+        logit_eps=scale.logit_eps or 1e-3,
+        lower_transform=scale.lower_transform,
+        reject_out_of_range=scale.reject_out_of_range,
+    )
     z = (transformed - scale.median) / scale.sigma
     z = min(max(z, -scale.winsor), scale.winsor)
     return {
@@ -106,6 +123,7 @@ def build_public_panels_and_scales(
     series_by_panel: dict[str, list[str]] = {}
     membership: dict[str, tuple[str, ...]] = {}
     extract: dict[str, tuple[str, str | None, str | None]] = {}
+    members_by_panel: dict[str, tuple[PublicAnchorMember, ...]] = {}
     for series in edition.common_core:
         contract = next(item for item in bundle.series if item.series_id == series.series_id)
         config_ids = tuple(sorted(item.config_id for item in contract.records))
@@ -115,9 +133,28 @@ def build_public_panels_and_scales(
             raise ValueError(f"{panel_id} has inconsistent config membership")
         membership[panel_id] = config_ids
         extract[panel_id] = (series.member, series.harness, series.panel_filter)
+        if panel_id not in members_by_panel:
+            members_by_panel[panel_id] = tuple(
+                PublicAnchorMember(
+                    anchor_member_id=f"{panel_id}:{item.config_id}",
+                    source_row_id=item.source_row_id or item.config_id,
+                    source_model_id=item.config_id,
+                    entity_id=item.entity_id,
+                    raw_value=item.raw,
+                    transformed_value=_transform_raw(
+                        item.raw,
+                        kind=series.kind,
+                        logit_eps=edition.normalization.logit_eps,
+                        lower_transform=edition.normalization.lower_transform,
+                        reject_out_of_range=edition.normalization.reject_out_of_range,
+                    ),
+                )
+                for item in sorted(contract.records, key=lambda row: row.config_id)
+            )
     panels: list[PublicAnchorPanel] = []
     for panel_id, config_ids in sorted(membership.items()):
         member, harness, panel_filter = extract[panel_id]
+        members = members_by_panel[panel_id]
         unsigned = {
             "panel_id": panel_id,
             "member": member,
@@ -125,6 +162,15 @@ def build_public_panels_and_scales(
             "panel_filter": panel_filter,
             "source_artifact_sha256": bundle.source_artifact_sha256,
             "config_ids": config_ids,
+            "members": [
+                {
+                    "source_row_id": item.source_row_id,
+                    "source_model_id": item.source_model_id,
+                    "raw_value": item.raw_value,
+                    "transformed_value": item.transformed_value,
+                }
+                for item in members
+            ],
         }
         panels.append(
             PublicAnchorPanel(
@@ -135,6 +181,7 @@ def build_public_panels_and_scales(
                 source_artifact_sha256=bundle.source_artifact_sha256,
                 series_ids=tuple(series_by_panel[panel_id]),
                 config_ids=config_ids,
+                members=members,
                 n=len(config_ids),
                 panel_fingerprint=_digest(unsigned),
             )
@@ -144,23 +191,33 @@ def build_public_panels_and_scales(
     for series in edition.common_core:
         points = bundle_points(bundle, series.series_id)
         raws = tuple(item.raw for item in points)
-        if series.kind == "proportion":
-            transformed_panel = tuple(
-                transform_proportion(item, edition.normalization.logit_eps) for item in raws
+        transformed_panel = tuple(
+            _transform_raw(
+                item,
+                kind=series.kind,
+                logit_eps=edition.normalization.logit_eps,
+                lower_transform=edition.normalization.lower_transform,
+                reject_out_of_range=edition.normalization.reject_out_of_range,
             )
-        else:
-            transformed_panel = tuple(transform_lower_better(item) for item in raws)
+            for item in raws
+        )
         _z, median, sigma = robust_z(
             transformed_panel[0],
             transformed_panel,
             winsor=edition.normalization.winsor,
+            iqr_scale=edition.normalization.iqr_scale,
+        )
+        transform_name = (
+            "logit" if series.kind == "proportion" else edition.normalization.lower_transform
         )
         unsigned_scale = {
             "panel_id": series.anchor_panel_id,
             "series_id": series.series_id,
             "kind": series.kind,
-            "transform": TRANSFORM_NAMES[series.kind],
+            "transform": transform_name,
             "logit_eps": edition.normalization.logit_eps if series.kind == "proportion" else None,
+            "lower_transform": edition.normalization.lower_transform,
+            "iqr_scale": edition.normalization.iqr_scale,
             "winsor": edition.normalization.winsor,
             "median": median,
             "sigma": sigma,
@@ -175,10 +232,13 @@ def build_public_panels_and_scales(
                 panel_id=series.anchor_panel_id,
                 series_id=series.series_id,
                 kind=series.kind,
-                transform=TRANSFORM_NAMES[series.kind],
+                transform=transform_name,
                 logit_eps=(
                     edition.normalization.logit_eps if series.kind == "proportion" else None
                 ),
+                lower_transform=edition.normalization.lower_transform,
+                iqr_scale=edition.normalization.iqr_scale,
+                reject_out_of_range=edition.normalization.reject_out_of_range,
                 winsor=edition.normalization.winsor,
                 median=median,
                 sigma=sigma,

@@ -51,6 +51,18 @@
         "source_name": {
           "title": "Source Name",
           "type": "string"
+        },
+        "source_row_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Row Id"
         }
       },
       "required": [

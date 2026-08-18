@@ -19,8 +19,10 @@ from umi.public import (
     load_epoch_member,
     public_series_specs,
     series_score,
+    series_score_kwargs,
 )
 from umi.public_crosswalk import config_id_for_entity
+from umi.public_paths import resolve_epoch_zip
 
 DRAW_COUNT = 2048
 
@@ -50,7 +52,7 @@ def series_intervals(*, edition_name: str = "v0.5") -> dict[str, dict[str, float
         if series.interval_field is None or series.interval_kind is None:
             continue
         seen: set[str] = set()
-        for row in load_epoch_member(series.member):
+        for row in load_epoch_member(series.member, zip_path=resolve_epoch_zip()):
             if series.harness and row.get("Harness") != series.harness:
                 continue
             config_id = str(row["Model version"])
@@ -126,6 +128,40 @@ def _combine(
     }
 
 
+def attach_interval_ranks(
+    models: list[dict[str, Any]],
+    uncertainty: dict[str, Any],
+) -> list[dict[str, Any]]:
+    by_id = {item["entity_id"]: item for item in uncertainty.get("models", ())}
+    overlapping = {
+        tuple(pair)
+        for pair in uncertainty.get("pairwise_indistinguishable", ())
+    }
+    if not overlapping:
+        from umi.public_certificate import overlapping_pairs
+
+        overlapping = set(overlapping_pairs(list(by_id.values())))
+    for item in models:
+        interval = by_id.get(item["entity_id"])
+        if interval is None:
+            continue
+        item["rank_low"] = interval["rank_low"]
+        item["rank_high"] = interval["rank_high"]
+        peers = sorted(
+            peer
+            for left, right in overlapping
+            for peer in (left, right)
+            if item["entity_id"] in (left, right) and peer != item["entity_id"]
+        )
+        if interval["rank_low"] != interval["rank_high"] or peers:
+            item["rank_status"] = "interval_overlap"
+            item["tie_group"] = tuple(sorted({item["entity_id"], *peers}))
+        else:
+            item["rank_status"] = "interval_unique"
+            item["tie_group"] = (item["entity_id"],)
+    return models
+
+
 def _clip_raw(raw: float, kind: str) -> float:
     if kind == "proportion":
         return min(max(raw, 1e-6), 1.0 - 1e-6)
@@ -146,15 +182,19 @@ def quantify_public_uncertainty(
     panels: dict[str, tuple[float, ...]] = {}
     point_raw: dict[str, dict[str, float]] = {}
     point_scores: dict[str, dict[str, float]] = {}
+    score_kwargs = series_score_kwargs(edition.normalization)
     for spec in specs:
         points = epoch_points(
             spec["member"],
             spec["field"],
+            zip_path=resolve_epoch_zip(),
             require_harness=spec.get("harness"),
             panel_filter=spec.get("panel_filter"),
             identities=identities,
             entity_map=mapping,
             high_effort_suffixes=edition.normalization.high_effort_suffixes,
+            duplicate_policy=edition.normalization.duplicate_policy,
+            excluded_config_ids=edition.normalization.excluded_config_ids,
         )
         panels[spec["id"]] = tuple(item.raw for item in points)
         for item in points:
@@ -165,8 +205,7 @@ def quantify_public_uncertainty(
                 item.raw,
                 panels[spec["id"]],
                 kind=spec["kind"],
-                logit_eps=edition.normalization.logit_eps,
-                winsor=edition.normalization.winsor,
+                **score_kwargs,
             )["score"]
     seed = int(str(payload["scored_data_fingerprint"])[:16], 16)
     rng = random.Random(seed)
@@ -185,8 +224,7 @@ def quantify_public_uncertainty(
                     raw,
                     panels[spec["id"]],
                     kind=spec["kind"],
-                    logit_eps=edition.normalization.logit_eps,
-                    winsor=edition.normalization.winsor,
+                    **score_kwargs,
                 )["score"]
             public_by_id[identity.entity_id] = _combine(
                 perturbed, edition_name=edition_name

@@ -13,47 +13,28 @@
       "entity_id": "gpt-5.6-sol-max",
       "entity_kind": "single_model_service",
       "indistinguishable_from": [],
-      "interval_high": 66.90836129366487,
-      "interval_low": 65.45900364355276,
+      "interval_high": 68.88095636904693,
+      "interval_low": 67.43715720830707,
       "interval_status": "partial_source_interval",
       "named_release": "GPT-5.6 Sol",
       "rank": 1,
       "rank_high": 1,
       "rank_low": 1,
-      "umi_public": 66.26583886547628
+      "umi_public": 68.2381304832757
     },
     {
       "effort_setting": "max",
       "entity_id": "kimi-k3-max",
       "entity_kind": "open_weight_deployment",
       "indistinguishable_from": [],
-      "interval_high": 60.893895215936666,
-      "interval_low": 58.14908097631116,
+      "interval_high": 62.6806242337474,
+      "interval_low": 59.8591076021121,
       "interval_status": "partial_source_interval",
       "named_release": "Kimi K3",
       "rank": 2,
-      "rank_high": 2,
+      "rank_high": 3,
       "rank_low": 2,
-      "umi_public": 59.69066272741414
-    },
-    {
-      "effort_setting": "xhigh",
-      "entity_id": "gpt-5.4-2026-03-05-xhigh",
-      "entity_kind": "single_model_service",
-      "indistinguishable_from": [
-        "claude-fable-5-max",
-        "claude-opus-5-max",
-        "gemini-3.6-flash-high",
-        "glm-5.2-max"
-      ],
-      "interval_high": 56.38747197299199,
-      "interval_low": 54.416354632321934,
-      "interval_status": "partial_source_interval",
-      "named_release": "GPT-5.4",
-      "rank": 3,
-      "rank_high": 7,
-      "rank_low": 3,
-      "umi_public": 55.51137725670947
+      "umi_public": 61.49802612989175
     },
     {
       "effort_setting": "max",
@@ -62,36 +43,34 @@
       "indistinguishable_from": [
         "claude-fable-5-max",
         "gemini-3.6-flash-high",
-        "glm-5.2-max",
         "gpt-5.4-2026-03-05-xhigh"
       ],
-      "interval_high": 56.39422329748467,
-      "interval_low": 54.21417790374281,
+      "interval_high": 58.82775334048127,
+      "interval_low": 56.69841549937639,
       "interval_status": "partial_source_interval",
       "named_release": "Claude Opus 5",
-      "rank": 4,
-      "rank_high": 7,
-      "rank_low": 3,
-      "umi_public": 55.510021169743936
+      "rank": 3,
+      "rank_high": 6,
+      "rank_low": 2,
+      "umi_public": 57.93300140039848
     },
     {
-      "effort_setting": "high",
-      "entity_id": "gemini-3.6-flash-high",
+      "effort_setting": "xhigh",
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
       "entity_kind": "single_model_service",
       "indistinguishable_from": [
         "claude-fable-5-max",
         "claude-opus-5-max",
-        "glm-5.2-max",
-        "gpt-5.4-2026-03-05-xhigh"
+        "gemini-3.6-flash-high"
       ],
-      "interval_high": 56.860238117567434,
-      "interval_low": 53.86105059524749,
+      "interval_high": 58.66937526861001,
+      "interval_low": 56.725612621310724,
       "interval_status": "partial_source_interval",
-      "named_release": "Gemini 3.6 Flash",
-      "rank": 5,
-      "rank_high": 7,
+      "named_release": "GPT-5.4",
+      "rank": 4,
+      "rank_high": 6,
       "rank_low": 3,
-      "umi_public": 55.4399971625043
+      "umi_public": 57.80480678218027
     },
     {
       "effort_setting": "max",
@@ -103,14 +82,33 @@
         "glm-5.2-max",
         "gpt-5.4-2026-03-05-xhigh"
       ],
-      "interval_high": 55.59444449064061,
-      "interval_low": 52.99973967224041,
+      "interval_high": 57.40521950359459,
+      "interval_low": 54.83072936456937,
       "interval_status": "partial_source_interval",
       "named_release": "Claude Fable 5",
-      "rank": 6,
+      "rank": 5,
       "rank_high": 7,
       "rank_low": 3,
-      "umi_public": 54.429636426057556
+      "umi_public": 56.282648308051385
+    },
+    {
+      "effort_setting": "high",
+      "entity_id": "gemini-3.6-flash-high",
+      "entity_kind": "single_model_service",
+      "indistinguishable_from": [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "gpt-5.4-2026-03-05-xhigh"
+      ],
+      "interval_high": 56.81205104298109,
+      "interval_low": 53.827122706486556,
+      "interval_status": "partial_source_interval",
+      "named_release": "Gemini 3.6 Flash",
+      "rank": 6,
+      "rank_high": 7,
+      "rank_low": 4,
+      "umi_public": 55.40215942538946
     },
     {
       "effort_setting": "max",
@@ -118,18 +116,16 @@
       "entity_kind": "open_weight_deployment",
       "indistinguishable_from": [
         "claude-fable-5-max",
-        "claude-opus-5-max",
-        "gemini-3.6-flash-high",
-        "gpt-5.4-2026-03-05-xhigh"
+        "gemini-3.6-flash-high"
       ],
-      "interval_high": 55.82124004005812,
-      "interval_low": 51.998747241927944,
+      "interval_high": 55.809503678486934,
+      "interval_low": 52.21180100378666,
       "interval_status": "partial_source_interval",
       "named_release": "GLM-5.2",
       "rank": 7,
       "rank_high": 7,
-      "rank_low": 3,
-      "umi_public": 54.202702676964044
+      "rank_low": 5,
+      "umi_public": 54.18566825659842
     }
   ],
   "pairwise_indistinguishable": [
@@ -138,44 +134,36 @@
       "gpt-5.4-2026-03-05-xhigh"
     ],
     [
-      "gemini-3.6-flash-high",
-      "gpt-5.4-2026-03-05-xhigh"
-    ],
-    [
-      "claude-fable-5-max",
-      "gpt-5.4-2026-03-05-xhigh"
-    ],
-    [
-      "glm-5.2-max",
-      "gpt-5.4-2026-03-05-xhigh"
-    ],
-    [
-      "claude-opus-5-max",
-      "gemini-3.6-flash-high"
-    ],
-    [
       "claude-fable-5-max",
       "claude-opus-5-max"
     ],
     [
       "claude-opus-5-max",
-      "glm-5.2-max"
+      "gemini-3.6-flash-high"
+    ],
+    [
+      "claude-fable-5-max",
+      "gpt-5.4-2026-03-05-xhigh"
+    ],
+    [
+      "gemini-3.6-flash-high",
+      "gpt-5.4-2026-03-05-xhigh"
     ],
     [
       "claude-fable-5-max",
       "gemini-3.6-flash-high"
     ],
     [
-      "gemini-3.6-flash-high",
+      "claude-fable-5-max",
       "glm-5.2-max"
     ],
     [
-      "claude-fable-5-max",
+      "gemini-3.6-flash-high",
       "glm-5.2-max"
     ]
   ],
-  "result_fingerprint": "efd31df7ce05a8e921fef185b7d60791766822a320f1950493554cbac7e410e2",
-  "scored_data_fingerprint": "5624c3b417e4c0e42dd35411065f200c38ccfc6b49474f47cb671c2d43a22c6c",
+  "result_fingerprint": "1ee8cc055e54067465c2979c01539327c62c837d83e6f8e4ec0a7fe2d067a44a",
+  "scored_data_fingerprint": "7d1b91aab68a6d5b92dbfb97b9e5e5279abd18435aa398eda00e61ab3a378aa6",
   "series": [
     "epoch-chess-puzzles",
     "deepswe-v1.1-pass1",
@@ -192,6 +180,6 @@
   "source_artifact_sha256": "35a7c21ba7d535514ebcf9bbe7b8265d2e2da40ef6b1fa63fe49323c3395a18b",
   "source_attribution": "Epoch AI, AI Benchmarking Hub, 2026",
   "source_license": "CC-BY-4.0",
-  "status": "published_governed_index",
+  "status": "provisional_public_score",
   "validation_valid": true
 }

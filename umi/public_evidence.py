@@ -16,6 +16,7 @@ class PublicEvidenceRecord(ConfigModel):
     raw: float
     complete: bool
     source_name: str
+    source_row_id: str | None = None
     member: str
     field: str
     source_artifact_id: str

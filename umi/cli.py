@@ -220,6 +220,7 @@ def build_parser() -> argparse.ArgumentParser:
     operational_preflight_parser.add_argument("--output")
     edition = subparsers.add_parser("edition")
     edition.add_argument("--edition", required=True, choices=("v0.3", "v0.4", "v0.5"))
+    edition.add_argument("--bundle-dir")
     edition_commands = edition.add_subparsers(dest="edition_command", required=True)
     edition_commands.add_parser("validate")
     edition_commands.add_parser("score")
@@ -425,12 +426,21 @@ def run(args: argparse.Namespace) -> int:
                 None,
             )
             return 0
+        bundle_dir = getattr(args, "bundle_dir", None)
         if args.edition_command == "score":
-            public_payload = score_public_edition(edition_name=args.edition)
+            public_payload = score_public_edition(
+                edition_name=args.edition, bundle_dir=bundle_dir
+            )
         elif args.edition_command == "build":
-            public_payload = write_public_artifacts(edition_name=args.edition)
+            public_payload = write_public_artifacts(
+                getattr(args, "output_dir", None),
+                edition_name=args.edition,
+                bundle_dir=bundle_dir,
+            )
         else:
-            public_payload = score_public_edition(edition_name=args.edition)
+            public_payload = score_public_edition(
+                edition_name=args.edition, bundle_dir=bundle_dir
+            )
         _emit(public_payload, getattr(args, "format", "json"), getattr(args, "output", None))
         if public_payload.get("certified"):
             return 0

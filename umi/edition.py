@@ -132,11 +132,22 @@ class PublicNormalizationConfig(ConfigModel):
     logit_eps: float = Field(gt=0, lt=0.1)
     winsor: float = Field(gt=0)
     high_effort_suffixes: tuple[str, ...] = Field(min_length=1)
+    lower_transform: str = "neglog1p"
+    iqr_scale: str = "legacy_mad_iqr"
+    reject_out_of_range: bool = False
+    duplicate_policy: str = "first_seen"
+    excluded_config_ids: tuple[str, ...] = ()
 
     @model_validator(mode="after")
     def validate_suffixes(self) -> PublicNormalizationConfig:
         if any(not item.startswith("_") for item in self.high_effort_suffixes):
             raise ValueError("high-effort suffixes must start with _")
+        if self.lower_transform not in {"neglog1p", "log"}:
+            raise ValueError("lower_transform must be neglog1p or log")
+        if self.iqr_scale not in {"legacy_mad_iqr", "iqr_over_1_349"}:
+            raise ValueError("iqr_scale must be legacy_mad_iqr or iqr_over_1_349")
+        if self.duplicate_policy not in {"first_seen", "declared"}:
+            raise ValueError("duplicate_policy must be first_seen or declared")
         return self
 
 

@@ -10,13 +10,13 @@
   ],
   "edition_id": "umi-public-v0.5",
   "errors": [],
-  "scored_data_fingerprint": "5624c3b417e4c0e42dd35411065f200c38ccfc6b49474f47cb671c2d43a22c6c",
+  "scored_data_fingerprint": "7d1b91aab68a6d5b92dbfb97b9e5e5279abd18435aa398eda00e61ab3a378aa6",
   "v04_reproduction": {
-    "claude-fable-5-max": 54.429636426057556,
-    "claude-opus-5-max": 55.510021169743936,
-    "glm-5.2-max": 54.202702676964044,
-    "gpt-5.6-sol-max": 66.26583886547628,
-    "kimi-k3-max": 59.69066272741414
+    "claude-fable-5-max": 56.282648308051385,
+    "claude-opus-5-max": 57.93300140039848,
+    "glm-5.2-max": 54.18566825659842,
+    "gpt-5.6-sol-max": 68.2381304832757,
+    "kimi-k3-max": 61.49802612989175
   },
   "valid": true
 }

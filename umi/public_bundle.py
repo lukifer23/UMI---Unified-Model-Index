@@ -33,6 +33,7 @@ from umi.public_certificate import (
     verify_epoch_zip,
 )
 from umi.public_evidence import PublicEvidenceRecord, PublicSeriesContract
+from umi.public_paths import resolve_epoch_zip
 
 
 class PublicScoringBundle(ConfigModel):
@@ -80,6 +81,7 @@ def _series_contract(
             raw=item.raw,
             complete=item.complete,
             source_name=item.source_name,
+            source_row_id=item.source_row_id,
             member=spec["member"],
             field=spec["field"],
             source_artifact_id=EPOCH_SNAPSHOT_ID,
@@ -110,10 +112,13 @@ def load_public_scoring_bundle(
     edition_name: str = "v0.5",
     config: PublicEditionConfig | None = None,
     identities: tuple[PublicSystemIdentity, ...] | None = None,
+    bundle_dir: Path | str | None = None,
+    zip_path: Path | str | None = None,
 ) -> PublicScoringBundle:
     edition = config or load_public_edition_config(edition=edition_name)
     loaded = identities or load_public_identities(edition=edition_name)
-    digest = verify_epoch_zip()
+    archive = Path(zip_path) if zip_path is not None else resolve_epoch_zip(bundle_dir)
+    digest = verify_epoch_zip(archive)
     mapping = entity_map_from_identities(loaded, edition=edition_name)
     required = {item.entity_id for item in loaded}
     contracts: list[PublicSeriesContract] = []
@@ -124,11 +129,14 @@ def load_public_scoring_bundle(
         points = epoch_points(
             spec["member"],
             spec["field"],
+            zip_path=archive,
             require_harness=spec.get("harness"),
             identities=loaded,
             panel_filter=spec.get("panel_filter"),
             entity_map=mapping,
             high_effort_suffixes=suffixes,
+            duplicate_policy=edition.normalization.duplicate_policy,
+            excluded_config_ids=edition.normalization.excluded_config_ids,
         )
         contract = _series_contract(spec, points, digest, core[spec["id"]])
         pilots = set(contract.accepted_entity_ids)
@@ -189,6 +197,7 @@ def bundle_points(bundle: PublicScoringBundle, series_id: str) -> tuple[SeriesPo
             raw=item.raw,
             complete=item.complete,
             source_name=item.source_name,
+            source_row_id=item.source_row_id,
         )
         for item in contract.records
     )
