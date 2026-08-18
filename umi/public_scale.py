@@ -9,7 +9,7 @@ from typing import Any
 
 from pydantic import Field, model_validator
 
-from umi.edition import GOVERNED_PUBLIC_INDEX, ConfigModel, PublicEditionConfig
+from umi.edition import V05_ANALYSIS_SURFACES, ConfigModel, PublicEditionConfig
 from umi.public import (
     ROOT,
     _phi,
@@ -197,7 +197,7 @@ def write_public_panels_and_scales(
     *,
     edition_name: str = "v0.5",
 ) -> dict[str, Any]:
-    if edition.release_class != GOVERNED_PUBLIC_INDEX:
+    if edition.release_class not in V05_ANALYSIS_SURFACES:
         raise ValueError("public panels and scales are a governed-index surface")
     if bundle.source_artifact_sha256 != EPOCH_SHA256:
         raise ValueError("panel zip checksum does not match the registry")

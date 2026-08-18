@@ -293,9 +293,9 @@ def build_blocker_report() -> dict[str, Any]:
     report = {
         "report_version": BLOCKER_REPORT_VERSION,
         "edition_id": GOVERNED_EDITION_ID,
-        "status": "published_with_documented_blockers",
+        "status": "provisional_public_score",
         "source_artifact_sha256": EPOCH_SHA256,
-        "headline_published": True,
+        "headline_published": False,
         "unpublished_entity_ids": unpublished,
         "blockers": blockers,
     }

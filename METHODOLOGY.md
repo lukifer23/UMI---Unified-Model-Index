@@ -12,13 +12,19 @@ current policy values; code must not contradict this document. Three editions ar
   Max pilot from frozen public extracts. It does not rewrite v0.3 artifacts, gates, or
   certificates. It is not the governed public index. Classification is in
   `docs/editions/v0.4/CLASSIFICATION.md`.
-- **v0.5 Governed Public** (`umi-public-v0.5`, formula `umi-methodology-v0.5.0`, normalization
-  `umi-normalization-v0.5.0`, `release_class: governed_public_index`) freezes v0.4, independently
-  validates published raw values against
-  the Epoch zip, adds source-interval uncertainty and family ablation, and scores every frozen
-  configuration that has the complete ten-series common core. The five v0.4 Max pilots must
-  reproduce their v0.4 `umi_public` numbers exactly. Named candidates that miss a required series
-  receive diagnostic certificates with `umi_public: null`; they are not added to the headline.
+- **v0.5 Public** (`umi-public-v0.5`, formula `umi-methodology-v0.5.0`, normalization
+  `umi-normalization-v0.5.0`, `release_class: provisional_public_score`) is the first candidate
+  for a governed public index. It is **not** a `certified_public_score`. The precommitted
+  six-domain Capability / three-part Operational Efficiency / three-part Access construct is
+  retained in `config/editions/v0.5/construct.yaml`. The frozen ten-series basket is an
+  `experimental_v0.4_compatible_profile` used only to reproduce v0.4 point scores and to
+  diagnose candidates. Source concentration uses evaluator/run origin with no single-source
+  exemption; Operational Efficiency (DataCurve) and Access Economics (WeirdML) each fail the
+  0.35 cap. CritPt is Artificial Analysis evaluator evidence distributed by Epoch. Effort is
+  never inferred from `_max` / `_high` / `_xhigh` suffixes. A certified headline requires the
+  full construct, identity, source cap, frozen anchors, and uncertainty. Until those gates
+  pass, v0.5 emits `provisional_public_score` and exact blockers. Named candidates that miss a
+  required series receive diagnostic certificates with `umi_public: null`.
 
 All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
 produce identical serialized results and fingerprints across supported Python versions; this is

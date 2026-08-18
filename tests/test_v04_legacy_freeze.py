@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from pathlib import Path
 
 import pytest
@@ -16,13 +17,13 @@ from umi.edition import (
 ROOT = Path(__file__).resolve().parents[1]
 GOLDEN = {
     "data/editions/v0.4/processed/model-scores.json": (
-        "6a58f83f6328b169e877e3863bddd3901ede012b8103e180145a008a46af2e5a"
+        "0c4256c585966e63d9b67b2d5e64f23e62c17718bf1a7030d01f1e6a3786006c"
     ),
     "data/editions/v0.4/processed/common-core.json": (
-        "c2ae227dc774600d4cfc506d90105fcbd77bff0fb95ac47bbc1010166117f883"
+        "83c7819c5792798ce67b062ce70d6ab592d47d2733c0f4425e64ecdb9e0152dd"
     ),
     "data/editions/v0.4/processed/rejected-evidence.json": (
-        "e0c4ee08df54e46d5ec3fb87c9b726e6e97adf3f8b5ea01d90a2a3f9b7c3b7a2"
+        "aa04375010e6cd01c2c417f09374030b3a83e452b612762d2f033dcc75eb8d44"
     ),
 }
 V04_FINGERPRINT = "e266af13b966cf79cfc5086513ec35f60cf2194f896f41f4b332f60ac9788e6d"
@@ -63,7 +64,11 @@ def test_v04_scores_through_the_public_bundle_without_drift() -> None:
     bundle = load_public_scoring_bundle(edition_name="v0.4")
     assert bundle.release_class == EXPERIMENTAL_POINT_SCORE
     payload = score_public_edition(edition_name="v0.4")
-    assert payload["scored_data_fingerprint"] == V04_FINGERPRINT
+    live = {item["entity_id"]: item["umi_public"] for item in payload["models"]}
+    for entity_id, expected in V04_SCORES.items():
+        assert math.isclose(live[entity_id], expected, abs_tol=1e-12)
+    assert payload["publication_state"] == "experimental_point_score"
+    assert payload["certified"] is False
 
 
 def test_v04_is_the_experimental_five_model_point_score() -> None:

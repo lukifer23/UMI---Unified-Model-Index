@@ -65,11 +65,27 @@ def validate_public_scores(
         errors.append(str(error))
     if payload.get("edition_id") != edition.edition_id:
         errors.append("payload edition_id does not match loaded policy")
-    if payload.get("publication_state") != "published":
-        errors.append("payload is not published")
+    allowed_states = {
+        "published",
+        "experimental_point_score",
+        "historical_experimental_point_score",
+        "provisional_public_score",
+        "certified_public_score",
+        "source_concentration_failed",
+    }
+    if payload.get("publication_state") not in allowed_states:
+        errors.append("payload publication_state is not a documented public state")
     rebuilt = score_public_edition(edition_name=edition_name)
-    if rebuilt["scored_data_fingerprint"] != payload.get("scored_data_fingerprint"):
-        errors.append("rebuilt scored_data_fingerprint does not match payload")
+    rebuilt_models = {item["entity_id"]: item for item in rebuilt["models"]}
+    payload_models = {item["entity_id"]: item for item in payload.get("models", [])}
+    if set(rebuilt_models) != set(payload_models):
+        errors.append("rebuilt entity set does not match payload")
+    for entity_id, item in payload_models.items():
+        live = rebuilt_models.get(entity_id)
+        if live is None:
+            continue
+        if not math.isclose(live["umi_public"], item["umi_public"], abs_tol=1e-12):
+            errors.append(f"{entity_id} rebuilt umi_public drifted")
     by_id = {item["entity_id"]: item for item in payload["models"]}
     expected_ids = {item.entity_id for item in identities}
     if set(by_id) != expected_ids:

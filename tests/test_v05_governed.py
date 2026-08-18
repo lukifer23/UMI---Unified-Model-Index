@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from umi.edition import GOVERNED_EDITION_ID, GOVERNED_PUBLIC_INDEX, load_public_edition_config
+from umi.edition import GOVERNED_EDITION_ID, PROVISIONAL_PUBLIC_SCORE, load_public_edition_config
 from umi.feasibility import validate_public_edition_feasibility
 from umi.identity import load_public_identities
 from umi.public import public_series_specs, score_public_edition, series_score
@@ -37,7 +37,7 @@ def test_v05_policy_is_feasible_and_expands_identities() -> None:
     config = load_public_edition_config(edition="v0.5")
     validate_public_edition_feasibility(config)
     assert config.edition_id == GOVERNED_EDITION_ID
-    assert config.release_class == GOVERNED_PUBLIC_INDEX
+    assert config.release_class == PROVISIONAL_PUBLIC_SCORE
     identities = load_public_identities(edition="v0.5")
     assert {item.entity_id for item in identities} == V04_PILOTS | {
         "gemini-3.6-flash-high",
@@ -47,7 +47,7 @@ def test_v05_policy_is_feasible_and_expands_identities() -> None:
 
 def test_governed_public_bundle_binds_typed_zip_evidence() -> None:
     bundle = load_public_scoring_bundle(edition_name="v0.5")
-    assert bundle.release_class == GOVERNED_PUBLIC_INDEX
+    assert bundle.release_class == PROVISIONAL_PUBLIC_SCORE
     assert bundle.source_artifact_sha256 == verify_epoch_zip()
     assert [item.series_id for item in bundle.series] == [
         spec["id"] for spec in public_series_specs(load_public_edition_config(edition="v0.5"))
@@ -147,7 +147,9 @@ def test_named_anchor_panels_and_scales_are_stable() -> None:
 def test_v05_reproduces_v04_pilot_scores() -> None:
     v04 = score_public_edition(edition_name="v0.4")
     v05 = score_public_edition(edition_name="v0.5")
-    assert v05["publication_state"] == "published"
+    assert v05["publication_state"] == "provisional_public_score"
+    assert v05["certified"] is False
+    assert "source_concentration_failed" in v05["eligibility"]["reason_codes"]
     assert len(v05["models"]) == 7
     scored = {item["entity_id"] for item in v05["models"]}
     assert "gpt-5.6-terra-max" not in scored
@@ -172,7 +174,7 @@ def test_v05_validation_and_partial_intervals() -> None:
         assert "epoch-scicode" in item["series_without_intervals"]
     assert uncertainty["family_ablations"]
     certificate = build_public_certificate(payload, report, uncertainty)
-    assert certificate["status"] == "published_governed_index"
+    assert certificate["status"] == "provisional_public_score"
     assert certificate["source_artifact_sha256"] == verify_epoch_zip()
     assert certificate["result_fingerprint"]
     assert certificate["result_fingerprint"] != payload["scored_data_fingerprint"]
@@ -252,7 +254,7 @@ def test_committed_candidate_audits_match_live() -> None:
 def test_blocker_report_is_precise_and_unscored() -> None:
     report = build_blocker_report()
     by_id = {item["blocker_id"]: item for item in report["blockers"]}
-    assert report["headline_published"] is True
+    assert report["headline_published"] is False
     assert by_id["candidate-grok-4.5-high"]["missing_series"] == [
         "epoch-weirdml",
         "weirdml-cost-per-run",
@@ -281,14 +283,16 @@ def test_blocker_report_is_precise_and_unscored() -> None:
         PublicEvidenceBlocker.model_validate({**report["blockers"][0], "umi_public": 50.0})
 
 
-def test_source_concentration_stays_inside_the_cap() -> None:
+def test_source_concentration_applies_cap_to_every_component() -> None:
     concentration = source_concentration(edition_name="v0.5")
     capability = concentration["components"]["capability"]
     assert capability["cap_applied"] is True
-    assert capability["source_shares"]["epoch"] == pytest.approx(0.35)
-    assert capability["largest_share"] == pytest.approx(0.35)
-    assert concentration["components"]["operational_efficiency"]["cap_applied"] is False
-    assert concentration["components"]["access_economics"]["cap_applied"] is False
+    assert capability["source_shares"]["epoch"] == pytest.approx(0.30)
+    assert capability["source_shares"]["artificial-analysis"] == pytest.approx(0.23)
+    assert capability["largest_share"] == pytest.approx(0.30)
+    assert concentration["components"]["operational_efficiency"]["exceeds_cap"] is True
+    assert concentration["components"]["access_economics"]["exceeds_cap"] is True
+    assert concentration["certified_headline_allowed"] is False
 
 
 def test_weight_sensitivity_is_diagnostic_and_preserves_headline() -> None:

@@ -223,6 +223,7 @@ def build_parser() -> argparse.ArgumentParser:
     edition_commands = edition.add_subparsers(dest="edition_command", required=True)
     edition_commands.add_parser("validate")
     edition_commands.add_parser("score")
+    edition_commands.add_parser("build")
     edition_commands.add_parser("dashboard")
     edition_commands.add_parser("audit")
     edition_commands.add_parser("certificate")
@@ -234,6 +235,10 @@ def build_parser() -> argparse.ArgumentParser:
     edition_score = edition_commands.choices["score"]
     edition_score.add_argument("--format", choices=("json", "csv"), default="json")
     edition_score.add_argument("--output")
+    edition_build = edition_commands.choices["build"]
+    edition_build.add_argument("--format", choices=("json", "csv"), default="json")
+    edition_build.add_argument("--output")
+    edition_build.add_argument("--output-dir")
     return parser
 
 
@@ -304,7 +309,7 @@ def _adapt_source(args: argparse.Namespace) -> Any:
 
 def run(args: argparse.Namespace) -> int:
     if args.command == "edition":
-        from umi.edition import GOVERNED_PUBLIC_INDEX, load_public_edition_config
+        from umi.edition import V05_ANALYSIS_SURFACES, load_public_edition_config
         from umi.feasibility import (
             validate_legacy_edition_feasibility,
             validate_public_edition_feasibility,
@@ -344,7 +349,7 @@ def run(args: argparse.Namespace) -> int:
         }
         if (
             args.edition_command in governed_only
-            and public_config.release_class != GOVERNED_PUBLIC_INDEX
+            and public_config.release_class not in V05_ANALYSIS_SURFACES
         ):
             raise SystemExit(
                 f"{public_config.edition_id} is {public_config.release_class}; "
@@ -421,11 +426,17 @@ def run(args: argparse.Namespace) -> int:
             )
             return 0
         if args.edition_command == "score":
+            public_payload = score_public_edition(edition_name=args.edition)
+        elif args.edition_command == "build":
             public_payload = write_public_artifacts(edition_name=args.edition)
         else:
             public_payload = score_public_edition(edition_name=args.edition)
         _emit(public_payload, getattr(args, "format", "json"), getattr(args, "output", None))
-        return 0 if public_payload["publication_state"] == "published" else 0
+        if public_payload.get("certified"):
+            return 0
+        if args.edition_command in {"score", "build"} and public_payload.get("certified") is False:
+            return 0
+        return 0
     if args.command == "operational":
         operational_report = operational_preflight(
             load_task_pack(args.task_pack), load_run_manifest(args.run_manifest)

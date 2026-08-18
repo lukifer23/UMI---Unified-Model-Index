@@ -10,7 +10,7 @@ from typing import Any
 from pydantic import Field, model_validator
 
 from umi.edition import (
-    GOVERNED_PUBLIC_INDEX,
+    V05_ANALYSIS_SURFACES,
     CommonCoreSeries,
     ConfigModel,
     PublicEditionConfig,
@@ -200,7 +200,7 @@ def write_public_scoring_bundle(
     *,
     edition_name: str = "v0.5",
 ) -> dict[str, Any]:
-    if bundle.release_class != GOVERNED_PUBLIC_INDEX:
+    if bundle.release_class not in V05_ANALYSIS_SURFACES:
         raise ValueError("public scoring-bundle artifact is a governed-index surface")
     destination = output_dir or ROOT / "data" / "editions" / edition_name / "processed"
     destination.mkdir(parents=True, exist_ok=True)

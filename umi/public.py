@@ -12,10 +12,15 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, NotRequired, TypedDict
 
-from umi.edition import GOVERNED_PUBLIC_INDEX, PublicEditionConfig, load_public_edition_config
+from umi.edition import (
+    V05_ANALYSIS_SURFACES,
+    PublicEditionConfig,
+    load_public_edition_config,
+)
+from umi.feasibility import validate_public_edition_feasibility
 from umi.identity import PublicSystemIdentity, evidence_matches_entity, load_public_identities
 from umi.public_crosswalk import entity_map_from_crosswalk
-from umi.version import ENGINE_VERSION, PACKAGE_VERSION
+from umi.public_eligibility import decide_public_eligibility
 
 ROOT = Path(__file__).resolve().parents[1]
 EPOCH_ZIP = ROOT / "data" / "sources" / "v0.3" / "epoch-benchmark-data-2026-08-14.zip"
@@ -93,13 +98,9 @@ def _composite_from_row(row: dict[str, str]) -> tuple[bool, tuple[str, ...]]:
 
 
 def _source_effort(row: dict[str, str], config_id: str) -> str | None:
+    del config_id
     effort = str(row.get("Reasoning effort") or "").strip()
-    if effort:
-        return effort
-    for suffix in EFFORT_SUFFIXES:
-        if config_id.endswith(f"_{suffix}"):
-            return suffix
-    return None
+    return effort or None
 
 
 def robust_z(
@@ -207,6 +208,7 @@ def epoch_points(
                 source_effort=_source_effort(row, config_id),
                 source_is_composite=composite,
                 source_fallbacks=fallbacks,
+                reviewed_crosswalk_effort=identity.effort_setting if entity_map else None,
             )
             if not accepted:
                 entity_id = None
@@ -347,6 +349,8 @@ def score_public_edition(
     from umi.public_scale import build_public_panels_and_scales
 
     edition = config or load_public_edition_config(edition=edition_name)
+    validate_public_edition_feasibility(edition)
+    eligibility = decide_public_eligibility(edition)
     loaded = identities or load_public_identities(edition=edition_name)
     identities = loaded
     bundle = load_public_scoring_bundle(
@@ -440,7 +444,7 @@ def score_public_edition(
                 "operational_efficiency": opeff,
                 "access_economics": access,
                 "umi_public": public,
-                "publication_state": "published",
+                "publication_state": eligibility.publication_state,
                 "cost_evidence": access_cost_evidence,
                 "capability_series": capability_series,
                 "operational_series": operational_series,
@@ -485,10 +489,12 @@ def score_public_edition(
         "edition_id": edition.edition_id,
         "formula_version": edition.formula_version,
         "normalization_version": edition.normalization_version,
-        "engine_version": ENGINE_VERSION,
-        "package_version": PACKAGE_VERSION,
+        "engine_version": edition.engine_version,
+        "package_version": edition.package_version,
         "comparison_profile_id": f"{edition.edition_id}/frozen-epoch-common-core",
-        "publication_state": "published",
+        "publication_state": eligibility.publication_state,
+        "certified": eligibility.certified,
+        "eligibility": eligibility.model_dump(mode="json"),
         "required_common_core_coverage": 1.0,
         "scored_data_fingerprint": fingerprint,
         "models": models,
@@ -506,6 +512,9 @@ def write_public_artifacts(
     destination = output_dir or ROOT / "data" / "editions" / edition_name / "processed"
     destination.mkdir(parents=True, exist_ok=True)
     payload = score_public_edition(edition_name=edition_name)
+    frozen_v04 = ROOT / "data" / "editions" / "v0.4" / "processed"
+    if edition_name == "v0.4" and destination.resolve() == frozen_v04.resolve():
+        return payload
     (destination / "model-scores.json").write_text(
         json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
@@ -529,7 +538,7 @@ def write_public_artifacts(
         encoding="utf-8",
     )
     edition = load_public_edition_config(edition=edition_name)
-    if edition.release_class == GOVERNED_PUBLIC_INDEX:
+    if edition.release_class in V05_ANALYSIS_SURFACES:
         from umi.public_bundle import load_public_scoring_bundle, write_public_scoring_bundle
         from umi.public_candidates import write_candidate_audits
         from umi.public_certificate import build_public_certificate

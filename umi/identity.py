@@ -81,9 +81,15 @@ def evidence_matches_entity(
     source_effort: str | None,
     source_is_composite: bool,
     source_fallbacks: tuple[str, ...],
+    reviewed_crosswalk_effort: str | None = None,
 ) -> tuple[bool, str]:
     if source_effort is None or source_effort.lower() in {"unknown", ""}:
-        return False, "unknown effort cannot map to a Max entity"
+        if (
+            reviewed_crosswalk_effort
+            and reviewed_crosswalk_effort.lower() == entity.effort_setting.lower()
+        ):
+            return True, "reviewed crosswalk effort; row effort field blank"
+        return False, "unknown effort cannot map without a reviewed crosswalk"
     if source_effort.lower() != entity.effort_setting.lower():
         return False, "effort does not match the scored entity"
     if entity.entity_kind == EntityKind.FALLBACK_COMPOSITE_SERVICE:

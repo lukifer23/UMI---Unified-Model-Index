@@ -129,8 +129,15 @@ def attach_public_sidecars(payload: dict[str, Any], processed_dir: Path) -> dict
 
 
 def build_public_dashboard(payload: dict[str, Any]) -> dict[str, Any]:
-    if payload.get("publication_state") != "published":
-        raise ValueError("public dashboard requires published umi_public scores")
+    allowed = {
+        "published",
+        "experimental_point_score",
+        "historical_experimental_point_score",
+        "provisional_public_score",
+        "certified_public_score",
+    }
+    if payload.get("publication_state") not in allowed:
+        raise ValueError("public dashboard requires a documented public publication_state")
     models = payload["models"]
     if any(item.get("umi_public") is None for item in models):
         raise ValueError("public dashboard refuses to plot a null umi_public as zero")

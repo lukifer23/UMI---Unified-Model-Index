@@ -18,7 +18,7 @@ def test_dashboard_reads_published_scores_and_does_not_invent_intervals() -> Non
     dashboard = build_public_dashboard(payload)
     by_id = {item["entity_id"]: item for item in payload["models"]}
     assert dashboard["scored_data_fingerprint"] == payload["scored_data_fingerprint"]
-    assert dashboard["publication_state"] == "published"
+    assert dashboard["publication_state"] == "experimental_point_score"
     for row in dashboard["ranking"]:
         source = by_id[row["entity_id"]]
         assert row["umi_public"] == pytest.approx(source["umi_public"], abs=1e-6)
@@ -40,7 +40,7 @@ def test_dashboard_refuses_to_plot_a_null_public_score() -> None:
     with pytest.raises(ValueError, match="null umi_public"):
         build_public_dashboard(payload)
     payload["publication_state"] = "insufficient_common_support"
-    with pytest.raises(ValueError, match="published umi_public"):
+    with pytest.raises(ValueError, match="documented public publication_state"):
         build_public_dashboard(payload)
 
 

@@ -9,9 +9,9 @@
     "gemini-3.6-flash-high",
     "gpt-5.4-2026-03-05-xhigh"
   ],
-  "evidence_fingerprint": "bc636b728785fc81183173a4b14092d2c1fcb704189275a20c8cde896a3fc687",
+  "evidence_fingerprint": "22a3a24dd447e13af106ba6c8f3d384a443f80785ff2db8ad81d42461e8caf97",
   "formula_version": "umi-methodology-v0.5.0",
-  "release_class": "governed_public_index",
+  "release_class": "provisional_public_score",
   "series": [
     {
       "accepted_entity_ids": [

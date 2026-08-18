@@ -120,7 +120,7 @@ def build_public_certificate(
         row["indistinguishable_from"] = tuple(sorted(neighbors[row["entity_id"]]))
     unsigned = {
         "certificate_version": CERTIFICATE_VERSION,
-        "status": "published_governed_index",
+        "status": "provisional_public_score",
         "edition_id": payload["edition_id"],
         "formula_version": payload["formula_version"],
         "scored_data_fingerprint": payload["scored_data_fingerprint"],

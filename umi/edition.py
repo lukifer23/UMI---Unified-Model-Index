@@ -18,11 +18,21 @@ PUBLIC_EDITION_IDS = {
     GOVERNED_EDITION_ID: "umi-methodology-v0.5.0",
 }
 EXPERIMENTAL_POINT_SCORE = "historical_experimental_point_score"
+EXPERIMENTAL_POINT_SCORE_PUBLIC = "experimental_point_score"
+PROVISIONAL_PUBLIC_SCORE = "provisional_public_score"
+CERTIFIED_PUBLIC_SCORE = "certified_public_score"
 GOVERNED_PUBLIC_INDEX = "governed_public_index"
+SOURCE_CONCENTRATION_FAILED = "source_concentration_failed"
+INSUFFICIENT_COMMON_SUPPORT = "insufficient_common_support"
+IDENTITY_UNRESOLVED = "identity_unresolved"
+UNCERTAINTY_INCOMPLETE = "uncertainty_incomplete"
 EDITION_RELEASE_CLASSES = {
     PUBLIC_EDITION_ID: EXPERIMENTAL_POINT_SCORE,
-    GOVERNED_EDITION_ID: GOVERNED_PUBLIC_INDEX,
+    GOVERNED_EDITION_ID: PROVISIONAL_PUBLIC_SCORE,
 }
+V05_ANALYSIS_SURFACES = frozenset(
+    {PROVISIONAL_PUBLIC_SCORE, CERTIFIED_PUBLIC_SCORE, GOVERNED_PUBLIC_INDEX}
+)
 
 
 class ConfigModel(BaseModel):
@@ -59,11 +69,23 @@ class AccessEconomicsSubcomponent(StrEnum):
 
 class CostEvidenceKind(StrEnum):
     PROVIDER_BILLING_RECORD = "provider_billing_record"
+    BENCHMARK_OBSERVED_COST = "benchmark_observed_cost"
+    BENCHMARK_CALCULATED_COST = "benchmark_calculated_cost"
     BENCHMARK_MEASURED_AND_CALCULATED = "benchmark_measured_and_calculated"
     TOKEN_TARIFF_MODEL = "token_tariff_model"
     FIXED_TARIFF_BASKET = "fixed_tariff_basket"
     SOURCE_REPORTED = "source_reported"
+    SOURCE_REPORTED_COST = "source_reported_cost"
     UNKNOWN = "unknown"
+
+
+class SourceRole(StrEnum):
+    BENCHMARK_OWNER = "benchmark_owner"
+    EVALUATOR = "evaluator"
+    RUN_EXECUTOR = "run_executor"
+    DATA_DISTRIBUTOR = "data_distributor"
+    PRICING_AUTHORITY = "pricing_authority"
+    MODEL_DEVELOPER = "model_developer"
 
 
 class PublicOverallWeights(ConfigModel):
@@ -125,6 +147,17 @@ class PublicFamilyDefinition(ConfigModel):
     weight: float = Field(gt=0, le=1)
     correlation_group: str = Field(min_length=1)
     source_organization: str = Field(min_length=1)
+    evaluator_organization: str | None = None
+    run_executor_organization: str | None = None
+    data_distributor: str | None = None
+    benchmark_owner: str | None = None
+
+    def concentration_origin(self) -> str:
+        return (
+            self.evaluator_organization
+            or self.run_executor_organization
+            or self.source_organization
+        )
 
 
 class CommonCoreSeries(ConfigModel):
@@ -178,6 +211,7 @@ class PublicEditionConfig(ConfigModel):
     package_version: str
     policy_mode: str
     release_class: str
+    comparison_profile_id: str | None = None
     weights: PublicWeightConfig
     eligibility: PublicEligibilityConfig
     normalization: PublicNormalizationConfig

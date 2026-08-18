@@ -57,7 +57,7 @@ def test_public_scores_are_published_finite_and_display_invariant() -> None:
     first = score_public_edition()
     second = score_public_edition()
     assert first == second
-    assert first["publication_state"] == "published"
+    assert first["publication_state"] == "experimental_point_score"
     assert first["required_common_core_coverage"] == 1.0
     assert first["scored_data_fingerprint"]
     assert first["scored_data_fingerprint"] == second["scored_data_fingerprint"]
@@ -66,7 +66,7 @@ def test_public_scores_are_published_finite_and_display_invariant() -> None:
     ranks = {item["rank"] for item in first["models"]}
     assert ranks == {1, 2, 3, 4, 5}
     for item in first["models"]:
-        assert item["publication_state"] == "published"
+        assert item["publication_state"] == "experimental_point_score"
         assert item["umi_public"] is not None
         assert item["access_economics"] is not None
         for key in ("capability", "operational_efficiency", "access_economics", "umi_public"):
@@ -163,5 +163,5 @@ def test_write_public_artifacts_round_trips(tmp_path) -> None:
     assert (tmp_path / "common-core.json").is_file()
     assert (tmp_path / "public-dashboard.html").is_file()
     assert (tmp_path / "public-ranking.csv").is_file()
-    assert payload["publication_state"] == "published"
+    assert payload["publication_state"] == "experimental_point_score"
     assert all(item["umi_public"] is not None for item in payload["models"])

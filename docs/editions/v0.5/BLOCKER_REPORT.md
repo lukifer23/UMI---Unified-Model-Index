@@ -4,7 +4,7 @@ This report documents evidence that is genuinely unavailable in the frozen publi
 archive. It does not invent scores, impute missing cells, or lower gates.
 
 Edition: `umi-public-v0.5`. Zip SHA-256: `35a7c21ba7d535514ebcf9bbe7b8265d2e2da40ef6b1fa63fe49323c3395a18b`.
-Status: `published_with_documented_blockers`. Headline remains published for complete common-core rows.
+Status: `provisional_public_score`. Headline remains published for complete common-core rows.
 
 | Blocker | Affected | Missing series | Why it fails | What would resolve it |
 |---|---|---|---|---|

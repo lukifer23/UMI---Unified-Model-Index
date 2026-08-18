@@ -1,0 +1,41 @@
+candidates:
+  - candidate_id: grok-4.5-xai-high
+    named_release: Grok 4.5
+    developer: xAI
+    serving_provider: xAI
+    endpoint_id: grok-4.5
+    reasoning_effort: high
+    entity_kind: first_party_api_service
+    release_state: ga
+    role: primary_v0.5_target
+    notes: Do not call this Max. CursorBench is contamination-risk diagnostic.
+  - candidate_id: gemini-3.1-pro-preview-google
+    named_release: Gemini 3.1 Pro Preview
+    developer: Google DeepMind
+    serving_provider: Google
+    endpoint_id: gemini-3.1-pro-preview
+    reasoning_effort: null
+    entity_kind: first_party_api_service
+    release_state: preview
+    role: primary_v0.5_target
+    notes: Preview is not a stable immutable release. Do not invent High effort.
+  - candidate_id: grok-4.6-xai-high
+    named_release: Grok 4.6
+    developer: xAI
+    reasoning_effort: high
+    entity_kind: first_party_api_service
+    role: intake
+    notes: Intake only unless independent common-profile evidence is mature.
+  - candidate_id: gpt-5.5-xhigh
+    named_release: GPT-5.5
+    developer: OpenAI
+    reasoning_effort: xhigh
+    role: intake
+  - candidate_id: qwen3.8-max
+    named_release: Qwen3.8
+    developer: Alibaba
+    reasoning_effort: max
+    role: intake
+  - candidate_id: muse-spark-1.1
+    named_release: Muse Spark 1.1
+    role: intake

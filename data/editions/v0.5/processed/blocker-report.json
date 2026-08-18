@@ -334,10 +334,10 @@
     }
   ],
   "edition_id": "umi-public-v0.5",
-  "headline_published": true,
+  "headline_published": false,
   "report_version": "umi-public-blocker-report-v0.5",
   "source_artifact_sha256": "35a7c21ba7d535514ebcf9bbe7b8265d2e2da40ef6b1fa63fe49323c3395a18b",
-  "status": "published_with_documented_blockers",
+  "status": "provisional_public_score",
   "unpublished_entity_ids": [
     "grok-4.5-high",
     "gemini-3.1-pro-preview",

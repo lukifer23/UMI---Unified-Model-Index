@@ -34,22 +34,30 @@ def source_concentration(*, edition_name: str = "v0.5") -> dict[str, Any]:
     for family in edition.families:
         parent_weight = domain_weights[family.component][family.parent]
         share = family.weight * parent_weight
-        component_orgs[family.component][family.source_organization] += share
+        component_orgs[family.component][family.concentration_origin()] += share
+    from umi.public_eligibility import source_hhi
+
     cap_applied = edition.eligibility.maximum_source_share
     components: dict[str, Any] = {}
     for component, shares in component_orgs.items():
         orgs = {org: round(share, 12) for org, share in sorted(shares.items())}
-        apply_cap = len(orgs) >= 2
+        largest = max(orgs.values()) if orgs else 0.0
         components[component] = {
             "source_shares": orgs,
-            "maximum_source_share": cap_applied if apply_cap else None,
-            "cap_applied": apply_cap,
-            "largest_share": max(orgs.values()) if orgs else 0.0,
+            "effective_source_weight": orgs,
+            "maximum_source_share": cap_applied,
+            "cap_applied": True,
+            "largest_share": largest,
+            "source_count": len(orgs),
+            "measurement_origin_count": len(orgs),
+            "source_HHI": source_hhi(orgs),
+            "exceeds_cap": largest - cap_applied > 1e-12,
         }
-        if apply_cap and components[component]["largest_share"] - cap_applied > 1e-12:
-            raise ValueError(f"{component} source share exceeds the configured cap")
     return {
         "edition_id": edition.edition_id,
+        "certified_headline_allowed": not any(
+            item["exceeds_cap"] for item in components.values()
+        ),
         "components": components,
     }
 

@@ -10,7 +10,7 @@ from umi.scoring import score_dataset
 
 
 def test_public_package_version_matches_release() -> None:
-    assert __version__ == "0.3.16"
+    assert __version__ == "0.5.0"
 
 
 def test_synthetic_pipeline_is_eligible_traceable_and_cohort_relative(
