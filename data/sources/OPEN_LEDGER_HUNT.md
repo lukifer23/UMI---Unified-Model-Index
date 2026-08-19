@@ -48,6 +48,8 @@ cannot emit `headline_overall`.
 | DeepSWE harness means | Reviewed facts; official ledger cited at SHA-256 `13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971` | Facts and citations only | **Admitted** input / output / steps | Reject | Re-read `trials.json` only for endpoint / tier identity that could promote cache and wall. Do not promote LiteLLM dollars. |
 | DeepSWE endpoint means | Same facts file; diagnostic records | Facts and citations only | Reject until deployment identity | Reject; Fable cost is 432/436 | Same ledger re-read |
 | RootCauseBench v3 final trials | Frozen at `0c3c476e4627978dc54b5c047fd488d40561b4e5`; 2,808 rows / 26 routes; Apache-2.0 | Full artifact | Reject: OpenRouter route has no explicit effort, exact deployment, or request/retry ledger | Reject: `CostUSD` is router-reported and unreconciled | Keep the source review and plot diagnostic; do not map it to a Max pilot or provider billing |
+| ReactBench v1.1 public Trials | 18,105 interactive trial rows; task repository is public | Results are a mutable web interface; no redistributable frozen result artifact or rights record located | Reject: native harness/deployment is not the configured OpenRouter target; Kimi K3 rows omit an explicit effort | Reject: visible per-trial dollar figures have no provider billing reconciliation or complete request/retry history | Retain as a cited discovery only. Do not scrape trajectories or infer Kimi effort; seek a versioned result export with endpoint, effort, and billing bindings. |
+| Instavar visual communication benchmark | Public report names all five pilots and describes 42 result rows / 34 paid calls | Linked source repository returned HTTP 404 on 2026-08-19; therefore no source artifact, license, or checksum is available to freeze | Reject: report says native API routes but does not publish exact snapshot, effort, or configured OpenRouter deployment bindings | Reject: reported API costs are not billing records, and raw request / response / retry records are unavailable | Cite the report as a transparent near-miss only. Reconsider only if the claimed repository becomes publicly available with immutable raw records and reconciled bills. |
 | AA Terminal-Bench tokens | Reviewed public-page facts `2026-08-15` | Facts and citations only | Reject: provider tokens, no attempt rows, `cacheable ≠ cached` | No cost field | Hunt Harbor / Stanford raw dumps for the exact Max five |
 | AA Omniscience tokens / calculated $ | Reviewed public-page facts | Facts and citations only | Reject: totals, not per-attempt means | Reject: calculated $ | Stay parked |
 | AA τ³ / LCR / GDPval ops | Reviewed public-page facts; incomplete columns | Facts and citations only | Reject | Reject | Stay parked unless a per-task dump appears |
@@ -87,6 +89,19 @@ and exact Max-effort identity.
    `browser_computer_use` 0.15 category. Ingest only after license review and an
    exact Max crosswalk. Vendor-claimed BrowseComp scores are claims, not ready
    Efficiency.
+
+6. **ReactBench Trials** — https://www.reactbench.com/data/trials and
+   https://github.com/millionco/reactbench. The live site exposes trial outcomes and
+   route-labelled model rows, but the public repository is the task/harness source,
+   not a versioned result ledger. Its native deployment, Kimi effort, billing, and
+   retry bindings are insufficient for this pilot's exact OpenRouter entities.
+
+7. **Instavar visual communication benchmark** —
+   https://instavar.com/research/agents/frontier-coding-model-visual-benchmark.
+   The report responsibly preserves small-cohort failures and costs, but it calls
+   native routes, lacks exact effort/deployment and provider-billing artifacts, and
+   its claimed public repository URL returned HTTP 404 on 2026-08-19. It is not
+   frozen or admitted.
 
 ## Admission bar (copy of the DeepSWE rule)
 
