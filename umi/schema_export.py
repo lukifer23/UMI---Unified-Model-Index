@@ -17,6 +17,7 @@ from umi.public_freeze import PublicEvidenceFreeze
 from umi.public_scale import PublicAnchorPanelSet, PublicScoreScaleSet
 from umi.public_stability import PublicRankStabilityReport, PublicSourceAblationReport
 from umi.public_uncertainty import PublicUncertaintyReport
+from umi.rootcausebench_review import RootCauseBenchReview
 from umi.schemas import (
     AcceptanceManifest,
     AttemptLedger,
@@ -64,6 +65,7 @@ SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "public-evidence-freeze.schema.json": PublicEvidenceFreeze,
     "public-audit-report.schema.json": PublicationAuditReport,
     "v06-source-audit.schema.json": V06SourceAuditReport,
+    "rootcausebench-v3-review.schema.json": RootCauseBenchReview,
 }
 
 

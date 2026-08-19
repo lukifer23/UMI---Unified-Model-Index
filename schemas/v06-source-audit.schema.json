@@ -91,6 +91,312 @@
       "title": "RequirementAssessment",
       "type": "object"
     },
+    "ResourceObservationSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "attempted_mean": {
+          "minimum": 0,
+          "title": "Attempted Mean",
+          "type": "number"
+        },
+        "field_id": {
+          "title": "Field Id",
+          "type": "string"
+        },
+        "maximum": {
+          "minimum": 0,
+          "title": "Maximum",
+          "type": "number"
+        },
+        "minimum": {
+          "minimum": 0,
+          "title": "Minimum",
+          "type": "number"
+        },
+        "observation_count": {
+          "minimum": 1,
+          "title": "Observation Count",
+          "type": "integer"
+        },
+        "source_column": {
+          "title": "Source Column",
+          "type": "string"
+        },
+        "success_adjusted_mean": {
+          "minimum": 0,
+          "title": "Success Adjusted Mean",
+          "type": "number"
+        },
+        "total": {
+          "minimum": 0,
+          "title": "Total",
+          "type": "number"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field_id",
+        "source_column",
+        "unit",
+        "observation_count",
+        "total",
+        "attempted_mean",
+        "success_adjusted_mean",
+        "minimum",
+        "maximum"
+      ],
+      "title": "ResourceObservationSummary",
+      "type": "object"
+    },
+    "RootCauseBenchModelReview": {
+      "additionalProperties": false,
+      "properties": {
+        "attempts": {
+          "minimum": 1,
+          "title": "Attempts",
+          "type": "integer"
+        },
+        "attempts_per_task": {
+          "minimum": 1,
+          "title": "Attempts Per Task",
+          "type": "integer"
+        },
+        "candidate_pilot_id": {
+          "title": "Candidate Pilot Id",
+          "type": "string"
+        },
+        "configured_agent": {
+          "title": "Configured Agent",
+          "type": "string"
+        },
+        "diagnostics": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Diagnostics",
+          "type": "array"
+        },
+        "economics_admitted": {
+          "title": "Economics Admitted",
+          "type": "boolean"
+        },
+        "efficiency_admitted": {
+          "title": "Efficiency Admitted",
+          "type": "boolean"
+        },
+        "exact_pilot_configuration_match": {
+          "title": "Exact Pilot Configuration Match",
+          "type": "boolean"
+        },
+        "explicit_inference_effort": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Explicit Inference Effort"
+        },
+        "final_trial_errors": {
+          "minimum": 0,
+          "title": "Final Trial Errors",
+          "type": "integer"
+        },
+        "mean_graded_reward": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Mean Graded Reward",
+          "type": "number"
+        },
+        "pass_rate": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Pass Rate",
+          "type": "number"
+        },
+        "resource_observations": {
+          "items": {
+            "$ref": "#/$defs/ResourceObservationSummary"
+          },
+          "title": "Resource Observations",
+          "type": "array"
+        },
+        "scoring_disposition": {
+          "title": "Scoring Disposition",
+          "type": "string"
+        },
+        "source_model_id": {
+          "title": "Source Model Id",
+          "type": "string"
+        },
+        "successful_final_trials": {
+          "minimum": 1,
+          "title": "Successful Final Trials",
+          "type": "integer"
+        },
+        "task_count": {
+          "minimum": 1,
+          "title": "Task Count",
+          "type": "integer"
+        },
+        "unique_trial_directories": {
+          "minimum": 1,
+          "title": "Unique Trial Directories",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "candidate_pilot_id",
+        "source_model_id",
+        "configured_agent",
+        "attempts",
+        "successful_final_trials",
+        "pass_rate",
+        "mean_graded_reward",
+        "task_count",
+        "attempts_per_task",
+        "unique_trial_directories",
+        "final_trial_errors",
+        "resource_observations",
+        "exact_pilot_configuration_match",
+        "efficiency_admitted",
+        "economics_admitted",
+        "scoring_disposition",
+        "diagnostics"
+      ],
+      "title": "RootCauseBenchModelReview",
+      "type": "object"
+    },
+    "RootCauseBenchReview": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_cohort_sufficient": {
+          "title": "Anchor Cohort Sufficient",
+          "type": "boolean"
+        },
+        "blockers": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Blockers",
+          "type": "array"
+        },
+        "configured_attempts_per_task": {
+          "minimum": 1,
+          "title": "Configured Attempts Per Task",
+          "type": "integer"
+        },
+        "configured_timeout_seconds": {
+          "minimum": 1,
+          "title": "Configured Timeout Seconds",
+          "type": "integer"
+        },
+        "final_trial_row_count": {
+          "minimum": 1,
+          "title": "Final Trial Row Count",
+          "type": "integer"
+        },
+        "full_cohort_model_count": {
+          "minimum": 8,
+          "title": "Full Cohort Model Count",
+          "type": "integer"
+        },
+        "headline_eligible": {
+          "title": "Headline Eligible",
+          "type": "boolean"
+        },
+        "headline_overall": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Headline Overall"
+        },
+        "license_id": {
+          "title": "License Id",
+          "type": "string"
+        },
+        "models": {
+          "items": {
+            "$ref": "#/$defs/RootCauseBenchModelReview"
+          },
+          "title": "Models",
+          "type": "array"
+        },
+        "redistribution_scope": {
+          "title": "Redistribution Scope",
+          "type": "string"
+        },
+        "report_version": {
+          "title": "Report Version",
+          "type": "string"
+        },
+        "review_fingerprint": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Review Fingerprint",
+          "type": "string"
+        },
+        "scoring_disposition": {
+          "title": "Scoring Disposition",
+          "type": "string"
+        },
+        "source_artifact_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Artifact Ids",
+          "type": "array"
+        },
+        "source_artifact_sha256": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Source Artifact Sha256",
+          "type": "object"
+        },
+        "source_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Source Commit",
+          "type": "string"
+        },
+        "source_url": {
+          "title": "Source Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "report_version",
+        "source_url",
+        "source_commit",
+        "source_artifact_ids",
+        "source_artifact_sha256",
+        "license_id",
+        "redistribution_scope",
+        "final_trial_row_count",
+        "full_cohort_model_count",
+        "anchor_cohort_sufficient",
+        "configured_attempts_per_task",
+        "configured_timeout_seconds",
+        "models",
+        "scoring_disposition",
+        "headline_eligible",
+        "blockers",
+        "review_fingerprint"
+      ],
+      "title": "RootCauseBenchReview",
+      "type": "object"
+    },
     "SourceArtifactAssessment": {
       "additionalProperties": false,
       "properties": {
@@ -291,6 +597,9 @@
       "title": "Requirements",
       "type": "array"
     },
+    "rootcausebench_review": {
+      "$ref": "#/$defs/RootCauseBenchReview"
+    },
     "source_artifacts": {
       "items": {
         "$ref": "#/$defs/SourceArtifactAssessment"
@@ -336,6 +645,7 @@
     "models",
     "source_artifacts",
     "requirements",
+    "rootcausebench_review",
     "blockers",
     "unresolved_requirement_ids",
     "v05_scored_data_fingerprint",

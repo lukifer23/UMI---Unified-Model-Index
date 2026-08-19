@@ -84,7 +84,12 @@
   "blockers": [
     {
       "affected_model": "claude-fable-5-max",
-      "complete_cost_entity_ids": [],
+      "complete_cost_entity_ids": [
+        "claude-opus-5-max",
+        "glm-5.2-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max"
+      ],
       "missing_series": "deepswe-mean-cost",
       "reason": "Official DeepSWE v1.1 cost is observed on 432 of 436 scored Fable attempts and cannot enter a complete all-attempt Access series",
       "required_identity": "complete cost observation count",

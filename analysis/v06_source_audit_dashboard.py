@@ -76,6 +76,36 @@ def _requirement_chart(requirements: list[dict[str, Any]]) -> str:
     return "".join(pieces)
 
 
+def _rootcausebench_pass_chart(review: dict[str, Any]) -> str:
+    models = review["models"]
+    width, left, row_height, top = 760, 230, 38, 42
+    usable = width - left - 90
+    height = top + len(models) * row_height + 18
+    pieces = [
+        f'<svg viewBox="0 0 {width} {height}" role="img" '
+        'aria-label="RootCauseBench v3 diagnostic final-trial pass rates">',
+        '<text x="12" y="20" font-size="14" font-weight="600" '
+        'fill="#111827">RootCauseBench v3 diagnostic final-trial pass rates</text>',
+    ]
+    for index, model in enumerate(models):
+        y = top + index * row_height
+        rate = float(model["pass_rate"])
+        pieces.extend(
+            [
+                f'<text x="8" y="{y + 18}" font-size="11" fill="#374151">'
+                f'{_escape(model["candidate_pilot_id"])}</text>',
+                f'<rect x="{left}" y="{y + 4}" width="{usable}" height="20" '
+                'rx="4" fill="#e5e7eb"></rect>',
+                f'<rect x="{left}" y="{y + 4}" width="{usable * rate:.2f}" '
+                'height="20" rx="4" fill="#2563eb"></rect>',
+                f'<text x="{left + usable + 8}" y="{y + 18}" font-size="11" '
+                f'fill="#111827">{rate:.1%}</text>',
+            ]
+        )
+    pieces.append("</svg>")
+    return "".join(pieces)
+
+
 def _partial_score_cell(model: dict[str, Any]) -> str:
     value = model["v05_governed_partial_score"]
     return "not scored" if value is None else f"{float(value):.2f}"
@@ -95,11 +125,13 @@ def build_v06_source_audit_dashboard(report: dict[str, Any] | None = None) -> di
         "gates": audit["gates"],
         "requirements": audit["requirements"],
         "source_artifacts": audit["source_artifacts"],
+        "rootcausebench_review": audit["rootcausebench_review"],
         "models": audit["models"],
         "unresolved_requirement_ids": audit["unresolved_requirement_ids"],
         "charts": [
             {"id": "gate_progress", "title": "Headline gate progress"},
             {"id": "source_requirements", "title": "Public source requirement status"},
+            {"id": "rootcausebench_pass_rate", "title": "RootCauseBench v3 diagnostic pass rates"},
         ],
     }
 
@@ -140,6 +172,15 @@ def render_v06_source_audit_dashboard_html(dashboard: dict[str, Any]) -> str:
         "<td>withheld</td></tr>"
         for item in dashboard["models"]
     )
+    review_rows = "".join(
+        "<tr>"
+        f"<td><code>{_escape(item['candidate_pilot_id'])}</code></td>"
+        f"<td><code>{_escape(item['source_model_id'])}</code></td>"
+        f"<td>{item['attempts']}</td><td>{item['successful_final_trials']}</td>"
+        f"<td>{item['pass_rate']:.1%}</td><td>{item['mean_graded_reward']:.3f}</td>"
+        "</tr>"
+        for item in dashboard["rootcausebench_review"]["models"]
+    )
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -169,6 +210,14 @@ calculated costs, or reviewed facts into a v0.6 Overall score.</div>
 <table><thead><tr><th>Gate</th><th>Observed</th><th>Required</th><th>Status</th></tr></thead>
 <tbody>{gate_rows}</tbody></table>
 {_requirement_chart(dashboard['requirements'])}
+<h2>RootCauseBench v3: frozen diagnostic evidence</h2>
+<p class="note">The blue bars and table below are source observations, not UMI scores. The full
+final-trial cohort is retained, while the missing effort, deployment, billing, and retry bindings
+keep every value diagnostic-only.</p>
+{_rootcausebench_pass_chart(dashboard['rootcausebench_review'])}
+<table><thead><tr><th>Candidate pilot</th><th>Source route</th><th>Final trials</th>
+<th>Passed</th><th>Pass rate</th><th>Mean graded reward</th></tr></thead>
+<tbody>{review_rows}</tbody></table>
 <h2>Why source requirements remain blocked</h2>
 <table><thead><tr><th>Requirement</th><th>Frozen sources</th><th>Status</th>
 <th>Failure</th></tr></thead>

@@ -420,6 +420,14 @@ license, rights scope, organization, URL, existing v0.5 gate observations, and b
 `headline_overall` fields are null. Its portable dashboard visualizes gate progress, source
 admissibility, rights, and five-model coverage; it never computes a score.
 
+`schemas/rootcausebench-v3-review.schema.json` is the machine-readable contract for the separately
+frozen, Apache-2.0 RootCauseBench v3 final-trial review. It binds the four retained source files,
+the upstream commit, complete 26-route / 2,808-final-trial cohort, source-route labels, selected
+pilot rows, and success-adjusted diagnostic resource summaries. The model validators require every
+resource column to cover every retained final trial and force `diagnostic_only`,
+`headline_eligible: false`, and `headline_overall: null`. It cannot crosswalk an omitted effort to
+Max, promote router-reported cost to provider billing, or stand in for missing request/retry history.
+
 ## Public uncertainty, source ablation, and rank stability
 
 `schemas/public-uncertainty.schema.json` is the contract for the 2,048-draw partial

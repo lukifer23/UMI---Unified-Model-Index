@@ -1014,6 +1014,24 @@ produces immutable raw responses and generation metadata, exact deployment verif
 per-attempt telemetry, and admissible billing records, the cohort remains non-scoring and changes no
 Capability, Efficiency, Economics, coverage, confidence, or headline gate.
 
+### RootCauseBench v3 diagnostic review
+
+On 2026-08-19, UMI froze the Apache-2.0 RootCauseBench v3 committed final-trial ledger at upstream
+commit `0c3c476e4627978dc54b5c047fd488d40561b4e5`, including its results, configuration, README,
+and license. The ledger contains 2,808 final trials: 36 scenarios, three final trials per route,
+and 26 OpenRouter routes. It includes all five pilot route labels under the same `terminus-2`
+agent and 1,800-second timeout. The offline review preserves every final row and derives
+source-reported outcome and success-adjusted resource diagnostics per route.
+
+This source changes no scoring formula, coverage, confidence, or eligibility gate. Its frozen
+configuration does not state an effective inference effort, immutable provider snapshot, endpoint,
+service tier, or run-level fallback outcome, so it cannot be crosswalked to any canonical Max
+pilot. Its `CostUSD` column is router-reported source cost, not a provider billing record reconciled
+to an authenticated account. Finally, the published retry policy re-runs infrastructure timeouts,
+but the committed final-trial ledger does not retain immutable request/response or retry-history
+residuals. Therefore the source is `diagnostic_only`: it cannot enter Capability, Efficiency,
+Economics, any coverage denominator, an uncertainty calculation, or an UMI headline.
+
 ## Economics
 
 Headline Economics uses comparable observed cost per successful task. Advertised prices and

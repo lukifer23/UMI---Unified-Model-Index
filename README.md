@@ -31,6 +31,7 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 stability
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 bundle
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.6 validate
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.6 source-audit
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.6 rootcausebench-review
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.6 dashboard
 ```
 
@@ -61,9 +62,12 @@ v0.6 verifies the public-source path for a future five-model Overall release at 
 2026-08-19 UTC evidence boundary. Its [source audit](docs/editions/v0.6/SOURCE_AUDIT.md) and
 [dashboard](data/editions/v0.6/processed/public-source-audit-dashboard.html) show real artifact
 checksums, rights, gate progress, and model coverage. It does **not** publish a score: only the
-Epoch archive is redistributable as a full artifact, while DeepSWE and Artificial Analysis remain
-facts-and-citations. No all-five provider-billing ledger or redistributable attempt residuals is
-admitted, so every v0.6 Overall headline is correctly withheld.
+Epoch archive and a separately quarantined RootCauseBench v3 final-trial ledger are redistributable
+as full artifacts, while DeepSWE and Artificial Analysis remain facts-and-citations. The
+[RootCauseBench review](docs/sources/ROOTCAUSEBENCH_V3.md) validates 2,808 final trials across 26
+routes and shows diagnostic plots, but its unrecorded effort, deployment, billing, and retry history
+bar it from coverage or scoring. No all-five provider-billing ledger or redistributable
+request-level residuals is admitted, so every v0.6 Overall headline is correctly withheld.
 
 Those numbers come from ten frozen Epoch-archive series that cover all five exact `_max`
 identities with 8+ anchors: chess, DeepSWE Pass@1, SciCode, WeirdML, GPQA, OTIS Mock AIME,
@@ -78,7 +82,8 @@ The pilot cohort is Claude Opus 5 Max, Claude Fable 5 Max, GPT-5.6 Sol Max, Kimi
 GLM-5.2 Max. Its frozen sources are Artificial Analysis public facts, Epoch ECI and Benchmarking Hub
 data, AA Terminal-Bench v2.1, AA-Omniscience, AA-LCR, τ³-Banking, GDPval-AA v2, and
 CursorBench 3.2 facts, LM Arena Agent and text/style-control rows, and
-DeepSWE v1.1 facts. Every source row is accepted only through an exact model-and-effort crosswalk.
+DeepSWE v1.1 facts, plus the quarantined RootCauseBench v3 final-trial ledger. Every source row is
+accepted only through an exact model-and-effort crosswalk.
 
 ## Install and verify
 

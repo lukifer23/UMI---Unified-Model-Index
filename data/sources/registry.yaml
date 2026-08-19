@@ -348,3 +348,75 @@ snapshots:
     artifact_path: captures/aa-muse-spark-1.1-page-2026-08-14.yaml
     artifact_sha256: 2938d5bbacea41d44f28cdd70355aecea320151ce15d608f397229ba9ac813a8
     notes: Mutable model page captured only to support exact release-date identity metadata.
+  - id: rootcausebench-v3-results-2026-08-16
+    title: RootCauseBench v3 complete final-trial result ledger
+    source:
+      organization: EdgeDelta
+      url: https://github.com/edgedelta/root-cause-bench
+      accessed: 2026-08-19
+    published: 2026-08-16
+    as_of: 2026-08-16
+    artifact_path: v0.6/rootcausebench-v3-results.json
+    artifact_sha256: b330a0c9672ac193a99710e20f6c181dffe91bf35a1d2aac992fee8a5506dbe5
+    content_type: application/json
+    upstream_revision: 0c3c476e4627978dc54b5c047fd488d40561b4e5
+    adapter_id: rootcausebench-v3-diagnostic-review-v1
+    license_id: Apache-2.0
+    license_url: https://github.com/edgedelta/root-cause-bench/blob/0c3c476e4627978dc54b5c047fd488d40561b4e5/LICENSE
+    attribution: RootCauseBench v3 by EdgeDelta, Apache-2.0 licensed repository
+    redistribution_scope: full_artifact
+    notes: Complete committed 2,808-row final-trial result ledger. It is retained as diagnostic evidence only because source effort, exact deployment, billing reconciliation, and request/retry history are not established.
+  - id: rootcausebench-v3-config-2026-08-16
+    title: RootCauseBench v3 leaderboard configuration
+    source:
+      organization: EdgeDelta
+      url: https://github.com/edgedelta/root-cause-bench
+      accessed: 2026-08-19
+    published: 2026-08-16
+    as_of: 2026-08-16
+    artifact_path: v0.6/rootcausebench-v3-leaderboard-v2-docker.yaml
+    artifact_sha256: bad575990dd88f37fb821b41db42e9718e7b633c2af7add76da59e15095df327
+    content_type: application/yaml
+    upstream_revision: 0c3c476e4627978dc54b5c047fd488d40561b4e5
+    adapter_id: rootcausebench-v3-diagnostic-review-v1
+    license_id: Apache-2.0
+    license_url: https://github.com/edgedelta/root-cause-bench/blob/0c3c476e4627978dc54b5c047fd488d40561b4e5/LICENSE
+    attribution: RootCauseBench v3 by EdgeDelta, Apache-2.0 licensed repository
+    redistribution_scope: full_artifact
+    notes: Frozen public agent, route, task, attempt, and timeout configuration. It names OpenRouter routes and terminus-2 but no explicit reasoning effort, provider snapshot, service tier, endpoint, or fallback record.
+  - id: rootcausebench-v3-readme-2026-08-16
+    title: RootCauseBench v3 frozen-run methodology README
+    source:
+      organization: EdgeDelta
+      url: https://github.com/edgedelta/root-cause-bench
+      accessed: 2026-08-19
+    published: 2026-08-16
+    as_of: 2026-08-16
+    artifact_path: v0.6/rootcausebench-v3-README.md
+    artifact_sha256: 4af8dc03ad15c4aff343209b338bf48e7835fc107710c68f3eec5f413be4d109
+    content_type: text/markdown
+    upstream_revision: 0c3c476e4627978dc54b5c047fd488d40561b4e5
+    adapter_id: rootcausebench-v3-diagnostic-review-v1
+    license_id: Apache-2.0
+    license_url: https://github.com/edgedelta/root-cause-bench/blob/0c3c476e4627978dc54b5c047fd488d40561b4e5/LICENSE
+    attribution: RootCauseBench v3 by EdgeDelta, Apache-2.0 licensed repository
+    redistribution_scope: full_artifact
+    notes: Retained to bind frozen-run dimensions, success definition, timing, and retry policy to the final-trial ledger without recharacterizing those final rows as an all-request billing ledger.
+  - id: rootcausebench-v3-license-2026-08-16
+    title: RootCauseBench Apache-2.0 license text
+    source:
+      organization: EdgeDelta
+      url: https://github.com/edgedelta/root-cause-bench
+      accessed: 2026-08-19
+    published: 2026-08-16
+    as_of: 2026-08-16
+    artifact_path: v0.6/rootcausebench-v3-LICENSE
+    artifact_sha256: 3ed9b1757e6895379155d0f69525d1910a0efa02bf3c406ce665e6bb09df6c85
+    content_type: text/plain
+    upstream_revision: 0c3c476e4627978dc54b5c047fd488d40561b4e5
+    adapter_id: rootcausebench-v3-diagnostic-review-v1
+    license_id: Apache-2.0
+    license_url: https://github.com/edgedelta/root-cause-bench/blob/0c3c476e4627978dc54b5c047fd488d40561b4e5/LICENSE
+    attribution: RootCauseBench v3 by EdgeDelta, Apache-2.0 licensed repository
+    redistribution_scope: full_artifact
+    notes: The frozen upstream Apache-2.0 license text that establishes redistribution rights for the retained source artifacts.

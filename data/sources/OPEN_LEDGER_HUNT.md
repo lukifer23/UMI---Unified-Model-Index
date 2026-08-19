@@ -47,6 +47,7 @@ cannot emit `headline_overall`.
 |---|---|---|---|---|---|
 | DeepSWE harness means | Reviewed facts; official ledger cited at SHA-256 `13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971` | Facts and citations only | **Admitted** input / output / steps | Reject | Re-read `trials.json` only for endpoint / tier identity that could promote cache and wall. Do not promote LiteLLM dollars. |
 | DeepSWE endpoint means | Same facts file; diagnostic records | Facts and citations only | Reject until deployment identity | Reject; Fable cost is 432/436 | Same ledger re-read |
+| RootCauseBench v3 final trials | Frozen at `0c3c476e4627978dc54b5c047fd488d40561b4e5`; 2,808 rows / 26 routes; Apache-2.0 | Full artifact | Reject: OpenRouter route has no explicit effort, exact deployment, or request/retry ledger | Reject: `CostUSD` is router-reported and unreconciled | Keep the source review and plot diagnostic; do not map it to a Max pilot or provider billing |
 | AA Terminal-Bench tokens | Reviewed public-page facts `2026-08-15` | Facts and citations only | Reject: provider tokens, no attempt rows, `cacheable ≠ cached` | No cost field | Hunt Harbor / Stanford raw dumps for the exact Max five |
 | AA Omniscience tokens / calculated $ | Reviewed public-page facts | Facts and citations only | Reject: totals, not per-attempt means | Reject: calculated $ | Stay parked |
 | AA τ³ / LCR / GDPval ops | Reviewed public-page facts; incomplete columns | Facts and citations only | Reject | Reject | Stay parked unless a per-task dump appears |

@@ -19,6 +19,17 @@ source_requirements:
     minimum_redistribution_scope: full_artifact
     requires_exact_deployment: false
     requires_attempt_residuals: false
+  - requirement_id: rootcausebench-v3-final-trial-integrity
+    component: diagnostic
+    description: Licensed, checksum-verified final-trial ledger with all five routes and an 8-plus anchor cohort; retained as diagnostic evidence only.
+    source_artifact_ids:
+      - rootcausebench-v3-results-2026-08-16
+      - rootcausebench-v3-config-2026-08-16
+      - rootcausebench-v3-readme-2026-08-16
+      - rootcausebench-v3-license-2026-08-16
+    minimum_redistribution_scope: full_artifact
+    requires_exact_deployment: false
+    requires_attempt_residuals: false
   - requirement_id: public-context-reliability
     component: capability
     description: Same-harness, 8-plus-anchor factual-reliability evidence for all five exact configurations.

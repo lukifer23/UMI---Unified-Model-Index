@@ -242,6 +242,8 @@ def build_parser() -> argparse.ArgumentParser:
     edition_report.add_argument("--output-dir")
     edition_source_audit = edition_commands.add_parser("source-audit")
     edition_source_audit.add_argument("--output-dir")
+    edition_rootcausebench_review = edition_commands.add_parser("rootcausebench-review")
+    edition_rootcausebench_review.add_argument("--output-dir")
     edition_score = edition_commands.choices["score"]
     edition_score.add_argument("--format", choices=("json", "csv"), default="json")
     edition_score.add_argument("--output")
@@ -358,6 +360,11 @@ def run(args: argparse.Namespace) -> int:
             if args.edition_command == "source-audit":
                 _emit(write_v06_source_audit(edition_output_dir), "json", None)
                 return 0
+            if args.edition_command == "rootcausebench-review":
+                from umi.rootcausebench_review import write_rootcausebench_review
+
+                _emit(write_rootcausebench_review(edition_output_dir), "json", None)
+                return 0
             if args.edition_command == "dashboard":
                 from analysis.v06_source_audit_dashboard import write_v06_source_audit_dashboard
 
@@ -373,7 +380,7 @@ def run(args: argparse.Namespace) -> int:
                 return 0
             raise SystemExit(
                 "umi-public-v0.6 is a strict public-source audit; only validate, "
-                "source-audit, and dashboard are available"
+                "source-audit, rootcausebench-review, and dashboard are available"
             )
         public_config = load_public_edition_config(edition=args.edition)
         edition_output_dir = Path(args.output_dir) if getattr(args, "output_dir", None) else None

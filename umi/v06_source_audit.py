@@ -18,6 +18,12 @@ from pydantic import Field, model_validator
 
 from umi.edition import ConfigModel
 from umi.loading import SourceRegistry, load_source_registry
+from umi.rootcausebench_review import (
+    RootCauseBenchReview,
+    build_rootcausebench_review,
+    validate_rootcausebench_review,
+    write_rootcausebench_review,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 V06_EDITION_ID = "umi-public-v0.6"
@@ -124,6 +130,7 @@ class V06SourceAuditReport(ConfigModel):
     models: tuple[SourceAuditModel, ...]
     source_artifacts: tuple[SourceArtifactAssessment, ...]
     requirements: tuple[RequirementAssessment, ...]
+    rootcausebench_review: RootCauseBenchReview
     blockers: tuple[str, ...]
     unresolved_requirement_ids: tuple[str, ...]
     v05_scored_data_fingerprint: str = Field(pattern=r"^[0-9a-f]{64}$")
@@ -267,6 +274,7 @@ def build_v06_source_audit(root: Path = ROOT) -> dict[str, Any]:
     requirements = tuple(
         _requirement_assessment(item, artifacts) for item in config.source_requirements
     )
+    rootcausebench_review = build_rootcausebench_review(root)
     audit_models = {str(item["entity_id"]): item for item in publication_audit["models"]}
     missing_models = [item for item in config.target_cohort if item not in audit_models]
     if missing_models:
@@ -290,6 +298,7 @@ def build_v06_source_audit(root: Path = ROOT) -> dict[str, Any]:
         "blocker_report": blocker_report,
         "source_artifacts": [artifacts[item].model_dump(mode="json") for item in sorted(artifacts)],
         "requirements": [item.model_dump(mode="json") for item in requirements],
+        "rootcausebench_review": rootcausebench_review,
     }
     report = {
         "report_version": V06_REPORT_VERSION,
@@ -308,6 +317,7 @@ def build_v06_source_audit(root: Path = ROOT) -> dict[str, Any]:
         "models": [item.model_dump(mode="json") for item in models],
         "source_artifacts": [artifacts[item].model_dump(mode="json") for item in sorted(artifacts)],
         "requirements": [item.model_dump(mode="json") for item in requirements],
+        "rootcausebench_review": rootcausebench_review,
         "blockers": reported_blockers,
         "unresolved_requirement_ids": unresolved,
         "v05_scored_data_fingerprint": publication_audit["scored_data_fingerprint"],
@@ -322,6 +332,9 @@ def build_v06_source_audit(root: Path = ROOT) -> dict[str, Any]:
             "No all-five provider-billing ledger, exact-deployment binding, or "
             "redistributable attempt residuals is admitted; headline Overall is withheld "
             "for every target.",
+            "RootCauseBench v3 is locally frozen under Apache-2.0 and its complete final "
+            "trial cohort is revalidated, but effort, deployment, billing, and retry-history "
+            "gaps keep it diagnostic-only.",
         ),
     }
     return V06SourceAuditReport.model_validate(report).model_dump(mode="json")
@@ -390,6 +403,7 @@ def write_v06_source_audit(
     (destination / "public-source-audit.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
+    write_rootcausebench_review(None if output_dir is None else destination, root=root)
     if output_dir is None:
         docs = root / "docs" / "editions" / "v0.6" / "SOURCE_AUDIT.md"
         docs.parent.mkdir(parents=True, exist_ok=True)
@@ -401,12 +415,14 @@ def validate_v06_source_audit(root: Path = ROOT) -> dict[str, Any]:
     report = build_v06_source_audit(root)
     expected_path = root / "data" / "editions" / "v0.6" / "processed" / "public-source-audit.json"
     stored_matches = expected_path.is_file() and _read_json(expected_path) == report
+    rootcausebench_validation = validate_rootcausebench_review(root)
     return {
-        "valid": stored_matches,
+        "valid": stored_matches and rootcausebench_validation["valid"],
         "edition": V06_EDITION_ID,
         "headline_eligible": False,
         "headline_overall": None,
         "publication_state": report["publication_state"],
         "unresolved_requirement_ids": report["unresolved_requirement_ids"],
         "source_audit_fingerprint": report["source_audit_fingerprint"],
+        "rootcausebench_review_fingerprint": rootcausebench_validation["review_fingerprint"],
     }

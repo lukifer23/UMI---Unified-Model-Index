@@ -306,7 +306,8 @@
     "v0.6 verifies frozen public-source provenance and the existing headline gates; it does not score a new Overall.",
     "The Epoch archive is checksum-verified and redistributable, while the public DeepSWE and Artificial Analysis captures remain facts-and-citations only.",
     "The DeepSWE v1.1 public trial ledger was independently reconciled at its pinned checksum, but its raw redistribution scope is not established.",
-    "No all-five provider-billing ledger, exact-deployment binding, or redistributable attempt residuals is admitted; headline Overall is withheld for every target."
+    "No all-five provider-billing ledger, exact-deployment binding, or redistributable attempt residuals is admitted; headline Overall is withheld for every target.",
+    "RootCauseBench v3 is locally frozen under Apache-2.0 and its complete final trial cohort is revalidated, but effort, deployment, billing, and retry-history gaps keep it diagnostic-only."
   ],
   "publication_scope": "strict_public_source_audit",
   "publication_state": "verified_abstention",
@@ -324,6 +325,22 @@
       "requires_exact_deployment": false,
       "source_artifact_ids": [
         "epoch-benchmark-data-2026-08-14"
+      ]
+    },
+    {
+      "component": "diagnostic",
+      "description": "Licensed, checksum-verified final-trial ledger with all five routes and an 8-plus anchor cohort; retained as diagnostic evidence only.",
+      "failures": [],
+      "minimum_redistribution_scope": "full_artifact",
+      "passes": true,
+      "requirement_id": "rootcausebench-v3-final-trial-integrity",
+      "requires_attempt_residuals": false,
+      "requires_exact_deployment": false,
+      "source_artifact_ids": [
+        "rootcausebench-v3-results-2026-08-16",
+        "rootcausebench-v3-config-2026-08-16",
+        "rootcausebench-v3-readme-2026-08-16",
+        "rootcausebench-v3-license-2026-08-16"
       ]
     },
     {
@@ -424,6 +441,452 @@
       ]
     }
   ],
+  "rootcausebench_review": {
+    "anchor_cohort_sufficient": true,
+    "blockers": [
+      "missing-explicit-inference-effort",
+      "missing-verified-exact-deployment",
+      "missing-provider-billing-reconciliation",
+      "missing-request-and-retry-history-residuals"
+    ],
+    "configured_attempts_per_task": 3,
+    "configured_timeout_seconds": 1800,
+    "final_trial_row_count": 2808,
+    "full_cohort_model_count": 26,
+    "headline_eligible": false,
+    "headline_overall": null,
+    "license_id": "Apache-2.0",
+    "models": [
+      {
+        "attempts": 108,
+        "attempts_per_task": 3,
+        "candidate_pilot_id": "claude-fable-5-max",
+        "configured_agent": "terminus-2",
+        "diagnostics": [
+          "OpenRouter route is frozen, but no explicit inference effort crosswalks it to the canonical Max pilot.",
+          "No immutable provider snapshot, endpoint, service tier, or run-level fallback record is retained.",
+          "CostUSD is source-reported router cost, not reconciled provider billing evidence.",
+          "Final trials omit immutable request/response and retry-history residuals, so complete request-level resources cannot be certified.",
+          "Resource values divide all final-trial resources by successful final trials and remain diagnostic only."
+        ],
+        "economics_admitted": false,
+        "efficiency_admitted": false,
+        "exact_pilot_configuration_match": false,
+        "explicit_inference_effort": null,
+        "final_trial_errors": 0,
+        "mean_graded_reward": 0.9675925925925926,
+        "pass_rate": 0.9629629629629629,
+        "resource_observations": [
+          {
+            "attempted_mean": 116305.5925925926,
+            "field_id": "input_tokens",
+            "maximum": 317438.0,
+            "minimum": 35193.0,
+            "observation_count": 108,
+            "source_column": "InputTokens",
+            "success_adjusted_mean": 120778.88461538461,
+            "total": 12561004.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 9172.074074074075,
+            "field_id": "output_tokens",
+            "maximum": 42881.0,
+            "minimum": 2879.0,
+            "observation_count": 108,
+            "source_column": "OutputTokens",
+            "success_adjusted_mean": 9524.846153846154,
+            "total": 990584.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 92655.30555555556,
+            "field_id": "cache_tokens",
+            "maximum": 272529.0,
+            "minimum": 22606.0,
+            "observation_count": 108,
+            "source_column": "CacheTokens",
+            "success_adjusted_mean": 96218.97115384616,
+            "total": 10006773.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 185.08703703703705,
+            "field_id": "duration_seconds",
+            "maximum": 635.0,
+            "minimum": 88.9,
+            "observation_count": 108,
+            "source_column": "DurationSec",
+            "success_adjusted_mean": 192.20576923076925,
+            "total": 19989.4,
+            "unit": "seconds"
+          },
+          {
+            "attempted_mean": 0.8465976111111111,
+            "field_id": "router_reported_cost_usd",
+            "maximum": 3.0616735000000004,
+            "minimum": 0.325212,
+            "observation_count": 108,
+            "source_column": "CostUSD",
+            "success_adjusted_mean": 0.8791590576923076,
+            "total": 91.432542,
+            "unit": "usd"
+          }
+        ],
+        "scoring_disposition": "diagnostic_only",
+        "source_model_id": "openrouter/anthropic/claude-fable-5",
+        "successful_final_trials": 104,
+        "task_count": 36,
+        "unique_trial_directories": 108
+      },
+      {
+        "attempts": 108,
+        "attempts_per_task": 3,
+        "candidate_pilot_id": "claude-opus-5-max",
+        "configured_agent": "terminus-2",
+        "diagnostics": [
+          "OpenRouter route is frozen, but no explicit inference effort crosswalks it to the canonical Max pilot.",
+          "No immutable provider snapshot, endpoint, service tier, or run-level fallback record is retained.",
+          "CostUSD is source-reported router cost, not reconciled provider billing evidence.",
+          "Final trials omit immutable request/response and retry-history residuals, so complete request-level resources cannot be certified.",
+          "Resource values divide all final-trial resources by successful final trials and remain diagnostic only."
+        ],
+        "economics_admitted": false,
+        "efficiency_admitted": false,
+        "exact_pilot_configuration_match": false,
+        "explicit_inference_effort": null,
+        "final_trial_errors": 0,
+        "mean_graded_reward": 0.9814814814814815,
+        "pass_rate": 0.9814814814814815,
+        "resource_observations": [
+          {
+            "attempted_mean": 111683.25,
+            "field_id": "input_tokens",
+            "maximum": 329707.0,
+            "minimum": 38889.0,
+            "observation_count": 108,
+            "source_column": "InputTokens",
+            "success_adjusted_mean": 113790.48113207547,
+            "total": 12061791.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 5723.490740740741,
+            "field_id": "output_tokens",
+            "maximum": 19573.0,
+            "minimum": 3058.0,
+            "observation_count": 108,
+            "source_column": "OutputTokens",
+            "success_adjusted_mean": 5831.481132075472,
+            "total": 618137.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 89339.85185185185,
+            "field_id": "cache_tokens",
+            "maximum": 292645.0,
+            "minimum": 24023.0,
+            "observation_count": 108,
+            "source_column": "CacheTokens",
+            "success_adjusted_mean": 91025.50943396226,
+            "total": 9648704.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 135.13796296296297,
+            "field_id": "duration_seconds",
+            "maximum": 316.3,
+            "minimum": 82.8,
+            "observation_count": 108,
+            "source_column": "DurationSec",
+            "success_adjusted_mean": 137.6877358490566,
+            "total": 14594.9,
+            "unit": "seconds"
+          },
+          {
+            "attempted_mean": 0.32738086342592587,
+            "field_id": "router_reported_cost_usd",
+            "maximum": 0.83263075,
+            "minimum": 0.1804845,
+            "observation_count": 108,
+            "source_column": "CostUSD",
+            "success_adjusted_mean": 0.3335578608490566,
+            "total": 35.35713325,
+            "unit": "usd"
+          }
+        ],
+        "scoring_disposition": "diagnostic_only",
+        "source_model_id": "openrouter/anthropic/claude-opus-5",
+        "successful_final_trials": 106,
+        "task_count": 36,
+        "unique_trial_directories": 108
+      },
+      {
+        "attempts": 108,
+        "attempts_per_task": 3,
+        "candidate_pilot_id": "gpt-5.6-sol-max",
+        "configured_agent": "terminus-2",
+        "diagnostics": [
+          "OpenRouter route is frozen, but no explicit inference effort crosswalks it to the canonical Max pilot.",
+          "No immutable provider snapshot, endpoint, service tier, or run-level fallback record is retained.",
+          "CostUSD is source-reported router cost, not reconciled provider billing evidence.",
+          "Final trials omit immutable request/response and retry-history residuals, so complete request-level resources cannot be certified.",
+          "Resource values divide all final-trial resources by successful final trials and remain diagnostic only."
+        ],
+        "economics_admitted": false,
+        "efficiency_admitted": false,
+        "exact_pilot_configuration_match": false,
+        "explicit_inference_effort": null,
+        "final_trial_errors": 0,
+        "mean_graded_reward": 0.9666666666666667,
+        "pass_rate": 0.9629629629629629,
+        "resource_observations": [
+          {
+            "attempted_mean": 46140.07407407407,
+            "field_id": "input_tokens",
+            "maximum": 187988.0,
+            "minimum": 23661.0,
+            "observation_count": 108,
+            "source_column": "InputTokens",
+            "success_adjusted_mean": 47914.692307692305,
+            "total": 4983128.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 3475.6018518518517,
+            "field_id": "output_tokens",
+            "maximum": 7834.0,
+            "minimum": 2058.0,
+            "observation_count": 108,
+            "source_column": "OutputTokens",
+            "success_adjusted_mean": 3609.278846153846,
+            "total": 375365.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 26499.98148148148,
+            "field_id": "cache_tokens",
+            "maximum": 160732.0,
+            "minimum": 0.0,
+            "observation_count": 108,
+            "source_column": "CacheTokens",
+            "success_adjusted_mean": 27519.21153846154,
+            "total": 2861998.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 105.53611111111111,
+            "field_id": "duration_seconds",
+            "maximum": 209.6,
+            "minimum": 72.7,
+            "observation_count": 108,
+            "source_column": "DurationSec",
+            "success_adjusted_mean": 109.5951923076923,
+            "total": 11397.9,
+            "unit": "seconds"
+          },
+          {
+            "attempted_mean": 0.22441922685185187,
+            "field_id": "router_reported_cost_usd",
+            "maximum": 0.48569475000000006,
+            "minimum": 0.11783700000000001,
+            "observation_count": 108,
+            "source_column": "CostUSD",
+            "success_adjusted_mean": 0.23305073557692307,
+            "total": 24.2372765,
+            "unit": "usd"
+          }
+        ],
+        "scoring_disposition": "diagnostic_only",
+        "source_model_id": "openrouter/openai/gpt-5.6-sol",
+        "successful_final_trials": 104,
+        "task_count": 36,
+        "unique_trial_directories": 108
+      },
+      {
+        "attempts": 108,
+        "attempts_per_task": 3,
+        "candidate_pilot_id": "kimi-k3-max",
+        "configured_agent": "terminus-2",
+        "diagnostics": [
+          "OpenRouter route is frozen, but no explicit inference effort crosswalks it to the canonical Max pilot.",
+          "No immutable provider snapshot, endpoint, service tier, or run-level fallback record is retained.",
+          "CostUSD is source-reported router cost, not reconciled provider billing evidence.",
+          "Final trials omit immutable request/response and retry-history residuals, so complete request-level resources cannot be certified.",
+          "Resource values divide all final-trial resources by successful final trials and remain diagnostic only."
+        ],
+        "economics_admitted": false,
+        "efficiency_admitted": false,
+        "exact_pilot_configuration_match": false,
+        "explicit_inference_effort": null,
+        "final_trial_errors": 0,
+        "mean_graded_reward": 0.9907407407407407,
+        "pass_rate": 0.9907407407407407,
+        "resource_observations": [
+          {
+            "attempted_mean": 89496.93518518518,
+            "field_id": "input_tokens",
+            "maximum": 388909.0,
+            "minimum": 26018.0,
+            "observation_count": 108,
+            "source_column": "InputTokens",
+            "success_adjusted_mean": 90333.35514018692,
+            "total": 9665669.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 4809.9537037037035,
+            "field_id": "output_tokens",
+            "maximum": 15299.0,
+            "minimum": 2175.0,
+            "observation_count": 108,
+            "source_column": "OutputTokens",
+            "success_adjusted_mean": 4854.906542056075,
+            "total": 519475.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 69999.4074074074,
+            "field_id": "cache_tokens",
+            "maximum": 337920.0,
+            "minimum": 17664.0,
+            "observation_count": 108,
+            "source_column": "CacheTokens",
+            "success_adjusted_mean": 70653.60747663552,
+            "total": 7559936.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 250.0175925925926,
+            "field_id": "duration_seconds",
+            "maximum": 641.7,
+            "minimum": 130.0,
+            "observation_count": 108,
+            "source_column": "DurationSec",
+            "success_adjusted_mean": 252.35420560747664,
+            "total": 27001.9,
+            "unit": "seconds"
+          },
+          {
+            "attempted_mean": 0.15197024444444446,
+            "field_id": "router_reported_cost_usd",
+            "maximum": 0.46560300000000004,
+            "minimum": 0.0629862,
+            "observation_count": 108,
+            "source_column": "CostUSD",
+            "success_adjusted_mean": 0.15339052710280376,
+            "total": 16.4127864,
+            "unit": "usd"
+          }
+        ],
+        "scoring_disposition": "diagnostic_only",
+        "source_model_id": "openrouter/moonshotai/kimi-k3",
+        "successful_final_trials": 107,
+        "task_count": 36,
+        "unique_trial_directories": 108
+      },
+      {
+        "attempts": 108,
+        "attempts_per_task": 3,
+        "candidate_pilot_id": "glm-5.2-max",
+        "configured_agent": "terminus-2",
+        "diagnostics": [
+          "OpenRouter route is frozen, but no explicit inference effort crosswalks it to the canonical Max pilot.",
+          "No immutable provider snapshot, endpoint, service tier, or run-level fallback record is retained.",
+          "CostUSD is source-reported router cost, not reconciled provider billing evidence.",
+          "Final trials omit immutable request/response and retry-history residuals, so complete request-level resources cannot be certified.",
+          "Resource values divide all final-trial resources by successful final trials and remain diagnostic only."
+        ],
+        "economics_admitted": false,
+        "efficiency_admitted": false,
+        "exact_pilot_configuration_match": false,
+        "explicit_inference_effort": null,
+        "final_trial_errors": 0,
+        "mean_graded_reward": 0.9814814814814815,
+        "pass_rate": 0.9814814814814815,
+        "resource_observations": [
+          {
+            "attempted_mean": 138120.8148148148,
+            "field_id": "input_tokens",
+            "maximum": 798391.0,
+            "minimum": 30832.0,
+            "observation_count": 108,
+            "source_column": "InputTokens",
+            "success_adjusted_mean": 140726.8679245283,
+            "total": 14917048.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 11149.898148148148,
+            "field_id": "output_tokens",
+            "maximum": 42776.0,
+            "minimum": 3501.0,
+            "observation_count": 108,
+            "source_column": "OutputTokens",
+            "success_adjusted_mean": 11360.27358490566,
+            "total": 1204189.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 91296.3425925926,
+            "field_id": "cache_tokens",
+            "maximum": 627968.0,
+            "minimum": 0.0,
+            "observation_count": 108,
+            "source_column": "CacheTokens",
+            "success_adjusted_mean": 93018.91509433962,
+            "total": 9860005.0,
+            "unit": "tokens"
+          },
+          {
+            "attempted_mean": 437.5472222222222,
+            "field_id": "duration_seconds",
+            "maximum": 1570.0,
+            "minimum": 84.4,
+            "observation_count": 108,
+            "source_column": "DurationSec",
+            "success_adjusted_mean": 445.80283018867925,
+            "total": 47255.1,
+            "unit": "seconds"
+          },
+          {
+            "attempted_mean": 0.11149714761037037,
+            "field_id": "router_reported_cost_usd",
+            "maximum": 0.553084272,
+            "minimum": 0.0325282,
+            "observation_count": 108,
+            "source_column": "CostUSD",
+            "success_adjusted_mean": 0.11360086737660377,
+            "total": 12.04169194192,
+            "unit": "usd"
+          }
+        ],
+        "scoring_disposition": "diagnostic_only",
+        "source_model_id": "openrouter/z-ai/glm-5.2",
+        "successful_final_trials": 106,
+        "task_count": 36,
+        "unique_trial_directories": 108
+      }
+    ],
+    "redistribution_scope": "full_artifact",
+    "report_version": "rootcausebench-v3-diagnostic-review-v1",
+    "review_fingerprint": "08ad9407170b2353ab3dda02822a9033a074b90ae3cf46a440f52a5c84bdf04f",
+    "scoring_disposition": "diagnostic_only",
+    "source_artifact_ids": [
+      "rootcausebench-v3-results-2026-08-16",
+      "rootcausebench-v3-config-2026-08-16",
+      "rootcausebench-v3-readme-2026-08-16",
+      "rootcausebench-v3-license-2026-08-16"
+    ],
+    "source_artifact_sha256": {
+      "rootcausebench-v3-config-2026-08-16": "bad575990dd88f37fb821b41db42e9718e7b633c2af7add76da59e15095df327",
+      "rootcausebench-v3-license-2026-08-16": "3ed9b1757e6895379155d0f69525d1910a0efa02bf3c406ce665e6bb09df6c85",
+      "rootcausebench-v3-readme-2026-08-16": "4af8dc03ad15c4aff343209b338bf48e7835fc107710c68f3eec5f413be4d109",
+      "rootcausebench-v3-results-2026-08-16": "b330a0c9672ac193a99710e20f6c181dffe91bf35a1d2aac992fee8a5506dbe5"
+    },
+    "source_commit": "0c3c476e4627978dc54b5c047fd488d40561b4e5",
+    "source_url": "https://github.com/edgedelta/root-cause-bench"
+  },
   "source_artifacts": [
     {
       "actual_sha256": "7d736d8a6dbbfcf1ea8815ab95847284fc7fdb0ec3e90887ab5cbf198e53d221",
@@ -468,9 +931,53 @@
       "redistribution_scope": "full_artifact",
       "source_organization": "Epoch AI",
       "source_url": "https://epoch.ai/data/benchmark_data.zip"
+    },
+    {
+      "actual_sha256": "bad575990dd88f37fb821b41db42e9718e7b633c2af7add76da59e15095df327",
+      "artifact_id": "rootcausebench-v3-config-2026-08-16",
+      "artifact_path": "data/sources/v0.6/rootcausebench-v3-leaderboard-v2-docker.yaml",
+      "artifact_sha256": "bad575990dd88f37fb821b41db42e9718e7b633c2af7add76da59e15095df327",
+      "checksum_valid": true,
+      "license_id": "Apache-2.0",
+      "redistribution_scope": "full_artifact",
+      "source_organization": "EdgeDelta",
+      "source_url": "https://github.com/edgedelta/root-cause-bench"
+    },
+    {
+      "actual_sha256": "3ed9b1757e6895379155d0f69525d1910a0efa02bf3c406ce665e6bb09df6c85",
+      "artifact_id": "rootcausebench-v3-license-2026-08-16",
+      "artifact_path": "data/sources/v0.6/rootcausebench-v3-LICENSE",
+      "artifact_sha256": "3ed9b1757e6895379155d0f69525d1910a0efa02bf3c406ce665e6bb09df6c85",
+      "checksum_valid": true,
+      "license_id": "Apache-2.0",
+      "redistribution_scope": "full_artifact",
+      "source_organization": "EdgeDelta",
+      "source_url": "https://github.com/edgedelta/root-cause-bench"
+    },
+    {
+      "actual_sha256": "4af8dc03ad15c4aff343209b338bf48e7835fc107710c68f3eec5f413be4d109",
+      "artifact_id": "rootcausebench-v3-readme-2026-08-16",
+      "artifact_path": "data/sources/v0.6/rootcausebench-v3-README.md",
+      "artifact_sha256": "4af8dc03ad15c4aff343209b338bf48e7835fc107710c68f3eec5f413be4d109",
+      "checksum_valid": true,
+      "license_id": "Apache-2.0",
+      "redistribution_scope": "full_artifact",
+      "source_organization": "EdgeDelta",
+      "source_url": "https://github.com/edgedelta/root-cause-bench"
+    },
+    {
+      "actual_sha256": "b330a0c9672ac193a99710e20f6c181dffe91bf35a1d2aac992fee8a5506dbe5",
+      "artifact_id": "rootcausebench-v3-results-2026-08-16",
+      "artifact_path": "data/sources/v0.6/rootcausebench-v3-results.json",
+      "artifact_sha256": "b330a0c9672ac193a99710e20f6c181dffe91bf35a1d2aac992fee8a5506dbe5",
+      "checksum_valid": true,
+      "license_id": "Apache-2.0",
+      "redistribution_scope": "full_artifact",
+      "source_organization": "EdgeDelta",
+      "source_url": "https://github.com/edgedelta/root-cause-bench"
     }
   ],
-  "source_audit_fingerprint": "a59ff93378c8372d68ff666f148dae06ffa102d9d007f243130cf37a48493755",
+  "source_audit_fingerprint": "9c96c7be0c578294ee8e08c0aae72862d0e8ebd40d1c11cff79f06063aaa1ea7",
   "target_cohort": [
     "claude-fable-5-max",
     "claude-opus-5-max",

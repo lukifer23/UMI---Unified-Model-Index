@@ -34,6 +34,7 @@ def test_v06_source_audit_is_deterministic_and_withholds_headline() -> None:
     assert first["publication_state"] == "verified_abstention"
     assert "provider-billed-economics" in first["unresolved_requirement_ids"]
     assert "hierarchical-bootstrap" in first["unresolved_requirement_ids"]
+    assert first["rootcausebench_review"]["scoring_disposition"] == "diagnostic_only"
 
 
 def test_v06_source_audit_checks_real_artifacts_and_rights() -> None:
@@ -45,6 +46,7 @@ def test_v06_source_audit_checks_real_artifacts_and_rights() -> None:
     assert artifacts["deepswe-v1.1-2026-08-13"]["redistribution_scope"] == "facts_only"
     requirements = {item["requirement_id"]: item for item in report["requirements"]}
     assert requirements["common-core-capability"]["passes"] is True
+    assert requirements["rootcausebench-v3-final-trial-integrity"]["passes"] is True
     assert requirements["success-adjusted-efficiency"]["passes"] is False
     efficiency_failures = requirements["success-adjusted-efficiency"]["failures"]
     assert any("facts_only" in item for item in efficiency_failures)
@@ -102,6 +104,7 @@ def test_v06_writers_and_validation_are_deterministic(tmp_path: Path) -> None:
     assert {item["id"] for item in dashboard["charts"]} == {
         "gate_progress",
         "source_requirements",
+        "rootcausebench_pass_rate",
     }
 
 
