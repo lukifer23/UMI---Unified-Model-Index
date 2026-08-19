@@ -1,0 +1,136 @@
+{
+  "$defs": {
+    "PublicCandidateAudit": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "certificate_version": {
+          "title": "Certificate Version",
+          "type": "string"
+        },
+        "config_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Config Ids",
+          "type": "array"
+        },
+        "headline_eligible": {
+          "title": "Headline Eligible",
+          "type": "boolean"
+        },
+        "missing_series": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Series",
+          "type": "array"
+        },
+        "named_release": {
+          "title": "Named Release",
+          "type": "string"
+        },
+        "notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        },
+        "present_series": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Present Series",
+          "type": "object"
+        },
+        "publication_label": {
+          "title": "Publication Label",
+          "type": "string"
+        },
+        "requested_effort": {
+          "title": "Requested Effort",
+          "type": "string"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        },
+        "umi_public": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Umi Public"
+        }
+      },
+      "required": [
+        "certificate_version",
+        "candidate_id",
+        "named_release",
+        "requested_effort",
+        "config_ids",
+        "headline_eligible",
+        "status",
+        "present_series",
+        "missing_series",
+        "notes",
+        "publication_label"
+      ],
+      "title": "PublicCandidateAudit",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "candidates": {
+      "items": {
+        "$ref": "#/$defs/PublicCandidateAudit"
+      },
+      "title": "Candidates",
+      "type": "array"
+    },
+    "certificate_version": {
+      "title": "Certificate Version",
+      "type": "string"
+    },
+    "edition_id": {
+      "title": "Edition Id",
+      "type": "string"
+    },
+    "gate": {
+      "title": "Gate",
+      "type": "string"
+    },
+    "headline_additions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Headline Additions",
+      "type": "array"
+    },
+    "source_artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Artifact Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "certificate_version",
+    "edition_id",
+    "gate",
+    "source_artifact_sha256",
+    "candidates",
+    "headline_additions"
+  ],
+  "title": "PublicCandidateAuditReport",
+  "type": "object"
+}

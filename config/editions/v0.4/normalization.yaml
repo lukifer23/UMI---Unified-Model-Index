@@ -1,0 +1,7 @@
+logit_eps: 0.001
+winsor: 3.0
+high_effort_suffixes:
+  - _max
+  - _xhigh
+  - _high
+  - _promax

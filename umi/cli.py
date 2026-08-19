@@ -226,6 +226,16 @@ def build_parser() -> argparse.ArgumentParser:
     edition_commands.add_parser("dashboard")
     edition_commands.add_parser("audit")
     edition_commands.add_parser("certificate")
+    edition_commands.add_parser("candidates")
+    edition_commands.add_parser("freeze")
+    edition_commands.add_parser("blockers")
+    edition_commands.add_parser("sensitivity")
+    edition_uncertainty = edition_commands.add_parser("uncertainty")
+    edition_uncertainty.add_argument("--draws", type=int, default=2048)
+    edition_commands.add_parser("ablation")
+    edition_commands.add_parser("stability")
+    edition_commands.add_parser("bundle")
+    edition_commands.add_parser("scales")
     edition_score = edition_commands.choices["score"]
     edition_score.add_argument("--format", choices=("json", "csv"), default="json")
     edition_score.add_argument("--output")
@@ -299,7 +309,7 @@ def _adapt_source(args: argparse.Namespace) -> Any:
 
 def run(args: argparse.Namespace) -> int:
     if args.command == "edition":
-        from umi.edition import load_public_edition_config
+        from umi.edition import GOVERNED_PUBLIC_INDEX, load_public_edition_config
         from umi.feasibility import (
             validate_legacy_edition_feasibility,
             validate_public_edition_feasibility,
@@ -329,6 +339,28 @@ def run(args: argparse.Namespace) -> int:
                 return 0
             raise SystemExit("v0.3 edition score remains the legacy umi estimates path")
         public_config = load_public_edition_config(edition=args.edition)
+        governed_only = {
+            "certificate",
+            "candidates",
+            "freeze",
+            "blockers",
+            "sensitivity",
+            "uncertainty",
+            "ablation",
+            "stability",
+            "bundle",
+            "scales",
+        }
+        if (
+            args.edition_command in governed_only
+            and public_config.release_class != GOVERNED_PUBLIC_INDEX
+        ):
+            raise SystemExit(
+                f"{public_config.edition_id} is {public_config.release_class}; "
+                "the governed certificate, candidate audits, evidence freeze, "
+                "blocker report, weight sensitivity, uncertainty, source "
+                "ablation, and rank stability belong to umi-public-v0.5"
+            )
         if args.edition_command == "validate":
             validate_public_edition_feasibility(public_config)
             _emit({"valid": True, "edition": public_config.edition_id}, "json", None)
@@ -358,6 +390,79 @@ def run(args: argparse.Namespace) -> int:
             uncertainty = json.loads((processed / "uncertainty.json").read_text(encoding="utf-8"))
             certificate = build_public_certificate(scores, validation, uncertainty)
             _emit(certificate, "json", None)
+            return 0
+        if args.edition_command == "candidates":
+            from umi.public_candidates import write_candidate_audits
+
+            audits = write_candidate_audits()
+            _emit(audits, "json", None)
+            return 0
+        if args.edition_command == "freeze":
+            from umi.public_freeze import write_evidence_freeze
+
+            _emit(write_evidence_freeze(), "json", None)
+            return 0
+        if args.edition_command == "blockers":
+            from umi.public_governance import write_governance_artifacts
+
+            governance = write_governance_artifacts()
+            _emit(governance["blocker_report"], "json", None)
+            return 0
+        if args.edition_command == "sensitivity":
+            from umi.public_sensitivity import write_weight_sensitivity
+
+            _emit(write_weight_sensitivity(), "json", None)
+            return 0
+        if args.edition_command == "uncertainty":
+            from umi.public_stability import write_rank_stability_artifacts
+            from umi.public_uncertainty import write_public_uncertainty
+
+            processed = Path("data") / "editions" / args.edition / "processed"
+            uncertainty = write_public_uncertainty(
+                output_dir=processed,
+                edition_name=args.edition,
+                draws=args.draws,
+            )
+            write_rank_stability_artifacts(
+                processed, uncertainty=uncertainty, edition_name=args.edition
+            )
+            _emit(uncertainty, "json", None)
+            return 0
+        if args.edition_command == "ablation":
+            from umi.public_stability import write_rank_stability_artifacts
+
+            processed = Path("data") / "editions" / args.edition / "processed"
+            pack = write_rank_stability_artifacts(processed, edition_name=args.edition)
+            _emit(pack["source_ablation"], "json", None)
+            return 0
+        if args.edition_command == "stability":
+            from umi.public_stability import write_rank_stability_artifacts
+
+            processed = Path("data") / "editions" / args.edition / "processed"
+            pack = write_rank_stability_artifacts(processed, edition_name=args.edition)
+            _emit(pack["rank_stability"], "json", None)
+            return 0
+        if args.edition_command == "bundle":
+            from umi.public_bundle import load_public_scoring_bundle, write_public_scoring_bundle
+
+            _emit(
+                write_public_scoring_bundle(load_public_scoring_bundle(edition_name=args.edition)),
+                "json",
+                None,
+            )
+            return 0
+        if args.edition_command == "scales":
+            from umi.public_bundle import load_public_scoring_bundle
+            from umi.public_scale import write_public_panels_and_scales
+
+            _emit(
+                write_public_panels_and_scales(
+                    load_public_scoring_bundle(edition_name=args.edition),
+                    public_config,
+                ),
+                "json",
+                None,
+            )
             return 0
         if args.edition_command == "score":
             public_payload = write_public_artifacts(edition_name=args.edition)

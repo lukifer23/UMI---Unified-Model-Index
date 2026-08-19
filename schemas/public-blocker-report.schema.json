@@ -1,0 +1,138 @@
+{
+  "$defs": {
+    "PublicEvidenceBlocker": {
+      "additionalProperties": false,
+      "properties": {
+        "affected_model": {
+          "title": "Affected Model",
+          "type": "string"
+        },
+        "blocker_id": {
+          "title": "Blocker Id",
+          "type": "string"
+        },
+        "missing_series": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Series",
+          "type": "array"
+        },
+        "notes": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        },
+        "present_series": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Present Series",
+          "type": "object"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "required_identity": {
+          "title": "Required Identity",
+          "type": "string"
+        },
+        "resolving_evidence": {
+          "title": "Resolving Evidence",
+          "type": "string"
+        },
+        "sources_investigated": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Sources Investigated",
+          "type": "array"
+        },
+        "umi_public": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Umi Public"
+        },
+        "urls_investigated": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Urls Investigated",
+          "type": "array"
+        }
+      },
+      "required": [
+        "blocker_id",
+        "affected_model",
+        "missing_series",
+        "required_identity",
+        "sources_investigated",
+        "urls_investigated",
+        "reason",
+        "resolving_evidence"
+      ],
+      "title": "PublicEvidenceBlocker",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "blockers": {
+      "items": {
+        "$ref": "#/$defs/PublicEvidenceBlocker"
+      },
+      "title": "Blockers",
+      "type": "array"
+    },
+    "edition_id": {
+      "title": "Edition Id",
+      "type": "string"
+    },
+    "headline_published": {
+      "title": "Headline Published",
+      "type": "boolean"
+    },
+    "report_version": {
+      "title": "Report Version",
+      "type": "string"
+    },
+    "source_artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Artifact Sha256",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "unpublished_entity_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unpublished Entity Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "report_version",
+    "edition_id",
+    "status",
+    "source_artifact_sha256",
+    "headline_published",
+    "unpublished_entity_ids",
+    "blockers"
+  ],
+  "title": "PublicBlockerReport",
+  "type": "object"
+}

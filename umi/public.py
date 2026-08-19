@@ -12,34 +12,22 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, NotRequired, TypedDict
 
-from umi.edition import PublicEditionConfig, load_public_edition_config
+from umi.edition import GOVERNED_PUBLIC_INDEX, PublicEditionConfig, load_public_edition_config
 from umi.identity import PublicSystemIdentity, evidence_matches_entity, load_public_identities
+from umi.public_crosswalk import entity_map_from_crosswalk
 from umi.version import ENGINE_VERSION, PACKAGE_VERSION
 
 ROOT = Path(__file__).resolve().parents[1]
 EPOCH_ZIP = ROOT / "data" / "sources" / "v0.3" / "epoch-benchmark-data-2026-08-14.zip"
-PILOT_MAP = {
-    "claude-opus-5_max": "claude-opus-5-max",
-    "claude-fable-5_max": "claude-fable-5-max",
-    "gpt-5.6-sol_max": "gpt-5.6-sol-max",
-    "kimi-k3_max": "kimi-k3-max",
-    "glm-5.2_max": "glm-5.2-max",
-}
 EFFORT_SUFFIXES = ("promax", "xhigh", "high", "medium", "low", "max")
-
-
-def config_id_for_entity(entity_id: str) -> str:
-    for suffix in EFFORT_SUFFIXES:
-        token = f"-{suffix}"
-        if entity_id.endswith(token):
-            return f"{entity_id[: -len(token)]}_{suffix}"
-    raise ValueError(f"entity {entity_id} has no effort suffix")
 
 
 def entity_map_from_identities(
     identities: tuple[PublicSystemIdentity, ...],
+    *,
+    edition: str,
 ) -> dict[str, str]:
-    return {config_id_for_entity(item.entity_id): item.entity_id for item in identities}
+    return entity_map_from_crosswalk(identities, edition=edition)
 INCOMPLETE_COST = {"claude-fable-5_max"}
 HIGH_EFFORT_SUFFIXES = ("_max", "_xhigh", "_high", "_promax")
 LOGIT_EPS = 1e-3
@@ -54,6 +42,7 @@ class SeriesSpec(TypedDict):
     component: str
     domain: str
     family_weight: float
+    anchor_panel_id: str
     harness: NotRequired[str]
     panel_filter: NotRequired[str]
 
@@ -71,13 +60,13 @@ def _phi(z: float) -> float:
     return 0.5 * (1.0 + math.erf(z / math.sqrt(2.0)))
 
 
-def _logit(value: float) -> float:
-    clipped = min(max(value, LOGIT_EPS), 1.0 - LOGIT_EPS)
+def _logit(value: float, eps: float = LOGIT_EPS) -> float:
+    clipped = min(max(value, eps), 1.0 - eps)
     return math.log(clipped / (1.0 - clipped))
 
 
-def transform_proportion(raw: float) -> float:
-    return _logit(raw)
+def transform_proportion(raw: float, eps: float = LOGIT_EPS) -> float:
+    return _logit(raw, eps)
 
 
 def transform_lower_better(raw: float, offset: float = 1.0) -> float:
@@ -113,7 +102,12 @@ def _source_effort(row: dict[str, str], config_id: str) -> str | None:
     return None
 
 
-def robust_z(value: float, panel: tuple[float, ...]) -> tuple[float, float, float]:
+def robust_z(
+    value: float,
+    panel: tuple[float, ...],
+    *,
+    winsor: float = WINSOR,
+) -> tuple[float, float, float]:
     ordered = sorted(panel)
     mid = len(ordered) // 2
     median = ordered[mid] if len(ordered) % 2 else (ordered[mid - 1] + ordered[mid]) / 2
@@ -129,19 +123,29 @@ def robust_z(value: float, panel: tuple[float, ...]) -> tuple[float, float, floa
     if sigma <= 1e-12:
         raise ValueError("anchor panel has no robust scale")
     z = (value - median) / sigma
-    z = min(max(z, -WINSOR), WINSOR)
+    z = min(max(z, -winsor), winsor)
     return z, median, sigma
 
 
-def series_score(raw: float, panel: tuple[float, ...], *, kind: str) -> dict[str, float]:
+def series_score(
+    raw: float,
+    panel: tuple[float, ...],
+    *,
+    kind: str,
+    logit_eps: float = LOGIT_EPS,
+    winsor: float = WINSOR,
+) -> dict[str, float]:
     transformed_panel = tuple(
-        transform_proportion(item) if kind == "proportion" else transform_lower_better(item)
+        transform_proportion(item, logit_eps)
+        if kind == "proportion"
+        else transform_lower_better(item)
         for item in panel
     )
-    transformed = (
-        transform_proportion(raw) if kind == "proportion" else transform_lower_better(raw)
-    )
-    z, median, sigma = robust_z(transformed, transformed_panel)
+    if kind == "proportion":
+        transformed = transform_proportion(raw, logit_eps)
+    else:
+        transformed = transform_lower_better(raw)
+    z, median, sigma = robust_z(transformed, transformed_panel, winsor=winsor)
     return {
         "raw": raw,
         "transformed": transformed,
@@ -174,9 +178,10 @@ def epoch_points(
     identities: tuple[PublicSystemIdentity, ...] | None = None,
     panel_filter: str | None = None,
     entity_map: dict[str, str] | None = None,
+    high_effort_suffixes: tuple[str, ...] = HIGH_EFFORT_SUFFIXES,
 ) -> tuple[SeriesPoint, ...]:
     known = {item.entity_id: item for item in identities} if identities is not None else None
-    mapping = entity_map if entity_map is not None else PILOT_MAP
+    mapping = entity_map if entity_map is not None else {}
     seen: set[str] = set()
     points: list[SeriesPoint] = []
     for row in load_epoch_member(member):
@@ -186,7 +191,7 @@ def epoch_points(
         if raw_value is None:
             continue
         config_id = str(row["Model version"])
-        if panel_filter == "high_effort" and not config_id.endswith(HIGH_EFFORT_SUFFIXES):
+        if panel_filter == "high_effort" and not config_id.endswith(high_effort_suffixes):
             continue
         if config_id in seen:
             continue
@@ -226,119 +231,50 @@ def deepswe_points(field: str, *, require_complete_cost: bool = False) -> tuple[
     )
 
 
-def _pilot_scores(points: tuple[SeriesPoint, ...], kind: str) -> dict[str, dict[str, float]]:
-    panel = tuple(item.raw for item in points)
-    if len(panel) < 8:
-        raise ValueError("anchor panel smaller than 8")
+def _pilot_scores(
+    points: tuple[SeriesPoint, ...],
+    scale: Any,
+) -> dict[str, dict[str, float]]:
+    from umi.public_scale import PublicScoreScale, apply_public_scale
+
+    if not isinstance(scale, PublicScoreScale):
+        raise TypeError("public scoring requires a PublicScoreScale")
+    if len(points) != scale.n:
+        raise ValueError(f"{scale.series_id} panel n drifted from the named scale")
     scores: dict[str, dict[str, float]] = {}
     for item in points:
         if item.entity_id is None:
             continue
-        scores[item.entity_id] = series_score(item.raw, panel, kind=kind)
+        scores[item.entity_id] = apply_public_scale(item.raw, scale)
     return scores
+
+
+def public_series_specs(edition: PublicEditionConfig) -> tuple[SeriesSpec, ...]:
+    families = {item.id: item for item in edition.families}
+    specs: list[SeriesSpec] = []
+    for series in edition.common_core:
+        family = families[series.family_id]
+        spec: SeriesSpec = {
+            "id": series.series_id,
+            "member": series.member,
+            "field": series.field,
+            "kind": series.kind,
+            "component": family.component,
+            "domain": family.parent,
+            "family_weight": family.weight,
+            "anchor_panel_id": series.anchor_panel_id,
+        }
+        if series.harness:
+            spec["harness"] = series.harness
+        if series.panel_filter:
+            spec["panel_filter"] = series.panel_filter
+        specs.append(spec)
+    return tuple(specs)
 
 
 def _digest(payload: dict[str, Any]) -> str:
     canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False)
     return hashlib.sha256(canonical.encode()).hexdigest()
-
-
-SERIES: tuple[SeriesSpec, ...] = (
-    {
-        "id": "epoch-chess-puzzles",
-        "member": "chess_puzzles.csv",
-        "field": "mean_score",
-        "kind": "proportion",
-        "component": "capability",
-        "domain": "general_reasoning_and_knowledge",
-        "family_weight": 1.0,
-    },
-    {
-        "id": "deepswe-v1.1-pass1",
-        "member": "deepswe_external.csv",
-        "field": "Pass@1",
-        "kind": "proportion",
-        "component": "capability",
-        "domain": "software_engineering",
-        "family_weight": 0.55,
-        "harness": "mini-swe-agent",
-    },
-    {
-        "id": "epoch-scicode",
-        "member": "scicode_external.csv",
-        "field": "Score",
-        "kind": "proportion",
-        "component": "capability",
-        "domain": "software_engineering",
-        "family_weight": 0.45,
-    },
-    {
-        "id": "epoch-weirdml",
-        "member": "weirdml_external.csv",
-        "field": "Accuracy",
-        "kind": "proportion",
-        "component": "capability",
-        "domain": "agentic_and_tool_mediated_work",
-        "family_weight": 1.0,
-    },
-    {
-        "id": "epoch-gpqa",
-        "member": "gpqa_diamond.csv",
-        "field": "mean_score",
-        "kind": "proportion",
-        "component": "capability",
-        "domain": "mathematics_and_science",
-        "family_weight": 0.50,
-    },
-    {
-        "id": "epoch-otis-aime",
-        "member": "otis_mock_aime_2024_2025.csv",
-        "field": "mean_score",
-        "kind": "proportion",
-        "component": "capability",
-        "domain": "mathematics_and_science",
-        "family_weight": 0.25,
-    },
-    {
-        "id": "epoch-critpt",
-        "member": "critpt_external.csv",
-        "field": "Accuracy",
-        "kind": "proportion",
-        "component": "capability",
-        "domain": "mathematics_and_science",
-        "family_weight": 0.25,
-    },
-    {
-        "id": "deepswe-output-tokens",
-        "member": "deepswe_external.csv",
-        "field": "Mean output tokens",
-        "kind": "lower",
-        "component": "operational_efficiency",
-        "domain": "task_resource_intensity",
-        "family_weight": 1.0,
-        "harness": "mini-swe-agent",
-    },
-    {
-        "id": "deepswe-agent-steps",
-        "member": "deepswe_external.csv",
-        "field": "Mean agent steps",
-        "kind": "lower",
-        "component": "operational_efficiency",
-        "domain": "task_completion_time_and_steps",
-        "family_weight": 1.0,
-        "harness": "mini-swe-agent",
-    },
-    {
-        "id": "weirdml-cost-per-run",
-        "member": "weirdml_external.csv",
-        "field": "Cost per run",
-        "kind": "lower",
-        "component": "access_economics",
-        "domain": "public_benchmark_task_cost",
-        "family_weight": 1.0,
-        "panel_filter": "high_effort",
-    },
-)
 
 
 def _weighted_sum(parts: list[tuple[float, float]]) -> float:
@@ -407,10 +343,17 @@ def score_public_edition(
     edition_name: str = "v0.4",
     identities: tuple[PublicSystemIdentity, ...] | None = None,
 ) -> dict[str, Any]:
+    from umi.public_bundle import bundle_points, load_public_scoring_bundle
+    from umi.public_scale import build_public_panels_and_scales
+
     edition = config or load_public_edition_config(edition=edition_name)
     loaded = identities or load_public_identities(edition=edition_name)
-    mapping = entity_map_from_identities(loaded)
     identities = loaded
+    bundle = load_public_scoring_bundle(
+        edition_name=edition_name,
+        config=edition,
+        identities=identities,
+    )
     domain_weights = {
         item.value: weight for item, weight in edition.weights.capability_domains.items()
     }
@@ -420,31 +363,22 @@ def score_public_edition(
     access_weights = {
         item.value: weight for item, weight in edition.weights.access_economics.items()
     }
+    families = {item.id: item for item in edition.families}
+    access_cost_evidence = next(
+        series.cost_evidence
+        for series in edition.common_core
+        if families[series.family_id].component == "access_economics"
+    )
+    if access_cost_evidence != "source_reported":
+        raise ValueError("public Access cost_evidence must be source_reported")
+    specs = public_series_specs(edition)
+    _panels, scales = build_public_panels_and_scales(bundle, edition)
+    scale_by_series = {item.series_id: item for item in scales}
     scored_series: dict[str, dict[str, dict[str, float]]] = {}
     anchors: dict[str, dict[str, Any]] = {}
-    blockers: list[dict[str, Any]] = []
-    required = {item.entity_id for item in identities}
-    for spec in SERIES:
-        points = epoch_points(
-            spec["member"],
-            spec["field"],
-            require_harness=spec.get("harness"),
-            identities=identities,
-            panel_filter=spec.get("panel_filter"),
-            entity_map=mapping,
-        )
-        pilots = {item.entity_id for item in points if item.entity_id}
-        if pilots != required or len(points) < edition.eligibility.minimum_anchor_panel:
-            blockers.append(
-                {
-                    "series": spec["id"],
-                    "pilots": sorted(item for item in pilots if item is not None),
-                    "anchor_n": len(points),
-                    "reason": "series missing a pilot or an 8+ anchor panel",
-                }
-            )
-            continue
-        scored_series[spec["id"]] = _pilot_scores(points, spec["kind"])
+    for spec in specs:
+        points = bundle_points(bundle, spec["id"])
+        scored_series[spec["id"]] = _pilot_scores(points, scale_by_series[spec["id"]])
         anchors[spec["id"]] = {
             "member": spec["member"],
             "field": spec["field"],
@@ -453,14 +387,12 @@ def score_public_edition(
             "panel_filter": spec.get("panel_filter"),
             "source": f"epoch-benchmark-data-2026-08-14.zip:{spec['member']}",
         }
-    if blockers:
-        raise ValueError("required public series failed: " + str(blockers))
 
     models: list[dict[str, Any]] = []
     for identity in identities:
         cap_parts: dict[str, float] = {}
         capability_series: dict[str, dict[str, float]] = {}
-        for spec in SERIES:
+        for spec in specs:
             if spec["component"] != "capability":
                 continue
             detail = scored_series[spec["id"]][identity.entity_id]
@@ -473,7 +405,7 @@ def score_public_edition(
         )
         operational_series: dict[str, dict[str, float]] = {}
         opeff_parts: list[tuple[float, float]] = []
-        for spec in SERIES:
+        for spec in specs:
             if spec["component"] != "operational_efficiency":
                 continue
             detail = scored_series[spec["id"]][identity.entity_id]
@@ -482,7 +414,7 @@ def score_public_edition(
         opeff = _weighted_sum(opeff_parts)
         access_series: dict[str, dict[str, float]] = {}
         access_parts: list[tuple[float, float]] = []
-        for spec in SERIES:
+        for spec in specs:
             if spec["component"] != "access_economics":
                 continue
             detail = scored_series[spec["id"]][identity.entity_id]
@@ -509,7 +441,7 @@ def score_public_edition(
                 "access_economics": access,
                 "umi_public": public,
                 "publication_state": "published",
-                "cost_evidence": "source_reported",
+                "cost_evidence": access_cost_evidence,
                 "capability_series": capability_series,
                 "operational_series": operational_series,
                 "access_series": access_series,
@@ -523,7 +455,7 @@ def score_public_edition(
             "edition_id": edition.edition_id,
             "formula_version": edition.formula_version,
             "normalization_version": edition.normalization_version,
-            "series": [spec["id"] for spec in SERIES],
+            "series": [spec["id"] for spec in specs],
             "weights": edition.weights.model_dump(mode="json"),
             "models": [
                 {
@@ -561,7 +493,7 @@ def score_public_edition(
         "scored_data_fingerprint": fingerprint,
         "models": models,
         "blockers": _diagnostic_blockers(),
-        "series": [spec["id"] for spec in SERIES],
+        "series": [spec["id"] for spec in specs],
         "anchors": anchors,
     }
 
@@ -596,8 +528,14 @@ def write_public_artifacts(
         + "\n",
         encoding="utf-8",
     )
-    if edition_name == "v0.5":
+    edition = load_public_edition_config(edition=edition_name)
+    if edition.release_class == GOVERNED_PUBLIC_INDEX:
+        from umi.public_bundle import load_public_scoring_bundle, write_public_scoring_bundle
+        from umi.public_candidates import write_candidate_audits
         from umi.public_certificate import build_public_certificate
+        from umi.public_freeze import write_evidence_freeze
+        from umi.public_governance import write_governance_artifacts
+        from umi.public_stability import write_rank_stability_artifacts
         from umi.public_uncertainty import quantify_public_uncertainty
         from umi.public_validate import validate_public_scores
 
@@ -611,15 +549,42 @@ def write_public_artifacts(
         (destination / "uncertainty.json").write_text(
             json.dumps(uncertainty, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
+        stability_pack = write_rank_stability_artifacts(
+            destination, payload, uncertainty, edition_name=edition_name
+        )
         certificate = build_public_certificate(payload, validation, uncertainty)
         (destination / "public-index-certificate.json").write_text(
             json.dumps(certificate, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
+        scored_bundle = load_public_scoring_bundle(edition_name=edition_name)
+        write_public_scoring_bundle(
+            scored_bundle,
+            destination,
+            edition_name=edition_name,
+        )
+        from umi.public_scale import write_public_panels_and_scales
+
+        write_public_panels_and_scales(
+            scored_bundle,
+            edition,
+            destination,
+            edition_name=edition_name,
+        )
+        candidate_audits = write_candidate_audits(destination)
+        evidence_freeze = write_evidence_freeze(
+            payload, destination, edition_name=edition_name
+        )
+        governance = write_governance_artifacts(destination, edition_name=edition_name)
         payload = {
             **payload,
             "validation": validation,
             "uncertainty": uncertainty,
             "certificate": certificate,
+            "candidate_audits": candidate_audits,
+            "evidence_freeze": evidence_freeze,
+            "governance": governance,
+            "source_ablation": stability_pack["source_ablation"],
+            "rank_stability": stability_pack["rank_stability"],
         }
     from analysis.public_dashboard import write_public_dashboard
 

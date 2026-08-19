@@ -1,0 +1,218 @@
+{
+  "$defs": {
+    "PublicAcceptedScore": {
+      "additionalProperties": false,
+      "properties": {
+        "entity_id": {
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "rank": {
+          "title": "Rank",
+          "type": "integer"
+        },
+        "umi_public": {
+          "title": "Umi Public",
+          "type": "number"
+        }
+      },
+      "required": [
+        "entity_id",
+        "umi_public",
+        "rank"
+      ],
+      "title": "PublicAcceptedScore",
+      "type": "object"
+    },
+    "PublicCandidateAudit": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "certificate_version": {
+          "title": "Certificate Version",
+          "type": "string"
+        },
+        "config_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Config Ids",
+          "type": "array"
+        },
+        "headline_eligible": {
+          "title": "Headline Eligible",
+          "type": "boolean"
+        },
+        "missing_series": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Series",
+          "type": "array"
+        },
+        "named_release": {
+          "title": "Named Release",
+          "type": "string"
+        },
+        "notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        },
+        "present_series": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Present Series",
+          "type": "object"
+        },
+        "publication_label": {
+          "title": "Publication Label",
+          "type": "string"
+        },
+        "requested_effort": {
+          "title": "Requested Effort",
+          "type": "string"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        },
+        "umi_public": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Umi Public"
+        }
+      },
+      "required": [
+        "certificate_version",
+        "candidate_id",
+        "named_release",
+        "requested_effort",
+        "config_ids",
+        "headline_eligible",
+        "status",
+        "present_series",
+        "missing_series",
+        "notes",
+        "publication_label"
+      ],
+      "title": "PublicCandidateAudit",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "accepted_entity_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Accepted Entity Ids",
+      "type": "array"
+    },
+    "accepted_scores": {
+      "items": {
+        "$ref": "#/$defs/PublicAcceptedScore"
+      },
+      "title": "Accepted Scores",
+      "type": "array"
+    },
+    "edition_id": {
+      "title": "Edition Id",
+      "type": "string"
+    },
+    "evidence_fingerprint": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Fingerprint",
+      "type": "string"
+    },
+    "freeze_fingerprint": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Freeze Fingerprint",
+      "type": "string"
+    },
+    "freeze_version": {
+      "title": "Freeze Version",
+      "type": "string"
+    },
+    "headline_additions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Headline Additions",
+      "type": "array"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "named_candidates": {
+      "items": {
+        "$ref": "#/$defs/PublicCandidateAudit"
+      },
+      "title": "Named Candidates",
+      "type": "array"
+    },
+    "near_miss_candidates": {
+      "items": {
+        "$ref": "#/$defs/PublicCandidateAudit"
+      },
+      "title": "Near Miss Candidates",
+      "type": "array"
+    },
+    "scored_data_fingerprint": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Scored Data Fingerprint",
+      "type": "string"
+    },
+    "series": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Series",
+      "type": "array"
+    },
+    "source_artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Artifact Sha256",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "freeze_version",
+    "status",
+    "edition_id",
+    "source_artifact_sha256",
+    "evidence_fingerprint",
+    "scored_data_fingerprint",
+    "accepted_entity_ids",
+    "accepted_scores",
+    "series",
+    "named_candidates",
+    "near_miss_candidates",
+    "headline_additions",
+    "limitations",
+    "freeze_fingerprint"
+  ],
+  "title": "PublicEvidenceFreeze",
+  "type": "object"
+}

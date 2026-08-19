@@ -1,0 +1,350 @@
+{
+  "blockers": [
+    {
+      "affected_model": "grok-4.5-high",
+      "blocker_id": "candidate-grok-4.5-high",
+      "missing_series": [
+        "epoch-weirdml",
+        "weirdml-cost-per-run"
+      ],
+      "notes": [],
+      "present_series": {
+        "deepswe-agent-steps": "grok-4.5_high",
+        "deepswe-output-tokens": "grok-4.5_high",
+        "deepswe-v1.1-pass1": "grok-4.5_high",
+        "epoch-chess-puzzles": "grok-4.5_high",
+        "epoch-critpt": "grok-4.5_high",
+        "epoch-gpqa": "grok-4.5_high",
+        "epoch-otis-aime": "grok-4.5_high",
+        "epoch-scicode": "grok-4.5_high"
+      },
+      "reason": "Frozen Epoch extract is missing required common-core series for this exact identity",
+      "required_identity": "exact high configuration on all ten common-core series",
+      "resolving_evidence": "Same-zip rows for every missing series at the exact config/effort identity, including a high-effort WeirdML cost suffix if Access is required",
+      "sources_investigated": [
+        "Epoch weirdml_external.csv",
+        "Epoch remaining common-core members",
+        "WeirdML public leaderboard citation"
+      ],
+      "umi_public": null,
+      "urls_investigated": [
+        "https://epoch.ai/data/benchmark_data.zip",
+        "https://htihle.github.io/weirdml.html",
+        "https://epoch.ai/benchmarks/about"
+      ]
+    },
+    {
+      "affected_model": "gemini-3.1-pro-preview",
+      "blocker_id": "candidate-gemini-3.1-pro-preview",
+      "missing_series": [
+        "weirdml-cost-per-run"
+      ],
+      "notes": [
+        "gemini-3.1-pro-preview has WeirdML Cost per run=1.36 but is excluded from the Access high-effort suffix panel"
+      ],
+      "present_series": {
+        "deepswe-agent-steps": "gemini-3.1-pro-preview",
+        "deepswe-output-tokens": "gemini-3.1-pro-preview",
+        "deepswe-v1.1-pass1": "gemini-3.1-pro-preview",
+        "epoch-chess-puzzles": "gemini-3.1-pro-preview_high",
+        "epoch-critpt": "gemini-3.1-pro-preview",
+        "epoch-gpqa": "gemini-3.1-pro-preview_high",
+        "epoch-otis-aime": "gemini-3.1-pro-preview_high",
+        "epoch-scicode": "gemini-3.1-pro-preview",
+        "epoch-weirdml": "gemini-3.1-pro-preview"
+      },
+      "reason": "Frozen Epoch extract is missing required common-core series for this exact identity",
+      "required_identity": "exact high configuration on all ten common-core series",
+      "resolving_evidence": "Same-zip rows for every missing series at the exact config/effort identity, including a high-effort WeirdML cost suffix if Access is required",
+      "sources_investigated": [
+        "Epoch weirdml_external.csv including unsuffixed Cost per run=1.36",
+        "gemini-3.1-pro-preview_high (incomplete suffix row)",
+        "WeirdML public leaderboard citation"
+      ],
+      "umi_public": null,
+      "urls_investigated": [
+        "https://epoch.ai/data/benchmark_data.zip",
+        "https://htihle.github.io/weirdml.html",
+        "https://epoch.ai/benchmarks/about"
+      ]
+    },
+    {
+      "affected_model": "gpt-5.6-terra-max",
+      "blocker_id": "near-miss-gpt-5.6-terra-max",
+      "missing_series": [
+        "epoch-weirdml",
+        "weirdml-cost-per-run"
+      ],
+      "notes": [],
+      "present_series": {
+        "deepswe-agent-steps": "gpt-5.6-terra_max",
+        "deepswe-output-tokens": "gpt-5.6-terra_max",
+        "deepswe-v1.1-pass1": "gpt-5.6-terra_max",
+        "epoch-chess-puzzles": "gpt-5.6-terra_max",
+        "epoch-critpt": "gpt-5.6-terra_max",
+        "epoch-gpqa": "gpt-5.6-terra_max",
+        "epoch-otis-aime": "gpt-5.6-terra_max",
+        "epoch-scicode": "gpt-5.6-terra_max"
+      },
+      "reason": "Frozen Epoch extract is missing required common-core series for this exact identity",
+      "required_identity": "exact max configuration on all ten common-core series",
+      "resolving_evidence": "Same-zip rows for every missing series at the exact config/effort identity, including a high-effort WeirdML cost suffix if Access is required",
+      "sources_investigated": [
+        "Epoch common-core members",
+        "Epoch weirdml_external.csv"
+      ],
+      "umi_public": null,
+      "urls_investigated": [
+        "https://epoch.ai/data/benchmark_data.zip",
+        "https://htihle.github.io/weirdml.html"
+      ]
+    },
+    {
+      "affected_model": "gpt-5.6-luna-max",
+      "blocker_id": "near-miss-gpt-5.6-luna-max",
+      "missing_series": [
+        "epoch-weirdml",
+        "weirdml-cost-per-run"
+      ],
+      "notes": [],
+      "present_series": {
+        "deepswe-agent-steps": "gpt-5.6-luna_max",
+        "deepswe-output-tokens": "gpt-5.6-luna_max",
+        "deepswe-v1.1-pass1": "gpt-5.6-luna_max",
+        "epoch-chess-puzzles": "gpt-5.6-luna_max",
+        "epoch-critpt": "gpt-5.6-luna_max",
+        "epoch-gpqa": "gpt-5.6-luna_max",
+        "epoch-otis-aime": "gpt-5.6-luna_max",
+        "epoch-scicode": "gpt-5.6-luna_max"
+      },
+      "reason": "Frozen Epoch extract is missing required common-core series for this exact identity",
+      "required_identity": "exact max configuration on all ten common-core series",
+      "resolving_evidence": "Same-zip rows for every missing series at the exact config/effort identity, including a high-effort WeirdML cost suffix if Access is required",
+      "sources_investigated": [
+        "Epoch common-core members",
+        "Epoch weirdml_external.csv"
+      ],
+      "umi_public": null,
+      "urls_investigated": [
+        "https://epoch.ai/data/benchmark_data.zip",
+        "https://htihle.github.io/weirdml.html"
+      ]
+    },
+    {
+      "affected_model": "claude-sonnet-5-max",
+      "blocker_id": "near-miss-claude-sonnet-5-max",
+      "missing_series": [
+        "epoch-weirdml",
+        "weirdml-cost-per-run"
+      ],
+      "notes": [],
+      "present_series": {
+        "deepswe-agent-steps": "claude-sonnet-5_max",
+        "deepswe-output-tokens": "claude-sonnet-5_max",
+        "deepswe-v1.1-pass1": "claude-sonnet-5_max",
+        "epoch-chess-puzzles": "claude-sonnet-5_max",
+        "epoch-critpt": "claude-sonnet-5_max",
+        "epoch-gpqa": "claude-sonnet-5_max",
+        "epoch-otis-aime": "claude-sonnet-5_max",
+        "epoch-scicode": "claude-sonnet-5_max"
+      },
+      "reason": "Frozen Epoch extract is missing required common-core series for this exact identity",
+      "required_identity": "exact max configuration on all ten common-core series",
+      "resolving_evidence": "Same-zip rows for every missing series at the exact config/effort identity, including a high-effort WeirdML cost suffix if Access is required",
+      "sources_investigated": [
+        "Epoch common-core members",
+        "Epoch weirdml_external.csv"
+      ],
+      "umi_public": null,
+      "urls_investigated": [
+        "https://epoch.ai/data/benchmark_data.zip",
+        "https://htihle.github.io/weirdml.html"
+      ]
+    },
+    {
+      "affected_model": "claude-opus-4-8-max",
+      "blocker_id": "near-miss-claude-opus-4-8-max",
+      "missing_series": [
+        "epoch-weirdml",
+        "weirdml-cost-per-run"
+      ],
+      "notes": [],
+      "present_series": {
+        "deepswe-agent-steps": "claude-opus-4-8_max",
+        "deepswe-output-tokens": "claude-opus-4-8_max",
+        "deepswe-v1.1-pass1": "claude-opus-4-8_max",
+        "epoch-chess-puzzles": "claude-opus-4-8_max",
+        "epoch-critpt": "claude-opus-4-8_max",
+        "epoch-gpqa": "claude-opus-4-8_max",
+        "epoch-otis-aime": "claude-opus-4-8_max",
+        "epoch-scicode": "claude-opus-4-8_max"
+      },
+      "reason": "Frozen Epoch extract is missing required common-core series for this exact identity",
+      "required_identity": "exact max configuration on all ten common-core series",
+      "resolving_evidence": "Same-zip rows for every missing series at the exact config/effort identity, including a high-effort WeirdML cost suffix if Access is required",
+      "sources_investigated": [
+        "Epoch common-core members",
+        "Epoch weirdml_external.csv"
+      ],
+      "umi_public": null,
+      "urls_investigated": [
+        "https://epoch.ai/data/benchmark_data.zip",
+        "https://htihle.github.io/weirdml.html"
+      ]
+    },
+    {
+      "affected_model": "claude-fable-5-max",
+      "blocker_id": "series-deepswe-mean-cost",
+      "missing_series": [
+        "deepswe-mean-cost"
+      ],
+      "notes": [
+        "Official DeepSWE v1.1 observes Fable cost on 432 of 436 scored attempts"
+      ],
+      "present_series": {},
+      "reason": "Official DeepSWE v1.1 cost is observed on 432 of 436 scored Fable attempts and cannot enter a complete all-attempt Access series",
+      "required_identity": "complete cost observation count",
+      "resolving_evidence": "Complete Fable cost denominator or another all-five billed/calculated series",
+      "sources_investigated": [
+        "DeepSWE reviewed facts",
+        "Epoch deepswe_external.csv"
+      ],
+      "umi_public": null,
+      "urls_investigated": [
+        "https://deepswe.datacurve.ai/",
+        "https://deepswe.datacurve.ai/artifacts/v1.1/trials.json",
+        "https://epoch.ai/data/benchmark_data.zip"
+      ]
+    },
+    {
+      "affected_model": "edition-scope",
+      "blocker_id": "construct-context-reliability",
+      "missing_series": [
+        "context_reliability_and_factual_discipline"
+      ],
+      "notes": [
+        "simpleqa_verified.csv has claude-fable-5_xhigh, not claude-fable-5_max"
+      ],
+      "present_series": {},
+      "reason": "No frozen public series has all five exact Max identities and an 8+ same-harness anchor panel for context reliability",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch simpleqa_verified.csv (missing claude-fable-5_max)",
+        "AA five-row extracts (anchor n=5)"
+      ],
+      "umi_public": null,
+      "urls_investigated": [
+        "https://epoch.ai/data/benchmark_data.zip",
+        "https://epoch.ai/benchmarks/about",
+        "https://artificialanalysis.ai/"
+      ]
+    },
+    {
+      "affected_model": "edition-scope",
+      "blocker_id": "construct-language-instruction",
+      "missing_series": [
+        "language_data_and_instruction_following"
+      ],
+      "notes": [
+        "live_bench_external.csv has zero 2026 Max pilots; AA extracts are n=5"
+      ],
+      "present_series": {},
+      "reason": "No frozen public series has all five exact Max identities and an 8+ same-harness anchor panel for language, data, or instruction following",
+      "required_identity": "exact Max or documented composite",
+      "resolving_evidence": "A frozen same-harness extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch live_bench_external.csv (zero 2026 Max pilots)",
+        "AA five-row extracts (anchor n=5)"
+      ],
+      "umi_public": null,
+      "urls_investigated": [
+        "https://epoch.ai/data/benchmark_data.zip",
+        "https://livebench.ai/",
+        "https://artificialanalysis.ai/"
+      ]
+    },
+    {
+      "affected_model": "edition-scope",
+      "blocker_id": "construct-interactive-latency",
+      "missing_series": [
+        "interactive_service_responsiveness"
+      ],
+      "notes": [],
+      "present_series": {},
+      "reason": "No frozen public series has all five exact Max identities and an 8+ same-extract anchor panel for interactive service latency",
+      "required_identity": "exact Max or documented composite plus 8+ same-extract anchors",
+      "resolving_evidence": "A frozen same-harness latency extract with all five pilots plus 8+ anchors",
+      "sources_investigated": [
+        "Epoch zip members with public latency or time-horizon columns",
+        "AA reviewed five-row facts"
+      ],
+      "umi_public": null,
+      "urls_investigated": [
+        "https://epoch.ai/data/benchmark_data.zip",
+        "https://artificialanalysis.ai/"
+      ]
+    },
+    {
+      "affected_model": "edition-scope",
+      "blocker_id": "construct-billed-economics",
+      "missing_series": [
+        "provider_billing_record"
+      ],
+      "notes": [],
+      "present_series": {},
+      "reason": "No frozen all-five 8+ billed ledger exists. Source-reported WeirdML cost is Access Economics, not observed provider billing",
+      "required_identity": "verified deployment plus admissible billing record",
+      "resolving_evidence": "An admissible all-five billed task ledger with exact deployment identity",
+      "sources_investigated": [
+        "Official five-card lab tariffs",
+        "DeepSWE LiteLLM dollars",
+        "AA calculated cost columns",
+        "CursorBench table averages",
+        "Epoch ARC cost-per-task metadata"
+      ],
+      "umi_public": null,
+      "urls_investigated": [
+        "https://deepswe.datacurve.ai/artifacts/v1.1/trials.json",
+        "https://artificialanalysis.ai/",
+        "https://cursor.com/cursorbench",
+        "https://epoch.ai/benchmarks/about"
+      ]
+    },
+    {
+      "affected_model": "edition-scope",
+      "blocker_id": "construct-hierarchical-bootstrap",
+      "missing_series": [
+        "attempt_level_residuals"
+      ],
+      "notes": [],
+      "present_series": {},
+      "reason": "Frozen extracts are configuration-level means without attempt residuals, so hierarchical bootstrap remains unpublished",
+      "required_identity": "attempt-level residuals on the scored extracts",
+      "resolving_evidence": "Redistributable attempt-level residuals for every headline series",
+      "sources_investigated": [
+        "Epoch configuration-level means in the frozen zip",
+        "DeepSWE official trial ledger (facts-and-citations only)"
+      ],
+      "umi_public": null,
+      "urls_investigated": [
+        "https://epoch.ai/data/benchmark_data.zip",
+        "https://deepswe.datacurve.ai/artifacts/v1.1/trials.json"
+      ]
+    }
+  ],
+  "edition_id": "umi-public-v0.5",
+  "headline_published": true,
+  "report_version": "umi-public-blocker-report-v0.5",
+  "source_artifact_sha256": "35a7c21ba7d535514ebcf9bbe7b8265d2e2da40ef6b1fa63fe49323c3395a18b",
+  "status": "published_with_documented_blockers",
+  "unpublished_entity_ids": [
+    "grok-4.5-high",
+    "gemini-3.1-pro-preview",
+    "gpt-5.6-terra-max",
+    "gpt-5.6-luna-max",
+    "claude-sonnet-5-max",
+    "claude-opus-4-8-max",
+    "claude-fable-5-max"
+  ]
+}

@@ -2,7 +2,7 @@
 
 ## Repository Hardening, Score Validation, Uncertainty, and Model Expansion
 
-Executed on `main`. This is the specification that was implemented.
+Executed on `feat/umi-v05-governed-public`. This is the specification that was implemented.
 
 ### Hard constraints retained
 
@@ -29,9 +29,74 @@ Executed on `main`. This is the specification that was implemented.
 - Frozen headline panel statistics.
 - Partial intervals: SciCode, CritPt, tokens, steps, and WeirdML cost stay at the point.
 - Family ablation is diagnostic.
+- Source-organization ablation drops Capability series from one origin and is diagnostic.
+- Rank stability combines Monte Carlo ranks, ablation ranks, and weight-hypothesis ranks.
 
 ### Model expansion
 
 - Score every frozen configuration with the complete ten-series common core.
 - Result: five Max pilots plus Gemini 3.6 Flash high and GPT-5.4 xhigh.
 - Exact effort identities. Not Max substitutes.
+
+### Named candidate audits
+
+- Audit Grok 4.5 High and Gemini 3.1 Pro Preview against the same ten-series gate.
+- Do not invent scores. Missing series → `insufficient_common_support` diagnostic certificate.
+- Keep the Access high-effort suffix panel. Do not admit unsuffixed WeirdML cost.
+
+Result: neither candidate is headline-eligible. Grok misses WeirdML accuracy and cost.
+Gemini misses the suffix-panel cost row (unsuffixed cost 1.36 exists and is excluded).
+
+### Precise blocker report
+
+When exact public evidence is unavailable, emit `blocker-report.json` with missing series,
+affected model, required identity, sources, URLs, fail reason, and resolving evidence.
+Also package source concentration, edition manifest, pairwise overlaps, and family ablation
+without inventing data.
+
+## 1.5 Commit in coherent phases
+
+Commit each phase separately. Do not squash unrelated work. Do not rewrite history,
+force-push, or implement on `main`. Suggested messages and the commits that fulfilled
+them:
+
+| Phase | Suggested commit | SHA | Branch |
+|---|---|---|---|
+| 1. Freeze, validate, expand | `Add UMI Public v0.5 Governed: freeze, validate, uncertainty, expand` | `40ffb7b` | `main` (already published) |
+| 2. Certificate and overlap ranks | `Add governed Public index certificate, zip checksum, and overlap ranks` | `75f6cbc` | `main` (already published) |
+| 3. Dashboard packaging | `Wire dashboard to uncertainty sidecars and finish Public index packaging` | `f4cc49b` | `main` (already published) |
+| 4. Named-candidate audits | `Audit Grok 4.5 High and Gemini 3.1 Pro Preview as diagnostic-only` | `4896e6e` | `feat/umi-v05-governed-public` |
+| 5. Blocker report and remaining packaging | `Emit a precise v0.5 blocker report and remaining packaging` | `de709d1` | `feat/umi-v05-governed-public` |
+| 6. Phase map | `Record v0.5 coherent commit phases` | `0ac6a38` | `feat/umi-v05-governed-public` |
+| 7. Baseline audit | `Add v0.5 baseline audit` | `6ffcbcb` | `feat/umi-v05-governed-public` |
+| 8. Weight sensitivity | `Add diagnostic Public weight-sensitivity hypotheses` | `e4f7db4` | `feat/umi-v05-governed-public` |
+| 9. Implementation report | `Complete the v0.5 implementation-report checklist` | `9dfa44e` | `feat/umi-v05-governed-public` |
+| 10. Uncertainty surfaces | `Add uncertainty, source ablation, and rank stability` | `b6c565e` | `feat/umi-v05-governed-public` |
+| 11. Evidence freeze | `Freeze expanded public evidence and audit candidate models` | this commit | `feat/umi-v05-governed-public` |
+
+Phases 1–3 stay on `main`. Later phases are separate commits on `feat/umi-v05-governed-public`.
+History is not rewritten.
+
+## Suggested commit sequence
+
+```text
+Freeze and classify the v0.4 experimental score release
+Add governed public scoring bundle and typed evidence contracts
+Unify v0.5 policy configuration and eliminate hardcoded scoring specs
+Harden deployable-system identity and source crosswalks
+Add explicit anchor panels and stable score scales
+Correct public efficiency and economics evidence semantics
+Add UMI Public v0.5 Governed: freeze, validate, uncertainty, expand
+Add governed Public index certificate, zip checksum, and overlap ranks
+Wire dashboard to uncertainty sidecars and finish Public index packaging
+Audit Grok 4.5 High and Gemini 3.1 Pro Preview as diagnostic-only
+Emit a precise v0.5 blocker report and remaining packaging
+Record v0.5 coherent commit phases
+Add v0.5 baseline audit
+Add diagnostic Public weight-sensitivity hypotheses
+Complete the v0.5 implementation-report checklist
+Add uncertainty, source ablation, and rank stability
+Freeze expanded public evidence and audit candidate models
+```
+
+Fulfilled as `40ffb7b`, `75f6cbc`, `f4cc49b` on `main`, then `4896e6e`, `de709d1`, `0ac6a38`, `6ffcbcb`, `e4f7db4`, `9dfa44e`, `b6c565e`, and this evidence-freeze commit on `feat/umi-v05-governed-public`.

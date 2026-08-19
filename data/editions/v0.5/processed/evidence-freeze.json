@@ -1,0 +1,248 @@
+{
+  "accepted_entity_ids": [
+    "claude-opus-5-max",
+    "claude-fable-5-max",
+    "gpt-5.6-sol-max",
+    "kimi-k3-max",
+    "glm-5.2-max",
+    "gemini-3.6-flash-high",
+    "gpt-5.4-2026-03-05-xhigh"
+  ],
+  "accepted_scores": [
+    {
+      "entity_id": "gpt-5.6-sol-max",
+      "rank": 1,
+      "umi_public": 66.26583886547628
+    },
+    {
+      "entity_id": "kimi-k3-max",
+      "rank": 2,
+      "umi_public": 59.69066272741414
+    },
+    {
+      "entity_id": "gpt-5.4-2026-03-05-xhigh",
+      "rank": 3,
+      "umi_public": 55.51137725670947
+    },
+    {
+      "entity_id": "claude-opus-5-max",
+      "rank": 4,
+      "umi_public": 55.510021169743936
+    },
+    {
+      "entity_id": "gemini-3.6-flash-high",
+      "rank": 5,
+      "umi_public": 55.4399971625043
+    },
+    {
+      "entity_id": "claude-fable-5-max",
+      "rank": 6,
+      "umi_public": 54.429636426057556
+    },
+    {
+      "entity_id": "glm-5.2-max",
+      "rank": 7,
+      "umi_public": 54.202702676964044
+    }
+  ],
+  "edition_id": "umi-public-v0.5",
+  "evidence_fingerprint": "bc636b728785fc81183173a4b14092d2c1fcb704189275a20c8cde896a3fc687",
+  "freeze_fingerprint": "d6095c11e59d21c7a78982c8c85d152fa458bbf4e3933a7e95e85f0de76f84f6",
+  "freeze_version": "umi-public-evidence-freeze-v0.5",
+  "headline_additions": [],
+  "limitations": [
+    "This freeze binds the seven complete common-core identities and the unpublished candidate audits. It does not invent umi_public for incomplete identities.",
+    "Grok 4.5 High and Gemini 3.1 Pro Preview remain diagnostic abstentions.",
+    "Four _max near-misses miss WeirdML and stay unpublished."
+  ],
+  "named_candidates": [
+    {
+      "candidate_id": "grok-4.5-high",
+      "certificate_version": "umi-public-candidate-certificate-v0.5",
+      "config_ids": [
+        "grok-4.5_high"
+      ],
+      "headline_eligible": false,
+      "missing_series": [
+        "epoch-weirdml",
+        "weirdml-cost-per-run"
+      ],
+      "named_release": "Grok 4.5",
+      "notes": [],
+      "present_series": {
+        "deepswe-agent-steps": "grok-4.5_high",
+        "deepswe-output-tokens": "grok-4.5_high",
+        "deepswe-v1.1-pass1": "grok-4.5_high",
+        "epoch-chess-puzzles": "grok-4.5_high",
+        "epoch-critpt": "grok-4.5_high",
+        "epoch-gpqa": "grok-4.5_high",
+        "epoch-otis-aime": "grok-4.5_high",
+        "epoch-scicode": "grok-4.5_high"
+      },
+      "publication_label": "diagnostic candidate certificate \u2014 missing required common-core series",
+      "requested_effort": "high",
+      "status": "insufficient_common_support",
+      "umi_public": null
+    },
+    {
+      "candidate_id": "gemini-3.1-pro-preview",
+      "certificate_version": "umi-public-candidate-certificate-v0.5",
+      "config_ids": [
+        "gemini-3.1-pro-preview",
+        "gemini-3.1-pro-preview_high"
+      ],
+      "headline_eligible": false,
+      "missing_series": [
+        "weirdml-cost-per-run"
+      ],
+      "named_release": "Gemini 3.1 Pro Preview",
+      "notes": [
+        "gemini-3.1-pro-preview has WeirdML Cost per run=1.36 but is excluded from the Access high-effort suffix panel"
+      ],
+      "present_series": {
+        "deepswe-agent-steps": "gemini-3.1-pro-preview",
+        "deepswe-output-tokens": "gemini-3.1-pro-preview",
+        "deepswe-v1.1-pass1": "gemini-3.1-pro-preview",
+        "epoch-chess-puzzles": "gemini-3.1-pro-preview_high",
+        "epoch-critpt": "gemini-3.1-pro-preview",
+        "epoch-gpqa": "gemini-3.1-pro-preview_high",
+        "epoch-otis-aime": "gemini-3.1-pro-preview_high",
+        "epoch-scicode": "gemini-3.1-pro-preview",
+        "epoch-weirdml": "gemini-3.1-pro-preview"
+      },
+      "publication_label": "diagnostic candidate certificate \u2014 missing required common-core series",
+      "requested_effort": "high",
+      "status": "insufficient_common_support",
+      "umi_public": null
+    }
+  ],
+  "near_miss_candidates": [
+    {
+      "candidate_id": "gpt-5.6-terra-max",
+      "certificate_version": "umi-public-candidate-certificate-v0.5",
+      "config_ids": [
+        "gpt-5.6-terra_max"
+      ],
+      "headline_eligible": false,
+      "missing_series": [
+        "epoch-weirdml",
+        "weirdml-cost-per-run"
+      ],
+      "named_release": "GPT-5.6 Terra",
+      "notes": [],
+      "present_series": {
+        "deepswe-agent-steps": "gpt-5.6-terra_max",
+        "deepswe-output-tokens": "gpt-5.6-terra_max",
+        "deepswe-v1.1-pass1": "gpt-5.6-terra_max",
+        "epoch-chess-puzzles": "gpt-5.6-terra_max",
+        "epoch-critpt": "gpt-5.6-terra_max",
+        "epoch-gpqa": "gpt-5.6-terra_max",
+        "epoch-otis-aime": "gpt-5.6-terra_max",
+        "epoch-scicode": "gpt-5.6-terra_max"
+      },
+      "publication_label": "diagnostic candidate certificate \u2014 missing required common-core series",
+      "requested_effort": "max",
+      "status": "insufficient_common_support",
+      "umi_public": null
+    },
+    {
+      "candidate_id": "gpt-5.6-luna-max",
+      "certificate_version": "umi-public-candidate-certificate-v0.5",
+      "config_ids": [
+        "gpt-5.6-luna_max"
+      ],
+      "headline_eligible": false,
+      "missing_series": [
+        "epoch-weirdml",
+        "weirdml-cost-per-run"
+      ],
+      "named_release": "GPT-5.6 Luna",
+      "notes": [],
+      "present_series": {
+        "deepswe-agent-steps": "gpt-5.6-luna_max",
+        "deepswe-output-tokens": "gpt-5.6-luna_max",
+        "deepswe-v1.1-pass1": "gpt-5.6-luna_max",
+        "epoch-chess-puzzles": "gpt-5.6-luna_max",
+        "epoch-critpt": "gpt-5.6-luna_max",
+        "epoch-gpqa": "gpt-5.6-luna_max",
+        "epoch-otis-aime": "gpt-5.6-luna_max",
+        "epoch-scicode": "gpt-5.6-luna_max"
+      },
+      "publication_label": "diagnostic candidate certificate \u2014 missing required common-core series",
+      "requested_effort": "max",
+      "status": "insufficient_common_support",
+      "umi_public": null
+    },
+    {
+      "candidate_id": "claude-sonnet-5-max",
+      "certificate_version": "umi-public-candidate-certificate-v0.5",
+      "config_ids": [
+        "claude-sonnet-5_max"
+      ],
+      "headline_eligible": false,
+      "missing_series": [
+        "epoch-weirdml",
+        "weirdml-cost-per-run"
+      ],
+      "named_release": "Claude Sonnet 5",
+      "notes": [],
+      "present_series": {
+        "deepswe-agent-steps": "claude-sonnet-5_max",
+        "deepswe-output-tokens": "claude-sonnet-5_max",
+        "deepswe-v1.1-pass1": "claude-sonnet-5_max",
+        "epoch-chess-puzzles": "claude-sonnet-5_max",
+        "epoch-critpt": "claude-sonnet-5_max",
+        "epoch-gpqa": "claude-sonnet-5_max",
+        "epoch-otis-aime": "claude-sonnet-5_max",
+        "epoch-scicode": "claude-sonnet-5_max"
+      },
+      "publication_label": "diagnostic candidate certificate \u2014 missing required common-core series",
+      "requested_effort": "max",
+      "status": "insufficient_common_support",
+      "umi_public": null
+    },
+    {
+      "candidate_id": "claude-opus-4-8-max",
+      "certificate_version": "umi-public-candidate-certificate-v0.5",
+      "config_ids": [
+        "claude-opus-4-8_max"
+      ],
+      "headline_eligible": false,
+      "missing_series": [
+        "epoch-weirdml",
+        "weirdml-cost-per-run"
+      ],
+      "named_release": "Claude Opus 4.8",
+      "notes": [],
+      "present_series": {
+        "deepswe-agent-steps": "claude-opus-4-8_max",
+        "deepswe-output-tokens": "claude-opus-4-8_max",
+        "deepswe-v1.1-pass1": "claude-opus-4-8_max",
+        "epoch-chess-puzzles": "claude-opus-4-8_max",
+        "epoch-critpt": "claude-opus-4-8_max",
+        "epoch-gpqa": "claude-opus-4-8_max",
+        "epoch-otis-aime": "claude-opus-4-8_max",
+        "epoch-scicode": "claude-opus-4-8_max"
+      },
+      "publication_label": "diagnostic candidate certificate \u2014 missing required common-core series",
+      "requested_effort": "max",
+      "status": "insufficient_common_support",
+      "umi_public": null
+    }
+  ],
+  "scored_data_fingerprint": "5624c3b417e4c0e42dd35411065f200c38ccfc6b49474f47cb671c2d43a22c6c",
+  "series": [
+    "epoch-chess-puzzles",
+    "deepswe-v1.1-pass1",
+    "epoch-scicode",
+    "epoch-weirdml",
+    "epoch-gpqa",
+    "epoch-otis-aime",
+    "epoch-critpt",
+    "deepswe-output-tokens",
+    "deepswe-agent-steps",
+    "weirdml-cost-per-run"
+  ],
+  "source_artifact_sha256": "35a7c21ba7d535514ebcf9bbe7b8265d2e2da40ef6b1fa63fe49323c3395a18b",
+  "status": "frozen_expanded_public_evidence"
+}

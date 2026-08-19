@@ -1,0 +1,316 @@
+{
+  "$defs": {
+    "PublicFamilyAblation": {
+      "additionalProperties": false,
+      "properties": {
+        "dropped_series": {
+          "title": "Dropped Series",
+          "type": "string"
+        },
+        "order": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Order",
+          "type": "array"
+        },
+        "rank_changes": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Rank Changes",
+          "type": "object"
+        }
+      },
+      "required": [
+        "dropped_series",
+        "order",
+        "rank_changes"
+      ],
+      "title": "PublicFamilyAblation",
+      "type": "object"
+    },
+    "PublicPairwiseDifference": {
+      "additionalProperties": false,
+      "properties": {
+        "difference_high": {
+          "title": "Difference High",
+          "type": "number"
+        },
+        "difference_low": {
+          "title": "Difference Low",
+          "type": "number"
+        },
+        "difference_status": {
+          "title": "Difference Status",
+          "type": "string"
+        },
+        "left": {
+          "title": "Left",
+          "type": "string"
+        },
+        "mean_difference": {
+          "title": "Mean Difference",
+          "type": "number"
+        },
+        "p_left_greater": {
+          "title": "P Left Greater",
+          "type": "number"
+        },
+        "p_right_greater": {
+          "title": "P Right Greater",
+          "type": "number"
+        },
+        "right": {
+          "title": "Right",
+          "type": "string"
+        }
+      },
+      "required": [
+        "left",
+        "right",
+        "p_left_greater",
+        "p_right_greater",
+        "mean_difference",
+        "difference_low",
+        "difference_high",
+        "difference_status"
+      ],
+      "title": "PublicPairwiseDifference",
+      "type": "object"
+    },
+    "PublicSourceAblation": {
+      "additionalProperties": false,
+      "properties": {
+        "dropped_organization": {
+          "title": "Dropped Organization",
+          "type": "string"
+        },
+        "dropped_series": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Dropped Series",
+          "type": "array"
+        },
+        "emptied_domains": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Emptied Domains",
+          "type": "array"
+        },
+        "models": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Models",
+          "type": "array"
+        },
+        "order": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Order",
+          "type": "array"
+        },
+        "rank_changes": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Rank Changes",
+          "type": "object"
+        },
+        "remaining_capability_domains": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Remaining Capability Domains",
+          "type": "array"
+        }
+      },
+      "required": [
+        "dropped_organization",
+        "dropped_series",
+        "emptied_domains",
+        "remaining_capability_domains",
+        "order",
+        "rank_changes",
+        "models"
+      ],
+      "title": "PublicSourceAblation",
+      "type": "object"
+    },
+    "PublicUncertaintyModelRow": {
+      "additionalProperties": false,
+      "properties": {
+        "access_economics_high": {
+          "title": "Access Economics High",
+          "type": "number"
+        },
+        "access_economics_low": {
+          "title": "Access Economics Low",
+          "type": "number"
+        },
+        "capability_high": {
+          "title": "Capability High",
+          "type": "number"
+        },
+        "capability_low": {
+          "title": "Capability Low",
+          "type": "number"
+        },
+        "entity_id": {
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "interval_high": {
+          "title": "Interval High",
+          "type": "number"
+        },
+        "interval_low": {
+          "title": "Interval Low",
+          "type": "number"
+        },
+        "interval_status": {
+          "title": "Interval Status",
+          "type": "string"
+        },
+        "operational_efficiency_high": {
+          "title": "Operational Efficiency High",
+          "type": "number"
+        },
+        "operational_efficiency_low": {
+          "title": "Operational Efficiency Low",
+          "type": "number"
+        },
+        "rank_high": {
+          "title": "Rank High",
+          "type": "integer"
+        },
+        "rank_low": {
+          "title": "Rank Low",
+          "type": "integer"
+        },
+        "series_with_intervals": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Series With Intervals",
+          "type": "array"
+        },
+        "series_without_intervals": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Series Without Intervals",
+          "type": "array"
+        },
+        "umi_public": {
+          "title": "Umi Public",
+          "type": "number"
+        }
+      },
+      "required": [
+        "entity_id",
+        "umi_public",
+        "interval_low",
+        "interval_high",
+        "rank_low",
+        "rank_high",
+        "interval_status",
+        "series_with_intervals",
+        "series_without_intervals",
+        "capability_low",
+        "capability_high",
+        "operational_efficiency_low",
+        "operational_efficiency_high",
+        "access_economics_low",
+        "access_economics_high"
+      ],
+      "title": "PublicUncertaintyModelRow",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "correlation_groups": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Correlation Groups",
+      "type": "array"
+    },
+    "draws": {
+      "title": "Draws",
+      "type": "integer"
+    },
+    "edition_id": {
+      "title": "Edition Id",
+      "type": "string"
+    },
+    "family_ablations": {
+      "items": {
+        "$ref": "#/$defs/PublicFamilyAblation"
+      },
+      "title": "Family Ablations",
+      "type": "array"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "method": {
+      "title": "Method",
+      "type": "string"
+    },
+    "models": {
+      "items": {
+        "$ref": "#/$defs/PublicUncertaintyModelRow"
+      },
+      "title": "Models",
+      "type": "array"
+    },
+    "pairwise": {
+      "items": {
+        "$ref": "#/$defs/PublicPairwiseDifference"
+      },
+      "title": "Pairwise",
+      "type": "array"
+    },
+    "resampling_method_version": {
+      "title": "Resampling Method Version",
+      "type": "string"
+    },
+    "seed_source": {
+      "title": "Seed Source",
+      "type": "string"
+    },
+    "source_ablations": {
+      "items": {
+        "$ref": "#/$defs/PublicSourceAblation"
+      },
+      "title": "Source Ablations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "edition_id",
+    "method",
+    "resampling_method_version",
+    "draws",
+    "seed_source",
+    "correlation_groups",
+    "models",
+    "family_ablations",
+    "source_ablations",
+    "pairwise",
+    "limitations"
+  ],
+  "title": "PublicUncertaintyReport",
+  "type": "object"
+}

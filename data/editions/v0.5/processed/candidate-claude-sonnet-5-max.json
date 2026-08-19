@@ -1,0 +1,28 @@
+{
+  "candidate_id": "claude-sonnet-5-max",
+  "certificate_version": "umi-public-candidate-certificate-v0.5",
+  "config_ids": [
+    "claude-sonnet-5_max"
+  ],
+  "headline_eligible": false,
+  "missing_series": [
+    "epoch-weirdml",
+    "weirdml-cost-per-run"
+  ],
+  "named_release": "Claude Sonnet 5",
+  "notes": [],
+  "present_series": {
+    "deepswe-agent-steps": "claude-sonnet-5_max",
+    "deepswe-output-tokens": "claude-sonnet-5_max",
+    "deepswe-v1.1-pass1": "claude-sonnet-5_max",
+    "epoch-chess-puzzles": "claude-sonnet-5_max",
+    "epoch-critpt": "claude-sonnet-5_max",
+    "epoch-gpqa": "claude-sonnet-5_max",
+    "epoch-otis-aime": "claude-sonnet-5_max",
+    "epoch-scicode": "claude-sonnet-5_max"
+  },
+  "publication_label": "diagnostic candidate certificate \u2014 missing required common-core series",
+  "requested_effort": "max",
+  "status": "insufficient_common_support",
+  "umi_public": null
+}

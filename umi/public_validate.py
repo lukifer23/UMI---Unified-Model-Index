@@ -11,14 +11,17 @@ from umi.edition import PUBLIC_EDITION_ID, load_public_edition_config
 from umi.identity import load_public_identities
 from umi.public import (
     ROOT,
-    SERIES,
     SeriesSpec,
-    config_id_for_entity,
     entity_map_from_identities,
     epoch_points,
+    public_series_specs,
     score_public_edition,
 )
+from umi.public_blockers import build_blocker_report
+from umi.public_candidates import audit_named_candidates
 from umi.public_certificate import EPOCH_SHA256, verify_epoch_zip
+from umi.public_crosswalk import config_id_for_entity
+from umi.public_freeze import build_evidence_freeze
 
 V04_PILOTS = {
     "claude-opus-5-max",
@@ -32,6 +35,8 @@ V04_PILOTS = {
 def _raw_lookup(
     spec: SeriesSpec,
     mapping: dict[str, str],
+    *,
+    high_effort_suffixes: tuple[str, ...],
 ) -> dict[str, float]:
     points = epoch_points(
         spec["member"],
@@ -39,6 +44,7 @@ def _raw_lookup(
         require_harness=spec.get("harness"),
         panel_filter=spec.get("panel_filter"),
         entity_map=mapping,
+        high_effort_suffixes=high_effort_suffixes,
     )
     return {item.entity_id: item.raw for item in points if item.entity_id is not None}
 
@@ -50,7 +56,7 @@ def validate_public_scores(
 ) -> dict[str, Any]:
     edition = load_public_edition_config(edition=edition_name)
     identities = load_public_identities(edition=edition_name)
-    mapping = entity_map_from_identities(identities)
+    mapping = entity_map_from_identities(identities, edition=edition_name)
     errors: list[str] = []
     try:
         digest = verify_epoch_zip()
@@ -70,7 +76,7 @@ def validate_public_scores(
     if set(by_id) != expected_ids:
         errors.append("payload entities do not match the identity manifest")
     for identity in identities:
-        config_id = config_id_for_entity(identity.entity_id)
+        config_id = config_id_for_entity(identity.entity_id, edition=edition_name)
         if mapping.get(config_id) != identity.entity_id:
             errors.append(f"config map failed for {identity.entity_id}")
         item = by_id.get(identity.entity_id)
@@ -83,13 +89,17 @@ def validate_public_scores(
         )
         if not math.isclose(item["umi_public"], expected, rel_tol=0, abs_tol=1e-9):
             errors.append(f"{identity.entity_id} umi_public is not the weighted sum")
-        for spec in SERIES:
+        for spec in public_series_specs(edition):
             group = {
                 "capability": "capability_series",
                 "operational_efficiency": "operational_series",
                 "access_economics": "access_series",
             }[spec["component"]]
-            raw_values = _raw_lookup(spec, mapping)
+            raw_values = _raw_lookup(
+                spec,
+                mapping,
+                high_effort_suffixes=edition.normalization.high_effort_suffixes,
+            )
             published_raw = item[group][spec["id"]]["raw"]
             if identity.entity_id not in raw_values:
                 errors.append(f"{identity.entity_id} missing zip raw for {spec['id']}")
@@ -108,6 +118,7 @@ def validate_public_scores(
                 errors.append(f"{entity_id} v0.5 score drifted from frozen v0.4")
         if v04.get("edition_id") != PUBLIC_EDITION_ID:
             errors.append("frozen v0.4 edition_id is unexpected")
+        errors.extend(_live_candidate_errors(set(by_id)))
     return {
         "edition_id": edition.edition_id,
         "valid": not errors,
@@ -116,6 +127,71 @@ def validate_public_scores(
         "v04_reproduction": reproduction,
         "scored_data_fingerprint": payload.get("scored_data_fingerprint"),
     }
+
+
+def _live_candidate_errors(published_ids: set[str]) -> tuple[str, ...]:
+    live = audit_named_candidates()
+    errors: list[str] = []
+    if live["headline_additions"]:
+        errors.append("named candidates must not enter the headline without a complete common core")
+    for item in live["candidates"]:
+        if item["umi_public"] is not None:
+            errors.append(f"{item['candidate_id']} invented umi_public")
+        if item["headline_eligible"] or item["status"] != "insufficient_common_support":
+            errors.append(f"{item['candidate_id']} is not an abstention")
+        if item["candidate_id"] in published_ids:
+            errors.append(f"{item['candidate_id']} appears in published model-scores")
+    return tuple(errors)
+
+
+def _stored_candidate_errors() -> tuple[str, ...]:
+    live = audit_named_candidates()
+    errors: list[str] = []
+    path = ROOT / "data" / "editions" / "v0.5" / "processed" / "candidate-audits.json"
+    if not path.is_file():
+        return ("missing candidate-audits.json",)
+    stored = json.loads(path.read_text(encoding="utf-8"))
+    if stored.get("headline_additions"):
+        errors.append("stored candidate headline_additions must be empty")
+    if stored.get("source_artifact_sha256") != live["source_artifact_sha256"]:
+        errors.append("stored candidate audit zip checksum drifted")
+    live_by_id = {item["candidate_id"]: item for item in live["candidates"]}
+    stored_by_id = {item["candidate_id"]: item for item in stored.get("candidates", [])}
+    if set(stored_by_id) != set(live_by_id):
+        errors.append("stored candidate IDs do not match the live audit")
+    for candidate_id, item in live_by_id.items():
+        committed = stored_by_id.get(candidate_id)
+        if committed is None:
+            continue
+        if committed.get("missing_series") != item["missing_series"]:
+            errors.append(f"{candidate_id} stored missing_series drifted")
+        if committed.get("umi_public") is not None:
+            errors.append(f"{candidate_id} stored umi_public is not null")
+    return tuple(errors)
+
+
+def _stored_blocker_errors() -> tuple[str, ...]:
+    live = build_blocker_report()
+    path = ROOT / "data" / "editions" / "v0.5" / "processed" / "blocker-report.json"
+    if not path.is_file():
+        return ("missing blocker-report.json",)
+    stored = json.loads(path.read_text(encoding="utf-8"))
+    errors: list[str] = []
+    if stored.get("source_artifact_sha256") != live["source_artifact_sha256"]:
+        errors.append("stored blocker-report zip checksum drifted")
+    live_ids = {item["blocker_id"]: item for item in live["blockers"]}
+    stored_ids = {item["blocker_id"]: item for item in stored.get("blockers", [])}
+    if set(stored_ids) != set(live_ids):
+        errors.append("stored blocker IDs do not match the live report")
+    for blocker_id, item in live_ids.items():
+        committed = stored_ids.get(blocker_id)
+        if committed is None:
+            continue
+        if committed.get("missing_series") != item["missing_series"]:
+            errors.append(f"{blocker_id} missing_series drifted")
+        if committed.get("umi_public") is not None:
+            errors.append(f"{blocker_id} invented umi_public")
+    return tuple(errors)
 
 
 def validate_public_artifacts(
@@ -127,4 +203,31 @@ def validate_public_artifacts(
         or ROOT / "data" / "editions" / edition_name / "processed" / "model-scores.json"
     )
     payload = json.loads(path.read_text(encoding="utf-8"))
-    return validate_public_scores(payload, edition_name=edition_name)
+    report = validate_public_scores(payload, edition_name=edition_name)
+    if edition_name != "v0.5":
+        return report
+    extra = (
+        _stored_candidate_errors()
+        + _stored_blocker_errors()
+        + _stored_freeze_errors(payload)
+    )
+    errors = tuple(report["errors"]) + extra
+    return {**report, "valid": not errors, "errors": errors}
+
+
+def _stored_freeze_errors(payload: dict[str, Any]) -> tuple[str, ...]:
+    try:
+        live = build_evidence_freeze(payload)
+    except ValueError as error:
+        return (str(error),)
+    path = ROOT / "data" / "editions" / "v0.5" / "processed" / "evidence-freeze.json"
+    if not path.is_file():
+        return ("missing evidence-freeze.json",)
+    stored = json.loads(path.read_text(encoding="utf-8"))
+    if stored.get("freeze_fingerprint") != live["freeze_fingerprint"]:
+        return ("stored evidence freeze drifted from live",)
+    if stored.get("scored_data_fingerprint") != live["scored_data_fingerprint"]:
+        return ("stored scored_data_fingerprint drifted",)
+    if stored.get("evidence_fingerprint") != live["evidence_fingerprint"]:
+        return ("stored evidence_fingerprint drifted",)
+    return ()

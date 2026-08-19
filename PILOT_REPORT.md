@@ -11,6 +11,13 @@ not as Max. Rebuild:
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 validate
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 score
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 audit
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 candidates
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 freeze
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 blockers
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 uncertainty
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 ablation
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 stability
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 bundle
 ```
 
 | Rank | Configuration | Effort | UMI Public | Partial 95% interval | Rank range |
@@ -25,11 +32,18 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 audit
 
 Intervals are `partial_source_interval`: published stderr / CI half-width on chess, GPQA,
 OTIS, DeepSWE Pass@1, and WeirdML accuracy. SciCode, CritPt, DeepSWE tokens/steps, and
-WeirdML cost stay at their point values. Sol and Kimi are rank-stable. Places 3–7 overlap.
+WeirdML cost stay at their point values. Sol and Kimi are interval-stable and
+diagnostically stable (they stay ranks 1 and 2 under family ablation, Capability
+source-organization ablation, and named weight hypotheses). Places 3–7 overlap.
+Family and source-organization ablation and named weight hypotheses are diagnostic; they do
+not change `umi_public`. Operational Efficiency and Access cannot be source-ablated without
+emptying a required component.
 
 Charts: [v0.5 dashboard](data/editions/v0.5/processed/public-dashboard.html). Validation:
 [validation.json](data/editions/v0.5/processed/validation.json). Uncertainty:
-[uncertainty.json](data/editions/v0.5/processed/uncertainty.json). Certificate:
+[uncertainty.json](data/editions/v0.5/processed/uncertainty.json). Source ablation:
+[source-ablation.json](data/editions/v0.5/processed/source-ablation.json). Rank stability:
+[rank-stability.json](data/editions/v0.5/processed/rank-stability.json). Certificate:
 [public-index-certificate.json](data/editions/v0.5/processed/public-index-certificate.json).
 The certificate binds those scores to the Epoch zip SHA-256 and marks overlapping intervals
 as indistinguishable.
@@ -37,9 +51,27 @@ as indistinguishable.
 Four other `_max` rows (Terra, Luna, Sonnet 5, Opus 4.8) miss only WeirdML and are not
 scored. v0.4 artifacts remain frozen.
 
+Grok 4.5 High and Gemini 3.1 Pro Preview were audited against the same ten-series gate.
+Neither is headline-eligible. Diagnostic certificates are
+[candidate-audits.json](data/editions/v0.5/processed/candidate-audits.json).
+`umi_public` is null on both. Four `_max` near-misses (Terra, Luna, Sonnet 5, Opus 4.8)
+are audited the same way and stay unpublished. The expanded seven-model evidence freeze is
+[evidence-freeze.json](data/editions/v0.5/processed/evidence-freeze.json).
+The precise evidence blocker report is
+[BLOCKER_REPORT.md](docs/editions/v0.5/BLOCKER_REPORT.md) and
+[blocker-report.json](data/editions/v0.5/processed/blocker-report.json).
+
+| Candidate | Config IDs | Present | Missing | Status |
+|---|---|---:|---|---|
+| Grok 4.5 High | `grok-4.5_high` | 8/10 | WeirdML accuracy and high-effort cost | `insufficient_common_support` |
+| Gemini 3.1 Pro Preview | `gemini-3.1-pro-preview`, `_high` | 9/10 | high-effort WeirdML cost (unsuffixed cost 1.36 is excluded by the Access suffix panel) | `insufficient_common_support` |
+
 ## UMI Public v0.4
 
-**First unified five-model score.** Edition `umi-public-v0.4`, formula
+**Historical experimental point-score edition.** It proved five exact Max identities can
+share one complete common core and yield deterministic `umi_public` numbers. It does not
+prove rank stability, independent zip validation, or coverage beyond those five systems.
+v0.5 is the governed public index. Edition `umi-public-v0.4`, formula
 `umi-methodology-v0.4.0`, normalization `umi-normalization-v0.4.0`. Publication state
 `published`. Fingerprint `e266af13b966cf79cfc5086513ec35f60cf2194f896f41f4b332f60ac9788e6d`.
 Authority: [METHODOLOGY.md](METHODOLOGY.md). Rebuild offline, no API keys:

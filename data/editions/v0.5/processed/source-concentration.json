@@ -1,0 +1,32 @@
+{
+  "components": {
+    "access_economics": {
+      "cap_applied": false,
+      "largest_share": 1.0,
+      "maximum_source_share": null,
+      "source_shares": {
+        "weirdml": 1.0
+      }
+    },
+    "capability": {
+      "cap_applied": true,
+      "largest_share": 0.35,
+      "maximum_source_share": 0.35,
+      "source_shares": {
+        "artificial-analysis": 0.18,
+        "datacurve": 0.22,
+        "epoch": 0.35,
+        "weirdml": 0.25
+      }
+    },
+    "operational_efficiency": {
+      "cap_applied": false,
+      "largest_share": 1.0,
+      "maximum_source_share": null,
+      "source_shares": {
+        "datacurve": 1.0
+      }
+    }
+  },
+  "edition_id": "umi-public-v0.5"
+}

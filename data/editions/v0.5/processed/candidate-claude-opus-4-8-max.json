@@ -1,0 +1,28 @@
+{
+  "candidate_id": "claude-opus-4-8-max",
+  "certificate_version": "umi-public-candidate-certificate-v0.5",
+  "config_ids": [
+    "claude-opus-4-8_max"
+  ],
+  "headline_eligible": false,
+  "missing_series": [
+    "epoch-weirdml",
+    "weirdml-cost-per-run"
+  ],
+  "named_release": "Claude Opus 4.8",
+  "notes": [],
+  "present_series": {
+    "deepswe-agent-steps": "claude-opus-4-8_max",
+    "deepswe-output-tokens": "claude-opus-4-8_max",
+    "deepswe-v1.1-pass1": "claude-opus-4-8_max",
+    "epoch-chess-puzzles": "claude-opus-4-8_max",
+    "epoch-critpt": "claude-opus-4-8_max",
+    "epoch-gpqa": "claude-opus-4-8_max",
+    "epoch-otis-aime": "claude-opus-4-8_max",
+    "epoch-scicode": "claude-opus-4-8_max"
+  },
+  "publication_label": "diagnostic candidate certificate \u2014 missing required common-core series",
+  "requested_effort": "max",
+  "status": "insufficient_common_support",
+  "umi_public": null
+}

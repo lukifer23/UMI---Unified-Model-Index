@@ -44,6 +44,9 @@ class PublicSystemIdentity(ConfigModel):
             raise ValueError(f"{self.entity_id} is not a composite service but lists fallbacks")
         if self.effort_setting.lower() == "unknown":
             raise ValueError(f"{self.entity_id} effort cannot be unknown")
+        token = f"-{self.effort_setting}"
+        if not self.entity_id.endswith(token):
+            raise ValueError(f"{self.entity_id} must end with {token}")
         return self
 
 
@@ -81,9 +84,7 @@ def evidence_matches_entity(
 ) -> tuple[bool, str]:
     if source_effort is None or source_effort.lower() in {"unknown", ""}:
         return False, "unknown effort cannot map to a Max entity"
-    if source_effort.lower() != entity.effort_setting.lower() and source_effort.lower() not in {
-        entity.reasoning_mode.lower()
-    }:
+    if source_effort.lower() != entity.effort_setting.lower():
         return False, "effort does not match the scored entity"
     if entity.entity_kind == EntityKind.FALLBACK_COMPOSITE_SERVICE:
         if source_is_composite:

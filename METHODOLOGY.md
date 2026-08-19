@@ -1,26 +1,38 @@
 # UMI methodology
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. Two editions are in force:
+current policy values; code must not contradict this document. Three editions are in force:
 
 - **v0.3.15 legacy** (`umi-public-v0.3-legacy`, formula `umi-methodology-v0.3.15`,
   normalization `umi-normalization-v0.3.4`) remains the multi-source reviewed-fact pilot. It does
   not publish `headline_overall`. Its three-model Capability certificate is unchanged.
 - **v0.4 Public** (`umi-public-v0.4`, formula `umi-methodology-v0.4.0`, normalization
-  `umi-normalization-v0.4.0`) is a separate edition that publishes one `umi_public` number per
-  exact Max pilot from frozen public extracts. It does not rewrite v0.3 artifacts, gates, or
-  certificates.
+  `umi-normalization-v0.4.0`, `release_class: historical_experimental_point_score`) is a
+  historical experimental point-score edition. It publishes one `umi_public` number per exact
+  Max pilot from frozen public extracts. It does not rewrite v0.3 artifacts, gates, or
+  certificates. It is not the governed public index. Classification is in
+  `docs/editions/v0.4/CLASSIFICATION.md`.
 - **v0.5 Governed Public** (`umi-public-v0.5`, formula `umi-methodology-v0.5.0`, normalization
-  `umi-normalization-v0.5.0`) freezes v0.4, independently validates published raw values against
-  the Epoch zip, adds source-interval uncertainty and family ablation, and scores every frozen
+  `umi-normalization-v0.5.0`, `release_class: governed_public_index`) freezes v0.4, independently
+  validates published raw values against
+  the Epoch zip, adds source-interval uncertainty, family and source-organization ablation,
+  and rank-stability diagnostics, and scores every frozen
   configuration that has the complete ten-series common core. The five v0.4 Max pilots must
-  reproduce their v0.4 `umi_public` numbers exactly.
+  reproduce their v0.4 `umi_public` numbers exactly. Named candidates that miss a required series
+  receive diagnostic certificates with `umi_public: null`; they are not added to the headline.
 
 All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
 produce identical serialized results and fingerprints across supported Python versions; this is
 numerical canonicalization, not a change to weights or score semantics.
 
 ## UMI Public v0.4
+
+v0.4 is a historical experimental point-score edition. It proved that five exact Max identities
+can share one complete ten-series common core and yield deterministic `umi_public` numbers from
+frozen extracts. It does not prove rank stability, independent raw-value validation, zip-bound
+provenance, attempt-level residuals, billed Economics, or coverage beyond those five identities.
+Those governance surfaces belong to v0.5. The frozen v0.4 artifacts remain a reproduction gate,
+not a living index.
 
 UMI Public is the first five-model unified score that the configured evidence can actually support.
 It is not v0.3 Overall, not provider-billed Economics, and not a six-domain score. The Python
@@ -60,26 +72,39 @@ Context reliability and language / instruction following have no all-five 8+ exa
 the frozen archive (SimpleQA lacks `claude-fable-5_max`; LiveBench has none of the 2026 Max
 pilots; AA extracts have n=5). They are out of this edition.
 
-Operational Efficiency is DeepSWE mean output tokens 0.60 and mean agent steps 0.40. Interactive
-service responsiveness has no all-five 8+ public latency series and is omitted. The component has
-one originating organization; the source-share cap is applied only when a component has two or
-more originating organizations.
+Operational Efficiency is DeepSWE mean output tokens 0.60 and mean agent steps 0.40. Those
+values are source-reported extract means. They are not success-adjusted: the frozen zip has
+no attempt-level residuals, so UMI does not pair another record's Pass@1 with these resource
+numerators and does not invent a success-conditioned mean. Interactive service responsiveness
+has no all-five 8+ public latency series and is omitted. The component has one originating
+organization; the source-share cap is applied only when a component has two or more originating
+organizations.
 
-Access Economics is WeirdML cost per run 1.00. DeepSWE mean cost is diagnostic only: official
-DeepSWE v1.1 observes Fable cost on 432 of 436 scored attempts, so that series cannot enter a
-complete all-attempt common core. Fixed tariff baskets have only five official cards and fail the
+Access Economics is WeirdML cost per run 1.00 with `cost_evidence: source_reported`. It is
+never a provider billing record. DeepSWE mean cost is diagnostic only: official DeepSWE v1.1
+observes Fable cost on 432 of 436 scored attempts, so that series cannot enter a complete
+all-attempt common core. Fixed tariff baskets have only five official cards and fail the
 8+ panel gate.
 
 ### Identity
 
-The scored entity is the exact deployable system, not the marketing family. Claude Fable 5 Max is
+The scored entity is the exact deployable system, not the marketing family. Source rows enter
+scoring only through an explicit exact crosswalk from Epoch `Model version` to `entity_id`.
+UMI does not infer a config ID by rewriting hyphens, and does not map a source effort onto
+a different identity because `reasoning_mode` resembles it. Claude Fable 5 Max is
 a `fallback_composite_service` with documented Opus 4.8 fallback. Source rows whose Name or Notes
 field labels an Opus 4.8 fallback score that composite. Exact `_max` product-label rows also score
 the composite product. Composite evidence cannot score a single-model entity. Unknown effort
-cannot map to Max.
+cannot map to Max. Crosswalks live in `config/editions/v0.4/crosswalk.yaml` and
+`config/editions/v0.5/crosswalk.yaml`.
 
 ### Normalization
 
+Extract bindings, family weights, transforms, and high-effort suffixes live in
+`config/editions/v0.4/` and `config/editions/v0.5/`. Scoring does not keep a parallel
+hardcoded series table. Each series is scored on a named `anchor_panel_id` of at least eight same-extract
+configurations. The panel membership and the derived median/σ define a stable score scale.
+Changing the panel requires a new `scale_id`. Display-row order does not change a scale.
 Each series is scored once against its frozen extract. Proportions use a logit with ε=1e-3.
 Lower-better resources and costs use `-log(x+1)`. The panel median and MAD define a robust-z,
 winsorized to ±3, then mapped through Φ to a 0–100 point. There is no percentile fallback.
@@ -122,6 +147,14 @@ governs that edition.
 v0.4 processed artifacts are frozen by SHA-256 in `tests/test_v04_legacy_freeze.py`. Rerunning
 v0.5 must not rewrite them. The five Max pilots' `umi_public` values are a reproduction gate.
 
+### Scoring bundle and evidence contracts
+
+v0.5 scoring consumes a revalidated `PublicScoringBundle`. Every accepted cell is a typed
+`PublicEvidenceRecord` bound to the Epoch zip member, field, config ID, entity ID, and zip
+SHA-256. Missing a required entity or an 8+ panel fails closed before components are
+combined. The bundle fingerprint excludes timestamps and input order. The scorer does not
+read unbound CSV rows.
+
 ### Score validation
 
 `umi edition --edition v0.5 audit` reloads the frozen zip, checks every published raw against
@@ -136,14 +169,67 @@ seven such rows: the five v0.4 Max pilots plus `gemini-3.6-flash_high` and
 Max substitutes. Four additional `_max` rows (GPT-5.6 Terra, GPT-5.6 Luna, Claude Sonnet 5,
 Claude Opus 4.8) miss only WeirdML and remain unpublished.
 
+### Named candidate audits
+
+Grok 4.5 High (`grok-4.5_high`) and Gemini 3.1 Pro Preview (`gemini-3.1-pro-preview`,
+including `gemini-3.1-pro-preview_high`) are audited against the same ten-series gate. They
+do not receive `umi_public` numbers. Missing a required series is
+`insufficient_common_support`. Changing the Access high-effort suffix filter to admit an
+unsuffixed WeirdML cost would rescore every published Access point and break v0.4
+reproduction; that filter stays. `umi edition --edition v0.5 candidates` writes diagnostic
+certificates only. Four `_max` near-misses are audited with the same gate and stay
+unpublished. `umi edition --edition v0.5 freeze` binds the seven accepted scores, the
+bundle `evidence_fingerprint`, the scored-data fingerprint, and those unpublished
+audits. The freeze has no timestamps and does not invent `umi_public`.
+
+### Evidence blockers
+
+When exact public evidence is unavailable, v0.5 still publishes the complete common-core
+index and writes a precise blocker report. The report lists missing series, affected
+model, required identity, sources and URLs investigated, the fail reason, and the
+evidence that would resolve it. Every blocker has `umi_public: null`. The report does
+not lower gates.
+
 ### Uncertainty
 
 Primary intervals are a 2,048-draw Monte Carlo that perturbs series with a published stderr or
 95% CI half-width, using the headline's frozen panel statistics. SciCode, CritPt, DeepSWE
 tokens/steps, and WeirdML cost stay at their point values, so intervals are labeled
-`partial_source_interval`. Rank ranges come from the same draws. Family ablation drops one
-multi-family series at a time and renormalizes only that domain; those orders are diagnostic,
-not the headline. This is not an attempt-level hierarchical bootstrap.
+`partial_source_interval`. Rank ranges and pairwise difference intervals come from the same
+draws. Series that share a `correlation_group` and both have published intervals reuse one
+residual. The seed is the first 16 hex characters of `scored_data_fingerprint`. Component
+intervals are stored beside the overall interval; Operational Efficiency and Access stay at
+their point values because those series have no published interval. This is not an
+attempt-level hierarchical bootstrap.
+
+### Source ablation
+
+Family ablation drops one `ablate: true` Capability series and renormalizes only that domain.
+Source-organization ablation drops every Capability series from one `source_organization`. If
+that empties a Capability domain, the remaining domain weights are renormalized. Operational
+Efficiency (DataCurve) and Access Economics (WeirdML) are single-origin and are listed under
+`cannot_ablate`; dropping them would empty a required headline component. Ablation orders and
+score ranges are diagnostic. They do not change `umi_public` and the remaining series after a
+drop are not a valid headline common core.
+
+### Rank stability
+
+`rank-stability.json` reports three diagnostic rank ranges beside the published rank: the
+partial-interval Monte Carlo range, the family and source-organization ablation ranges, and
+the named weight-hypothesis range. A model is `interval_stable` only when the Monte Carlo
+rank range is a single rank that equals the published rank. `diagnostically_stable` requires
+that same unique rank under family ablation, source ablation, and weight hypotheses.
+Overlapping partial intervals remain `indistinguishable_from` on the certificate. `umi edition
+--edition v0.5 uncertainty|ablation|stability` writes these artifacts. They do not rescore
+the headline.
+
+### Weight sensitivity
+
+Named overall-weight hypotheses recombine the published Capability, Operational
+Efficiency, and Access component scores. They do not renormalize series, do not change
+`umi_public`, and do not change ranks on the certificate. The hypotheses are `baseline`
+0.55/0.25/0.20, `capability_60`, `operational_30`, `access_15`, and `access_25`. Output
+is diagnostic `weight-sensitivity.json`.
 
 Models whose partial intervals overlap are `indistinguishable_from` one another. The
 certificate and dashboard must show that cluster; they must not present overlapping ranks as

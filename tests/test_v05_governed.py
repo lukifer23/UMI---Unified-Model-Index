@@ -1,12 +1,38 @@
 from __future__ import annotations
 
-from umi.edition import GOVERNED_EDITION_ID, load_public_edition_config
+import json
+from pathlib import Path
+
+import pytest
+from pydantic import ValidationError
+
+from umi.edition import GOVERNED_EDITION_ID, GOVERNED_PUBLIC_INDEX, load_public_edition_config
 from umi.feasibility import validate_public_edition_feasibility
 from umi.identity import load_public_identities
-from umi.public import score_public_edition
+from umi.public import public_series_specs, score_public_edition, series_score
+from umi.public_blockers import PublicEvidenceBlocker, build_blocker_report
+from umi.public_bundle import bundle_points, load_public_scoring_bundle
+from umi.public_candidates import (
+    PublicCandidateAudit,
+    PublicCandidateAuditReport,
+    audit_named_candidates,
+    audit_near_miss_candidates,
+)
 from umi.public_certificate import build_public_certificate, overlapping_pairs, verify_epoch_zip
+from umi.public_freeze import (
+    EXPANDED_ENTITY_IDS,
+    FROZEN_EVIDENCE_FINGERPRINT,
+    FROZEN_SCORED_DATA_FINGERPRINT,
+    FROZEN_SCORES,
+    PublicEvidenceFreeze,
+    build_evidence_freeze,
+)
+from umi.public_governance import source_concentration
+from umi.public_scale import apply_public_scale, build_public_panels_and_scales
+from umi.public_sensitivity import WEIGHT_HYPOTHESES, quantify_weight_sensitivity
+from umi.public_stability import quantify_rank_stability, quantify_source_ablation
 from umi.public_uncertainty import quantify_public_uncertainty
-from umi.public_validate import validate_public_scores
+from umi.public_validate import validate_public_artifacts, validate_public_scores
 
 V04_PILOTS = {
     "claude-opus-5-max",
@@ -21,11 +47,111 @@ def test_v05_policy_is_feasible_and_expands_identities() -> None:
     config = load_public_edition_config(edition="v0.5")
     validate_public_edition_feasibility(config)
     assert config.edition_id == GOVERNED_EDITION_ID
+    assert config.release_class == GOVERNED_PUBLIC_INDEX
     identities = load_public_identities(edition="v0.5")
     assert {item.entity_id for item in identities} == V04_PILOTS | {
         "gemini-3.6-flash-high",
         "gpt-5.4-2026-03-05-xhigh",
     }
+
+
+def test_governed_public_bundle_binds_typed_zip_evidence() -> None:
+    bundle = load_public_scoring_bundle(edition_name="v0.5")
+    assert bundle.release_class == GOVERNED_PUBLIC_INDEX
+    assert bundle.source_artifact_sha256 == verify_epoch_zip()
+    assert [item.series_id for item in bundle.series] == [
+        spec["id"] for spec in public_series_specs(load_public_edition_config(edition="v0.5"))
+    ]
+    identities = {item.entity_id for item in load_public_identities(edition="v0.5")}
+    assert set(bundle.entity_ids) == identities
+    for contract in bundle.series:
+        assert set(contract.accepted_entity_ids) == identities
+        assert contract.anchor_n >= 8
+        assert all(
+            item.source_artifact_sha256 == bundle.source_artifact_sha256
+            for item in contract.records
+        )
+    again = load_public_scoring_bundle(edition_name="v0.5")
+    assert again.evidence_fingerprint == bundle.evidence_fingerprint
+
+
+def test_public_efficiency_and_access_semantics_are_source_reported() -> None:
+    edition = load_public_edition_config(edition="v0.5")
+    families = {item.id: item for item in edition.families}
+    for series in edition.common_core:
+        component = families[series.family_id].component
+        if component == "operational_efficiency":
+            assert series.evidence_kind == "source_reported_resource_mean"
+            assert series.success_adjusted is False
+            assert series.cost_evidence is None
+        elif component == "access_economics":
+            assert series.evidence_kind == "source_reported_task_cost"
+            assert series.cost_evidence == "source_reported"
+            assert series.success_adjusted is False
+    payload = edition.model_dump(mode="json")
+    access = next(
+        item
+        for item in payload["common_core"]
+        if item["series_id"] == "weirdml-cost-per-run"
+    )
+    access["cost_evidence"] = "provider_billing_record"
+    with pytest.raises(ValidationError, match="provider billing"):
+        type(edition).model_validate(payload)
+    payload = edition.model_dump(mode="json")
+    tokens = next(
+        item
+        for item in payload["common_core"]
+        if item["series_id"] == "deepswe-output-tokens"
+    )
+    tokens["success_adjusted"] = True
+    with pytest.raises(ValidationError, match="success-adjusted"):
+        type(edition).model_validate(payload)
+    scores = score_public_edition(edition_name="v0.5")
+    assert {item["cost_evidence"] for item in scores["models"]} == {"source_reported"}
+
+
+def test_public_series_come_from_edition_policy() -> None:
+    edition = load_public_edition_config(edition="v0.5")
+    specs = public_series_specs(edition)
+    families = {item.id: item for item in edition.families}
+    by_id = {spec["id"]: spec for spec in specs}
+    assert by_id["deepswe-v1.1-pass1"]["family_weight"] == families["deepswe-v1.1"].weight
+    assert by_id["deepswe-v1.1-pass1"]["domain"] == families["deepswe-v1.1"].parent
+    assert by_id["weirdml-cost-per-run"]["panel_filter"] == "high_effort"
+    payload = edition.model_dump(mode="json")
+    payload["families"] = [
+        {**item, "weight": 0.5} if item["id"] == "epoch-chess" else item
+        for item in payload["families"]
+    ]
+    with pytest.raises(ValidationError, match="family weights must sum"):
+        type(edition).model_validate(payload)
+
+
+def test_named_anchor_panels_and_scales_are_stable() -> None:
+    edition = load_public_edition_config(edition="v0.5")
+    bundle = load_public_scoring_bundle(edition_name="v0.5")
+    panels, scales = build_public_panels_and_scales(bundle, edition)
+    assert {item.panel_id for item in panels} == {
+        series.anchor_panel_id for series in edition.common_core
+    }
+    assert all(item.n >= 8 for item in panels)
+    by_series = {item.series_id: item for item in scales}
+    chess = next(item for item in edition.common_core if item.series_id == "epoch-chess-puzzles")
+    points = bundle_points(bundle, chess.series_id)
+    raws = tuple(item.raw for item in points)
+    scale = by_series[chess.series_id]
+    applied = apply_public_scale(points[0].raw, scale)
+    rebuilt = series_score(
+        points[0].raw,
+        raws,
+        kind=chess.kind,
+        logit_eps=edition.normalization.logit_eps,
+        winsor=edition.normalization.winsor,
+    )
+    assert applied["score"] == rebuilt["score"]
+    again, again_scales = build_public_panels_and_scales(bundle, edition)
+    assert [item.panel_fingerprint for item in again] == [item.panel_fingerprint for item in panels]
+    assert [item.scale_id for item in again_scales] == [item.scale_id for item in scales]
 
 
 def test_v05_reproduces_v04_pilot_scores() -> None:
@@ -55,6 +181,9 @@ def test_v05_validation_and_partial_intervals() -> None:
         assert item["interval_status"] == "partial_source_interval"
         assert "epoch-scicode" in item["series_without_intervals"]
     assert uncertainty["family_ablations"]
+    assert uncertainty["source_ablations"]
+    assert uncertainty["pairwise"]
+    assert uncertainty["resampling_method_version"] == "umi-public-uncertainty-v0.5"
     certificate = build_public_certificate(payload, report, uncertainty)
     assert certificate["status"] == "published_governed_index"
     assert certificate["source_artifact_sha256"] == verify_epoch_zip()
@@ -78,6 +207,280 @@ def test_v05_validation_and_partial_intervals() -> None:
     assert "claude-opus-5-max" in cluster
     pairs = overlapping_pairs(certificate["models"])
     assert pairs
+
+
+def test_named_candidates_are_diagnostic_abstentions() -> None:
+    identities = {item.entity_id for item in load_public_identities(edition="v0.5")}
+    report = audit_named_candidates()
+    assert report["headline_additions"] == []
+    assert report["source_artifact_sha256"] == verify_epoch_zip()
+    by_id = {item["candidate_id"]: item for item in report["candidates"]}
+    assert set(by_id) == {"grok-4.5-high", "gemini-3.1-pro-preview"}
+    grok = by_id["grok-4.5-high"]
+    gemini = by_id["gemini-3.1-pro-preview"]
+    assert grok["missing_series"] == ["epoch-weirdml", "weirdml-cost-per-run"]
+    assert gemini["missing_series"] == ["weirdml-cost-per-run"]
+    assert grok["notes"] == []
+    assert gemini["notes"] == [
+        "gemini-3.1-pro-preview has WeirdML Cost per run=1.36 but is excluded "
+        "from the Access high-effort suffix panel"
+    ]
+    for item in (grok, gemini):
+        assert item["headline_eligible"] is False
+        assert item["status"] == "insufficient_common_support"
+        assert item["umi_public"] is None
+        assert item["candidate_id"] not in identities
+        assert "diagnostic candidate certificate" in item["publication_label"]
+
+
+def test_candidate_audit_rejects_invented_scores() -> None:
+    live = audit_named_candidates()["candidates"][0]
+    with pytest.raises(ValidationError, match="must not invent umi_public"):
+        PublicCandidateAudit.model_validate({**live, "umi_public": 55.0})
+    with pytest.raises(ValidationError, match="cannot be headline eligible"):
+        PublicCandidateAudit.model_validate(
+            {**live, "headline_eligible": True, "status": "published"}
+        )
+    with pytest.raises(ValidationError, match="must abstain"):
+        PublicCandidateAudit.model_validate({**live, "status": "published"})
+    report = audit_named_candidates()
+    with pytest.raises(ValidationError, match="headline_additions must match"):
+        PublicCandidateAuditReport.model_validate(
+            {**report, "headline_additions": ["grok-4.5-high"]}
+        )
+
+
+def test_committed_candidate_audits_match_live() -> None:
+    live = audit_named_candidates()
+    root = Path(__file__).resolve().parents[1] / "data" / "editions" / "v0.5" / "processed"
+    stored = json.loads((root / "candidate-audits.json").read_text(encoding="utf-8"))
+    assert stored == live
+    for item in (*live["candidates"], *audit_near_miss_candidates()):
+        path = root / f"candidate-{item['candidate_id']}.json"
+        assert json.loads(path.read_text(encoding="utf-8")) == item
+    audit = validate_public_artifacts("v0.5")
+    assert audit["valid"] is True
+
+
+def test_blocker_report_is_precise_and_unscored() -> None:
+    report = build_blocker_report()
+    by_id = {item["blocker_id"]: item for item in report["blockers"]}
+    assert report["headline_published"] is True
+    assert by_id["candidate-grok-4.5-high"]["missing_series"] == [
+        "epoch-weirdml",
+        "weirdml-cost-per-run",
+    ]
+    assert by_id["candidate-gemini-3.1-pro-preview"]["missing_series"] == [
+        "weirdml-cost-per-run"
+    ]
+    for blocker_id in (
+        "near-miss-gpt-5.6-terra-max",
+        "near-miss-gpt-5.6-luna-max",
+        "near-miss-claude-sonnet-5-max",
+        "near-miss-claude-opus-4-8-max",
+    ):
+        assert by_id[blocker_id]["missing_series"] == [
+            "epoch-weirdml",
+            "weirdml-cost-per-run",
+        ]
+    assert "construct-billed-economics" in by_id
+    assert "construct-interactive-latency" in by_id
+    for item in report["blockers"]:
+        assert item["umi_public"] is None
+        assert item["urls_investigated"]
+        assert item["sources_investigated"]
+        assert item["resolving_evidence"]
+    with pytest.raises(ValidationError, match="must not invent umi_public"):
+        PublicEvidenceBlocker.model_validate({**report["blockers"][0], "umi_public": 50.0})
+
+
+def test_source_concentration_stays_inside_the_cap() -> None:
+    concentration = source_concentration(edition_name="v0.5")
+    capability = concentration["components"]["capability"]
+    assert capability["cap_applied"] is True
+    assert capability["source_shares"]["epoch"] == pytest.approx(0.35)
+    assert capability["largest_share"] == pytest.approx(0.35)
+    assert concentration["components"]["operational_efficiency"]["cap_applied"] is False
+    assert concentration["components"]["access_economics"]["cap_applied"] is False
+
+
+def test_weight_sensitivity_is_diagnostic_and_preserves_headline() -> None:
+    payload = score_public_edition(edition_name="v0.5")
+    report = quantify_weight_sensitivity(payload)
+    assert report["status"] == "diagnostic"
+    assert report["headline_unchanged"] is True
+    assert [item["name"] for item in WEIGHT_HYPOTHESES] == report["hypotheses"]
+    baseline = next(item for item in report["scenarios"] if item["name"] == "baseline")
+    ranked = sorted(payload["models"], key=lambda row: row["rank"])
+    published = [item["entity_id"] for item in ranked]
+    assert baseline["order"] == published
+    by_id = {item["entity_id"]: item for item in payload["models"]}
+    for row in baseline["models"]:
+        assert row["diagnostic_public"] == pytest.approx(by_id[row["entity_id"]]["umi_public"])
+
+
+def test_committed_blocker_report_matches_live() -> None:
+    live = build_blocker_report()
+    root = Path(__file__).resolve().parents[1] / "data" / "editions" / "v0.5" / "processed"
+    stored = json.loads((root / "blocker-report.json").read_text(encoding="utf-8"))
+    assert stored == live
+    assert (root / "edition-manifest.json").is_file()
+    assert (root / "source-concentration.json").is_file()
+
+
+def test_uncertainty_is_deterministic_and_widens_with_sigma() -> None:
+    payload = score_public_edition(edition_name="v0.5")
+    first = quantify_public_uncertainty(payload, edition_name="v0.5", draws=64)
+    second = quantify_public_uncertainty(payload, edition_name="v0.5", draws=64)
+    assert first == second
+    wider = quantify_public_uncertainty(
+        payload, edition_name="v0.5", draws=64, sigma_scale=2.0
+    )
+    by_base = {item["entity_id"]: item for item in first["models"]}
+    by_wide = {item["entity_id"]: item for item in wider["models"]}
+    for entity_id, item in by_base.items():
+        base_width = item["interval_high"] - item["interval_low"]
+        wide_width = by_wide[entity_id]["interval_high"] - by_wide[entity_id]["interval_low"]
+        assert wide_width + 1e-12 >= base_width
+        assert item["operational_efficiency_low"] == item["operational_efficiency_high"]
+        assert item["access_economics_low"] == item["access_economics_high"]
+        assert "epoch-scicode" in item["series_without_intervals"]
+        assert "weirdml-cost-per-run" in item["series_without_intervals"]
+
+
+def test_source_ablation_is_diagnostic_and_drops_capability_orgs() -> None:
+    payload = score_public_edition(edition_name="v0.5")
+    uncertainty = quantify_public_uncertainty(payload, edition_name="v0.5", draws=32)
+    report = quantify_source_ablation(payload, uncertainty)
+    assert report["status"] == "diagnostic"
+    assert report["headline_unchanged"] is True
+    orgs = {item["dropped_organization"] for item in report["source_ablations"]}
+    assert orgs == {"artificial-analysis", "datacurve", "epoch", "weirdml"}
+    epoch = next(
+        item for item in report["source_ablations"] if item["dropped_organization"] == "epoch"
+    )
+    assert "epoch-chess-puzzles" in epoch["dropped_series"]
+    assert "epoch-gpqa" in epoch["dropped_series"]
+    assert "general_reasoning_and_knowledge" in epoch["emptied_domains"]
+    assert "mathematics_and_science" in epoch["emptied_domains"]
+    assert "software_engineering" in epoch["remaining_capability_domains"]
+    cannot = {item["component"]: item["source_organization"] for item in report["cannot_ablate"]}
+    assert cannot["operational_efficiency"] == "datacurve"
+    assert cannot["access_economics"] == "weirdml"
+    published = [
+        item["entity_id"]
+        for item in sorted(payload["models"], key=lambda row: row["rank"])
+    ]
+    assert published[0] == "gpt-5.6-sol-max"
+    assert published[1] == "kimi-k3-max"
+    for scenario in report["family_ablations"]:
+        assert scenario["order"][0] == "gpt-5.6-sol-max"
+        assert scenario["order"][1] == "kimi-k3-max"
+        assert scenario["rank_changes"]["gpt-5.6-sol-max"] == 0
+        assert scenario["rank_changes"]["kimi-k3-max"] == 0
+
+
+def test_rank_stability_marks_sol_and_kimi() -> None:
+    payload = score_public_edition(edition_name="v0.5")
+    uncertainty = quantify_public_uncertainty(payload, edition_name="v0.5", draws=128)
+    ablation = quantify_source_ablation(payload, uncertainty)
+    stability = quantify_rank_stability(payload, uncertainty, ablation)
+    assert stability["headline_unchanged"] is True
+    assert stability["interval_stable_prefix"][:2] == ["gpt-5.6-sol-max", "kimi-k3-max"]
+    by_id = {item["entity_id"]: item for item in stability["models"]}
+    assert by_id["gpt-5.6-sol-max"]["interval_stable"] is True
+    assert by_id["kimi-k3-max"]["interval_stable"] is True
+    assert by_id["gpt-5.6-sol-max"]["published_rank"] == 1
+    assert by_id["kimi-k3-max"]["published_rank"] == 2
+    overlap = set(stability["overlap_cluster"])
+    assert "claude-opus-5-max" in overlap
+    assert "gpt-5.6-sol-max" not in overlap
+    for item in payload["models"]:
+        row = by_id[item["entity_id"]]
+        assert row["interval_rank_low"] <= item["rank"] <= row["interval_rank_high"]
+        assert row["family_ablation_rank_low"] <= row["family_ablation_rank_high"]
+        assert row["source_ablation_score_low"] <= row["source_ablation_score_high"]
+
+
+def test_expanded_evidence_freeze_binds_seven_models_and_candidates() -> None:
+    payload = score_public_edition(edition_name="v0.5")
+    report = build_evidence_freeze(payload)
+    assert report["status"] == "frozen_expanded_public_evidence"
+    assert report["scored_data_fingerprint"] == FROZEN_SCORED_DATA_FINGERPRINT
+    assert report["evidence_fingerprint"] == FROZEN_EVIDENCE_FINGERPRINT
+    assert set(report["accepted_entity_ids"]) == set(EXPANDED_ENTITY_IDS)
+    by_id = {item["entity_id"]: item for item in report["accepted_scores"]}
+    for entity_id, expected in FROZEN_SCORES.items():
+        assert by_id[entity_id]["umi_public"] == expected
+    named = {item["candidate_id"]: item for item in report["named_candidates"]}
+    assert named["grok-4.5-high"]["missing_series"] == [
+        "epoch-weirdml",
+        "weirdml-cost-per-run",
+    ]
+    assert named["gemini-3.1-pro-preview"]["missing_series"] == ["weirdml-cost-per-run"]
+    near = {item["candidate_id"]: item for item in report["near_miss_candidates"]}
+    assert set(near) == {
+        "gpt-5.6-terra-max",
+        "gpt-5.6-luna-max",
+        "claude-sonnet-5-max",
+        "claude-opus-4-8-max",
+    }
+    for item in (*named.values(), *near.values()):
+        assert item["umi_public"] is None
+        assert item["status"] == "insufficient_common_support"
+        assert item["headline_eligible"] is False
+    again = build_evidence_freeze(payload)
+    assert again["freeze_fingerprint"] == report["freeze_fingerprint"]
+    drifted = {**report, "accepted_entity_ids": [*report["accepted_entity_ids"], "grok-4.5-high"]}
+    with pytest.raises(ValidationError, match="accepted entity set"):
+        PublicEvidenceFreeze.model_validate(drifted)
+    invented = {
+        **report["named_candidates"][0],
+        "umi_public": 50.0,
+        "headline_eligible": False,
+        "status": "insufficient_common_support",
+    }
+    with pytest.raises(ValidationError, match="must not invent umi_public"):
+        PublicEvidenceFreeze.model_validate({**report, "named_candidates": [invented]})
+
+
+def test_committed_evidence_freeze_matches_live() -> None:
+    payload = score_public_edition(edition_name="v0.5")
+    live = build_evidence_freeze(payload)
+    root = Path(__file__).resolve().parents[1] / "data" / "editions" / "v0.5" / "processed"
+    stored = json.loads((root / "evidence-freeze.json").read_text(encoding="utf-8"))
+    assert stored == live
+    assert payload["scored_data_fingerprint"] == FROZEN_SCORED_DATA_FINGERPRINT
+
+
+def test_committed_uncertainty_surfaces_are_governed() -> None:
+    root = Path(__file__).resolve().parents[1] / "data" / "editions" / "v0.5" / "processed"
+    uncertainty = json.loads((root / "uncertainty.json").read_text(encoding="utf-8"))
+    ablation = json.loads((root / "source-ablation.json").read_text(encoding="utf-8"))
+    stability = json.loads((root / "rank-stability.json").read_text(encoding="utf-8"))
+    assert uncertainty["draws"] == 2048
+    assert uncertainty["seed_source"] == "scored_data_fingerprint"
+    assert uncertainty["source_ablations"]
+    assert ablation["headline_unchanged"] is True
+    assert ablation["status"] == "diagnostic"
+    assert stability["interval_stable_prefix"][:2] == ["gpt-5.6-sol-max", "kimi-k3-max"]
+    assert "claude-opus-5-max" in set(stability["overlap_cluster"])
+
+
+def test_incomplete_candidate_identity_fails_closed() -> None:
+    identities = load_public_identities(edition="v0.5")
+    grok = identities[0].model_copy(
+        update={
+            "entity_id": "grok-4.5-high",
+            "developer": "xAI",
+            "named_release": "Grok 4.5",
+            "effort_setting": "high",
+            "reasoning_mode": "high",
+            "primary_target": "grok-4.5",
+        }
+    )
+    with pytest.raises(ValueError, match="lack exact source crosswalks"):
+        score_public_edition(edition_name="v0.5", identities=(*identities, grok))
 
 
 def payload_score(payload: dict[str, object], entity_id: str) -> float:

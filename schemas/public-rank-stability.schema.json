@@ -1,0 +1,165 @@
+{
+  "$defs": {
+    "PublicRankStabilityModel": {
+      "additionalProperties": false,
+      "properties": {
+        "diagnostically_stable": {
+          "title": "Diagnostically Stable",
+          "type": "boolean"
+        },
+        "entity_id": {
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "family_ablation_rank_high": {
+          "title": "Family Ablation Rank High",
+          "type": "integer"
+        },
+        "family_ablation_rank_low": {
+          "title": "Family Ablation Rank Low",
+          "type": "integer"
+        },
+        "indistinguishable_from": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Indistinguishable From",
+          "type": "array"
+        },
+        "interval_rank_high": {
+          "title": "Interval Rank High",
+          "type": "integer"
+        },
+        "interval_rank_low": {
+          "title": "Interval Rank Low",
+          "type": "integer"
+        },
+        "interval_stable": {
+          "title": "Interval Stable",
+          "type": "boolean"
+        },
+        "published_rank": {
+          "title": "Published Rank",
+          "type": "integer"
+        },
+        "source_ablation_rank_high": {
+          "title": "Source Ablation Rank High",
+          "type": "integer"
+        },
+        "source_ablation_rank_low": {
+          "title": "Source Ablation Rank Low",
+          "type": "integer"
+        },
+        "source_ablation_score_high": {
+          "title": "Source Ablation Score High",
+          "type": "number"
+        },
+        "source_ablation_score_low": {
+          "title": "Source Ablation Score Low",
+          "type": "number"
+        },
+        "umi_public": {
+          "title": "Umi Public",
+          "type": "number"
+        },
+        "weight_rank_high": {
+          "title": "Weight Rank High",
+          "type": "integer"
+        },
+        "weight_rank_low": {
+          "title": "Weight Rank Low",
+          "type": "integer"
+        },
+        "weight_score_high": {
+          "title": "Weight Score High",
+          "type": "number"
+        },
+        "weight_score_low": {
+          "title": "Weight Score Low",
+          "type": "number"
+        }
+      },
+      "required": [
+        "entity_id",
+        "published_rank",
+        "umi_public",
+        "interval_rank_low",
+        "interval_rank_high",
+        "family_ablation_rank_low",
+        "family_ablation_rank_high",
+        "source_ablation_rank_low",
+        "source_ablation_rank_high",
+        "weight_rank_low",
+        "weight_rank_high",
+        "interval_stable",
+        "diagnostically_stable",
+        "indistinguishable_from",
+        "source_ablation_score_low",
+        "source_ablation_score_high",
+        "weight_score_low",
+        "weight_score_high"
+      ],
+      "title": "PublicRankStabilityModel",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "edition_id": {
+      "title": "Edition Id",
+      "type": "string"
+    },
+    "headline_unchanged": {
+      "title": "Headline Unchanged",
+      "type": "boolean"
+    },
+    "interval_stable_prefix": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Interval Stable Prefix",
+      "type": "array"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "method": {
+      "title": "Method",
+      "type": "string"
+    },
+    "models": {
+      "items": {
+        "$ref": "#/$defs/PublicRankStabilityModel"
+      },
+      "title": "Models",
+      "type": "array"
+    },
+    "overlap_cluster": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Overlap Cluster",
+      "type": "array"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "edition_id",
+    "status",
+    "headline_unchanged",
+    "method",
+    "models",
+    "interval_stable_prefix",
+    "overlap_cluster",
+    "limitations"
+  ],
+  "title": "PublicRankStabilityReport",
+  "type": "object"
+}
