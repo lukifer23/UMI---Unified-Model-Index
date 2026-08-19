@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from umi.adapters.models import AdaptationResult
 from umi.config import ProjectConfig
 from umi.loading import Dataset, SourceRegistry
+from umi.public_audit import PublicationAuditReport
 from umi.public_blockers import PublicBlockerReport
 from umi.public_bundle import PublicScoringBundle
 from umi.public_candidates import PublicCandidateAuditReport
@@ -31,6 +32,7 @@ from umi.schemas import (
     ScoreScale,
     ScoringResult,
 )
+from umi.v06_source_audit import V06SourceAuditReport
 
 SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "dataset.schema.json": Dataset,
@@ -60,6 +62,8 @@ SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "public-source-ablation.schema.json": PublicSourceAblationReport,
     "public-rank-stability.schema.json": PublicRankStabilityReport,
     "public-evidence-freeze.schema.json": PublicEvidenceFreeze,
+    "public-audit-report.schema.json": PublicationAuditReport,
+    "v06-source-audit.schema.json": V06SourceAuditReport,
 }
 
 

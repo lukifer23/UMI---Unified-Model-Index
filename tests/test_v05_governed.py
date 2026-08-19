@@ -10,6 +10,7 @@ from umi.edition import GOVERNED_EDITION_ID, GOVERNED_PUBLIC_INDEX, load_public_
 from umi.feasibility import validate_public_edition_feasibility
 from umi.identity import load_public_identities
 from umi.public import public_series_specs, score_public_edition, series_score
+from umi.public_audit import build_public_audit_report, write_public_audit_report
 from umi.public_blockers import PublicEvidenceBlocker, build_blocker_report
 from umi.public_bundle import bundle_points, load_public_scoring_bundle
 from umi.public_candidates import (
@@ -90,18 +91,14 @@ def test_public_efficiency_and_access_semantics_are_source_reported() -> None:
             assert series.success_adjusted is False
     payload = edition.model_dump(mode="json")
     access = next(
-        item
-        for item in payload["common_core"]
-        if item["series_id"] == "weirdml-cost-per-run"
+        item for item in payload["common_core"] if item["series_id"] == "weirdml-cost-per-run"
     )
     access["cost_evidence"] = "provider_billing_record"
     with pytest.raises(ValidationError, match="provider billing"):
         type(edition).model_validate(payload)
     payload = edition.model_dump(mode="json")
     tokens = next(
-        item
-        for item in payload["common_core"]
-        if item["series_id"] == "deepswe-output-tokens"
+        item for item in payload["common_core"] if item["series_id"] == "deepswe-output-tokens"
     )
     tokens["success_adjusted"] = True
     with pytest.raises(ValidationError, match="success-adjusted"):
@@ -209,6 +206,37 @@ def test_v05_validation_and_partial_intervals() -> None:
     assert pairs
 
 
+def test_public_audit_exposes_partial_scope_and_gate_blockers(tmp_path: Path) -> None:
+    payload = score_public_edition(edition_name="v0.5")
+    report = build_public_audit_report(payload)
+    assert report["publication_scope"] == "governed_partial"
+    assert report["headline_eligible"] is False
+    assert report["headline_overall"] is None
+    assert report["target_cohort"] == [
+        "claude-fable-5-max",
+        "claude-opus-5-max",
+        "gpt-5.6-sol-max",
+        "kimi-k3-max",
+        "glm-5.2-max",
+    ]
+    assert report["gates"]["efficiency"]["observed"] == pytest.approx(0.045)
+    assert report["gates"]["efficiency"]["passes"] is False
+    assert report["gates"]["economics"]["observed"] == 0
+    assert report["evidence_counts"]["capability_ready_scored"] == 48
+    assert report["evidence_counts"]["capability_missing"] == 23
+    assert report["blocker_count"] == 12
+    assert len(report["blockers"]) == 12
+    assert (
+        report["complete_audit_fingerprint"]
+        == "2e8e9922f76590751058d009e29c52ba2bff9f0c14c9d5cda4e3f7234f91e0ff"
+    )
+    assert all(item["headline_eligible"] is False for item in report["models"])
+
+    written = write_public_audit_report(tmp_path, payload=payload)
+    assert json.loads((tmp_path / "public-audit-report.json").read_text()) == written
+    assert written["scored_data_fingerprint"] == payload["scored_data_fingerprint"]
+
+
 def test_named_candidates_are_diagnostic_abstentions() -> None:
     identities = {item.entity_id for item in load_public_identities(edition="v0.5")}
     report = audit_named_candidates()
@@ -270,9 +298,7 @@ def test_blocker_report_is_precise_and_unscored() -> None:
         "epoch-weirdml",
         "weirdml-cost-per-run",
     ]
-    assert by_id["candidate-gemini-3.1-pro-preview"]["missing_series"] == [
-        "weirdml-cost-per-run"
-    ]
+    assert by_id["candidate-gemini-3.1-pro-preview"]["missing_series"] == ["weirdml-cost-per-run"]
     for blocker_id in (
         "near-miss-gpt-5.6-terra-max",
         "near-miss-gpt-5.6-luna-max",
@@ -333,9 +359,7 @@ def test_uncertainty_is_deterministic_and_widens_with_sigma() -> None:
     first = quantify_public_uncertainty(payload, edition_name="v0.5", draws=64)
     second = quantify_public_uncertainty(payload, edition_name="v0.5", draws=64)
     assert first == second
-    wider = quantify_public_uncertainty(
-        payload, edition_name="v0.5", draws=64, sigma_scale=2.0
-    )
+    wider = quantify_public_uncertainty(payload, edition_name="v0.5", draws=64, sigma_scale=2.0)
     by_base = {item["entity_id"]: item for item in first["models"]}
     by_wide = {item["entity_id"]: item for item in wider["models"]}
     for entity_id, item in by_base.items():
@@ -368,8 +392,7 @@ def test_source_ablation_is_diagnostic_and_drops_capability_orgs() -> None:
     assert cannot["operational_efficiency"] == "datacurve"
     assert cannot["access_economics"] == "weirdml"
     published = [
-        item["entity_id"]
-        for item in sorted(payload["models"], key=lambda row: row["rank"])
+        item["entity_id"] for item in sorted(payload["models"], key=lambda row: row["rank"])
     ]
     assert published[0] == "gpt-5.6-sol-max"
     assert published[1] == "kimi-k3-max"

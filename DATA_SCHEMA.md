@@ -392,6 +392,34 @@ pairwise interval overlap. `result_fingerprint` is SHA-256 over the certificate 
 that field. The certificate does not rescore. Overlapping partial intervals are
 `indistinguishable_from`, not a claim of equal capability.
 
+The certificate also exposes `publication_scope` and `headline_eligible`. v0.5 uses
+`publication_scope: governed_partial` and `headline_eligible: false`; this is a compatibility
+and presentation boundary, not a second score.
+
+## Public publication audit
+
+`schemas/public-audit-report.schema.json` and
+`data/editions/v0.5/processed/public-audit-report.json` bind the governed partial publication
+to the current five-model Overall target cohort. The report records the complete configured
+Capability cell inventory, component and breadth gate observations, per-model coverage,
+confidence, diagnostics, and unresolved blocker IDs. It reads existing validated scoring
+artifacts and does not rescore, impute, reweight, or promote diagnostic evidence. `headline_overall`
+is null until the ordinary Overall gates pass.
+
+## v0.6 strict public-source audit
+
+`config/editions/v0.6/source-audit.yaml` is the live non-scoring evidence contract for the five
+exact pilot configurations. It binds the fixed 2026-08-19 UTC cutoff, source requirements,
+minimum redistribution scope, and whether each requirement needs an exact deployment binding or
+redistributable attempt-level residuals. `schemas/v06-source-audit.schema.json` is the
+machine-readable authority for `data/editions/v0.6/processed/public-source-audit.json`.
+
+The report verifies committed source artifacts against registry SHA-256 values and retains source
+license, rights scope, organization, URL, existing v0.5 gate observations, and blocker IDs. It is
+`strict_public_source_audit` with `publication_state: verified_abstention`: all
+`headline_overall` fields are null. Its portable dashboard visualizes gate progress, source
+admissibility, rights, and five-model coverage; it never computes a score.
+
 ## Public uncertainty, source ablation, and rank stability
 
 `schemas/public-uncertainty.schema.json` is the contract for the 2,048-draw partial

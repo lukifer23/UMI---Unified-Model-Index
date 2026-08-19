@@ -8,3 +8,9 @@ does not admit new scored evidence.
 `registry.yaml` is machine validated. `captures/` contains compact, manually
 reviewed fact snapshots rather than copied webpages. Artifact checksums make later
 source or transcription changes explicit.
+
+The v0.6 source audit consumes only this registry and frozen local artifacts. Its
+requirements, integrity results, rights limits, and explicit abstention are
+published in `config/editions/v0.6/source-audit.yaml` and
+`data/editions/v0.6/processed/public-source-audit.json`; it does not turn
+facts-only captures into score inputs.

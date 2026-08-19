@@ -2,12 +2,15 @@
 
 UMI is an auditable Python library and CLI for comparing exact model configurations across
 Capability, Efficiency, Economics, Overall, and experimental Value. The current package is
-0.3.16. The living public index is **UMI Public v0.5 Governed**. v0.4 remains a historical
+0.3.16. The living public evidence surface is **UMI Public v0.6 Strict Source Audit**; its
+underlying governed common-core release is **UMI Public v0.5 Governed**. v0.4 remains a historical
 experimental point-score edition for the five exact Max pilots. The v0.3.15 legacy edition
 still does **not** publish `headline_overall`.
 
 UMI Public is `0.55 × Capability + 0.25 × Operational Efficiency + 0.20 × Access Economics`.
-v0.5 freezes v0.4, validates every published raw against the Epoch zip, adds partial
+v0.5 is a governed common-core partial-score release, not a headline Overall UMI release: the
+current pilot fails the configured Efficiency and Economics gates, so every `headline_overall`
+value remains null. It freezes v0.4, validates every published raw against the Epoch zip, adds partial
 source-interval uncertainty, and scores every frozen configuration that has the complete
 common core. Named candidates that miss a required series get diagnostic certificates, not
 imputed scores. Rebuild offline with no API keys:
@@ -16,6 +19,7 @@ imputed scores. Rebuild offline with no API keys:
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 validate
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 score
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 audit
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 report
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 dashboard
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 certificate
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 candidates
@@ -25,9 +29,12 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 uncertainty
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 ablation
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 stability
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 bundle
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.6 validate
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.6 source-audit
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.6 dashboard
 ```
 
-| Rank | Configuration | Capability | Operational Efficiency | Access Economics | UMI Public |
+| Common-core order | Configuration | Capability | Operational Efficiency | Access Economics | Governed partial |
 |---:|---|---:|---:|---:|---:|
 | 1 | GPT-5.6 Sol Max | 91.94 | 49.66 | 16.40 | **66.27** |
 | 2 | Kimi K3 Max | 88.84 | 27.80 | 19.40 | **59.69** |
@@ -35,18 +42,28 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 bundle
 | 4 | Claude Fable 5 Max | 88.71 | 21.99 | 0.71 | **54.43** |
 | 5 | GLM-5.2 Max | 67.89 | 23.22 | 55.31 | **54.20** |
 
-v0.5 keeps those five numbers and adds GPT-5.4 xhigh (**55.51**) and Gemini 3.6 Flash high
+v0.5 keeps those five governed partial values and adds GPT-5.4 xhigh (**55.51**) and Gemini 3.6 Flash high
 (**55.44**). Sol and Kimi stay ranks 1 and 2 under partial intervals; places 3–7 overlap.
 Grok 4.5 High and Gemini 3.1 Pro Preview remain diagnostic: they miss required WeirdML
 series and have no `umi_public`.
 
 Open [public-dashboard.html](data/editions/v0.5/processed/public-dashboard.html) for the
-governed views: rank-order UMI Public bars, stacked weighted contributions, grouped
-unweighted components, and the Capability series heatmap. Plot-ready tables are
+governed views: common-core partial bars, weighted contributions, component scores, Capability
+series, configured hierarchy coverage, and headline gate progress. The companion
+[publication audit](docs/editions/v0.5/AUDIT_REPORT.md) explains what is publishable, what is
+blocked, and why. Plot-ready tables are
 [public-ranking.csv](data/editions/v0.5/processed/public-ranking.csv) and
 [public-series.csv](data/editions/v0.5/processed/public-series.csv). The v0.4 dashboard
 remains the frozen experimental point-score surface. Methods and weights are in
 [PILOT_REPORT.md](PILOT_REPORT.md).
+
+v0.6 verifies the public-source path for a future five-model Overall release at the fixed
+2026-08-19 UTC evidence boundary. Its [source audit](docs/editions/v0.6/SOURCE_AUDIT.md) and
+[dashboard](data/editions/v0.6/processed/public-source-audit-dashboard.html) show real artifact
+checksums, rights, gate progress, and model coverage. It does **not** publish a score: only the
+Epoch archive is redistributable as a full artifact, while DeepSWE and Artificial Analysis remain
+facts-and-citations. No all-five provider-billing ledger or redistributable attempt residuals is
+admitted, so every v0.6 Overall headline is correctly withheld.
 
 Those numbers come from ten frozen Epoch-archive series that cover all five exact `_max`
 identities with 8+ anchors: chess, DeepSWE Pass@1, SciCode, WeirdML, GPQA, OTIS Mock AIME,

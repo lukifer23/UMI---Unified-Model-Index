@@ -1,7 +1,7 @@
 # UMI methodology
 
 This document is the authority for UMI scoring behavior. Configuration files contain the
-current policy values; code must not contradict this document. Three editions are in force:
+current policy values; code must not contradict this document. Four editions are in force:
 
 - **v0.3.15 legacy** (`umi-public-v0.3-legacy`, formula `umi-methodology-v0.3.15`,
   normalization `umi-normalization-v0.3.4`) remains the multi-source reviewed-fact pilot. It does
@@ -20,10 +20,39 @@ current policy values; code must not contradict this document. Three editions ar
   configuration that has the complete ten-series common core. The five v0.4 Max pilots must
   reproduce their v0.4 `umi_public` numbers exactly. Named candidates that miss a required series
   receive diagnostic certificates with `umi_public: null`; they are not added to the headline.
+- **v0.6 Strict Public-Source Audit** (`umi-public-v0.6`,
+  `release_class: strict_public_source_audit`) fixes the public evidence boundary at 2026-08-19
+  UTC for the five exact pilot configurations. It verifies source artifact checksums, rights, and
+  admission requirements, but publishes no UMI score or headline Overall.
 
 All governed floating-point totals and weighted means use `math.fsum` so identical ordered inputs
 produce identical serialized results and fingerprints across supported Python versions; this is
 numerical canonicalization, not a change to weights or score semantics.
+
+### Publication terminology
+
+The v0.5 `umi_public` values are published **governed partial scores**. They are complete and
+verifiable for the frozen common-core cohort, but they are not headline Overall UMI scores. The
+machine-readable publication scope is `governed_partial`; `headline_overall` remains null until
+the independent Overall eligibility gates pass. The dashboard and audit report must keep this
+distinction visible. `headline_overall` and a publishable Overall rank are reserved for the
+ordinary v0.3 scoring result when Capability, Efficiency, Economics, coverage, breadth, date,
+readiness, and confidence rules all pass.
+
+### UMI Public v0.6 strict public-source audit
+
+v0.6 is not a formula change, a score release, or a relaxation of the v0.5 governance boundary.
+It verifies the raw-artifact checksum, license, attribution, redistribution scope, and source
+readiness of each candidate source before it can enter a future score. The audit reports existing
+gates, source requirements, and explicit failures, but serializes `headline_eligible: false` and
+`headline_overall: null` for every pilot.
+
+The audit does not convert a reviewed fact extract, tariff, calculated task cost, source-reported
+benchmark cost, or mutable leaderboard into provider-billed Economics. It also does not treat a
+checksum-verified aggregate as a substitute for redistributable attempt-level residuals, exact
+deployment bindings, or a compatible 8-plus-anchor cohort. A later scoring edition may supersede
+this abstention only with evidence that independently clears the existing gates; its audit
+fingerprint excludes dynamic timestamps.
 
 ## UMI Public v0.4
 
@@ -141,6 +170,12 @@ timestamps are excluded.
 
 v0.5 does not change the v0.4 formula, domain weights, transforms, or common-core series. It
 governs that edition.
+
+The governed common-core values retain the historical `umi_public` field for compatibility, but
+their publication scope is `governed_partial`. They must not be described as a universal Overall
+score, provider-billed Economics, or headline leaderboard rank. `public-audit-report.json` and
+`docs/editions/v0.5/AUDIT_REPORT.md` are the release-governance companion artifacts; they bind the
+current target cohort to the existing v0.3 gate and coverage results without rescoring.
 
 ### Hardening
 

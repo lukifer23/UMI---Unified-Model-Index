@@ -1,0 +1,281 @@
+{
+  "$defs": {
+    "GateAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "observed": {
+          "minimum": 0,
+          "title": "Observed",
+          "type": "number"
+        },
+        "passes": {
+          "title": "Passes",
+          "type": "boolean"
+        },
+        "required": {
+          "minimum": 0,
+          "title": "Required",
+          "type": "number"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "observed",
+        "required",
+        "passes",
+        "unit"
+      ],
+      "title": "GateAssessment",
+      "type": "object"
+    },
+    "PublicationAuditModel": {
+      "additionalProperties": false,
+      "properties": {
+        "blockers": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Blockers",
+          "type": "array"
+        },
+        "capability_coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Capability Coverage",
+          "type": "number"
+        },
+        "capability_domains_represented": {
+          "minimum": 0,
+          "title": "Capability Domains Represented",
+          "type": "integer"
+        },
+        "confidence": {
+          "title": "Confidence",
+          "type": "string"
+        },
+        "diagnostics": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Diagnostics",
+          "type": "array"
+        },
+        "economics_coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Economics Coverage",
+          "type": "number"
+        },
+        "economics_workloads_represented": {
+          "minimum": 0,
+          "title": "Economics Workloads Represented",
+          "type": "integer"
+        },
+        "efficiency_coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Efficiency Coverage",
+          "type": "number"
+        },
+        "efficiency_workloads_represented": {
+          "minimum": 0,
+          "title": "Efficiency Workloads Represented",
+          "type": "integer"
+        },
+        "entity_id": {
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "gates": {
+          "additionalProperties": {
+            "$ref": "#/$defs/GateAssessment"
+          },
+          "title": "Gates",
+          "type": "object"
+        },
+        "governed_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Governed Score"
+        },
+        "headline_eligible": {
+          "title": "Headline Eligible",
+          "type": "boolean"
+        },
+        "headline_overall": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Headline Overall"
+        },
+        "overall_coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Overall Coverage",
+          "type": "number"
+        },
+        "publication_scope": {
+          "title": "Publication Scope",
+          "type": "string"
+        }
+      },
+      "required": [
+        "entity_id",
+        "publication_scope",
+        "headline_eligible",
+        "confidence",
+        "capability_coverage",
+        "efficiency_coverage",
+        "economics_coverage",
+        "overall_coverage",
+        "capability_domains_represented",
+        "efficiency_workloads_represented",
+        "economics_workloads_represented",
+        "gates",
+        "blockers",
+        "diagnostics"
+      ],
+      "title": "PublicationAuditModel",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "blocker_count": {
+      "minimum": 0,
+      "title": "Blocker Count",
+      "type": "integer"
+    },
+    "blockers": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blockers",
+      "type": "array"
+    },
+    "complete_audit_fingerprint": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Complete Audit Fingerprint"
+    },
+    "edition_id": {
+      "title": "Edition Id",
+      "type": "string"
+    },
+    "evidence_counts": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Evidence Counts",
+      "type": "object"
+    },
+    "gates": {
+      "additionalProperties": {
+        "$ref": "#/$defs/GateAssessment"
+      },
+      "title": "Gates",
+      "type": "object"
+    },
+    "headline_eligible": {
+      "title": "Headline Eligible",
+      "type": "boolean"
+    },
+    "headline_overall": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Headline Overall"
+    },
+    "models": {
+      "items": {
+        "$ref": "#/$defs/PublicationAuditModel"
+      },
+      "title": "Models",
+      "type": "array"
+    },
+    "narrative": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Narrative",
+      "type": "array"
+    },
+    "publication_scope": {
+      "title": "Publication Scope",
+      "type": "string"
+    },
+    "publication_state": {
+      "title": "Publication State",
+      "type": "string"
+    },
+    "report_version": {
+      "title": "Report Version",
+      "type": "string"
+    },
+    "scored_data_fingerprint": {
+      "title": "Scored Data Fingerprint",
+      "type": "string"
+    },
+    "source_artifacts": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Source Artifacts",
+      "type": "object"
+    },
+    "target_cohort": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Target Cohort",
+      "type": "array"
+    }
+  },
+  "required": [
+    "report_version",
+    "edition_id",
+    "publication_state",
+    "publication_scope",
+    "headline_eligible",
+    "headline_overall",
+    "target_cohort",
+    "source_artifacts",
+    "evidence_counts",
+    "gates",
+    "models",
+    "blockers",
+    "blocker_count",
+    "narrative",
+    "scored_data_fingerprint"
+  ],
+  "title": "PublicationAuditReport",
+  "type": "object"
+}

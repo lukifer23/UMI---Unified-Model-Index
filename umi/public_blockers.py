@@ -290,7 +290,8 @@ def render_blocker_markdown(report: dict[str, Any]) -> str:
         "archive. It does not invent scores, impute missing cells, or lower gates.",
         "",
         f"Edition: `{report['edition_id']}`. Zip SHA-256: `{report['source_artifact_sha256']}`.",
-        f"Status: `{report['status']}`. Headline remains published for complete common-core rows.",
+        f"Status: `{report['status']}`. Governed partial values remain published for "
+        "complete common-core rows; no Overall headline is published.",
         "",
         "| Blocker | Affected | Missing series | Why it fails | What would resolve it |",
         "|---|---|---|---|---|",
@@ -338,7 +339,8 @@ def write_blocker_report(output_dir: Path | None = None) -> dict[str, Any]:
     )
     markdown = render_blocker_markdown(report)
     (destination / "blocker-report.md").write_text(markdown, encoding="utf-8")
-    docs = ROOT / "docs" / "editions" / "v0.5" / "BLOCKER_REPORT.md"
-    docs.parent.mkdir(parents=True, exist_ok=True)
-    docs.write_text(markdown, encoding="utf-8")
+    if output_dir is None:
+        docs = ROOT / "docs" / "editions" / "v0.5" / "BLOCKER_REPORT.md"
+        docs.parent.mkdir(parents=True, exist_ok=True)
+        docs.write_text(markdown, encoding="utf-8")
     return report

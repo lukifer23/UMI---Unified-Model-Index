@@ -1,8 +1,32 @@
 # UMI pilot report
 
-## UMI Public v0.5 Governed
+## UMI Public v0.6 verified source audit
 
-**Governed expansion of the frozen v0.4 Public score.** Edition `umi-public-v0.5`, formula
+Edition `umi-public-v0.6` locks the public-evidence boundary at **2026-08-19 UTC** for Claude
+Fable 5 Max, Claude Opus 5 Max, GPT-5.6 Sol Max, Kimi K3 Max, and GLM-5.2 Max. It is a strict
+source audit, not an Overall scoring release. Rebuild it offline with:
+
+```bash
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.6 validate
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.6 source-audit
+PYTHONPATH=. uv run --no-sync umi edition --edition v0.6 dashboard
+```
+
+The Epoch Benchmarking Hub archive is checksum-verified and redistributable. The public DeepSWE
+v1.1 ledger was independently reconciled at SHA-256
+`13d6f7563330110231b008ae4eb38e03de24af08acead840de296d1127144971`: the selected five
+configurations have 2,231 scored rows, while Fable cost remains observed on only 432/436 attempts.
+DeepSWE and Artificial Analysis captures remain facts-only, so neither becomes a redistributable
+attempt ledger or provider-billing record. Context reliability, language/instruction following,
+interactive latency, provider-billed Economics, and hierarchical bootstrap remain blockers. The
+[v0.6 source audit](docs/editions/v0.6/SOURCE_AUDIT.md) and
+[dashboard](data/editions/v0.6/processed/public-source-audit-dashboard.html) expose the evidence
+and gates. Every v0.6 `headline_overall` is null.
+
+## UMI Public v0.5 Governed Partial Release
+
+**Governed expansion of the frozen v0.4 Public score.** Edition `umi-public-v0.5`, publication
+scope `governed_partial`, formula
 `umi-methodology-v0.5.0`. The five Max pilots reproduce v0.4 exactly. Two additional
 high-effort systems have the complete ten-series common core and are scored as themselves,
 not as Max. Rebuild:
@@ -20,7 +44,7 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 stability
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 bundle
 ```
 
-| Rank | Configuration | Effort | UMI Public | Partial 95% interval | Rank range |
+| Common-core order | Configuration | Effort | Governed partial | Partial 95% interval | Common-core range |
 |---:|---|---|---:|---|---|
 | 1 | GPT-5.6 Sol Max | max | 66.27 | 65.46–66.91 | 1–1 |
 | 2 | Kimi K3 Max | max | 59.69 | 58.15–60.89 | 2–2 |
@@ -30,7 +54,9 @@ PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 bundle
 | 6 | Claude Fable 5 Max | max | 54.43 | 53.00–55.59 | 3–7 |
 | 7 | GLM-5.2 Max | max | 54.20 | 52.00–55.82 | 3–7 |
 
-Intervals are `partial_source_interval`: published stderr / CI half-width on chess, GPQA,
+These values are not headline Overall UMI scores. `headline_overall` remains null because the
+current pilot fails the configured Efficiency and Economics gates. Intervals are
+`partial_source_interval`: published stderr / CI half-width on chess, GPQA,
 OTIS, DeepSWE Pass@1, and WeirdML accuracy. SciCode, CritPt, DeepSWE tokens/steps, and
 WeirdML cost stay at their point values. Sol and Kimi are interval-stable and
 diagnostically stable (they stay ranks 1 and 2 under family ablation, Capability
@@ -39,7 +65,8 @@ Family and source-organization ablation and named weight hypotheses are diagnost
 not change `umi_public`. Operational Efficiency and Access cannot be source-ablated without
 emptying a required component.
 
-Charts: [v0.5 dashboard](data/editions/v0.5/processed/public-dashboard.html). Validation:
+Charts: [v0.5 dashboard](data/editions/v0.5/processed/public-dashboard.html). Publication audit:
+[AUDIT_REPORT.md](docs/editions/v0.5/AUDIT_REPORT.md). Validation:
 [validation.json](data/editions/v0.5/processed/validation.json). Uncertainty:
 [uncertainty.json](data/editions/v0.5/processed/uncertainty.json). Source ablation:
 [source-ablation.json](data/editions/v0.5/processed/source-ablation.json). Rank stability:

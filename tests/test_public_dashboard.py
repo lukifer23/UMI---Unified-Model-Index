@@ -8,6 +8,7 @@ import pytest
 from analysis.public_dashboard import (
     attach_public_sidecars,
     build_public_dashboard,
+    render_public_dashboard_html,
     write_public_dashboard,
 )
 from umi.public import score_public_edition
@@ -76,3 +77,13 @@ def test_dashboard_attaches_v05_uncertainty_sidecar() -> None:
     assert sol["interval_high"] is not None
     assert sol["interval_status"] == "partial_source_interval"
     assert "overlap" in " ".join(dashboard["limitations"])
+    assert dashboard["publication_scope"] == "governed_partial"
+    assert dashboard["headline_eligible"] is False
+    assert {item["id"] for item in dashboard["charts"]} >= {
+        "coverage_heatmap",
+        "gate_progress",
+    }
+    html = render_public_dashboard_html(dashboard)
+    assert "Publication boundary" in html
+    assert "Configured hierarchy coverage" in html
+    assert "Headline gate progress" in html

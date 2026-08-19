@@ -1,0 +1,63 @@
+edition_id: umi-public-v0.6
+release_class: strict_public_source_audit
+evidence_snapshot_cutoff: "2026-08-19T00:00:00Z"
+target_cohort:
+  - claude-fable-5-max
+  - claude-opus-5-max
+  - gpt-5.6-sol-max
+  - kimi-k3-max
+  - glm-5.2-max
+baseline_artifacts:
+  publication_audit: data/editions/v0.5/processed/public-audit-report.json
+  blocker_report: data/editions/v0.5/processed/blocker-report.json
+  source_registry: data/sources/registry.yaml
+source_requirements:
+  - requirement_id: common-core-capability
+    component: capability
+    description: Frozen, redistributable public Capability evidence for exact pilot configurations.
+    source_artifact_ids: [epoch-benchmark-data-2026-08-14]
+    minimum_redistribution_scope: full_artifact
+    requires_exact_deployment: false
+    requires_attempt_residuals: false
+  - requirement_id: public-context-reliability
+    component: capability
+    description: Same-harness, 8-plus-anchor factual-reliability evidence for all five exact configurations.
+    source_artifact_ids: [aa-omniscience-facts-2026-08-15]
+    minimum_redistribution_scope: full_artifact
+    requires_exact_deployment: false
+    requires_attempt_residuals: false
+  - requirement_id: public-language-instruction
+    component: capability
+    description: Same-harness, 8-plus-anchor language, data, or instruction-following evidence for all five exact configurations.
+    source_artifact_ids: []
+    minimum_redistribution_scope: full_artifact
+    requires_exact_deployment: false
+    requires_attempt_residuals: false
+  - requirement_id: success-adjusted-efficiency
+    component: efficiency
+    description: Complete attempt-level physical-resource observations, success-adjusted within each exact record.
+    source_artifact_ids: [deepswe-v1.1-2026-08-13, aa-lcr-facts-2026-08-15]
+    minimum_redistribution_scope: full_artifact
+    requires_exact_deployment: true
+    requires_attempt_residuals: true
+  - requirement_id: interactive-latency
+    component: efficiency
+    description: Same-harness interactive service latency for all five exact configurations with 8-plus anchors.
+    source_artifact_ids: [aa-lcr-facts-2026-08-15]
+    minimum_redistribution_scope: full_artifact
+    requires_exact_deployment: true
+    requires_attempt_residuals: true
+  - requirement_id: provider-billed-economics
+    component: economics
+    description: Complete provider-billing records tied to exact deployments and successful-task denominators.
+    source_artifact_ids: []
+    minimum_redistribution_scope: full_artifact
+    requires_exact_deployment: true
+    requires_attempt_residuals: true
+  - requirement_id: hierarchical-bootstrap
+    component: uncertainty
+    description: Redistributable attempt-level residuals for every accepted headline series.
+    source_artifact_ids: [epoch-benchmark-data-2026-08-14, deepswe-v1.1-2026-08-13]
+    minimum_redistribution_scope: full_artifact
+    requires_exact_deployment: true
+    requires_attempt_residuals: true

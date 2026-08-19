@@ -49,6 +49,19 @@ cohort-relative, and source-bound uncertainty is deterministic endpoint sensitiv
 fully calibrated probabilistic model. Lab claims are first-class diagnostics but mostly lack an
 independent, cohort-identical comparison.
 
+The current v0.5 publication boundary is explicit: its seven complete common-core values are
+`governed_partial` scores, while `headline_overall` remains null. The publication audit and
+dashboard expose component coverage, gate progress, confidence, and blocker IDs for the current
+five-model Overall target cohort. These artifacts read validated evidence and do not rescore it.
+
+The v0.6 milestone implements the next no-paid-run gate: a strict, reproducible public-source
+audit fixed at 2026-08-19 UTC. It verifies source checksums, licensing and redistribution scope,
+reports source admissibility and five-model headline-gate coverage, and renders gate and source
+requirement charts. It is an explicit abstention, not a partial-score promotion: provider-billed
+Economics, exact deployment evidence, interactive latency, and redistributable attempt residuals
+remain unavailable from admitted public artifacts. A future scoring milestone must add those
+artifacts without changing the methodology or target cohort.
+
 ## Permanent rules
 
 - Keep raw source artifacts, literal labels, crosswalk decisions, selected IDs, conflicts,
@@ -112,7 +125,8 @@ install smoke outside the checkout, all CLI smokes, deterministic rebuild/diff, 
 assertions. Do not claim `>=3.11` support without this matrix.
 
 Exit: clean install/import and every documented offline CLI flow work; v0.3 rebuilds
-deterministically with all headlines null.
+deterministically with all headlines null; and verification writes generated artifacts to an
+explicit staging/output directory rather than mutating tracked files.
 
 ### Phase 1 — approve v1 policy/contracts
 

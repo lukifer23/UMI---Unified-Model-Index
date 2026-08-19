@@ -1,4 +1,4 @@
-"""UMI Public v0.4 scoring from frozen public artifacts."""
+"""UMI Public scoring from frozen public artifacts."""
 
 from __future__ import annotations
 
@@ -28,6 +28,8 @@ def entity_map_from_identities(
     edition: str,
 ) -> dict[str, str]:
     return entity_map_from_crosswalk(identities, edition=edition)
+
+
 INCOMPLETE_COST = {"claude-fable-5_max"}
 HIGH_EFFORT_SUFFIXES = ("_max", "_xhigh", "_high", "_promax")
 LOGIT_EPS = 1e-3
@@ -282,7 +284,14 @@ def _weighted_sum(parts: list[tuple[float, float]]) -> float:
 
 
 def _diagnostic_blockers() -> tuple[dict[str, Any], ...]:
-    complete_cost = deepswe_points("Mean cost (USD)", require_complete_cost=True)
+    entity_map = entity_map_from_identities(load_public_identities(), edition="v0.4")
+    complete_cost = epoch_points(
+        "deepswe_external.csv",
+        "Mean cost (USD)",
+        require_harness="mini-swe-agent",
+        skip_incomplete_cost=True,
+        entity_map=entity_map,
+    )
     complete_ids = {item.entity_id for item in complete_cost if item.entity_id}
     return (
         {
@@ -389,6 +398,7 @@ def score_public_edition(
         }
 
     models: list[dict[str, Any]] = []
+    publication_scope = "governed_partial"
     for identity in identities:
         cap_parts: dict[str, float] = {}
         capability_series: dict[str, dict[str, float]] = {}
@@ -430,23 +440,30 @@ def score_public_edition(
         )
         if not all(math.isfinite(value) for value in (capability, opeff, access, public)):
             raise ValueError(f"non-finite public score for {identity.entity_id}")
-        models.append(
-            {
-                "entity_id": identity.entity_id,
-                "entity_kind": identity.entity_kind.value,
-                "named_release": identity.named_release,
-                "effort_setting": identity.effort_setting,
-                "capability": capability,
-                "operational_efficiency": opeff,
-                "access_economics": access,
-                "umi_public": public,
-                "publication_state": "published",
-                "cost_evidence": access_cost_evidence,
-                "capability_series": capability_series,
-                "operational_series": operational_series,
-                "access_series": access_series,
-            }
-        )
+        model: dict[str, Any] = {
+            "entity_id": identity.entity_id,
+            "entity_kind": identity.entity_kind.value,
+            "named_release": identity.named_release,
+            "effort_setting": identity.effort_setting,
+            "capability": capability,
+            "operational_efficiency": opeff,
+            "access_economics": access,
+            "umi_public": public,
+            "publication_state": "published",
+            "cost_evidence": access_cost_evidence,
+            "capability_series": capability_series,
+            "operational_series": operational_series,
+            "access_series": access_series,
+        }
+        if edition_name == "v0.5":
+            model.update(
+                {
+                    "publication_scope": publication_scope,
+                    "headline_eligible": False,
+                    "headline_overall": None,
+                }
+            )
+        models.append(model)
     ranked = sorted(models, key=lambda item: (-item["umi_public"], item["entity_id"]))
     for index, item in enumerate(ranked, start=1):
         item["rank"] = index
@@ -481,7 +498,7 @@ def score_public_edition(
             ],
         }
     )
-    return {
+    result = {
         "edition_id": edition.edition_id,
         "formula_version": edition.formula_version,
         "normalization_version": edition.normalization_version,
@@ -496,6 +513,15 @@ def score_public_edition(
         "series": [spec["id"] for spec in specs],
         "anchors": anchors,
     }
+    if edition_name == "v0.5":
+        result.update(
+            {
+                "publication_scope": publication_scope,
+                "headline_eligible": False,
+                "headline_overall": None,
+            }
+        )
+    return result
 
 
 def write_public_artifacts(
@@ -571,10 +597,15 @@ def write_public_artifacts(
             edition_name=edition_name,
         )
         candidate_audits = write_candidate_audits(destination)
-        evidence_freeze = write_evidence_freeze(
-            payload, destination, edition_name=edition_name
-        )
+        evidence_freeze = write_evidence_freeze(payload, destination, edition_name=edition_name)
         governance = write_governance_artifacts(destination, edition_name=edition_name)
+        from umi.public_audit import write_public_audit_report
+
+        publication_audit = write_public_audit_report(
+            destination,
+            payload=payload,
+            edition_name=edition_name,
+        )
         payload = {
             **payload,
             "validation": validation,
@@ -583,6 +614,7 @@ def write_public_artifacts(
             "candidate_audits": candidate_audits,
             "evidence_freeze": evidence_freeze,
             "governance": governance,
+            "publication_audit": publication_audit,
             "source_ablation": stability_pack["source_ablation"],
             "rank_stability": stability_pack["rank_stability"],
         }

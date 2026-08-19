@@ -54,9 +54,14 @@ def _hash(value: object) -> str:
     return hashlib.sha256(rendered.encode()).hexdigest()
 
 
+def _write_text(path: Path, content: str) -> None:
+    """Keep regenerated frozen artifacts byte-stable across operating systems."""
+    path.write_text(content, encoding="utf-8", newline="\n")
+
+
 def _write_yaml(path: Path, key: str, values: tuple[Any, ...]) -> None:
     payload = {key: [item.model_dump(mode="json", exclude_none=True) for item in values]}
-    path.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
+    _write_text(path, yaml.safe_dump(payload, sort_keys=False))
 
 
 def main() -> None:
@@ -180,7 +185,8 @@ def main() -> None:
     _write_yaml(RAW_ROOT / "task_economics.yaml", "measurements", dataset.task_economics)
     _write_yaml(RAW_ROOT / "external_indexes.yaml", "measurements", dataset.external_indexes)
     _write_yaml(RAW_ROOT / "release_claims.yaml", "claims", dataset.release_claims)
-    (RAW_ROOT / "audit.yaml").write_text(
+    _write_text(
+        RAW_ROOT / "audit.yaml",
         yaml.safe_dump(
             {
                 "scored_audit_fingerprint": dataset.scored_audit_fingerprint,
@@ -189,7 +195,6 @@ def main() -> None:
             },
             sort_keys=False,
         ),
-        encoding="utf-8",
     )
     report = {
         "label": "real evidence — model-specific partial estimate",
@@ -197,8 +202,9 @@ def main() -> None:
         "scored_audit_fingerprint": dataset.scored_audit_fingerprint,
         "complete_audit_fingerprint": dataset.complete_audit_fingerprint,
     }
-    (PROCESSED_ROOT / "adaptation-report.json").write_text(
-        json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    _write_text(
+        PROCESSED_ROOT / "adaptation-report.json",
+        json.dumps(report, indent=2, sort_keys=True) + "\n"
     )
     config = load_project_config(ROOT / "config")
     bundle = load_scoring_bundle(
@@ -224,33 +230,36 @@ def main() -> None:
         "acceptance_manifest": acceptance_manifest.model_dump(mode="json"),
         "readiness": [item.model_dump(mode="json") for item in source_readiness_matrix(dataset)],
     }
-    (PROCESSED_ROOT / "source-readiness.json").write_text(
-        json.dumps(source_report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    _write_text(
+        PROCESSED_ROOT / "source-readiness.json",
+        json.dumps(source_report, indent=2, sort_keys=True) + "\n"
     )
     scoring_results = score_bundle(bundle)
     estimates = [item.model_dump(mode="json") for item in scoring_results]
-    (PROCESSED_ROOT / "model-specific-partial-estimates.json").write_text(
-        json.dumps(estimates, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    _write_text(
+        PROCESSED_ROOT / "model-specific-partial-estimates.json",
+        json.dumps(estimates, indent=2, sort_keys=True) + "\n"
     )
-    (PROCESSED_ROOT / "overall-sensitivity.json").write_text(
+    _write_text(
+        PROCESSED_ROOT / "overall-sensitivity.json",
         json.dumps(
             [asdict(item) for item in analyze_sensitivity(scoring_results, config)],
             indent=2,
             sort_keys=True,
         )
         + "\n",
-        encoding="utf-8",
     )
-    (PROCESSED_ROOT / "pilot-sensitivity.json").write_text(
+    _write_text(
+        PROCESSED_ROOT / "pilot-sensitivity.json",
         json.dumps(
             [asdict(item) for item in analyze_pilot_sensitivity(dataset, config)],
             indent=2,
             sort_keys=True,
         )
         + "\n",
-        encoding="utf-8",
     )
-    (PROCESSED_ROOT / "correlations.json").write_text(
+    _write_text(
+        PROCESSED_ROOT / "correlations.json",
         json.dumps(
             [
                 asdict(item)
@@ -262,39 +271,38 @@ def main() -> None:
             sort_keys=True,
         )
         + "\n",
-        encoding="utf-8",
     )
-    (PROCESSED_ROOT / "pareto.json").write_text(
+    _write_text(
+        PROCESSED_ROOT / "pareto.json",
         json.dumps(
             pareto_dimensions(dataset, scoring_results),
             indent=2,
             sort_keys=True,
         )
         + "\n",
-        encoding="utf-8",
     )
-    (PROCESSED_ROOT / "overlap.json").write_text(
+    _write_text(
+        PROCESSED_ROOT / "overlap.json",
         json.dumps(overlap_report(config), indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
     )
-    (PROCESSED_ROOT / "source-bound-uncertainty.json").write_text(
+    _write_text(
+        PROCESSED_ROOT / "source-bound-uncertainty.json",
         json.dumps(source_bound_capability_sensitivity(dataset, config), indent=2, sort_keys=True)
         + "\n",
-        encoding="utf-8",
     )
-    (PROCESSED_ROOT / "release-claim-calibration.json").write_text(
+    _write_text(
+        PROCESSED_ROOT / "release-claim-calibration.json",
         json.dumps(calibrate_release_claims(dataset), indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
     )
     gap_report = pilot_gap_report(dataset, config)
-    (PROCESSED_ROOT / "pilot-gap-report.json").write_text(
+    _write_text(
+        PROCESSED_ROOT / "pilot-gap-report.json",
         json.dumps(gap_report, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
     )
-    (PROCESSED_ROOT / "pilot-dashboard.json").write_text(
+    _write_text(
+        PROCESSED_ROOT / "pilot-dashboard.json",
         json.dumps(build_pilot_dashboard(dataset, estimates, gap_report), indent=2, sort_keys=True)
         + "\n",
-        encoding="utf-8",
     )
     five_models = tuple(model.id for model in models)
     three_models = ("claude-opus-5-max", "kimi-k3-max", "glm-5.2-max")
@@ -303,13 +311,14 @@ def main() -> None:
         ("common-evidence-three-model-comparison.json", three_models),
     ):
         comparison = common_capability_comparison(dataset, config, model_ids)
-        (PROCESSED_ROOT / name).write_text(
-            json.dumps(comparison, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        _write_text(
+            PROCESSED_ROOT / name,
+            json.dumps(comparison, indent=2, sort_keys=True) + "\n"
         )
     certificate = build_comparison_certificate(bundle, three_models)
-    (PROCESSED_ROOT / "comparison-certificate-three-model.json").write_text(
+    _write_text(
+        PROCESSED_ROOT / "comparison-certificate-three-model.json",
         json.dumps(certificate.model_dump(mode="json"), indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
     )
 
 

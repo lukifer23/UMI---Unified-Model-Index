@@ -1,0 +1,408 @@
+{
+  "blocker_count": 12,
+  "blockers": [
+    "candidate-grok-4.5-high",
+    "candidate-gemini-3.1-pro-preview",
+    "near-miss-gpt-5.6-terra-max",
+    "near-miss-gpt-5.6-luna-max",
+    "near-miss-claude-sonnet-5-max",
+    "near-miss-claude-opus-4-8-max",
+    "series-deepswe-mean-cost",
+    "construct-context-reliability",
+    "construct-language-instruction",
+    "construct-interactive-latency",
+    "construct-billed-economics",
+    "construct-hierarchical-bootstrap"
+  ],
+  "complete_audit_fingerprint": "2e8e9922f76590751058d009e29c52ba2bff9f0c14c9d5cda4e3f7234f91e0ff",
+  "edition_id": "umi-public-v0.5",
+  "evidence_counts": {
+    "capability_cells_total": 75,
+    "capability_diagnostic_measurement": 3,
+    "capability_diagnostic_reference": 1,
+    "capability_missing": 23,
+    "capability_ready_scored": 48
+  },
+  "gates": {
+    "capability": {
+      "observed": 0.64,
+      "passes": true,
+      "required": 0.6,
+      "unit": "fraction of configured cells"
+    },
+    "economics": {
+      "observed": 0.0,
+      "passes": false,
+      "required": 0.4,
+      "unit": "hierarchical workload coverage"
+    },
+    "efficiency": {
+      "observed": 0.045,
+      "passes": false,
+      "required": 0.5,
+      "unit": "hierarchical workload coverage"
+    },
+    "overall": {
+      "observed": 0.05662500000000001,
+      "passes": false,
+      "required": 0.6,
+      "unit": "headline eligibility"
+    }
+  },
+  "headline_eligible": false,
+  "headline_overall": null,
+  "models": [
+    {
+      "blockers": [
+        "capability coverage 0.083 is below the 0.600 gate",
+        "efficiency coverage 0.045 is below the 0.500 gate",
+        "economics coverage 0.000 is below the 0.400 gate",
+        "overall coverage 0.057 is below the 0.600 gate",
+        "efficiency workload coverage 0.045 is below the 0.500 gate",
+        "capability breadth 1 domains is below the 3-domain gate",
+        "headline eligibility is false"
+      ],
+      "capability_coverage": 0.0825,
+      "capability_domains_represented": 1,
+      "confidence": "low",
+      "diagnostics": [
+        "model release date is outside the configured eligibility window",
+        "not eligible for headline Overall ranking",
+        "provisional normalization cohorts: autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens",
+        "provisional normalization cohorts: deepswe-v1.1/deepswe-v1.1-2026-08-13"
+      ],
+      "economics_coverage": 0.0,
+      "economics_workloads_represented": 0,
+      "efficiency_coverage": 0.045,
+      "efficiency_workloads_represented": 1,
+      "entity_id": "claude-fable-5-max",
+      "gates": {
+        "capability": {
+          "observed": 0.0825,
+          "passes": false,
+          "required": 0.6,
+          "unit": "fraction"
+        },
+        "capability_breadth": {
+          "observed": 1.0,
+          "passes": false,
+          "required": 3.0,
+          "unit": "domains"
+        },
+        "economics": {
+          "observed": 0.0,
+          "passes": false,
+          "required": 0.4,
+          "unit": "fraction"
+        },
+        "efficiency": {
+          "observed": 0.045,
+          "passes": false,
+          "required": 0.5,
+          "unit": "fraction"
+        },
+        "efficiency_workload": {
+          "observed": 0.045,
+          "passes": false,
+          "required": 0.5,
+          "unit": "fraction"
+        },
+        "overall": {
+          "observed": 0.05662500000000001,
+          "passes": false,
+          "required": 0.6,
+          "unit": "fraction"
+        }
+      },
+      "governed_score": 54.429636426057556,
+      "headline_eligible": false,
+      "headline_overall": null,
+      "overall_coverage": 0.05662500000000001,
+      "publication_scope": "governed_partial"
+    },
+    {
+      "blockers": [
+        "efficiency coverage 0.045 is below the 0.500 gate",
+        "economics coverage 0.000 is below the 0.400 gate",
+        "overall coverage 0.561 is below the 0.600 gate",
+        "efficiency workload coverage 0.045 is below the 0.500 gate",
+        "headline eligibility is false"
+      ],
+      "capability_coverage": 1.0,
+      "capability_domains_represented": 5,
+      "confidence": "low",
+      "diagnostics": [
+        "not eligible for headline Overall ranking",
+        "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, aa-omniscience/aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15, arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15, terminalbench-2.1/aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+        "provisional normalization cohorts: autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
+      ],
+      "economics_coverage": 0.0,
+      "economics_workloads_represented": 0,
+      "efficiency_coverage": 0.045,
+      "efficiency_workloads_represented": 1,
+      "entity_id": "claude-opus-5-max",
+      "gates": {
+        "capability": {
+          "observed": 1.0,
+          "passes": true,
+          "required": 0.6,
+          "unit": "fraction"
+        },
+        "capability_breadth": {
+          "observed": 5.0,
+          "passes": true,
+          "required": 3.0,
+          "unit": "domains"
+        },
+        "economics": {
+          "observed": 0.0,
+          "passes": false,
+          "required": 0.4,
+          "unit": "fraction"
+        },
+        "efficiency": {
+          "observed": 0.045,
+          "passes": false,
+          "required": 0.5,
+          "unit": "fraction"
+        },
+        "efficiency_workload": {
+          "observed": 0.045,
+          "passes": false,
+          "required": 0.5,
+          "unit": "fraction"
+        },
+        "overall": {
+          "observed": 0.56125,
+          "passes": false,
+          "required": 0.6,
+          "unit": "fraction"
+        }
+      },
+      "governed_score": 55.510021169743936,
+      "headline_eligible": false,
+      "headline_overall": null,
+      "overall_coverage": 0.56125,
+      "publication_scope": "governed_partial"
+    },
+    {
+      "blockers": [
+        "efficiency coverage 0.045 is below the 0.500 gate",
+        "economics coverage 0.000 is below the 0.400 gate",
+        "overall coverage 0.561 is below the 0.600 gate",
+        "efficiency workload coverage 0.045 is below the 0.500 gate",
+        "headline eligibility is false"
+      ],
+      "capability_coverage": 1.0,
+      "capability_domains_represented": 5,
+      "confidence": "low",
+      "diagnostics": [
+        "not eligible for headline Overall ranking",
+        "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, aa-omniscience/aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15, arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15, terminalbench-2.1/aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+        "provisional normalization cohorts: autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
+      ],
+      "economics_coverage": 0.0,
+      "economics_workloads_represented": 0,
+      "efficiency_coverage": 0.045,
+      "efficiency_workloads_represented": 1,
+      "entity_id": "gpt-5.6-sol-max",
+      "gates": {
+        "capability": {
+          "observed": 1.0,
+          "passes": true,
+          "required": 0.6,
+          "unit": "fraction"
+        },
+        "capability_breadth": {
+          "observed": 5.0,
+          "passes": true,
+          "required": 3.0,
+          "unit": "domains"
+        },
+        "economics": {
+          "observed": 0.0,
+          "passes": false,
+          "required": 0.4,
+          "unit": "fraction"
+        },
+        "efficiency": {
+          "observed": 0.045,
+          "passes": false,
+          "required": 0.5,
+          "unit": "fraction"
+        },
+        "efficiency_workload": {
+          "observed": 0.045,
+          "passes": false,
+          "required": 0.5,
+          "unit": "fraction"
+        },
+        "overall": {
+          "observed": 0.56125,
+          "passes": false,
+          "required": 0.6,
+          "unit": "fraction"
+        }
+      },
+      "governed_score": 66.26583886547628,
+      "headline_eligible": false,
+      "headline_overall": null,
+      "overall_coverage": 0.56125,
+      "publication_scope": "governed_partial"
+    },
+    {
+      "blockers": [
+        "efficiency coverage 0.045 is below the 0.500 gate",
+        "economics coverage 0.000 is below the 0.400 gate",
+        "overall coverage 0.561 is below the 0.600 gate",
+        "efficiency workload coverage 0.045 is below the 0.500 gate",
+        "headline eligibility is false"
+      ],
+      "capability_coverage": 1.0,
+      "capability_domains_represented": 5,
+      "confidence": "low",
+      "diagnostics": [
+        "not eligible for headline Overall ranking",
+        "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, aa-omniscience/aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15, arc-agi-2/arc-prize-verified-arc-agi-2-semi-private-pass2, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15, terminalbench-2.1/aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+        "provisional normalization cohorts: autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
+      ],
+      "economics_coverage": 0.0,
+      "economics_workloads_represented": 0,
+      "efficiency_coverage": 0.045,
+      "efficiency_workloads_represented": 1,
+      "entity_id": "kimi-k3-max",
+      "gates": {
+        "capability": {
+          "observed": 1.0,
+          "passes": true,
+          "required": 0.6,
+          "unit": "fraction"
+        },
+        "capability_breadth": {
+          "observed": 5.0,
+          "passes": true,
+          "required": 3.0,
+          "unit": "domains"
+        },
+        "economics": {
+          "observed": 0.0,
+          "passes": false,
+          "required": 0.4,
+          "unit": "fraction"
+        },
+        "efficiency": {
+          "observed": 0.045,
+          "passes": false,
+          "required": 0.5,
+          "unit": "fraction"
+        },
+        "efficiency_workload": {
+          "observed": 0.045,
+          "passes": false,
+          "required": 0.5,
+          "unit": "fraction"
+        },
+        "overall": {
+          "observed": 0.56125,
+          "passes": false,
+          "required": 0.6,
+          "unit": "fraction"
+        }
+      },
+      "governed_score": 59.69066272741414,
+      "headline_eligible": false,
+      "headline_overall": null,
+      "overall_coverage": 0.56125,
+      "publication_scope": "governed_partial"
+    },
+    {
+      "blockers": [
+        "efficiency coverage 0.045 is below the 0.500 gate",
+        "economics coverage 0.000 is below the 0.400 gate",
+        "overall coverage 0.486 is below the 0.600 gate",
+        "efficiency workload coverage 0.045 is below the 0.500 gate",
+        "headline eligibility is false"
+      ],
+      "capability_coverage": 0.8625,
+      "capability_domains_represented": 5,
+      "confidence": "low",
+      "diagnostics": [
+        "not eligible for headline Overall ranking",
+        "provisional normalization cohorts: aa-lcr/aa-lcr-100-questions-3-repeats-gpt-5.6-luna-medium-2026-08-15, aa-omniscience/aa-omniscience-6000-single-pass-gpt-5.6-luna-medium-2026-08-15, critpt/aa-v4.1.1-critpt-70-test-challenges-pass1, cursorbench-3.2/cursorbench-3.2-public-leaderboard-2026-08-14, deepswe-v1.1/deepswe-v1.1-2026-08-13, gdpval-aa-v2/aa-gdpval-v2-public-leaderboard-2026-08-15, gpqa-diamond/epoch-gpqa-diamond-1.0.6-simple-evals, hle/aa-hle-v4.1-may-2025-text-2158-pass1-gpt4o-judge, scicode/aa-v4.1.1-scicode-test-288-background-pass1, tau3-banking/aa-tau3-banking-97-tasks-5-repeats-bm25-grep-2026-08-15, terminalbench-2.1/aa-terminalbench-v2-1-89-tasks-terminus-2-e2b-3-repeats-2026-08-15",
+        "provisional normalization cohorts: autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_agent_steps, autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_input_tokens, autonomous_task/deepswe-v1.1-mini-swe-agent-autonomous/deepswe-v1.1-trial-passed/deepswe-v1.1/deepswe-v1.1-2026-08-13/effective_output_tokens"
+      ],
+      "economics_coverage": 0.0,
+      "economics_workloads_represented": 0,
+      "efficiency_coverage": 0.045,
+      "efficiency_workloads_represented": 1,
+      "entity_id": "glm-5.2-max",
+      "gates": {
+        "capability": {
+          "observed": 0.8625,
+          "passes": true,
+          "required": 0.6,
+          "unit": "fraction"
+        },
+        "capability_breadth": {
+          "observed": 5.0,
+          "passes": true,
+          "required": 3.0,
+          "unit": "domains"
+        },
+        "economics": {
+          "observed": 0.0,
+          "passes": false,
+          "required": 0.4,
+          "unit": "fraction"
+        },
+        "efficiency": {
+          "observed": 0.045,
+          "passes": false,
+          "required": 0.5,
+          "unit": "fraction"
+        },
+        "efficiency_workload": {
+          "observed": 0.045,
+          "passes": false,
+          "required": 0.5,
+          "unit": "fraction"
+        },
+        "overall": {
+          "observed": 0.48562500000000003,
+          "passes": false,
+          "required": 0.6,
+          "unit": "fraction"
+        }
+      },
+      "governed_score": 54.202702676964044,
+      "headline_eligible": false,
+      "headline_overall": null,
+      "overall_coverage": 0.48562500000000003,
+      "publication_scope": "governed_partial"
+    }
+  ],
+  "narrative": [
+    "The seven v0.5 values are governed partial scores from complete common-core evidence.",
+    "They are not headline Overall UMI scores because the configured Efficiency and Economics gates are not met.",
+    "Access Economics is source-reported public task cost, not provider-billed task economics.",
+    "The target cohort remains the current five exact configurations; missing or fallback evidence stays abstained."
+  ],
+  "publication_scope": "governed_partial",
+  "publication_state": "published",
+  "report_version": "umi-public-audit-v0.1",
+  "scored_data_fingerprint": "5624c3b417e4c0e42dd35411065f200c38ccfc6b49474f47cb671c2d43a22c6c",
+  "source_artifacts": {
+    "adaptation_report": "data/pilots/v0.3/processed/adaptation-report.json",
+    "blocker_report": "data/editions/v0.5/processed/blocker-report.json",
+    "capability_gap_report": "data/pilots/v0.3/processed/pilot-gap-report.json",
+    "governed_scores": "data/editions/v0.5/processed/model-scores.json",
+    "legacy_scoring_results": "data/pilots/v0.3/processed/model-specific-partial-estimates.json"
+  },
+  "target_cohort": [
+    "claude-fable-5-max",
+    "claude-opus-5-max",
+    "gpt-5.6-sol-max",
+    "kimi-k3-max",
+    "glm-5.2-max"
+  ]
+}

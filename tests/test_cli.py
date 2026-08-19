@@ -191,21 +191,27 @@ def test_certificate_cli_emits_the_governed_certificate(
     assert certificate["result_fingerprint"]
 
 
-def test_edition_validate_and_score_v04(capsys: pytest.CaptureFixture[str]) -> None:
+def test_edition_validate_and_score_v04(
+    capsys: pytest.CaptureFixture[str], tmp_path: Path
+) -> None:
     validate_args = build_parser().parse_args(["edition", "--edition", "v0.4", "validate"])
     assert run(validate_args) == 0
     report = json.loads(capsys.readouterr().out)
     assert report["valid"] is True
     assert report["edition"] == "umi-public-v0.4"
 
-    score_args = build_parser().parse_args(["edition", "--edition", "v0.4", "score"])
+    score_args = build_parser().parse_args(
+        ["edition", "--edition", "v0.4", "score", "--output-dir", str(tmp_path)]
+    )
     assert run(score_args) == 0
     payload = json.loads(capsys.readouterr().out)
     assert payload["publication_state"] == "published"
     assert len(payload["models"]) == 5
     assert all(item["umi_public"] is not None for item in payload["models"])
 
-    dashboard_args = build_parser().parse_args(["edition", "--edition", "v0.4", "dashboard"])
+    dashboard_args = build_parser().parse_args(
+        ["edition", "--edition", "v0.4", "dashboard", "--output-dir", str(tmp_path)]
+    )
     assert run(dashboard_args) == 0
     dashboard = json.loads(capsys.readouterr().out)
     assert dashboard["surface"] == "public-dashboard"
@@ -220,6 +226,45 @@ def test_edition_validate_v05(capsys: pytest.CaptureFixture[str]) -> None:
     assert report["edition"] == "umi-public-v0.5"
 
 
+def test_edition_report_v05_can_stage_without_root_writes(
+    capsys: pytest.CaptureFixture[str], tmp_path: Path
+) -> None:
+    args = build_parser().parse_args(
+        ["edition", "--edition", "v0.5", "report", "--output-dir", str(tmp_path)]
+    )
+    assert run(args) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert report["publication_scope"] == "governed_partial"
+    assert report["headline_overall"] is None
+    assert (tmp_path / "public-audit-report.json").is_file()
+    assert not (tmp_path / "AUDIT_REPORT.md").is_file()
+
+
+def test_edition_v06_source_audit_and_dashboard_can_stage_without_root_writes(
+    capsys: pytest.CaptureFixture[str], tmp_path: Path
+) -> None:
+    audit_args = build_parser().parse_args(
+        ["edition", "--edition", "v0.6", "source-audit", "--output-dir", str(tmp_path)]
+    )
+    assert run(audit_args) == 0
+    audit = json.loads(capsys.readouterr().out)
+    assert audit["headline_overall"] is None
+    assert (tmp_path / "public-source-audit.json").is_file()
+    dashboard_args = build_parser().parse_args(
+        ["edition", "--edition", "v0.6", "dashboard", "--output-dir", str(tmp_path)]
+    )
+    assert run(dashboard_args) == 0
+    dashboard = json.loads(capsys.readouterr().out)
+    assert dashboard["surface"] == "v0.6-public-source-audit-dashboard"
+    assert (tmp_path / "public-source-audit-dashboard.html").is_file()
+
+
+def test_edition_v06_rejects_scoring(capsys: pytest.CaptureFixture[str]) -> None:
+    args = build_parser().parse_args(["edition", "--edition", "v0.6", "score"])
+    with pytest.raises(SystemExit, match="strict public-source audit"):
+        run(args)
+
+
 def test_edition_certificate_v05(capsys: pytest.CaptureFixture[str]) -> None:
     args = build_parser().parse_args(["edition", "--edition", "v0.5", "certificate"])
     assert run(args) == 0
@@ -229,8 +274,12 @@ def test_edition_certificate_v05(capsys: pytest.CaptureFixture[str]) -> None:
     assert certificate["result_fingerprint"]
 
 
-def test_edition_candidates_v05_are_abstentions(capsys: pytest.CaptureFixture[str]) -> None:
-    args = build_parser().parse_args(["edition", "--edition", "v0.5", "candidates"])
+def test_edition_candidates_v05_are_abstentions(
+    capsys: pytest.CaptureFixture[str], tmp_path: Path
+) -> None:
+    args = build_parser().parse_args(
+        ["edition", "--edition", "v0.5", "candidates", "--output-dir", str(tmp_path)]
+    )
     assert run(args) == 0
     report = json.loads(capsys.readouterr().out)
     assert report["headline_additions"] == []
@@ -242,8 +291,10 @@ def test_edition_candidates_v05_are_abstentions(capsys: pytest.CaptureFixture[st
     assert all(item["status"] == "insufficient_common_support" for item in report["candidates"])
 
 
-def test_edition_freeze_v05(capsys: pytest.CaptureFixture[str]) -> None:
-    args = build_parser().parse_args(["edition", "--edition", "v0.5", "freeze"])
+def test_edition_freeze_v05(capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
+    args = build_parser().parse_args(
+        ["edition", "--edition", "v0.5", "freeze", "--output-dir", str(tmp_path)]
+    )
     assert run(args) == 0
     report = json.loads(capsys.readouterr().out)
     assert report["status"] == "frozen_expanded_public_evidence"
@@ -256,8 +307,10 @@ def test_edition_freeze_v05(capsys: pytest.CaptureFixture[str]) -> None:
     assert all(item["umi_public"] is None for item in report["near_miss_candidates"])
 
 
-def test_edition_bundle_v05(capsys: pytest.CaptureFixture[str]) -> None:
-    args = build_parser().parse_args(["edition", "--edition", "v0.5", "bundle"])
+def test_edition_bundle_v05(capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
+    args = build_parser().parse_args(
+        ["edition", "--edition", "v0.5", "bundle", "--output-dir", str(tmp_path)]
+    )
     assert run(args) == 0
     bundle = json.loads(capsys.readouterr().out)
     assert bundle["release_class"] == "governed_public_index"
@@ -265,8 +318,10 @@ def test_edition_bundle_v05(capsys: pytest.CaptureFixture[str]) -> None:
     assert len(bundle["series"]) == 10
 
 
-def test_edition_sensitivity_v05(capsys: pytest.CaptureFixture[str]) -> None:
-    args = build_parser().parse_args(["edition", "--edition", "v0.5", "sensitivity"])
+def test_edition_sensitivity_v05(capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
+    args = build_parser().parse_args(
+        ["edition", "--edition", "v0.5", "sensitivity", "--output-dir", str(tmp_path)]
+    )
     assert run(args) == 0
     report = json.loads(capsys.readouterr().out)
     assert report["status"] == "diagnostic"
@@ -283,8 +338,10 @@ def test_edition_uncertainty_v05_parses_draws() -> None:
     assert args.draws == 32
 
 
-def test_edition_blockers_v05(capsys: pytest.CaptureFixture[str]) -> None:
-    args = build_parser().parse_args(["edition", "--edition", "v0.5", "blockers"])
+def test_edition_blockers_v05(capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
+    args = build_parser().parse_args(
+        ["edition", "--edition", "v0.5", "blockers", "--output-dir", str(tmp_path)]
+    )
     assert run(args) == 0
     report = json.loads(capsys.readouterr().out)
     assert report["headline_published"] is True
@@ -307,6 +364,7 @@ def test_edition_blockers_v05(capsys: pytest.CaptureFixture[str]) -> None:
         "stability",
         "bundle",
         "scales",
+        "report",
     ],
 )
 def test_governed_surfaces_rejected_on_experimental_v04(command: str) -> None:

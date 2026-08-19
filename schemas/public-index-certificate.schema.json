@@ -55,6 +55,10 @@
           "title": "Named Release",
           "type": "string"
         },
+        "publication_scope": {
+          "title": "Publication Scope",
+          "type": "string"
+        },
         "rank": {
           "title": "Rank",
           "type": "integer"
@@ -94,6 +98,7 @@
         "entity_kind",
         "effort_setting",
         "umi_public",
+        "publication_scope",
         "rank",
         "interval_status"
       ],
@@ -114,6 +119,10 @@
     "formula_version": {
       "title": "Formula Version",
       "type": "string"
+    },
+    "headline_eligible": {
+      "title": "Headline Eligible",
+      "type": "boolean"
     },
     "limitations": {
       "items": {
@@ -145,6 +154,10 @@
       },
       "title": "Pairwise Indistinguishable",
       "type": "array"
+    },
+    "publication_scope": {
+      "title": "Publication Scope",
+      "type": "string"
     },
     "result_fingerprint": {
       "pattern": "^[0-9a-f]{64}$",
@@ -190,6 +203,8 @@
   "required": [
     "certificate_version",
     "status",
+    "publication_scope",
+    "headline_eligible",
     "edition_id",
     "formula_version",
     "scored_data_fingerprint",

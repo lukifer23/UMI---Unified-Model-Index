@@ -68,6 +68,13 @@ def validate_public_scores(
         errors.append("payload edition_id does not match loaded policy")
     if payload.get("publication_state") != "published":
         errors.append("payload is not published")
+    expected_scope = (
+        "governed_partial" if edition_name == "v0.5" else "historical_experimental_point_score"
+    )
+    if payload.get("publication_scope") != expected_scope:
+        errors.append("payload publication_scope does not match the edition")
+    if payload.get("headline_eligible") is not False or payload.get("headline_overall") is not None:
+        errors.append("public edition must not claim a headline Overall score")
     rebuilt = score_public_edition(edition_name=edition_name)
     if rebuilt["scored_data_fingerprint"] != payload.get("scored_data_fingerprint"):
         errors.append("rebuilt scored_data_fingerprint does not match payload")
@@ -82,6 +89,10 @@ def validate_public_scores(
         item = by_id.get(identity.entity_id)
         if item is None:
             continue
+        if item.get("publication_scope") != expected_scope:
+            errors.append(f"{identity.entity_id} publication_scope drifted")
+        if item.get("headline_eligible") is not False or item.get("headline_overall") is not None:
+            errors.append(f"{identity.entity_id} has an unearned headline field")
         expected = (
             edition.weights.overall.capability * item["capability"]
             + edition.weights.overall.operational_efficiency * item["operational_efficiency"]

@@ -84,12 +84,7 @@
   "blockers": [
     {
       "affected_model": "claude-fable-5-max",
-      "complete_cost_entity_ids": [
-        "claude-opus-5-max",
-        "glm-5.2-max",
-        "gpt-5.6-sol-max",
-        "kimi-k3-max"
-      ],
+      "complete_cost_entity_ids": [],
       "missing_series": "deepswe-mean-cost",
       "reason": "Official DeepSWE v1.1 cost is observed on 432 of 436 scored Fable attempts and cannot enter a complete all-attempt Access series",
       "required_identity": "complete cost observation count",
@@ -126,6 +121,8 @@
   "edition_id": "umi-public-v0.5",
   "engine_version": "umi-engine-v0.3.13",
   "formula_version": "umi-methodology-v0.5.0",
+  "headline_eligible": false,
+  "headline_overall": null,
   "models": [
     {
       "access_economics": 3.965024788773297,
@@ -210,6 +207,8 @@
       "effort_setting": "max",
       "entity_id": "claude-opus-5-max",
       "entity_kind": "single_model_service",
+      "headline_eligible": false,
+      "headline_overall": null,
       "named_release": "Claude Opus 5",
       "operational_efficiency": 19.259082866957094,
       "operational_series": {
@@ -232,6 +231,7 @@
           "transformed": -11.674761057442826
         }
       },
+      "publication_scope": "governed_partial",
       "publication_state": "published",
       "rank": 4,
       "umi_public": 55.510021169743936
@@ -319,6 +319,8 @@
       "effort_setting": "max",
       "entity_id": "claude-fable-5-max",
       "entity_kind": "fallback_composite_service",
+      "headline_eligible": false,
+      "headline_overall": null,
       "named_release": "Claude Fable 5",
       "operational_efficiency": 21.9899129304721,
       "operational_series": {
@@ -341,6 +343,7 @@
           "transformed": -11.683459259410002
         }
       },
+      "publication_scope": "governed_partial",
       "publication_state": "published",
       "rank": 6,
       "umi_public": 54.429636426057556
@@ -428,6 +431,8 @@
       "effort_setting": "max",
       "entity_id": "gpt-5.6-sol-max",
       "entity_kind": "single_model_service",
+      "headline_eligible": false,
+      "headline_overall": null,
       "named_release": "GPT-5.6 Sol",
       "operational_efficiency": 49.66282520757648,
       "operational_series": {
@@ -450,6 +455,7 @@
           "transformed": -11.00234388549708
         }
       },
+      "publication_scope": "governed_partial",
       "publication_state": "published",
       "rank": 1,
       "umi_public": 66.26583886547628
@@ -537,6 +543,8 @@
       "effort_setting": "max",
       "entity_id": "kimi-k3-max",
       "entity_kind": "open_weight_deployment",
+      "headline_eligible": false,
+      "headline_overall": null,
       "named_release": "Kimi K3",
       "operational_efficiency": 27.796767515717043,
       "operational_series": {
@@ -559,6 +567,7 @@
           "transformed": -11.308368637483024
         }
       },
+      "publication_scope": "governed_partial",
       "publication_state": "published",
       "rank": 2,
       "umi_public": 59.69066272741414
@@ -646,6 +655,8 @@
       "effort_setting": "max",
       "entity_id": "glm-5.2-max",
       "entity_kind": "open_weight_deployment",
+      "headline_eligible": false,
+      "headline_overall": null,
       "named_release": "GLM-5.2",
       "operational_efficiency": 23.217368565617466,
       "operational_series": {
@@ -668,6 +679,7 @@
           "transformed": -11.26672189682232
         }
       },
+      "publication_scope": "governed_partial",
       "publication_state": "published",
       "rank": 7,
       "umi_public": 54.202702676964044
@@ -755,6 +767,8 @@
       "effort_setting": "high",
       "entity_id": "gemini-3.6-flash-high",
       "entity_kind": "single_model_service",
+      "headline_eligible": false,
+      "headline_overall": null,
       "named_release": "Gemini 3.6 Flash",
       "operational_efficiency": 21.10297878847333,
       "operational_series": {
@@ -777,6 +791,7 @@
           "transformed": -11.482252665745987
         }
       },
+      "publication_scope": "governed_partial",
       "publication_state": "published",
       "rank": 5,
       "umi_public": 55.4399971625043
@@ -864,6 +879,8 @@
       "effort_setting": "xhigh",
       "entity_id": "gpt-5.4-2026-03-05-xhigh",
       "entity_kind": "single_model_service",
+      "headline_eligible": false,
+      "headline_overall": null,
       "named_release": "GPT-5.4",
       "operational_efficiency": 40.4031338063335,
       "operational_series": {
@@ -886,6 +903,7 @@
           "transformed": -11.176191428595725
         }
       },
+      "publication_scope": "governed_partial",
       "publication_state": "published",
       "rank": 3,
       "umi_public": 55.51137725670947
@@ -893,6 +911,7 @@
   ],
   "normalization_version": "umi-normalization-v0.5.0",
   "package_version": "0.3.16",
+  "publication_scope": "governed_partial",
   "publication_state": "published",
   "required_common_core_coverage": 1.0,
   "scored_data_fingerprint": "5624c3b417e4c0e42dd35411065f200c38ccfc6b49474f47cb671c2d43a22c6c",

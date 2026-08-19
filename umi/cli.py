@@ -208,37 +208,44 @@ def build_parser() -> argparse.ArgumentParser:
     attempt_aggregate.add_argument("--format", choices=("json", "csv"), default="json")
     attempt_aggregate.add_argument("--output")
     operational = subparsers.add_parser("operational")
-    operational_commands = operational.add_subparsers(
-        dest="operational_command", required=True
-    )
+    operational_commands = operational.add_subparsers(dest="operational_command", required=True)
     operational_preflight_parser = operational_commands.add_parser("preflight")
     operational_preflight_parser.add_argument("--task-pack", required=True)
     operational_preflight_parser.add_argument("--run-manifest", required=True)
-    operational_preflight_parser.add_argument(
-        "--format", choices=("json", "csv"), default="json"
-    )
+    operational_preflight_parser.add_argument("--format", choices=("json", "csv"), default="json")
     operational_preflight_parser.add_argument("--output")
     edition = subparsers.add_parser("edition")
-    edition.add_argument("--edition", required=True, choices=("v0.3", "v0.4", "v0.5"))
+    edition.add_argument("--edition", required=True, choices=("v0.3", "v0.4", "v0.5", "v0.6"))
     edition_commands = edition.add_subparsers(dest="edition_command", required=True)
     edition_commands.add_parser("validate")
     edition_commands.add_parser("score")
-    edition_commands.add_parser("dashboard")
+    edition_dashboard = edition_commands.add_parser("dashboard")
+    edition_dashboard.add_argument("--output-dir")
     edition_commands.add_parser("audit")
     edition_commands.add_parser("certificate")
-    edition_commands.add_parser("candidates")
-    edition_commands.add_parser("freeze")
-    edition_commands.add_parser("blockers")
-    edition_commands.add_parser("sensitivity")
+    for command_name in (
+        "candidates",
+        "freeze",
+        "blockers",
+        "sensitivity",
+        "ablation",
+        "stability",
+        "bundle",
+        "scales",
+    ):
+        command_parser = edition_commands.add_parser(command_name)
+        command_parser.add_argument("--output-dir")
     edition_uncertainty = edition_commands.add_parser("uncertainty")
     edition_uncertainty.add_argument("--draws", type=int, default=2048)
-    edition_commands.add_parser("ablation")
-    edition_commands.add_parser("stability")
-    edition_commands.add_parser("bundle")
-    edition_commands.add_parser("scales")
+    edition_uncertainty.add_argument("--output-dir")
+    edition_report = edition_commands.add_parser("report")
+    edition_report.add_argument("--output-dir")
+    edition_source_audit = edition_commands.add_parser("source-audit")
+    edition_source_audit.add_argument("--output-dir")
     edition_score = edition_commands.choices["score"]
     edition_score.add_argument("--format", choices=("json", "csv"), default="json")
     edition_score.add_argument("--output")
+    edition_score.add_argument("--output-dir")
     return parser
 
 
@@ -338,7 +345,38 @@ def run(args: argparse.Namespace) -> int:
                 _emit({"valid": True, "edition": "v0.3"}, "json", None)
                 return 0
             raise SystemExit("v0.3 edition score remains the legacy umi estimates path")
+        if args.edition == "v0.6":
+            from umi.v06_source_audit import validate_v06_source_audit, write_v06_source_audit
+
+            edition_output_dir = (
+                Path(args.output_dir) if getattr(args, "output_dir", None) else None
+            )
+            if args.edition_command == "validate":
+                source_audit_report = validate_v06_source_audit()
+                _emit(source_audit_report, "json", None)
+                return 0 if source_audit_report["valid"] else 1
+            if args.edition_command == "source-audit":
+                _emit(write_v06_source_audit(edition_output_dir), "json", None)
+                return 0
+            if args.edition_command == "dashboard":
+                from analysis.v06_source_audit_dashboard import write_v06_source_audit_dashboard
+
+                source_audit_report = write_v06_source_audit(edition_output_dir)
+                _emit(
+                    write_v06_source_audit_dashboard(
+                        edition_output_dir,
+                        report=source_audit_report,
+                    ),
+                    "json",
+                    None,
+                )
+                return 0
+            raise SystemExit(
+                "umi-public-v0.6 is a strict public-source audit; only validate, "
+                "source-audit, and dashboard are available"
+            )
         public_config = load_public_edition_config(edition=args.edition)
+        edition_output_dir = Path(args.output_dir) if getattr(args, "output_dir", None) else None
         governed_only = {
             "certificate",
             "candidates",
@@ -350,6 +388,7 @@ def run(args: argparse.Namespace) -> int:
             "stability",
             "bundle",
             "scales",
+            "report",
         }
         if (
             args.edition_command in governed_only
@@ -372,8 +411,19 @@ def run(args: argparse.Namespace) -> int:
                 Path("data") / "editions" / args.edition / "processed" / "model-scores.json"
             )
             scores = json.loads(scores_path.read_text(encoding="utf-8"))
-            dashboard = write_public_dashboard(scores, scores_path.parent)
+            dashboard = write_public_dashboard(scores, edition_output_dir or scores_path.parent)
             _emit(dashboard, "json", None)
+            return 0
+        if args.edition_command == "report":
+            if args.edition != "v0.5":
+                raise SystemExit("the publication audit report belongs to umi-public-v0.5")
+            from umi.public_audit import write_public_audit_report
+
+            publication_report = write_public_audit_report(
+                edition_output_dir,
+                edition_name=args.edition,
+            )
+            _emit(publication_report, "json", None)
             return 0
         if args.edition_command == "audit":
             from umi.public_validate import validate_public_artifacts
@@ -394,59 +444,87 @@ def run(args: argparse.Namespace) -> int:
         if args.edition_command == "candidates":
             from umi.public_candidates import write_candidate_audits
 
-            audits = write_candidate_audits()
+            audits = write_candidate_audits(edition_output_dir)
             _emit(audits, "json", None)
             return 0
         if args.edition_command == "freeze":
             from umi.public_freeze import write_evidence_freeze
 
-            _emit(write_evidence_freeze(), "json", None)
+            _emit(write_evidence_freeze(output_dir=edition_output_dir), "json", None)
             return 0
         if args.edition_command == "blockers":
             from umi.public_governance import write_governance_artifacts
 
-            governance = write_governance_artifacts()
+            governance = write_governance_artifacts(edition_output_dir)
             _emit(governance["blocker_report"], "json", None)
             return 0
         if args.edition_command == "sensitivity":
             from umi.public_sensitivity import write_weight_sensitivity
 
-            _emit(write_weight_sensitivity(), "json", None)
+            _emit(write_weight_sensitivity(edition_output_dir), "json", None)
             return 0
         if args.edition_command == "uncertainty":
             from umi.public_stability import write_rank_stability_artifacts
             from umi.public_uncertainty import write_public_uncertainty
 
-            processed = Path("data") / "editions" / args.edition / "processed"
+            processed = edition_output_dir or Path("data") / "editions" / args.edition / "processed"
+            scores_path = (
+                Path("data") / "editions" / args.edition / "processed" / "model-scores.json"
+            )
+            scores = json.loads(scores_path.read_text(encoding="utf-8"))
             uncertainty = write_public_uncertainty(
+                payload=scores,
                 output_dir=processed,
                 edition_name=args.edition,
                 draws=args.draws,
             )
             write_rank_stability_artifacts(
-                processed, uncertainty=uncertainty, edition_name=args.edition
+                processed,
+                payload=scores,
+                uncertainty=uncertainty,
+                edition_name=args.edition,
             )
             _emit(uncertainty, "json", None)
             return 0
         if args.edition_command == "ablation":
             from umi.public_stability import write_rank_stability_artifacts
 
-            processed = Path("data") / "editions" / args.edition / "processed"
-            pack = write_rank_stability_artifacts(processed, edition_name=args.edition)
+            processed = edition_output_dir or Path("data") / "editions" / args.edition / "processed"
+            scores_path = (
+                Path("data") / "editions" / args.edition / "processed" / "model-scores.json"
+            )
+            scores = json.loads(scores_path.read_text(encoding="utf-8"))
+            pack = write_rank_stability_artifacts(
+                processed,
+                payload=scores,
+                edition_name=args.edition,
+            )
             _emit(pack["source_ablation"], "json", None)
             return 0
         if args.edition_command == "stability":
             from umi.public_stability import write_rank_stability_artifacts
 
-            processed = Path("data") / "editions" / args.edition / "processed"
-            pack = write_rank_stability_artifacts(processed, edition_name=args.edition)
+            processed = edition_output_dir or Path("data") / "editions" / args.edition / "processed"
+            scores_path = (
+                Path("data") / "editions" / args.edition / "processed" / "model-scores.json"
+            )
+            scores = json.loads(scores_path.read_text(encoding="utf-8"))
+            pack = write_rank_stability_artifacts(
+                processed,
+                payload=scores,
+                edition_name=args.edition,
+            )
             _emit(pack["rank_stability"], "json", None)
             return 0
         if args.edition_command == "bundle":
             from umi.public_bundle import load_public_scoring_bundle, write_public_scoring_bundle
 
             _emit(
-                write_public_scoring_bundle(load_public_scoring_bundle(edition_name=args.edition)),
+                write_public_scoring_bundle(
+                    load_public_scoring_bundle(edition_name=args.edition),
+                    edition_output_dir,
+                    edition_name=args.edition,
+                ),
                 "json",
                 None,
             )
@@ -459,13 +537,18 @@ def run(args: argparse.Namespace) -> int:
                 write_public_panels_and_scales(
                     load_public_scoring_bundle(edition_name=args.edition),
                     public_config,
+                    edition_output_dir,
+                    edition_name=args.edition,
                 ),
                 "json",
                 None,
             )
             return 0
         if args.edition_command == "score":
-            public_payload = write_public_artifacts(edition_name=args.edition)
+            public_payload = write_public_artifacts(
+                edition_output_dir,
+                edition_name=args.edition,
+            )
         else:
             public_payload = score_public_edition(edition_name=args.edition)
         _emit(public_payload, getattr(args, "format", "json"), getattr(args, "output", None))
@@ -539,9 +622,7 @@ def run(args: argparse.Namespace) -> int:
         data_report = validate_dataset(dataset, config)
         crosswalk = load_model_crosswalk(args.crosswalk)
         if args.strict:
-            registry_report = validate_source_registry(
-                registry, args.source_registry, dataset
-            )
+            registry_report = validate_source_registry(registry, args.source_registry, dataset)
             crosswalk_report = validate_crosswalk(crosswalk, dataset, registry)
             audit_errors = (
                 *data_report.errors,
@@ -564,9 +645,7 @@ def run(args: argparse.Namespace) -> int:
                 crosswalk.model_copy(
                     update={
                         "entries": tuple(
-                            item
-                            for item in crosswalk.entries
-                            if item.id in accepted_crosswalk_ids
+                            item for item in crosswalk.entries if item.id in accepted_crosswalk_ids
                         )
                     }
                 )
@@ -586,7 +665,7 @@ def run(args: argparse.Namespace) -> int:
         _emit(source_payload, args.format, args.output)
         return 0 if data_report.schema_valid and not audit_errors else 1
     if args.command == "validate":
-        report = validate_dataset(dataset, config)
+        validation_report = validate_dataset(dataset, config)
         source_report = None
         if args.source_registry:
             source_report = validate_source_registry(
@@ -594,20 +673,20 @@ def run(args: argparse.Namespace) -> int:
             )
         _emit(
             {
-                "schema_valid": report.schema_valid,
-                "scored_inputs_ready": report.scored_inputs_ready,
+                "schema_valid": validation_report.schema_valid,
+                "scored_inputs_ready": validation_report.scored_inputs_ready,
                 "strict_audit_valid": None,
                 "headline_eligible": None,
-                "errors": report.errors,
-                "readiness_failures": report.readiness_failures,
-                "warnings": report.warnings,
+                "errors": validation_report.errors,
+                "readiness_failures": validation_report.readiness_failures,
+                "warnings": validation_report.warnings,
                 "source_errors": source_report.errors if source_report is not None else (),
                 "source_warnings": source_report.warnings if source_report is not None else (),
             },
             args.format,
             args.output,
         )
-        return 0 if report.schema_valid else 1
+        return 0 if validation_report.schema_valid else 1
     real_dataset = any(not model.synthetic for model in dataset.models)
     if real_dataset:
         bundle = load_scoring_bundle(

@@ -77,9 +77,7 @@ def chart_rows(payload: dict[str, Any]) -> list[dict[str, Any]]:
                 "access_economics": _round(access),
                 "umi_public": _round(public),
                 "capability_weighted": _round(weights.capability * capability),
-                "operational_efficiency_weighted": _round(
-                    weights.operational_efficiency * opeff
-                ),
+                "operational_efficiency_weighted": _round(weights.operational_efficiency * opeff),
                 "access_economics_weighted": _round(weights.access_economics * access),
                 "interval_low": None,
                 "interval_high": None,
@@ -124,6 +122,7 @@ def attach_public_sidecars(payload: dict[str, Any], processed_dir: Path) -> dict
         "certificate": "public-index-certificate.json",
         "source_ablation": "source-ablation.json",
         "rank_stability": "rank-stability.json",
+        "publication_audit": "public-audit-report.json",
     }
     for name, filename in sidecars.items():
         path = processed_dir / filename
@@ -141,6 +140,13 @@ def build_public_dashboard(payload: dict[str, Any]) -> dict[str, Any]:
         raise ValueError("public dashboard refuses to plot a null umi_public as zero")
     edition_name = "v0.5" if str(payload.get("edition_id", "")).endswith("v0.5") else "v0.4"
     edition = load_public_edition_config(edition=edition_name)
+    governed = edition_name == "v0.5"
+    publication_scope = str(payload.get("publication_scope", "governed_partial"))
+    audit = payload.get("publication_audit") if governed else None
+    if audit is None and governed:
+        from umi.public_audit import build_public_audit_report
+
+        audit = build_public_audit_report(payload, edition_name=edition_name)
     ranking = chart_rows(payload)
     uncertainty_models = payload.get("uncertainty", {}).get("models", ())
     if uncertainty_models:
@@ -172,7 +178,56 @@ def build_public_dashboard(payload: dict[str, Any]) -> dict[str, Any]:
                 continue
             row["interval_stable"] = stability["interval_stable"]
             row["diagnostically_stable"] = stability["diagnostically_stable"]
-    return {
+    charts = [
+        {
+            "id": "umi_public",
+            "title": "UMI Public",
+            "type": "bar",
+            "y_field": "umi_public",
+            "note": "One published number per exact Max configuration.",
+        },
+        {
+            "id": "components",
+            "title": "Unweighted component scores",
+            "type": "grouped_bar",
+            "note": "Each component is 0-100 before overall weights are applied.",
+        },
+        {
+            "id": "contributions",
+            "title": "Weighted contributions to umi_public",
+            "type": "stacked_bar",
+            "note": "Segments are 0.55 Capability, 0.25 Operational Efficiency, 0.20 Access.",
+        },
+        {
+            "id": "capability_heatmap",
+            "title": "Capability series scores",
+            "type": "heatmap",
+            "note": "0-100 robust-z scores from the frozen common-core extracts.",
+        },
+    ]
+    if governed:
+        charts.extend(
+            [
+                {
+                    "id": "coverage_heatmap",
+                    "title": "Configured hierarchy coverage",
+                    "type": "heatmap",
+                    "note": (
+                        "Coverage is measured against the complete configured hierarchy; "
+                        "missing evidence is not zero-filled."
+                    ),
+                },
+                {
+                    "id": "gate_progress",
+                    "title": "Headline gate progress",
+                    "type": "grouped_bar",
+                    "note": (
+                        "Observed coverage is compared with the configured publication threshold."
+                    ),
+                },
+            ]
+        )
+    dashboard = {
         "surface": "public-dashboard",
         "edition_id": payload["edition_id"],
         "formula_version": payload["formula_version"],
@@ -189,37 +244,23 @@ def build_public_dashboard(payload: dict[str, Any]) -> dict[str, Any]:
             ),
         },
         "weights": edition.weights.model_dump(mode="json"),
-        "limitations": _dashboard_limitations(bool(uncertainty_models)),
+        "limitations": _dashboard_limitations(
+            bool(uncertainty_models), publication_scope if governed else ""
+        ),
         "ranking": ranking,
         "series": series_rows(payload),
-        "charts": [
-            {
-                "id": "umi_public",
-                "title": "UMI Public",
-                "type": "bar",
-                "y_field": "umi_public",
-                "note": "One published number per exact Max configuration.",
-            },
-            {
-                "id": "components",
-                "title": "Unweighted component scores",
-                "type": "grouped_bar",
-                "note": "Each component is 0-100 before overall weights are applied.",
-            },
-            {
-                "id": "contributions",
-                "title": "Weighted contributions to umi_public",
-                "type": "stacked_bar",
-                "note": "Segments are 0.55 Capability, 0.25 Operational Efficiency, 0.20 Access.",
-            },
-            {
-                "id": "capability_heatmap",
-                "title": "Capability series scores",
-                "type": "heatmap",
-                "note": "0-100 robust-z scores from the frozen common-core extracts.",
-            },
-        ],
+        "charts": charts,
     }
+    if governed:
+        dashboard.update(
+            {
+                "publication_scope": publication_scope,
+                "headline_eligible": bool(payload.get("headline_eligible", False)),
+                "headline_overall": payload.get("headline_overall"),
+                "publication_audit": audit,
+            }
+        )
+    return dashboard
 
 
 def _horizontal_bars(
@@ -310,8 +351,7 @@ def _stacked_bars(
             f'fill="{color}"></rect>'
         )
         parts.append(
-            f'<text x="{legend_x + 14}" y="{legend_y}" font-size="11" fill="#374151">'
-            f"{label}</text>"
+            f'<text x="{legend_x + 14}" y="{legend_y}" font-size="11" fill="#374151">{label}</text>'
         )
         legend_x += 170
     parts.append("</svg>")
@@ -370,8 +410,7 @@ def _grouped_component_bars(
             f'fill="{color}"></rect>'
         )
         parts.append(
-            f'<text x="{legend_x + 14}" y="{legend_y}" font-size="11" fill="#374151">'
-            f"{label}</text>"
+            f'<text x="{legend_x + 14}" y="{legend_y}" font-size="11" fill="#374151">{label}</text>'
         )
         legend_x += 120
     parts.append("</svg>")
@@ -437,6 +476,99 @@ def _capability_heatmap(
     return "".join(parts)
 
 
+def _coverage_heatmap(
+    audit: dict[str, Any],
+    *,
+    title: str,
+    width: int = 760,
+) -> str:
+    rows = list(audit.get("models", ()))
+    fields = (
+        ("capability_coverage", "Capability"),
+        ("efficiency_coverage", "Efficiency"),
+        ("economics_coverage", "Economics"),
+        ("overall_coverage", "Overall"),
+    )
+    left = 148
+    top = 48
+    cell_w = (width - left - 16) / max(len(fields), 1)
+    cell_h = 30
+    height = top + len(rows) * cell_h + 26
+    parts = [
+        f'<svg viewBox="0 0 {width} {height}" role="img" aria-label="{_escape(title)}">',
+        f'<text x="12" y="20" font-size="14" font-weight="600" fill="#111827">'
+        f"{_escape(title)}</text>",
+    ]
+    for column, (_field, label) in enumerate(fields):
+        parts.append(
+            f'<text x="{left + column * cell_w + cell_w / 2:.2f}" y="{top - 9}" '
+            f'font-size="12" text-anchor="middle" fill="#374151">{_escape(label)}</text>'
+        )
+    for row_index, row in enumerate(rows):
+        y = top + row_index * cell_h
+        label = SHORT_NAMES.get(row["entity_id"], row["entity_id"])
+        parts.append(
+            f'<text x="8" y="{y + 20}" font-size="11" fill="#374151">{_escape(label)}</text>'
+        )
+        for column, (field, _label) in enumerate(fields):
+            value = float(row[field])
+            fill, ink = _score_fill(value * 100.0)
+            x = left + column * cell_w
+            parts.append(
+                f'<rect x="{x:.2f}" y="{y:.2f}" width="{cell_w - 2:.2f}" '
+                f'height="{cell_h - 2:.2f}" fill="{fill}"></rect>'
+            )
+            parts.append(
+                f'<text x="{x + cell_w / 2:.2f}" y="{y + 20:.2f}" font-size="11" '
+                f'text-anchor="middle" fill="{ink}">{value:.1%}</text>'
+            )
+    parts.append("</svg>")
+    return "".join(parts)
+
+
+def _gate_progress(audit: dict[str, Any], *, title: str, width: int = 760) -> str:
+    gates = list(audit.get("gates", {}).items())
+    left = 150
+    top = 38
+    row_h = 38
+    height = top + len(gates) * row_h + 22
+    usable = width - left - 90
+    parts = [
+        f'<svg viewBox="0 0 {width} {height}" role="img" aria-label="{_escape(title)}">',
+        f'<text x="12" y="20" font-size="14" font-weight="600" fill="#111827">'
+        f"{_escape(title)}</text>",
+    ]
+    for index, (name, gate) in enumerate(gates):
+        y = top + index * row_h
+        observed = float(gate["observed"])
+        required = float(gate["required"])
+        scale = max(required, 1.0)
+        observed_w = usable * min(observed / scale, 1.0)
+        required_x = left + usable * min(required / scale, 1.0)
+        color = "#15803d" if gate["passes"] else "#b45309"
+        parts.append(
+            f'<text x="8" y="{y + 18}" font-size="11" fill="#374151">{_escape(name)}</text>'
+        )
+        parts.append(
+            f'<rect x="{left}" y="{y + 4}" width="{usable}" height="20" rx="4" '
+            f'fill="#e5e7eb"></rect>'
+        )
+        parts.append(
+            f'<rect x="{left}" y="{y + 4}" width="{observed_w:.2f}" height="20" rx="4" '
+            f'fill="{color}"></rect>'
+        )
+        parts.append(
+            f'<line x1="{required_x:.2f}" y1="{y + 1}" x2="{required_x:.2f}" '
+            f'y2="{y + 27}" stroke="#111827" stroke-width="2"></line>'
+        )
+        parts.append(
+            f'<text x="{left + usable + 8}" y="{y + 18}" font-size="11" fill="#111827">'
+            f"{observed:.1%} / {required:.1%}</text>"
+        )
+    parts.append("</svg>")
+    return "".join(parts)
+
+
 def _interval_cell(row: dict[str, Any]) -> str:
     if row.get("interval_low") is None or row.get("interval_high") is None:
         return "unpublished"
@@ -453,7 +585,7 @@ def _interval_cell(row: dict[str, Any]) -> str:
     )
 
 
-def render_public_dashboard_html(dashboard: dict[str, Any]) -> str:
+def _render_historical_public_dashboard_html(dashboard: dict[str, Any]) -> str:
     ranking = dashboard["ranking"]
     public_bars = [
         (row["short_name"], row["umi_public"], COMPONENT_COLORS["umi_public"])
@@ -559,6 +691,169 @@ def render_public_dashboard_html(dashboard: dict[str, Any]) -> str:
 """
 
 
+def render_public_dashboard_html(dashboard: dict[str, Any]) -> str:
+    if dashboard.get("publication_scope") != "governed_partial":
+        return _render_historical_public_dashboard_html(dashboard)
+    ranking = dashboard["ranking"]
+    audit = dashboard.get("publication_audit") or {}
+    publication_scope = dashboard.get("publication_scope", "unknown")
+    display_title = (
+        "UMI Public v0.5 — Governed Partial Scores"
+        if publication_scope == "governed_partial"
+        else "UMI Public v0.4 — Historical Experimental Scores"
+    )
+    public_bars = [
+        (row["short_name"], row["umi_public"], COMPONENT_COLORS["umi_public"]) for row in ranking
+    ]
+    table_rows = "".join(
+        (
+            "<tr>"
+            f"<td>{row['rank']}</td>"
+            f"<td>{_escape(row['named_release'])}</td>"
+            f"<td>{_escape(row['entity_kind'])}</td>"
+            f"<td>{row['capability']:.2f}</td>"
+            f"<td>{row['operational_efficiency']:.2f}</td>"
+            f"<td>{row['access_economics']:.2f}</td>"
+            f"<td><strong>{row['umi_public']:.2f}</strong></td>"
+            f"<td>{_interval_cell(row)}</td>"
+            "</tr>"
+        )
+        for row in ranking
+    )
+    limitations = "".join(f"<li>{_escape(item)}</li>" for item in dashboard["limitations"])
+    weights = dashboard["weights"]
+    series_header = "".join(
+        f"<th>{_escape(SERIES_LABELS[series_id])}</th>" for series_id in CAPABILITY_SERIES_ORDER
+    )
+    series_lookup = {
+        (row["short_name"], row["series_id"]): row["score"]
+        for row in dashboard["series"]
+        if row["component"] == "capability"
+    }
+    series_body = "".join(
+        "<tr>"
+        + f"<td>{_escape(row['short_name'])}</td>"
+        + "".join(
+            f"<td>{series_lookup[(row['short_name'], series_id)]:.1f}</td>"
+            for series_id in CAPABILITY_SERIES_ORDER
+        )
+        + "</tr>"
+        for row in ranking
+    )
+    audit_models = audit.get("models", ())
+    audit_rows = "".join(
+        "<tr>"
+        f"<td>{_escape(SHORT_NAMES.get(row['entity_id'], row['entity_id']))}</td>"
+        f"<td>{row['capability_coverage']:.1%}</td>"
+        f"<td>{row['efficiency_coverage']:.1%}</td>"
+        f"<td>{row['economics_coverage']:.1%}</td>"
+        f"<td>{row['confidence']}</td>"
+        f"<td>{'eligible' if row['headline_eligible'] else 'withheld'}</td>"
+        "</tr>"
+        for row in audit_models
+    )
+    blocker_items = "".join(
+        f"<li><code>{_escape(item)}</code></li>" for item in audit.get("blockers", ())
+    )
+    audit_explanation = (
+        "The seven current v0.5 values are complete common-core governed partials. "
+        "They are useful for the declared evidence cohort, but they are not headline "
+        "Overall UMI scores."
+        if publication_scope == "governed_partial"
+        else (
+            "This historical edition demonstrates deterministic scoring from a frozen "
+            "common core; it is not the current Overall UMI release."
+        )
+    )
+    headline_label = "eligible" if dashboard.get("headline_eligible") else "withheld"
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{_escape(display_title)}</title>
+  <style>
+    body {{ font: 15px/1.5 system-ui, sans-serif; margin: 24px auto; max-width: 920px;
+           color: #111827; }}
+    h1, h2 {{ line-height: 1.2; }}
+    .meta, .note {{ color: #4b5563; }}
+    .callout {{ background: #f3f4f6; border-left: 4px solid #1d4ed8;
+                padding: 12px 16px; margin: 16px 0 24px; }}
+    .blocked {{ color: #92400e; }}
+    table {{ border-collapse: collapse; width: 100%; margin: 16px 0 28px; }}
+    th, td {{ border-bottom: 1px solid #e5e7eb; padding: 8px 6px; text-align: left; }}
+    th {{ font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: #6b7280; }}
+    svg {{ width: 100%; height: auto; margin: 8px 0 28px; }}
+    code {{ font-size: 13px; }}
+  </style>
+</head>
+<body>
+  <h1>{_escape(display_title)}</h1>
+  <p class="meta">{_escape(dashboard["formula"]["text"])}</p>
+  <p class="meta">Fingerprint <code>{_escape(dashboard["scored_data_fingerprint"])}</code></p>
+  <div class="callout"><strong>Publication boundary.</strong> {_escape(audit_explanation)}
+  <br>Headline Overall UMI: <strong>{headline_label}</strong>.
+  </div>
+  <p class="note">Charts read published <code>model-scores.json</code>.
+  They do not recompute scores. Access Economics is source-reported task cost,
+  not a provider bill. Partial intervals are shown when published; overlapping
+  intervals are not a unique rank.</p>
+  <p class="note">The score bars answer what the governed common-core evidence produces.
+  The coverage and gate charts answer whether that evidence supports an Overall claim.</p>
+  {_horizontal_bars(public_bars, title="Governed partial scores")}
+  {_stacked_bars(ranking, title="Weighted contributions to governed partial score")}
+  {_grouped_component_bars(ranking, title="Unweighted components (component scores)")}
+  {_capability_heatmap(ranking, dashboard["series"], title="Capability series scores")}
+  {_coverage_heatmap(audit, title="Configured hierarchy coverage") if audit else ""}
+  {_gate_progress(audit, title="Headline gate progress") if audit else ""}
+  <h2>How to read the coverage</h2>
+  <p class="note">Coverage is measured against the complete configured hierarchy, not just the
+  number of rows present in the common-core extract. A missing workload, family, or metric remains
+  missing; it is never treated as zero performance or silently reweighted into full coverage.</p>
+  <table>
+    <thead><tr><th>Configuration</th><th>Capability</th><th>Efficiency</th><th>Economics</th><th>Confidence</th><th>Overall</th></tr></thead>
+    <tbody>{audit_rows}</tbody>
+  </table>
+  <h2>Evidence blockers</h2>
+  <p class="note">These are release blockers, not missing scores to be filled in. Each requires
+  exact identity, compatible cohort, readiness, provenance, and rights before it can affect a
+  score.</p>
+  <ul class="blocked">{blocker_items}</ul>
+  <h2>Methods</h2>
+  <p class="note">Capability domains: general reasoning
+  {weights["capability_domains"]["general_reasoning_and_knowledge"]:.2f},
+  software {weights["capability_domains"]["software_engineering"]:.2f},
+  agentic {weights["capability_domains"]["agentic_and_tool_mediated_work"]:.2f},
+  math/science {weights["capability_domains"]["mathematics_and_science"]:.2f}.
+  Operational Efficiency is DeepSWE tokens
+  {weights["operational_efficiency"]["task_resource_intensity"]:.2f} and steps
+  {weights["operational_efficiency"]["task_completion_time_and_steps"]:.2f}.
+  Access is WeirdML high-effort cost
+  {weights["access_economics"]["public_benchmark_task_cost"]:.2f}.</p>
+  <h2>Published governed values</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th><th>Configuration</th><th>Kind</th><th>Capability</th>
+        <th>Op. Efficiency</th><th>Access</th><th>UMI Public</th><th>95% interval</th>
+      </tr>
+    </thead>
+    <tbody>{table_rows}</tbody>
+  </table>
+  <h2>Capability series</h2>
+  <table>
+    <thead>
+      <tr><th>Model</th>{series_header}</tr>
+    </thead>
+    <tbody>{series_body}</tbody>
+  </table>
+  <h2>Limitations</h2>
+  <ul>{limitations}</ul>
+</body>
+</html>
+"""
+
+
 def write_chart_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     if not rows:
         raise ValueError("chart CSV requires rows")
@@ -576,18 +871,28 @@ def write_chart_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     path.write_text(handle.getvalue(), encoding="utf-8")
 
 
-def _dashboard_limitations(has_intervals: bool) -> list[str]:
+def _dashboard_limitations(has_intervals: bool, publication_scope: str) -> list[str]:
     interval_note = (
         "Partial source-interval ranks overlap for some models and are not a unique order. "
         "Source ablation and weight hypotheses are diagnostic rank-stability checks."
         if has_intervals
         else "95% intervals are unpublished because this payload has no uncertainty sidecar."
     )
+    scope_note = (
+        "These are governed partial scores, not headline Overall UMI; "
+        "headline_overall remains null."
+        if publication_scope == "governed_partial"
+        else (
+            "This is a historical experimental point-score edition, not headline_overall."
+            if publication_scope
+            else "This is not v0.3 headline_overall."
+        )
+    )
     return [
         "Access Economics is source-reported public task cost, not provider billing.",
         "Operational Efficiency is source-reported DeepSWE means, not success-adjusted resources.",
         interval_note,
-        "This is not v0.3 headline_overall.",
+        scope_note,
         "Fable is the documented fallback composite product.",
         "DeepSWE cost is diagnostic only (Fable 432/436).",
     ]

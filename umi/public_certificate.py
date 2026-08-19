@@ -24,6 +24,7 @@ class PublicIndexModelRow(ConfigModel):
     entity_kind: str
     effort_setting: str
     umi_public: float
+    publication_scope: str
     rank: int
     interval_low: float | None = None
     interval_high: float | None = None
@@ -36,6 +37,8 @@ class PublicIndexModelRow(ConfigModel):
 class PublicIndexCertificate(ConfigModel):
     certificate_version: str
     status: str
+    publication_scope: str
+    headline_eligible: bool
     edition_id: str
     formula_version: str
     scored_data_fingerprint: str
@@ -59,9 +62,7 @@ def _digest(payload: dict[str, Any]) -> str:
 def verify_epoch_zip() -> str:
     digest = hashlib.sha256(EPOCH_ZIP.read_bytes()).hexdigest()
     if digest != EPOCH_SHA256:
-        raise ValueError(
-            f"Epoch zip checksum {digest} does not match registry {EPOCH_SHA256}"
-        )
+        raise ValueError(f"Epoch zip checksum {digest} does not match registry {EPOCH_SHA256}")
     return digest
 
 
@@ -103,6 +104,7 @@ def build_public_certificate(
                 "entity_kind": item["entity_kind"],
                 "effort_setting": item["effort_setting"],
                 "umi_public": item["umi_public"],
+                "publication_scope": item.get("publication_scope", "governed_partial"),
                 "rank": item["rank"],
                 "interval_low": interval["interval_low"],
                 "interval_high": interval["interval_high"],
@@ -121,6 +123,8 @@ def build_public_certificate(
     unsigned = {
         "certificate_version": CERTIFICATE_VERSION,
         "status": "published_governed_index",
+        "publication_scope": "governed_partial",
+        "headline_eligible": False,
         "edition_id": payload["edition_id"],
         "formula_version": payload["formula_version"],
         "scored_data_fingerprint": payload["scored_data_fingerprint"],
