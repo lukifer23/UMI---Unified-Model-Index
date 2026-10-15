@@ -13,7 +13,12 @@ current pilot fails the configured Efficiency and Economics gates, so every `hea
 value remains null. It freezes v0.4, validates every published raw against the Epoch zip, adds partial
 source-interval uncertainty, and scores every frozen configuration that has the complete
 common core. Named candidates that miss a required series get diagnostic certificates, not
-imputed scores. Rebuild offline with no API keys:
+imputed scores.
+
+Before running the commands below, follow [Install and verify](#install-and-verify).
+These commands rebuild derived scores, audits, and reports from frozen public evidence;
+they do not rerun the upstream benchmarks or perform new model evaluations. After
+installation, the rebuild is offline and requires no API keys:
 
 ```bash
 PYTHONPATH=. uv run --no-sync umi edition --edition v0.5 validate
